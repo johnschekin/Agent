@@ -1,0 +1,1127 @@
+[
+  {
+    "row": 2,
+    "term": "Commitment Letter / Transaction Description",
+    "background": "The transaction description aligns the financing packages with the acquisition structure and definitions of Borrower, Holdings, Sponsor, Acquisition, and Closing Date. Source materials emphasize ensuring the commitment letter description mirrors the M&A agreement, and that funding under the facilities occurs substantially concurrently with the acquisition close. Where the M&A is not finalized when the commitment letter is drafted, acceptability to the arrangers is reserved and later dropped once final M&A documents are reviewed."
+  },
+  {
+    "row": 3,
+    "term": "Debt Quantum",
+    "template_fields": "* [First Lien] Term Loan: [•]-year; $[•]mm; [•]% amort * [Delayed Draw Term Loan: $[•]] * Revolver: [•]-year; $[•]mm * [Second Lien Term Loan: [•]-year; $[•]mm]",
+    "analysis_guidelines": "The notes indicate standard tenors and amortization for Term B (7 years; 1% per year of original principal), Term A (varies; escalates), Revolver (5–6 years), and Second Lien (7.5–8 years; no amortization). Flag any deviation, springing maturities, or first amortization timing where a full fiscal quarter would pass post-closing without payment.",
+    "background": "“Debt quantum” sets the principal amounts and basic structural terms of each facility and should tie to the financing grid. The sources stress calibrating tenors and amortization to market norms and avoiding springing or earlier inside maturities that would invert priority. For DDTLs, specify the commitment size and availability window; for revolvers, confirm standard 5–6 year terms and alignment with ABL marketing if applicable."
+  },
+  {
+    "row": 4,
+    "term": "Commitment and giveaway",
+    "template_fields": "* [•]%; [•] handed papers * Up to [•] additional lenders within [•] days; [•]% minimum economics * [Additional lenders may receive greater economics than initial lenders] / [Additional lenders not required to commit ratably]",
+    "analysis_guidelines": "The notes do not prescribe percentages but emphasize role clarity and flex discipline. Confirm giveaway size, timing, and whether additional lenders may receive greater economics, and reserve flex if economics diverge from precedent.",
+    "background": "“Giveaway” describes how much of the underwritten allocation the leads may place with additional lenders post-signing and the minimum economics that must be offered. The commitment papers should define the number of “handed” tickets, any sponsor-favored allocations, and a floor on economics to preserve parity; market flex should allow arrangers to adjust if syndication feedback requires."
+  },
+  {
+    "row": 5,
+    "term": "Disqualified Institutions",
+    "template_fields": "* List can be updated after signing if agreed by arrangers and after closing if agreed by agent * Note if competitors not required to be identified in writing * List any atypical carveouts [e.g. debt fund carveout applies to both financial institutions and competitive prongs, instead of just competitors]",
+    "analysis_guidelines": "Outline DQ list update timing and specifics of whether DQ list can be updated after signing and pre-closing/post-closing; whether competitors must be identified in writing, and whether debt fund carveouts apply to competitive prongs.",
+    "background": "Disqualified Institutions provisions prevent assignments or participations to named competitors and other barred institutions. The agent should be able to share the DQ list with prospective assignees and participants; updates typically can be made pre-closing and sometimes post-closing. Where sponsors ask for debt fund affiliate carveouts, make clear whether “competitor” prongs apply to debt funds and how updates operate."
+  },
+  {
+    "row": 6,
+    "term": "Information",
+    "template_fields": "* Information limited to “factual” information * Note if third party memos or reports are carved out of info rep * Supplementation of information cures all breaches",
+    "analysis_guidelines": "The notes stress confidentiality and survival of information representations. Clarify that supplementation cures breaches during negotiated post-closing assistance and ensure no obligation to disclose to market data collectors.",
+    "background": "The information covenant and related reps govern what the borrower must provide for syndication and diligence. The commitment letter materials emphasize survival for a negotiated post-closing period and confidentiality, and they expressly disallow required disclosure to market data aggregators. “Specified Information” for bridges should meet Rule 144A marketing needs, with commercially reasonable efforts for auditor comfort letters."
+  },
+  {
+    "row": 7,
+    "term": "Other advisory roles",
+    "template_fields": "Is [•] acting in additional capacities in this transaction (i.e. buy-/sell- side advisor or staple financing provider)?",
+    "analysis_guidelines": "Confirm engagement letter scope and bank roles on the bond component; flag deal-away economics and exclusive rights consistent with the notes’ engagement letter guidance.",
+    "background": "Clarify which banks hold roles on both bank and bond products, and whether any “staple” provider roles exist. Sources underscore aligning engagement-letter exclusivities, rights of first refusal, and alternate transaction fees with the commitment package to avoid conflicts if the take-out securities change."
+  },
+  {
+    "row": 8,
+    "term": "Expense Reimbursement",
+    "template_fields": "[Cap on costs/expenses of Commitment Parties of $[ ]] [Expenses only covered to the extent the closing date occurs]",
+    "analysis_guidelines": "Fees must be paid at closing and may be netted against proceeds; expenses must be invoiced at least three business days prior to closing, consistent with the notes.",
+    "background": "Expense provisions obligate the borrower to reimburse the arrangers’ out-of-pocket costs and fund upfront fees at closing. The sources note standard practice of allowing netting of fees against proceeds and requiring invoices a few business days pre-close so that cash flows can be planned without delaying funding."
+  },
+  {
+    "row": 9,
+    "term": "Countersign date",
+    "template_fields": "[•] days from the date of the Commitment Letter",
+    "analysis_guidelines": "The notes do not fix this period. Align countersign timing with the assumed 120-day outside date and underwriting calendar; confirm in the sponsor grid.",
+    "background": "The countersign date sets how long the borrower has to accept the commitment. Source guidance is to align the acceptance window with the M&A outside date plus a short cushion and with the intended marketing timeline; bid-stage drafts often leave brackets to be finalized once the outside date and marketing period are settled."
+  },
+  {
+    "row": 10,
+    "term": "Termination of commitments",
+    "template_fields": "Sponsor may terminate commitments [in part] / [in whole] on a non-ratable basis [across the facilities]",
+    "analysis_guidelines": "The notes explain automatic termination where acquisition closes without use of facilities or the purchase agreement terminates. If sponsor seeks non-ratable termination across facilities, clarify lender economics and syndication implications.",
+    "background": "Commitment termination typically occurs automatically if the acquisition closes without drawing the facility, the acquisition agreement is terminated, or the outside date elapses. If the sponsor wants the ability to terminate selectively across facilities, the sources recommend addressing allocation economics and any bridge conversion protections to ensure lenders are not disadvantaged by piecemeal termination."
+  },
+  {
+    "row": 11,
+    "term": "Outside Date",
+    "template_fields": "[•] days after the termination date set forth in the Acquisition Agreement [or earlier termination of the Acquisition Agreement]",
+    "analysis_guidelines": "Adopt the five business day cushion to the acquisition agreement outside date; the grid assumes 120 days. Confirm custom length and any extensions per acquisition agreement.",
+    "background": "The “Outside Date” in the commitment letter should track the acquisition agreement’s termination date as of signing, typically with a five business day cushion, per the materials. This keeps commitment availability coterminous with the M&A timeline and avoids having to renegotiate if the seller grants extensions within the acquisition agreement framework."
+  },
+  {
+    "row": 12,
+    "term": "Minimum equity contribution",
+    "template_fields": "* [•]%, with [no] requirement that sponsor holds a majority * [Can be common/qualified preferred/preferred acceptable to the Lead Arranger] * [Note any unusual exclusions to the denominator in this calculation]",
+    "analysis_guidelines": "Notes anchor 50% contribution, permit preferred or other equity, and exclude revolver proceeds used for WC, PPA adjustments, and transaction costs from denominator. Align with Ironman-style treatment.",
+    "background": "Minimum equity dictates the sponsor cash at risk and calibrates leverage. The sources show formulations that include preferred or similar qualifying equity, exclude revolver used for working capital, purchase price adjustments and fees from the total sources “denominator,” and measure at closing on a pro forma basis. This aligns with market “Ironman” style formulations to avoid artificially inflating debt."
+  },
+  {
+    "row": 13,
+    "term": "Closing Date Refinancing",
+    "template_fields": "* Does not include refinancing of existing debt * [List debt and confirm this is the only existing debt]",
+    "analysis_guidelines": "Not all target debt must be refinanced. Ensure repayment or arrangements satisfactory to the lead arrangers, release liens, terminate commitments, and roll/backstop/cash collateralize letters of credit as noted.",
+    "background": "“Refinancing” covers paying off or otherwise addressing specified target debt at or concurrent with closing. Per the sources, acceptable approaches include payoffs with lien releases, termination of commitments, rollovers where permitted, and for outstanding LCs, replacement, back-to-back support, or cash collateralization to satisfy arrangers’ comfort on contingent liabilities."
+  },
+  {
+    "row": 14,
+    "term": "Term Sheet",
+    "template_fields": "**Term Sheet**",
+    "background": "The bank term sheet encapsulates the operative terms that will be “hardwired” into definitive documentation subject to documentation precedent and flex. The source materials emphasize that many specifics—financial definitions, negative covenant baskets, incremental limits—are incorporated by reference to precedent and are then adjusted by flex in the fee letter."
+  },
+  {
+    "row": 15,
+    "term": "Revolver closing date draws",
+    "template_fields": "Permitted (i) to replace, backstop or cash collateralize LCs, (ii) to finance a portion of the transactions [(no cap)][cap of $[•]mm], (iii) for working capital [(no cap)] and (iv) to fund OID/upfront fees",
+    "analysis_guidelines": "The notes support closing-date draws to fund fees/OID, working capital, and backstop/cash collateralize LCs. Confirm any dollar caps consistent with marketing flexibility.",
+    "background": "Closing-date revolver availability may be used to fund upfront fees/OID arising from flex, working capital, and letter of credit backstops. The sources acknowledge this common practice under Sungard conditionality and recommend capping general corporate draws at an agreed amount to protect marketing while preserving closing liquidity."
+  },
+  {
+    "row": 16,
+    "term": "Revolver – borrowing notices",
+    "template_fields": "[To the extent specified, confirm clients have sufficient notice for revolving borrowings]`",
+    "analysis_guidelines": "Confirm operational notice periods to avoid liquidity friction; the notes emphasize closing readiness rather than prescribing specific business days.",
+    "background": "Borrowing notice timing governs how quickly the borrower can access cash. The materials counsel setting practical notice periods that match agent operations and closing-day funding needs without creating conditions beyond Sungard, so liquidity is not impeded by administrative timing traps."
+  },
+  {
+    "row": 17,
+    "term": "Revolver – additional borrowers",
+    "template_fields": "[Not subject to KYC requirements]",
+    "analysis_guidelines": "The notes caution that additional borrowers often require KYC and jurisdictional constraints. Align borrower-addition flexibility with agent requirements and tax structuring needs.",
+    "background": "Adding revolving borrowers implicates KYC, sanctions, and tax withholdings. The sources recommend preserving agent discretion to approve additional borrowers, including foreign obligors, to ensure compliance and operational readiness, and to avoid inadvertently expanding LC or swingline exposure into jurisdictions the agent cannot support."
+  },
+  {
+    "row": 18,
+    "term": "Revolver currencies",
+    "template_fields": "Available in [specify any non-USD currencies]",
+    "analysis_guidelines": "Flag any non-USD currencies for revolver or swingline per notes; confirm multi-currency operational capabilities.",
+    "background": "Where multi-currency borrowing is contemplated, the agent must confirm currency processing, LC issuance capability, and hedging impacts. The materials emphasize upfront clarity on allowed currencies and related sublimits to prevent gaps in operations and avoid later changes that could become sacred rights."
+  },
+  {
+    "row": 19,
+    "term": "Swingline",
+    "template_fields": "* $[•]mm * Can [•] provide swingline or same-day ABR borrowings?",
+    "analysis_guidelines": "Agents may prefer same-day base rate loans rather than swingline. Identify currency availability and agent willingness consistent with notes.",
+    "background": "Swingline facilities provide intraday liquidity, usually in the base currency. The sources note some agents prefer to rely on same-day base rate advances in lieu of a formal swingline; if a swingline is included, define the cap, currency scope, and participation mechanics to align with agent capacity and LC arrangements."
+  },
+  {
+    "row": 20,
+    "term": "LCs",
+    "template_fields": "* $[•] sublimit * No requirement to share pro rata * Available in [specify any non-USD currencies] * Can be standby [or trade] LCs",
+    "analysis_guidelines": "Non-pro rata LC sharing and non-USD availability may be contemplated. Clarify standby versus trade LCs and sublimits consistent with precedent.",
+    "background": "Letter of credit mechanics include a fronting bank sublimit, the allocation of LC exposure across revolver lenders, and currency and product scope (standby vs. commercial). The sources note some precedents use non-pro rata sharing constructs; ensure the LC waterfall, reimbursements, and cash collateralization provisions match agent practice."
+  },
+  {
+    "row": 21,
+    "term": "[DDTL – availability period]",
+    "template_fields": "Can be standby [or trade] LCs",
+    "analysis_guidelines": "Specify DDTL commitment period; each DDTL lender should have consent rights to extend. Ensure amendment provisions respect DDTL lender-specific consents.",
+    "background": "DDTLs provide committed delayed term capacity for acquisitions or capex. Per the materials, define the outside date for takedowns, require DDTL-specific lender consent for any extension of commitments, and ensure amendment sections do not subsume DDTL consents into general revolver consent mechanics."
+  },
+  {
+    "row": 22,
+    "term": "[DDTL – conditions to draw]",
+    "template_fields": "* Pro forma compliance with [•]x (subject to LCT) * No Default / EoD (subject to LCT) * Accuracy of reps (subject to LCT) * [•] BDs prior notice",
+    "analysis_guidelines": "Conditions should include payment of accrued DDTL fees, bring-down of reps, no default, and leverage testing without netting DDTL proceeds. Consider minimum draw sizes and maximum number of draws.",
+    "background": "DDTL draws typically require no default, bring-down of reps, payment of ticking/commitment fees, and satisfaction of any leverage tests measured without netting the very proceeds being drawn. The sources recommend setting minimum draw amounts and a cap on draw frequency to streamline administration and protect syndication."
+  },
+  {
+    "row": 23,
+    "term": "[DDTL – use of proceeds]",
+    "template_fields": "* [•] * [Can be used to replenish cash used for [•] within [•] days]",
+    "analysis_guidelines": "Limit to specified acquisitions or general corporate purposes if agreed; the notes highlight that GCP includes restricted payments and restricted debt payments—confirm sponsor’s intent and lender flex.",
+    "background": "Use-of-proceeds for DDTLs should be tailored. Where limited to identified acquisitions, the sources advise tying the covenant to permitted acquisitions or LCT mechanics; if “general corporate purposes” is used, note that sources treat GCP as including RPs and RDPs, which may require flex or ratio gating to preserve credit."
+  },
+  {
+    "row": 24,
+    "term": "Incremental Amount – freebie",
+    "template_fields": "Greater of $[•] and [1]x LTM EBITDA[; shared with Second Lien] [plus unused amounts under the General Debt Basket [and the Available Amount]]",
+    "analysis_guidelines": "Notes define “free and clear” as the the starter component of Incremental capacity – sometimes a fixed dollar amount or a grower (greater of 100% EBITDA at closing and 100% LTM EBITDA), often shared across first/second lien; reserve flex to reduce to 75% and to remove grower prongs or unused general debt components.",
+    "background": "The “free and clear” incremental is unconditioned capacity, typically the greater of a fixed dollar amount tied to closing EBITDA and a grower based on current LTM EBITDA. Sources show sponsors sometimes add unused general debt reallocation; lenders typically flex to 75% of EBITDA and remove reallocation to limit debt creep without ratio compliance."
+  },
+  {
+    "row": 25,
+    "term": "Incremental Amount – prepayments",
+    "template_fields": "* All voluntary prepayments of [first lien [and second lien]] term loans with [no] exclusion for prepayments from debt proceeds * [Permits uptiering of junior debt prepayments] * Includes debt buybacks and yank-a-bank provisions * [Credit for face value of debt retired]",
+    "analysis_guidelines": "Credit voluntary prepayments, including buybacks counted at cash paid rather than par. Clarify whether junior debt prepayments qualify and whether yank-a-bank credits apply at face or cash value.",
+    "background": "The “prepayment” component increases incremental capacity by prior deleveraging. Sources counsel counting only voluntary prepayments of pari first-lien debt, not mandatory sweeps or refinancings with long-term debt; discounted buybacks should credit only cash paid. Prepayment of junior or unsecured debt typically should not build first-lien incremental capacity."
+  },
+  {
+    "row": 26,
+    "term": "Incremental Amount – ratio",
+    "template_fields": "* First Lien: [•]x or [•]x ICR * Second Lien: [•]x or [•]x ICR * Unsecured: [•]x or [•]x ICR * [Ratios include no worse prongs [not limited to acquisitions]]",
+    "analysis_guidelines": "Align ratio prongs with incremental capacity; scrutinize “no worse” formulations and interest coverage prongs. Flex to reduce leverage tests and add MFN to pari passu ratio loans.",
+    "background": "Ratio-based incremental capacity allows unlimited debt subject to passing leverage or coverage tests appropriate to seniority: first-lien leverage for pari secured, total secured for junior liens, and total leverage or coverage for unsecured. The sources warn that “no worse” prongs are generous and often flexed out or limited to acquisition uses."
+  },
+  {
+    "row": 27,
+    "term": "Incremental DDTLs",
+    "template_fields": "Ratio can be tested either at commitment establishment [(with no need to deem such amounts fully drawn thereafter)] or at draw date]",
+    "analysis_guidelines": "Permit ratio testing at commitment establishment or at draw; the notes caution against netting proceeds and support operational clarity for DDTL allocator lenders.",
+    "background": "For incremental DDTLs, ratio compliance may be tested when the incremental commitment is established or at each draw. The sources caution to prohibit netting the proceeds of the incremental when testing and to define fungibility and WAL/M so post-draw terms comply with inside-maturity and MFN parameters."
+  },
+  {
+    "row": 28,
+    "term": "Incremental – racking and stacking",
+    "template_fields": "Starter, prepayment and ratio prongs can be used in any order, and freebie and prepayment prongs can be ignored in running ratio tests [(not required to be concurrent incurrences)]",
+    "analysis_guidelines": "Starter, prepayment, and ratio prongs may be used in any order and not concurrently; reserve flex to restrict reclassification if needed.",
+    "background": "Borrowers may “rack and stack” incremental capacity by sequencing free-and-clear, prepayment, and ratio prongs. Sources describe automatic or elective reclassification from fixed/prong baskets into ratio capacity as it becomes available; lenders often seek to restrict simultaneous incurrence across prongs and to limit redesignation if it undermines underwriting assumptions."
+  },
+  {
+    "row": 29,
+    "term": "Incremental – RCF sub-limit",
+    "template_fields": "* RCF incremental increases subject to a cap of greater of $[•] and [1]x LTM EBITDA * [Where there is a super senior RCF, always note whether there is an incremental cap and whether increases to that cap is a sacred right]",
+    "analysis_guidelines": "Super-senior RCF increases often have a distinct cap; confirm whether increases to that cap are a sacred right and align with inside maturity constraints.",
+    "background": "Many precedents cap incremental super-senior revolver upsizes differently than term loans. Changes to super-senior caps or revolver economics may be treated as sacred rights, and any revolver incremental should be tested assuming full drawing to prevent artificial headroom."
+  },
+  {
+    "row": 30,
+    "term": "Incremental – reclassification",
+    "template_fields": "Able to redesignate starter and prepayment prongs to the ratio prong [(automatic redesignation)]",
+    "analysis_guidelines": "Permit redesignation of starter and prepayment to ratio prong; consider automatic versus elective reclassification per notes and precedent.",
+    "background": "Reclassification provisions let debt first incurred under fixed baskets be deemed incurred under ratio tests once capacity exists, restoring the fixed basket. The sources include automatic reclassification formulations and note borrowers sometimes electively reclassify; lenders monitor this to avoid stealth capacity expansion."
+  },
+  {
+    "row": 31,
+    "term": "Incremental – netting",
+    "template_fields": "[Funded amounts are not netted, except to the extent (i) replacing balance sheet cash used to finance a previous Permitted Acquisition or (ii) to finance a pending Permitted Acquisition]",
+    "analysis_guidelines": "Do not net funded amounts except to replace balance sheet cash used for prior permitted acquisitions or to fund pending acquisitions—per notes’ conservative treatment. Has generally expanded to permit cash netting subject to a cap.",
+    "background": "Cash netting in leverage tests should be limited to truly unrestricted cash and should not include the very proceeds of the incremental. The sources flag sponsor attempts to net proceeds unless earmarked for working capital; best practice is to bar netting incremental proceeds to prevent headroom inflation."
+  },
+  {
+    "row": 32,
+    "term": "Incremental – terms",
+    "template_fields": "* Default blocker: [describe] * [No requirement for terms to be no more favorable] / [Terms MFN included] * [No requirement for prepayments to be applied on a pro rata (or less than pro rata) basis] * [May be secured by non-collateral and incurred by non-guarantors]",
+    "analysis_guidelines": "The notes encourage MFN for pari passu USD term loans, caution against more favorable terms, and flag whether prepayments must be pro rata. Confirm intercreditor alignment and maturity/weighted average life constraints.",
+    "background": "Incremental debt must share collateral and guarantors and not be effectively senior. Sources stress MFN “all-in yield” protection for pari term loans, scope to USD pari loans, and limits on earlier maturities (inside maturity baskets) and WAL/M, plus alignment with intercreditor terms to avoid silent seniority."
+  },
+  {
+    "row": 33,
+    "term": "Incremental – inside maturity basket",
+    "template_fields": "Exception to WAL/M requirements for (i) amounts less than the greater of $[•] and [•]% of LTM EBITDA, (ii) customary bridge facilities and (iii) escrowed amounts",
+    "analysis_guidelines": "Permit limited exceptions for small amounts, customary bridge facilities, and escrowed amounts; avoid maturity inversion relative to initial term loans.",
+    "background": "“Inside maturity” capacity allows a small amount of earlier-maturing debt despite the general rule against effective seniority via maturity. The sources show lenders flex to reduce or remove this basket to preserve maturity parity and to limit abuse in refinancings and extensions."
+  },
+  {
+    "row": 34,
+    "term": "Incremental – MFN",
+    "template_fields": "* [•] bps [yield] / [rate] * Only applies to [ratio-based incurrence] [note any limitations by type/priority] * Trigger of the greater of $[•] and [•]% of LTM EBITDA * Only applies to the extent the loans mature within [•] year(s) of initial term loans * Does not apply to Permitted Acquisitions or other similar investments * [Note any other unusual carveouts or limitations]",
+    "analysis_guidelines": "Adopt a 50 bps MFN cushion; consider sunsets (12–36 months) or “for life.” Scrutinize carveouts by prong, maturity, acquisition use, currency, and syndicated versus direct.",
+    "background": "MFN provisions protect existing term lenders against higher-priced pari incrementals by adjusting margins/yield on the original tranche. The materials reflect common 50 bps cushions, negotiated sunsets, and carveouts (e.g., non-USD, non-syndicated, different maturities), many of which are flex targets to tighten."
+  },
+  {
+    "row": 35,
+    "term": "Incremental – ROFR",
+    "template_fields": "[No ROFR/ROFO for existing lenders. Would you like to include a ROFR or ROFO?]",
+    "analysis_guidelines": "Private/direct lender transactions sometimes include ROFR; confirm whether included and the mechanics; confirm if any carveouts apply for",
+    "background": "In private deals, incumbent lenders may have a right of first refusal on incremental facilities to avoid dilution of their vote and economics. The sources observe ROFRs are atypical in syndicated facilities but may appear in direct deals."
+  },
+  {
+    "row": 36,
+    "term": "Incremental Equivalent Debt",
+    "template_fields": "[Note any additional issues different from the incremental facility. Issues should generally be the same and need not be separately set forth]",
+    "analysis_guidelines": "Ensure restrictions match incremental facility: non-guarantor/asset scope, maturity and WAL/M limits, and MFN if incurred pari passu outside the credit agreement.",
+    "background": "“Incremental equivalent debt” lets borrowers incur pari debt outside the credit agreement subject to the same quantum and tests as incremental facilities. Source guidance is to port terms parity, collateral/guarantor scope, inside maturity/WAL, and MFN yield protection to such external instruments to avoid circumvention."
+  },
+  {
+    "row": 37,
+    "term": "Refinancing Facilities – Inside Maturity",
+    "template_fields": "Subject to the Inside Maturity Basket",
+    "analysis_guidelines": "Apply inside maturity basket; refinancing facilities should not mature earlier or have shorter WAL/M than the initial facility to avoid seniority inversion.",
+    "background": "Refinancing facilities replace existing loans without increasing leverage, so MFN does not apply; however, sources caution against earlier maturities or shorter weighted average life that would create effective seniority, subject only to the limited inside maturity basket."
+  },
+  {
+    "row": 38,
+    "term": "Refinancing Facilities – Terms",
+    "template_fields": "* Not required to have the same guarantee/collateral as the refinanced loans * No terms MFN (can be market terms)",
+    "analysis_guidelines": "MFN does not apply to refinancing facilities; terms may be market without identical guarantee/collateral to refinanced loans, per notes.",
+    "background": "Refinancing debt may vary in pricing and minor terms but should not expand guarantor or collateral packages beyond the loans being refinanced. Per the materials, MFN protection is a leverage guard and thus inapplicable to pure refis; ensure lien/guarantor scope is consistent to avoid priority drift."
+  },
+  {
+    "row": 39,
+    "term": "Collateral and Guarantors",
+    "template_fields": "* Note any unusual aspects of collateral/guaranty structure * Will there be DACAs? * Note any exceptions for DACAs * May be noted as ‘Under Review’ in the initial issues list as diligence is ongoing",
+    "analysis_guidelines": "Under “Sungard,” require borrower/holdings stock pledges at closing and if any carveouts are included; UCCs are baseline. Consider IP filings for material portfolios, post-closing foreign collateral, and whether DACAs are required initially or post-closing.",
+    "background": "Collateral/guarantee scope should be “all assets” of U.S. loan parties with standard exceptions. Sources emphasize Sungard conditionality: UCC filings and stock certificates of borrower (and sometimes subs if readily deliverable) at close; other perfection steps (e.g., account control, mortgages, USPTO filings, foreign assets) move to post-closing covenants unless essential to the credit."
+  },
+  {
+    "row": 40,
+    "term": "Collateral/Guarantor release – Chewy",
+    "template_fields": "* [Included; describe formulation] / [Not included] * Release [is] / [is not] automatic * [Can]/[Cannot] remain guarantor under other debt",
+    "analysis_guidelines": "If included, specify whether release is automatic upon qualifying events; specify each of the qualifying events; specify whether entities can remain guarantors under other debt.",
+    "background": "“Chewy” protection limits the ability to release subsidiary guarantees because a subsidiary ceases to be wholly owned or due to internal reorganizations. The materials show many market forms include criteria that block automatic releases absent continued subsidiary status or unless not primarily for release purposes; specifying these mechanics prevents guarantee shedding in LMEs."
+  },
+  {
+    "row": 41,
+    "term": "Asset Sale Sweep - Coverage",
+    "template_fields": "* [Covers asset sales [of collateral] by the loan parties only [and excludes Holdings]] * [Note whether it is restricted to specified baskets]",
+    "analysis_guidelines": "Clarify whether asset sale sweeps cover all assets; all collateral or loan-party collateral only and whether holdings sales are excluded. Example: “100% of net cash proceeds of certain material non-ordinary course dispositions and casualty/condemnation, by the Borrower and its Restricted Subs”",
+    "background": "The asset sale prepayment applies to net cash proceeds from non-ordinary-course dispositions, usually of loan-party collateral. The sources outline customary netting (taxes, costs), reinvestment rights, and thresholds, and caution that if stepdowns allow significant retention of proceeds, those amounts can feed the builder basket and increase leakage."
+  },
+  {
+    "row": 42,
+    "term": "Asset Sale Sweep - Threshold",
+    "template_fields": "$[•] per FY and [•] per transaction, with growers[, and prepayment only required to the extent in excess thereof]",
+    "analysis_guidelines": "Include annual and per-transaction thresholds with EBITDA growers; prepayment occurs only to the extent proceeds exceed thresholds.",
+    "background": "Minimum thresholds avoid de minimis prepayments; they are often set as the greater of a fixed dollar amount and a percentage of EBITDA. The sources recommend pairing thresholds with cumulative cash-consideration requirements in the dispositions covenant and maintaining full sweeps absent negotiated leverage-based stepdowns."
+  },
+  {
+    "row": 43,
+    "term": "Asset Sale Sweep – Reinvestment",
+    "template_fields": "[•] months with a [•] month extension[, and applies to previously consummated acquisitions/investments]",
+    "analysis_guidelines": "Adopt 15–18 months reinvestment periods with possible extension; tie to previously consummated acquisitions/investments where applicable.",
+    "background": "Reinvestment rights let borrowers use proceeds for assets useful in the business within 12–18 months, often with an additional 6 months if committed within the initial period. The sources advise defining what counts as “useful assets” and whether reinvestment can include permitted acquisitions or capex, to avoid leakage into unrestricted subsidiaries."
+  },
+  {
+    "row": 44,
+    "term": "Asset Sale Sweep – Stepdowns",
+    "template_fields": "Steps down to 50% and 0% at [•]x and [•]x, respectively",
+    "analysis_guidelines": "Step-downs to 50% and 0% based on leverage are increasingly aggressive; the notes recommend flex to remove or modify step-downs.",
+    "background": "Leverage-based stepdowns reduce the sweep as leverage declines, but the materials caution that these can enable retention of proceeds that then build the builder basket, exacerbating leakage. Lenders typically flex toward 100% sweep and shorter reinvestment periods to preserve deleveraging."
+  },
+  {
+    "row": 45,
+    "term": "ECF Sweep – Holiday",
+    "template_fields": "Commences with [•] after closing",
+    "analysis_guidelines": "Begin with the first full fiscal year after closing; confirm whether the holiday defers the initial sweep period consistent with syndication expectations.",
+    "background": "Excess Cash Flow sweeps generally commence with the first full fiscal year after closing, creating a “holiday” from partial-period calculations. The sources emphasize that under modern formulations, ECF can be small due to deductions or dollar-for-dollar credits, so start date and definition mechanics materially impact deleveraging and builder basket growth."
+  },
+  {
+    "row": 46,
+    "term": "ECF Sweep – Percentages",
+    "template_fields": "[50]%, stepping down to [25]% and [0]% at [•]x and [•]x",
+    "analysis_guidelines": "A 50% sweep stepping to 25% and 0% at specified leverage is common; consider conservative flex to 75% initial sweep and tighter step-down triggers per notes.",
+    "background": "Standard ECF sweeps are 50%, stepping to 25% and then 0% upon achieving leverage targets. Per the materials, lenders often flex up to 75% initial sweep in riskier transactions and tighten or remove stepdowns; ensure any ECF credits apply in the prepayment section or the ECF definition consistently."
+  },
+  {
+    "row": 47,
+    "term": "ECF Sweep – Threshold",
+    "template_fields": "$[•] per FY with a grower[, and prepayment only required to the extent in excess thereof]",
+    "analysis_guidelines": "Include annual de minimis thresholds with growers; prepayments only to the extent ECF exceeds the threshold, per notes.",
+    "background": "A de minimis threshold avoids operational churn when ECF is trivial. Sources suggest greater-of fixed dollar and percentage of EBITDA thresholds; amounts under the threshold do not trigger prepayment and do not build retained ECF in the builder basket unless specifically drafted to do so."
+  },
+  {
+    "row": 48,
+    "term": "ECF Sweep – Credits",
+    "template_fields": "* Buybacks (limited to lesser of cash paid and par) * Voluntary prepayments of second lien and incremental/refinancing debt * [No general exclusion for payments that are debt funded] * Note whether the below are deducts in calculating ECF or dollar for dollar credits to ECF prepayment obligation: 1. CapEx 2. Permitted Acquisitions/investments 3. RPs (sometimes only certain RPs) * Includes carryforward to subsequent fiscal year(s) * Pro forma effect is given to after-year end payments",
+    "analysis_guidelines": "Count buybacks at cash paid; clarify whether deductions occur within the ECF definition (traditional) or as dollar-for-dollar credits (aggressive). Allow carryforward of excess credits to subsequent fiscal years.",
+    "background": "Two competing formulations drive outcomes: “traditional” ECF definitions deduct uses like capex and investments from ECF, while “aggressive” formulations reduce the ECF prepayment amount dollar-for-dollar after ECF is computed. The sources show the latter both lowers prepayments and increases builder basket build from retained ECF; lenders prefer counting loan buybacks at cash cost and carefully circumscribing credits."
+  },
+  {
+    "row": 49,
+    "term": "Documentation Precedent",
+    "template_fields": "[•], and can be no worse than existing target credit facilities [Carefully review target facility for any unusual EBITDA addbacks and covenant capacity. Where aggressive terms are included by way of reference to “otherwise consistent with Doc Principles” be sure to call out such aggressive terms]",
+    "analysis_guidelines": "Definitive documentation “otherwise” follows precedent. The issues list should note omissions relative to precedent, additions beyond precedent, and flex directions where precedent is more or less favorable, per notes.",
+    "background": "Documentation precedent is the baseline source for definitions and covenants. The materials direct counsel to benchmark every term against the precedent, flag divergences, and ensure flex provisions in the fee letter allow movement toward lender-favorable positions if syndication requires."
+  },
+  {
+    "row": 50,
+    "term": "Pro Forma Calculations",
+    "template_fields": "[Note whether calculations can be based off internally prepared financials]",
+    "analysis_guidelines": "Pro formas are borrower-prepared; for bridges, ensure Reg S-X compliant financials and offering-document readiness. Pro formas can delay marketing commencement, which may be desirable in underwriting.",
+    "background": "Pro forma financials show the financing and acquisition effects for leverage and coverage tests. Sources state internally prepared pro formas suffice for bank facilities, but bridge take-outs need Rule 144A-level marketing information and auditor comfort; marketing periods typically begin only once “Required Information” is deliverable."
+  },
+  {
+    "row": 51,
+    "term": "Reps and Warranties",
+    "template_fields": "[Note any client specific or industry specific issues. OK to remove]",
+    "analysis_guidelines": "Include solvency covering borrower and all subsidiaries; consider historical financials with knowledge qualifiers if target was under different ownership, and align with precedent lists of reps.",
+    "background": "Representations in commitment papers are limited by Sungard to “Specified Representations” plus “Specified Acquisition Agreement Representations.” The sources list common Specified Reps (existence, power, enforceability, solvency, margin regs, Investment Company Act, PATRIOT Act, OFAC/FCPA use-of-proceeds, creation/perfection). Historical target financial reps may be knowledge-qualified where the buyer did not control the target pre-close."
+  },
+  {
+    "row": 52,
+    "term": "Financial Statements – quarterly",
+    "template_fields": "Within [•] days of FQ end ([•] days for the first [•] FQs). [Only required for first 3 FQ of each FY.]",
+    "analysis_guidelines": "Quarterly unaudited statements and compliance certificates should be delivered; extended delivery windows may apply post-closing for initial periods.",
+    "background": "Affirmative covenants require delivery of quarterly unaudited financials and certificates within customary timeframes, with longer periods for the first post-closing quarters. This supports maintenance of lender information rights and any maintenance covenant administration."
+  },
+  {
+    "row": 53,
+    "term": "Financial Statements – monthly",
+    "template_fields": "[Note any client specific requirements. Unlikely to be offered up in initial drafts. For small cap and tougher deals, ask if board observer or board packs are to be required.]",
+    "analysis_guidelines": "The notes expect monthly reporting only in small-cap or tougher deals and often with board observer requests; confirm client appetite before offering.",
+    "background": "Monthly reporting is uncommon for larger sponsored TLB credits and usually appears only in small-cap or stressed situations. The sources recommend discussing with the client before offering monthly reporting or board observer rights, as both can be sensitive and syndication-dependent."
+  },
+  {
+    "row": 54,
+    "term": "Financial Statements – annual audits",
+    "template_fields": "Within [•] days of FY end ([•] days for the first FY)",
+    "analysis_guidelines": "Annual audited statements are required with customary delivery periods; audit opinions should not include scope qualifications and may include going-concern notes limited as described in the notes.",
+    "background": "Annual audited financials from nationally recognized auditors must be delivered within customary deadlines and without scope qualifications. The materials allow going-concern explanatory language limited to upcoming maturities or covenant compliance (not broad operational concerns), consistent with institutional investor expectations."
+  },
+  {
+    "row": 55,
+    "term": "Financial Statements – going concern",
+    "template_fields": "Audit may include a qualification relating to (x) any impending debt maturity (not limited to these facilities), (y) any actual or prospective default under any financial covenant (not limited to these facilities) or (z) unrestricted subsidiaries. [Note any issue on a ‘qualification’ instead of an ‘explanatory or emphasis of matter’ paragraph]",
+    "analysis_guidelines": "Permit qualifications tied to upcoming maturities, actual/prospective default under any financial covenant, or unrestricted subsidiaries; clarify “qualification” versus “explanatory paragraph” distinctions.",
+    "background": "The sources distinguish disfavored “qualifications” from acceptable explanatory paragraphs related to near-term debt maturities or potential covenant breaches. Drafting should expressly allow the latter to avoid technical defaults from auditor language necessitated by debt profiles, not by business viability."
+  },
+  {
+    "row": 56,
+    "term": "Affirmative Covenants – other",
+    "template_fields": "* No requirement for lender calls or MD&A * No obligation to deliver other information reasonably requested * No requirement to deliver notice of default; limited to notices of EoDs",
+    "analysis_guidelines": "Add quarterly lender calls and MD&A as flex; ratings covenants framed as commercially reasonable efforts. Include notices of defaults, litigation, ERISA events, and use of proceeds.",
+    "background": "Beyond financials, affirmative covenants often include quarterly MD&A and lender calls, commercially reasonable efforts to maintain ratings, and notices of defaults, material litigation, ERISA events, and material adverse changes. The notes position MD&A/calls and ratings as common flex items aligned with syndication practice."
+  },
+  {
+    "row": 57,
+    "term": "Financial Covenant – application",
+    "template_fields": "Covenant applies to [Term Loan facility and] [Revolving Facility [only]]",
+    "analysis_guidelines": "Covenant applies to the revolver only and springs when utilization exceeds agreed thresholds. Term loan default should occur only if the revolver accelerates and terminates commitments, per notes.",
+    "background": "Modern “covenant-lite” structures limit the maintenance covenant to the revolver and only when drawn above a threshold. Per sources, a term loan EoD from financial covenant breach should occur only after revolver acceleration and termination of commitments, preserving TLB norms while protecting the super-senior RCF."
+  },
+  {
+    "row": 58,
+    "term": "Financial Covenant – levels",
+    "template_fields": "* [•]x * [[•]% cushion to sponsor model [assuming the revolver is [•]% drawn]] * [•] stepdowns",
+    "analysis_guidelines": "Set leverage levels with cushions to the sponsor model and step-downs; the notes do not prescribe figures but emphasize “covenant-lite” design and realistic testing cadence.",
+    "background": "Levels are typically a first-lien net leverage cap sized to a cushion (e.g., 35% below model EBITDA, assuming a revolver draw), with calibrations sensitive to cash assumptions and the timing of first test. Sources favor realistic cushions and test commencement in the second full quarter to accommodate post-close integration."
+  },
+  {
+    "row": 59,
+    "term": "Financial Covenant – testing thresholds",
+    "template_fields": "[•]%, excluding [all] / [cash collateralized LCs and other LCs up to $[•]] and excludes [note any other exclusions]",
+    "analysis_guidelines": "Exclusions for cash-collateralized LCs or specific LC amounts may apply. Confirm the utilization percentage that triggers testing and any carveouts per the notes’ framework.",
+    "background": "The springing test is triggered when revolving exposure exceeds a specified percentage of commitments. The materials discuss whether undrawn LCs count, with some precedents excluding cash-collateralized LCs and modest undrawn LC amounts to reflect available liquidity accurately."
+  },
+  {
+    "row": 60,
+    "term": "Financial Covenant – first test date",
+    "template_fields": "[•]",
+    "analysis_guidelines": "Confirm the first test date relative to closing; initial delay can be appropriate to permit operational ramp.",
+    "background": "The first maintenance test typically occurs at the end of the first or second full fiscal quarter following closing, depending on integration needs and cash buffers. Aligning timing to liquidity forecasts avoids avoidable breaches while still providing a guardrail for revolver lenders."
+  },
+  {
+    "row": 61,
+    "term": "Financial Covenant – equity cure",
+    "template_fields": "* Permits deduction of debt actually prepaid, including for the FQ in which the cure is made * May take the form of subordinated or unsecured debt or disqualified equity",
+    "analysis_guidelines": "Equity cure contributions must occur after the quarter and within 10–15 business days of financial statement due date; common equity or acceptable forms only; limit frequency (2 in 4 quarters; 5 total) and apply solely to cure.",
+    "background": "Equity cure mechanics allow a post-period injection of qualifying equity to cure a testing shortfall. The sources note cures are time-limited, capped in frequency, and disregard cure equity for other calculations (e.g., leverage baskets) to prevent double counting; cures should not retroactively reduce debt for the failed period."
+  },
+  {
+    "row": 62,
+    "term": "Leverage Ratio Calculations",
+    "template_fields": "* FLNLR and SNLR only include debt secured by liens on [substantially all] the Collateral [(excludes cap leases, purchase money debt and non-guarantor subs)] * Only debt for borrowed money [and excludes concurrent revolver draws] * Cash netting is [uncapped] and does not specify the exclusion of incurred debt for ratio testing; [counts cash outside DACA accounts] * Debt for ICR purpose excludes [•]",
+    "analysis_guidelines": "Count only debt for borrowed money; consider excluding concurrent revolver draws; uncapped cash netting may apply but confirm treatment of cash in non-DACA accounts and debt incurred for ratio tests.",
+    "background": "The sources define leverage using “Consolidated Debt” that includes borrowed money (and drawn LC reimbursements), less unrestricted cash; restricted cash and pledged cash are excluded except to the securing debt. Proceeds of the very basket being tested may not be netted; sponsors sometimes seek broader cash netting that lenders typically restrict."
+  },
+  {
+    "row": 63,
+    "term": "EBITDA Addbacks",
+    "template_fields": "* Addbacks [are uncapped] for (i) one-time, unusual and non-recurring costs, (ii) restructuring costs and (iii) run rate cost saves ([•] month lookforward, and includes synergies, cost saves, expense reductions, operating improvements) [Note any caps and structure] * [Permits addbacks ‘of the type’ included in QofE / sponsor model] * [Includes revenue synergies or enhancements] * [Uncapped addbacks for pre-opening and ramp-up costs] * [Permits addbacks for new contracts or amended contract rates] * Reg S-X addbacks not limited to pre-2021 amendment language * QofEs not limited to acquisitions and national accounting firm * Capped addbacks permitted as uncapped through QofE * Cash comp items added back * [Check CNI definition for addbacks; highlight in CNI if AA builder is CNI-based]",
+    "analysis_guidelines": "Include cost savings/synergies with look-forward caps (12–24 months) and aggregate caps (e.g., 25–30% of EBITDA). Remove “of the type” QofE language if conservative; distinguish revenue addbacks as more controversial. Clarify which addbacks are capped; clarify if caps are standalone or shared with any other addbacks; *Extraordinary, nonrecurring etc.; Cost savings etc. (implementation/realization period? Which one?); Future QofE (lay out terms); Current QofE and Sponsor Model (“of the type” language); Revenue synergies, pricing etc., pre-opening losses;*",
+    "background": "EBITDA is frequently expanded by addbacks for cost savings, synergies, and other adjustments, often uncapped in aggressive forms. Sources advise capping look-forward periods (12–24 months) and the aggregate addbacks and removing “of the type” QofE language that broadens discretion; revenue adjustments are particularly controversial and should be scrutinized."
+  },
+  {
+    "row": 64,
+    "term": "Negative Covenants – General",
+    "template_fields": "* [All] / [Certain] dollar baskets subject to growers based on [•] * Redesignation of [debt, RPs, liens and investments] is permitted across covenants * Does not include [note any missing covenants, typically passive holdco, amendment to junior debt/org docs, limitation on subsidiary dividend blockers, change in FY, change to line of business] [Transactions with Affiliates is an affirmative covenant rather than a negative covenant]",
+    "analysis_guidelines": "Apply EBITDA growers to dollar baskets; permit redesignation across debt, RPs, liens, and investments; confirm inclusion of line-of-business, junior docs amendments, passive holdco, and fiscal year changes per notes.",
+    "background": "The negative covenants govern debt, liens, RPs, RDPs, investments, asset sales, affiliate transactions, and other restrictions. Sources highlight increased use of EBITDA “growers,” reclassification mechanics among baskets, and the need to include baseline protections such as line-of-business and passive holding company covenants."
+  },
+  {
+    "row": 65,
+    "term": "Negative Covenants – high water mark ratchet",
+    "template_fields": "* [Included]",
+    "analysis_guidelines": "Rare; if included, confirm mechanical ratchet-up of basket sizes with growth metrics; otherwise note omission versus precedent.",
+    "background": "Some agreements include “high-water-mark” ratchets that permanently increase basket sizes as metrics improve. While not in the core materials, if proposed, ensure the trigger methodology is clear and constrained to avoid runaway capacity increases inconsistent with underwriting."
+  },
+  {
+    "row": 66,
+    "term": "Negative Covenants – carryforward/carryback",
+    "template_fields": "[Included]",
+    "analysis_guidelines": "Where included, explain carryforward of unused cap space and carryback mechanics for specified baskets; confirm against precedent since notes do not detail.",
+    "background": "Carryforward/carryback allows unused amounts in annual baskets (e.g., employee stock repurchases) to be used in future or prior periods, often with caps. The materials do not prescribe, so tie to precedent sizing and ensure usage does not multiply capacity across categories inadvertently."
+  },
+  {
+    "row": 67,
+    "term": "Unrestricted Subsidiaries - generally",
+    "template_fields": "* Designation of unrestricted subsidiaries subject to no EoD * No separate ratio/pro forma compliance test * No prohibition on material IP * No restriction on UnSub being creditor of restricted group members or owning equity of restricted group members * No restriction on restricted group guaranteeing UnSub debt or pledging assets to secure UnSub debt * No EBITDA or assets cap on UnSubs No requirement to be an UnSub under 2L or other debt",
+    "analysis_guidelines": "Detail all designation requirements Notes: avoid unrestricted subs as creditors of restricted group, ownership of restricted equity, and unlimited designation where material IP exists—tie to J. Crew protections.",
+    "background": "Unrestricted subsidiaries sit outside covenants and permit structural leakage. Sources emphasize blocking unsubs from owning debt or liens on restricted group assets (double-dip risk), restricting designations to prevent moving “crown jewel” IP out, and conditioning designations on no default and investment capacity."
+  },
+  {
+    "row": 68,
+    "term": "Negative Covenants – Unrestricted Subsidiaries – Envision",
+    "template_fields": "* [Not included] [Included; describe formulation]",
+    "analysis_guidelines": "Clarify if Envision protection included – Envision protection caps usage of investment baskets to transfer assets to unsubs/non-guarantors – clarify any carveouts",
+    "background": "“Envision” style protections cap usage of investment baskets to transfer assets to unsubs and/or non-guarantors, often limiting unsub investments to a single basket with fixed caps. The sources recommend this targeted restriction to prevent two-step “trap door” transfers that convert non-loan party investment capacity into unrestricted subsidiary leakage."
+  },
+  {
+    "row": 69,
+    "term": "Negative Covenants – J Crew protection",
+    "template_fields": "[Not included] / [Included; describe formulation, including whether it applies only to material IP or other key assets]",
+    "analysis_guidelines": "Clarify if included is a negative covenant barring designation or transfer of material IP/crown jewels to unrestricted subs and prohibiting designations where such assets would remain.",
+    "background": "“J.Crew” protections prevent transfers of material IP and other core assets to unrestricted subsidiaries and block designations of entities holding such assets. The sources provide sample blocker concepts and warn of weaknesses if limited only to “permitted investments” or only to loan parties."
+  },
+  {
+    "row": 70,
+    "term": "Negative Covenants – Pluralsight protection",
+    "template_fields": "[Included] / [Limited to UnSubs]",
+    "analysis_guidelines": "Include limitations on unrestricted subs where relevant; the notes suggest protections can be limited to unrestricted subs depending on asset profile.",
+    "background": "“Pluralsight” style provisions refine J.Crew blockers by restricting the avenues—RPs, investments, or otherwise—through which material assets can reach unsubs. The materials suggest tailoring to the asset base to limit overbreadth while neutralizing typical LME paths."
+  },
+  {
+    "row": 71,
+    "term": "Negative Covenants – double dip",
+    "template_fields": "* [Includes a double dip blocker] [Requires that intercompany debt owed to non-Loan Parties (including guarantees thereof) [and unrestricted subsidiaries] is subordinated]",
+    "analysis_guidelines": "Clarify if subordination of intercompany debt owed to non-loan parties and unrestricted subs is required. This prevents double recovery on the same asset pool.",
+    "background": "Double-dip and pari-plus structures use non-loan party claims and guarantees to create overlapping recoveries. The sources recommend prohibiting unsubs from holding restricted group debt or liens and subordinating intercompany debt owed to non-loan parties, limiting the ability to manufacture senior claims against the same collateral box."
+  },
+  {
+    "row": 72,
+    "term": "Negative Covenants - Indebtedness",
+    "template_fields": " *Negative Covenants - Indebtedness**",
+    "analysis_guidelines": "List all debt baskets",
+    "background": "The indebtedness covenant caps debt incurrences subject to exceptions. Per sources, key baskets include ratio debt aligned with incremental tests, contribution debt, acquisition debt (incurred/assumed), general debt, purchase money/capital lease debt, and structurally senior non-loan party/JV baskets, each with tailored lien carveouts and MFN/maturity constraints for pari secured forms."
+  },
+  {
+    "row": 73,
+    "term": "Negative Covenants – Indebtedness – Ratio Debt – amount",
+    "template_fields": "[Shared starter with incremental debt] [Ratio prongs track incremental]",
+    "analysis_guidelines": "Align ratio debt capacity with incremental ratio prongs; reserve flex for non-guarantor sublimits and MFN application to pari passu USD term loans.",
+    "background": "Ratio debt is unlimited if pro forma tests are satisfied, mirroring incremental ratio tests by seniority. Some deals also let ratio debt use free-and-clear or prepayment components; lenders usually restrict that sharing, cap non-guarantor usage to limit structural seniority, and extend MFN to pari term loans even if incurred outside the credit agreement."
+  },
+  {
+    "row": 74,
+    "term": "Negative Covenants – Indebtedness – Ratio Debt – non-guarantor cap",
+    "template_fields": "Greater of $[•] / [•]% LTM EBITDA [shared with Incurred Acquisition Debt]",
+    "analysis_guidelines": "Clarify ratio level(s); sublimits; no worse prong applicability; Notes: Add a non-guarantor cap as per notes’ flex suggestion to curb structural seniority and leakage into non-guarantor subs.",
+    "background": "Debt at non-loan parties sits structurally senior. The materials recommend a separate cap—expressed as the greater of a dollar figure and a percentage of EBITDA—to limit the build-up of senior debt at non-guarantors or foreign subs and keep overall structural subordination within underwritten tolerances."
+  },
+  {
+    "row": 75,
+    "term": "Negative Covenants – Indebtedness – Ratio Debt – terms",
+    "template_fields": "Does not include [WAL/M, MFN, intercreditor, terms MFN, no greater than ratable prepayments]",
+    "analysis_guidelines": "Impose maturity/WAL/M constraints, MFN for pari passu USD loans, and intercreditor alignment; direct lender deals may extend MFN to pari debt in note form.",
+    "background": "Ratio debt terms should not be more favorable than the initial term loans in ways that create effective seniority. Sources advise parity on collateral and guarantors, inside-maturity/WAL limits, MFN for pari USD term loans (some direct deals extend to pari notes), and ensuring the underlying intercreditor framework remains intact."
+  },
+  {
+    "row": 76,
+    "term": "Negative Covenants – Indebtedness – Contribution Debt",
+    "template_fields": "[•]%[, with no time limit on incurrence] [Can [automatically] be secured]",
+    "analysis_guidelines": "Clarify all elements/requirements; Reduce to 100% and remove liens carveout as a conservative flex per notes; confirm automatic security permissions align with lien baskets.",
+    "background": "Contribution debt allows debt equal to post-closing equity contributions (some aggressive forms allow 2x). The sources recommend reducing to 100% and avoiding a dedicated lien carveout, ensuring any security must fit within general or ratio lien baskets and cannot be used to lever beyond equity inflows."
+  },
+  {
+    "row": 77,
+    "term": "Negative Covenants – Indebtedness – Incurred Acquisition Debt – amount",
+    "template_fields": "See above for Ratio Debt",
+    "analysis_guidelines": "Track ratio debt limits; consider separate starter prong for acquisition financing if proposed; apply same MFN and maturity constraints.",
+    "background": "Debt incurred “in connection with” acquisitions typically follows ratio debt parameters with potential dedicated starter capacity. The sources caution against layering unique free-and-clear amounts for acquisition debt and emphasize applying MFN and inside-maturity/WAL limits commensurate with seniority."
+  },
+  {
+    "row": 78,
+    "term": "Negative Covenants – Indebtedness – Incurred Acquisition Debt – non-guarantor cap",
+    "template_fields": "Greater of $[•] / [•]% LTM EBITDA [shared with Ratio Debt]",
+    "analysis_guidelines": "Apply caps shared with Ratio Debt to limit structural seniority; confirm application across secured/unsecured forms.",
+    "background": "As with general ratio debt, acquisition debt at non-guarantors should be capped to prevent structural priming risk. The materials suggest using the same cap grid as for non-guarantor ratio debt and to apply regardless of secured or unsecured form."
+  },
+  {
+    "row": 79,
+    "term": "Negative Covenants – Indebtedness – Assumed Acquisition Debt",
+    "template_fields": "[Uncapped, with no ratio requirement so long as not incurred in contemplation]",
+    "analysis_guidelines": "Permit assumption of existing target debt not incurred in contemplation of the acquisition without ratio tests; ensure liens are addressed under lien baskets.",
+    "background": "Assumed debt acquired with a target and not incurred “in contemplation” of the acquisition is typically permitted without financial tests. The sources note lien treatment must be separately permitted under the liens covenant (e.g., acquired liens basket) to avoid creating unauthorized secured priming."
+  },
+  {
+    "row": 80,
+    "term": "Negative Covenants – Indebtedness – Securitization Facilities",
+    "template_fields": "Permitted [and uncapped]",
+    "analysis_guidelines": "The notes do not limit securitizations; if permitted and uncapped, confirm asset scope, performance triggers, and interaction with collateral pools.",
+    "background": "Securitization and receivables facilities are often permitted on a limited or unlimited basis. Sources suggest clarifying that they are non-recourse to loan parties (other than customary limited recourse) and that assets pledged are excluded from collateral to prevent cross-lien conflicts and leakage of cash flows needed for term debt."
+  },
+  {
+    "row": 81,
+    "term": "Negative Covenants – Indebtedness – Sale-Leaseback debt",
+    "template_fields": "[•] [Note if uncapped]",
+    "analysis_guidelines": "If uncapped, consider conservative caps; align with disposition and lien covenants to avoid unintended leverage increases.",
+    "background": "Sale-leasebacks can increase effective leverage and should be bounded by dollar caps or tied to asset sale and purchase money frameworks. Sources recommend ensuring any resulting liens or obligations fit within lien baskets and that cash proceeds are subject to the asset sale sweep."
+  },
+  {
+    "row": 82,
+    "term": "Negative Covenants – Indebtedness – General Basket",
+    "template_fields": "Greater of $[•] / [•]% LTM EBITDA [describe any reallocation mechanisms]",
+    "analysis_guidelines": "Size general debt basket with growers; reserve flex to reduce if oversized versus precedent and market generally, per notes.",
+    "background": "The general debt basket is uncircumscribed debt capacity not tied to ratios. Per the materials, it typically grows with EBITDA but should be calibrated against precedent; lenders often flex it down if large relative to EBITDA to avoid meaningful untested leverage."
+  },
+  {
+    "row": 83,
+    "term": "Negative Covenants – Indebtedness – Non-guarantor/foreign subsidiary debt",
+    "template_fields": "$[•][, foreign revolving lines uncapped]",
+    "analysis_guidelines": "Permit foreign revolving lines uncapped only if operationally essential; otherwise introduce caps to limit structural seniority, consistent with notes’ caution on non-guarantor exposure.",
+    "background": "Debt at foreign or other non-loan party subsidiaries can be structurally senior. While operational working capital lines abroad may need flexibility, the sources advise caps and a prohibition on recourse to loan parties (except limited customary recourse) to preserve the underwritten credit perimeter."
+  },
+  {
+    "row": 84,
+    "term": "Other",
+    "template_fields": "* [Includes Available Amount basket] [and can [automatically] be secured] * [Includes Available RP Capacity basket] [and can [automatically] be secured] [Describe how earnouts and/or seller debt is treated and any caps]",
+    "analysis_guidelines": "If permitted to be secured automatically, clarify lien scope and subordination. Treat earnouts/seller debt explicitly and cap-sized to avoid hidden leverage. List any other debt baskets included in the term sheet that were not already covered above",
+    "background": "If the debt covenant allows debt equal to unused RP capacity (or allows RP capacity to be reallocated to debt), sources caution this can accelerate leverage without ratio tests. Earnouts and seller paper should be treated carefully in “Indebtedness” definitions and baskets to avoid off-balance-sheet leverage escaping limits."
+  },
+  {
+    "row": 85,
+    "term": "Negative Covenants - Liens",
+    "template_fields": " *Negative Covenants - Liens**",
+    "analysis_guidelines": "List all lien exceptions included",
+    "background": "The liens covenant restricts granting liens on borrower/restricted subsidiary assets, with cross-references to permitted debt baskets. The sources prescribe accepted lien carveouts (ratio liens, capital leases, purchase money, JV equity, non-collateral liens) and caution against dedicated lien baskets for general debt or contribution debt that permit pari liens outside ratio governance."
+  },
+  {
+    "row": 86,
+    "term": "Negative Covenants – Liens – General Basket",
+    "template_fields": "Greater of $[•] / [•]% LTM EBITDA",
+    "analysis_guidelines": "Size liens general basket consistent with debt general basket; ensure dedicated baskets for contribution and RP debt liens; unlimited junior liens may be acceptable per notes.",
+    "background": "The general lien basket covers incidental liens and should scale with EBITDA. Sources note acceptable junior lien baskets and limited non-collateral lien baskets; be careful not to allow pari liens broadly via general baskets, which would undermine intercreditor priorities."
+  },
+  {
+    "row": 87,
+    "term": "Negative Covenants – Liens – Ratio Basket",
+    "template_fields": "[•]x",
+    "analysis_guidelines": "If ratio-based liens are included, align with ratio debt tests and inside maturity limits; confirm “no worse” prongs where liens and debt tests interact.",
+    "background": "Ratio lien capacity should be tethered to the same tests as ratio debt by seniority and be limited by inside maturity/WAL principles. The materials describe improper use of first lien ratio tests to permit junior liens or unsecured debt; align lien and debt governance to the intended position in the stack."
+  },
+  {
+    "row": 88,
+    "term": "Negative Covenants – Investments",
+    "background": "Investment covenants govern value transfers to non-loan parties and third parties. Sources warn against unlimited investments in non-guarantors and unrestricted subsidiaries and flag “trap door” two-step paths; recommended fixes include caps on investments in non-guarantors, JV caps, and reinvestment baskets limited to asset sale proceeds actually required to be swept."
+  },
+  {
+    "row": 89,
+    "term": "Negative Covenants – Investments – Investments in non-Loan Parties",
+    "template_fields": "[Uncapped] / [Cap of $[•]] / [Capped except for ‘ordinary course’ investments in non-Loan Parties]",
+    "analysis_guidelines": "Uncapped investments in non-loan parties are aggressive; consider caps or “ordinary-course” exceptions only, consistent with notes’ conservative flex guidance.",
+    "background": "Investments in non-loan parties facilitate structural leakage. The materials recommend imposing aggregate caps (greater of fixed and EBITDA grower) and limiting reinvestments to ordinary-course or asset-sale reinvestments that do not require separate investment capacity, to avoid creating a “black hole” of capacity to move assets away from collateral."
+  },
+  {
+    "row": 90,
+    "term": "Negative Covenants – Investments – Investments in ‘similar businesses’",
+    "template_fields": "$[•]",
+    "analysis_guidelines": "Confirm scope and amount; the notes do not specify amounts—use precedent calibration with EBITDA growers.",
+    "background": "“Similar businesses” baskets allow strategic M&A. Per sources, size against precedent and EBITDA, and consider gating by leverage or LCT mechanics; ensure these cannot be used to transfer assets to unrestricted subsidiaries indirectly without investment capacity."
+  },
+  {
+    "row": 91,
+    "term": "Negative Covenants – Investments – Investments in Unsubs/JVs",
+    "template_fields": "$[•]",
+    "analysis_guidelines": "Consider caps tied to EBITDA; align with J. Crew and Envision protections to avoid crown-jewel leakage.",
+    "background": "Investments in JVs and unsubs can be substantial if uncapped. The materials support explicit caps and coordination with J.Crew blockers and Envision constraints to prevent core asset transfers into structures outside creditor protections."
+  },
+  {
+    "row": 92,
+    "term": "Negative Covenants – Investments – General Basket",
+    "template_fields": "Greater of $[•] / [•]% LTM EBITDA [with reallocation from General RP/RDP baskets]",
+    "analysis_guidelines": "Clarify growers; clarify reallocation mechanics with RP and RDP general baskets per notes.",
+    "background": "The general investment basket builds flexibility for ordinary-course or modest growth investments. Sources recommend coordinated reallocation mechanics that do not allow double counting across investment, RP, and RDP baskets and careful drafting to avoid converting investment capacity into RP capacity via returns."
+  },
+  {
+    "row": 93,
+    "term": "Negative Covenants – Investments – Ratio Basket",
+    "template_fields": "* [Pro forma] [•]x [, subject to no EoD and includes ‘no worse’ prong] [Pro Forma] [•]x ICR[, subject to [no EoD] / [no payment/bankruptcy EoD] and includes ‘no worse’ prong]",
+    "analysis_guidelines": "Reduce ratios or remove ICR prongs as flex; include “no worse” only where appropriate and subject to no default or specified default stoppers.",
+    "background": "Unlimited ratio investments allow capex/M&A if leverage or coverage tests are met. The sources flag the looseness of first-lien or secured leverage tests for leakage and suggest using total leverage, eliminating “no worse” and ICR prongs, and applying default blockers to curb use in stressed conditions."
+  },
+  {
+    "row": 94,
+    "term": "Negative Covenants – Investments – Permitted Acquisitions",
+    "template_fields": "* [Not subject to any ratio test/pro forma compliance/dollar basket] * [Not subject to no EoD] * [$[•] / [•]% LTM EBITDA cap on acquisitions of non-guarantors/non-collateral]",
+    "analysis_guidelines": "Clarify all elements/requirements (*Note terms such as: 1.non loan party/non-collateral cap and any overall cap 2. leverage/ liquidity etc. conditions 3. positive ebitda conditions 4. information, QofE deliverables conditions)*; Avoid ratio or pro forma compliance if agreed; otherwise apply caps on acquisitions of non-guarantors and non-collateral entities; tie to designation protections",
+    "background": "“Permitted acquisitions” carveouts define when M&A is allowed absent separate investment capacity. The materials suggest setting modest conditions (no default, target being in similar business, post-close guarantor/collateral status) and capping acquisitions of non-guarantors to manage structural seniority."
+  },
+  {
+    "row": 95,
+    "term": "Negative Covenants – Investments – Other",
+    "template_fields": "* [Includes Available RP Capacity basket] * [Includes J Crew Trap Door language]",
+    "analysis_guidelines": "Include trap-door language consistent with notes to prevent IP leakage; coordinate with Available Amount builder and RP capacity.",
+    "background": "“Trap door” provisions convert investment capacity for non-loan parties into unrestricted subsidiary capacity in two steps. The sources urge closing this with explicit blockers and careful drafting of reallocation and returns-on-investments components so gains do not double build both CNI and the builder basket."
+  },
+  {
+    "row": 96,
+    "term": "Negative Covenants – Dispositions",
+    "background": "Dispositions covenants limit asset sales outside the ordinary course, requiring fair market value and minimum cash consideration. The sources advocate a 75% cash-consideration test (with limited designated non-cash deemed cash), cumulative cash measurement, and thresholds, together with the asset sale sweep, to ensure real deleveraging."
+  },
+  {
+    "row": 97,
+    "term": "Negative Covenants – Dispositions – 75% Cash Consideration Basket",
+    "template_fields": "* [Does] / [Does not] specify FMV requirement * 75% test is [cumulative from closing date] / [per transaction] * $[•] threshold * Subject to [no EoD] / [no payment/bankruptcy EoD] [at [signing/closing] of the disposition] Designated non-cash consideration of up to the greater of $[•] / [•]% LTM EBITDA",
+    "analysis_guidelines": "Require fair market value; measure cash consideration cumulatively from closing; include thresholds; allow designated non-cash consideration subject to agreed caps.",
+    "background": "The 75% cash-consideration construct ensures that most sale proceeds are in cash or cash equivalents and available for the sweep. Designated non-cash consideration counts toward the 75% up to a cap and refreshes when converted to cash; sources favor measuring on a cumulative basis to avoid fragmentation of sales below per-transaction thresholds."
+  },
+  {
+    "row": 98,
+    "term": "Negative Covenants – Dispositions – General Basket",
+    "template_fields": "* Greater of $[•] / [•]% LTM EBITDA",
+    "analysis_guidelines": "Size with growers; ensure subject to no default or specified default stoppers where conservative flex applies.",
+    "background": "A general dispositions basket accommodates ordinary-course or modest non-core sales without tests, scaled to EBITDA. The materials suggest default stoppers for larger disposals and alignment with the asset sale sweep to prevent bypassing deleveraging through exceptions."
+  },
+  {
+    "row": 99,
+    "term": "Negative Covenants – Dispositions – De Minimis Threshold",
+    "template_fields": "$[•]",
+    "analysis_guidelines": "Include a de minimis threshold to avoid immaterial compliance friction; calibrate to precedent.",
+    "background": "A de minimis threshold eliminates friction for small disposals and avoids inadvertent breaches. Sources suggest calibrating to market and ensuring thresholds do not compound via multiple related transactions."
+  },
+  {
+    "row": 100,
+    "term": "Negative Covenants – Dispositions – Sale-Leaseback",
+    "template_fields": "[Describe relevant parameters and caps, if any]",
+    "analysis_guidelines": "Align with debt and lien covenants; include caps or operational carveouts consistent with precedent and notes.",
+    "background": "Sale-leasebacks are constrained via dollar caps or by requiring purchase money–style liens and covenants; the sources emphasize coordination with the asset sale sweep and investment covenants to avoid net leverage creep masked by accounting."
+  },
+  {
+    "row": 101,
+    "term": "Negative Covenants – Dispositions – Securitizations",
+    "template_fields": "[Uncapped] [All asset securitizations are permitted]",
+    "analysis_guidelines": "If uncapped, clarify asset scope and ring-fencing to avoid leakage of collateral; confirm interaction with mandatory prepayments.",
+    "background": "Where securitizations are permitted broadly, documents should ring-fence assets from collateral pools, limit recourse, and make clear how proceeds interact with mandatory prepayment provisions to avoid leakage that does not reduce funded debt."
+  },
+  {
+    "row": 102,
+    "term": "Negative Covenants – Dispositions – Other",
+    "template_fields": "* [No cap] on Dispositions to non-Loan Parties [Note any shared cap] * Dispositions of [non-core] assets acquired in an acquisition [uncapped] * [Unlimited leverage based asset sales are permitted (describe parameters)] * Dispositions of non-collateral assets permitted (no cap) [Check whether exclusive licensing is permitted]",
+    "analysis_guidelines": "Address unlimited leverage-based asset sales cautiously; exclusive licensing of core IP should be constrained per J. Crew-style protections.",
+    "background": "The materials caution that leverage-based exceptions to dispositions can undermine the sweep and feed the builder basket. Exclusive licenses of core IP are treated as effective transfers and should be blocked by J.Crew-style protections to keep “crown jewels” within the collateralized restricted group."
+  },
+  {
+    "row": 103,
+    "term": "Negative Covenants – Restricted Payments –",
+    "template_fields": " *Negative Covenants – Restricted Payments**",
+    "background": "The RP covenant restricts dividends, equity repurchases, and similar value transfers, with key exceptions: a builder basket (available amount/cumulative credit), general dollar baskets, post-IPO baskets, employee repurchases, and ratio-based unlimited baskets. Sources stress governors (no default, leverage tests), removal of “no worse” prongs, and careful calibration to prevent leakage."
+  },
+  {
+    "row": 104,
+    "term": "Negative Covenants – Restricted Payments – General Basket",
+    "template_fields": "Greater of $[•] / [•]% LTM EBITDA [with reallocation from General RDP and Investments] [Subject to no [EoD] / [no payment/bankruptcy EoD] / [no Default stopper]",
+    "analysis_guidelines": "Size with growers and reallocation from general RDP/Investment baskets; apply default stoppers or payment/bankruptcy default stoppers for conservative flex.",
+    "background": "The general RP basket provides baseline dividend capacity, scaled to EBITDA. Sources note frequent reallocation rights among investment and RDP baskets and recommend default stoppers and removal of “payment/bankruptcy only” limitations where conservative posture is required."
+  },
+  {
+    "row": 105,
+    "term": "Negative Covenants – Restricted Payments – Ratio Basket",
+    "template_fields": "* [Pro Forma] [•]x[, with ‘no worse’ prong] Subject to [no EoD]",
+    "analysis_guidelines": "Reduce ratios; remove “no worse” prongs; consider use of total leverage rather than secured leverage as conservative flex.",
+    "background": "Unlimited ratio RPs are typically gated by total net leverage materially inside closing date levels. The sources advise rejecting “no worse” formulations and first-lien or secured leverage tests for RPs, since those can permit significant total leverage while satisfying secured-only tests."
+  },
+  {
+    "row": 106,
+    "term": "Negative Covenants – Restricted Payments – Employee Stock Repurchases",
+    "template_fields": "* $[•] [with carryforward/carryback]",
+    "analysis_guidelines": "Permit modest repurchases with carryforward/carryback mechanics; confirm sponsor equity program needs.",
+    "background": "Employee equity repurchase baskets fund buybacks on termination or under plans, with annual caps that can carry forward. Sources suggest increasing the cap post-IPO and allowing proceeds of employee equity issuances or key person insurance to replenish without double building the builder basket."
+  },
+  {
+    "row": 107,
+    "term": "Negative Covenants – Restricted Payments – Unrestricted Subsidiary Stock",
+    "template_fields": "* [Uncapped ability to distribute equity of, or debt owed by, Unrestricted Subsidiaries] [Address cash cow protection]",
+    "analysis_guidelines": "If uncapped, add cash-cow protections; otherwise cap distributions to avoid leakage consistent with notes.",
+    "background": "Distributing unsubs equity or unsub debt to equityholders can convert investment capacity into RP capacity. The sources permit these as RP exceptions but warn against unlimited amounts and recommend caps to avoid wholesale leakage of unsub value to sponsors."
+  },
+  {
+    "row": 108,
+    "term": "Negative Covenants – Restricted Payments – Post-IPO Basket",
+    "template_fields": "* [Sum of] [•]% IPO proceeds and [•]% of market cap * [Note private issuance and SPAC provisions]",
+    "analysis_guidelines": "Remove market cap prong as conservative flex; use percentage of IPO proceeds calibrated to precedent.",
+    "background": "Post-IPO RPs allow annual dividends up to a percentage of IPO proceeds and, in aggressive forms, market capitalization. Sources show 6–7% per annum is common; lenders often flex out the market cap prong and restrict use to common dividends rather than all RPs."
+  },
+  {
+    "row": 109,
+    "term": "Negative Covenants – Restricted Payments – Management Agreement",
+    "template_fields": "* [Note payments allowed by reference to management agreement and amount]",
+    "analysis_guidelines": "Permit sponsor management fees per agreement; consider board-approved customary fees and default stoppers for conservative flex.",
+    "background": "Affiliate transaction covenants often carve out fees under the sponsor management agreement as in effect on the closing date and amendments not materially adverse to lenders. The sources also recognize a dollar basket for customary board-approved fees, still subject to RP and affiliate-transaction governance."
+  },
+  {
+    "row": 110,
+    "term": "Negative Covenants – Restricted Payments – Permitted Tax Distribution",
+    "template_fields": "[Note if this is by xref to an LLC Agreement or if expressly permits ignoring amortization of stepped up basis in assets]",
+    "analysis_guidelines": "If expressly permitting distributions ignoring amortization of stepped-up basis, confirm tax counsel alignment; notes are silent—defer to precedent.",
+    "background": "Pass-through structures often require tax distributions to cover owners’ taxes. The sources don’t prescribe the exact tax distribution construct; align to precedent and ensure distributions are limited to imputed tax liabilities rather than general cash leakage."
+  },
+  {
+    "row": 111,
+    "term": "Negative Covenants – Restricted Debt Payments",
+    "template_fields": "**Negative Covenants – Restricted Debt Payments**",
+    "background": "The RDP covenant limits prepayments or purchases of subordinated debt and, in conservative forms, junior lien and unsecured debt. Sources advise ratio gating via total leverage, rejecting “no worse” tests for unlimited RDPs, and aligning with refinancing and intercreditor terms."
+  },
+  {
+    "row": 112,
+    "term": "Negative Covenants – Restricted Debt Payments – Scope",
+    "template_fields": "[Describe type of debt covered [junior lien, unsecured, subordinated] [payments or just prepayments?]]",
+    "analysis_guidelines": "Clarify if scope covers payments and prepayments of subordinated in right of payment, junior lien, and sometimes unsecured debt; clarify if all payments versus prepayments; the notes recommend conservative expansion and ratio alignment.",
+    "background": "RDPs should cover payments and prepayments of subordinated in right of payment, junior lien, and sometimes unsecured debt. The materials recommend comprehensive scope and ensuring that pari refinancings are governed under the right covenant (debt vs. RDP) with appropriate ratio tests."
+  },
+  {
+    "row": 113,
+    "term": "Negative Covenants – Restricted Debt Payments – Threshold",
+    "template_fields": "$[•]",
+    "analysis_guidelines": "Include de minimis threshold; calibrate to precedent given notes’ lack of specifics.",
+    "background": "A small de minimis threshold avoids technical breaches for immaterial RDPs (e.g., small buybacks at discount). Set the threshold in line with deal size and precedent to maintain meaningful covenant function."
+  },
+  {
+    "row": 114,
+    "term": "Negative Covenants – Restricted Debt Payments – General Basket",
+    "template_fields": "Greater of $[•] / [•]% LTM EBITDA [with reallocation from General RP and Investments]",
+    "analysis_guidelines": "Size with growers and allow reallocation from RP and investment baskets; apply default stoppers where conservative flex is desired.",
+    "background": "The general RDP basket provides flexibility to address junior debt opportunistically. The sources advise aligning size with EBITDA and coordinating reallocation provisions so usage reduces the corresponding baskets and is blocked during defaults."
+  },
+  {
+    "row": 115,
+    "term": "Negative Covenants – Restricted Debt Payments – Ratio Basket",
+    "template_fields": "* [•]x[, with ‘no worse’ prong] Subject to [no EoD]",
+    "analysis_guidelines": "Reduce ratio; remove “no worse”; use total leverage test conservatively per notes; do not include “no worse” for unlimited RDPs.",
+    "background": "Unlimited ratio RDPs, if present, should be permitted only at significantly lower total leverage than closing date levels. The materials emphasize that “no worse” is inappropriate for RDPs because paying down debt is inherently leverage-neutral at worst and could justify large outflows."
+  },
+  {
+    "row": 116,
+    "term": "Negative Covenants – Restricted Debt Payments – Refinancings",
+    "template_fields": "* [Junior debt permitted to be refinanced with pari debt]",
+    "analysis_guidelines": "Permit junior debt refinanced with pari debt subject to ratio compliance; confirm MFN and maturity alignment where relevant.",
+    "background": "Refinancing junior debt with pari new debt must be limited by ratio tests befitting the seniority of the new instrument and should not introduce earlier maturities or better-than-market terms that create effective seniority."
+  },
+  {
+    "row": 117,
+    "term": "Negative Covenants – Restricted Debt Payments – Earnouts",
+    "template_fields": "* [Are earnouts treated as junior debt?] [Describe parameters for payments]",
+    "analysis_guidelines": "Clarify whether earnouts are junior debt and define payment parameters to avoid unexpected covenant usage.",
+    "background": "Earnouts can be excluded from “Indebtedness” unless reflected as debt under GAAP (more commonly if earned and payable); where included, the sources recommend addressing whether earnout payments are RDPs or investments and imposing sensible limits so contingent obligations do not drain RP/RDP capacity unexpectedly."
+  },
+  {
+    "row": 118,
+    "term": "Negative Covenants – Available Amount",
+    "template_fields": " *Negative Covenants – Available Amount**",
+    "background": "The “builder basket” or “available amount/cumulative credit” is the principal RP/investment/RDP capacity that grows over time. Sources describe its components—starter, financial performance builder (retained ECF or 50% CNI), equity builders, returns on investments, declined proceeds/unswept asset sale proceeds—and the conditions to use (no default, leverage gates), warning against double counting and overly loose builders."
+  },
+  {
+    "row": 119,
+    "term": "Negative Covenants – Available Amount – Starter",
+    "template_fields": "Greater of $[•] / [•]% LTM EBITDA",
+    "analysis_guidelines": "Starter is fee-letter defined; reserve flex to reduce starter amount per notes.",
+    "background": "The starter component provides immediate capacity from closing, often the greater of a fixed dollar amount and a percentage of EBITDA. Sources counsel sizing conservatively and pairing with governors for RPs (no default, leverage conditions) to prevent early leakage before operating performance builds capacity."
+  },
+  {
+    "row": 120,
+    "term": "Negative Covenants – Available Amount – Builder",
+    "template_fields": "* [Greater of] retained ECF [or 50% of CNI] [If CNI, reference CNI summary above] * [ECF/CNI cannot be negative] * [Builds with [voluntary prepayments/starter/retained asset sale proceeds/other] [Note if builder amounts are not limited to the amount originally made using the available amount]",
+    "analysis_guidelines": "Require borrower to elect ECF or CNI prior to syndication; do not permit negative amounts to build; define build with credits (voluntary prepayments, retained sale proceeds) only if agreed.",
+    "background": "The financial builder prong is typically either retained ECF (traditional in loans) or 50% CNI (traditional in bonds, but increasingly in loans). Sources recommend forcing an election pre-launch, barring negative-period “floors,” and avoiding “greatest of” formulations or EBITDA-minus-interest variants that decouple capacity from free cash generation."
+  },
+  {
+    "row": 121,
+    "term": "Negative Covenants – Available Amount – EoD Blocker",
+    "template_fields": "* Subject to [no EoD] / [no payment/bankruptcy EoD], applicable to [•]",
+    "analysis_guidelines": "Apply no default or payment/bankruptcy default stoppers to usage, especially for restricted payments; per notes’ conservative flex.",
+    "background": "Conditions to using the builder basket should include a default blocker; conservative formulations use “no default” rather than “no payment/bankruptcy EoD only,” and may add a leverage test for using the growth prong to make RPs. Sources highlight a trend to weaken blockers, which lenders should resist."
+  },
+  {
+    "row": 122,
+    "term": "Negative Covenants – Available Amount – Ratio Test",
+    "template_fields": "[•]x, applicable to [•]",
+    "analysis_guidelines": "Consider ratio governor on builder usage for restricted payments as conservative flex.",
+    "background": "Adding a ratio governor to use the builder for RPs (e.g., a total leverage cap) ties leakage to sustained performance. The sources show this as an effective flex lever to align RP usage with investor expectations without rewriting the builder components."
+  },
+  {
+    "row": 123,
+    "term": "Negative Covenants – Available Amount – Other",
+    "template_fields": "[Note any issues with respect to the Available Amount build]",
+    "analysis_guidelines": "Align Cumulative Credit parameters to precedent; clarify any and all elements of Available Amount",
+    "background": "Other elements include equity proceeds and returns on investments. Sources warn that uncapped returns on investments and inclusion of asset sale proceeds unswept due to stepdowns can inflate capacity and convert investment capacity into RP capacity; careful drafting avoids double counting and limits inclusion to amounts originally funded from the builder basket."
+  },
+  {
+    "row": 124,
+    "term": "Negative Covenants – Transactions with Affiliates –",
+    "template_fields": "**Negative Covenants – Transactions with Affiliates**",
+    "background": "The affiliate transactions covenant requires arm’s-length terms for dealings with affiliates and often carves out the sponsor management agreement. Sources recognize de minimis thresholds, board approval/fairness opinion constructs for larger deals, and caution against broad exclusions that would render the covenant duplicative of other covenants."
+  },
+  {
+    "row": 125,
+    "term": "Negative Covenants – Transactions with Affiliates – De Minimis Threshold",
+    "template_fields": "$[•]",
+    "analysis_guidelines": "Include de minimis thresholds; align with precedent because notes are high-level.",
+    "background": "A de minimis threshold for affiliate transactions filters out small ordinary-course items from review. Sources suggest pairing with arm’s-length standards and fairness opinions for large transactions to protect creditors from value leakage to affiliates."
+  },
+  {
+    "row": 126,
+    "term": "Negative Covenants – Transactions with Affiliates – Sponsor Management Fees",
+    "template_fields": "* Permitted [to the extent permitted by the sponsor management agreement] and [not] subject to any default block * Does not state amount of fee / references the management agreement * [Permits other [customary] fees approved by the Board] Permits Sponsor and its affiliates to acquire debt of the Borrower and its restricted subs",
+    "analysis_guidelines": "Permit fees per management agreement; consider allowing other customary board-approved fees; allow sponsor debt purchases subject to general assignment and affiliated lender provisions.",
+    "background": "Sponsor management fee payments are typically permitted per the closing date agreement and amendments not materially adverse to lenders, or subject to a dollar cap. The sources stress that other affiliate transfers should satisfy arm’s-length standards and remain subject to RP limits."
+  },
+  {
+    "row": 127,
+    "term": "Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing",
+    "template_fields": " *Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing**",
+    "background": "“Limited Condition Transactions” (LCT) allow ratio and covenant testing at signing of a definitive agreement rather than at closing for acquisitions, with subsequent tests done pro forma for the transaction. Events of Default, sacred rights, and assignment provisions should incorporate contemporary protections against LMEs (Serta/NYDJ), vote-rigging (Wesco/Incora), and net-short activism, while pricing and MFN constructs should reflect current SOFR-based yield practice."
+  },
+  {
+    "row": 128,
+    "term": "Limited Conditionality Transactions",
+    "template_fields": "* Applies not only to permitted acquisitions the consummation of which financing is not a condition but also other investments, RPs, RDPs, dispositions and similar transactions * Subsequent tests are pro forma [and also actual basis for RPs and RDPs] * [Includes outside date of [x] days] [RCF draws subject to LCT provisions]",
+    "analysis_guidelines": "Clarify if LCT is applicable beyond acquisitions to investments, RPs, RDPs, dispositions; subsequent tests on pro forma basis; consider outside date and RCF draw applicability consistent with notes.",
+    "background": "Limited Condition Transaction “LCT” provisions fix testing metrics at the LCT election point (e.g., acquisition signing) for baskets and ratios, insulating from interim fluctuations. The sources support extending LCT to related dispositions, RPs, and RDPs tied to the acquisition, with an outside date to avoid indefinite reliance and clarity on whether revolver draws can be LCT-tested."
+  },
+  {
+    "row": 129,
+    "term": "Events of Default",
+    "template_fields": "* [•] grace period for interest; [•] for other amounts * 30 day grace period for misrepresentations capable of being cured * $[•] cross-default threshold * [Includes ‘cured default’ language] * [[•] statute of limitations] * [Includes ‘net short’ provisions]",
+    "analysis_guidelines": "Include 5-day interest grace; 30-day misrepresentation cure; cross-default/cross-acceleration to material debt; ensure financial covenant default does not trigger term loan EoD unless revolver accelerates.",
+    "background": "Standard EoDs include payment defaults with short grace for interest, covenant breaches with cure periods where appropriate, cross-default or cross-acceleration to material debt, and insolvency. The sources also discuss “net-short” voting disenfranchisement to deter activism and limit maintenance-covenant breaches to revolver remedies."
+  },
+  {
+    "row": 130,
+    "term": "Change of Control",
+    "template_fields": "* [Describe terms] * [Can be sold to other portcos / continuation funds] * [Uncapped management/closing date investors] * [Includes Change of Control portability on the following terms: [•]]",
+    "analysis_guidelines": "Avoid portability; cover holdings-level defaults; require offers to prepay/purchase at change-of-control levels consistent with bridge/exchange notes comparables.",
+    "background": "Change of control typically triggers a mandatory prepayment offer (loans) or put (notes) and an EoD under bank facilities if not taken up. The materials discourage portability in sponsor deals and recommend alignment of CoC mechanics across bank and bridge/exchange note components."
+  },
+  {
+    "row": 131,
+    "term": "Voting",
+    "template_fields": "* [Includes] / [Does not include] Serta protection [describe formulation] * [Incora protection [included] / [not included]] * [Release of all/substantially all guarantees/collateral is a majority vote] * [Include small group voting provisions – i.e. 2 or more unaffiliated lenders?] * [Is waterfall, pro rata payments and sharing an affected lender vote? Are there any other holes in the voting structure?] * [Waiving payment defaults is a Req Lender vote, creating a perpetual standstill]",
+    "analysis_guidelines": "List all sacred right protections (i.e. changes requiring all/all affected lender consent); Clarify if Serta blocker included and the specific elements; clarify if Serta blocker applies across both lien and payment subordination; NYDJ: clarify if affected-lender consent required for waterfall/pro rata amendments; Clarify if Incora included (sacred-rights protections incremental issuance to manipulate votes)",
+    "background": "The sources define “Serta” blockers requiring affected lender consent for lien/payment subordination and “NYDJ” protections for waterfall and pro rata sharing. They also note post-LME practices adding sacred-rights protections against using extensions or incremental issuance to manipulate votes (Wesco/Incora) and limiting the influence of small, concentrated groups."
+  },
+  {
+    "row": 132,
+    "term": "Assignments – consents",
+    "template_fields": "* [Describe deemed consent, sponsor/borrower consent] * [Identify unusual limits – can loans be pledged for leveraged facilities?] * DQ List – [describe (i) whether it can be updated (and if just competitors), (ii) if it is available to other lenders, (iii) when the updates apply and (iv) if it applies after a payment/bankruptcy EoD]",
+    "analysis_guidelines": "Clarify deemed borrower consent, sponsor/borrower consent parameters, DQ list update mechanics post-signing and pre-closing as well as post-closing, and applicability post-default.",
+    "background": "Assignment provisions balance borrower consent rights and lender liquidity. Sources recommend deemed consent after a set period, clarity on sponsor consent where applicable, visibility of the DQ list to assignees, and fallaway of consent rights upon specified defaults, while preserving agent KYC and operational controls."
+  },
+  {
+    "row": 133,
+    "term": "Assignments – open market purchases",
+    "template_fields": "* [Permitted on a [non-]pro rata basis]",
+    "analysis_guidelines": "If permitted, align with Serta protections and sharing provisions; confirm whether open-market purchases are affected-lender votes.",
+    "background": "Borrower/affiliate loan purchases should be for cash, not funded with revolver proceeds, and—if held by the borrower or its subs—typically be canceled. The sources stress ensuring that buyback mechanics cannot be used to effect non-pro rata LME exchanges and that voting is handled per affiliated lender rules."
+  },
+  {
+    "row": 134,
+    "term": "Assignments – Affiliated lenders and buybacks",
+    "template_fields": "* [•]% cap * No cap on number of affiliated lenders * No express voting limits in bankruptcy Not limited to term loans (i.e. can buy back revolver)",
+    "analysis_guidelines": "Cap affiliated debt funds at 49.9% for Required Lenders; avoid general voting restrictions but flag bankruptcy voting considerations; clarify revolver buyback permissions.",
+    "background": "Affiliated Lenders are split between Debt Fund Affiliates and other affiliates. Sources endorse a 49.9% cap on Debt Fund Affiliates counting toward Required Lenders, deem-voting for non-debt-fund affiliates, and caps (e.g., 25–30%) on aggregate non-debt-fund affiliate holdings to prevent blocking positions in bankruptcy, with revolver assignments typically prohibited."
+  },
+  {
+    "row": 135,
+    "term": "Assignments – Borrower buybacks",
+    "template_fields": "* Not required to be cancelled * No prohibition on use of revolver * Not subject to no EoD * Assignments to unrestricted subsidiaries not required to be cancelled",
+    "analysis_guidelines": "If buybacks are not required to be cancelled, confirm pro rata and sharing; consider prohibiting revolver usage and applying default stoppers as conservative flex.",
+    "background": "Borrower/subsidiary buybacks are usually permitted for cash and canceled upon purchase to avoid voting manipulation. The sources caution against allowing buybacks funded with revolving loans and recommend default stoppers and pro rata Dutch auction mechanics where buybacks are permitted."
+  },
+  {
+    "row": 136,
+    "term": "Assignments – voting limit on Debt Fund Affiliates",
+    "template_fields": "* [49.9]%",
+    "analysis_guidelines": "Adopt 49.9% cap for required lender determinations consistent with notes’ affiliated debt fund treatment.",
+    "background": "Debt Fund Affiliates may vote but should not constitute a majority of Required Lenders alone. The sources reflect a common 49.9% cap, ensuring non-affiliated lenders are needed for majority actions, while still permitting debt funds to be significant constituents."
+  },
+  {
+    "row": 137,
+    "term": "Equity Co-Invest",
+    "template_fields": "[None] [[ ] has the right to co-invest $[ ] on same terms/price as Sponsor and w/ customary minority protections",
+    "analysis_guidelines": "If included, define minority protections and pricing parity; the notes are silent—confirm business grid.",
+    "background": "Equity co-invest rights for lenders or sponsors should specify right of first refusal mechanics, pricing parity, and governance/minority protections. The sources do not prescribe terms; align with sponsor’s broader equity program and avoid conflicts with financing conditions."
+  },
+  {
+    "row": 138,
+    "term": "Pricing",
+    "template_fields": "* [Hardwired pricing through delivery of financials for [ ] quarter post-closing] * [•]% of interest rate margin starting [•] and increasing to [•]% at [•]] * [additional step down of [ ] bps upon consummation of an IPO] [PIK Interest]",
+    "analysis_guidelines": "Hardwire initial pricing post-closing; consider margin step-downs tied to leverage and IPO; PIK only if structured as agreed; ensure MFN and Total Cap alignment where bridge features exist.",
+    "background": "Pricing includes SOFR margins, OID/upfront fees, and potential step-downs upon leverage improvement or an IPO. For bridges, total yield caps and step-ups are standard; sources advise ensuring MFN calculations use all-in yield and allowing flex to convert margin increases into OID if needed for syndication."
+  },
+  {
+    "row": 139,
+    "term": "Floor",
+    "template_fields": "* [ ]%",
+    "analysis_guidelines": "Confirm benchmark floors consistent with fee letter and market flex; notes are silent on specific levels.",
+    "background": "Benchmark floors protect lender yield when reference rates fall. Although the sources don’t fix levels, ensure floor levels align with fee letter flex (and MFN “all-in yield” math) and are consistent across original and incremental tranches for comparability."
+  },
+  {
+    "row": 140,
+    "term": "RCF Commitment Fee",
+    "template_fields": "[[ ] bps with [ ] stepdown(s) at [ ]x [FLNLR]]",
+    "analysis_guidelines": "Align fee to leverage tests and stepdowns; confirm sacred-rights treatment for changes to super-senior RCF caps.",
+    "background": "Revolver commitment fees compensate for undrawn availability; step-downs at lower leverage are common. The sources suggest treating super-senior revolver cap increases as sacred rights and aligning fee adjustments across incremental revolver capacity to keep syndicate expectations stable."
+  },
+  {
+    "row": 141,
+    "term": "DDTL Commitment Fee",
+    "template_fields": "[ ]%",
+    "analysis_guidelines": "Apply 50% of term margin stepping to full margin over time; accrues from closing to takedown or expiry, consistent with notes.",
+    "background": "DDTL ticking fees typically accrue at 50% of the applicable SOFR margin, stepping up over time or to full margin after a set period, per the sources. This compensates commitment providers for time risk and encourages timely takedowns."
+  },
+  {
+    "row": 142,
+    "term": "LC Fronting Fee",
+    "template_fields": "[ ]%",
+    "analysis_guidelines": "Confirm fee consistent with LC usage and sublimits; notes do not fix percentages—use precedent calibration.",
+    "background": "LC fronting fees compensate the issuing bank for LC exposure; calibrate to precedent for transaction size and LC usage profile. Ensure consistency with LC participation fees payable to revolver lenders and with any multi-currency LC program."
+  },
+  {
+    "row": 143,
+    "term": "Second Lien Facility",
+    "background": "Second lien facilities mirror first lien structures with set-backs. Sources address cushions on baskets, cross-default/acceleration formulations, and ensuring covenant setbacks so first lien lenders control collateral enforcement and sweeps until their discharge, including mandatory prepayments sequencing."
+  },
+  {
+    "row": 144,
+    "term": "Cushions to first lien",
+    "template_fields": "[•]%, applicable to $ baskets [and ratios]",
+    "analysis_guidelines": "Apply 20–30% cushions on fixed-dollar and grower baskets; 0.25x ratio cushions where proposed; consider flex to shrink or remove ratio cushion per notes.",
+    "background": "Second lien baskets and ratios should be tighter than first lien’s to reflect junior position. The materials cite common practice of smaller fixed/grower baskets and modest ratio cushions (e.g., 0.25x tighter), which lenders may further tighten through flex to avoid crowding first lien headroom."
+  },
+  {
+    "row": 145,
+    "term": "Anti-layering",
+    "template_fields": "[Not] included",
+    "analysis_guidelines": "If included, ensure it prevents incurrence of structurally senior debt ahead of second lien; the notes do not detail—confirm with intercreditor norms.",
+    "background": "Anti-layering provisions restrict incurring additional debt that is senior to the second lien but junior to first lien, preserving the intended two-tier capital structure. The sources encourage aligning with intercreditor agreements to avoid unintended priority shifts."
+  },
+  {
+    "row": 146,
+    "term": "Cross-default",
+    "template_fields": "Cross-acceleration [and cross-payment default] to [other indebtedness] / [first lien] [at maturity]",
+    "analysis_guidelines": "Prefer cross-acceleration and cross-payment default at maturity; avoid cross-default to first lien financial covenant breaches, per notes.",
+    "background": "Cross-default mechanics in second lien should reference payment defaults and acceleration under first lien debt but avoid triggering on first lien maintenance covenant breaches. This prevents junior creditors from accelerating based on super-senior maintenance test outcomes."
+  },
+  {
+    "row": 147,
+    "term": "Mandatory Prepayments",
+    "template_fields": "Only required after first lien terminated",
+    "analysis_guidelines": "Second lien mandatory prepayments should be required only after first lien is terminated, per notes’ covenant set-back philosophy.",
+    "background": "Mandatory prepayment waterfalls should prioritize first lien repayment; second lien sweeps should occur only after first lien discharge or in amounts clearly subordinated by intercreditor terms. The materials emphasize this “set-back” consistency across covenants and sweep sections."
+  },
+  {
+    "row": 148,
+    "term": "Conditions Annex",
+    "template_fields": "**Conditions Annex**",
+    "background": "The Conditions Annex implements Sungard limited conditionality: funding is conditioned only on Specified Representations, Specified Acquisition Agreement Representations, delivery of essential collateral/perfection steps (UCCs and stock certificates as available), MAC linked to the M&A definition as of signing, and delivery of specified financial statements/marketing information for bridges."
+  },
+  {
+    "row": 149,
+    "term": "Waiver",
+    "template_fields": "Majority, rather than all lenders",
+    "analysis_guidelines": "Permit majority waivers rather than unanimity to avoid funding risk; confirm scope consistent with LCT.",
+    "background": "Funding conditions should be waivable by the commitment parties holding a majority of commitments, not unanimity, to avoid execution risk. The sources tie this to LCT constructs and the need to complete underwritten acquisitions without minority vetoes."
+  },
+  {
+    "row": 150,
+    "term": "Representations",
+    "template_fields": "* [Only “making” of specified reps/specified acquisition agreement reps] * MAC to conform to acquisition agreement Specified Reps limited to Holdings and AcquisitionCo",
+    "analysis_guidelines": "Limit to “making” of Specified and Specified Acquisition Agreement Reps; align MAC definitions to acquisition agreement; restrict reps to Holdings/Borrower as appropriate.",
+    "background": "Under Sungard, only Specified Reps (existence, power, enforceability, solvency, margin regs, Investment Company Act, sanctions/anti-corruption use-of-proceeds, and creation/perfection) and Specified Acquisition Agreement Reps must be accurate for funding. Other reps are made but not closing conditions."
+  },
+  {
+    "row": 151,
+    "term": "Acquisition Agreement",
+    "template_fields": "* Any change in MAE definition [is] / [is not] materially adverse * Arrangers deemed to consent to changes within [•] days * [Purchase price reductions [less than [•]] deemed not to be materially adverse] [Purchase price reductions greater than [•] permitted so long as first applied to reduce Equity Contribution to min. % and thereafter the term facilities are ratably reduced] [Consider minimum size on any second lien] * [Purchase price increases permitted if funded with permitted debt/revolver/equity]",
+    "analysis_guidelines": "Treat MAE definition changes as material and adverse; provide deemed consents within a short window where not materially adverse; handle purchase price adjustments via equity and ratable term facility reductions as noted.",
+    "background": "Commitment conditions tie to the acquisition agreement as executed on signing. The sources require consent for any materially adverse amendments, deem changes to the MAE definition per se adverse, and specify that purchase price reductions reduce term loan size dollar-for-dollar (subject to a floor), aligning debt with value."
+  },
+  {
+    "row": 152,
+    "term": "Refinancing",
+    "template_fields": "* [Specify refinanced debt and whether any debt survives]",
+    "analysis_guidelines": "Specify refinanced debt and whether any debt survives; coordinate with collateral termination and LC backstops.",
+    "background": "The Conditions Annex should list debt to be repaid or addressed at closing and ensure liens are released, commitments terminated, and any residual contingent obligations (e.g., LCs) are backstopped or cash collateralized to the arrangers’ satisfaction."
+  },
+  {
+    "row": 153,
+    "term": "MAC",
+    "template_fields": "* Runs from date of signing Only applies if acquiror can terminate the acquisition as a result",
+    "analysis_guidelines": "MAC runs from acquisition agreement signing and applies only if acquiror can terminate; notes emphasize the importance of MAC even if proof burdens are high.",
+    "background": "The MAC condition looks to the acquisition agreement’s MAE/MAC definition as of signing and runs from signing to closing, consistent with the buyer’s closing condition. Sources stress lenders’ reliance on this even though MAE findings are rare under Delaware law."
+  },
+  {
+    "row": 154,
+    "term": "Closing Deliverables",
+    "template_fields": "* [Does not include officer’s certificate] * Solvency certificate only covers Borrower and restricted subs * [Note any certain funds limitations on the collateral –i.e. is only the pledge of borrower/loan party equity required?]",
+    "analysis_guidelines": "Include legal opinions, secretary/incumbency certificates, solvency certificate covering the consolidated group, borrowing base certificate for ABL, and notice of borrowing; confine stock delivery to borrower equity at closing per notes.",
+    "background": "Closing deliverables comprise customary legal opinions, organizational certificates, a CFO solvency certificate covering the consolidated group post-Transactions, notices of borrowing, and, for ABLs, borrowing base certificates. Under Sungard, only UCCs and readily deliverable stock certificates are conditions; other perfection steps are post-closing."
+  },
+  {
+    "row": 155,
+    "term": "Financial Statements",
+    "template_fields": "* [Summarize required financials] * [Confirm client has received] * [Confirm if subsequent financials between signing/closing are required if not provided for]",
+    "analysis_guidelines": "Require audited for two most recent fiscal years (≥90 days before closing) and unaudited quarters (≥45 days before closing; not Q4), per notes; bridge offerings need offering document-ready packages.",
+    "background": "For bank facilities, audited financials for the two most recent years and interim quarterlies support closing diligence; for bridges, a preliminary offering memorandum suitable for a high-yield roadshow plus auditor “comfort” is required, with marketing periods keyed to receipt of “Required Information.”"
+  },
+  {
+    "row": 156,
+    "term": "Other",
+    "template_fields": "* [Confirm any required ‘soft notice’ of closing date to ensure funding availability] * Does not include [express condition that specified reps and acquisition agreement reps are true] [express condition that minimum equity contribution is made] * Inside date is not specified ([•] in Acquisition Agreement) * No diligence condition * No IC approval condition * [No condition that remaining commitments must be received from other lenders] * Is a VCOC letter required? * Will there be an equity co-invest or warrants? [is this a CP?]",
+    "analysis_guidelines": "Include soft notice of closing date; avoid diligence or IC approval conditions at closing once “Sungard” is in place; consider VCOC letters, co-invests, or warrants only if business grid requires.",
+    "background": "“Soft” closing date notices help operational readiness but are not conditions. The sources caution against including credit committee approvals or extra diligence as conditions inconsistent with Sungard; ancillary sponsor items (e.g., VCOC letters) should be outside closing conditions or tied to business terms."
+  },
+  {
+    "row": 157,
+    "term": "Fee Letter",
+    "template_fields": " *Fee Letter**",
+    "background": "The fee letter houses economics and market flex. The sources recommend aligning flex items to the indicative terms and precedent, defining OID/fees that may be used for MFN “all-in yield,” and including alternate transaction fees/ROFR mechanics and drag-along flex for second lien if applicable."
+  },
+  {
+    "row": 158,
+    "term": "Commitment/Underwriting Fee",
+    "template_fields": "* [First Lien] Term Loan: [•]% of commitments [at signing] / [at closing] * Revolver: [•]% of commitments [at signing] / [at closing] * [DDTL: [•]] [Note this typically matches term loan, split 50% at close/draw or less commonly at termination] [Second Lien Term Loan: [•]% of commitments [at signing] / [at closing]",
+    "analysis_guidelines": "Pay on signing or closing per facility; for DDTLs, clients prefer full fee at closing akin to revolver commitments; borrowers may push for 50%/50% split—flag as a key economics issue.",
+    "background": "Underwriting and arrangement fees are typically payable at closing for funded term loans; for DDTLs, the sources reflect lender preference to charge full fees at closing (commitment in place), while borrowers argue for partial payment on closing and balance on takedown. This is a core negotiation point highlighted in the materials."
+  },
+  {
+    "row": 159,
+    "term": "Structuring Fee",
+    "template_fields": "* First Lien [(including revolver)]: $[•] * [Second Lien: $[•]]",
+    "analysis_guidelines": "Confirm structuring fee sizing across first lien (including revolver) and second lien per precedent and market; notes provide no fixed figures.",
+    "background": "Structuring fees compensate for complexity in multi-tranche or bespoke features. Align with comparable recent deals in sector and size and ensure fees are included in “all-in yield” for MFN purposes where relevant."
+  },
+  {
+    "row": 160,
+    "term": "Ticking Fee (Term/Revolver)",
+    "template_fields": "* [•]% of interest rate margin starting [•] and increasing to [•]% at [•]]",
+    "analysis_guidelines": "Apply a percentage of interest margin starting after a defined period and increasing with time; coordinate with market flex provisions.",
+    "background": "Ticking fees accrue when closing is delayed past a set date, typically at a percentage of the term margin and stepping up with time. The sources recommend aligning start dates, step-ups, and conversion to OID under flex to manage syndication yield needs."
+  },
+  {
+    "row": 161,
+    "term": "Delayed Draw Ticking Fee",
+    "template_fields": "[•]%]",
+    "analysis_guidelines": "Set at 50% of SOFR margin stepping to full margin; accrues from closing until takedown or expiry, per notes.",
+    "background": "For DDTLs, ticking fees typically start at 50% of the SOFR margin and step to full margin after a period, compensating for undrawn committed capital. This is consistent with the source guidance on DDTL economics."
+  },
+  {
+    "row": 162,
+    "term": "Agency Fee",
+    "template_fields": "$[•]",
+    "analysis_guidelines": "Confirm agency fee consistent with role scope; notes are silent—use precedent.",
+    "background": "Administrative and collateral agency fees depend on transaction complexity and collateral scope. Use recent precedent with similar borrower footprints and lien packages; set second lien agent fees with an appropriate set-back given smaller workload."
+  },
+  {
+    "row": 163,
+    "term": "Alternate Transaction Fee",
+    "template_fields": "* 12 months; 50% of upfront fees [calculated as the “lesser of” committed and alternate facility fees] * ROFR, without requirement for same roles/economics, with customary sponsor exceptions * ROFR applies to the acquisition and alternate acquisition",
+    "analysis_guidelines": "Twelve months; 50% of upfront fees; include ROFR without same roles/economics requirement; adopt carveouts where lenders exercise “outs” or withhold approvals, consistent with notes.",
+    "background": "Alternate transaction fees compensate commitment parties if the borrower pivots to different financing. The sources show 12-month tails at 50% of upfront fee levels with carveouts if commitment parties invoked outs or refused reasonable amendments; ROFRs are typically included without guarantees of identical roles/economics."
+  },
+  {
+    "row": 164,
+    "term": "Sponsor Participation",
+    "template_fields": "* Can commit up to [•]% of [•] within [•] days * [Entitled to [•]% share of fees on committed amount] / [Initial lenders not entitled to fees on sponsor allocation]",
+    "analysis_guidelines": "Define sponsor commit rights and fee shares on sponsor allocations; notes do not specify—confirm in grid and fee letter.",
+    "background": "Where sponsors or affiliates take down debt allocations, allocate proportionate fees or carve out fee reductions for affiliate allocations as agreed. The sources suggest clarifying this in the grid and fee letter to avoid disputes during allocation."
+  }
+]

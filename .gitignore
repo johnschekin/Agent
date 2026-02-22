@@ -1,0 +1,35 @@
+# Corpus data (large, synced from S3)
+corpus/
+corpus_index/
+
+# Agent workspaces (runtime data)
+workspaces/*/evidence/
+workspaces/*/results/
+workspaces/*/strategies/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp
+*.tmp
+*.bak
