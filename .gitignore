@@ -2,6 +2,9 @@
 corpus/
 corpus_index/
 
+# Large reference data (copied from VP, too big for git)
+data/ontology/
+
 # Agent workspaces (runtime data)
 workspaces/*/evidence/
 workspaces/*/results/
