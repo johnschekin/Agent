@@ -106,3 +106,17 @@ Section 2.01. Commitments.
         sections = find_sections(text)
         for s in sections:
             assert s.article_num == 0
+
+    def test_fallback_regex_when_doc_outline_returns_no_sections(self, monkeypatch) -> None:
+        class _EmptyOutline:
+            sections: list[object] = []
+
+        monkeypatch.setattr(
+            "agent.section_parser.DocOutline.from_text",
+            lambda _text: _EmptyOutline(),
+        )
+        text = "Section 9.01. Incremental Facilities.\nSection 9.02. Amendments."
+        sections = find_sections(text)
+        numbers = [s.number for s in sections]
+        assert "9.01" in numbers
+        assert "9.02" in numbers

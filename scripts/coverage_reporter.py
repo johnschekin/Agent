@@ -11,10 +11,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from collections import defaultdict
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+from uuid import uuid4
 
 try:
     import orjson
@@ -29,8 +32,9 @@ except ImportError:
         print()
 
 
-from agent.corpus import CorpusIndex
-from agent.strategy import load_strategy, Strategy
+from agent.corpus import CorpusIndex, load_candidate_doc_ids
+from agent.structural_fingerprint import build_section_fingerprint, summarize_fingerprints
+from agent.strategy import Strategy, load_strategy_with_views
 from agent.textmatch import heading_matches, keyword_density, section_dna_density, score_in_range
 
 
@@ -44,6 +48,66 @@ KEYWORD_MAX = 0.70
 DNA_MIN = 0.25
 DNA_MAX = 0.55
 HIT_THRESHOLD = 0.3
+_CLUSTER_FAMILY_RE = re.compile(r"^cluster_(\d+)$")
+
+
+def _load_template_classifications(path: Path) -> dict[str, dict[str, Any]]:
+    """Load doc_id -> classification metadata JSON map."""
+    try:
+        payload = json.loads(path.read_text())
+    except Exception:
+        return {}
+    if not isinstance(payload, dict):
+        return {}
+    result: dict[str, dict[str, Any]] = {}
+    for raw_doc_id, raw_meta in payload.items():
+        doc_id = str(raw_doc_id)
+        if isinstance(raw_meta, dict):
+            result[doc_id] = raw_meta
+    return result
+
+
+def _extract_cluster_values(
+    *,
+    template_family: str,
+    classification: dict[str, Any] | None,
+) -> tuple[str, str]:
+    """Return (cluster_id_value, cluster_label) from metadata/family text."""
+    if isinstance(classification, dict):
+        raw_cluster = classification.get("cluster_id")
+        if isinstance(raw_cluster, int):
+            if raw_cluster < 0:
+                return "noise", "noise"
+            return str(raw_cluster), f"cluster_{raw_cluster:03d}"
+        if isinstance(raw_cluster, str):
+            parsed = raw_cluster.strip()
+            if parsed:
+                if parsed == "-1":
+                    return "noise", "noise"
+                if parsed.isdigit():
+                    val = int(parsed)
+                    return str(val), f"cluster_{val:03d}"
+
+        family_from_meta = str(classification.get("template_family", "")).strip().lower()
+        if family_from_meta:
+            if family_from_meta == "noise":
+                return "noise", "noise"
+            m_meta = _CLUSTER_FAMILY_RE.match(family_from_meta)
+            if m_meta:
+                val = int(m_meta.group(1))
+                return str(val), f"cluster_{val:03d}"
+            return "unknown", family_from_meta
+
+    family = (template_family or "").strip().lower()
+    if not family:
+        return "unknown", "unknown"
+    if family == "noise":
+        return "noise", "noise"
+    m = _CLUSTER_FAMILY_RE.match(family)
+    if m:
+        val = int(m.group(1))
+        return str(val), f"cluster_{val:03d}"
+    return "unknown", family
 
 
 def score_section(
@@ -94,21 +158,41 @@ def score_section(
     return best_score, method
 
 
-def best_doc_score(
+def best_doc_match(
     corpus: CorpusIndex,
     doc_id: str,
     strategy: Strategy,
-) -> float:
-    """Return the best section score for a document."""
-    sections = corpus.search_sections(doc_id=doc_id, limit=9999)
+    *,
+    cohort_only: bool,
+) -> dict[str, Any]:
+    """Return best section match details for a document."""
+    sections = corpus.search_sections(
+        doc_id=doc_id,
+        cohort_only=cohort_only,
+        limit=9999,
+    )
     best = 0.0
+    best_section = ""
+    best_heading = ""
+    best_article_num = 0
+    best_text = ""
     for sec in sections:
         text = corpus.get_section_text(doc_id, sec.section_number)
         text_lower = text.lower() if text else ""
         score, _ = score_section(sec.heading, text_lower, strategy)
         if score > best:
             best = score
-    return best
+            best_section = sec.section_number
+            best_heading = sec.heading
+            best_article_num = sec.article_num
+            best_text = text
+    return {
+        "score": best,
+        "section_number": best_section,
+        "heading": best_heading,
+        "article_num": best_article_num,
+        "text": best_text,
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -116,24 +200,65 @@ def best_doc_score(
 # ---------------------------------------------------------------------------
 
 def run(args: argparse.Namespace) -> None:
-    strategy = load_strategy(Path(args.strategy))
+    strategy, raw_strategy, _resolved_strategy = load_strategy_with_views(Path(args.strategy))
     group_by = args.group_by
+    cohort_only = not args.include_all
+    run_id = args.run_id or (
+        f"coverage_reporter_{datetime.now(UTC).strftime('%Y%m%dT%H%M%SZ')}_{uuid4().hex[:8]}"
+    )
     print(f"Loaded strategy: {strategy.concept_id} v{strategy.version}", file=sys.stderr)
     print(f"Grouping by: {group_by}", file=sys.stderr)
 
+    template_classifications: dict[str, dict[str, Any]] = {}
+    if args.template_classifications:
+        classifications_path = Path(args.template_classifications)
+        template_classifications = _load_template_classifications(classifications_path)
+        print(
+            f"Loaded template classifications: {len(template_classifications)} docs",
+            file=sys.stderr,
+        )
+
     with CorpusIndex(Path(args.db)) as corpus:
         # Determine doc list
-        if args.sample:
-            doc_ids = corpus.sample_docs(args.sample, seed=args.seed)
+        if args.doc_ids:
+            doc_id_path = Path(args.doc_ids)
+            doc_ids = [
+                line.strip()
+                for line in doc_id_path.read_text().splitlines()
+                if line.strip()
+            ]
+            print(f"Loaded {len(doc_ids)} doc IDs from {args.doc_ids}", file=sys.stderr)
+        elif args.sample:
+            doc_ids = corpus.sample_docs(
+                args.sample,
+                seed=args.seed,
+                cohort_only=cohort_only,
+            )
             print(f"Sampled {len(doc_ids)} docs (seed={args.seed})", file=sys.stderr)
         else:
-            doc_ids = corpus.doc_ids()
+            doc_ids = corpus.doc_ids(cohort_only=cohort_only)
             print(f"Testing all {len(doc_ids)} docs", file=sys.stderr)
+
+        source_doc_count = len(doc_ids)
+        candidate_input_count = 0
+        if args.family_candidates_in:
+            candidate_path = Path(args.family_candidates_in)
+            candidate_doc_ids = load_candidate_doc_ids(candidate_path)
+            candidate_input_count = len(candidate_doc_ids)
+            candidate_set = set(candidate_doc_ids)
+            doc_ids = [doc_id for doc_id in doc_ids if doc_id in candidate_set]
+            print(
+                "Applied family candidate filter: "
+                f"{len(doc_ids)}/{source_doc_count} docs remain",
+                file=sys.stderr,
+            )
 
         # Group docs and score
         group_hits: defaultdict[str, int] = defaultdict(int)
         group_totals: defaultdict[str, int] = defaultdict(int)
+        group_fingerprints: defaultdict[str, list] = defaultdict(list)
         total_hits = 0
+        hit_doc_ids: list[str] = []
 
         for i, doc_id in enumerate(doc_ids):
             if (i + 1) % 100 == 0:
@@ -141,7 +266,28 @@ def run(args: argparse.Namespace) -> None:
 
             # Get group value
             doc_rec = corpus.get_doc(doc_id)
-            if doc_rec is None:
+            classification = template_classifications.get(doc_id)
+            template_family_from_doc = doc_rec.template_family if doc_rec else ""
+            template_family_from_cls = (
+                str(classification.get("template_family", "")).strip()
+                if isinstance(classification, dict)
+                else ""
+            )
+            resolved_template_family = (
+                template_family_from_cls
+                or str(template_family_from_doc or "").strip()
+                or "unknown"
+            )
+
+            if group_by == "template_family":
+                group_val = resolved_template_family
+            elif group_by in {"cluster_id", "template_cluster"}:
+                cluster_id_val, cluster_label = _extract_cluster_values(
+                    template_family=resolved_template_family,
+                    classification=classification,
+                )
+                group_val = cluster_id_val if group_by == "cluster_id" else cluster_label
+            elif doc_rec is None:
                 group_val = "unknown"
             else:
                 group_val = getattr(doc_rec, group_by, None)
@@ -154,10 +300,24 @@ def run(args: argparse.Namespace) -> None:
             group_totals[group_val] += 1
 
             # Score document
-            score = best_doc_score(corpus, doc_id, strategy)
-            if score > HIT_THRESHOLD:
+            match = best_doc_match(
+                corpus,
+                doc_id,
+                strategy,
+                cohort_only=cohort_only,
+            )
+            if float(match["score"]) > HIT_THRESHOLD:
                 group_hits[group_val] += 1
                 total_hits += 1
+                hit_doc_ids.append(doc_id)
+                fp = build_section_fingerprint(
+                    template_family=resolved_template_family,
+                    article_num=int(match["article_num"]),
+                    section_number=str(match["section_number"]),
+                    heading=str(match["heading"]),
+                    text=str(match["text"]),
+                )
+                group_fingerprints[group_val].append(fp)
 
         # Build output
         total = len(doc_ids)
@@ -171,17 +331,70 @@ def run(args: argparse.Namespace) -> None:
                 "hit_rate": round(h / n, 4) if n > 0 else 0.0,
                 "n": n,
                 "hits": h,
+                "structural_fingerprint_summary": summarize_fingerprints(
+                    group_fingerprints.get(gv, []),
+                    top_tokens=12,
+                ),
             }
 
         output: dict[str, Any] = {
+            "schema_version": "coverage_reporter_v2",
+            "run_id": run_id,
+            "ontology_node_id": strategy.concept_id,
             "strategy": strategy.concept_id,
+            "strategy_version": strategy.version,
+            "strategy_profile": {
+                "profile_type": strategy.profile_type,
+                "inherits_from": strategy.inherits_from,
+                "inheritance_active": bool(
+                    isinstance(raw_strategy, dict)
+                    and isinstance(raw_strategy.get("inherits_from"), str)
+                    and raw_strategy.get("inherits_from", "").strip()
+                ),
+            },
             "overall": {
                 "hit_rate": overall_hit_rate,
                 "n": total,
                 "hits": total_hits,
             },
             "by_group": by_group,
+            "candidate_set": {
+                "input_doc_count": source_doc_count,
+                "candidate_input_count": candidate_input_count,
+                "evaluated_doc_count": total,
+                "pruning_ratio": (
+                    round(1.0 - (total / source_doc_count), 4)
+                    if source_doc_count > 0
+                    else 0.0
+                ),
+            },
+            "grouping": {
+                "group_by": group_by,
+                "template_classifications_loaded": len(template_classifications),
+                "template_classifications_path": (
+                    str(Path(args.template_classifications))
+                    if args.template_classifications
+                    else None
+                ),
+            },
         }
+
+        if args.family_candidates_out:
+            out_path = Path(args.family_candidates_out)
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+            candidate_payload = {
+                "schema_version": "family_candidates_v1",
+                "generated_at": datetime.now(UTC).isoformat(),
+                "run_id": run_id,
+                "ontology_node_id": strategy.concept_id,
+                "strategy_version": strategy.version,
+                "doc_ids": sorted(set(hit_doc_ids)),
+                "source_doc_count": source_doc_count,
+                "evaluated_doc_count": total,
+                "hit_count": total_hits,
+            }
+            out_path.write_text(json.dumps(candidate_payload, indent=2))
+            output["family_candidates_out"] = str(out_path)
 
         dump_json(output)
 
@@ -197,13 +410,46 @@ def main() -> None:
     )
     parser.add_argument("--db", required=True, help="Path to corpus.duckdb")
     parser.add_argument("--strategy", required=True, help="Path to strategy JSON file")
+    parser.add_argument("--doc-ids", default=None, help="File with doc IDs to test (one per line)")
     parser.add_argument(
         "--group-by",
         default="template_family",
         help="Column to group by (default: template_family)",
     )
+    parser.add_argument(
+        "--template-classifications",
+        default=None,
+        help=(
+            "Optional classifications JSON from template_classifier "
+            "(doc_id -> cluster/template metadata). Used for template-family "
+            "and cluster-id grouping."
+        ),
+    )
     parser.add_argument("--sample", type=int, default=None, help="Test on N random docs")
     parser.add_argument("--seed", type=int, default=42, help="Random seed for sampling")
+    parser.add_argument(
+        "--include-all",
+        action="store_true",
+        help="Include non-cohort documents (default is cohort-only).",
+    )
+    parser.add_argument(
+        "--run-id",
+        default=None,
+        help="Optional run identifier for provenance; auto-generated when omitted.",
+    )
+    parser.add_argument(
+        "--family-candidates-in",
+        default=None,
+        help=(
+            "Optional candidate doc-id set (txt/json). "
+            "When set, coverage runs only on this subset."
+        ),
+    )
+    parser.add_argument(
+        "--family-candidates-out",
+        default=None,
+        help="Optional path to persist hit doc_ids as a family candidate set JSON.",
+    )
     args = parser.parse_args()
     run(args)
 

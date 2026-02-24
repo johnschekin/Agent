@@ -1,0 +1,95 @@
+{
+  "schema_version": "wave_scheduler_v1",
+  "generated_at": "2026-02-23T05:38:52.725411+00:00",
+  "config_path": "swarm/swarm.full49.conf",
+  "workspace_root": "workspaces",
+  "mode": "ready",
+  "wave": 1,
+  "summary": {
+    "considered_assignments": 5,
+    "selected_count": 0,
+    "blocked_count": 0,
+    "skipped_count": 5
+  },
+  "selected": [],
+  "blocked": [],
+  "skipped": [
+    {
+      "family": "available_amount",
+      "reason": "already_running"
+    },
+    {
+      "family": "dividend_blockers",
+      "reason": "already_running"
+    },
+    {
+      "family": "carve_outs",
+      "reason": "already_running"
+    },
+    {
+      "family": "cross_covenant",
+      "reason": "already_running"
+    },
+    {
+      "family": "dispositions",
+      "reason": "already_running"
+    }
+  ],
+  "checkpoint_status_by_family": {
+    "available_amount": "running",
+    "dividend_blockers": "running",
+    "carve_outs": "running",
+    "cross_covenant": "running",
+    "dispositions": "running",
+    "inv": "missing",
+    "rp": "missing",
+    "indebtedness": "missing",
+    "liens": "missing",
+    "acquisition_debt": "missing",
+    "collateral": "missing",
+    "ebitda": "missing",
+    "ied": "missing",
+    "leverage": "missing",
+    "lme_protections": "missing",
+    "mandatory_prepayment": "missing",
+    "other_advisory_roles": "missing",
+    "pricing": "missing",
+    "structural_controls": "missing",
+    "affiliate_txns": "missing",
+    "builders": "missing",
+    "corporate_structure": "missing",
+    "ddtl": "missing",
+    "equity_cure": "missing",
+    "mfn": "missing",
+    "pre_closing": "missing",
+    "restricted_debt_payments": "missing",
+    "revolver": "missing",
+    "subordinated_debt": "missing",
+    "amendments_voting": "missing",
+    "contribution_debt": "missing",
+    "events_of_default": "missing",
+    "fees": "missing",
+    "financial_covenant": "missing",
+    "ratio": "missing",
+    "reporting": "missing",
+    "second_lien": "missing",
+    "side_by_side_revolvers": "missing",
+    "simultaneous_incurrence_netting": "missing",
+    "accounting": "missing",
+    "assignments": "missing",
+    "change_of_control": "missing",
+    "free_clear": "missing",
+    "governance": "missing",
+    "guarantees": "missing",
+    "lct": "missing",
+    "reps_conditions": "missing",
+    "stacking_reclass": "missing",
+    "term_loan": "missing"
+  },
+  "families_out": "plans/wave1_ready_families_2026-02-23.txt",
+  "failed_statuses": [
+    "error",
+    "failed",
+    "stalled"
+  ]
+}

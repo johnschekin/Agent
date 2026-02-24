@@ -1,0 +1,95 @@
+# Ray cluster configuration for corpus build pipeline.
+#
+# Launch:  ray up ray-cluster.yaml --yes
+# Submit:  ray submit ray-cluster.yaml scripts/build_corpus_ray.py -- \
+#            --bucket edgar-pipeline-documents-216213517387 \
+#            --output /home/ubuntu/corpus_index/corpus.duckdb \
+#            --s3-upload s3://edgar-pipeline-documents-216213517387/corpus_index/corpus.duckdb \
+#            --batch-size 100 --force -v
+# Teardown: ray down ray-cluster.yaml --yes
+
+cluster_name: corpus-build
+
+max_workers: 8
+
+provider:
+    type: aws
+    region: us-east-1
+    availability_zone: us-east-1a
+    cache_stopped_nodes: False
+
+auth:
+    ssh_user: ubuntu
+    ssh_private_key: ~/.ssh/ray-corpus.pem
+
+head_node_type: ray.head.default
+
+available_node_types:
+    ray.head.default:
+        node_config:
+            InstanceType: c6i.2xlarge  # 8 vCPU, 16GB — runs writer actor + orchestrator
+            ImageId: ami-0071174ad8cbb9e17  # Ubuntu 24.04 LTS (2026-02-18) — Python 3.12
+            KeyName: ray-corpus
+            BlockDeviceMappings:
+                - DeviceName: /dev/sda1
+                  Ebs:
+                      VolumeSize: 100  # 100GB for DuckDB output
+                      VolumeType: gp3
+            IamInstanceProfile:
+                Arn: arn:aws:iam::216213517387:instance-profile/ray-corpus-head
+        resources:
+            CPU: 6  # Reserve 2 CPUs for writer actor + system
+
+    ray.worker.default:
+        node_config:
+            InstanceType: c6i.4xlarge  # 16 vCPU, 32GB — NLP processing
+            ImageId: ami-0071174ad8cbb9e17  # Ubuntu 24.04 LTS (2026-02-18) — Python 3.12
+            KeyName: ray-corpus
+            IamInstanceProfile:
+                Arn: arn:aws:iam::216213517387:instance-profile/ray-corpus-worker
+        resources:
+            CPU: 14  # Reserve 2 for system overhead
+        min_workers: 1
+        max_workers: 3  # 32 vCPU limit: head (8) + 1 worker (16) = 24; room for 1 more c6i.4xlarge if limit raised
+
+# Autoscaler settings
+upscaling_speed: 1.0
+idle_timeout_minutes: 5
+
+setup_commands:
+    - sudo apt-get update -qq && sudo apt-get install -y -qq python3-pip python3-venv python3-dev build-essential python-is-python3 > /dev/null 2>&1
+    - python3 -m venv /home/ubuntu/venv
+    - /home/ubuntu/venv/bin/pip install --upgrade pip setuptools wheel
+    - cd /home/ubuntu/agent && /home/ubuntu/venv/bin/pip install -e ".[ray]"
+    - /home/ubuntu/venv/bin/pip install boto3 duckdb orjson
+    - sudo ln -sf /home/ubuntu/venv/bin/ray /usr/local/bin/ray
+    - sudo ln -sf /home/ubuntu/venv/bin/python3 /usr/local/bin/python3-venv
+
+head_setup_commands:
+    - /home/ubuntu/venv/bin/pip install tqdm
+
+head_start_ray_commands:
+    - ray stop
+    - ulimit -n 65536; ray start --head --port=6379 --object-manager-port=8076 --autoscaling-config=~/ray_bootstrap_config.yaml --dashboard-host=0.0.0.0
+
+worker_start_ray_commands:
+    - ray stop
+    - ulimit -n 65536; ray start --address=$RAY_HEAD_IP:6379 --object-manager-port=8076
+
+rsync_exclude:
+    - node_modules
+    - .next
+    - __pycache__
+    - "*.pyc"
+    - .git
+    - corpus/
+    - corpus_index/
+    - "*.duckdb"
+    - dashboard/node_modules
+    - dashboard/.next
+
+rsync_filter:
+    - ".gitignore"
+
+file_mounts:
+    "/home/ubuntu/agent": "."

@@ -65,6 +65,11 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help="File with doc IDs to restrict search (one per line)",
     )
+    parser.add_argument(
+        "--include-all",
+        action="store_true",
+        help="Include non-cohort documents (default is cohort-only).",
+    )
     return parser
 
 
@@ -98,7 +103,10 @@ def main() -> None:
             )
 
         if args.sample is not None:
-            sampled = corpus.sample_docs(args.sample)
+            sampled = corpus.sample_docs(
+                args.sample,
+                cohort_only=not args.include_all,
+            )
             if doc_ids is not None:
                 # Intersect: only keep sampled docs that are also in the file
                 sampled_set = set(sampled)
@@ -115,6 +123,7 @@ def main() -> None:
             context_chars=args.context_chars,
             max_results=args.max_results,
             doc_ids=doc_ids,
+            cohort_only=not args.include_all,
         )
 
         # Compute distinct doc count

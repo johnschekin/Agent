@@ -56,6 +56,11 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help="Write doc IDs to file (one per line). If omitted, JSON to stdout.",
     )
+    parser.add_argument(
+        "--include-all",
+        action="store_true",
+        help="Include non-cohort documents (default is cohort-only).",
+    )
     return parser
 
 
@@ -67,7 +72,7 @@ def main() -> None:
         sys.exit(1)
 
     with CorpusIndex(args.db) as corpus:
-        total_docs = corpus.doc_count
+        total_docs = corpus.doc_count if args.include_all else corpus.cohort_count()
 
         if args.n > total_docs:
             print(
@@ -81,6 +86,7 @@ def main() -> None:
             args.n,
             seed=args.seed,
             stratify_by=args.stratify,
+            cohort_only=not args.include_all,
         )
 
         # Fetch full records to build output

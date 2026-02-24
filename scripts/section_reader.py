@@ -69,6 +69,11 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Include clause tree structure in output.",
     )
+    parser.add_argument(
+        "--include-all",
+        action="store_true",
+        help="Include non-cohort documents (default is cohort-only).",
+    )
     return parser
 
 
@@ -135,12 +140,19 @@ def main() -> None:
         if doc is None:
             print(f"Error: document not found: {args.doc_id}", file=sys.stderr)
             sys.exit(1)
+        if not args.include_all and not doc.cohort_included:
+            print(
+                f"Error: document {args.doc_id} is excluded from cohort; use --include-all to inspect",
+                file=sys.stderr,
+            )
+            sys.exit(1)
 
         if args.section is None:
             # List mode: show all sections (optionally filtered by article)
             sections = corpus.search_sections(
                 doc_id=args.doc_id,
                 article_num=args.article,
+                cohort_only=not args.include_all,
                 limit=1000,
             )
 
@@ -164,7 +176,9 @@ def main() -> None:
             # Section detail mode
             # Find the section record
             sections = corpus.search_sections(
-                doc_id=args.doc_id, limit=1000
+                doc_id=args.doc_id,
+                cohort_only=not args.include_all,
+                limit=1000,
             )
             section_rec = None
             for s in sections:

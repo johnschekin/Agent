@@ -15,6 +15,7 @@ import json
 import shutil
 import sys
 from pathlib import Path
+from typing import Any
 
 try:
     import orjson
@@ -47,7 +48,47 @@ def log(msg: str) -> None:
     print(msg, file=sys.stderr)
 
 
-def extract_family_subtree(ontology: object, family_name: str) -> tuple[object, int]:
+def collect_ontology_ids(tree: object) -> set[str]:
+    """Collect all ontology node IDs from an arbitrarily nested tree."""
+    out: set[str] = set()
+
+    def walk(node: object) -> None:
+        if isinstance(node, dict):
+            node_id = node.get("id")
+            if isinstance(node_id, str) and node_id.strip():
+                out.add(node_id)
+            for value in node.values():
+                if isinstance(value, (dict, list)):
+                    walk(value)
+        elif isinstance(node, list):
+            for item in node:
+                walk(item)
+
+    walk(tree)
+    return out
+
+
+def validate_node_ids(tree: object, valid_ids: set[str]) -> list[str]:
+    """Return sorted list of IDs present in tree that do not exist in valid_ids."""
+    found = collect_ontology_ids(tree)
+    return sorted(node_id for node_id in found if node_id not in valid_ids)
+
+
+def _strategy_concept_id(entry: dict[str, Any]) -> str | None:
+    """Extract a concept ID from a strategy-like object."""
+    for key in ("concept_id", "id"):
+        val = entry.get(key)
+        if isinstance(val, str) and val.strip():
+            return val
+    return None
+
+
+def extract_family_subtree(
+    ontology: object,
+    family_name: str,
+    *,
+    family_id: str | None = None,
+) -> tuple[object, int]:
     """Extract the family subtree from the ontology.
 
     The ontology has structure: {domains: [{id, name, children: [{id, name, children: [...]}]}]}
@@ -57,13 +98,17 @@ def extract_family_subtree(ontology: object, family_name: str) -> tuple[object, 
     Returns (subtree, node_count).
     """
     family_lower = family_name.lower()
+    family_id_norm = (family_id or "").strip()
 
     def node_matches(node: object) -> bool:
         """Check if a node matches the family name."""
         if not isinstance(node, dict):
             return False
+        node_id_raw = node.get("id", "")
+        node_id = node_id_raw if isinstance(node_id_raw, str) else ""
+        if family_id_norm:
+            return node_id == family_id_norm
         # Check ID field — the primary match for this ontology format
-        node_id = node.get("id", "")
         if isinstance(node_id, str):
             # Match as a path component: debt_capacity.indebtedness, indebtedness.general_basket
             parts = node_id.lower().split(".")
@@ -71,9 +116,7 @@ def extract_family_subtree(ontology: object, family_name: str) -> tuple[object, 
                 return True
         # Also check name field
         node_name = node.get("name", "")
-        if isinstance(node_name, str) and family_lower == node_name.lower():
-            return True
-        return False
+        return isinstance(node_name, str) and family_lower == node_name.lower()
 
     def count_nodes(node: object) -> int:
         """Count total nodes in a subtree."""
@@ -129,7 +172,10 @@ def extract_family_subtree(ontology: object, family_name: str) -> tuple[object, 
 
 
 def extract_bootstrap_strategies(
-    bootstrap: object, family_name: str
+    bootstrap: object,
+    family_name: str,
+    *,
+    valid_ids: set[str] | None = None,
 ) -> list[dict]:
     """Extract bootstrap strategies matching the family name."""
     family_lower = family_name.lower()
@@ -142,18 +188,26 @@ def extract_bootstrap_strategies(
                 return True
         return False
 
+    def append_if_valid(entry: dict[str, Any]) -> None:
+        concept_id = _strategy_concept_id(entry)
+        if valid_ids is not None and concept_id is not None and concept_id not in valid_ids:
+            return
+        results.append(entry)
+
     if isinstance(bootstrap, list):
         for entry in bootstrap:
             if isinstance(entry, dict) and matches_family(entry):
-                results.append(entry)
+                append_if_valid(entry)
     elif isinstance(bootstrap, dict):
         # Check if it's keyed by family name
         for key, val in bootstrap.items():
             if family_lower in key.lower():
                 if isinstance(val, list):
-                    results.extend(v for v in val if isinstance(v, dict))
+                    for v in val:
+                        if isinstance(v, dict):
+                            append_if_valid(v)
                 elif isinstance(val, dict):
-                    results.append(val)
+                    append_if_valid(val)
 
         # Also check if there's a top-level list
         for list_key in ("strategies", "concepts", "entries", "items"):
@@ -161,7 +215,7 @@ def extract_bootstrap_strategies(
             if isinstance(entries, list):
                 for entry in entries:
                     if isinstance(entry, dict) and matches_family(entry):
-                        results.append(entry)
+                        append_if_valid(entry)
 
     return results
 
@@ -172,6 +226,14 @@ def main() -> None:
     )
     parser.add_argument(
         "--family", required=True, help='Family name (e.g., "indebtedness")'
+    )
+    parser.add_argument(
+        "--family-id",
+        default=None,
+        help=(
+            "Optional exact ontology family id "
+            "(e.g., debt_capacity.indebtedness)."
+        ),
     )
     parser.add_argument(
         "--ontology", required=True, help="Path to production ontology JSON"
@@ -205,14 +267,35 @@ def main() -> None:
     # Extract family subtree from ontology
     log(f"Loading ontology from {ontology_path}")
     ontology = load_json(ontology_path)
+    ontology_ids = collect_ontology_ids(ontology)
+    if not ontology_ids:
+        log("Error: ontology has no node IDs; expected id-bearing production ontology.")
+        sys.exit(1)
 
-    subtree, node_count = extract_family_subtree(ontology, args.family)
+    subtree, node_count = extract_family_subtree(
+        ontology,
+        args.family,
+        family_id=args.family_id,
+    )
+    if node_count == 0:
+        log(f"Error: family '{args.family}' was not found in ontology.")
+        sys.exit(1)
+    invalid_subtree_ids = validate_node_ids(subtree, ontology_ids)
+    if invalid_subtree_ids:
+        preview = ", ".join(invalid_subtree_ids[:5])
+        log(
+            "Error: extracted subtree contains IDs not present in ontology: "
+            + preview
+        )
+        sys.exit(1)
+
     subtree_path = output / "context" / "ontology_subtree.json"
     write_json(subtree_path, subtree)
     log(f"Extracted ontology subtree: {node_count} node(s)")
 
     # Extract bootstrap strategies
     bootstrap_count = 0
+    bootstrap_rejected_invalid_ids = 0
     if args.bootstrap:
         bootstrap_path = Path(args.bootstrap)
         if not bootstrap_path.exists():
@@ -220,13 +303,27 @@ def main() -> None:
         else:
             log(f"Loading bootstrap strategies from {bootstrap_path}")
             bootstrap = load_json(bootstrap_path)
-            strategies = extract_bootstrap_strategies(bootstrap, args.family)
+            strategies = extract_bootstrap_strategies(
+                bootstrap,
+                args.family,
+                valid_ids=ontology_ids,
+            )
+
+            # Count rejected family strategies that failed ontology ID validation.
+            all_family_strategies = extract_bootstrap_strategies(bootstrap, args.family)
+            bootstrap_rejected_invalid_ids = len(all_family_strategies) - len(strategies)
             bootstrap_count = len(strategies)
 
             # Write bootstrap strategy to context
             bootstrap_context_path = output / "context" / "bootstrap_strategy.json"
             write_json(bootstrap_context_path, strategies)
             log(f"Extracted {bootstrap_count} bootstrap strategy/strategies")
+            if bootstrap_rejected_invalid_ids > 0:
+                log(
+                    "Dropped "
+                    f"{bootstrap_rejected_invalid_ids} bootstrap entries "
+                    "with non-ontology concept IDs"
+                )
 
             # Write individual strategy files to strategies/
             for i, strat in enumerate(strategies):
@@ -254,6 +351,7 @@ def main() -> None:
         "workspace": str(output),
         "ontology_nodes": node_count,
         "bootstrap_concepts": bootstrap_count,
+        "bootstrap_rejected_invalid_ids": bootstrap_rejected_invalid_ids,
         "directories_created": subdirs,
     }
     dump_json(summary)

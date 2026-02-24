@@ -1,0 +1,103 @@
+{
+  "schema_version": "wave_promote_status_v1",
+  "generated_at": "2026-02-23T06:06:27.045611+00:00",
+  "config_path": "swarm/swarm.full49.conf",
+  "workspace_root": "workspaces",
+  "wave": 2,
+  "from_statuses": [
+    "running"
+  ],
+  "to_status": "completed",
+  "criteria": {
+    "require_strategy": true,
+    "require_evidence": true,
+    "min_strategy_files": 1,
+    "min_evidence_files": 1,
+    "min_evidence_records": 1
+  },
+  "dry_run": false,
+  "summary": {
+    "assignments": 4,
+    "promoted_count": 4,
+    "blocked_count": 0,
+    "skipped_count": 0
+  },
+  "rows": [
+    {
+      "family": "inv",
+      "wave": 2,
+      "pane": 0,
+      "status_before": "running",
+      "status_after": "completed",
+      "eligible_status": true,
+      "meets_criteria": true,
+      "action": "promoted",
+      "reasons": [],
+      "checkpoint_path": "workspaces/inv/checkpoint.json",
+      "strategy_version_file_count": 20,
+      "evidence_file_count": 1,
+      "evidence_record_count": 300,
+      "result_json_file_count": 1,
+      "latest_strategy_file": "workspaces/inv/strategies/cash_flow.inv_v001.json",
+      "latest_evidence_file": "workspaces/inv/evidence/cash_flow.inv_20260223T060416.jsonl",
+      "latest_result_file": "workspaces/inv/results/cash_flow.inv_pattern_tester_wave2_bootstrap.json"
+    },
+    {
+      "family": "rp",
+      "wave": 2,
+      "pane": 1,
+      "status_before": "running",
+      "status_after": "completed",
+      "eligible_status": true,
+      "meets_criteria": true,
+      "action": "promoted",
+      "reasons": [],
+      "checkpoint_path": "workspaces/rp/checkpoint.json",
+      "strategy_version_file_count": 18,
+      "evidence_file_count": 1,
+      "evidence_record_count": 300,
+      "result_json_file_count": 1,
+      "latest_strategy_file": "workspaces/rp/strategies/cash_flow.rp_v001.json",
+      "latest_evidence_file": "workspaces/rp/evidence/cash_flow.rp_20260223T060449.jsonl",
+      "latest_result_file": "workspaces/rp/results/cash_flow.rp_pattern_tester_wave2_bootstrap.json"
+    },
+    {
+      "family": "indebtedness",
+      "wave": 2,
+      "pane": 2,
+      "status_before": "running",
+      "status_after": "completed",
+      "eligible_status": true,
+      "meets_criteria": true,
+      "action": "promoted",
+      "reasons": [],
+      "checkpoint_path": "workspaces/indebtedness/checkpoint.json",
+      "strategy_version_file_count": 21,
+      "evidence_file_count": 4,
+      "evidence_record_count": 1909,
+      "result_json_file_count": 27,
+      "latest_strategy_file": "workspaces/indebtedness/strategies/debt_capacity.indebtedness.securitization_v001.json",
+      "latest_evidence_file": "workspaces/indebtedness/evidence/debt_capacity.indebtedness_20260222T220430.jsonl",
+      "latest_result_file": "workspaces/indebtedness/results/matches_for_evidence_indebtedness_sample500_latest_strategy_outlier_v1.json"
+    },
+    {
+      "family": "liens",
+      "wave": 2,
+      "pane": 3,
+      "status_before": "running",
+      "status_after": "completed",
+      "eligible_status": true,
+      "meets_criteria": true,
+      "action": "promoted",
+      "reasons": [],
+      "checkpoint_path": "workspaces/liens/checkpoint.json",
+      "strategy_version_file_count": 16,
+      "evidence_file_count": 1,
+      "evidence_record_count": 300,
+      "result_json_file_count": 1,
+      "latest_strategy_file": "workspaces/liens/strategies/debt_capacity.liens_v001.json",
+      "latest_evidence_file": "workspaces/liens/evidence/debt_capacity.liens_20260223T060522.jsonl",
+      "latest_result_file": "workspaces/liens/results/debt_capacity.liens_pattern_tester_wave2_bootstrap.json"
+    }
+  ]
+}

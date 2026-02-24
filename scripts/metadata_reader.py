@@ -65,6 +65,11 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Show corpus-level statistics",
     )
+    parser.add_argument(
+        "--include-all",
+        action="store_true",
+        help="Include non-cohort documents (default is cohort-only).",
+    )
     return parser
 
 
@@ -124,6 +129,12 @@ def main() -> None:
                     file=sys.stderr,
                 )
                 sys.exit(1)
+            if not args.include_all and not doc.cohort_included:
+                print(
+                    f"Error: document {args.doc_id} is excluded from cohort; use --include-all",
+                    file=sys.stderr,
+                )
+                sys.exit(1)
 
             result = _doc_to_dict(doc)
             print(
@@ -136,13 +147,15 @@ def main() -> None:
 
         elif args.filter is not None:
             # Filter mode: use raw SQL query with user-provided WHERE clause
+            base_where = "cohort_included = true"
+            final_filter = args.filter if args.include_all else f"({base_where}) AND ({args.filter})"
             query = f"""
                 SELECT doc_id, cik, accession, borrower, admin_agent,
                        section_count, clause_count, definition_count,
                        text_length, template_family, facility_size_mm,
                        closing_date, filing_date, form_type
                 FROM documents
-                WHERE {args.filter}
+                WHERE {final_filter}
                 LIMIT ?
             """
             try:
@@ -179,6 +192,7 @@ def main() -> None:
 
         elif args.stats:
             # Stats mode: corpus-level aggregate statistics
+            where = "" if args.include_all else " WHERE cohort_included = true"
             stats_query = """
                 SELECT
                     COUNT(*) as total_documents,
@@ -191,7 +205,7 @@ def main() -> None:
                     MIN(text_length) as min_text_length,
                     MAX(text_length) as max_text_length
                 FROM documents
-            """
+            """ + where
             rows = corpus.query(stats_query)
             if not rows:
                 print("Error: could not compute statistics", file=sys.stderr)
@@ -214,6 +228,7 @@ def main() -> None:
             family_query = """
                 SELECT template_family, COUNT(*) as count
                 FROM documents
+            """ + where + """
                 GROUP BY template_family
                 ORDER BY count DESC
             """

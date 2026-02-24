@@ -1,0 +1,96 @@
+{
+  "schema_version": "swarm_ops_snapshot_v1",
+  "generated_at": "2026-02-23T05:58:02.463974+00:00",
+  "config_path": "/Users/johnchtchekine/Projects/Agent/swarm/swarm.full49.conf",
+  "workspace_root": "/Users/johnchtchekine/Projects/Agent/workspaces",
+  "wave_filter": null,
+  "session": "agent-swarm",
+  "next_wave": 2,
+  "transition_scope": "previous",
+  "artifacts": {
+    "ledger": "/Users/johnchtchekine/Projects/Agent/plans/swarm_ledger_2026-02-23.json",
+    "watchdog": "/Users/johnchtchekine/Projects/Agent/plans/watchdog_2026-02-23.json",
+    "artifact_manifest": "/Users/johnchtchekine/Projects/Agent/plans/artifact_manifest_2026-02-23.json",
+    "transition_gate": "/Users/johnchtchekine/Projects/Agent/plans/transition_gate_wave2_2026-02-23.json"
+  },
+  "subprocess": {
+    "ledger": {
+      "returncode": 0,
+      "error": ""
+    },
+    "watchdog": {
+      "returncode": 0,
+      "error": ""
+    },
+    "artifact_manifest": {
+      "returncode": 0,
+      "error": ""
+    },
+    "transition_gate": {
+      "returncode": 0,
+      "error": ""
+    }
+  },
+  "summary": {
+    "ledger": {
+      "assignments": 49,
+      "waves": {
+        "1": 5,
+        "2": 4,
+        "3": 40
+      },
+      "checkpoint_status_counts": {
+        "completed": 5,
+        "missing": 44
+      },
+      "stale_running_count": 0,
+      "stale_threshold_minutes": 120,
+      "completed_like_count": 5,
+      "running_count": 0,
+      "with_evidence_count": 6,
+      "with_strategy_version_count": 39,
+      "missing_checkpoint_count": 44,
+      "invalid_checkpoint_count": 0
+    },
+    "watchdog": {
+      "families_evaluated": 49,
+      "running_count": 0,
+      "stalled_count": 0,
+      "missing_checkpoint_count": 44,
+      "alert_count": 0,
+      "warning_count": 0,
+      "critical_count": 0
+    },
+    "artifact_manifest": {
+      "families_evaluated": 49,
+      "running_count": 0,
+      "completed_count": 5,
+      "missing_checkpoint_count": 44,
+      "with_strategy_count": 39,
+      "with_evidence_count": 6,
+      "with_judge_count": 0,
+      "review_ready_count": 6,
+      "total_strategy_versions": 452,
+      "total_evidence_files": 9,
+      "total_evidence_records": 3609,
+      "total_judge_reports": 0
+    },
+    "transition_gate": {
+      "prerequisite_waves": [
+        1
+      ],
+      "prerequisite_assignments": 5,
+      "blocked_count": 0,
+      "waived_count": 0,
+      "complete_count": 5
+    }
+  },
+  "decision": {
+    "go_no_go": {
+      "no_critical_alerts": true,
+      "next_wave_allowed": true
+    },
+    "blocking_reasons": [],
+    "allowed": true
+  }
+}

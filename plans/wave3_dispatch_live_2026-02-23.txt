@@ -1,0 +1,10 @@
+Transition gate passed for wave 3 (artifact: plans/wave3_dispatch_gate_2026-02-23.json)
+Started family 'acquisition_debt' on %0 using backend 'opus46'
+Prompt file: /tmp/agent_swarm_acquisition_debt_XXXXXX.md
+Started family 'affiliate_txns' on %1 using backend 'opus46'
+Prompt file: /tmp/agent_swarm_affiliate_txns_XXXXXX.md
+Started family 'amendments_voting' on %2 using backend 'opus46'
+Prompt file: /tmp/agent_swarm_amendments_voting_XXXXXX.md
+Started family 'accounting' on %3 using backend 'opus46'
+Prompt file: /tmp/agent_swarm_accounting_XXXXXX.md
+Dispatched wave 3 with 4 family agent(s); skipped=36.

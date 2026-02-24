@@ -1,0 +1,2884 @@
+{
+  "schema_version": "0.2.0",
+  "counts": {
+    "total_docs": 12583,
+    "cohort_docs": 12583,
+    "excluded_docs": 0
+  },
+  "parse_quality": {
+    "docs_with_sections": 12488,
+    "docs_with_definitions": 12577,
+    "docs_with_clauses": 12479,
+    "section_success_rate": 0.9925,
+    "definition_success_rate": 0.9995,
+    "clause_success_rate": 0.9917
+  },
+  "distributions": {
+    "by_doc_type": {
+      "credit_agreement": 12583
+    },
+    "by_market_segment": {
+      "leveraged": 12583
+    },
+    "by_template_family": {
+      "": 12583
+    },
+    "word_count": {
+      "count": 12583,
+      "mean": 94211.288,
+      "median": 87604.0,
+      "min": 20041.0,
+      "max": 515138.0,
+      "p5": 51473.3,
+      "p95": 154788.6
+    },
+    "section_count": {
+      "count": 12583,
+      "mean": 114.571,
+      "median": 120.0,
+      "min": 0.0,
+      "max": 326.0,
+      "p5": 25.1,
+      "p95": 159.0
+    },
+    "clause_count": {
+      "count": 12583,
+      "mean": 1776.661,
+      "median": 1662.0,
+      "min": 0.0,
+      "max": 8989.0,
+      "p5": 705.0,
+      "p95": 3255.8
+    },
+    "definition_count": {
+      "count": 12583,
+      "mean": 46.393,
+      "median": 19.0,
+      "min": 0.0,
+      "max": 732.0,
+      "p5": 6.0,
+      "p95": 271.9
+    },
+    "facility_size_mm": {
+      "count": 0,
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "p5": 0.0,
+      "p95": 0.0
+    }
+  },
+  "anomalies": {
+    "no_sections": [
+      "04dfcec69dac4a79",
+      "07008c40fc85585a",
+      "0c860935682110cc",
+      "0dfe06adcac2d155",
+      "1019233f6241e2ce",
+      "10d9475f889e3149",
+      "140ac304e363b935",
+      "14e4e058b8a076ba",
+      "14ecb47ad168a90e",
+      "1782d2ae0d0e8f85",
+      "1938591ee86f5902",
+      "1db00470864e4fc4",
+      "232d03f3230ce1b6",
+      "263d5ae74f84a153",
+      "2792f3572607bf42",
+      "28e31263c1420a74",
+      "2a95a5897c3d3623",
+      "2c02729afc3a6187",
+      "2ee3272b29b8a704",
+      "309cfc0f3f481c0d",
+      "31a96a7267fb2ba0",
+      "325643f3d31d3bcc",
+      "3c18096010c06a3e",
+      "422fa1ae834aecc6",
+      "42435dbaf922ee63",
+      "42ca1c7fa85add9c",
+      "43b11fee6dcb08bc",
+      "4631b286794bbd65",
+      "488734d4c476aab3",
+      "4f6f58ff3df71e67",
+      "52f881aafcf29100",
+      "6308fc835c0bcad0",
+      "634c9a5b6a433812",
+      "6b2faf4f5cefc0bc",
+      "6bb6966b844a5453",
+      "7262c733626b2f0a",
+      "7325e72e65bff169",
+      "75771d11b01b7fd3",
+      "7887b8efe7bcf00e",
+      "79a37e30b4e98c37",
+      "7a5f5bd8db0c7bf4",
+      "7c64f73572b526ce",
+      "7e6928fa91de20fd",
+      "806831abb7e41de7",
+      "806c90373e9aaa46",
+      "8433fefe4b91c864",
+      "85c5c594523a48c1",
+      "8a8873497c2e907e",
+      "8e519df11a401660",
+      "95b1ca9a2ef75d24",
+      "96497fef71a7926f",
+      "995ed22b6214defb",
+      "9a23c7db4ce5923d",
+      "9bba1dd1107b4270",
+      "9c21ba2dbfcdf891",
+      "9df312c403ff847c",
+      "9e92caa911f57bc0",
+      "9ea6f89948386359",
+      "a3a7870ef3395a05",
+      "a6fc81a834ef70b9",
+      "a718f2d26656bc7e",
+      "a77bc01e1215d3ec",
+      "a85d06107ae38be3",
+      "aad34383885379e9",
+      "acf5171fc61fd2e3",
+      "b0358cbabb26c6b3",
+      "b4e634ecff8bfc06",
+      "b730844ac8ff1e8f",
+      "b91e5fb2c7e89e80",
+      "b935449be6b3a2c5",
+      "ba3a56093477fc0e",
+      "bb2fbbc725f14e9f",
+      "bc07d1891d004f9c",
+      "bd6b9b050ddf3fc8",
+      "c6c4da9d14aa91cc",
+      "c7e9e470b375066d",
+      "c89b6ac25b6584fd",
+      "c9211fc748806bfb",
+      "ca924db9e83cb4c4",
+      "cb03e861c3ed396b",
+      "cc9fa57fe1f7618b",
+      "d04e22ab539606f5",
+      "d39ded9681165f46",
+      "dcde10c676f26dec",
+      "e468924f026adff3",
+      "e82e245b2017aea6",
+      "ea874bc97cbd186e",
+      "ee7deb99f22aa303",
+      "efcee208b9f5080f",
+      "efdd137f52b62f21",
+      "f67bfb1c62fc339b",
+      "f82d360b1af3f5be",
+      "f9a6e74bc5e8fdeb",
+      "fadb382b2864ba67",
+      "fbb6f4daf6c3ef60"
+    ],
+    "no_sections_details": [
+      {
+        "doc_id": "04dfcec69dac4a79",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 337,
+        "word_count": 109958,
+        "text_length": 684170,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "07008c40fc85585a",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 121,
+        "word_count": 125909,
+        "text_length": 816730,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "0c860935682110cc",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 66,
+        "word_count": 106570,
+        "text_length": 673716,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "0dfe06adcac2d155",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 55,
+        "word_count": 60487,
+        "text_length": 403309,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "1019233f6241e2ce",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 260,
+        "word_count": 68349,
+        "text_length": 433913,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "10d9475f889e3149",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 26,
+        "word_count": 104484,
+        "text_length": 641994,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "140ac304e363b935",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 17,
+        "word_count": 67365,
+        "text_length": 442064,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "14e4e058b8a076ba",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 419,
+        "word_count": 106627,
+        "text_length": 665522,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "14ecb47ad168a90e",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 11,
+        "word_count": 78802,
+        "text_length": 503317,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "1782d2ae0d0e8f85",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 20,
+        "word_count": 94387,
+        "text_length": 590048,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "1938591ee86f5902",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 287,
+        "word_count": 89073,
+        "text_length": 579306,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "1db00470864e4fc4",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 15,
+        "word_count": 131671,
+        "text_length": 840326,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "232d03f3230ce1b6",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 237,
+        "word_count": 74689,
+        "text_length": 471228,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "263d5ae74f84a153",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 454,
+        "word_count": 118608,
+        "text_length": 751199,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "2792f3572607bf42",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 54,
+        "word_count": 92574,
+        "text_length": 587200,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "28e31263c1420a74",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 183,
+        "word_count": 43987,
+        "text_length": 473235,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "2a95a5897c3d3623",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 49,
+        "word_count": 81178,
+        "text_length": 523484,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "2c02729afc3a6187",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 14,
+        "word_count": 75507,
+        "text_length": 472983,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "2ee3272b29b8a704",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 15,
+        "word_count": 111062,
+        "text_length": 703735,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "309cfc0f3f481c0d",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 13,
+        "word_count": 85468,
+        "text_length": 541362,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "31a96a7267fb2ba0",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 174,
+        "word_count": 65871,
+        "text_length": 416262,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "325643f3d31d3bcc",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 62,
+        "word_count": 92384,
+        "text_length": 599399,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "3c18096010c06a3e",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 64,
+        "word_count": 88276,
+        "text_length": 573129,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "422fa1ae834aecc6",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 102,
+        "word_count": 108775,
+        "text_length": 700380,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "42435dbaf922ee63",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 304,
+        "word_count": 75185,
+        "text_length": 474914,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "42ca1c7fa85add9c",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 253,
+        "word_count": 174723,
+        "text_length": 1134987,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "43b11fee6dcb08bc",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 5,
+        "word_count": 91964,
+        "text_length": 572626,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "4631b286794bbd65",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 49,
+        "word_count": 102459,
+        "text_length": 653626,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "488734d4c476aab3",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 34,
+        "word_count": 44216,
+        "text_length": 284091,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "4f6f58ff3df71e67",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 7,
+        "word_count": 89327,
+        "text_length": 554402,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "52f881aafcf29100",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 131,
+        "word_count": 59488,
+        "text_length": 435405,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "6308fc835c0bcad0",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 11,
+        "word_count": 98900,
+        "text_length": 625888,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "634c9a5b6a433812",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 24,
+        "word_count": 85427,
+        "text_length": 532187,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "6b2faf4f5cefc0bc",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 7,
+        "word_count": 72372,
+        "text_length": 451644,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "6bb6966b844a5453",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 3,
+        "word_count": 32293,
+        "text_length": 209709,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "7262c733626b2f0a",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 25,
+        "word_count": 95979,
+        "text_length": 593257,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "7325e72e65bff169",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 8,
+        "word_count": 92389,
+        "text_length": 575661,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "75771d11b01b7fd3",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 29,
+        "word_count": 95104,
+        "text_length": 595202,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "7887b8efe7bcf00e",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 13,
+        "word_count": 101577,
+        "text_length": 642842,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "79a37e30b4e98c37",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 7,
+        "word_count": 82518,
+        "text_length": 515092,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "7a5f5bd8db0c7bf4",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 18,
+        "word_count": 75568,
+        "text_length": 461924,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "7c64f73572b526ce",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 8,
+        "word_count": 30514,
+        "text_length": 198552,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "7e6928fa91de20fd",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 294,
+        "word_count": 83305,
+        "text_length": 530459,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "806831abb7e41de7",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 120,
+        "word_count": 124756,
+        "text_length": 809960,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "806c90373e9aaa46",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 16,
+        "word_count": 67689,
+        "text_length": 446032,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "8433fefe4b91c864",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 332,
+        "word_count": 82787,
+        "text_length": 523317,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "85c5c594523a48c1",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 21,
+        "word_count": 95761,
+        "text_length": 599654,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "8a8873497c2e907e",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 489,
+        "word_count": 117111,
+        "text_length": 742739,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "8e519df11a401660",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 16,
+        "word_count": 77251,
+        "text_length": 516501,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "95b1ca9a2ef75d24",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 284,
+        "word_count": 71252,
+        "text_length": 454685,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "96497fef71a7926f",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 267,
+        "word_count": 69149,
+        "text_length": 438227,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "995ed22b6214defb",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 38,
+        "word_count": 83729,
+        "text_length": 551358,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "9a23c7db4ce5923d",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 297,
+        "word_count": 102458,
+        "text_length": 645911,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "9bba1dd1107b4270",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 138,
+        "word_count": 66147,
+        "text_length": 424020,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "9c21ba2dbfcdf891",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 4,
+        "word_count": 117011,
+        "text_length": 744271,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "9df312c403ff847c",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 312,
+        "word_count": 93642,
+        "text_length": 608519,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "9e92caa911f57bc0",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 48,
+        "word_count": 91661,
+        "text_length": 613314,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "9ea6f89948386359",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 13,
+        "word_count": 65421,
+        "text_length": 405236,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "a3a7870ef3395a05",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 12,
+        "word_count": 76365,
+        "text_length": 480961,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "a6fc81a834ef70b9",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 7,
+        "word_count": 79856,
+        "text_length": 498190,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "a718f2d26656bc7e",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 55,
+        "word_count": 96772,
+        "text_length": 613609,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "a77bc01e1215d3ec",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 6,
+        "word_count": 49135,
+        "text_length": 321450,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "a85d06107ae38be3",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 19,
+        "word_count": 102066,
+        "text_length": 641615,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "aad34383885379e9",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 12,
+        "word_count": 101340,
+        "text_length": 641105,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "acf5171fc61fd2e3",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 105,
+        "word_count": 108513,
+        "text_length": 696233,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "b0358cbabb26c6b3",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 30,
+        "word_count": 110699,
+        "text_length": 700385,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "b4e634ecff8bfc06",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 53,
+        "word_count": 95332,
+        "text_length": 608440,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "b730844ac8ff1e8f",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 26,
+        "word_count": 93247,
+        "text_length": 583607,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "b91e5fb2c7e89e80",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 10,
+        "word_count": 85167,
+        "text_length": 532972,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "b935449be6b3a2c5",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 12,
+        "word_count": 100686,
+        "text_length": 641219,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "ba3a56093477fc0e",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 51,
+        "word_count": 31343,
+        "text_length": 203843,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "bb2fbbc725f14e9f",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 12,
+        "word_count": 102074,
+        "text_length": 643899,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "bc07d1891d004f9c",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 18,
+        "word_count": 75568,
+        "text_length": 461924,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "bd6b9b050ddf3fc8",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 13,
+        "word_count": 125195,
+        "text_length": 795557,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "c6c4da9d14aa91cc",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 24,
+        "word_count": 99996,
+        "text_length": 630935,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "c7e9e470b375066d",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 23,
+        "word_count": 96485,
+        "text_length": 612434,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "c89b6ac25b6584fd",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 5,
+        "word_count": 142535,
+        "text_length": 904419,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "c9211fc748806bfb",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 294,
+        "word_count": 72400,
+        "text_length": 457297,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "ca924db9e83cb4c4",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 289,
+        "word_count": 82995,
+        "text_length": 528684,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "cb03e861c3ed396b",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 9,
+        "word_count": 148942,
+        "text_length": 942610,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "cc9fa57fe1f7618b",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 11,
+        "word_count": 73565,
+        "text_length": 459108,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "d04e22ab539606f5",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 17,
+        "word_count": 98687,
+        "text_length": 629456,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "d39ded9681165f46",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 9,
+        "word_count": 110184,
+        "text_length": 705213,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "dcde10c676f26dec",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 15,
+        "word_count": 49649,
+        "text_length": 309734,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "e468924f026adff3",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 67,
+        "word_count": 141676,
+        "text_length": 912709,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "e82e245b2017aea6",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 20,
+        "word_count": 66870,
+        "text_length": 433971,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "ea874bc97cbd186e",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 43,
+        "word_count": 107011,
+        "text_length": 672105,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "ee7deb99f22aa303",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 26,
+        "word_count": 121431,
+        "text_length": 751851,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "efcee208b9f5080f",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 12,
+        "word_count": 77416,
+        "text_length": 489589,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "efdd137f52b62f21",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 46,
+        "word_count": 90611,
+        "text_length": 577338,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "f67bfb1c62fc339b",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 19,
+        "word_count": 102513,
+        "text_length": 662426,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "f82d360b1af3f5be",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 10,
+        "word_count": 59590,
+        "text_length": 391962,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "f9a6e74bc5e8fdeb",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 138,
+        "word_count": 66161,
+        "text_length": 424180,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "fadb382b2864ba67",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 39,
+        "word_count": 56621,
+        "text_length": 374400,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "fbb6f4daf6c3ef60",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 11,
+        "word_count": 83543,
+        "text_length": 530277,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      }
+    ],
+    "no_definitions": [
+      "16e50cf6b190dbe3",
+      "1b24ae05d4c7b6c5",
+      "243c3403b5973b6c",
+      "741cd87c62d18146",
+      "d4a2a92ae252cf05",
+      "ec19e103c291caad"
+    ],
+    "zero_clauses": [
+      "04dfcec69dac4a79",
+      "07008c40fc85585a",
+      "0c860935682110cc",
+      "0dfe06adcac2d155",
+      "1019233f6241e2ce",
+      "10d9475f889e3149",
+      "12ca75414f85727d",
+      "140ac304e363b935",
+      "14e4e058b8a076ba",
+      "14ecb47ad168a90e",
+      "165da36504469a43",
+      "1782d2ae0d0e8f85",
+      "1938591ee86f5902",
+      "1db00470864e4fc4",
+      "232d03f3230ce1b6",
+      "263d5ae74f84a153",
+      "2792f3572607bf42",
+      "28e31263c1420a74",
+      "2a95a5897c3d3623",
+      "2c02729afc3a6187",
+      "2ee3272b29b8a704",
+      "309cfc0f3f481c0d",
+      "31a96a7267fb2ba0",
+      "325643f3d31d3bcc",
+      "3c18096010c06a3e",
+      "422fa1ae834aecc6",
+      "42435dbaf922ee63",
+      "42ca1c7fa85add9c",
+      "43b11fee6dcb08bc",
+      "4631b286794bbd65",
+      "488734d4c476aab3",
+      "4f6f58ff3df71e67",
+      "52f881aafcf29100",
+      "5a4995093c7d79bb",
+      "5cebdbfb7768d9bb",
+      "6308fc835c0bcad0",
+      "634c9a5b6a433812",
+      "6b2faf4f5cefc0bc",
+      "6bb6966b844a5453",
+      "6f4c9c999edc3906",
+      "7262c733626b2f0a",
+      "7325e72e65bff169",
+      "75771d11b01b7fd3",
+      "7887b8efe7bcf00e",
+      "79a37e30b4e98c37",
+      "7a5f5bd8db0c7bf4",
+      "7c64f73572b526ce",
+      "7e6928fa91de20fd",
+      "806831abb7e41de7",
+      "806c90373e9aaa46",
+      "8433fefe4b91c864",
+      "85c5c594523a48c1",
+      "8830d065a4eee5f9",
+      "8a8873497c2e907e",
+      "8e519df11a401660",
+      "95b1ca9a2ef75d24",
+      "96497fef71a7926f",
+      "987969f1caccd765",
+      "995ed22b6214defb",
+      "9a23c7db4ce5923d",
+      "9bba1dd1107b4270",
+      "9c21ba2dbfcdf891",
+      "9df312c403ff847c",
+      "9e92caa911f57bc0",
+      "9ea6f89948386359",
+      "a3a7870ef3395a05",
+      "a6fc81a834ef70b9",
+      "a718f2d26656bc7e",
+      "a77bc01e1215d3ec",
+      "a85d06107ae38be3",
+      "a8acc546f5f5818f",
+      "aad34383885379e9",
+      "acf5171fc61fd2e3",
+      "b0358cbabb26c6b3",
+      "b4e634ecff8bfc06",
+      "b730844ac8ff1e8f",
+      "b91e5fb2c7e89e80",
+      "b935449be6b3a2c5",
+      "ba3a56093477fc0e",
+      "bb2fbbc725f14e9f",
+      "bc07d1891d004f9c",
+      "bd6b9b050ddf3fc8",
+      "c6c4da9d14aa91cc",
+      "c7e9e470b375066d",
+      "c89b6ac25b6584fd",
+      "c9211fc748806bfb",
+      "ca924db9e83cb4c4",
+      "cb03e861c3ed396b",
+      "cc9fa57fe1f7618b",
+      "d04e22ab539606f5",
+      "d39ded9681165f46",
+      "dcde10c676f26dec",
+      "e468924f026adff3",
+      "e82e245b2017aea6",
+      "e868045d64e9e1dd",
+      "ea874bc97cbd186e",
+      "ee7deb99f22aa303",
+      "efcee208b9f5080f",
+      "efdd137f52b62f21",
+      "f67bfb1c62fc339b",
+      "f82d360b1af3f5be",
+      "f9a6e74bc5e8fdeb",
+      "fadb382b2864ba67",
+      "fbb6f4daf6c3ef60"
+    ],
+    "zero_clauses_details": [
+      {
+        "doc_id": "04dfcec69dac4a79",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 337,
+        "word_count": 109958,
+        "text_length": 684170,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "07008c40fc85585a",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 121,
+        "word_count": 125909,
+        "text_length": 816730,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "0c860935682110cc",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 66,
+        "word_count": 106570,
+        "text_length": 673716,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "0dfe06adcac2d155",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 55,
+        "word_count": 60487,
+        "text_length": 403309,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "1019233f6241e2ce",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 260,
+        "word_count": 68349,
+        "text_length": 433913,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "10d9475f889e3149",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 26,
+        "word_count": 104484,
+        "text_length": 641994,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "12ca75414f85727d",
+        "template_family": "unknown",
+        "section_count": 1,
+        "clause_count": 0,
+        "definition_count": 18,
+        "word_count": 157824,
+        "text_length": 998815,
+        "failure_signatures": [
+          "no_clauses_detected",
+          "sections_without_clause_nodes"
+        ]
+      },
+      {
+        "doc_id": "140ac304e363b935",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 17,
+        "word_count": 67365,
+        "text_length": 442064,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "14e4e058b8a076ba",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 419,
+        "word_count": 106627,
+        "text_length": 665522,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "14ecb47ad168a90e",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 11,
+        "word_count": 78802,
+        "text_length": 503317,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "165da36504469a43",
+        "template_family": "unknown",
+        "section_count": 15,
+        "clause_count": 0,
+        "definition_count": 11,
+        "word_count": 52300,
+        "text_length": 332953,
+        "failure_signatures": [
+          "no_clauses_detected",
+          "sections_without_clause_nodes"
+        ]
+      },
+      {
+        "doc_id": "1782d2ae0d0e8f85",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 20,
+        "word_count": 94387,
+        "text_length": 590048,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "1938591ee86f5902",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 287,
+        "word_count": 89073,
+        "text_length": 579306,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "1db00470864e4fc4",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 15,
+        "word_count": 131671,
+        "text_length": 840326,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "232d03f3230ce1b6",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 237,
+        "word_count": 74689,
+        "text_length": 471228,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "263d5ae74f84a153",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 454,
+        "word_count": 118608,
+        "text_length": 751199,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "2792f3572607bf42",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 54,
+        "word_count": 92574,
+        "text_length": 587200,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "28e31263c1420a74",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 183,
+        "word_count": 43987,
+        "text_length": 473235,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "2a95a5897c3d3623",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 49,
+        "word_count": 81178,
+        "text_length": 523484,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "2c02729afc3a6187",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 14,
+        "word_count": 75507,
+        "text_length": 472983,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "2ee3272b29b8a704",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 15,
+        "word_count": 111062,
+        "text_length": 703735,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "309cfc0f3f481c0d",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 13,
+        "word_count": 85468,
+        "text_length": 541362,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "31a96a7267fb2ba0",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 174,
+        "word_count": 65871,
+        "text_length": 416262,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "325643f3d31d3bcc",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 62,
+        "word_count": 92384,
+        "text_length": 599399,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "3c18096010c06a3e",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 64,
+        "word_count": 88276,
+        "text_length": 573129,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "422fa1ae834aecc6",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 102,
+        "word_count": 108775,
+        "text_length": 700380,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "42435dbaf922ee63",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 304,
+        "word_count": 75185,
+        "text_length": 474914,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "42ca1c7fa85add9c",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 253,
+        "word_count": 174723,
+        "text_length": 1134987,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "43b11fee6dcb08bc",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 5,
+        "word_count": 91964,
+        "text_length": 572626,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "4631b286794bbd65",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 49,
+        "word_count": 102459,
+        "text_length": 653626,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "488734d4c476aab3",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 34,
+        "word_count": 44216,
+        "text_length": 284091,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "4f6f58ff3df71e67",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 7,
+        "word_count": 89327,
+        "text_length": 554402,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "52f881aafcf29100",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 131,
+        "word_count": 59488,
+        "text_length": 435405,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "5a4995093c7d79bb",
+        "template_family": "unknown",
+        "section_count": 60,
+        "clause_count": 0,
+        "definition_count": 20,
+        "word_count": 107337,
+        "text_length": 678562,
+        "failure_signatures": [
+          "no_clauses_detected",
+          "sections_without_clause_nodes"
+        ]
+      },
+      {
+        "doc_id": "5cebdbfb7768d9bb",
+        "template_family": "unknown",
+        "section_count": 15,
+        "clause_count": 0,
+        "definition_count": 12,
+        "word_count": 61467,
+        "text_length": 391106,
+        "failure_signatures": [
+          "no_clauses_detected",
+          "sections_without_clause_nodes"
+        ]
+      },
+      {
+        "doc_id": "6308fc835c0bcad0",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 11,
+        "word_count": 98900,
+        "text_length": 625888,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "634c9a5b6a433812",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 24,
+        "word_count": 85427,
+        "text_length": 532187,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "6b2faf4f5cefc0bc",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 7,
+        "word_count": 72372,
+        "text_length": 451644,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "6bb6966b844a5453",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 3,
+        "word_count": 32293,
+        "text_length": 209709,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "6f4c9c999edc3906",
+        "template_family": "unknown",
+        "section_count": 1,
+        "clause_count": 0,
+        "definition_count": 11,
+        "word_count": 81206,
+        "text_length": 530487,
+        "failure_signatures": [
+          "no_clauses_detected",
+          "sections_without_clause_nodes"
+        ]
+      },
+      {
+        "doc_id": "7262c733626b2f0a",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 25,
+        "word_count": 95979,
+        "text_length": 593257,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "7325e72e65bff169",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 8,
+        "word_count": 92389,
+        "text_length": 575661,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "75771d11b01b7fd3",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 29,
+        "word_count": 95104,
+        "text_length": 595202,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "7887b8efe7bcf00e",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 13,
+        "word_count": 101577,
+        "text_length": 642842,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "79a37e30b4e98c37",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 7,
+        "word_count": 82518,
+        "text_length": 515092,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "7a5f5bd8db0c7bf4",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 18,
+        "word_count": 75568,
+        "text_length": 461924,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "7c64f73572b526ce",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 8,
+        "word_count": 30514,
+        "text_length": 198552,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "7e6928fa91de20fd",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 294,
+        "word_count": 83305,
+        "text_length": 530459,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "806831abb7e41de7",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 120,
+        "word_count": 124756,
+        "text_length": 809960,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "806c90373e9aaa46",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 16,
+        "word_count": 67689,
+        "text_length": 446032,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "8433fefe4b91c864",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 332,
+        "word_count": 82787,
+        "text_length": 523317,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "85c5c594523a48c1",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 21,
+        "word_count": 95761,
+        "text_length": 599654,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "8830d065a4eee5f9",
+        "template_family": "unknown",
+        "section_count": 101,
+        "clause_count": 0,
+        "definition_count": 10,
+        "word_count": 79399,
+        "text_length": 497744,
+        "failure_signatures": [
+          "no_clauses_detected",
+          "sections_without_clause_nodes"
+        ]
+      },
+      {
+        "doc_id": "8a8873497c2e907e",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 489,
+        "word_count": 117111,
+        "text_length": 742739,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "8e519df11a401660",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 16,
+        "word_count": 77251,
+        "text_length": 516501,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "95b1ca9a2ef75d24",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 284,
+        "word_count": 71252,
+        "text_length": 454685,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "96497fef71a7926f",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 267,
+        "word_count": 69149,
+        "text_length": 438227,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "987969f1caccd765",
+        "template_family": "unknown",
+        "section_count": 1,
+        "clause_count": 0,
+        "definition_count": 13,
+        "word_count": 83454,
+        "text_length": 537093,
+        "failure_signatures": [
+          "no_clauses_detected",
+          "sections_without_clause_nodes"
+        ]
+      },
+      {
+        "doc_id": "995ed22b6214defb",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 38,
+        "word_count": 83729,
+        "text_length": 551358,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "9a23c7db4ce5923d",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 297,
+        "word_count": 102458,
+        "text_length": 645911,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "9bba1dd1107b4270",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 138,
+        "word_count": 66147,
+        "text_length": 424020,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "9c21ba2dbfcdf891",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 4,
+        "word_count": 117011,
+        "text_length": 744271,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "9df312c403ff847c",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 312,
+        "word_count": 93642,
+        "text_length": 608519,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "9e92caa911f57bc0",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 48,
+        "word_count": 91661,
+        "text_length": 613314,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "9ea6f89948386359",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 13,
+        "word_count": 65421,
+        "text_length": 405236,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "a3a7870ef3395a05",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 12,
+        "word_count": 76365,
+        "text_length": 480961,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "a6fc81a834ef70b9",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 7,
+        "word_count": 79856,
+        "text_length": 498190,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "a718f2d26656bc7e",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 55,
+        "word_count": 96772,
+        "text_length": 613609,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "a77bc01e1215d3ec",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 6,
+        "word_count": 49135,
+        "text_length": 321450,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "a85d06107ae38be3",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 19,
+        "word_count": 102066,
+        "text_length": 641615,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "a8acc546f5f5818f",
+        "template_family": "unknown",
+        "section_count": 1,
+        "clause_count": 0,
+        "definition_count": 12,
+        "word_count": 80961,
+        "text_length": 516628,
+        "failure_signatures": [
+          "no_clauses_detected",
+          "sections_without_clause_nodes"
+        ]
+      },
+      {
+        "doc_id": "aad34383885379e9",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 12,
+        "word_count": 101340,
+        "text_length": 641105,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "acf5171fc61fd2e3",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 105,
+        "word_count": 108513,
+        "text_length": 696233,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "b0358cbabb26c6b3",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 30,
+        "word_count": 110699,
+        "text_length": 700385,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "b4e634ecff8bfc06",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 53,
+        "word_count": 95332,
+        "text_length": 608440,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "b730844ac8ff1e8f",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 26,
+        "word_count": 93247,
+        "text_length": 583607,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "b91e5fb2c7e89e80",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 10,
+        "word_count": 85167,
+        "text_length": 532972,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "b935449be6b3a2c5",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 12,
+        "word_count": 100686,
+        "text_length": 641219,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "ba3a56093477fc0e",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 51,
+        "word_count": 31343,
+        "text_length": 203843,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "bb2fbbc725f14e9f",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 12,
+        "word_count": 102074,
+        "text_length": 643899,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "bc07d1891d004f9c",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 18,
+        "word_count": 75568,
+        "text_length": 461924,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "bd6b9b050ddf3fc8",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 13,
+        "word_count": 125195,
+        "text_length": 795557,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "c6c4da9d14aa91cc",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 24,
+        "word_count": 99996,
+        "text_length": 630935,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "c7e9e470b375066d",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 23,
+        "word_count": 96485,
+        "text_length": 612434,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "c89b6ac25b6584fd",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 5,
+        "word_count": 142535,
+        "text_length": 904419,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "c9211fc748806bfb",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 294,
+        "word_count": 72400,
+        "text_length": 457297,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "ca924db9e83cb4c4",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 289,
+        "word_count": 82995,
+        "text_length": 528684,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "cb03e861c3ed396b",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 9,
+        "word_count": 148942,
+        "text_length": 942610,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "cc9fa57fe1f7618b",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 11,
+        "word_count": 73565,
+        "text_length": 459108,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "d04e22ab539606f5",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 17,
+        "word_count": 98687,
+        "text_length": 629456,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "d39ded9681165f46",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 9,
+        "word_count": 110184,
+        "text_length": 705213,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "dcde10c676f26dec",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 15,
+        "word_count": 49649,
+        "text_length": 309734,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "e468924f026adff3",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 67,
+        "word_count": 141676,
+        "text_length": 912709,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "e82e245b2017aea6",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 20,
+        "word_count": 66870,
+        "text_length": 433971,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "e868045d64e9e1dd",
+        "template_family": "unknown",
+        "section_count": 10,
+        "clause_count": 0,
+        "definition_count": 35,
+        "word_count": 116242,
+        "text_length": 742283,
+        "failure_signatures": [
+          "no_clauses_detected",
+          "sections_without_clause_nodes"
+        ]
+      },
+      {
+        "doc_id": "ea874bc97cbd186e",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 43,
+        "word_count": 107011,
+        "text_length": 672105,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "ee7deb99f22aa303",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 26,
+        "word_count": 121431,
+        "text_length": 751851,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "efcee208b9f5080f",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 12,
+        "word_count": 77416,
+        "text_length": 489589,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "efdd137f52b62f21",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 46,
+        "word_count": 90611,
+        "text_length": 577338,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "f67bfb1c62fc339b",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 19,
+        "word_count": 102513,
+        "text_length": 662426,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "f82d360b1af3f5be",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 10,
+        "word_count": 59590,
+        "text_length": 391962,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "f9a6e74bc5e8fdeb",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 138,
+        "word_count": 66161,
+        "text_length": 424180,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "fadb382b2864ba67",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 39,
+        "word_count": 56621,
+        "text_length": 374400,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      },
+      {
+        "doc_id": "fbb6f4daf6c3ef60",
+        "template_family": "unknown",
+        "section_count": 0,
+        "clause_count": 0,
+        "definition_count": 11,
+        "word_count": 83543,
+        "text_length": 530277,
+        "failure_signatures": [
+          "no_sections_detected",
+          "no_clauses_detected"
+        ]
+      }
+    ],
+    "limit_per_list": 200
+  },
+  "manifest": {
+    "path": "/Users/johnchtchekine/Projects/Agent/corpus_index/run_manifest.json",
+    "present": false,
+    "run_id": null,
+    "created_at": null,
+    "manifest_version": null
+  }
+}

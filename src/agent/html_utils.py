@@ -22,7 +22,6 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 from bs4.element import NavigableString
 
-
 # ---------------------------------------------------------------------------
 # Inverse map types
 # ---------------------------------------------------------------------------
@@ -78,7 +77,11 @@ def _is_image_overlay_pdf(html: str) -> bool:
 # ---------------------------------------------------------------------------
 
 
-def strip_html(raw_html: str, *, preserve_newlines: bool = True) -> str:
+def strip_html(
+    raw_html: str,
+    *,
+    preserve_newlines: bool = True,
+) -> str:
     """Extract text from HTML with optional paragraph-break preservation.
 
     Args:
@@ -105,7 +108,9 @@ def strip_html(raw_html: str, *, preserve_newlines: bool = True) -> str:
     return text.strip()
 
 
-def normalize_html(raw_html: str) -> tuple[str, InverseMap]:
+def normalize_html(
+    raw_html: str,
+) -> tuple[str, InverseMap]:
     """Convert HTML to structured text with character-level inverse map.
 
     The inverse map allows resolving any normalized-text offset back to

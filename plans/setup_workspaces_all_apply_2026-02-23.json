@@ -1,0 +1,1850 @@
+{
+  "schema_version": "setup_workspaces_all_v1",
+  "generated_at": "2026-02-23T04:29:41.283112+00:00",
+  "ontology": "data/ontology/r36a_production_ontology_v2.5.1.json",
+  "workspace_root": "workspaces",
+  "summary": {
+    "selected_families": 49,
+    "created": 48,
+    "skipped_existing": 1,
+    "failed": 0,
+    "dry_run": false,
+    "force_existing": false,
+    "duration_sec": 3.983
+  },
+  "rows": [
+    {
+      "index": 1,
+      "family_id": "deal_econ.term_loan",
+      "family_name": "Term Loan",
+      "family_tail": "term_loan",
+      "workspace_key": "term_loan",
+      "workspace": "workspaces/term_loan",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "term_loan",
+        "--family-id",
+        "deal_econ.term_loan",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/term_loan",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "term_loan",
+        "workspace": "workspaces/term_loan",
+        "ontology_nodes": 74,
+        "bootstrap_concepts": 0,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/term_loan\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 74 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 0 bootstrap strategy/strategies"
+    },
+    {
+      "index": 2,
+      "family_id": "deal_econ.ddtl",
+      "family_name": "Delayed Draw Term Loan (DDTL)",
+      "family_tail": "ddtl",
+      "workspace_key": "ddtl",
+      "workspace": "workspaces/ddtl",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "ddtl",
+        "--family-id",
+        "deal_econ.ddtl",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/ddtl",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "ddtl",
+        "workspace": "workspaces/ddtl",
+        "ontology_nodes": 88,
+        "bootstrap_concepts": 1,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/ddtl\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 88 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 1 bootstrap strategy/strategies"
+    },
+    {
+      "index": 3,
+      "family_id": "deal_econ.revolver",
+      "family_name": "Revolving Credit Facility",
+      "family_tail": "revolver",
+      "workspace_key": "revolver",
+      "workspace": "workspaces/revolver",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "revolver",
+        "--family-id",
+        "deal_econ.revolver",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/revolver",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "revolver",
+        "workspace": "workspaces/revolver",
+        "ontology_nodes": 60,
+        "bootstrap_concepts": 0,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/revolver\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 60 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 0 bootstrap strategy/strategies"
+    },
+    {
+      "index": 4,
+      "family_id": "deal_econ.pricing",
+      "family_name": "Pricing Economics",
+      "family_tail": "pricing",
+      "workspace_key": "pricing",
+      "workspace": "workspaces/pricing",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "pricing",
+        "--family-id",
+        "deal_econ.pricing",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/pricing",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "pricing",
+        "workspace": "workspaces/pricing",
+        "ontology_nodes": 101,
+        "bootstrap_concepts": 17,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/pricing\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 101 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 17 bootstrap strategy/strategies"
+    },
+    {
+      "index": 5,
+      "family_id": "deal_econ.fees",
+      "family_name": "Fee Structure",
+      "family_tail": "fees",
+      "workspace_key": "fees",
+      "workspace": "workspaces/fees",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "fees",
+        "--family-id",
+        "deal_econ.fees",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/fees",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "fees",
+        "workspace": "workspaces/fees",
+        "ontology_nodes": 52,
+        "bootstrap_concepts": 11,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/fees\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 52 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 11 bootstrap strategy/strategies"
+    },
+    {
+      "index": 6,
+      "family_id": "deal_econ.second_lien",
+      "family_name": "Second Lien Economics",
+      "family_tail": "second_lien",
+      "workspace_key": "second_lien",
+      "workspace": "workspaces/second_lien",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "second_lien",
+        "--family-id",
+        "deal_econ.second_lien",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/second_lien",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "second_lien",
+        "workspace": "workspaces/second_lien",
+        "ontology_nodes": 47,
+        "bootstrap_concepts": 0,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/second_lien\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 47 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 0 bootstrap strategy/strategies"
+    },
+    {
+      "index": 7,
+      "family_id": "deal_econ.governance",
+      "family_name": "Cross-Facility Governance",
+      "family_tail": "governance",
+      "workspace_key": "governance",
+      "workspace": "workspaces/governance",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "governance",
+        "--family-id",
+        "deal_econ.governance",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/governance",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "governance",
+        "workspace": "workspaces/governance",
+        "ontology_nodes": 39,
+        "bootstrap_concepts": 58,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/governance\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 39 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 58 bootstrap strategy/strategies"
+    },
+    {
+      "index": 8,
+      "family_id": "debt_capacity.incremental.free_clear",
+      "family_name": "Free and Clear Capacity",
+      "family_tail": "free_clear",
+      "workspace_key": "free_clear",
+      "workspace": "workspaces/free_clear",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "free_clear",
+        "--family-id",
+        "debt_capacity.incremental.free_clear",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/free_clear",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "free_clear",
+        "workspace": "workspaces/free_clear",
+        "ontology_nodes": 24,
+        "bootstrap_concepts": 4,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/free_clear\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 24 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 4 bootstrap strategy/strategies"
+    },
+    {
+      "index": 9,
+      "family_id": "debt_capacity.incremental.ratio",
+      "family_name": "Ratio-Based Capacity",
+      "family_tail": "ratio",
+      "workspace_key": "ratio",
+      "workspace": "workspaces/ratio",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "ratio",
+        "--family-id",
+        "debt_capacity.incremental.ratio",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/ratio",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "ratio",
+        "workspace": "workspaces/ratio",
+        "ontology_nodes": 24,
+        "bootstrap_concepts": 17,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/ratio\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 24 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 17 bootstrap strategy/strategies"
+    },
+    {
+      "index": 10,
+      "family_id": "debt_capacity.incremental.builders",
+      "family_name": "Builder Mechanisms",
+      "family_tail": "builders",
+      "workspace_key": "builders",
+      "workspace": "workspaces/builders",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "builders",
+        "--family-id",
+        "debt_capacity.incremental.builders",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/builders",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "builders",
+        "workspace": "workspaces/builders",
+        "ontology_nodes": 20,
+        "bootstrap_concepts": 3,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/builders\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 20 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 3 bootstrap strategy/strategies"
+    },
+    {
+      "index": 11,
+      "family_id": "debt_capacity.incremental.mfn",
+      "family_name": "MFN Protection",
+      "family_tail": "mfn",
+      "workspace_key": "mfn",
+      "workspace": "workspaces/mfn",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "mfn",
+        "--family-id",
+        "debt_capacity.incremental.mfn",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/mfn",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "mfn",
+        "workspace": "workspaces/mfn",
+        "ontology_nodes": 24,
+        "bootstrap_concepts": 5,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/mfn\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 24 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 5 bootstrap strategy/strategies"
+    },
+    {
+      "index": 12,
+      "family_id": "debt_capacity.incremental.ied",
+      "family_name": "Incremental Equivalent Debt",
+      "family_tail": "ied",
+      "workspace_key": "ied",
+      "workspace": "workspaces/ied",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "ied",
+        "--family-id",
+        "debt_capacity.incremental.ied",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/ied",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "ied",
+        "workspace": "workspaces/ied",
+        "ontology_nodes": 28,
+        "bootstrap_concepts": 6,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/ied\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 28 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 6 bootstrap strategy/strategies"
+    },
+    {
+      "index": 13,
+      "family_id": "debt_capacity.incremental.stacking_reclass",
+      "family_name": "Stacking & Reclassification",
+      "family_tail": "stacking_reclass",
+      "workspace_key": "stacking_reclass",
+      "workspace": "workspaces/stacking_reclass",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "stacking_reclass",
+        "--family-id",
+        "debt_capacity.incremental.stacking_reclass",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/stacking_reclass",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "stacking_reclass",
+        "workspace": "workspaces/stacking_reclass",
+        "ontology_nodes": 21,
+        "bootstrap_concepts": 2,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/stacking_reclass\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 21 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 2 bootstrap strategy/strategies"
+    },
+    {
+      "index": 14,
+      "family_id": "debt_capacity.incremental.acquisition_debt",
+      "family_name": "Acquisition Debt",
+      "family_tail": "acquisition_debt",
+      "workspace_key": "acquisition_debt",
+      "workspace": "workspaces/acquisition_debt",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "acquisition_debt",
+        "--family-id",
+        "debt_capacity.incremental.acquisition_debt",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/acquisition_debt",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "acquisition_debt",
+        "workspace": "workspaces/acquisition_debt",
+        "ontology_nodes": 20,
+        "bootstrap_concepts": 4,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/acquisition_debt\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 20 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 4 bootstrap strategy/strategies"
+    },
+    {
+      "index": 15,
+      "family_id": "debt_capacity.incremental.contribution_debt",
+      "family_name": "Contribution Debt",
+      "family_tail": "contribution_debt",
+      "workspace_key": "contribution_debt",
+      "workspace": "workspaces/contribution_debt",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "contribution_debt",
+        "--family-id",
+        "debt_capacity.incremental.contribution_debt",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/contribution_debt",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "contribution_debt",
+        "workspace": "workspaces/contribution_debt",
+        "ontology_nodes": 18,
+        "bootstrap_concepts": 4,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/contribution_debt\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 18 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 4 bootstrap strategy/strategies"
+    },
+    {
+      "index": 16,
+      "family_id": "debt_capacity.incremental.subordinated_debt",
+      "family_name": "Subordinated Debt",
+      "family_tail": "subordinated_debt",
+      "workspace_key": "subordinated_debt",
+      "workspace": "workspaces/subordinated_debt",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "subordinated_debt",
+        "--family-id",
+        "debt_capacity.incremental.subordinated_debt",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/subordinated_debt",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "subordinated_debt",
+        "workspace": "workspaces/subordinated_debt",
+        "ontology_nodes": 16,
+        "bootstrap_concepts": 3,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/subordinated_debt\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 16 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 3 bootstrap strategy/strategies"
+    },
+    {
+      "index": 17,
+      "family_id": "debt_capacity.incremental.structural_controls",
+      "family_name": "Structural Controls & Protections",
+      "family_tail": "structural_controls",
+      "workspace_key": "structural_controls",
+      "workspace": "workspaces/structural_controls",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "structural_controls",
+        "--family-id",
+        "debt_capacity.incremental.structural_controls",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/structural_controls",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "structural_controls",
+        "workspace": "workspaces/structural_controls",
+        "ontology_nodes": 50,
+        "bootstrap_concepts": 8,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/structural_controls\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 50 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 8 bootstrap strategy/strategies"
+    },
+    {
+      "index": 18,
+      "family_id": "debt_capacity.indebtedness",
+      "family_name": "Indebtedness",
+      "family_tail": "indebtedness",
+      "workspace_key": "indebtedness",
+      "workspace": "workspaces/indebtedness",
+      "status": "skipped_existing"
+    },
+    {
+      "index": 19,
+      "family_id": "debt_capacity.liens",
+      "family_name": "Liens",
+      "family_tail": "liens",
+      "workspace_key": "liens",
+      "workspace": "workspaces/liens",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "liens",
+        "--family-id",
+        "debt_capacity.liens",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/liens",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "liens",
+        "workspace": "workspaces/liens",
+        "ontology_nodes": 256,
+        "bootstrap_concepts": 15,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/liens\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 256 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 15 bootstrap strategy/strategies"
+    },
+    {
+      "index": 20,
+      "family_id": "debt_capacity.side_by_side_revolvers",
+      "family_name": "Side By Side Revolvers",
+      "family_tail": "side_by_side_revolvers",
+      "workspace_key": "side_by_side_revolvers",
+      "workspace": "workspaces/side_by_side_revolvers",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "side_by_side_revolvers",
+        "--family-id",
+        "debt_capacity.side_by_side_revolvers",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/side_by_side_revolvers",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "side_by_side_revolvers",
+        "workspace": "workspaces/side_by_side_revolvers",
+        "ontology_nodes": 6,
+        "bootstrap_concepts": 0,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/side_by_side_revolvers\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 6 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 0 bootstrap strategy/strategies"
+    },
+    {
+      "index": 21,
+      "family_id": "cash_flow.available_amount",
+      "family_name": "Available Amount / Builder Basket",
+      "family_tail": "available_amount",
+      "workspace_key": "available_amount",
+      "workspace": "workspaces/available_amount",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "available_amount",
+        "--family-id",
+        "cash_flow.available_amount",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/available_amount",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "available_amount",
+        "workspace": "workspaces/available_amount",
+        "ontology_nodes": 103,
+        "bootstrap_concepts": 19,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/available_amount\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 103 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 19 bootstrap strategy/strategies"
+    },
+    {
+      "index": 22,
+      "family_id": "cash_flow.rp",
+      "family_name": "Restricted Payments",
+      "family_tail": "rp",
+      "workspace_key": "rp",
+      "workspace": "workspaces/rp",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "rp",
+        "--family-id",
+        "cash_flow.rp",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/rp",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "rp",
+        "workspace": "workspaces/rp",
+        "ontology_nodes": 214,
+        "bootstrap_concepts": 17,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/rp\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 214 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 17 bootstrap strategy/strategies"
+    },
+    {
+      "index": 23,
+      "family_id": "cash_flow.inv",
+      "family_name": "Investments",
+      "family_tail": "inv",
+      "workspace_key": "inv",
+      "workspace": "workspaces/inv",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "inv",
+        "--family-id",
+        "cash_flow.inv",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/inv",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "inv",
+        "workspace": "workspaces/inv",
+        "ontology_nodes": 179,
+        "bootstrap_concepts": 19,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/inv\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 179 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 19 bootstrap strategy/strategies"
+    },
+    {
+      "index": 24,
+      "family_id": "cash_flow.restricted_debt_payments",
+      "family_name": "Restricted Debt Payments / Junior Debt Prepayments",
+      "family_tail": "restricted_debt_payments",
+      "workspace_key": "restricted_debt_payments",
+      "workspace": "workspaces/restricted_debt_payments",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "restricted_debt_payments",
+        "--family-id",
+        "cash_flow.restricted_debt_payments",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/restricted_debt_payments",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "restricted_debt_payments",
+        "workspace": "workspaces/restricted_debt_payments",
+        "ontology_nodes": 73,
+        "bootstrap_concepts": 13,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/restricted_debt_payments\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 73 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 13 bootstrap strategy/strategies"
+    },
+    {
+      "index": 25,
+      "family_id": "cash_flow.dispositions",
+      "family_name": "Asset Sales / Dispositions",
+      "family_tail": "dispositions",
+      "workspace_key": "dispositions",
+      "workspace": "workspaces/dispositions",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "dispositions",
+        "--family-id",
+        "cash_flow.dispositions",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/dispositions",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "dispositions",
+        "workspace": "workspaces/dispositions",
+        "ontology_nodes": 137,
+        "bootstrap_concepts": 22,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/dispositions\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 137 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 22 bootstrap strategy/strategies"
+    },
+    {
+      "index": 26,
+      "family_id": "cash_flow.dividend_blockers",
+      "family_name": "Dividend Blockers / EoD Conditions",
+      "family_tail": "dividend_blockers",
+      "workspace_key": "dividend_blockers",
+      "workspace": "workspaces/dividend_blockers",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "dividend_blockers",
+        "--family-id",
+        "cash_flow.dividend_blockers",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/dividend_blockers",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "dividend_blockers",
+        "workspace": "workspaces/dividend_blockers",
+        "ontology_nodes": 26,
+        "bootstrap_concepts": 1,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/dividend_blockers\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 26 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 1 bootstrap strategy/strategies"
+    },
+    {
+      "index": 27,
+      "family_id": "cash_flow.cross_covenant",
+      "family_name": "Cross-Covenant Coordination Mechanics",
+      "family_tail": "cross_covenant",
+      "workspace_key": "cross_covenant",
+      "workspace": "workspaces/cross_covenant",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "cross_covenant",
+        "--family-id",
+        "cash_flow.cross_covenant",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/cross_covenant",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "cross_covenant",
+        "workspace": "workspaces/cross_covenant",
+        "ontology_nodes": 22,
+        "bootstrap_concepts": 4,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/cross_covenant\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 22 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 4 bootstrap strategy/strategies"
+    },
+    {
+      "index": 28,
+      "family_id": "cash_flow.mandatory_prepayment",
+      "family_name": "Mandatory Prepayments",
+      "family_tail": "mandatory_prepayment",
+      "workspace_key": "mandatory_prepayment",
+      "workspace": "workspaces/mandatory_prepayment",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "mandatory_prepayment",
+        "--family-id",
+        "cash_flow.mandatory_prepayment",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/mandatory_prepayment",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "mandatory_prepayment",
+        "workspace": "workspaces/mandatory_prepayment",
+        "ontology_nodes": 136,
+        "bootstrap_concepts": 8,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/mandatory_prepayment\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 136 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 8 bootstrap strategy/strategies"
+    },
+    {
+      "index": 29,
+      "family_id": "cash_flow.carve_outs",
+      "family_name": "Carve Outs",
+      "family_tail": "carve_outs",
+      "workspace_key": "carve_outs",
+      "workspace": "workspaces/carve_outs",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "carve_outs",
+        "--family-id",
+        "cash_flow.carve_outs",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/carve_outs",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "carve_outs",
+        "workspace": "workspaces/carve_outs",
+        "ontology_nodes": 7,
+        "bootstrap_concepts": 0,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/carve_outs\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 7 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 0 bootstrap strategy/strategies"
+    },
+    {
+      "index": 30,
+      "family_id": "cash_flow.simultaneous_incurrence_netting",
+      "family_name": "Simultaneous Incurrence Netting",
+      "family_tail": "simultaneous_incurrence_netting",
+      "workspace_key": "simultaneous_incurrence_netting",
+      "workspace": "workspaces/simultaneous_incurrence_netting",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "simultaneous_incurrence_netting",
+        "--family-id",
+        "cash_flow.simultaneous_incurrence_netting",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/simultaneous_incurrence_netting",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "simultaneous_incurrence_netting",
+        "workspace": "workspaces/simultaneous_incurrence_netting",
+        "ontology_nodes": 6,
+        "bootstrap_concepts": 0,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/simultaneous_incurrence_netting\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 6 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 0 bootstrap strategy/strategies"
+    },
+    {
+      "index": 31,
+      "family_id": "fin_framework.ebitda",
+      "family_name": "EBITDA Definition",
+      "family_tail": "ebitda",
+      "workspace_key": "ebitda",
+      "workspace": "workspaces/ebitda",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "ebitda",
+        "--family-id",
+        "fin_framework.ebitda",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/ebitda",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "ebitda",
+        "workspace": "workspaces/ebitda",
+        "ontology_nodes": 89,
+        "bootstrap_concepts": 14,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/ebitda\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 89 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 14 bootstrap strategy/strategies"
+    },
+    {
+      "index": 32,
+      "family_id": "fin_framework.leverage",
+      "family_name": "Leverage Ratios & Debt Definitions",
+      "family_tail": "leverage",
+      "workspace_key": "leverage",
+      "workspace": "workspaces/leverage",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "leverage",
+        "--family-id",
+        "fin_framework.leverage",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/leverage",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "leverage",
+        "workspace": "workspaces/leverage",
+        "ontology_nodes": 55,
+        "bootstrap_concepts": 9,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/leverage\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 55 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 9 bootstrap strategy/strategies"
+    },
+    {
+      "index": 33,
+      "family_id": "fin_framework.financial_covenant",
+      "family_name": "Financial Covenants",
+      "family_tail": "financial_covenant",
+      "workspace_key": "financial_covenant",
+      "workspace": "workspaces/financial_covenant",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "financial_covenant",
+        "--family-id",
+        "fin_framework.financial_covenant",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/financial_covenant",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "financial_covenant",
+        "workspace": "workspaces/financial_covenant",
+        "ontology_nodes": 97,
+        "bootstrap_concepts": 15,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/financial_covenant\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 97 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 15 bootstrap strategy/strategies"
+    },
+    {
+      "index": 34,
+      "family_id": "fin_framework.equity_cure",
+      "family_name": "Equity Cure",
+      "family_tail": "equity_cure",
+      "workspace_key": "equity_cure",
+      "workspace": "workspaces/equity_cure",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "equity_cure",
+        "--family-id",
+        "fin_framework.equity_cure",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/equity_cure",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "equity_cure",
+        "workspace": "workspaces/equity_cure",
+        "ontology_nodes": 55,
+        "bootstrap_concepts": 11,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/equity_cure\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 55 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 11 bootstrap strategy/strategies"
+    },
+    {
+      "index": 35,
+      "family_id": "fin_framework.lct",
+      "family_name": "LCT / Limited Condition Transactions",
+      "family_tail": "lct",
+      "workspace_key": "lct",
+      "workspace": "workspaces/lct",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "lct",
+        "--family-id",
+        "fin_framework.lct",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/lct",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "lct",
+        "workspace": "workspaces/lct",
+        "ontology_nodes": 46,
+        "bootstrap_concepts": 8,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/lct\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 46 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 8 bootstrap strategy/strategies"
+    },
+    {
+      "index": 36,
+      "family_id": "fin_framework.accounting",
+      "family_name": "Accounting Change Provisions",
+      "family_tail": "accounting",
+      "workspace_key": "accounting",
+      "workspace": "workspaces/accounting",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "accounting",
+        "--family-id",
+        "fin_framework.accounting",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/accounting",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "accounting",
+        "workspace": "workspaces/accounting",
+        "ontology_nodes": 31,
+        "bootstrap_concepts": 0,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/accounting\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 31 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 0 bootstrap strategy/strategies"
+    },
+    {
+      "index": 37,
+      "family_id": "credit_protection.events_of_default",
+      "family_name": "Events of Default",
+      "family_tail": "events_of_default",
+      "workspace_key": "events_of_default",
+      "workspace": "workspaces/events_of_default",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "events_of_default",
+        "--family-id",
+        "credit_protection.events_of_default",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/events_of_default",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "events_of_default",
+        "workspace": "workspaces/events_of_default",
+        "ontology_nodes": 82,
+        "bootstrap_concepts": 14,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/events_of_default\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 82 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 14 bootstrap strategy/strategies"
+    },
+    {
+      "index": 38,
+      "family_id": "credit_protection.lme_protections",
+      "family_name": "LME Protections",
+      "family_tail": "lme_protections",
+      "workspace_key": "lme_protections",
+      "workspace": "workspaces/lme_protections",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "lme_protections",
+        "--family-id",
+        "credit_protection.lme_protections",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/lme_protections",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "lme_protections",
+        "workspace": "workspaces/lme_protections",
+        "ontology_nodes": 117,
+        "bootstrap_concepts": 0,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/lme_protections\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 117 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 0 bootstrap strategy/strategies"
+    },
+    {
+      "index": 39,
+      "family_id": "credit_protection.change_of_control",
+      "family_name": "Change of Control",
+      "family_tail": "change_of_control",
+      "workspace_key": "change_of_control",
+      "workspace": "workspaces/change_of_control",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "change_of_control",
+        "--family-id",
+        "credit_protection.change_of_control",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/change_of_control",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "change_of_control",
+        "workspace": "workspaces/change_of_control",
+        "ontology_nodes": 35,
+        "bootstrap_concepts": 7,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/change_of_control\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 35 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 7 bootstrap strategy/strategies"
+    },
+    {
+      "index": 40,
+      "family_id": "credit_protection.collateral",
+      "family_name": "Collateral Package",
+      "family_tail": "collateral",
+      "workspace_key": "collateral",
+      "workspace": "workspaces/collateral",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "collateral",
+        "--family-id",
+        "credit_protection.collateral",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/collateral",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "collateral",
+        "workspace": "workspaces/collateral",
+        "ontology_nodes": 98,
+        "bootstrap_concepts": 18,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/collateral\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 98 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 18 bootstrap strategy/strategies"
+    },
+    {
+      "index": 41,
+      "family_id": "credit_protection.guarantees",
+      "family_name": "Guarantees",
+      "family_tail": "guarantees",
+      "workspace_key": "guarantees",
+      "workspace": "workspaces/guarantees",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "guarantees",
+        "--family-id",
+        "credit_protection.guarantees",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/guarantees",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "guarantees",
+        "workspace": "workspaces/guarantees",
+        "ontology_nodes": 42,
+        "bootstrap_concepts": 5,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/guarantees\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 42 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 5 bootstrap strategy/strategies"
+    },
+    {
+      "index": 42,
+      "family_id": "credit_protection.corporate_structure",
+      "family_name": "Corporate Structure",
+      "family_tail": "corporate_structure",
+      "workspace_key": "corporate_structure",
+      "workspace": "workspaces/corporate_structure",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "corporate_structure",
+        "--family-id",
+        "credit_protection.corporate_structure",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/corporate_structure",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "corporate_structure",
+        "workspace": "workspaces/corporate_structure",
+        "ontology_nodes": 63,
+        "bootstrap_concepts": 0,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/corporate_structure\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 63 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 0 bootstrap strategy/strategies"
+    },
+    {
+      "index": 43,
+      "family_id": "governance.amendments_voting",
+      "family_name": "Amendments & Voting",
+      "family_tail": "amendments_voting",
+      "workspace_key": "amendments_voting",
+      "workspace": "workspaces/amendments_voting",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "amendments_voting",
+        "--family-id",
+        "governance.amendments_voting",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/amendments_voting",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "amendments_voting",
+        "workspace": "workspaces/amendments_voting",
+        "ontology_nodes": 81,
+        "bootstrap_concepts": 13,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/amendments_voting\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 81 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 13 bootstrap strategy/strategies"
+    },
+    {
+      "index": 44,
+      "family_id": "governance.assignments",
+      "family_name": "Assignments & Transfers",
+      "family_tail": "assignments",
+      "workspace_key": "assignments",
+      "workspace": "workspaces/assignments",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "assignments",
+        "--family-id",
+        "governance.assignments",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/assignments",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "assignments",
+        "workspace": "workspaces/assignments",
+        "ontology_nodes": 67,
+        "bootstrap_concepts": 10,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/assignments\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 67 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 10 bootstrap strategy/strategies"
+    },
+    {
+      "index": 45,
+      "family_id": "governance.affiliate_txns",
+      "family_name": "Affiliate Transactions",
+      "family_tail": "affiliate_txns",
+      "workspace_key": "affiliate_txns",
+      "workspace": "workspaces/affiliate_txns",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "affiliate_txns",
+        "--family-id",
+        "governance.affiliate_txns",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/affiliate_txns",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "affiliate_txns",
+        "workspace": "workspaces/affiliate_txns",
+        "ontology_nodes": 55,
+        "bootstrap_concepts": 12,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/affiliate_txns\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 55 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 12 bootstrap strategy/strategies"
+    },
+    {
+      "index": 46,
+      "family_id": "governance.reporting",
+      "family_name": "Reporting & Information",
+      "family_tail": "reporting",
+      "workspace_key": "reporting",
+      "workspace": "workspaces/reporting",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "reporting",
+        "--family-id",
+        "governance.reporting",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/reporting",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "reporting",
+        "workspace": "workspaces/reporting",
+        "ontology_nodes": 48,
+        "bootstrap_concepts": 10,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/reporting\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 48 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 10 bootstrap strategy/strategies"
+    },
+    {
+      "index": 47,
+      "family_id": "governance.reps_conditions",
+      "family_name": "Reps & Conditions",
+      "family_tail": "reps_conditions",
+      "workspace_key": "reps_conditions",
+      "workspace": "workspaces/reps_conditions",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "reps_conditions",
+        "--family-id",
+        "governance.reps_conditions",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/reps_conditions",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "reps_conditions",
+        "workspace": "workspaces/reps_conditions",
+        "ontology_nodes": 75,
+        "bootstrap_concepts": 13,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/reps_conditions\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 75 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 13 bootstrap strategy/strategies"
+    },
+    {
+      "index": 48,
+      "family_id": "governance.pre_closing",
+      "family_name": "Pre-Closing Mechanics",
+      "family_tail": "pre_closing",
+      "workspace_key": "pre_closing",
+      "workspace": "workspaces/pre_closing",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "pre_closing",
+        "--family-id",
+        "governance.pre_closing",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/pre_closing",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "pre_closing",
+        "workspace": "workspaces/pre_closing",
+        "ontology_nodes": 41,
+        "bootstrap_concepts": 0,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/pre_closing\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 41 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 0 bootstrap strategy/strategies"
+    },
+    {
+      "index": 49,
+      "family_id": "governance.other_advisory_roles",
+      "family_name": "Other Advisory Roles",
+      "family_tail": "other_advisory_roles",
+      "workspace_key": "other_advisory_roles",
+      "workspace": "workspaces/other_advisory_roles",
+      "status": "created",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "/Users/johnchtchekine/Projects/Agent/scripts/setup_workspace.py",
+        "--family",
+        "other_advisory_roles",
+        "--family-id",
+        "governance.other_advisory_roles",
+        "--ontology",
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "--output",
+        "workspaces/other_advisory_roles",
+        "--bootstrap",
+        "data/bootstrap/bootstrap_all.json"
+      ],
+      "returncode": 0,
+      "result": {
+        "family": "other_advisory_roles",
+        "workspace": "workspaces/other_advisory_roles",
+        "ontology_nodes": 3,
+        "bootstrap_concepts": 0,
+        "bootstrap_rejected_invalid_ids": 0,
+        "directories_created": [
+          "context",
+          "strategies",
+          "evidence",
+          "results"
+        ]
+      },
+      "stderr": "Created workspace directory structure at workspaces/other_advisory_roles\nLoading ontology from data/ontology/r36a_production_ontology_v2.5.1.json\nExtracted ontology subtree: 3 node(s)\nLoading bootstrap strategies from data/bootstrap/bootstrap_all.json\nExtracted 0 bootstrap strategy/strategies"
+    }
+  ]
+}

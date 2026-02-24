@@ -1,0 +1,10 @@
+Transition gate passed for wave 3 (artifact: plans/wave3_dispatch_gate_2026-02-23.json)
+Started family 'ebitda' on %0 using backend 'opus46'
+Prompt file: /tmp/agent_swarm_ebitda_XXXXXX.md
+Started family 'corporate_structure' on %1 using backend 'opus46'
+Prompt file: /tmp/agent_swarm_corporate_structure_XXXXXX.md
+Started family 'events_of_default' on %2 using backend 'opus46'
+Prompt file: /tmp/agent_swarm_events_of_default_XXXXXX.md
+Started family 'change_of_control' on %3 using backend 'opus46'
+Prompt file: /tmp/agent_swarm_change_of_control_XXXXXX.md
+Dispatched wave 3 with 4 family agent(s); skipped=36.

@@ -4,78 +4,87 @@ Parses enumerated clauses such as (a)/(b)/(c), (i)/(ii)/(iii), (A)/(B)/(C),
 (1)/(2)/(3) into a multi-level tree. Every node is kept; low-confidence nodes
 are demoted with is_structural_candidate=False.
 
-Standalone module: only standard library imports.
+Three-layer architecture:
+  enumerator.py   — scanning, anchoring, ordinal utilities
+  clause_parser.py — tree building, disambiguation, confidence, xref detection
+  parsing_types.py — canonical ClauseNode type (forward-looking schema)
 """
 
 from __future__ import annotations
 
+import bisect
 import re
 from dataclasses import dataclass
 
+from agent.enumerator import (
+    CANONICAL_DEPTH,
+    EnumeratorMatch,
+    compute_indentation,
+    compute_line_starts,
+    scan_enumerators,
+)
+from agent.enumerator import (
+    ROMAN_VALUES as ROMAN_VALUES,
+)
+from agent.enumerator import (
+    check_anchor as check_anchor,
+)
 
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
 
-ROMAN_VALUES: dict[str, int] = {
-    "i": 1, "ii": 2, "iii": 3, "iv": 4, "v": 5,
-    "vi": 6, "vii": 7, "viii": 8, "ix": 9, "x": 10,
-    "xi": 11, "xii": 12, "xiii": 13, "xiv": 14, "xv": 15,
-    "xvi": 16, "xvii": 17, "xviii": 18, "xix": 19, "xx": 20,
-    "xxi": 21, "xxii": 22, "xxiii": 23, "xxiv": 24, "xxv": 25,
-}
-
-_ROMAN_SET = frozenset(ROMAN_VALUES.keys())
-
-# Depth ordering: alpha=1, roman=2, caps=3, numeric=4 (root=0)
-_LEVEL_DEPTH: dict[str, int] = {
-    "root": 0,
-    "alpha": 1,
-    "roman": 2,
-    "caps": 3,
-    "numeric": 4,
-}
-
-# Confidence weights
-_WEIGHT_ANCHOR = 0.3
-_WEIGHT_RUN = 0.3
-_WEIGHT_GAP = 0.2
-_WEIGHT_NOT_XREF = 0.2
+# Confidence weights (5-signal: anchor, run, gap, not_xref, indent)
+_WEIGHT_ANCHOR = 0.30
+_WEIGHT_RUN = 0.30
+_WEIGHT_GAP = 0.20
+_WEIGHT_NOT_XREF = 0.15
+_WEIGHT_INDENT = 0.05
 
 _HEADER_MAX_LEN = 80
 
-# ---------------------------------------------------------------------------
-# Regex patterns
-# ---------------------------------------------------------------------------
+# Labels whose inner text is ambiguous between alpha and roman
+_AMBIGUOUS_ROMAN = frozenset({"i", "v", "x", "l", "c", "d", "m"})
 
-_ALPHA_PAREN_RE = re.compile(r"\(\s*([a-z]{1,2})\s*\)")
-_ROMAN_PAREN_RE = re.compile(r"\(\s*((?:x{0,3})(?:ix|iv|v?i{0,3}))\s*\)")
-_CAPS_PAREN_RE = re.compile(r"\(\s*([A-Z]{1,2})\s*\)")
-_NUMERIC_PAREN_RE = re.compile(r"\(\s*(\d{1,2})\s*\)")
+
+# ---------------------------------------------------------------------------
+# Regex patterns (clause_parser's own — xref detection)
+# ---------------------------------------------------------------------------
 
 _XREF_CONTEXT_RE = re.compile(
-    r"(?:Section|Sections|clause|Article)\s+\d+\.\d+\s*\($",
+    r"(?:"
+    r"(?:Section|Sections|clause|clauses|Article|Articles|paragraph|paragraphs)"
+    r"\s+\d+(?:\.\d+)*\s*\($"
+    r"|(?:sub-?clauses?|paragraphs?)\s+\($"
+    r")",
     re.IGNORECASE,
 )
 
-# Hard boundary characters that can precede a structural enumerator
-_HARD_BOUNDARY_CHARS = frozenset(";\n")
-
+_XREF_LOOKAHEAD_RE = re.compile(
+    r"\)\s*(?:"
+    r"of\s+(?:this\s+|the\s+)?(?:Section|Article|Agreement)"
+    r"|above|below"
+    r"|here(?:of|in|under|to)|there(?:of|in|under|to)"
+    r")",
+    re.IGNORECASE,
+)
 
 # ---------------------------------------------------------------------------
 # Data types
 # ---------------------------------------------------------------------------
 
-@dataclass(frozen=True, slots=True)
-class EnumeratorMatch:
-    """A single enumerator match found in text."""
-
-    raw_label: str      # "(a)", "(iv)", "(A)", "(1)"
-    ordinal: int        # Sequential ordinal: a=1, b=2, ..., z=26
-    level_type: str     # "alpha" | "roman" | "caps" | "numeric"
-    position: int       # Char offset in the text
-    match_end: int      # Char offset of end of match
-    is_anchored: bool   # True if at line start or after hard boundary
+# Re-export EnumeratorMatch from enumerator for backward compatibility
+__all__ = [
+    "ClauseNode",
+    "ClauseTree",
+    "EnumeratorMatch",
+    "ROMAN_VALUES",
+    "check_anchor",
+    "parse_clause_tree",
+    "parse_clauses",
+    "resolve_path",
+    "scan_enumerators",
+]
 
 
 @dataclass(frozen=True, slots=True)
@@ -95,6 +104,8 @@ class ClauseNode:
     anchor_ok: bool                # Enumerator at line start or after hard boundary
     run_length_ok: bool            # Level has >=2 sequential siblings
     gap_ok: bool                   # No ordinal skip >5 at this level
+    indentation_score: float       # 0.0-1.0 (deeper = higher)
+    xref_suspected: bool           # Pattern resembles inline cross-ref
     is_structural_candidate: bool  # True = high-confidence structural
     parse_confidence: float        # 0.0-1.0
     demotion_reason: str           # "" if structural, else reason
@@ -120,242 +131,123 @@ class _MutableNode:
     ordinal: int
     is_xref: bool
     is_anchored: bool
+    indentation_score: float
+    match_end_local: int  # end of match in local (non-offset) coords
 
 
 # ---------------------------------------------------------------------------
-# Scanning
+# Xref detection (Phase 2)
 # ---------------------------------------------------------------------------
 
-def _alpha_ordinal(s: str) -> int:
-    """Convert alpha string to ordinal: a=1, b=2, ..., z=26, aa=27, ..."""
-    if len(s) == 1:
-        return ord(s) - ord("a") + 1
-    # Two-letter: aa=27, ab=28, etc.
-    return 26 + (ord(s[0]) - ord("a")) * 26 + (ord(s[1]) - ord("a")) + 1
+def _is_xref(text: str, pos: int, match_end: int) -> bool:
+    """Check if an enumerator at `pos` is part of a cross-reference.
 
-
-def _caps_ordinal(s: str) -> int:
-    """Convert caps string to ordinal: A=1, B=2, ..., Z=26, AA=27, ..."""
-    if len(s) == 1:
-        return ord(s) - ord("A") + 1
-    return 26 + (ord(s[0]) - ord("A")) * 26 + (ord(s[1]) - ord("A")) + 1
-
-
-def _is_anchored(text: str, pos: int) -> bool:
-    """Check if position is at line start or after a hard boundary."""
-    if pos == 0:
-        return True
-    # Walk backwards past whitespace to find the preceding non-space character
-    i = pos - 1
-    while i >= 0 and text[i] in " \t":
-        i -= 1
-    if i < 0:
-        return True
-    return text[i] in _HARD_BOUNDARY_CHARS
-
-
-def _is_xref(text: str, pos: int) -> bool:
-    """Check if an enumerator at `pos` is part of a cross-reference."""
-    lookback_start = max(0, pos - 80)
+    Uses both lookback (200 chars) and lookahead to detect xref context.
+    """
+    # Lookback: check for "Section 2.14(" pattern preceding
+    lookback_start = max(0, pos - 200)
     window = text[lookback_start:pos + 1]
-    return _XREF_CONTEXT_RE.search(window) is not None
+    if _XREF_CONTEXT_RE.search(window):
+        return True
 
+    # Lookahead: check for "of this Section", "above", "hereof" etc.
+    if match_end < len(text):
+        lookahead_window = text[match_end - 1:min(match_end + 80, len(text))]
+        if _XREF_LOOKAHEAD_RE.search(lookahead_window):
+            return True
 
-def scan_enumerators(text: str) -> list[EnumeratorMatch]:
-    """Scan text for all enumerator patterns. Returns sorted by position."""
-    matches: list[EnumeratorMatch] = []
-
-    # Alpha
-    for m in _ALPHA_PAREN_RE.finditer(text):
-        inner = m.group(1)
-        # Skip if it is also a valid roman numeral -- handled by disambiguation later
-        # We include it as alpha here; disambiguation pass may reclassify
-        matches.append(EnumeratorMatch(
-            raw_label=m.group(0),
-            ordinal=_alpha_ordinal(inner),
-            level_type="alpha",
-            position=m.start(),
-            match_end=m.end(),
-            is_anchored=_is_anchored(text, m.start()),
-        ))
-
-    # Roman
-    for m in _ROMAN_PAREN_RE.finditer(text):
-        inner = m.group(1)
-        if not inner:
-            continue  # Empty match from the regex
-        if inner not in _ROMAN_SET:
-            continue
-        matches.append(EnumeratorMatch(
-            raw_label=m.group(0),
-            ordinal=ROMAN_VALUES[inner],
-            level_type="roman",
-            position=m.start(),
-            match_end=m.end(),
-            is_anchored=_is_anchored(text, m.start()),
-        ))
-
-    # Caps
-    for m in _CAPS_PAREN_RE.finditer(text):
-        inner = m.group(1)
-        matches.append(EnumeratorMatch(
-            raw_label=m.group(0),
-            ordinal=_caps_ordinal(inner),
-            level_type="caps",
-            position=m.start(),
-            match_end=m.end(),
-            is_anchored=_is_anchored(text, m.start()),
-        ))
-
-    # Numeric
-    for m in _NUMERIC_PAREN_RE.finditer(text):
-        inner = m.group(1)
-        matches.append(EnumeratorMatch(
-            raw_label=m.group(0),
-            ordinal=int(inner),
-            level_type="numeric",
-            position=m.start(),
-            match_end=m.end(),
-            is_anchored=_is_anchored(text, m.start()),
-        ))
-
-    # Sort by position, then prefer the deeper (more specific) level type
-    # when two matches share the same position
-    matches.sort(key=lambda em: (em.position, _LEVEL_DEPTH.get(em.level_type, 99)))
-    return matches
+    return False
 
 
 # ---------------------------------------------------------------------------
-# Disambiguation
+# Inline enumeration detection (Phase 6)
 # ---------------------------------------------------------------------------
 
-def _disambiguate(matches: list[EnumeratorMatch]) -> list[EnumeratorMatch]:
-    """Resolve ambiguity between alpha and roman at the same position.
+def _detect_inline_enums(
+    matches: list[EnumeratorMatch],
+    text: str,
+    line_starts: list[int],
+) -> set[int]:
+    """Detect inline enumerations like "(a), (b) and (c)" on a single line.
 
-    The key challenge: (i) can be alpha (9th letter) or roman numeral 1.
+    Groups matches by line, then looks for 3+ same-type enumerators separated
+    by ", " / " and " / " or " / " through " on the same line.
 
-    Rules:
-    - If (i) is preceded by (h) at the same level -> alpha
-    - If (ii) follows (i) nearby -> both are roman
-    - If (i) stands alone with no (h) before and no (ii) after -> roman
-    - Also handles (v) ambiguity: alpha 'v' (22nd) vs roman 'v' (5)
+    Returns set of positions that should be marked as xref.
     """
-    # Group by position to find overlapping matches
-    by_pos: dict[int, list[EnumeratorMatch]] = {}
+    inline_positions: set[int] = set()
+
+    # Group matches by line number
+    by_line: dict[int, list[EnumeratorMatch]] = {}
     for em in matches:
-        by_pos.setdefault(em.position, []).append(em)
+        line_idx = bisect.bisect_right(line_starts, em.position) - 1
+        by_line.setdefault(line_idx, []).append(em)
 
-    # Build quick lookup: for a given level_type, what ordinals exist
-    # at what positions (for context checking)
-    alpha_by_ordinal: dict[int, list[int]] = {}
-    roman_by_ordinal: dict[int, list[int]] = {}
-    for em in matches:
-        if em.level_type == "alpha":
-            alpha_by_ordinal.setdefault(em.ordinal, []).append(em.position)
-        elif em.level_type == "roman":
-            roman_by_ordinal.setdefault(em.ordinal, []).append(em.position)
+    for line_matches in by_line.values():
+        # Group by level_type within same line
+        by_type: dict[str, list[EnumeratorMatch]] = {}
+        for em in line_matches:
+            by_type.setdefault(em.level_type, []).append(em)
 
-    result: list[EnumeratorMatch] = []
-    seen_positions: set[tuple[int, str]] = set()
+        for same_type in by_type.values():
+            if len(same_type) < 2:
+                continue
 
-    for em in matches:
-        key = (em.position, em.level_type)
-        if key in seen_positions:
-            continue
+            # Check inter-match text for inline separators
+            same_type_sorted = sorted(same_type, key=lambda m: m.position)
+            is_inline = True
+            for j in range(len(same_type_sorted) - 1):
+                gap_start = same_type_sorted[j].match_end
+                gap_end = same_type_sorted[j + 1].position
+                gap_text = text[gap_start:gap_end].strip().lower()
 
-        overlapping = by_pos.get(em.position, [em])
+                # Accept: ", " / " and " / " or " / " through " / ", and " / ", or "
+                if gap_text not in (
+                    ",", "and", "or", "and/or", "through", ", and", ", or",
+                ):
+                    is_inline = False
+                    break
 
-        # If only one match at this position, keep it
-        if len(overlapping) == 1:
-            seen_positions.add(key)
-            result.append(em)
-            continue
+            if is_inline:
+                for em in same_type_sorted:
+                    inline_positions.add(em.position)
 
-        # Multiple matches at same position -- decide which to keep
-        types_at_pos = {o.level_type for o in overlapping}
-
-        if "alpha" in types_at_pos and "roman" in types_at_pos:
-            alpha_em = next(o for o in overlapping if o.level_type == "alpha")
-            roman_em = next(o for o in overlapping if o.level_type == "roman")
-
-            keep = _choose_alpha_or_roman(
-                alpha_em, roman_em, alpha_by_ordinal, roman_by_ordinal,
-            )
-
-            for o in overlapping:
-                okey = (o.position, o.level_type)
-                seen_positions.add(okey)
-                if o.level_type == keep:
-                    result.append(o)
-                elif o.level_type not in ("alpha", "roman"):
-                    # Keep non-conflicting types (caps, numeric)
-                    result.append(o)
-        else:
-            # No alpha/roman conflict -- keep all
-            for o in overlapping:
-                okey = (o.position, o.level_type)
-                if okey not in seen_positions:
-                    seen_positions.add(okey)
-                    result.append(o)
-
-    result.sort(key=lambda em: (em.position, _LEVEL_DEPTH.get(em.level_type, 99)))
-    return result
+    return inline_positions
 
 
-def _choose_alpha_or_roman(
-    alpha_em: EnumeratorMatch,
-    roman_em: EnumeratorMatch,
-    alpha_by_ordinal: dict[int, list[int]],
-    roman_by_ordinal: dict[int, list[int]],
+# ---------------------------------------------------------------------------
+# Inline disambiguation (Phase 1)
+# ---------------------------------------------------------------------------
+
+def _classify_ambiguous(
+    label_inner: str,
+    depth: int,
+    last_sibling_at_level: dict[int, str],
 ) -> str:
-    """Decide whether an ambiguous match is alpha or roman.
+    """4-rule cascade for ambiguous alpha/roman labels.
 
-    Returns 'alpha' or 'roman'.
+    Returns "alpha" or "roman". Ported from TermIntel ca_chunker.py.
     """
-    # The raw inner text (without parens) for this match
-    # Roman ordinal 1 corresponds to (i), which is also alpha ordinal 9
-    roman_ord = roman_em.ordinal
-    alpha_ord = alpha_em.ordinal
-
-    # Check: is (h) present before this position? (h) = alpha ordinal 8
-    # If so, this (i) is likely alpha continuation
-    if alpha_ord == 9:  # (i) as alpha
-        prev_alpha_ord = alpha_ord - 1  # (h) = 8
-        h_positions = alpha_by_ordinal.get(prev_alpha_ord, [])
-        has_h_before = any(p < alpha_em.position for p in h_positions)
-        if has_h_before:
+    # Rule 1: continues letter sequence at same depth?
+    #   e.g., last_sibling[1] == "h" and label == "i" -> alpha
+    last_at_depth = last_sibling_at_level.get(depth)
+    if last_at_depth is not None and len(last_at_depth) == 1 and last_at_depth.isalpha():
+        expected_next = chr(ord(last_at_depth) + 1)
+        if label_inner == expected_next:
             return "alpha"
 
-    # Check: does (ii) follow? If so, this is roman
-    if roman_ord == 1:
-        ii_positions = roman_by_ordinal.get(2, [])
-        has_ii_after = any(p > roman_em.position for p in ii_positions)
-        if has_ii_after:
-            return "roman"
-
-    # For (v): alpha 'v' = ordinal 22, roman 'v' = ordinal 5
-    # If (iv) or (vi) exists nearby, prefer roman
-    if roman_ord == 5:
-        iv_positions = roman_by_ordinal.get(4, [])
-        vi_positions = roman_by_ordinal.get(6, [])
-        has_iv_near = any(abs(p - roman_em.position) < 5000 for p in iv_positions)
-        has_vi_near = any(abs(p - roman_em.position) < 5000 for p in vi_positions)
-        if has_iv_near or has_vi_near:
-            return "roman"
-        # If (u) exists before (alpha ordinal 21), it's alpha
-        u_positions = alpha_by_ordinal.get(21, [])
-        has_u_before = any(p < alpha_em.position for p in u_positions)
-        if has_u_before:
-            return "alpha"
-
-    # For single-letter roman numerals that are also alpha:
-    # i(9), v(22), x(24), c(3), d(4), m(13), l(12)
-    # Default: if the roman ordinal is small (1-3) prefer roman interpretation
-    if roman_ord <= 3:
+    # Rule 2: active roman run at child depth?
+    child_depth = depth + 1
+    if last_sibling_at_level.get(child_depth) is not None:
         return "roman"
 
-    # Default: prefer alpha for larger ordinals
-    return "alpha"
+    # Rule 3: letter siblings exist at this depth but no sequential match?
+    #   -> new roman child level
+    if last_at_depth is not None:
+        return "roman"
+
+    # Rule 4: no context -> default roman (matches corpus convention)
+    return "roman"
 
 
 # ---------------------------------------------------------------------------
@@ -369,7 +261,7 @@ def _extract_header(text: str, start: int) -> str:
 
     # Truncate at first period+space or semicolon
     for i, ch in enumerate(chunk):
-        if ch == ";" :
+        if ch == ";":
             return chunk[:i].strip()
         if ch == "." and i + 1 < len(chunk) and chunk[i + 1] == " ":
             return chunk[:i + 1].strip()
@@ -378,7 +270,26 @@ def _extract_header(text: str, start: int) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Tree construction
+# Ghost clause filtering (Phase 4)
+# ---------------------------------------------------------------------------
+
+def _is_ghost_clause(body_text: str) -> bool:
+    """Check if clause body is empty or near-empty (ghost clause).
+
+    Conservative check — only catches truly empty/punctuation-only bodies
+    to avoid false positives on short but legitimate clauses like
+    "(b) Capital Expenditures;" or "(iv) ratio debt."
+    """
+    stripped = body_text.strip()
+    if not stripped:
+        return True
+    # Strip all non-alphanumeric — if < 2 chars remain, it's ghost
+    alpha_content = re.sub(r"[^a-zA-Z0-9]", "", stripped)
+    return len(alpha_content) < 2
+
+
+# ---------------------------------------------------------------------------
+# Tree construction (Phase 0 + Phase 1)
 # ---------------------------------------------------------------------------
 
 def _build_id(parent_id: str, label_key: str) -> str:
@@ -393,7 +304,6 @@ def _label_key(em: EnumeratorMatch) -> str:
 
     (a) -> 'a', (iv) -> 'iv', (A) -> 'A', (12) -> '12'
     """
-    # Strip parens and whitespace
     inner = em.raw_label.strip()
     if inner.startswith("(") and inner.endswith(")"):
         inner = inner[1:-1].strip()
@@ -404,35 +314,95 @@ def _build_tree(
     enumerators: list[EnumeratorMatch],
     text: str,
     global_offset: int,
+    line_starts: list[int],
+    inline_xref_positions: set[int],
 ) -> list[_MutableNode]:
-    """Stack-walk algorithm to build the clause tree.
+    """Stack-walk algorithm to build the clause tree with inline disambiguation.
 
-    We maintain a stack of (depth, node_id) pairs representing the current
-    nesting path. For each enumerator:
-    1. Determine its depth from level_type
-    2. Pop stack until top has depth < new depth
-    3. Parent is the top of stack (or root)
-    4. Push new node onto stack
+    Key improvements over the original:
+    - Inline alpha/roman disambiguation using last_sibling_at_level (Phase 1)
+    - Level-reset when entering a new parent (Phase 1/6)
+    - Enhanced xref detection with lookback+lookahead (Phase 2)
+    - Indentation scoring per node (Phase 3)
     """
     nodes: list[_MutableNode] = []
     node_map: dict[str, _MutableNode] = {}
     # Stack entries: (depth, node_id)
     stack: list[tuple[int, str]] = []
 
+    # Phase 1: track last sibling at each depth for disambiguation
+    last_sibling_at_level: dict[int, str] = {}
+
+    # Group matches by position — when both alpha and roman exist at the
+    # same position, we need to pick one via _classify_ambiguous()
+    by_pos: dict[int, list[EnumeratorMatch]] = {}
     for em in enumerators:
-        depth = _LEVEL_DEPTH.get(em.level_type, 1)
-        lk = _label_key(em)
-        xref = _is_xref(text, em.position)
+        by_pos.setdefault(em.position, []).append(em)
+
+    # Process in position order
+    seen_positions: set[int] = set()
+    for em in enumerators:
+        if em.position in seen_positions:
+            continue
+        seen_positions.add(em.position)
+
+        overlapping = by_pos[em.position]
+
+        # Resolve alpha/roman ambiguity inline
+        chosen: EnumeratorMatch
+        if len(overlapping) == 1:
+            chosen = overlapping[0]
+        else:
+            # Check for alpha/roman conflict
+            types_at_pos = {o.level_type for o in overlapping}
+            if "alpha" in types_at_pos and "roman" in types_at_pos:
+                alpha_em = next(o for o in overlapping if o.level_type == "alpha")
+                roman_em = next(o for o in overlapping if o.level_type == "roman")
+
+                # Get the inner text for disambiguation
+                lk_inner = _label_key(alpha_em).lower()
+
+                if len(lk_inner) > 1 and lk_inner in ROMAN_VALUES:
+                    # Multi-char roman (ii, iii, iv, vi, etc.) — always roman.
+                    # These never represent alpha ordinals in legal text.
+                    chosen = roman_em
+                elif lk_inner in _AMBIGUOUS_ROMAN:
+                    # Single-char ambiguous (i, v, x, l, c, d, m) — use
+                    # context-sensitive 4-rule cascade
+                    alpha_depth = CANONICAL_DEPTH.get("alpha", 1)
+                    decision = _classify_ambiguous(
+                        lk_inner, alpha_depth, last_sibling_at_level,
+                    )
+                    chosen = alpha_em if decision == "alpha" else roman_em
+                else:
+                    # Not ambiguous — keep alpha (e.g., "b", "e", "f")
+                    chosen = alpha_em
+
+            else:
+                # No alpha/roman conflict — pick first by depth order
+                overlapping_sorted = sorted(
+                    overlapping,
+                    key=lambda o: CANONICAL_DEPTH.get(o.level_type, 99),
+                )
+                chosen = overlapping_sorted[0]
+
+        depth = CANONICAL_DEPTH.get(chosen.level_type, 1)
+        lk = _label_key(chosen)
+        xref = _is_xref(text, chosen.position, chosen.match_end)
+
+        # Phase 6: mark inline enumerations as xref
+        if chosen.position in inline_xref_positions:
+            xref = True
+
+        # Phase 3: compute indentation score
+        indent_score = compute_indentation(chosen.position, text, line_starts)
 
         # Pop stack until we find a node with depth < current depth
         while stack and stack[-1][0] >= depth:
             stack.pop()
 
         # Determine parent
-        if stack:
-            parent_id = stack[-1][1]
-        else:
-            parent_id = ""
+        parent_id = stack[-1][1] if stack else ""
 
         node_id = _build_id(parent_id, lk)
 
@@ -443,22 +413,24 @@ def _build_tree(
             node_id = f"{base_id}_{counter}"
             counter += 1
 
-        header_start = em.match_end
+        header_start = chosen.match_end
         header = _extract_header(text, header_start)
 
         node = _MutableNode(
             id=node_id,
-            label=em.raw_label,
+            label=chosen.raw_label,
             depth=depth,
-            level_type=em.level_type,
-            span_start=em.position + global_offset,
+            level_type=chosen.level_type,
+            span_start=chosen.position + global_offset,
             span_end=len(text) + global_offset,  # Placeholder; fixed in post-pass
             header_text=header,
             parent_id=parent_id,
             children_ids=[],
-            ordinal=em.ordinal,
+            ordinal=chosen.ordinal,
             is_xref=xref,
-            is_anchored=em.is_anchored,
+            is_anchored=chosen.is_anchored,
+            indentation_score=indent_score,
+            match_end_local=chosen.match_end,
         )
 
         # Register as child of parent
@@ -468,6 +440,14 @@ def _build_tree(
         node_map[node_id] = node
         nodes.append(node)
         stack.append((depth, node_id))
+
+        # Phase 1: update last_sibling_at_level
+        last_sibling_at_level[depth] = lk
+
+        # Phase 1/6: level-reset — purge deeper levels
+        for deeper in list(last_sibling_at_level):
+            if deeper > depth:
+                del last_sibling_at_level[deeper]
 
     return nodes
 
@@ -511,19 +491,26 @@ def _compute_spans(nodes: list[_MutableNode], text_len: int, global_offset: int)
             else:
                 sib.span_end = group_end
 
-    # Now propagate: a node's span_end should also be bounded by its children
-    # (handled implicitly since children are within the parent's span)
-
 
 # ---------------------------------------------------------------------------
-# Confidence scoring
+# Confidence scoring (Phases 3 + 4)
 # ---------------------------------------------------------------------------
 
-def _compute_confidence(nodes: list[_MutableNode]) -> list[tuple[_MutableNode, bool, bool, bool, bool, float, str]]:
-    """Compute per-node confidence flags.
+def _compute_confidence(
+    nodes: list[_MutableNode],
+    text: str,
+    global_offset: int,
+) -> list[tuple[_MutableNode, bool, bool, bool, bool, float, str]]:
+    """Compute per-node confidence flags with 5-signal scoring.
 
     Returns list of (node, anchor_ok, run_length_ok, gap_ok,
                       is_structural_candidate, parse_confidence, demotion_reason)
+
+    Improvements:
+    - 5th signal: indentation_score (weighted at 0.05)
+    - Singleton hard invariant: if run_length_ok is False, immediately demote
+    - Threshold-based demotion: is_structural = confidence >= 0.5
+    - Ghost clause filtering: empty/near-empty bodies get demoted
     """
     # Group siblings by (parent_id, level_type)
     sibling_groups: dict[tuple[str, str], list[_MutableNode]] = {}
@@ -560,29 +547,60 @@ def _compute_confidence(nodes: list[_MutableNode]) -> list[tuple[_MutableNode, b
         gap_ok = group_gap_ok.get(key, True)
         not_xref = not n.is_xref
 
-        is_structural = anchor_ok and run_length_ok and gap_ok and not_xref
+        # Singleton hard invariant: if not run_length_ok, immediately demote
+        if not run_length_ok:
+            confidence = (
+                _WEIGHT_ANCHOR * (1.0 if anchor_ok else 0.0)
+                + _WEIGHT_RUN * 0.0
+                + _WEIGHT_GAP * (1.0 if gap_ok else 0.0)
+                + _WEIGHT_NOT_XREF * (1.0 if not_xref else 0.0)
+                + _WEIGHT_INDENT * n.indentation_score
+            )
+            results.append((
+                n, anchor_ok, False, gap_ok, False,
+                round(confidence, 4), "singleton",
+            ))
+            continue
 
+        # Full 5-signal scoring
         confidence = (
             _WEIGHT_ANCHOR * (1.0 if anchor_ok else 0.0)
             + _WEIGHT_RUN * (1.0 if run_length_ok else 0.0)
             + _WEIGHT_GAP * (1.0 if gap_ok else 0.0)
             + _WEIGHT_NOT_XREF * (1.0 if not_xref else 0.0)
+            + _WEIGHT_INDENT * n.indentation_score
         )
 
+        # Threshold-based demotion
+        is_structural = confidence >= 0.5
+
+        # Phase 4: Ghost clause filtering
         demotion_reason = ""
-        if not is_structural:
+        if is_structural:
+            # Check body text for ghost clause
+            body_start_local = n.match_end_local
+            body_end_local = n.span_end - global_offset
+            if 0 <= body_start_local <= body_end_local <= len(text):
+                body_text = text[body_start_local:body_end_local]
+                if _is_ghost_clause(body_text):
+                    is_structural = False
+                    demotion_reason = "ghost_body"
+
+        if not is_structural and not demotion_reason:
             reasons: list[str] = []
             if not anchor_ok:
                 reasons.append("not_anchored")
-            if not run_length_ok:
-                reasons.append("singleton_level")
             if not gap_ok:
                 reasons.append("ordinal_gap")
             if n.is_xref:
                 reasons.append("cross_reference")
-            demotion_reason = "; ".join(reasons)
+            if reasons:
+                demotion_reason = "; ".join(reasons)
 
-        results.append((n, anchor_ok, run_length_ok, gap_ok, is_structural, confidence, demotion_reason))
+        results.append((
+            n, anchor_ok, run_length_ok, gap_ok,
+            is_structural, round(confidence, 4), demotion_reason,
+        ))
 
     return results
 
@@ -596,12 +614,13 @@ def parse_clauses(text: str, *, global_offset: int = 0) -> list[ClauseNode]:
 
     Algorithm:
     1. Scan text with 4 regex patterns (alpha, roman, caps, numeric)
-    2. Filter by anchor constraint (line-start or after hard boundary like ';')
-    3. Disambiguate (i) -- alpha 'i' vs roman numeral 'i' based on context
-    4. Stack-walk: build tree with parent-child relationships
-    5. Post-pass: apply run-length and gap constraints
-    6. Compute span boundaries (span_end = next sibling's span_start or parent end)
-    7. Compute per-node confidence scores
+       — both alpha and roman returned at ambiguous positions
+    2. Detect inline enumerations (3+ same-type on one line with separators)
+    3. Stack-walk: build tree with inline alpha/roman disambiguation
+       using last_sibling_at_level context
+    4. Compute span boundaries
+    5. 5-signal confidence scoring with singleton hard invariant,
+       threshold demotion, and ghost clause filtering
 
     Args:
         text: Section text to parse.
@@ -613,30 +632,31 @@ def parse_clauses(text: str, *, global_offset: int = 0) -> list[ClauseNode]:
     if not text:
         return []
 
-    # Step 1: Scan for all enumerators
-    raw_matches = scan_enumerators(text)
+    # Pre-compute line starts for anchor checking and indentation
+    line_starts = compute_line_starts(text)
+
+    # Step 1: Scan for all enumerators (both alpha and roman at same position)
+    raw_matches = scan_enumerators(
+        text, line_starts, deduplicate_alpha_roman=False,
+    )
     if not raw_matches:
         return []
 
-    # Step 2: Filter -- keep only anchored matches for structural consideration
-    # (but we still keep non-anchored ones; they get demoted in confidence)
-    # We keep all matches and let confidence scoring handle demotion.
+    # Step 2: Detect inline enumerations
+    inline_positions = _detect_inline_enums(raw_matches, text, line_starts)
 
-    # Step 3: Disambiguate alpha vs roman
-    matches = _disambiguate(raw_matches)
-    if not matches:
-        return []
-
-    # Step 4: Build tree via stack-walk
-    mutable_nodes = _build_tree(matches, text, global_offset)
+    # Step 3: Build tree via stack-walk with inline disambiguation
+    mutable_nodes = _build_tree(
+        raw_matches, text, global_offset, line_starts, inline_positions,
+    )
     if not mutable_nodes:
         return []
 
-    # Step 6: Compute span boundaries
+    # Step 4: Compute span boundaries
     _compute_spans(mutable_nodes, len(text), global_offset)
 
-    # Step 5 & 7: Confidence scoring
-    scored = _compute_confidence(mutable_nodes)
+    # Step 5: Confidence scoring with ghost clause filtering
+    scored = _compute_confidence(mutable_nodes, text, global_offset)
 
     # Convert to frozen ClauseNode
     result: list[ClauseNode] = []
@@ -654,8 +674,10 @@ def parse_clauses(text: str, *, global_offset: int = 0) -> list[ClauseNode]:
             anchor_ok=anchor_ok,
             run_length_ok=run_length_ok,
             gap_ok=gap_ok,
+            indentation_score=round(node.indentation_score, 4),
+            xref_suspected=node.is_xref,
             is_structural_candidate=is_structural,
-            parse_confidence=round(confidence, 4),
+            parse_confidence=confidence,
             demotion_reason=demotion,
         )
         result.append(clause)
@@ -687,7 +709,10 @@ def resolve_path(nodes: list[ClauseNode], path: list[str]) -> ClauseNode | None:
 
     # Start: find root-level nodes matching the first path element
     target_label = _normalize_label(path[0])
-    candidates = [n for n in nodes if n.parent_id == "" and _normalize_label(n.label) == target_label]
+    candidates = [
+        n for n in nodes
+        if n.parent_id == "" and _normalize_label(n.label) == target_label
+    ]
 
     if not candidates:
         return None
@@ -707,3 +732,59 @@ def resolve_path(nodes: list[ClauseNode], path: list[str]) -> ClauseNode | None:
             return None
 
     return current
+
+
+@dataclass(frozen=True, slots=True)
+class ClauseTree:
+    """Wrapper API around flat clause nodes for parity with VP-style consumers."""
+
+    nodes: tuple[ClauseNode, ...]
+
+    @classmethod
+    def from_text(cls, text: str, *, global_offset: int = 0) -> ClauseTree:
+        return cls(nodes=tuple(parse_clauses(text, global_offset=global_offset)))
+
+    @property
+    def roots(self) -> tuple[ClauseNode, ...]:
+        return tuple(n for n in self.nodes if n.parent_id == "")
+
+    def node_by_id(self, node_id: str) -> ClauseNode | None:
+        for node in self.nodes:
+            if node.id == node_id:
+                return node
+        return None
+
+    def children_of(self, node_id: str) -> tuple[ClauseNode, ...]:
+        return tuple(n for n in self.nodes if n.parent_id == node_id)
+
+    def resolve(self, path: list[str]) -> ClauseNode | None:
+        return resolve_path(list(self.nodes), path)
+
+    def as_records(self) -> list[dict[str, object]]:
+        return [
+            {
+                "id": n.id,
+                "label": n.label,
+                "depth": n.depth,
+                "level_type": n.level_type,
+                "span_start": n.span_start,
+                "span_end": n.span_end,
+                "header_text": n.header_text,
+                "parent_id": n.parent_id,
+                "children_ids": list(n.children_ids),
+                "anchor_ok": n.anchor_ok,
+                "run_length_ok": n.run_length_ok,
+                "gap_ok": n.gap_ok,
+                "indentation_score": n.indentation_score,
+                "xref_suspected": n.xref_suspected,
+                "is_structural_candidate": n.is_structural_candidate,
+                "parse_confidence": n.parse_confidence,
+                "demotion_reason": n.demotion_reason,
+            }
+            for n in self.nodes
+        ]
+
+
+def parse_clause_tree(text: str, *, global_offset: int = 0) -> ClauseTree:
+    """Convenience wrapper returning a ClauseTree object."""
+    return ClauseTree.from_text(text, global_offset=global_offset)

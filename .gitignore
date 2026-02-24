@@ -33,6 +33,10 @@ venv/
 .DS_Store
 Thumbs.db
 
+# Node.js / Next.js (dashboard)
+node_modules/
+.next/
+
 # Temp
 *.tmp
 *.bak

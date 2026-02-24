@@ -1,0 +1,313 @@
+{
+  "_meta": {
+    "description": "Per-family location guidance and co-examination notes for pattern discovery agents",
+    "updated": "2026-02-23",
+    "source": "domain expert voice transcripts"
+  },
+
+  "_structural_changes": {
+    "description": "Decided ontology restructuring actions",
+    "changes": [
+      {
+        "action": "create_l1_family",
+        "new_family_id": "debt_capacity.incremental",
+        "name": "Incremental Capacity",
+        "absorbs": ["debt_capacity.incremental.free_clear", "debt_capacity.incremental.ratio", "debt_capacity.incremental.builders"],
+        "note": "free_clear, ratio, and builders are all about incremental capacity and should be subsumed under a new incremental L1 family. IED stays as-is (it lives in the indebtedness covenant, not the incremental section)."
+      },
+      {
+        "action": "reparent_under",
+        "parent_family_id": "debt_capacity.indebtedness",
+        "absorbs": ["debt_capacity.incremental.acquisition_debt", "debt_capacity.incremental.contribution_debt", "debt_capacity.incremental.subordinated_debt"],
+        "note": "acquisition_debt, contribution_debt, and subordinated_debt are all baskets in the indebtedness covenant and should be children of indebtedness, not siblings."
+      },
+      {
+        "action": "remove_family",
+        "family_id": "cash_flow.carve_outs",
+        "reason": "Already covered by cash_flow.inv. The children of investments are already carve-outs to the investments covenant."
+      }
+    ]
+  },
+
+  "debt_capacity.incremental": {
+    "location_guidance": "The incremental provision governs incremental capacity including free and clear, ratio-based, and builder mechanisms. Typically in Article II or a dedicated incremental facility section.",
+    "primary_location": "Incremental section (typically Article II or dedicated incremental facility section)",
+    "co_examine": ["incremental section", "relevant incremental definitions"],
+    "notes": "New L1 family subsuming free_clear, ratio, and builders. These all describe aspects of incremental capacity and are found in the incremental section and/or relevant incremental definitions.",
+    "subsumes": ["free_clear", "ratio", "builders"],
+    "status": "active"
+  },
+
+  "debt_capacity.incremental.free_clear": {
+    "location_guidance": "Free and clear (aka 'freebie basket') is set in the incremental provision and/or in a relevant incremental definition.",
+    "primary_location": "Incremental section (typically Article II or a dedicated incremental facility section)",
+    "co_examine": ["incremental section", "relevant incremental definitions"],
+    "notes": "The incremental section should always be returned as a match. Any relevant incremental definitions must also be examined. Now a child of the new debt_capacity.incremental L1 family.",
+    "status": "active",
+    "reparented_under": "debt_capacity.incremental"
+  },
+
+  "debt_capacity.incremental.ratio": {
+    "location_guidance": "Ratio-based capacity is set in the incremental provision and/or in a relevant incremental definition, same as free and clear capacity.",
+    "primary_location": "Incremental section",
+    "co_examine": ["incremental section", "relevant incremental definitions"],
+    "notes": "Same structural guidance as free_clear: incremental section should always be returned, plus relevant incremental definitions. Now a child of the new debt_capacity.incremental L1 family.",
+    "status": "active",
+    "reparented_under": "debt_capacity.incremental"
+  },
+
+  "debt_capacity.incremental.builders": {
+    "location_guidance": "Builder mechanisms are set in the incremental provision and/or in a relevant incremental definition, same as free and clear and ratio-based capacity.",
+    "primary_location": "Incremental section",
+    "co_examine": ["incremental section", "relevant incremental definitions"],
+    "notes": "Same structural guidance as free_clear and ratio: incremental section should always be returned, plus relevant incremental definitions. Now a child of the new debt_capacity.incremental L1 family.",
+    "status": "active",
+    "reparented_under": "debt_capacity.incremental"
+  },
+
+  "debt_capacity.incremental.mfn": {
+    "location_guidance": "MFN protection is found in the incremental section but may also apply to other types of debt such as incremental equivalent debt.",
+    "primary_location": "Incremental section",
+    "co_examine": ["incremental section", "MFN protection definitions", "any other sections that include MFN protection (e.g., incremental equivalent debt provisions)"],
+    "notes": "Broader scope than other incremental sub-families: MFN may appear in multiple locations beyond the core incremental section. Any MFN protection definitions, the incremental section, and any other sections with MFN protection should all be returned.",
+    "status": "active"
+  },
+
+  "debt_capacity.incremental.ied": {
+    "location_guidance": "Incremental equivalent debt is virtually always included as a basket in the indebtedness covenant. Sometimes also covered in a corresponding defined term.",
+    "primary_location": "Indebtedness section (negative covenants article)",
+    "co_examine": ["indebtedness covenant", "corresponding defined terms for incremental equivalent debt"],
+    "notes": "Unlike other incremental sub-families, IED lives in the indebtedness covenant rather than the incremental section. Stays as-is (not subsumed under the new incremental L1 family).",
+    "status": "active"
+  },
+
+  "debt_capacity.incremental.stacking_reclass": {
+    "location_guidance": "Stacking and reclassification is always provided for in an interpretive provision in Article I. If the defined terms section is not in Article I, it will be in the same article that contains the defined terms.",
+    "primary_location": "Interpretive provisions section in Article I (or same article as defined terms)",
+    "co_examine": ["interpretive provisions", "defined terms article"],
+    "notes": "Always in an interpretive provision, co-located with or adjacent to the defined terms.",
+    "status": "active"
+  },
+
+  "debt_capacity.incremental.acquisition_debt": {
+    "location_guidance": "Acquisition debt is always provided for in the indebtedness section of the negative covenants article. May have corresponding defined terms in the defined terms section.",
+    "primary_location": "Indebtedness section (negative covenants article)",
+    "co_examine": ["indebtedness section", "corresponding defined terms in definitions section"],
+    "notes": "Always in the indebtedness covenant. Check defined terms section for corresponding definitions. Now reparented as a child of debt_capacity.indebtedness (it is a basket in the indebtedness covenant).",
+    "status": "active",
+    "reparented_under": "debt_capacity.indebtedness"
+  },
+
+  "debt_capacity.incremental.contribution_debt": {
+    "location_guidance": "Contribution debt is always in the indebtedness covenant in the negative covenant article, similarly to acquisition debt.",
+    "primary_location": "Indebtedness section (negative covenants article)",
+    "co_examine": ["indebtedness section"],
+    "notes": "Same structural pattern as acquisition debt. Now reparented as a child of debt_capacity.indebtedness.",
+    "status": "active",
+    "reparented_under": "debt_capacity.indebtedness"
+  },
+
+  "debt_capacity.incremental.subordinated_debt": {
+    "location_guidance": "Subordinated debt is always in the indebtedness covenant in the negative covenant article, same as acquisition debt and contribution debt.",
+    "primary_location": "Indebtedness section (negative covenants article)",
+    "co_examine": ["indebtedness section"],
+    "notes": "Same structural pattern as acquisition debt and contribution debt. Now reparented as a child of debt_capacity.indebtedness.",
+    "status": "active",
+    "reparented_under": "debt_capacity.indebtedness"
+  },
+
+  "debt_capacity.incremental.structural_controls": {
+    "status": "defer_discussion",
+    "notes": "Deferred to a separate devoted discussion at the end."
+  },
+
+  "debt_capacity.indebtedness": {
+    "location_guidance": "Indebtedness will always be a section in the negative covenants article.",
+    "primary_location": "Negative covenants article (dedicated indebtedness section)",
+    "co_examine": ["indebtedness section"],
+    "notes": "Always a section in the negative covenants article. Now absorbs acquisition_debt, contribution_debt, and subordinated_debt as children (they are baskets within the indebtedness covenant).",
+    "absorbs": ["debt_capacity.incremental.acquisition_debt", "debt_capacity.incremental.contribution_debt", "debt_capacity.incremental.subordinated_debt"],
+    "status": "active"
+  },
+
+  "debt_capacity.liens": {
+    "location_guidance": "Liens will always be a separate section dedicated to liens in the negative covenants article, usually but not always before or after the indebtedness section.",
+    "primary_location": "Negative covenants article (dedicated liens section)",
+    "co_examine": ["liens section"],
+    "notes": "Typically adjacent to the indebtedness section in the negative covenants article, but not always.",
+    "status": "active"
+  },
+
+  "debt_capacity.side_by_side_revolvers": {
+    "status": "defer_discussion",
+    "notes": "Deferred to a separate devoted discussion at the end."
+  },
+
+  "cash_flow": {
+    "status": "defer_discussion",
+    "notes": "Cash flow and value leakage domain-level discussion deferred to a separate devoted discussion at the end."
+  },
+
+  "cash_flow.rp": {
+    "location_guidance": "Restricted payments will always be in the negative covenants article. There are multiple structural approaches: (1) Bond-style: RP, investments, and restricted debt payments are combined in a single section with subsections for each; (2) Regular credit agreement: RP, investments, and restricted debt payments are each separate sections in the negative covenants article; (3) Hybrid A: RP and investments are their own sections, but restricted debt payments is covered within the RP section; (4) Hybrid B: Both RP and restricted debt payments have their own separate sections.",
+    "primary_location": "Negative covenants article",
+    "co_examine": ["restricted payments section", "investments section (if separate)", "restricted debt payments section or subsection"],
+    "structural_variants": [
+      "Bond-style: combined section with subsections for RP, investments, restricted debt payments",
+      "Regular: separate sections for RP, investments, and restricted debt payments",
+      "Hybrid A: RP and investments as own sections; restricted debt payments within RP section",
+      "Hybrid B: RP and restricted debt payments each have separate sections"
+    ],
+    "notes": "The relationship between RP, investments, and restricted debt payments varies significantly by deal structure. All three should be analyzed together.",
+    "status": "active"
+  },
+
+  "cash_flow.inv": {
+    "location_guidance": "Investments will always be in the negative covenants article. May be a standalone section or part of a combined bond-style section with restricted payments and restricted debt payments.",
+    "primary_location": "Negative covenants article",
+    "co_examine": ["investments section", "restricted payments section (if bond-style combined)"],
+    "notes": "See cash_flow.rp for the full set of structural variants governing how RP, investments, and restricted debt payments are organized. The children of the investments family are already carve-outs to the investments covenant (this is why the separate carve_outs family was removed).",
+    "status": "active"
+  },
+
+  "cash_flow.restricted_debt_payments": {
+    "location_guidance": "Restricted debt payments will always be in the negative covenants article. May be its own section, a subsection of a combined bond-style section, or covered within the restricted payments section itself.",
+    "primary_location": "Negative covenants article",
+    "co_examine": ["restricted debt payments section (if standalone)", "restricted payments section (if covered there)", "combined RP/inv/RDP section (if bond-style)"],
+    "notes": "See cash_flow.rp for the full set of structural variants. Restricted debt payments has the most variation in placement.",
+    "status": "active"
+  },
+
+  "cash_flow.dispositions": {
+    "location_guidance": "Asset sales and dispositions will always have a dedicated section in the negative covenants article. Must also examine a corresponding set of definitions that are integral for analysis.",
+    "primary_location": "Negative covenants article (dedicated dispositions section)",
+    "co_examine": ["dispositions section in negative covenants", "Net Proceeds definition", "Asset Sale definition", "Disposition definition", "other related definitions"],
+    "notes": "Critical: the definitions (Net Proceeds, Asset Sale, Disposition, and others) MUST be examined alongside the negative covenants section. The section alone is insufficient for analysis.",
+    "status": "active"
+  },
+
+  "cash_flow.mandatory_prepayment": {
+    "location_guidance": "Mandatory prepayments will virtually always be in Article II, either as a separate dedicated section or as a clause within a general prepayments section (which also covers voluntary prepayments).",
+    "primary_location": "Article II (prepayments section or dedicated mandatory prepayments section)",
+    "co_examine": ["mandatory prepayments section or clause", "excess cash flow definitions", "asset sale definitions", "casualty event definitions"],
+    "structural_variants": [
+      "Standalone: dedicated mandatory prepayments section in Article II",
+      "Combined: clause within a general prepayments section alongside voluntary prepayments"
+    ],
+    "typical_components": ["excess cash flow", "asset sales", "casualty events"],
+    "notes": "Similar to incrementals in that it lives in Article II. The corresponding definitions for excess cash flow and asset sales must be analyzed alongside the section/clause.",
+    "status": "active"
+  },
+
+  "cash_flow.carve_outs": {
+    "status": "removed",
+    "reason": "Already covered by cash_flow.inv. The children of the investments family are already carve-outs to the investments covenant. Redundant family."
+  },
+
+  "cash_flow.simultaneous_incurrence_netting": {
+    "status": "defer_discussion",
+    "notes": "Deferred to a separate devoted discussion at the end."
+  },
+
+  "fin_framework.ebitda": {
+    "location_guidance": "The EBITDA definition may appear as 'Consolidated EBITDA', 'EBITDA', or 'Last 12 Months EBITDA', but will always contain 'EBITDA' in the name. Found in the defined terms section.",
+    "primary_location": "Defined terms section (Article I)",
+    "co_examine": ["EBITDA definition", "defined terms referenced within the EBITDA definition", "Consolidated Net Income definition (starting place for EBITDA)"],
+    "definition_variants": ["Consolidated EBITDA", "EBITDA", "Last 12 Months EBITDA"],
+    "notes": "EBITDA should be examined alongside any defined terms inside the EBITDA definition itself, plus Consolidated Net Income which is the starting point for the EBITDA calculation.",
+    "status": "active"
+  },
+
+  "fin_framework.leverage": {
+    "location_guidance": "Leverage ratios consist of separate definitions in the defined terms section.",
+    "primary_location": "Defined terms section (Article I)",
+    "co_examine": ["leverage ratio definitions"],
+    "definition_variants": ["Consolidated Net Leverage", "Consolidated Secured Leverage", "Consolidated First Lien Net Leverage", "Consolidated Total Net Leverage"],
+    "notes": "Multiple separate ratio definitions. Each is its own defined term.",
+    "status": "active"
+  },
+
+  "fin_framework.financial_covenant": {
+    "location_guidance": "Financial covenants will either consist of their own article or be a section in the negative covenants article.",
+    "primary_location": "Own article OR section in negative covenants article",
+    "co_examine": ["financial covenants article or section"],
+    "structural_variants": [
+      "Standalone: own dedicated article for financial covenants",
+      "Embedded: section within the negative covenants article"
+    ],
+    "notes": "Two possible structural locations.",
+    "status": "active"
+  },
+
+  "fin_framework.equity_cure": {
+    "location_guidance": "Equity cure will either be a section towards the end of the events of default article or in the financial covenants article, but is usually at the end of the events of default article.",
+    "primary_location": "Events of default article (usually at the end) OR financial covenants article",
+    "co_examine": ["equity cure section", "events of default article", "financial covenants article"],
+    "structural_variants": [
+      "Typical: section at the end of the events of default article",
+      "Alternative: section in the financial covenants article"
+    ],
+    "notes": "Usually at the end of the events of default article.",
+    "status": "active"
+  },
+
+  "fin_framework.lct": {
+    "location_guidance": "LCT (Limited Condition Transactions) is usually a definition as well as a subsection in the interpretive provisions at the end of Article I.",
+    "primary_location": "Interpretive provisions (end of Article I) and defined terms section",
+    "co_examine": ["LCT definition", "interpretive provisions subsection for LCT"],
+    "notes": "Dual presence: both a defined term and an interpretive provision subsection in Article I.",
+    "status": "active"
+  },
+
+  "fin_framework.accounting": {
+    "status": "defer_discussion",
+    "notes": "Deferred to a separate devoted discussion at the end."
+  },
+
+  "credit_protection.events_of_default": {
+    "location_guidance": "Events of default will always be its own article.",
+    "primary_location": "Dedicated events of default article",
+    "co_examine": ["events of default article"],
+    "notes": "Always a standalone article.",
+    "status": "active"
+  },
+
+  "governance.pre_closing": {
+    "location_guidance": "Pre-closing mechanics will always be covered in the conditions precedent article.",
+    "primary_location": "Conditions precedent article",
+    "co_examine": ["conditions precedent article"],
+    "notes": "Always in the conditions precedent article.",
+    "status": "active"
+  },
+
+  "governance.other_advisory_roles": {
+    "status": "skip",
+    "notes": "Skipped for now per user instruction."
+  },
+
+  "_deferred_discussions": {
+    "description": "Topics flagged for separate devoted discussions",
+    "topics": [
+      {
+        "family_id": "debt_capacity.incremental.structural_controls",
+        "topic": "Structural controls and protections - devoted discussion needed"
+      },
+      {
+        "family_id": "debt_capacity.side_by_side_revolvers",
+        "topic": "Side-by-side revolvers - devoted discussion needed"
+      },
+      {
+        "family_id": "cash_flow",
+        "topic": "Cash flow and value leakage domain - devoted discussion needed"
+      },
+      {
+        "family_id": "cash_flow.simultaneous_incurrence_netting",
+        "topic": "Simultaneous incurrence netting - devoted discussion needed"
+      },
+      {
+        "family_id": "fin_framework.accounting",
+        "topic": "Accounting change provisions - devoted discussion needed"
+      }
+    ]
+  }
+}

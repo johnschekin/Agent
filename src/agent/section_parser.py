@@ -19,6 +19,8 @@ import re
 from bisect import bisect_right
 from dataclasses import dataclass
 
+from agent.doc_parser import DocOutline
+
 
 # ---------------------------------------------------------------------------
 # Data types
@@ -227,14 +229,33 @@ def parse_outline(text: str) -> list[OutlineArticle]:
     if not text:
         return []
 
-    # Phase 1: Find all articles
-    articles = _find_articles(text)
-
-    # Phase 2: Find all sections and assign to articles
-    sections = _find_all_sections(text, articles)
-
-    # Phase 3: Group sections into articles and build OutlineArticle objects
-    return _build_articles(articles, sections)
+    # Compatibility shim: delegate to authoritative doc parser, then project
+    # into section_parser dataclasses expected by existing call sites/tests.
+    outline = DocOutline.from_text(text)
+    out: list[OutlineArticle] = []
+    for article in outline.articles:
+        projected_sections = tuple(
+            OutlineSection(
+                number=s.number,
+                heading=s.heading,
+                char_start=s.char_start,
+                char_end=s.char_end,
+                article_num=s.article_num,
+                word_count=s.word_count,
+            )
+            for s in article.sections
+        )
+        out.append(
+            OutlineArticle(
+                num=article.num,
+                label=article.label,
+                title=article.title,
+                char_start=article.char_start,
+                char_end=article.char_end,
+                sections=projected_sections,
+            )
+        )
+    return out
 
 
 def find_sections(text: str) -> list[OutlineSection]:
@@ -251,49 +272,36 @@ def find_sections(text: str) -> list[OutlineSection]:
     if not text:
         return []
 
-    matches = list(_SECTION_RE.finditer(text))
-    if not matches:
-        return []
-
-    # Deduplicate by section number (prefer match with heading, then earliest)
-    best: dict[str, re.Match[str]] = {}
-    for m in matches:
-        number = m.group(1)
-        if number not in best:
-            best[number] = m
-        else:
-            cur_heading = _extract_heading(best[number].group(2) or "")
-            new_heading = _extract_heading(m.group(2) or "")
-            if new_heading and not cur_heading:
-                best[number] = m
-
-    deduped = sorted(best.values(), key=lambda m: m.start())
-
-    results: list[OutlineSection] = []
-    for i, m in enumerate(deduped):
-        number = m.group(1)
-        heading = _extract_heading(m.group(2) or "")
-        char_start = m.start()
-
-        # char_end: start of next section, or end of text
-        if i + 1 < len(deduped):
-            char_end = deduped[i + 1].start()
-        else:
-            char_end = len(text)
-
-        section_text = text[char_start:char_end]
-        word_count = len(section_text.split())
-
-        results.append(OutlineSection(
-            number=number,
-            heading=heading,
-            char_start=char_start,
-            char_end=char_end,
+    outline = DocOutline.from_text(text)
+    projected = [
+        OutlineSection(
+            number=s.number,
+            heading=s.heading,
+            char_start=s.char_start,
+            char_end=s.char_end,
             article_num=0,
-            word_count=word_count,
-        ))
+            word_count=s.word_count,
+        )
+        for s in outline.sections
+    ]
+    if projected:
+        return projected
 
-    return results
+    # Fallback path: regex-only extraction for parser blind spots.
+    # Keep article_num=0 to preserve existing find_sections contract.
+    articles = _find_articles(text)
+    fallback_sections = _find_all_sections(text, articles)
+    return [
+        OutlineSection(
+            number=str(s["number"]),
+            heading=str(s["heading"]),
+            char_start=int(s["char_start"]),
+            char_end=int(s["char_end"]),
+            article_num=0,
+            word_count=int(s["word_count"]),
+        )
+        for s in fallback_sections
+    ]
 
 
 # ---------------------------------------------------------------------------

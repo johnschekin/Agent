@@ -1,0 +1,7 @@
+Transition gate passed for wave 2 (artifact: plans/wave2_dispatch_gate_2026-02-23.json)
+[dry-run] would launch session: agent-swarm
+[dry-run] start inv on pane=0 backend=opus46
+[dry-run] start rp on pane=1 backend=opus46
+[dry-run] start indebtedness on pane=2 backend=opus46
+[dry-run] start liens on pane=3 backend=opus46
+Dispatched wave 2 with 4 family agent(s); skipped=0.

@@ -40,6 +40,22 @@ class DnaCandidate:
     rejection_reason: str       # "" if passed; e.g., "section_rate<0.20"
 
 
+@dataclass(frozen=True, slots=True)
+class FamilyProfile:
+    """Family-level orchestration summary for DNA candidate quality."""
+
+    target_count: int
+    background_count: int
+    avg_target_words: float
+    avg_background_words: float
+    token_diversity_target: float
+    token_diversity_background: float
+    candidate_count: int
+    high_signal_candidate_count: int
+    avg_candidate_section_rate: float
+    avg_candidate_background_rate: float
+
+
 def discover_dna_phrases(
     target_texts: list[str],
     background_texts: list[str],
@@ -213,3 +229,63 @@ _WORD_RE = re.compile(r"[a-z][a-z''-]+", re.IGNORECASE)
 def _tokenize(text: str) -> list[str]:
     """Tokenize text into lowercase words."""
     return [m.group().lower() for m in _WORD_RE.finditer(text)]
+
+
+def build_family_profile(
+    target_texts: list[str],
+    background_texts: list[str],
+    candidates: list[DnaCandidate],
+) -> FamilyProfile:
+    """Build family-level profile used by orchestration/reporting tools."""
+    target_tokens = [_tokenize(t) for t in target_texts]
+    bg_tokens = [_tokenize(t) for t in background_texts]
+
+    target_word_counts = [len(tokens) for tokens in target_tokens]
+    bg_word_counts = [len(tokens) for tokens in bg_tokens]
+
+    target_vocab = {tok for tokens in target_tokens for tok in tokens}
+    bg_vocab = {tok for tokens in bg_tokens for tok in tokens}
+
+    target_total_tokens = sum(target_word_counts)
+    bg_total_tokens = sum(bg_word_counts)
+    high_signal = [c for c in candidates if c.combined_score >= 0.8]
+
+    avg_sec_rate = (
+        sum(c.section_rate for c in candidates) / len(candidates)
+        if candidates
+        else 0.0
+    )
+    avg_bg_rate = (
+        sum(c.background_rate for c in candidates) / len(candidates)
+        if candidates
+        else 0.0
+    )
+
+    return FamilyProfile(
+        target_count=len(target_texts),
+        background_count=len(background_texts),
+        avg_target_words=(
+            sum(target_word_counts) / len(target_word_counts)
+            if target_word_counts
+            else 0.0
+        ),
+        avg_background_words=(
+            sum(bg_word_counts) / len(bg_word_counts)
+            if bg_word_counts
+            else 0.0
+        ),
+        token_diversity_target=(
+            len(target_vocab) / max(1, target_total_tokens)
+            if target_total_tokens > 0
+            else 0.0
+        ),
+        token_diversity_background=(
+            len(bg_vocab) / max(1, bg_total_tokens)
+            if bg_total_tokens > 0
+            else 0.0
+        ),
+        candidate_count=len(candidates),
+        high_signal_candidate_count=len(high_signal),
+        avg_candidate_section_rate=avg_sec_rate,
+        avg_candidate_background_rate=avg_bg_rate,
+    )

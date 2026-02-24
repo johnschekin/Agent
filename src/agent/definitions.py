@@ -16,7 +16,9 @@ confidence) and returned sorted by char_start.
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
+
+from agent.definition_types import classify_definition_text
 
 
 # ---------------------------------------------------------------------------
@@ -35,6 +37,11 @@ class DefinedTerm:
     def_end: int             # Char offset end of definition text
     pattern_engine: str      # Which engine found it
     confidence: float        # 0.0-1.0
+    definition_type: str = "DIRECT"
+    definition_types: tuple[str, ...] = ()
+    type_confidence: float = 0.0
+    type_signals: tuple[str, ...] = ()
+    dependency_terms: tuple[str, ...] = ()
 
 
 # ---------------------------------------------------------------------------
@@ -68,6 +75,28 @@ _FALSE_POSITIVE_PHRASES: tuple[str, ...] = (
     "notwithstanding",
 )
 
+_DEPENDENCY_QUOTED_RE = re.compile(
+    r'["\u201c]([A-Z][^"\u201d]{1,100})["\u201d]'
+)
+_DEPENDENCY_CAP_RE = re.compile(
+    r"\b([A-Z][A-Za-z0-9]+(?: [A-Z][A-Za-z0-9]+){0,5})\b"
+)
+_DEPENDENCY_STOPWORDS = frozenset(
+    {
+        "Section",
+        "Article",
+        "Schedule",
+        "Exhibit",
+        "Agreement",
+        "Borrower",
+        "Lender",
+        "Lenders",
+        "Agent",
+        "Administrative Agent",
+        "The",
+    }
+)
+
 
 def _is_false_positive(term: str) -> bool:
     """Return True if *term* should be rejected as a false positive."""
@@ -91,6 +120,64 @@ def _is_false_positive(term: str) -> bool:
         return True
 
     return False
+
+
+def infer_dependency_terms(
+    definition_text: str,
+    *,
+    term_name: str = "",
+    max_terms: int = 12,
+) -> tuple[str, ...]:
+    """Infer likely defined-term dependencies referenced in a definition body."""
+    text = definition_text or ""
+    if not text:
+        return ()
+
+    seen: set[str] = set()
+    out: list[str] = []
+
+    def _push(candidate: str) -> None:
+        cleaned = " ".join(candidate.split()).strip(" ,.;:()")
+        if not cleaned:
+            return
+        if cleaned in _DEPENDENCY_STOPWORDS:
+            return
+        if cleaned.lower() == term_name.lower():
+            return
+        key = cleaned.lower()
+        if key in seen:
+            return
+        seen.add(key)
+        out.append(cleaned)
+
+    for m in _DEPENDENCY_QUOTED_RE.finditer(text):
+        _push(m.group(1))
+        if len(out) >= max_terms:
+            return tuple(out[:max_terms])
+
+    for m in _DEPENDENCY_CAP_RE.finditer(text):
+        _push(m.group(1))
+        if len(out) >= max_terms:
+            break
+
+    return tuple(out[:max_terms])
+
+
+def _annotate_definition_term(term: DefinedTerm) -> DefinedTerm:
+    """Attach type/dependency metadata to a raw extracted definition."""
+    type_result = classify_definition_text(term.definition_text)
+    dependencies = infer_dependency_terms(
+        term.definition_text,
+        term_name=term.term,
+    )
+    return replace(
+        term,
+        definition_type=type_result.primary_type,
+        definition_types=type_result.detected_types,
+        type_confidence=type_result.confidence,
+        type_signals=type_result.signals,
+        dependency_terms=dependencies,
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -432,10 +519,13 @@ def extract_definitions(
     # Deduplicate
     deduped = _deduplicate(all_terms)
 
-    # Sort by char_start
-    deduped.sort(key=lambda dt: dt.char_start)
+    # Attach structural type/dependency metadata used by precision gates.
+    annotated = [_annotate_definition_term(dt) for dt in deduped]
 
-    return deduped
+    # Sort by char_start
+    annotated.sort(key=lambda dt: dt.char_start)
+
+    return annotated
 
 
 def find_term(text: str, term: str) -> DefinedTerm | None:

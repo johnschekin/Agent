@@ -1,0 +1,15 @@
+{
+  "schema_version": "latest_corpus_snapshot_v1",
+  "captured_at": "2026-02-23T00:00:00Z",
+  "db_path": "corpus_index/corpus.duckdb",
+  "profile_path": "plans/corpus_profile_latest_2026-02-23.json",
+  "counts": {
+    "total_docs": 12583,
+    "cohort_docs": 12583
+  },
+  "parse_quality": {
+    "section_success_rate": 0.9925,
+    "clause_success_rate": 0.9917,
+    "definition_success_rate": 0.9995
+  }
+}

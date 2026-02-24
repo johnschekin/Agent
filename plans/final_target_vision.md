@@ -2,7 +2,7 @@
 
 ## Context
 
-We have a 3,538-node leveraged finance ontology (49 families) and 30,000+ credit agreements.
+We have a 3,538-node leveraged finance ontology (49 families) and a current full corpus of 12,583 credit agreements.
 The goal: discover reliable patterns (heading, keyword, DNA phrase, structural position) for each
 node that can locate it across thousands of CAs — producing labeled data (node-to-clause mappings)
 without per-doc LLM calls.
@@ -33,7 +33,10 @@ edgar-pipeline-documents-216213517387/
     └── ...
 ```
 
-**Decision**: Ingest ALL 30K docs before agent work begins. Use Ray for parallel processing.
+**Decision**: Use staged ingestion gates before full scale:
+- Gate 1 (MVP): 500 docs (local)
+- Gate 2: 5,000 docs (local)
+- Gate 3: full corpus (currently 12,583 docs; Ray cluster optional for refresh-scale runs, Phase E)
 
 ### Template Discovery
 
@@ -151,7 +154,7 @@ Source selection based on detailed comparison of VP L0 vs TI scripts:
 
 ---
 
-## Phase 2: Corpus Ingestion (Full 30K from S3)
+## Phase 2: Corpus Ingestion (Staged: 500 → 5K → Full Corpus)
 
 ### 2.0 AWS Setup (prerequisite)
 
@@ -163,7 +166,7 @@ aws s3 ls s3://edgar-pipeline-documents-216213517387/  # Verify access
 
 ### 2.1 S3 Sync
 
-**`scripts/sync_corpus.py`** — Download full corpus from S3 to local:
+**`scripts/sync_corpus.py`** — Download corpus from S3 to local (used across all gates):
 ```bash
 python3 scripts/sync_corpus.py --bucket edgar-pipeline-documents-216213517387 \
   --local-dir corpus/ --parallel 32
@@ -185,14 +188,17 @@ corpus/
 **Infrastructure**: Transient AWS Ray cluster for fast parallel processing.
 - `infra/ray_cluster.yaml` — Ray cluster config (auto-scaling EC2 spot instances)
 - Head node: m5.xlarge, Workers: m5.large × 16-32
-- Estimated runtime: ~15-30 min for 30K docs
+- Estimated runtime: environment-dependent; current 12,583-doc full corpus is materially smaller than earlier large-scale assumptions.
 
-**`scripts/build_corpus_index.py`** — Process all 30K docs via Ray:
+**`scripts/build_corpus_index.py`** — Process corpus by stage:
 ```bash
-# Local development (small subset):
-python3 scripts/build_corpus_index.py --corpus-dir corpus/ --output corpus_index/ --workers 8
+# Gate 1 (MVP): 500-doc local build
+python3 scripts/build_corpus_index.py --corpus-dir corpus/ --output corpus_index/ --workers 8 --limit 500
 
-# Production (full 30K on Ray cluster):
+# Gate 2: 5,000-doc local build
+python3 scripts/build_corpus_index.py --corpus-dir corpus/ --output corpus_index/ --workers 8 --limit 5000
+
+# Gate 3 / Phase E: Production full-corpus run on Ray cluster (current full corpus: 12,583 docs)
 ray submit infra/ray_cluster.yaml scripts/build_corpus_index.py -- \
   --corpus-dir /mnt/efs/corpus/ --output /mnt/efs/corpus_index/ --ray
 ```
@@ -209,7 +215,7 @@ Per-document processing (parallelized via Ray):
 5. `definitions.extract_definitions()` → all defined terms with text + char offsets
 6. `metadata.extract_metadata()` → borrower, agent, dates, facility size
 
-**Storage: DuckDB** (not 30K JSON files — concurrent agent I/O would bottleneck)
+**Storage: DuckDB** (not per-document JSON files — concurrent agent I/O would bottleneck)
 
 All per-doc results written to a single `corpus_index/corpus.duckdb` database:
 - **`documents`** table: master index (one row per doc)
@@ -219,12 +225,12 @@ All per-doc results written to a single `corpus_index/corpus.duckdb` database:
 - **`section_text`** table: full section text (lazy-loaded, not held in memory)
 
 Why DuckDB over alternatives:
-- **vs JSON files**: 30K files × 49 concurrent agents = I/O catastrophe. DuckDB handles
+- **vs JSON files**: per-doc files × 49 concurrent agents = I/O catastrophe. DuckDB handles
   concurrent reads with zero contention (single-writer, multi-reader).
 - **vs Parquet**: DuckDB reads Parquet natively, but also supports SQL queries, joins,
   and aggregations that CLI tools need (e.g., "find all sections with heading LIKE '%Indebtedness%'").
   We can always `EXPORT` to Parquet for interop.
-- **vs SQLite**: DuckDB is columnar — analytics queries (aggregations, scans across 30K docs)
+- **vs SQLite**: DuckDB is columnar — analytics queries (aggregations, scans across full corpus)
   are 10-100x faster. SQLite is row-oriented and struggles with analytical workloads.
 - **vs PostgreSQL**: No server to manage. Single file, zero config, embedded.
 
@@ -251,7 +257,7 @@ CREATE TABLE documents (
 );
 ```
 
-### 2.3 Template Discovery (Boilerplate Shingle Clustering)
+### 2.3 Template Discovery (Boilerplate Shingle Clustering, Phase B+)
 
 **`scripts/template_classifier.py`** — Two-phase template discovery:
 
@@ -284,7 +290,12 @@ Output: `corpus_index/templates/classifications.json` mapping doc_id → templat
 
 ---
 
-## Phase 3: CLI Tool Suite (Pilot Set — 16 tools)
+## Phase 3: CLI Tool Suite (Final Target — 16 tools)
+
+MVP Phase A uses a focused subset (12 tools + setup workspace). The following are **deferred to Phase B+**:
+- `structural_mapper.py`
+- `template_classifier.py`
+- `llm_judge.py`
 
 Each tool: standalone Python script, argparse CLI, structured JSON output to stdout.
 All tools query `corpus.duckdb` via the `corpus.py` library (DuckDB-backed, read-only).
@@ -387,7 +398,7 @@ python3 scripts/definition_finder.py --doc-id abc123 --term "Consolidated EBITDA
 # Output: [{term, definition_text, pattern_engine, char_offset}]
 ```
 
-**10. `structural_mapper.py`** — Map structural positions
+**10. `structural_mapper.py`** — Map structural positions (**Phase B+; deferred from MVP**)
 ```
 python3 scripts/structural_mapper.py --concept "indebtedness" \
   --heading-patterns "Indebtedness,Limitation on Indebtedness" --sample 500
@@ -440,9 +451,9 @@ python3 scripts/strategy_writer.py --concept-id debt_capacity.indebtedness \
 #   kirkland templates by 15% (92%→77%). Revert or fix kirkland before saving."
 ```
 
-**15. `llm_judge.py`** — Precision self-evaluation via LLM
+**14. `llm_judge.py`** — Precision self-evaluation via LLM (**Phase B+; deferred from MVP**)
 
-**Required before strategy commit.** Agents must self-evaluate precision, not just recall.
+**Phase B+ release gate (not MVP blocking).** Agents should self-evaluate precision, not just recall.
 Samples N random matches (default: 20), sends each match + surrounding context to an LLM
 judge (Claude Haiku for cost efficiency), asks: "Does this extracted clause actually express
 the concept {concept_name}? Rate: correct / partial / wrong."
@@ -458,10 +469,11 @@ python3 scripts/llm_judge.py --matches matches.json --concept-id debt_capacity.i
 # }
 ```
 
-The agent prompt requires running `llm_judge.py` before every `strategy_writer.py` call.
+In Phase B+, require `llm_judge.py` before release-candidate strategy commits.
+In MVP Phase A, `llm_judge.py` is advisory/optional.
 Results are persisted alongside the strategy version for the human reviewer's dashboard.
 
-**14. `setup_workspace.py`** — Initialize agent workspace
+**15. `setup_workspace.py`** — Initialize agent workspace
 ```
 python3 scripts/setup_workspace.py --family indebtedness \
   --expert-materials ~/Projects/TermIntelligence/analysis/indebtedness \
@@ -556,8 +568,8 @@ Read the files in your workspace context/ directory:
 1. UNDERSTAND: Read all context files. Start with domain_guidance.md — it tells you WHERE
    to look. Then read trace.md for WHAT to look for. Then components.json for HOW DEEP to go.
 2. BOOTSTRAP: Load current strategy. If none, create from expert materials + domain guidance.
-3. MAP STRUCTURE: Run structural_mapper first — confirm the domain expert's location hints
-   against the actual corpus. Does the concept really live in Article VII / Section 7.01?
+3. MAP STRUCTURE: In MVP, start with heading_discoverer + coverage_reporter to validate location hints.
+   In Phase B+, run structural_mapper first for explicit structural priors.
 4. TEST: Run pattern_tester against sample. Examine coverage_reporter by template family.
 5. ANALYZE: Why do misses occur? Different heading? Different article? Different structure entirely?
    Look for secondary signal locations mentioned in domain guidance.
@@ -572,8 +584,8 @@ Read the files in your workspace context/ directory:
 - ALL patterns must be grounded in corpus evidence, never fabricated from training knowledge
 - Save evidence for every pattern decision (which docs, which clauses)
 - Version your strategies (strategy_writer creates version history)
-- **BEFORE every strategy save**: run `llm_judge.py` on 20 random matches. If precision < 70%,
-  refine patterns before committing. The judge results are saved for human review.
+- **Phase B+ release gate**: run `llm_judge.py` on 20 random matches before release-candidate saves.
+  In MVP, this step is optional/advisory and does not block iteration.
 - When stuck, examine the miss_summary from pattern_tester — it gives you mathematical hints
   (log-odds discriminators, template breakdown, structural deviation) without raw text
 - Target CLAUSE-level matches, not section-level. Use child_locator with clause_depth
@@ -592,7 +604,7 @@ Read the files in your workspace context/ directory:
 ### 5.1 Setup
 1. Run `setup_workspace.py` for indebtedness family
 2. Build corpus_index against pilot corpus
-3. Run `template_classifier.py` to classify docs (even partial classification helps)
+3. (Phase B+) Run `template_classifier.py` to classify docs (even partial classification helps)
 
 ### 5.2 Manual agent run (before swarm)
 First run the pilot agent manually in a terminal (not tmux) to validate the tool suite:
@@ -659,7 +671,7 @@ rich components, zero frontend boilerplate).
 - section_parser.py: verify section extraction on 3-5 known CAs
 - clause_parser.py: verify enumeration parsing, depth tracking, nested AST on real sections
 - strategy.py: verify load/save/merge/version round-trip
-- llm_judge.py: verify prompt construction, response parsing, precision calculation
+- (Phase B+) llm_judge.py: verify prompt construction, response parsing, precision calculation
 
 ### Integration tests
 - Build corpus_index on 10-doc mini corpus
@@ -680,7 +692,7 @@ rich components, zero frontend boilerplate).
   `{doc_id, section_path, clause_offset, clause_text, linked_definitions[], confidence}`
 - Strategy versioning shows iterative refinement history with measurable improvement
 - Coverage reporter shows >70% hit rate across each template family (no blind spots)
-- LLM-judge precision ≥ 80% on family-level matches (verified by human spot-check via dashboard)
+- (Phase B+) LLM-judge precision ≥ 80% on family-level matches (verified by human spot-check via dashboard)
 - No regression: every strategy version in history shows monotonic improvement on regression set
 
 ---
@@ -714,15 +726,16 @@ rich components, zero frontend boilerplate).
 - `metadata.py` — **TI** borrower/agent/facility extraction. Test on diverse preambles.
 - `dna.py` — **VP L1** TF-IDF + log-odds (Monroe 2008). Test on known sections.
 
-### Step 4: AWS Setup + S3 Sync
+### Step 4: AWS Setup + S3 Sync (staged)
 - Configure AWS CLI with bucket access
-- `scripts/sync_corpus.py` — download full 30K to local
+- `scripts/sync_corpus.py` — sync corpus locally for staged builds
 - Inspect `.meta.json` files, incorporate into index format
 
-### Step 5: Corpus Ingestion
-- `scripts/build_corpus_index.py` — local mode first (test on 100 docs)
+### Step 5: Corpus Ingestion (gated)
+- Gate 1: `scripts/build_corpus_index.py --limit 500`
+- Gate 2: `scripts/build_corpus_index.py --limit 5000`
 - Validate DuckDB tables: documents, sections, clauses, definitions
-- Then: Ray cluster config + full 30K ingestion
+- Gate 3 / Phase E: Ray cluster config + full-corpus ingestion (current full corpus: 12,583 docs)
 - Verify clause-level parsing quality on sample docs before full run
 
 ### Step 6: Search & Access Tools
@@ -734,15 +747,16 @@ rich components, zero frontend boilerplate).
 - Test with bootstrap strategies from VP's bootstrap_all.json
 
 ### Step 8: Discovery Tools
-- `dna_discoverer.py`, `definition_finder.py`, `structural_mapper.py`
+- MVP: `dna_discoverer.py`, `definition_finder.py`
+- Phase B+: `structural_mapper.py`
 - Test DNA discovery on known Indebtedness sections
 
 ### Step 9: Drill-Down + Persistence + Validation Tools
 - `child_locator.py` — test with Indebtedness basket sub-sections (clause-level AST)
 - `evidence_collector.py`, `strategy_writer.py` (with regression circuit breaker), `setup_workspace.py`
-- `llm_judge.py` — test with known correct/incorrect matches, verify LLM can distinguish
+- (Phase B+) `llm_judge.py` — test with known correct/incorrect matches, verify LLM can distinguish
 
-### Step 10: Template Discovery
+### Step 10: Template Discovery (Phase B+)
 - `template_classifier.py` — boilerplate shingle clustering
 - Run on full corpus, present clusters for user labeling
 - Persist template classifications to corpus_index
@@ -786,7 +800,7 @@ rich components, zero frontend boilerplate).
 ## Resolved Decisions
 
 1. ~~Corpus location~~ → S3: `s3://edgar-pipeline-documents-216213517387/`, CIK-partitioned
-2. ~~Pilot corpus~~ → Go big: ingest all 30K before agent work
+2. ~~Pilot corpus~~ → Staged ingestion: 500 → 5,000 → full corpus (currently 12,583 docs; Ray at Phase E optional)
 3. ~~Template discovery~~ → Statistical clustering (improved from TI), user labels clusters
 4. ~~Pilot scope~~ → Two levels deep (family → children → grandchildren)
 
@@ -879,7 +893,7 @@ form_type, market_segment. The filename hints at form type (e.g., `ex10d1` = EX-
 ## All Resolved Decisions
 
 1. ~~Corpus location~~ → S3: `s3://edgar-pipeline-documents-216213517387/`, CIK-partitioned
-2. ~~Pilot corpus~~ → Go big: ingest all 30K before agent work
+2. ~~Pilot corpus~~ → Staged ingestion: 500 → 5,000 → full corpus (currently 12,583 docs; Ray at Phase E optional)
 3. ~~Template discovery~~ → Statistical clustering (improved from TI), user labels clusters
 4. ~~Pilot scope~~ → Two levels deep (family → children → grandchildren)
 5. ~~AWS CLI~~ → Needs configuration (Step 4 in build order)
@@ -892,10 +906,10 @@ form_type, market_segment. The filename hints at form type (e.g., `ex10d1` = EX-
 12. ~~Labeled data output~~ → Start with JSONL, add Parquet export later
 13. ~~Agent autonomy~~ → `--dangerously-skip-permissions` per BSL retrospective lessons
 14. ~~Clause-level ingestion~~ → Ray pipeline parses down to clause-level AST, not just sections
-15. ~~Precision validation~~ → LLM-judge tool (Haiku) required before every strategy commit + human dashboard review
+15. ~~Precision validation~~ → LLM-judge tool (Haiku) is a Phase B+ release gate (advisory in MVP) + human dashboard review
 16. ~~Failure summarization~~ → pattern_tester returns mathematical summaries (log-odds, template breakdown, structural deviation), never raw missed text
 17. ~~Definition auto-unroll~~ → `--auto-unroll` flag on section_reader.py and child_locator.py
-18. ~~Corpus storage~~ → DuckDB (not 30K JSON files) — concurrent agent reads, SQL queries, columnar analytics
+18. ~~Corpus storage~~ → DuckDB (not per-document JSON files) — concurrent agent reads, SQL queries, columnar analytics
 19. ~~Regression circuit breaker~~ → strategy_writer.py rejects updates that degrade previously-solved template clusters
 20. ~~Hybrid VP+TI~~ → Keep hybrid approach, do not simplify to single source
 21. ~~Swarm orchestration~~ → Tmux + shell scripts (subscriptions, not API — ~4 Claude Code Max subs)
@@ -904,7 +918,7 @@ form_type, market_segment. The filename hints at form type (e.g., `ex10d1` = EX-
 24. ~~Escalation~~ → When agent plateaus, alert user ("call John"); no auto-sub-agent for now
 25. ~~Integration to VP~~ → Keep separate for initial rounds; multiple validation passes before linking to L0-L3 DAG
 26. ~~Pilot depth evolution~~ → Start 1 agent per family covering full subtree; revisit sub-agent approach only if a family proves too deep/complex after pilot. Simpler orchestration wins initially — most families are 2-3 levels, only a handful reach 4-5.
-27. ~~30K ingestion cost~~ → ~$5-10 total (16-32 m5.large spot instances @ ~$0.05/hr each × 30 min + head node). S3 transfer free within us-east-1. Absolutely worth it vs. iterating on a subset — agents need the full template diversity to discover robust patterns.
+27. ~~Full-corpus ingestion cost~~ → depends on cluster size and refresh cadence; current 12,583-doc baseline is below prior large-scale estimates. Track actual cost per run in manifest/benchmark artifacts.
 
 ---
 
@@ -1087,7 +1101,7 @@ provides battle-tested fixes. Critical lessons already incorporated:
 | Claude eats kickoff message after permission dialog | Send prompt AFTER acceptance via background subshell (8s wait → Down → Enter) | Now added |
 | Context exhaustion needs checkpoint files | Per-record checkpointing so context-exhausted agents' work is preserved | **NEW** — add to agent prompt |
 | Concept whitelist per agent prevents boundary violations | Each agent gets a concept whitelist; extractions outside list are rejected | **NEW** — add to swarm.conf |
-| Inline QA during extraction (not final-wave QA) | Already aligned with llm_judge.py requirement before every strategy save | Yes (Decision #15) |
+| Inline QA during extraction (not final-wave QA) | Aligned with Phase B+ llm_judge release-gate checks (advisory in MVP) | Yes (Decision #15) |
 | `unset CLAUDECODE` for nested sessions | Prevents Claude from detecting it's running inside another Claude session | **NEW** — add to start-agent.sh |
 | Multi-fragment CLAUDE.md composition | common-rules + extraction-protocol + family-prompt concatenated at launch | **NEW** — add to start-agent.sh |
 

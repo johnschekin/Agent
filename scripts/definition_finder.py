@@ -3,7 +3,8 @@
 
 Usage:
     python3 scripts/definition_finder.py --db corpus_index/corpus.duckdb --doc-id abc123
-    python3 scripts/definition_finder.py --db corpus_index/corpus.duckdb --doc-id abc123 --term "Consolidated EBITDA"
+    python3 scripts/definition_finder.py --db corpus_index/corpus.duckdb \
+      --doc-id abc123 --term "Consolidated EBITDA"
 
 Outputs structured JSON to stdout, human messages to stderr.
 """
@@ -12,6 +13,11 @@ import argparse
 import json
 import sys
 from pathlib import Path
+
+from agent.corpus import SchemaVersionError, ensure_schema_version
+from agent.definition_graph import build_definition_dependency_graph
+from agent.definition_types import classify_definition_records
+from agent.definitions import infer_dependency_terms
 
 try:
     import orjson
@@ -43,6 +49,21 @@ def main() -> None:
     parser.add_argument(
         "--term", default=None, help="Find a specific term"
     )
+    parser.add_argument(
+        "--include-all",
+        action="store_true",
+        help="Include non-cohort documents (default is cohort-only).",
+    )
+    parser.add_argument(
+        "--no-enrich",
+        action="store_true",
+        help="Disable definition type/dependency enrichment in output.",
+    )
+    parser.add_argument(
+        "--with-graph-summary",
+        action="store_true",
+        help="Emit definition dependency graph summary alongside records.",
+    )
     args = parser.parse_args()
 
     db_path = Path(args.db)
@@ -58,6 +79,29 @@ def main() -> None:
 
     log(f"Opening corpus database: {db_path}")
     con = duckdb.connect(str(db_path), read_only=True)
+    try:
+        ensure_schema_version(con, db_path=db_path)
+    except SchemaVersionError as exc:
+        log(f"Error: {exc}")
+        con.close()
+        sys.exit(1)
+
+    if not args.include_all:
+        cohort_row = con.execute(
+            "SELECT cohort_included FROM documents WHERE doc_id = ?",
+            [args.doc_id],
+        ).fetchone()
+        if cohort_row is None:
+            log(f"Error: document not found: {args.doc_id}")
+            con.close()
+            sys.exit(1)
+        if not bool(cohort_row[0]):
+            log(
+                f"Error: document {args.doc_id} is excluded from cohort. "
+                "Use --include-all to query anyway."
+            )
+            con.close()
+            sys.exit(1)
 
     # Check available tables to find definitions
     tables = [row[0] for row in con.execute("SHOW TABLES").fetchall()]
@@ -77,7 +121,8 @@ def main() -> None:
 
         # Get column names to adapt query
         columns_info = con.execute(
-            f"SELECT column_name FROM information_schema.columns WHERE table_name = '{definitions_table}'"
+            "SELECT column_name FROM information_schema.columns "
+            f"WHERE table_name = '{definitions_table}'"
         ).fetchall()
         columns = [row[0] for row in columns_info]
         log(f"Columns: {columns}")
@@ -106,6 +151,26 @@ def main() -> None:
         conf_col = next(
             (c for c in columns if c in ("confidence", "score", "conf")), None
         )
+        type_col = next(
+            (c for c in columns if c in ("definition_type", "type", "def_type")),
+            None,
+        )
+        types_col = next(
+            (c for c in columns if c in ("definition_types", "type_list")),
+            None,
+        )
+        type_conf_col = next(
+            (c for c in columns if c in ("type_confidence", "def_type_confidence")),
+            None,
+        )
+        type_sig_col = next(
+            (c for c in columns if c in ("type_signals", "def_type_signals")),
+            None,
+        )
+        deps_col = next(
+            (c for c in columns if c in ("dependency_terms", "definition_dependencies")),
+            None,
+        )
 
         if not doc_id_col:
             log(f"Error: no doc_id column found in {definitions_table}. Columns: {columns}")
@@ -125,6 +190,16 @@ def main() -> None:
             select_parts.append(f"{engine_col} AS pattern_engine")
         if conf_col:
             select_parts.append(f"{conf_col} AS confidence")
+        if type_col:
+            select_parts.append(f"{type_col} AS definition_type")
+        if types_col:
+            select_parts.append(f"{types_col} AS definition_types")
+        if type_conf_col:
+            select_parts.append(f"{type_conf_col} AS type_confidence")
+        if type_sig_col:
+            select_parts.append(f"{type_sig_col} AS type_signals")
+        if deps_col:
+            select_parts.append(f"{deps_col} AS dependency_terms")
 
         if not select_parts:
             select_parts.append("*")
@@ -148,7 +223,7 @@ def main() -> None:
         col_names = [desc[0] for desc in con.description]
 
         for row in rows:
-            record = dict(zip(col_names, row))
+            record = dict(zip(col_names, row, strict=True))
             # Ensure standard field names with defaults
             results.append({
                 "term": record.get("term", ""),
@@ -157,6 +232,11 @@ def main() -> None:
                 "char_end": record.get("char_end"),
                 "pattern_engine": record.get("pattern_engine", "unknown"),
                 "confidence": record.get("confidence"),
+                "definition_type": record.get("definition_type"),
+                "definition_types": record.get("definition_types"),
+                "type_confidence": record.get("type_confidence"),
+                "type_signals": record.get("type_signals"),
+                "dependency_terms": record.get("dependency_terms"),
             })
 
         log(f"Found {len(results)} definition(s)")
@@ -176,7 +256,8 @@ def main() -> None:
             sys.exit(1)
 
         columns_info = con.execute(
-            f"SELECT column_name FROM information_schema.columns WHERE table_name = '{sections_table}'"
+            "SELECT column_name FROM information_schema.columns "
+            f"WHERE table_name = '{sections_table}'"
         ).fetchall()
         columns = [row[0] for row in columns_info]
         log(f"Using table '{sections_table}' with columns: {columns}")
@@ -228,6 +309,11 @@ def main() -> None:
                         "char_end": match.end(),
                         "pattern_engine": "quoted",
                         "confidence": 0.85,
+                        "definition_type": None,
+                        "definition_types": None,
+                        "type_confidence": None,
+                        "type_signals": None,
+                        "dependency_terms": None,
                     })
 
         # Deduplicate by term
@@ -241,7 +327,34 @@ def main() -> None:
         results = deduped
         log(f"Extracted {len(results)} definition(s) via pattern matching")
 
+    if not args.no_enrich and results:
+        results = classify_definition_records(results)
+        for record in results:
+            if not record.get("dependency_terms"):
+                record["dependency_terms"] = list(
+                    infer_dependency_terms(
+                        str(record.get("definition_text") or ""),
+                        term_name=str(record.get("term") or ""),
+                    )
+                )
+            if not record.get("definition_type"):
+                record["definition_type"] = "DIRECT"
+            if not isinstance(record.get("definition_types"), list):
+                record["definition_types"] = [record["definition_type"]]
+            if not isinstance(record.get("type_signals"), list):
+                record["type_signals"] = []
+            if record.get("type_confidence") is None:
+                record["type_confidence"] = 0.5
+
     con.close()
+    if args.with_graph_summary:
+        dump_json(
+            {
+                "definitions": results,
+                "definition_graph": build_definition_dependency_graph(results),
+            }
+        )
+        return
     dump_json(results)
 
 
