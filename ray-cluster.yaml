@@ -1,11 +1,16 @@
 # Ray cluster configuration for corpus build pipeline.
 #
+# Uses the trimmed corpus (3,298 docs, one per CIK, amendments excluded):
+#   documents-trimmed/  — 3,298 HTML credit agreements
+#   metadata-trimmed/   — 3,298 .meta.json sidecars
+#
 # Launch:  ray up ray-cluster.yaml --yes
-# Submit:  ray submit ray-cluster.yaml scripts/build_corpus_ray.py -- \
+# Submit:  ray exec ray-cluster.yaml \
+#            '/home/ubuntu/venv/bin/python3 /home/ubuntu/agent/scripts/build_corpus_ray_v2.py \
 #            --bucket edgar-pipeline-documents-216213517387 \
 #            --output /home/ubuntu/corpus_index/corpus.duckdb \
-#            --s3-upload s3://edgar-pipeline-documents-216213517387/corpus_index/corpus.duckdb \
-#            --batch-size 100 --force -v
+#            --s3-upload s3://edgar-pipeline-documents-216213517387/corpus_index/corpus-trimmed.duckdb \
+#            --batch-size 100 --force -v'
 # Teardown: ray down ray-cluster.yaml --yes
 
 cluster_name: corpus-build
@@ -61,7 +66,7 @@ setup_commands:
     - python3 -m venv /home/ubuntu/venv
     - /home/ubuntu/venv/bin/pip install --upgrade pip setuptools wheel
     - cd /home/ubuntu/agent && /home/ubuntu/venv/bin/pip install -e ".[ray]"
-    - /home/ubuntu/venv/bin/pip install boto3 duckdb orjson
+    - /home/ubuntu/venv/bin/pip install boto3 duckdb orjson pyarrow
     - sudo ln -sf /home/ubuntu/venv/bin/ray /usr/local/bin/ray
     - sudo ln -sf /home/ubuntu/venv/bin/python3 /usr/local/bin/python3-venv
 

@@ -11,13 +11,13 @@ Early-exit: non-cohort documents are classified in ~200ms and skip the
 expensive section/clause/definition NLP pipeline (~1s). Since ~75% of S3
 docs are non-CAs, this cuts total processing time by ~60%.
 
-Target: single c7i.metal-48xl instance (~192 vCPU, 384 GB RAM) with --local.
-Expected time: ~4-5 minutes for 34K documents.
+Default S3 prefixes point to the **trimmed corpus** (3,298 docs, one per
+CIK, amendments excluded):
+    - ``documents-trimmed/``  — 3,298 HTML credit agreements
+    - ``metadata-trimmed/``   — 3,298 .meta.json sidecars
 
-Bottleneck eliminated: v1 funneled all 34K results through a single
-DuckDBWriterActor whose FIFO mailbox created a ~28K backlog. This version
-writes Parquet shards in <50ms per batch (vs 2-3s for DuckDB executemany),
-so the driver never becomes a bottleneck.
+Use ``--doc-prefix documents --meta-prefix metadata`` to process the full
+34K corpus instead.
 
 Usage (single instance):
     python3 scripts/build_corpus_ray_v2.py \\
@@ -25,11 +25,13 @@ Usage (single instance):
         --output corpus_index/corpus.duckdb \\
         --local --force -v
 
-Usage (cluster):
-    ray submit ray-cluster.yaml scripts/build_corpus_ray_v2.py -- \\
+Usage (cluster via ray exec):
+    ray exec ray-cluster.yaml \\
+        '/home/ubuntu/venv/bin/python3 /home/ubuntu/agent/scripts/build_corpus_ray_v2.py \\
         --bucket edgar-pipeline-documents-216213517387 \\
         --output /home/ubuntu/corpus_index/corpus.duckdb \\
-        --s3-upload s3://edgar-pipeline-documents-216213517387/corpus_index/corpus.duckdb
+        --s3-upload s3://edgar-pipeline-documents-216213517387/corpus_index/corpus-trimmed.duckdb \\
+        --force -v'
 """
 from __future__ import annotations
 
