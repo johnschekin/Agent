@@ -298,6 +298,7 @@ class TestDocumentResult:
         d = result.to_dict()
         assert set(d.keys()) == {
             "doc",
+            "articles",
             "sections",
             "clauses",
             "definitions",
@@ -409,7 +410,7 @@ class TestProcessDocumentText:
         assert len(result.definitions) >= 100
         # to_dict roundtrip
         d = result.to_dict()
-        assert len(d) == 7
+        assert len(d) == 8
 
     def test_sidecar_overrides_path_metadata(self) -> None:
         html = _make_leveraged_ca_html()

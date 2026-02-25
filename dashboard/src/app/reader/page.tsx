@@ -119,9 +119,9 @@ export default function ReaderPage() {
   const hasClauses = (sectionDetail.data?.clauses.length ?? 0) > 0;
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-canvas">
       {/* Header: Document picker + metadata */}
-      <div className="px-6 py-3 border-b border-border flex items-center gap-4 flex-shrink-0">
+      <div className="px-6 py-3 border-b border-border bg-surface-1 flex items-center gap-4 flex-shrink-0">
         <div className="flex items-center gap-2 flex-shrink-0">
           <label
             htmlFor="doc-picker"
@@ -192,11 +192,12 @@ export default function ReaderPage() {
           />
         </div>
       ) : (
-        <div className="flex-1 min-h-0 flex">
+        <div className="flex-1 min-h-0 flex gap-px p-1">
           {/* Left: Section TOC */}
-          <div className="w-[280px] flex-shrink-0 border-r border-border bg-surface-secondary flex flex-col overflow-hidden">
+          <div className="w-[280px] flex-shrink-0 bg-surface-1 rounded-lg shadow-card flex flex-col overflow-hidden">
             <SectionTOC
               sections={sections}
+              articles={doc.data?.articles}
               activeSectionNumber={activeSectionNumber}
               onSelectSection={handleSectionSelect}
               searchQuery={searchInput}
@@ -207,7 +208,7 @@ export default function ReaderPage() {
           </div>
 
           {/* Center: Section text */}
-          <div className="flex-1 min-w-0 flex flex-col bg-surface-primary overflow-hidden">
+          <div className="flex-1 min-w-0 flex flex-col bg-surface-1 rounded-lg shadow-card overflow-hidden">
             <SectionViewer
               section={sectionDetail.data ?? null}
               isLoading={sectionDetail.isLoading}
@@ -222,7 +223,7 @@ export default function ReaderPage() {
 
           {/* Right: Clause panel (conditional) */}
           {hasClauses && (
-            <div className="w-[360px] flex-shrink-0 border-l border-border bg-surface-secondary flex flex-col overflow-hidden">
+            <div className="w-[360px] flex-shrink-0 bg-surface-1 rounded-lg shadow-card flex flex-col overflow-hidden">
               <ClausePanel
                 clauses={sectionDetail.data?.clauses ?? []}
                 selectedClauseId={selectedClauseId}

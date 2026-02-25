@@ -133,8 +133,10 @@ _SECTION_TOPLEVEL_RE = re.compile(
 # R6-fix F6: extended number capture to match Roman-dot-number format (e.g., "Section II.1").
 # R6-fix F9: tolerate optional whitespace in section number (e.g., "Section 1. 01" from OCR).
 # R6-fix F15: allow optional letter suffix on section numbers (e.g., "Section 2.01a").
+# Block-2 Imp 22: added Sec\. and Sec\b as section keyword alternatives
+# (occurs in older EDGAR filings).
 _SECTION_STRICT_RE = re.compile(
-    r"(?:^|\n)\s*(?:Section|SECTION|§)\s+(\d+\.\s?\d+[a-z]?|[IVX]+\.\s?\d+[a-z]?)[^\S\n]*[.:\s][^\S\n]*([A-Z][A-Za-z][^\n]*)?",
+    r"(?:^|\n)\s*(?:Section|SECTION|Sec\.|Sec\b|§)\s+(\d+\.\s?\d+[a-z]?|[IVX]+\.\s?\d+[a-z]?)[^\S\n]*[.:\s][^\S\n]*([A-Z][A-Za-z][^\n]*)?",
 )
 
 # Bare-number section pattern: many CAs (particularly BofA-style) use "X.XX Heading"
@@ -187,6 +189,23 @@ _CLAUSE_TOPLEVEL_RE = re.compile(
 # from numbered body-text lists.
 _SECTION_FLAT_RE = re.compile(
     r"(?:^|\n)\s*(\d{1,2})\.\s+([A-Z][A-Za-z][^\n]{0,120})",
+)
+
+# Block-2 Imp 7: standalone section number pattern — section number alone on a
+# line with heading on the NEXT non-empty line. Common in some EDGAR filings
+# where HTML formatting places number and title on separate lines.
+# Validated with major <= 20 guard to avoid matching pricing grid values like "50.00".
+# Ported from Neutron build_section_index.py:60-62 and TI section_level_parser.py:801-940.
+_SECTION_STANDALONE_RE = re.compile(
+    r"(?:^|\n)\s*(\d{1,2}\.\d{1,2})\s*\.?\s*$",
+    re.MULTILINE,
+)
+
+# Block-2 Imp 8: reserved section detection — [RESERVED], [Reserved],
+# [Intentionally Omitted] patterns returned as heading.
+# Ported from TI section_level_parser.py:393-395.
+_RESERVED_RE = re.compile(
+    r"\[(?:RESERVED|Reserved|Intentionally Omitted|Intentionally omitted)\]",
 )
 
 # R7-fix: boilerplate phrases that indicate a false-positive title extraction.
@@ -282,6 +301,10 @@ _XREF_INTENT_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     ("definition", re.compile(r"(?:as\s+defined\s+in|has\s+the\s+meaning|the\s+meaning\s+(?:set\s+forth|assigned))", re.IGNORECASE)),
     ("exception", re.compile(r"(?:other\s+than|excluding|except\s+(?:as|for|to))", re.IGNORECASE)),
     ("amendment", re.compile(r"(?:as\s+amended\s+by|as\s+modified\s+by|as\s+supplemented\s+by)", re.IGNORECASE)),
+    # Block-2 Imp 18: additional contextual reference patterns from Neutron
+    ("compliance", re.compile(r"(?:in\s+accordance\s+with|in\s+compliance\s+with)", re.IGNORECASE)),
+    ("reference", re.compile(r"(?:referenced\s+in|referred\s+to\s+in|specified\s+in)", re.IGNORECASE)),
+    ("restriction", re.compile(r"(?:required\s+(?:by|under|pursuant\s+to)|permitted\s+(?:by|under))", re.IGNORECASE)),
 ]
 
 # Keyword-to-concept mapping (from structure_extraction.py, proven across corpus)
@@ -410,6 +433,183 @@ def _is_valid_title(title: str) -> bool:
 # ---------------------------------------------------------------------------
 # TOC detection
 # ---------------------------------------------------------------------------
+
+def heading_quality(heading: str) -> int:
+    """Score heading quality on a 3-tier scale.
+
+    Returns:
+        2 — proper heading (starts with uppercase letter or bracket)
+        1 — empty heading (may be on next line)
+        0 — garbage heading (starts with comma, semicolon, lowercase,
+            sub-clause marker, or contains sentence-like body text)
+
+    Used by section deduplication to prefer entries with better headings
+    and by TOC dedup to decide whether to inherit a heading from a TOC entry.
+
+    Ported from Neutron build_section_index.py:194-211 and
+    VP _doc_parser.py:1011-1032 heading quality scoring.
+    """
+    if not heading or not heading.strip():
+        return 1  # empty — acceptable, heading may be on next line
+
+    h = heading.strip()
+
+    # Garbage indicators: starts with body-text patterns
+    if h[0] in (",", ";", "("):
+        return 0
+    if h[0].islower():
+        return 0
+
+    # Sentence-like body text detection (from VP):
+    # If > 60% of words are lowercase content words, it's likely body text
+    words = h.split()
+    if len(words) > 5:
+        lowercase_content = sum(
+            1 for w in words
+            if w[0].islower() and w.lower() not in ("of", "and", "or", "the", "to", "for", "in", "by", "with", "on", "a", "an")
+        )
+        if lowercase_content > len(words) * 0.6:
+            return 0
+
+    # Contains parenthetical clause references (body text, not heading)
+    if re.search(r"\([a-z]\)\s*\([ivx]+\)", h):
+        return 0
+
+    # Proper heading: starts with uppercase or bracket
+    if h[0].isupper() or h[0] == "[":
+        return 2
+
+    return 0
+
+
+# ---------------------------------------------------------------------------
+# Block-2 Imp 16: Section canonical naming
+# ---------------------------------------------------------------------------
+
+
+def section_canonical_name(heading: str) -> str:
+    """Derive a canonical section name from its heading.
+
+    Canonical name: lowercase, stripped, punctuation-collapsed.
+    Useful for fuzzy matching across documents (e.g., "Indebtedness"
+    and "INDEBTEDNESS" both become "indebtedness").
+    """
+    h = heading.strip().lower()
+    # Remove trailing periods and leading/trailing punctuation
+    h = h.strip(".")
+    # Collapse internal whitespace
+    h = re.sub(r"\s+", " ", h)
+    return h
+
+
+def section_reference_key(doc_id: str, heading: str) -> str:
+    """Build a cross-document reference key: ``{doc_id}:{canonical_name}``."""
+    return f"{doc_id}:{section_canonical_name(heading)}"
+
+
+# ---------------------------------------------------------------------------
+# Block-2 Imp 17: Content-addressed chunk IDs
+# ---------------------------------------------------------------------------
+
+import hashlib as _hashlib
+
+
+def section_text_hash(text: str, start: int, end: int) -> str:
+    """SHA-256 of the section text slice, truncated to 16 hex chars."""
+    return _hashlib.sha256(text[start:end].encode()).hexdigest()[:16]
+
+
+def compute_chunk_id(doc_id: str, section_path: str, text_hash: str) -> str:
+    """Content-addressed chunk ID for search retrieval.
+
+    Stable across re-parses when the section content is unchanged.
+    Format: SHA-256[:16] of ``{doc_id}\\0{section_path}\\0{text_hash}``.
+    """
+    payload = f"{doc_id}\x00{section_path}\x00{text_hash}"
+    return _hashlib.sha256(payload.encode()).hexdigest()[:16]
+
+
+# ---------------------------------------------------------------------------
+# Block-2 Imp 21: Section path normalization
+# ---------------------------------------------------------------------------
+
+
+def section_path(article_num: int, section_number: str) -> str:
+    """Build a normalized section path.
+
+    Format: ``{article_num}.{section_number}`` when article is known,
+    otherwise just ``{section_number}``.
+
+    Round-trip invariant: ``section_path(a, n)`` always produces the same
+    string for the same inputs.
+    """
+    if article_num > 0:
+        return f"{article_num}.{section_number}"
+    return section_number
+
+
+def parse_section_path(path: str) -> tuple[int, str]:
+    """Parse a section path back to (article_num, section_number).
+
+    Inverse of ``section_path()``.  Returns ``(0, path)`` for paths without
+    an article prefix.
+    """
+    parts = path.split(".", 2)
+    if len(parts) >= 3:
+        try:
+            art = int(parts[0])
+            return (art, f"{parts[1]}.{parts[2]}")
+        except ValueError:
+            pass
+    return (0, path)
+
+
+# ---------------------------------------------------------------------------
+# Block-2 Imp 19: Plural/range reference patterns
+# ---------------------------------------------------------------------------
+
+# "Sections 2.01 and 2.02", "Sections 2.01, 2.02, and 2.03"
+SECTION_PLURAL_RE = re.compile(
+    r"\bSections\s+(\d+(?:\.\d+)*)"
+    r"\s*(?:,\s*(\d+(?:\.\d+)*))?"
+    r"\s*(?:,?\s*and\s+(\d+(?:\.\d+)*))?",
+    re.IGNORECASE,
+)
+
+# "Sections 2.01 through 2.05", "Section 2.01 to 2.10"
+SECTION_RANGE_RE = re.compile(
+    r"\bSections?\s+(\d+(?:\.\d+)*)\s*(?:through|to|-)\s*(\d+(?:\.\d+)*)",
+    re.IGNORECASE,
+)
+
+# "Articles I through V", "Articles I-V"
+ARTICLE_RANGE_RE = re.compile(
+    r"\bArticles?\s+([IVXLCDM]+|\d+)\s*(?:through|to|-)\s*([IVXLCDM]+|\d+)",
+    re.IGNORECASE,
+)
+
+
+def extract_plural_sections(text: str) -> list[str]:
+    """Extract all section numbers from plural references in text.
+
+    Handles "Sections 2.01 and 2.02" and "Sections 2.01, 2.02, and 2.03".
+    Returns a flat list of section number strings.
+    """
+    results: list[str] = []
+    for m in SECTION_PLURAL_RE.finditer(text):
+        for g in m.groups():
+            if g:
+                results.append(g)
+    return results
+
+
+def extract_section_range(text: str) -> list[tuple[str, str]]:
+    """Extract section ranges from text.
+
+    Returns list of (start, end) tuples from "Sections X through Y".
+    """
+    return [(m.group(1), m.group(2)) for m in SECTION_RANGE_RE.finditer(text)]
+
 
 def _is_toc_entry(
     text: str,
@@ -1151,8 +1351,8 @@ class DocOutline:
             next_start = matches[i + 1]["char_start"] if i + 1 < len(matches) else len(self._text)
             a["_provisional_end"] = next_start
 
-        def _heading_quality(title: str) -> int:
-            """Score heading quality: 2=proper heading, 1=has title, 0=no title.
+        def _article_heading_quality(title: str) -> int:
+            """Score article heading quality: 2=proper, 1=has title, 0=none/body.
 
             R5-fix: detects body-text "headings" captured from cross-references.
             Real headings are ALL CAPS ("NEGATIVE COVENANTS") or Title Case
@@ -1185,8 +1385,8 @@ class DocOutline:
                 best[a["num"]] = a
             else:
                 cur: dict[str, Any] = best[a["num"]]
-                cur_q = _heading_quality(cur["title"])
-                new_q = _heading_quality(a["title"])
+                cur_q = _article_heading_quality(cur["title"])
+                new_q = _article_heading_quality(a["title"])
                 # Prefer: (1) higher heading quality, (2) earlier in document
                 # (earlier is more likely to be the real article heading)
                 if new_q > cur_q:
@@ -1381,6 +1581,19 @@ class DocOutline:
         Also handles the case where the heading is empty (heading text is
         entirely on the next line after "Section X.YY.").
         """
+        # Block-2 Imp 8: check for [Reserved] / [Intentionally Omitted] pattern
+        # in the heading or immediately following text. These sections have no
+        # substantive content but should still be tracked in the outline.
+        if heading:
+            reserved_m = _RESERVED_RE.search(heading)
+            if reserved_m:
+                return reserved_m.group(0)
+        if not heading:
+            after_text = self._text[match_end:match_end + 200]
+            reserved_m = _RESERVED_RE.search(after_text)
+            if reserved_m:
+                return reserved_m.group(0)
+
         # If heading is empty, try to get it from the next line
         if not heading:
             next_text = self._text[match_end:match_end + 200]
@@ -1504,8 +1717,29 @@ class DocOutline:
         use_bare = surviving_keyword < 10
 
         bare_sections: list[re.Match[str]] = []
+        standalone_sections: list[tuple[str, str, int]] = []  # (number, heading, char_start)
         if use_bare:
             bare_sections = list(_SECTION_BARE_RE.finditer(self._text))
+            # Block-2 Imp 7: standalone section number fallback.
+            # Match "10.3" alone on a line, then look ahead for heading.
+            for sm in _SECTION_STANDALONE_RE.finditer(self._text):
+                number = sm.group(1)
+                # Reject major > 20 (pricing grid values like "50.00 bps")
+                major = int(number.split(".")[0])
+                if major > 20:
+                    continue
+                # Look-ahead: scan next 2 non-empty lines for heading
+                after = self._text[sm.end():sm.end() + 200]
+                heading = ""
+                for line in after.split("\n")[:3]:
+                    candidate = line.strip()
+                    if not candidate:
+                        continue
+                    if candidate[0].isupper() and len(candidate) < 60:
+                        heading = candidate
+                    break
+                if heading:
+                    standalone_sections.append((number, heading, sm.start()))
         # R6-fix F7: when bare matches outnumber keyword by 3x+, merge both sets
         # instead of replacing keyword with bare.  This handles CAs that mix
         # "Section X.YY" headings with bare "X.YY Heading" lines.  Below 3x we
@@ -1590,28 +1824,56 @@ class DocOutline:
                 "article_num": article_num,
             })
 
-        # Deduplicate: prefer sections WITH headings over those without,
-        # then prefer the occurrence appearing inside a detected article.
-        # This avoids both: (a) first-occurrence keeping TOC entries, and
-        # (b) largest-span keeping ghost xref sections with inflated spans.
+        # Block-2 Imp 7: merge standalone section matches (number alone on line,
+        # heading on next line). Only add if the section number isn't already found.
+        existing_numbers = {s["number"] for s in sections}
+        for number, heading, char_start in standalone_sections:
+            if number not in existing_numbers:
+                article_num = self._find_article_num(char_start, articles, article_starts)
+                sections.append({
+                    "number": number,
+                    "heading": heading,
+                    "char_start": char_start,
+                    "article_num": article_num,
+                })
+
+        # Deduplicate: use heading quality scoring and heading inheritance.
+        # When the same section number appears multiple times (e.g., in TOC
+        # and body), prefer the body occurrence (later, in-article) but
+        # inherit the heading from an earlier entry if the body entry lacks one.
+        # Ported from Neutron build_section_index.py:214-241.
         best: dict[str, dict[str, Any]] = {}
+        # Track best heading seen for each section number, regardless of
+        # which entry we ultimately keep. This enables heading inheritance.
+        best_heading: dict[str, str] = {}
         for s in sections:
             key: str = s["number"]
+            h: str = s["heading"]
+            # Track highest-quality heading seen for this section number
+            if key not in best_heading or heading_quality(h) > heading_quality(best_heading[key]):
+                best_heading[key] = h
             if key not in best:
                 best[key] = s
             else:
                 cur: dict[str, Any] = best[key]
-                cur_has_heading = bool(cur["heading"])
-                new_has_heading = bool(s["heading"])
+                cur_quality = heading_quality(cur["heading"])
+                new_quality = heading_quality(h)
                 cur_in_article: bool = cur["article_num"] > 0
                 new_in_article = s["article_num"] > 0
-                # Prefer: (1) has heading, (2) inside a detected article
-                if (new_has_heading and not cur_has_heading) or (
-                    new_has_heading == cur_has_heading
+                # Prefer: (1) higher heading quality, (2) inside a detected article
+                if (new_quality > cur_quality) or (
+                    new_quality == cur_quality
                     and new_in_article
                     and not cur_in_article
                 ):
                     best[key] = s
+        # Heading inheritance: if the best entry has an empty/garbage heading
+        # but we saw a proper heading for the same section number (e.g., from
+        # TOC), inherit it. This recovers headings for body sections that
+        # appear as bare "Section 2.14" without inline heading text.
+        for key, s in best.items():
+            if heading_quality(s["heading"]) < 2 and heading_quality(best_heading.get(key, "")) == 2:
+                s["heading"] = best_heading[key]
         deduped: list[dict[str, Any]] = list(best.values())
 
         # Block-1.1 Fix C: section-level TOC over-rejection recovery.
@@ -1714,7 +1976,85 @@ class DocOutline:
                     sec_text = self._text[s["char_start"]:s["char_end"]]
                     s["word_count"] = len(sec_text.split())
 
+        # Block-2 Imp 10: enforce monotonic section ordering within each article.
+        # Sections whose numeric minor part does not strictly increase (in document
+        # order) are dropped.  This catches stale cross-reference echoes that
+        # survived earlier dedup.  Also detects numbering gaps for diagnostics.
+        deduped = self._enforce_monotonic_sections(deduped)
+
         return deduped
+
+    @staticmethod
+    def _parse_section_minor(number: str) -> int | None:
+        """Extract the minor (after-dot) part of a section number as int.
+
+        "7.02" → 2, "7.2" → 2, "0.05" → 5, "IV.3" → None (roman article).
+        """
+        parts = number.split(".")
+        if len(parts) != 2:
+            return None
+        try:
+            return int(parts[1])
+        except ValueError:
+            return None
+
+    def _enforce_monotonic_sections(
+        self, sections: list[dict[str, Any]],
+    ) -> list[dict[str, Any]]:
+        """Enforce strictly increasing section numbers within each article.
+
+        Within a single article, sections must have strictly increasing minor
+        numbers (the part after the dot).  A section whose minor number is ≤
+        the previously kept section's minor number is dropped (unless it has
+        a better heading than the previous entry with the same number, in
+        which case it replaces it).
+
+        Returns: the filtered section list, sorted by char_start.
+        """
+        # Group by article_num.  When article_num is 0 (no article context),
+        # use the major number (part before the dot) as a proxy so that
+        # sections 1.01, 1.02, 2.01, 2.02 are validated independently.
+        by_article: dict[int, list[dict[str, Any]]] = defaultdict(list)
+        for s in sections:
+            art = s["article_num"]
+            if art == 0:
+                parts = s["number"].split(".")
+                try:
+                    art = int(parts[0])
+                except ValueError:
+                    pass
+            by_article[art].append(s)
+
+        validated: list[dict[str, Any]] = []
+        for _art_num in sorted(by_article):
+            art_secs = sorted(by_article[_art_num], key=lambda s: s["char_start"])
+
+            if len(art_secs) <= 1:
+                validated.extend(art_secs)
+                continue
+
+            kept: list[dict[str, Any]] = [art_secs[0]]
+            for s in art_secs[1:]:
+                cur_minor = self._parse_section_minor(s["number"])
+                prev_minor = self._parse_section_minor(kept[-1]["number"])
+
+                if cur_minor is None or prev_minor is None:
+                    # Unparseable — keep (graceful degradation)
+                    kept.append(s)
+                    continue
+
+                if cur_minor > prev_minor:
+                    kept.append(s)
+                elif cur_minor == prev_minor:
+                    # Duplicate minor: prefer entry with heading
+                    if s["heading"] and not kept[-1]["heading"]:
+                        kept[-1] = s
+                # else: cur_minor < prev_minor → drop (non-monotonic)
+
+            validated.extend(kept)
+
+        validated.sort(key=lambda s: s["char_start"])
+        return validated
 
     def _find_article_num(
         self, char_pos: int, articles: list[dict[str, Any]], starts: list[int],

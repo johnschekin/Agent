@@ -1,0 +1,19 @@
+{
+  "family": "collateral",
+  "iteration_count": 0,
+  "last_strategy_version": 1,
+  "last_update": "2026-02-23T06:45:57.923482+00:00",
+  "status": "completed",
+  "last_session": "agent-swarm",
+  "last_pane": "0",
+  "last_start_at": "2026-02-23T06:40:54.767250+00:00",
+  "current_concept_id": "credit_protection.collateral",
+  "last_concept_id": "credit_protection.collateral",
+  "last_evidence_file": "workspaces/collateral/evidence/credit_protection.collateral_20260223T064553.jsonl",
+  "last_evidence_run_id": "wave3_batch2_collateral_2026-02-23",
+  "last_evidence_records": 300,
+  "last_evidence_at": "2026-02-23T06:45:53.964015+00:00",
+  "status_updated_at": "2026-02-23T06:45:57.923482+00:00",
+  "status_updated_by": "wave_promote_status.py",
+  "status_note": "wave3-batch2-bootstrap-evidence-complete"
+}

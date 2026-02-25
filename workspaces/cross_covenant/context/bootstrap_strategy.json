@@ -1,0 +1,102 @@
+[
+  {
+    "id": "cash_flow.available_amount.aa_cross_covenant_allocation",
+    "name": "Cross-Covenant Allocation",
+    "family_id": "cash_flow.available_amount",
+    "concept_area": "available_amount",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "Growth Amount"
+      ],
+      "keyword_anchors": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "retained Excess Cash Flow",
+        "Growth Amount"
+      ],
+      "concept_specific_keywords": [
+        "Cross-Covenant Allocation"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.inv.cross_covenant",
+    "name": "Cross-Covenant Coordination",
+    "family_id": "cash_flow.inv",
+    "concept_area": "inv",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Investments",
+        "Loans and Investments",
+        "Limitation on Investments",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Investment",
+        "Permitted Investment",
+        "Permitted Acquisition",
+        "loan",
+        "advance"
+      ],
+      "concept_specific_keywords": [
+        "Cross-Covenant Coordination"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_cross_covenant_links",
+    "name": "Cross-Covenant Links",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "Cross-Covenant Links",
+        "cascade effect"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.equity_cure.cross_covenant",
+    "name": "Cross-Covenant Interactions",
+    "family_id": "fin_framework.equity_cure",
+    "concept_area": "equity_cure",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Equity Cure",
+        "Cure Right",
+        "Financial Covenant"
+      ],
+      "keyword_anchors": [
+        "equity cure",
+        "cure right",
+        "Specified Equity Contribution",
+        "cure amount"
+      ],
+      "concept_specific_keywords": [
+        "Cross-Covenant Interactions"
+      ]
+    }
+  }
+]

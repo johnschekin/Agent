@@ -1,0 +1,19 @@
+{
+  "family": "available_amount",
+  "iteration_count": 0,
+  "last_strategy_version": 1,
+  "last_update": "2026-02-23T05:57:43.368882+00:00",
+  "status": "completed",
+  "last_session": "agent-swarm",
+  "last_pane": "0",
+  "last_start_at": "2026-02-23T05:13:21.091814+00:00",
+  "current_concept_id": "cash_flow.available_amount",
+  "last_concept_id": "cash_flow.available_amount",
+  "last_evidence_file": "workspaces/available_amount/evidence/cash_flow.available_amount_20260223T054549.jsonl",
+  "last_evidence_run_id": "pattern_tester_20260223T054515Z_36239fe9",
+  "last_evidence_records": 300,
+  "last_evidence_at": "2026-02-23T05:45:49.874323+00:00",
+  "status_updated_at": "2026-02-23T05:57:43.368882+00:00",
+  "status_updated_by": "wave_promote_status.py",
+  "status_note": "wave1-bootstrap-evidence-complete"
+}

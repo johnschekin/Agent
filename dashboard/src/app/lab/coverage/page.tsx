@@ -23,7 +23,7 @@ function CoverageRow({ item }: { item: CoverageGroup }) {
         ? "bg-accent-orange/20 text-accent-orange"
         : "bg-accent-red/20 text-accent-red";
   return (
-    <tr className="border-t border-border hover:bg-surface-tertiary/50 transition-colors">
+    <tr className="border-t border-border hover:bg-surface-3/50 transition-colors">
       <td className="px-3 py-2 text-xs">{item.group}</td>
       <td className="px-3 py-2">
         <span className={cn("inline-block px-1.5 py-0.5 rounded text-[10px] font-medium", color)}>
@@ -37,13 +37,13 @@ function CoverageRow({ item }: { item: CoverageGroup }) {
         {formatNumber(item.total)}
       </td>
       <td className="px-3 py-2">
-        <div className="w-20 h-1.5 bg-surface-tertiary rounded-full overflow-hidden">
+        <div className="w-20 h-1.5 bg-surface-3 rounded-full overflow-hidden">
           <div
             className="h-full rounded-full"
             style={{
               width: `${Math.min(100, item.hit_rate)}%`,
               backgroundColor:
-                item.hit_rate >= 80 ? "#27AE60" : item.hit_rate >= 50 ? "#D9822B" : "#DB3737",
+                item.hit_rate >= 80 ? "#22C55E" : item.hit_rate >= 50 ? "#F59E0B" : "#EF4444",
             }}
           />
         </div>
@@ -254,7 +254,7 @@ export default function CoveragePage() {
             ) : (
               <div className="overflow-auto max-h-[500px]">
                 <table className="w-full text-sm" aria-label="Coverage by group">
-                  <thead className="sticky top-0 bg-surface-tertiary z-10">
+                  <thead className="sticky top-0 bg-surface-3 z-10">
                     <tr className="text-left text-xs text-text-muted uppercase">
                       <th className="px-3 py-2">Group</th>
                       <th className="px-3 py-2">Hit Rate</th>

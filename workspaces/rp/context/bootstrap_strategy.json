@@ -1,0 +1,447 @@
+[
+  {
+    "id": "cash_flow.rp.builder_basket",
+    "name": "Builder Basket / Available Amount RP",
+    "family_id": "cash_flow.rp",
+    "concept_area": "rp",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Payments",
+        "Limitation on Restricted Payments",
+        "Dividends",
+        "Distributions"
+      ],
+      "keyword_anchors": [
+        "Restricted Payment",
+        "restricted payment",
+        "dividend",
+        "distribution",
+        "repurchase",
+        "redemption"
+      ],
+      "concept_specific_keywords": [
+        "Builder Basket / Available Amount RP",
+        "The Available Amount"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.rp.general_basket",
+    "name": "General RP Basket",
+    "family_id": "cash_flow.rp",
+    "concept_area": "rp",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Payments",
+        "Limitation on Restricted Payments",
+        "Dividends",
+        "Distributions"
+      ],
+      "keyword_anchors": [
+        "Restricted Payment",
+        "restricted payment",
+        "dividend",
+        "distribution",
+        "repurchase",
+        "redemption"
+      ],
+      "concept_specific_keywords": [
+        "General RP Basket"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.rp.ratio_basket",
+    "name": "Unlimited Ratio RP Basket",
+    "family_id": "cash_flow.rp",
+    "concept_area": "rp",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Payments",
+        "Limitation on Restricted Payments",
+        "Dividends",
+        "Distributions"
+      ],
+      "keyword_anchors": [
+        "Restricted Payment",
+        "restricted payment",
+        "dividend",
+        "distribution",
+        "repurchase",
+        "redemption"
+      ],
+      "concept_specific_keywords": [
+        "Unlimited Ratio RP Basket"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.rp.mgmt_repurchases",
+    "name": "Management Equity Repurchases",
+    "family_id": "cash_flow.rp",
+    "concept_area": "rp",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Payments",
+        "Limitation on Restricted Payments",
+        "Dividends",
+        "Distributions"
+      ],
+      "keyword_anchors": [
+        "Restricted Payment",
+        "restricted payment",
+        "dividend",
+        "distribution",
+        "repurchase",
+        "redemption"
+      ],
+      "concept_specific_keywords": [
+        "Management Equity Repurchases"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.rp.ipo_proceeds",
+    "name": "IPO Proceeds Distribution",
+    "family_id": "cash_flow.rp",
+    "concept_area": "rp",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Payments",
+        "Limitation on Restricted Payments",
+        "Dividends",
+        "Distributions"
+      ],
+      "keyword_anchors": [
+        "Restricted Payment",
+        "restricted payment",
+        "dividend",
+        "distribution",
+        "repurchase",
+        "redemption"
+      ],
+      "concept_specific_keywords": [
+        "IPO Proceeds Distribution"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.rp.tax_distributions",
+    "name": "Tax Distributions",
+    "family_id": "cash_flow.rp",
+    "concept_area": "rp",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Payments",
+        "Limitation on Restricted Payments",
+        "Dividends",
+        "Distributions"
+      ],
+      "keyword_anchors": [
+        "Restricted Payment",
+        "restricted payment",
+        "dividend",
+        "distribution",
+        "repurchase",
+        "redemption"
+      ],
+      "concept_specific_keywords": [
+        "Tax Distributions"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.rp.holdco_expenses",
+    "name": "Holdco Operating Expenses / Management Fees",
+    "family_id": "cash_flow.rp",
+    "concept_area": "rp",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Payments",
+        "Limitation on Restricted Payments",
+        "Dividends",
+        "Distributions"
+      ],
+      "keyword_anchors": [
+        "Restricted Payment",
+        "restricted payment",
+        "dividend",
+        "distribution",
+        "repurchase",
+        "redemption"
+      ],
+      "concept_specific_keywords": [
+        "Holdco Operating Expenses / Management Fees"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.rp.dividend_blockers",
+    "name": "Dividend Blockers",
+    "family_id": "cash_flow.rp",
+    "concept_area": "rp",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Payments",
+        "Limitation on Restricted Payments",
+        "Dividends",
+        "Distributions"
+      ],
+      "keyword_anchors": [
+        "Restricted Payment",
+        "restricted payment",
+        "dividend",
+        "distribution",
+        "repurchase",
+        "redemption"
+      ],
+      "concept_specific_keywords": [
+        "Dividend Blockers"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.rp.unsub_stock",
+    "name": "Unrestricted Subsidiary Stock",
+    "family_id": "cash_flow.rp",
+    "concept_area": "rp",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Payments",
+        "Limitation on Restricted Payments",
+        "Dividends",
+        "Distributions"
+      ],
+      "keyword_anchors": [
+        "Restricted Payment",
+        "restricted payment",
+        "dividend",
+        "distribution",
+        "repurchase",
+        "redemption"
+      ],
+      "concept_specific_keywords": [
+        "Unrestricted Subsidiary Stock"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.rp.equity_proceeds",
+    "name": "Equity Proceeds Basket",
+    "family_id": "cash_flow.rp",
+    "concept_area": "rp",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Payments",
+        "Limitation on Restricted Payments",
+        "Dividends",
+        "Distributions"
+      ],
+      "keyword_anchors": [
+        "Restricted Payment",
+        "restricted payment",
+        "dividend",
+        "distribution",
+        "repurchase",
+        "redemption"
+      ],
+      "concept_specific_keywords": [
+        "Equity Proceeds Basket",
+        "Available Amount"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.rp.investment_return",
+    "name": "Investment Return Basket",
+    "family_id": "cash_flow.rp",
+    "concept_area": "rp",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Payments",
+        "Limitation on Restricted Payments",
+        "Dividends",
+        "Distributions"
+      ],
+      "keyword_anchors": [
+        "Restricted Payment",
+        "restricted payment",
+        "dividend",
+        "distribution",
+        "repurchase",
+        "redemption"
+      ],
+      "concept_specific_keywords": [
+        "Investment Return Basket",
+        "trap door"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.rp.declined_proceeds",
+    "name": "Declined Proceeds Basket",
+    "family_id": "cash_flow.rp",
+    "concept_area": "rp",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Payments",
+        "Limitation on Restricted Payments",
+        "Dividends",
+        "Distributions"
+      ],
+      "keyword_anchors": [
+        "Restricted Payment",
+        "restricted payment",
+        "dividend",
+        "distribution",
+        "repurchase",
+        "redemption"
+      ],
+      "concept_specific_keywords": [
+        "Declined Proceeds Basket"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.rp.annual_basket",
+    "name": "Annual RP Basket",
+    "family_id": "cash_flow.rp",
+    "concept_area": "rp",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Payments",
+        "Limitation on Restricted Payments",
+        "Dividends",
+        "Distributions"
+      ],
+      "keyword_anchors": [
+        "Restricted Payment",
+        "restricted payment",
+        "dividend",
+        "distribution",
+        "repurchase",
+        "redemption"
+      ],
+      "concept_specific_keywords": [
+        "Annual RP Basket"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.rp.dividend_equivalents",
+    "name": "Dividend Equivalents",
+    "family_id": "cash_flow.rp",
+    "concept_area": "rp",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Payments",
+        "Limitation on Restricted Payments",
+        "Dividends",
+        "Distributions"
+      ],
+      "keyword_anchors": [
+        "Restricted Payment",
+        "restricted payment",
+        "dividend",
+        "distribution",
+        "repurchase",
+        "redemption"
+      ],
+      "concept_specific_keywords": [
+        "Dividend Equivalents"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.rp.redesignation",
+    "name": "RP Redesignation / Reclassification",
+    "family_id": "cash_flow.rp",
+    "concept_area": "rp",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Payments",
+        "Limitation on Restricted Payments",
+        "Dividends",
+        "Distributions"
+      ],
+      "keyword_anchors": [
+        "Restricted Payment",
+        "restricted payment",
+        "dividend",
+        "distribution",
+        "repurchase",
+        "redemption"
+      ],
+      "concept_specific_keywords": [
+        "RP Redesignation / Reclassification"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.rp.other_baskets",
+    "name": "Other RP Baskets",
+    "family_id": "cash_flow.rp",
+    "concept_area": "rp",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Payments",
+        "Limitation on Restricted Payments",
+        "Dividends",
+        "Distributions"
+      ],
+      "keyword_anchors": [
+        "Restricted Payment",
+        "restricted payment",
+        "dividend",
+        "distribution",
+        "repurchase",
+        "redemption"
+      ],
+      "concept_specific_keywords": [
+        "Other RP Baskets"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.rp.borrower_buybacks",
+    "name": "Borrower Debt Buybacks",
+    "family_id": "cash_flow.rp",
+    "concept_area": "rp",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Payments",
+        "Limitation on Restricted Payments",
+        "Dividends",
+        "Distributions"
+      ],
+      "keyword_anchors": [
+        "Restricted Payment",
+        "restricted payment",
+        "dividend",
+        "distribution",
+        "repurchase",
+        "redemption"
+      ],
+      "concept_specific_keywords": [
+        "Borrower Debt Buybacks"
+      ]
+    }
+  }
+]

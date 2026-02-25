@@ -1,0 +1,348 @@
+[
+  {
+    "id": "governance.amendments_voting.required_lenders",
+    "name": "Required Lenders Definition",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Required Lenders Definition",
+        "Required Lenders"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.sacred_rights",
+    "name": "Sacred Rights",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Sacred Rights",
+        "Required Lender",
+        "Admin Agent"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.pro_rata_sharing",
+    "name": "Pro Rata Sharing / Waterfall",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Pro Rata Sharing / Waterfall"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.deemed_consent",
+    "name": "Deemed Consent",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Deemed Consent",
+        "snooze-you-lose"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.yank_a_bank",
+    "name": "Yank-a-Bank",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Yank-a-Bank"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.serta_blockers",
+    "name": "Anti-Serta / Anti-Priming Provisions",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Anti-Serta / Anti-Priming Provisions",
+        "Serta Simmons"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.net_short",
+    "name": "Net Short Lender Restrictions",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Net Short Lender Restrictions"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.omp_voting",
+    "name": "Open Market Purchase Voting",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Open Market Purchase Voting"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.supermajority",
+    "name": "Supermajority Provisions",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Supermajority Provisions",
+        "Required Lender"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.amendment_types",
+    "name": "Amendment Types",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Amendment Types"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.separate_class_voting",
+    "name": "Separate Class Voting",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Separate Class Voting"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.statute_limitations",
+    "name": "Default Statute of Limitations",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Default Statute of Limitations"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.dilution_of_rights",
+    "name": "Dilution of Lender Rights Audit",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Dilution of Lender Rights Audit",
+        "Key Credit Terms Category",
+        "Lender Rights"
+      ]
+    }
+  }
+]

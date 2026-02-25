@@ -2,7 +2,7 @@
 
 **Created:** 2026-02-23
 **Status:** In Progress
-**Last Updated:** 2026-02-23 (Block 5 added — domain expert verification & golden set)
+**Last Updated:** 2026-02-24 (Block 3 expanded — workspace analysis, discovery pipeline, finalization criteria)
 
 ---
 
@@ -183,7 +183,7 @@
 - [ ] Check for cross-contamination between definition engines (colon engine false positives in particular)
 
 ### 1.4 Facility Size
-> **Root cause identified:** `build_corpus_index.py:569` uses `.get("aggregate")` but `extract_facility_sizes()` returns `"facility_size_mm"` as the key. This is why 0/12,583 docs have facility size data.
+> **Root cause identified:** `build_corpus_index.py:569` uses `.get("aggregate")` but `extract_facility_sizes()` returns `"facility_size_mm"` as the key. This is why 0/3,000 docs have facility size data.
 
 - [x] Fix key mismatch in `build_corpus_index.py` — change `.get("aggregate")` to `.get("facility_size_mm")` (2026-02-23)
   - Fixed in `build_corpus_index.py:573`. Also added `facility_confidence` column to schema and doc_record.
@@ -196,7 +196,7 @@
 > **Focus:** Documents where borrower extraction returned None/empty — not accuracy of existing extractions.
 
 - [ ] Query corpus index for docs with empty/null borrower field
-- [ ] Quantify: how many of 12,583 docs have no borrower?
+- [ ] Quantify: how many of 3,000 docs have no borrower?
 - [ ] Sample 20 missing-borrower docs, manually identify what borrower patterns they use
 - [ ] Expand `extract_borrower()` regex passes to cover new patterns
 - [ ] Validate fixes against the sampled docs
@@ -214,7 +214,7 @@
 
 **Tasks:**
 - [ ] Query corpus index for docs with empty/null admin_agent field
-- [ ] Quantify: how many of 12,583 docs have no admin_agent?
+- [ ] Quantify: how many of 3,000 docs have no admin_agent?
 - [ ] Widen search window from 10K to 20K chars in `extract_admin_agent()`
 - [ ] Add role variant patterns: `"as Agent"`, `"as Collateral Agent"`, `"as Administrative Agent and Collateral Agent"`, `"in its capacity as [Aa]gent"`
 - [ ] Add signature block fallback: search for bank names near "agent" in last 5K chars
@@ -295,19 +295,327 @@
 
 ## Block 2 — Header & Numbering Format Audit
 
+**Cross-project analysis:** Section header and numbering format implementations surveyed across TermIntelligence, Vantage Platform, and Neutron (2026-02-23). All three sibling projects parse the same EDGAR credit agreement corpus and have independently evolved solutions for edge cases Agent doesn't yet handle.
+
+### Cross-Project Feature Matrix (2026-02-23)
+
+| Feature | Agent | TermIntel | VP | Neutron |
+|---|:---:|:---:|:---:|:---:|
+| **Article: Roman** (ARTICLE VII) | ✅ | ✅ | ✅ | ✅ |
+| **Article: Arabic** (Article 7) | ✅ | ✅ | ✅ | ✅ |
+| **Article: Spelled-out** (ARTICLE ONE) | ✅ | ✅ | ✅ | ❌ |
+| **Article: Spaced** (A R T I C L E) | ✅ | ❌ | ✅ | ❌ |
+| **Article: Split-line** (title on next line) | ✅ | ✅ | ✅ | ❌ |
+| **Article: PART/CHAPTER** | ✅ | ❌ | ❌ | ❌ |
+| **Article: Leading page numbers** (OCR) | ✅ | ✅ | ✅ | ❌ |
+| **Section: Standard** (Section 2.14) | ✅ | ✅ | ✅ | ✅ |
+| **Section: § symbol** | ✅ | ✅ | ✅ | ❌ |
+| **Section: Bare number** (2.01 Heading) | ✅ | ✅ | ✅ | ✅ |
+| **Section: OCR space** (1. 01) | ✅ | ✅ | ✅ | ✅ |
+| **Section: Letter suffix** (2.01a) | ✅ | ❌ | ✅ | ❌ |
+| **Section: Roman prefix** (II.1) | ✅ | ✅ | ✅ | ❌ |
+| **Section: Flat numbered** (1. Definitions) | ✅ | ❌ | ❌ | ❌ |
+| **Section: Standalone number** (10.3 alone, heading next line) | ❌ | ✅ | ❌ | ✅ |
+| **Section: No-space** (1.01Defined Terms) | ❌ | ❌ | ❌ | ✅ |
+| **Section: Abbreviation** (Sec. / Sec) | ❌ | ❌ | ❌ | ✅ |
+| **TOC deduplication** | ❌ | partial | partial | ✅ |
+| **Multi-signal TOC detection** | basic | ✅ | ✅ (5 signals) | partial |
+| **Heading quality scoring** | ❌ | ✅ | ✅ | ✅ (3-tier) |
+| **Multi-line heading continuation** | ❌ | ✅ | ✅ (3 lines) | partial |
+| **Section number plausibility** | ❌ | ✅ | ✅ | partial |
+| **Gap detection / monotonic enforcement** | ❌ | ✅ | ❌ | ❌ |
+| **Ghost section rejection** | ❌ | ❌ | ✅ | ❌ |
+| **Numbering format taxonomy** | ❌ | ✅ | ❌ | ❌ |
+| **Synthetic article scaffolding** | ❌ | ❌ | ✅ | ❌ |
+| **Exhibit/signature boundary hardening** | basic | ❌ | ✅ (500-char margin) | ❌ |
+| **Section canonical naming** | ❌ | ❌ | ✅ | ❌ |
+| **Content-addressed chunk IDs** | ❌ | ❌ | ✅ | ❌ |
+| **Contextual reference patterns** | ❌ | ❌ | ❌ | ✅ |
+| **Plural/range reference patterns** | ❌ | ❌ | ❌ | ✅ |
+| **Straight→smart quote normalization** | ❌ | ❌ | ❌ | ✅ |
+| **Zero-width character stripping** | ❌ | ❌ | ❌ | ✅ |
+| **Reserved section detection** | ❌ | ✅ | ❌ | ❌ |
+| **Boilerplate removal** (timestamps, SEC URLs) | ❌ | ❌ | ❌ | ✅ |
+| **Concept-level location strategies (HHI)** | ❌ | ✅ | ❌ | ❌ |
+
+### Where Each Project Excels
+
+| Project | Primary Strength | Best Ideas to Port |
+|---|---|---|
+| **TermIntelligence** | Corpus-wide format census & DOM-aware extraction | Numbering taxonomy, gap detection, concept-location stability scoring, reserved section detection |
+| **Vantage Platform** | Multi-signal quality gates & recovery mechanisms | TOC detection (5 signals), heading continuation, ghost rejection, synthetic articles, canonical naming |
+| **Neutron** | Reference resolution & hierarchical structure model | TOC dedup (keep body + inherit heading), reference patterns, section path normalization, quote normalization |
+
+### Key Source Files
+
+**TermIntelligence:**
+- `scripts/round11_numbering_census.py` — Comprehensive format taxonomy (ROMAN/ARABIC/HYBRID, zero-pad, 2/3-level)
+- `scripts/section_level_parser.py` — 3-style section extraction (Style A/B/C), gap detection (lines 470-491), monotonic enforcement (lines 1087-1110)
+- `scripts/round11_article_boundary.py` — DOM-aware article extraction with explicit TOC zone detection (lines 81-223)
+- `scripts/compile_section_map.py` — Per-concept location strategies with HHI stability scoring
+
+**Vantage Platform:**
+- `src/vantage_platform/l0/_doc_parser.py` — 5-signal TOC detection (lines 383-455), section plausibility (lines 1517-1536), ghost rejection (lines 1423-1435), heading continuation (lines 1228-1322), synthetic articles (lines 1538-1571), canonical naming (`l0/outline.py:117-124`)
+
+**Neutron:**
+- `tools/swarm-bsl-golden/scripts/build_section_index.py` — TOC dedup with heading inheritance (lines 214-241), heading quality scoring (lines 194-211), standalone section look-ahead (lines 60-62)
+- `tools/swarm-bsl-golden/scripts/convert_html_to_clean.py` — Straight→smart quote normalization (lines 267-302), zero-width char stripping
+- `apps/backend/src/common/patterns/reference-patterns.ts` — Contextual/plural/range reference patterns (lines 431-474)
+
+---
+
+### 22 Improvements — Implementation Plan
+
+> **Prerequisite:** Improvements 1-2 (TOC handling) should be implemented first, as TOC contamination would corrupt any corpus-wide heading survey. Improvements are grouped into 4 phases by dependency and impact.
+
+#### Phase A — TOC Handling & Section Validation (gate for corpus survey)
+
+**Improvement 1: TOC deduplication — keep body occurrence, inherit heading from TOC**
+- **Source:** Neutron `build_section_index.py:214-241`
+- **What:** When the same section number appears in both TOC and body, keep the LAST occurrence (body). If the body entry has an empty heading but the TOC entry has a good one, inherit the heading from the TOC entry.
+- **Files:** `src/agent/doc_parser.py` — add `_dedup_sections()` post-processing pass after `_detect_sections()`
+- **Complexity:** Low
+- **Tests:** New test cases with synthetic TOC + body duplicate sections
+- [ ] Implement `_dedup_sections()` — keep last occurrence per section number, with heading inheritance
+- [ ] Add heading quality scoring helper: quality 0 (garbage: starts with `,`, lowercase, `(`), quality 1 (empty), quality 2 (proper: starts with `[A-Z]`)
+- [ ] Add tests with TOC-contaminated documents
+
+**Improvement 2: Multi-signal TOC detection (5 signals)**
+- **Source:** VP `_doc_parser.py:383-455`
+- **What:** Replace basic "TABLE OF CONTENTS" header detection with 5-signal heuristic: (1) distance from TOC header within 3K chars, (2) dense section clustering (>6 refs in ±200 chars, median gap <80), (3) page number patterns (dot-leader or standalone 2+ digits), (4) pipe-separated page numbers (EDGAR HTML table format), (5) short-line clustering (<50 chars, 7+ lines, no lines >100 chars).
+- **Files:** `src/agent/doc_parser.py` — enhance `_is_toc_entry()` with additional signals
+- **Complexity:** Medium
+- **Tests:** Add signal-specific test cases for each of the 5 TOC indicators
+- [ ] Add dense section clustering signal (#2) — count section refs in ±200 char window, check median gap
+- [ ] Add pipe-separated page number signal (#4)
+- [ ] Add short-line clustering signal (#5)
+- [ ] Integrate min_signals parameter for adjustable sensitivity
+- [ ] Add tests for each signal in isolation and combined
+
+**Improvement 3: Section number plausibility validation**
+- **Source:** VP `_doc_parser.py:1517-1536`
+- **What:** Validate parsed section numbers by rejecting outliers (major >40, minor >120). Outliers only allowed if keyword-matched (has "Section" prefix) AND heading present.
+- **Files:** `src/agent/doc_parser.py` — add `_is_plausible_section_number()` called during section detection
+- **Complexity:** Low
+- **Tests:** Test with monetary amounts ("50.00"), ratios, and valid edge cases (Section 40.01)
+- [ ] Implement `_is_plausible_section_number(major, minor, has_keyword, has_heading)` → bool
+- [ ] Wire into `_detect_sections()` as a filter after regex matching
+- [ ] Add tests for outlier rejection and valid edge cases
+
+**Improvement 4: Heading quality scoring**
+- **Source:** VP `_doc_parser.py:1011-1032`, Neutron `build_section_index.py:194-211`
+- **What:** Score heading quality on a 3-tier scale: 0 = garbage (starts with `,`, `;`, lowercase, sub-clause marker), 1 = empty (may be on next line), 2 = proper (starts with `[A-Z]`). Use quality score in section dedup and article dedup to prefer entries with better headings.
+- **Files:** `src/agent/doc_parser.py` — add `_heading_quality()` helper, use in dedup logic
+- **Complexity:** Low
+- [ ] Implement `_heading_quality(heading: str) -> int` (0/1/2)
+- [ ] Use in `_dedup_sections()` (Improvement 1) and article dedup
+- [ ] Add sentence-like body text detection from VP (parenthetical clauses, lowercase content words)
+
+---
+
+#### Phase B — Heading Extraction & Recovery (improves extraction before survey)
+
+**Improvement 5: Multi-line heading continuation**
+- **Source:** VP `_doc_parser.py:1228-1322`, TI `section_level_parser.py:870-922`
+- **What:** When heading extraction yields an empty or truncated result, look up to 3 continuation lines. Check for: (a) title ends with connector word (of, and, or, the, to, for, in, by, with), (b) title ends with comma, (c) title is very short (1-2 words). Continuation lines must start with uppercase, be <60 chars, and not be another section/article header. Abbreviation-aware sentence breaks (don't truncate at "U.S." or "Inc.").
+- **Files:** `src/agent/doc_parser.py` — enhance `_extract_article_title()` and section heading extraction
+- **Complexity:** Medium
+- [ ] Add abbreviation-aware sentence break detection (U.S., Inc., Co., Ltd., Corp., N.A., L.P.)
+- [ ] Add heading truncation detection (connector words, comma, short length)
+- [ ] Add continuation line scanner (up to 3 lines, validate each)
+- [ ] Increase heading word limit from 12 to 15 (matching VP)
+- [ ] Add tests with split headings from real EDGAR HTML
+
+**Improvement 6: Ghost section rejection with context checks**
+- **Source:** VP `_doc_parser.py:1423-1435`
+- **What:** After section detection, reject sections without headings that start with body-text patterns. Real headingless sections start with: `.`, `:`, `(a)`, `(i)`, `(1)`, uppercase. Ghost xrefs start with: `,`, lowercase, prepositions ("pursuant", "as defined"), parenthetical asides.
+- **Files:** `src/agent/doc_parser.py` — add `_is_ghost_section()` post-filter
+- **Complexity:** Low
+- [ ] Implement `_is_ghost_section(section_text_start: str, has_heading: bool) -> bool`
+- [ ] Apply as post-filter in `_detect_sections()` (only for headingless sections)
+- [ ] Add tests with body-text cross-references vs. real headingless sections
+
+**Improvement 7: Standalone section number with look-ahead**
+- **Source:** Neutron `build_section_index.py:60-62`, TI `section_level_parser.py:801-940`
+- **What:** Handle section numbers that appear alone on a line (e.g., "10.3" with no heading), with heading on the NEXT non-empty line. Validate: reject article numbers >20 (pricing grid values like "50.00 bps"), require 2-line look-ahead for uppercase-starting text.
+- **Files:** `src/agent/doc_parser.py` — add `_SECTION_STANDALONE_RE` pattern and look-ahead logic
+- **Complexity:** Low
+- [ ] Add `_SECTION_STANDALONE_RE = re.compile(r"(?:^|\n)\s*(\d{1,2}\.\d{1,2})\s*\.?\s*$")`
+- [ ] Add look-ahead: scan next 2 lines for uppercase-starting text <60 chars
+- [ ] Add validation: reject major >20 for standalone matches
+- [ ] Wire in as fallback after `_SECTION_BARE_RE`
+- [ ] Add tests with standalone section numbers + pricing grid false positives
+
+**Improvement 8: Reserved section detection**
+- **Source:** TI `section_level_parser.py:393-395`
+- **What:** Detect `[RESERVED]`, `[Reserved]`, `[Intentionally Omitted]` patterns in section text and return as heading.
+- **Files:** `src/agent/doc_parser.py` — add `_RESERVED_RE` pattern check in heading extraction
+- **Complexity:** Low
+- [ ] Add `_RESERVED_RE = re.compile(r"\[(?:RESERVED|Reserved|Intentionally Omitted)\]")`
+- [ ] Check in `_extract_heading()` and `_extract_article_title()` — if found, return "[Reserved]"
+- [ ] Add tests
+
+---
+
+#### Phase C — Numbering Taxonomy & Corpus Survey (the Block 2 core deliverables)
+
+**Improvement 9: Numbering format taxonomy (corpus-wide census)**
+- **Source:** TI `round11_numbering_census.py`
+- **What:** Classify every document's numbering format: article format (ROMAN/ARABIC/SECTION_ONLY/HYBRID with 80% dominance rule), section depth (2-level/3-level), zero-padding (padded/unpadded/mixed), and detect anomalies (mid-document format switches, padding convention shifts).
+- **Files:** New `scripts/numbering_census.py`; add `article_format`, `section_depth`, `zero_padded` columns to DuckDB `documents` table
+- **Complexity:** Medium
+- [ ] Build `scripts/numbering_census.py` — classify article format per document
+- [ ] Classify section depth (2-level X.Y vs 3-level X.Y.Z) per document
+- [ ] Classify zero-padding (padded "6.01" vs unpadded "6.1") per document
+- [ ] Detect mid-document format anomalies (ROMAN→ARABIC switches)
+- [ ] Add `article_format`, `section_depth`, `zero_padded` to DuckDB schema
+- [ ] Output corpus-wide format distribution report (JSON to stdout)
+
+**Improvement 10: Section gap detection & monotonic enforcement**
+- **Source:** TI `section_level_parser.py:470-491, 1087-1110`
+- **What:** After section extraction, detect gaps in section numbering within each article (e.g., 7.01→7.03 without 7.02). Remove out-of-sequence sections. Merge duplicates (keep the one with a valid heading).
+- **Files:** `src/agent/doc_parser.py` — add `_detect_numbering_gaps()` and `_enforce_monotonic()` post-processing
+- **Complexity:** Low
+- [ ] Implement `_detect_numbering_gaps(sections, article_num)` → list of gap tuples
+- [ ] Implement `_enforce_monotonic(sections)` → reordered sections with out-of-sequence removed
+- [ ] Store gap metadata for edge-case reporting
+- [ ] Add tests with gapped and out-of-sequence section numbers
+
+**Improvement 11: Synthetic article scaffolding**
+- **Source:** VP `_doc_parser.py:1538-1571`
+- **What:** When sections are found but no articles are detected, group sections by major component (all "2.xx" → Article 2) and create synthetic articles. Mark as `is_synthetic: True`.
+- **Files:** `src/agent/doc_parser.py` — add `_synthesize_articles_from_sections()`, similar to existing `_synthesize_sections_from_articles()` (Fix F from Block 1.1)
+- **Complexity:** Low
+- [ ] Implement `_synthesize_articles_from_sections(sections)` → list of articles
+- [ ] Add `is_synthetic` flag to article data (or use a naming convention like "Article 7 [synthetic]")
+- [ ] Wire into fallback chain: if no articles AND sections exist, synthesize
+- [ ] Add tests
+
+**Improvement 12: Exhibit/signature boundary hardening**
+- **Source:** VP `_doc_parser.py:1078-1094`
+- **What:** Harden existing `_EXHIBIT_BOUNDARY_RE` and `_SIGNATURE_BOUNDARY_RE` with a 500-char margin requirement to avoid false positives from cross-references like "as set forth in Exhibit A".
+- **Files:** `src/agent/doc_parser.py` — add margin check in boundary truncation logic
+- **Complexity:** Low
+- [ ] Add 500-char margin check: boundary must be >500 chars from last section start
+- [ ] Add tests with cross-reference false positives near document end
+
 ### 2.1 Section Headers — Broad Range Survey
-- [ ] Query the corpus index for all distinct section headings across 12,583 docs
+
+> **Blocked on:** Phase A + B improvements (TOC handling, heading quality, ghost rejection, multi-line continuation). Without these, the survey would be contaminated by TOC duplicates, ghost sections, and truncated headings.
+
+- [ ] Query the corpus index for all distinct section headings across 12,583 docs (post-rebuild)
 - [ ] Group by frequency and identify the long tail of rare/unusual headings
-- [ ] Categorize heading formats: standard, non-standard, truncated, HTML artifacts
-- [ ] Identify headings that the parser is truncating (>120 chars) or rejecting (>12 words)
+- [ ] Categorize heading formats: standard, non-standard, truncated, HTML artifacts, [Reserved]
+- [ ] Identify headings that the parser is truncating (>120 chars) or rejecting (>15 words)
 - [ ] Build a heading taxonomy for use in strategy development
+- [ ] Identify per-template heading patterns (if template families are assigned)
 
 ### 2.2 Article & Section Numbering Formats
-- [ ] Survey numbering schemes: Roman (ARTICLE VII), Arabic (Article 7), spelled-out (ARTICLE ONE)
-- [ ] Survey section numbering: dotted (2.14), bare (Section 2.14), letter-suffixed (2.01a)
+
+> **Blocked on:** Improvement 9 (numbering format taxonomy). The census script will produce the quantified distribution.
+
+- [ ] Survey numbering schemes: Roman (ARTICLE VII), Arabic (Article 7), spelled-out (ARTICLE ONE), HYBRID
+- [ ] Survey section numbering: dotted (2.14), bare (Section 2.14), letter-suffixed (2.01a), 3-level (X.Y.Z)
+- [ ] Survey zero-padding distribution: padded (6.01) vs unpadded (6.1)
 - [ ] Identify non-standard formats the parser doesn't handle
-- [ ] Check OCR tolerance patterns (e.g., "Section 1. 01" with extra space)
+- [ ] Check OCR tolerance patterns (e.g., "Section 1. 01" with extra space, no-space "1.01Defined Terms")
 - [ ] Quantify format distribution across the corpus
+- [ ] Identify mid-document format anomalies
+
+---
+
+#### Phase D — Enrichment & Normalization (future enhancement layer)
+
+**Improvement 13: Straight→smart quote normalization**
+- **Source:** Neutron `convert_html_to_clean.py:267-302`
+- **What:** Normalize straight double quotes to smart quotes (U+201C/U+201D) in normalized text, handling paragraph-spanning definitions.
+- **Files:** `src/agent/html_utils.py` — add `_normalize_defined_term_quotes()` pass
+- **Complexity:** Low
+- [ ] Implement `_normalize_defined_term_quotes(text)` with paragraph-boundary awareness
+- [ ] Call after main normalization in `normalize_html()`
+- [ ] Verify definition extraction improvement on sample docs with straight quotes
+
+**Improvement 14: Zero-width character stripping**
+- **Source:** Neutron `convert_html_to_clean.py`
+- **What:** Strip U+200C (ZWNJ), U+200B (ZWSP), U+FEFF (BOM) characters from normalized text.
+- **Files:** `src/agent/html_utils.py`
+- **Complexity:** Low
+- [ ] Add zero-width character stripping after HTML entity normalization
+- [ ] Add test with embedded zero-width chars in section headings
+
+**Improvement 15: Boilerplate removal (timestamps, SEC URLs, page markers)**
+- **Source:** Neutron `strip_boilerplate.py:116-128`
+- **What:** Strip common EDGAR boilerplate patterns before parsing: timestamps ("1/16/26, 1:44 PM"), SEC archive URLs, page markers ("Page 1 of 252"), exhibit headers ("EX-10.1 2 exh101-...").
+- **Files:** `src/agent/html_utils.py` — add `_strip_boilerplate()` pass
+- **Complexity:** Low
+- [ ] Implement boilerplate pattern removal (4 patterns: timestamp, SEC URL, page marker, exhibit header)
+- [ ] Call before section parsing
+- [ ] Add tests with real boilerplate from EDGAR filings
+
+**Improvement 16: Section canonical naming**
+- **Source:** VP `outline.py:117-124`
+- **What:** Add `section_canonical_name` (heading lowercased + stripped) and `section_reference_key` (`{doc_id}:{canonical_name}`) to section data.
+- **Files:** `src/agent/doc_parser.py` or `src/agent/corpus.py` — add to `OutlineSection` or DuckDB `sections` table
+- **Complexity:** Low
+- [ ] Add `canonical_name` to section data model
+- [ ] Add `reference_key` combining doc_id + canonical_name
+- [ ] Add to DuckDB `sections` table schema
+
+**Improvement 17: Content-addressed chunk IDs**
+- **Source:** VP `outline.py:43-54`
+- **What:** Compute `SHA-256[:16]` chunk ID from `(doc_id, section_path, text_hash)` for each section. Stable across re-parses when section content is unchanged.
+- **Files:** `src/agent/doc_parser.py` — add `_compute_chunk_id()`, store in section data
+- **Complexity:** Low
+- [ ] Implement `_compute_chunk_id(doc_id, section_path, text_hash)` → hex string
+- [ ] Add `chunk_id` to DuckDB `sections` table
+- [ ] Add tests for stability (same content → same chunk_id)
+
+**Improvement 18: Contextual reference patterns**
+- **Source:** Neutron `reference-patterns.ts:431-474`
+- **What:** Recognize legal preamble patterns: "pursuant to Section X.XX", "as set forth in Section X.XX", "subject to Section X.XX", "in accordance with Section X.XX", "defined in Section X.XX", "referenced in Section X.XX", "specified in Section X.XX". These improve xref detection by providing intent classification.
+- **Files:** `src/agent/doc_parser.py` — extend `_XREF_INTENT_PATTERNS`
+- **Complexity:** Medium
+- [ ] Add 7+ legal preamble patterns to `_XREF_INTENT_PATTERNS`
+- [ ] Add tests for each preamble pattern
+
+**Improvement 19: Plural/range reference patterns**
+- **Source:** Neutron `reference-patterns.ts`
+- **What:** Handle "Sections 7.01 and 7.02", "Sections 7.01, 7.02, and 7.03", "Sections 7.01 through 7.05", "Sections 7.01-7.10".
+- **Files:** `src/agent/doc_parser.py` — extend `_XREF_SCAN_RE` or add companion patterns
+- **Complexity:** Medium
+- [ ] Add plural section reference pattern (comma/and separated)
+- [ ] Add range reference pattern (through/dash)
+- [ ] Add expansion logic (range → enumerate intermediate section numbers)
+- [ ] Add tests
+
+**Improvement 20: Concept-level location strategies with HHI stability scoring**
+- **Source:** TI `compile_section_map.py`
+- **What:** For each ontology concept, compute a prevalence matrix across the corpus (which section numbers it most commonly appears in), rank by frequency, and compute Herfindahl-Hirschman Index (HHI) for stability scoring. High HHI = concept always in same section; low HHI = scattered across many sections.
+- **Files:** New `scripts/compile_section_map.py`
+- **Complexity:** High
+- [ ] Build per-concept section prevalence matrix from strategy matches
+- [ ] Compute top_raw_titles per concept (canonical section titles)
+- [ ] Compute HHI stability score per concept
+- [ ] Output per-concept location strategy with confidence indicators
+- [ ] Integrate with strategy seeding (Block 3.5)
+
+**Improvement 21: Section path normalization with round-trip invariant**
+- **Source:** Neutron `section-path.utils.ts:23-166`
+- **What:** Define a canonical section path format (`ARTICLE VII > Section 7.06 > (a)`) with separator ` > `. Ensure round-trip invariant: `array → string → array` produces identical result. Support legacy separators on read, normalize on write.
+- **Files:** New utility in `src/agent/` or extend `doc_parser.py`
+- **Complexity:** Medium
+- [ ] Define canonical section path format and separator
+- [ ] Implement `split_section_path(path)` and `join_section_path(parts)`
+- [ ] Add round-trip invariant tests
+- [ ] Add legacy separator support on read
+
+**Improvement 22: Section abbreviation patterns (Sec. / Sec)**
+- **Source:** Neutron `reference-patterns.ts`
+- **What:** Add `Sec.` and `Sec` as section keyword alternatives in `_SECTION_STRICT_RE` (rare but occurs in some older filings).
+- **Files:** `src/agent/doc_parser.py` — extend section detection regex
+- **Complexity:** Low
+- [ ] Add `Sec\.?` to `_SECTION_STRICT_RE` keyword alternatives
+- [ ] Add tests with "Sec. 2.14" and "Sec 2.14" patterns
 
 ---
 
@@ -315,68 +623,392 @@
 
 > **Philosophy change:** Focus exclusively on the 49 top-level families. Finalize family-level strategies before touching any children. Child/grandchild strategies will derive from the sections linked by the family strategy.
 
-### 3.1 Clean Up Cross-Family Strategy Contamination
-> 17 workspaces have strategies from multiple families (e.g., `ratio` workspace has strategies from 10 different families, `governance` has strategies from 5 families).
+### Current State Analysis (2026-02-23)
 
-- [ ] Audit each workspace to identify strategies that don't belong to the workspace's family
-- [ ] Move or remove cross-family strategies
-- [ ] Document which strategies were removed and why
+**Workspace ↔ Family mapping:**
+- 41 workspace directories exist under `workspaces/`
+- 49 ontology families exist (level-1 nodes across 6 domains)
+- Mapping is **not 1:1**: the `incremental` workspace covers 10 ontology sub-families (`free_clear`, `ratio`, `builders`, `mfn`, `ied`, `stacking_reclass`, `acquisition_debt`, `contribution_debt`, `subordinated_debt`, `structural_controls`) — but 3 of those (`mfn`, `stacking_reclass`, `structural_controls`) also have their own dedicated workspaces. The `governance` workspace aggregates 5 sub-families (`affiliate_txns`, `amendments_voting`, `assignments`, `reporting`, `reps_conditions`) that also each have their own workspace.
+- 1 ontology family (`cash_flow.carve_outs`, 6 concepts) has **no workspace at all**
+- Net: 41 workspaces, 49 families, with overlap and one gap
 
-### 3.2 Remove Child/Grandchild Strategies
-> Of 464 total strategies: 13 are `family_core`, 451 are `concept_standard` (children). All are bootstrap v1.
+**Strategy files:**
+- 440 total strategy JSON files across all `strategies/` directories
+- ALL are `_v001.json` — zero iteration has occurred
+- ALL are bootstrap quality (`validation_status: "bootstrap"`)
+- Estimated split: ~13 `family_core` (profile_type), ~427 `concept_standard` (children)
+- All originated from `data/bootstrap/bootstrap_all.json` (332 entries) via `setup_workspace.py`
 
-- [ ] Identify all `concept_standard` (child) strategies across all workspaces
-- [ ] Archive them (move to `workspaces/{family}/archive/`) before deletion
-- [ ] Remove from active `strategies/` directories
-- [ ] Verify dashboard shows only the 49 family-level strategies
+**Format state:**
+- All workspace strategies are in **flat format** (individual top-level fields, not nested `search_strategy` wrapper). `setup_workspace.py` already flattens on write.
+- All are `acceptance_policy_version: "v1"` — no v2 policy fields populated (no `outlier_policy`, `did_not_find_policy`, `template_stability_policy`)
+- The `bootstrap_all.json` source file uses the legacy **nested format** (`search_strategy` sub-object) but workspace copies were already flattened
 
-### 3.3 Normalize Family Strategies to Flat Format
-> Only the indebtedness workspace (22 strategies) uses the flat Strategy dataclass format with v2 policies. The remaining 440 use the legacy nested `search_strategy` wrapper.
+**Checkpoint state:**
+- 22 of 41 workspaces have `checkpoint.json`
+- All at `iteration_count: 0` — wave 2 was bootstrap/evidence-only
+- Status: all either `"completed"` or `"running"` (set by `wave_promote_status.py`)
+- No workspace has gone through the iterative refinement loop
 
-- [ ] For each of the 49 families, ensure a `family_core` strategy exists in flat format
-- [ ] Migrate legacy nested format to flat format using `migrate_strategy_v1_to_v2.py`
-- [ ] Add `acceptance_policy_version: v2`, `outlier_policy`, and `did_not_find_policy` to each
-- [ ] Verify all 49 family strategies load correctly in the dashboard
+**Contamination (14 files across 8 workspaces):**
 
-### 3.4 Fill Strategy Gaps for Missing Families
-> 9 families have zero strategies: term_loan, revolver, second_lien, corporate_structure, lme_protections, pre_closing, other_advisory_roles, side_by_side_revolvers, simultaneous_incurrence_netting.
+| Workspace | Contaminating Strategy | Root Cause |
+|-----------|----------------------|------------|
+| `collateral` | `cash_flow.dispositions.disp_non_collateral` | "collateral" in concept name |
+| `collateral` | `debt_capacity.liens.cash_collateral_liens` | "collateral" in concept name |
+| `collateral` | `debt_capacity.liens.non_collateral_liens` | "collateral" in concept name |
+| `cross_covenant` | `cash_flow.available_amount.aa_cross_covenant_allocation` | "cross_covenant" in concept ID |
+| `cross_covenant` | `cash_flow.dispositions.disp_cross_covenant_links` | "cross_covenant" in concept ID |
+| `ebitda` | `debt_capacity.incremental.free_clear.ebitda_correlation` | "ebitda" in concept name |
+| `fees` | `deal_econ.pricing.lc_fees` | "fees" in concept name |
+| `incremental` | `debt_capacity.indebtedness.incremental_equivalent` | "incremental" in concept name |
+| `inv` | `cash_flow.available_amount.aa_investment_returns` | "inv" substring of "investment" |
+| `inv` | `cash_flow.dispositions.disp_reinvestment_period` | "inv" substring of "reinvestment" |
+| `inv` | `cash_flow.rp.investment_return` | "inv" substring of "investment" |
+| `inv` | `credit_protection.events_of_default.invalidity` | "inv" substring of "invalidity" |
+| `leverage` | `debt_capacity.incremental.ratio.leverage_metric` | "leverage" in concept name |
+| `mfn` | `deal_econ.pricing.mfn_protection` | "mfn" in concept name |
 
-- [ ] Create bootstrap `family_core` strategies for each of the 9 missing families
-- [ ] Source heading patterns and keyword anchors from ontology expert materials
-- [ ] Validate against sample corpus documents
+**Root cause:** `setup_workspace.py:extract_bootstrap_strategies()` does **substring matching** (`family_lower in val.lower()`) on concept fields. The 3-letter `inv` family is worst affected — "inv" is a substring of "investment", "reinvestment", and "invalidity".
 
-### 3.5 Family Strategy Pre-Process — Discovery Seeding
-> **Before** agents refine strategies, run automated discovery algorithms on each of the 49 families to seed richer initial strategies. This gives agents a strong starting point rather than bare bootstrap patterns.
+**Bootstrap gap families (no entries in `bootstrap_all.json`):**
+- `deal_econ.term_loan` (73 concepts)
+- `deal_econ.revolver` (59 concepts)
+- `deal_econ.second_lien` (46 concepts)
+- `credit_protection.corporate_structure` (62 concepts)
+- `credit_protection.lme_protections` (116 concepts)
+- `governance.pre_closing` (40 concepts)
+- `governance.other_advisory_roles` (2 concepts)
+- `debt_capacity.side_by_side_revolvers` (5 concepts)
+- `cash_flow.simultaneous_incurrence_netting` (5 concepts)
 
-**For each of the 49 families, run:**
-- [ ] **DNA Discovery** — scan corpus for family-specific DNA phrases (tier 1 and tier 2)
-- [ ] **Anti-DNA Discovery** — identify negative DNA patterns (phrases that indicate the section is NOT this family)
-- [ ] **Heading Discovery** — discover heading patterns from corpus evidence beyond the bootstrap set
-- [ ] **Keyword Discovery** — expand keyword anchors from corpus frequency analysis
-- [ ] **Structural Position Analysis** — identify primary articles/sections where each family typically appears
-- [ ] **Defined Term Dependencies** — auto-detect which defined terms are relevant to each family
-- [ ] **Template Family Patterns** — identify per-template variations if template families are assigned
-- [ ] Merge all discovery results into the family strategy files (enriching heading_patterns, keyword_anchors, dna_tier1, dna_tier2, dna_negative_tier1, primary_articles, primary_sections, defined_term_dependencies, concept_notes)
-- [ ] Validate enriched strategies don't regress baseline metrics
+---
 
-### 3.6 Begin Family-Level Strategy Finalization
-> This is the iterative corpus-testing loop: run each family strategy against the corpus, measure hit rate / precision / prevalence / coverage, refine patterns, repeat until metrics stabilize.
+### 3.1 Fix Workspace Setup Root Cause & Reconcile Mapping
 
-- [ ] Define "finalized" criteria for family strategies (min hit rate, min precision, etc.)
-- [ ] Prioritize the 49 families by importance / corpus prevalence
-- [ ] For each family (in priority order):
-  - [ ] Run strategy against corpus
-  - [ ] Measure heading_hit_rate, keyword_precision, corpus_prevalence, cohort_coverage
-  - [ ] Identify false positives and false negatives
-  - [ ] Refine heading_patterns and keyword_anchors
-  - [ ] Promote to `corpus_validated` when criteria met
-- [ ] Track progress in dashboard Strategy Manager
+> The cross-family contamination and workspace-family mapping issues stem from `setup_workspace.py`'s substring matching. Fix the root cause before any cleanup.
+
+**Improvement 1: Exact family matching in `setup_workspace.py`**
+- **What:** Replace `family_lower in val.lower()` substring matching with exact ontology-path matching. A concept belongs to family `F` if and only if its `concept_id` starts with the family's ontology path (e.g., `"cash_flow.inv."` for the `inv` family, `"cash_flow.inv"` for the family node itself). This prevents "inv" from matching "investment" or "invalidity".
+- **Files:** `scripts/setup_workspace.py` — `extract_bootstrap_strategies()` function
+- **Complexity:** Low
+- [ ] Replace substring matching with exact ontology-path prefix matching in `extract_bootstrap_strategies()`
+- [ ] Add `--family-id` parameter (full dotted ontology path, e.g., `cash_flow.inv`) distinct from `--family` (short name)
+- [ ] Add validation: reject concepts whose `family_id` prefix doesn't match the workspace family
+- [ ] Add tests for false-positive rejection (e.g., "inv" must NOT match "invalidity")
+
+**Improvement 2: Workspace ↔ family mapping reconciliation**
+- **What:** Establish a canonical 1:1 mapping between workspaces and ontology families. Resolve the incremental/governance overlap. Decide whether to split `incremental` into 10 sub-workspaces or keep it as a super-workspace. Create workspace for `cash_flow.carve_outs`.
+- [ ] Create `data/workspace_family_map.json` — canonical mapping of `{ workspace_name: family_id }`
+- [ ] Resolve `incremental` overlap: decide whether `mfn`, `stacking_reclass`, `structural_controls` use their own workspace or the shared `incremental` workspace (recommend: dedicated workspaces, since each has its own ontology family)
+- [ ] Resolve `governance` overlap: the `governance` workspace aggregates 5 sub-families that also have their own workspaces — deduplicate (recommend: remove the aggregated `governance` workspace, keep 5 individual workspaces)
+- [ ] Create missing workspace for `cash_flow.carve_outs`
+- [ ] Update `generate_swarm_conf.py` to use `workspace_family_map.json` for canonical assignments
+- [ ] Validate: every ontology family has exactly one workspace; every workspace maps to exactly one family
+
+### 3.2 Clean Up Cross-Family Contamination
+
+> 14 contaminated files across 8 workspaces identified (see table above). Must be cleaned after root cause fix (3.1) to prevent re-contamination on re-setup.
+
+- [ ] For each of the 14 contaminated files: verify the concept doesn't belong to this workspace's family by checking its ontology path
+- [ ] Move contaminated files to `workspaces/{family}/quarantine/` (not delete — some may be useful reference)
+- [ ] For the `inv` workspace: remove all 4 false-positive strategies (`aa_investment_returns`, `disp_reinvestment_period`, `investment_return`, `invalidity`)
+- [ ] For the `collateral` workspace: remove 3 files (`disp_non_collateral`, `cash_collateral_liens`, `non_collateral_liens`) — these belong to `dispositions` and `liens` respectively
+- [ ] Log all removals to `plans/contamination_cleanup_log.json` with `{workspace, file, concept_id, correct_family, reason}`
+- [ ] Re-run `setup_workspace.py` with fixed matching (from 3.1) on affected workspaces to verify no re-contamination
+- [ ] Verify final file counts per workspace match expected concept counts from ontology
+
+### 3.3 Remove Child/Grandchild Strategies
+
+> Of ~440 total strategies: ~13 `family_core`, ~427 `concept_standard` (children). All are bootstrap v001. Per the philosophy change, only family-level strategies should remain active.
+
+**Approach:** Archive child strategies rather than delete — they contain bootstrap heading_patterns and keyword_anchors that may be useful reference during discovery seeding (3.5).
+
+- [ ] Scan all workspaces and classify each strategy by `profile_type` (or infer from concept_id depth if field is absent)
+- [ ] For each workspace, identify the family-level strategy (shortest concept_id, or `profile_type: "family_core"`)
+- [ ] Create `workspaces/{family}/archive/` directory in each workspace
+- [ ] Move all `concept_standard` (child) strategies to `archive/`
+- [ ] Update `current.json` symlinks to point to the family strategy (if they currently point to a child)
+- [ ] Reset `checkpoint.json` in each workspace (`iteration_count: 0`, `status: "pending"`, clear evidence fields)
+- [ ] Build summary: per-workspace count of archived vs. retained strategies
+- [ ] Verify dashboard `/strategies` page shows only ~49 family-level strategies (one per family)
+
+### 3.4 Normalize Family Strategies to v2 Policy Format
+
+> All workspace strategies are already in flat format (setup_workspace.py flattens on write), but all are `acceptance_policy_version: "v1"`. Need to upgrade to v2 with policy fields.
+
+**Migration pipeline:**
+1. Run `migrate_strategy_v1_to_v2.py` on each family strategy
+2. Fill starter policy values (configurable defaults)
+3. Validate loaded strategy against `Strategy` dataclass
+
+**Default starter policy values (tuned for family-level discovery phase):**
+
+| Policy | Field | Starter Value | Rationale |
+|--------|-------|---------------|-----------|
+| `outlier_policy` | `max_outlier_rate` | `0.15` | Relaxed for bootstrap (tighten during refinement) |
+| | `max_high_risk_rate` | `0.08` | |
+| | `max_review_rate` | `0.25` | |
+| | `sample_size` | `200` | |
+| `template_stability_policy` | `min_group_size` | `10` | |
+| | `min_groups` | `2` | |
+| | `min_group_hit_rate` | `0.50` | Relaxed for bootstrap |
+| | `max_group_hit_rate_gap` | `0.30` | Relaxed for bootstrap |
+| `did_not_find_policy` | `min_coverage` | `0.80` | Relaxed for bootstrap |
+| | `max_near_miss_rate` | `0.20` | |
+| | `max_near_miss_count` | `15` | |
+| `confidence_policy` | `min_final` | `0.40` | Low floor for discovery |
+| | `min_margin` | `0.05` | |
+
+**Tasks:**
+- [ ] Run `migrate_strategy_v1_to_v2.py --force` on all ~49 family strategies
+- [ ] Verify each migrated strategy loads via `load_strategy()` without errors
+- [ ] Verify `acceptance_policy_version: "v2"` is set on all family strategies
+- [ ] Verify `outlier_policy`, `template_stability_policy`, `did_not_find_policy` are non-empty dicts
+- [ ] Add `profile_type: "family_core"` to any family strategy that's missing it
+- [ ] Set `validation_status: "bootstrap"` explicitly (should already be set)
+- [ ] Run `strategy_writer.py --dry-run` on one family to verify gate pipeline accepts the v2 format
+- [ ] Build script `scripts/migrate_all_family_strategies.sh` that runs the migration across all 49 families with consistent parameters
+
+### 3.5 Fill Strategy Gaps for Missing Families
+
+> 9 families have zero entries in `bootstrap_all.json`. These need hand-crafted bootstrap strategies seeded from ontology definitions and domain knowledge.
+
+**Per-family bootstrap strategy design:**
+
+| Family | Likely Article(s) | Seed Heading Patterns | Seed Keywords |
+|--------|-------------------|----------------------|---------------|
+| `deal_econ.term_loan` | I–II | `Term Loan`, `Term Facility`, `Term Loan Commitments` | `term loan`, `term facility`, `maturity date`, `amortization`, `scheduled repayment` |
+| `deal_econ.revolver` | I–II | `Revolving Credit`, `Revolving Facility`, `Revolving Loan` | `revolving`, `revolving commitment`, `availability`, `swingline`, `letter of credit` |
+| `deal_econ.second_lien` | I–II | `Second Lien`, `Second Lien Term Loan` | `second lien`, `junior lien`, `subordinated`, `intercreditor` |
+| `credit_protection.corporate_structure` | V–VI | `Merger`, `Consolidation`, `Fundamental Changes` | `merger`, `consolidate`, `fundamental change`, `successor`, `all or substantially all` |
+| `credit_protection.lme_protections` | various | `Liability Management`, `J. Crew`, `Serta`, `Uptier` | `uptier`, `liability management`, `non-pro-rata`, `open market purchase`, `Dutch auction` |
+| `governance.pre_closing` | IV, conditions | `Conditions Precedent`, `Conditions to Closing`, `Conditions to Effectiveness` | `conditions precedent`, `closing date`, `effective date`, `officer's certificate`, `legal opinion` |
+| `governance.other_advisory_roles` | preamble | `Arranger`, `Bookrunner`, `Syndication Agent` | `arranger`, `bookrunner`, `syndication agent`, `documentation agent`, `co-agent` |
+| `debt_capacity.side_by_side_revolvers` | I–II | `Side-by-Side`, `Additional Revolving` | `side-by-side`, `additional revolving`, `parallel revolving`, `co-extensive` |
+| `cash_flow.simultaneous_incurrence_netting` | VII | `Simultaneous Incurrence`, `Netting` | `simultaneous`, `incurrence`, `netting`, `offset`, `deemed to satisfy` |
+
+**Tasks:**
+- [ ] Create `{family_id}_v001.json` bootstrap strategies for each of the 9 gap families using seed patterns above
+- [ ] Validate each against the `Strategy` dataclass (all required fields present, types correct)
+- [ ] Set `acceptance_policy_version: "v2"` with starter policy values (from 3.4)
+- [ ] Run `pattern_tester.py --sample 100` on each to get a baseline hit rate
+- [ ] Refine heading patterns based on initial test results (add discovered variants)
+- [ ] Add bootstrap entries to `data/bootstrap/bootstrap_all.json` for future re-setup
+- [ ] Create workspaces for any gap families that lack one (currently only `carve_outs` is missing)
+
+### 3.6 Family Strategy Pre-Process — Discovery Seeding
+
+> **Before** agents refine strategies, run automated discovery algorithms on each of the 49 families to seed richer initial strategies. This replaces bare bootstrap patterns with corpus-evidence-backed patterns and provides a strong starting point for iterative refinement.
+
+#### Discovery Pipeline — Per-Family Orchestration
+
+The seeding pipeline runs 6 discovery steps per family, each building on the previous. A new orchestration script (`scripts/discovery_seed_pipeline.py`) should coordinate these steps.
+
+**Step 1: Heading Discovery** (`heading_discoverer.py`)
+- Input: family's current `heading_patterns` as `--seed-headings`; optional `--article-range` from `primary_articles`
+- Output: ranked heading variants with frequency, article distribution, and canonical concept mapping
+- Action: expand `heading_patterns` with high-frequency discovered headings (frequency ≥ 5)
+- Also populate `negative_heading_patterns` from headings that frequently co-occur in matched articles but belong to a different family (via canonical mapping)
+
+**Step 2: DNA Discovery** (`dna_discoverer.py`)
+- Input: positive sections = all sections matching Step 1 headings; background = random non-matching sections
+- Output: ranked DNA phrases with TF-IDF + log-odds scores, section rates, background rates
+- Action: populate `dna_tier1` (top 10 phrases, section_rate ≥ 0.30, bg_rate ≤ 0.03) and `dna_tier2` (next 15, section_rate ≥ 0.15, bg_rate ≤ 0.08)
+
+**Step 3: Anti-DNA Discovery** (inverse of Step 2)
+- Input: positive sections = sections that are near-misses (score 0.15–0.30) or false positives from other families; background = true positive sections from Step 2
+- Output: phrases that discriminate false positives from true positives
+- Action: populate `dna_negative_tier1` (top 10 anti-signal phrases) and `dna_negative_tier2` (next 10)
+
+**Step 4: Structural Position Analysis** (`structural_mapper.py`)
+- Input: family strategy (with enriched headings/DNA from Steps 1-2)
+- Output: article distribution, section number distribution, typical position, structural fingerprint summary
+- Action: populate `primary_articles`, `primary_sections`, `structural_fingerprint_allowlist`
+
+**Step 5: Defined Term Dependencies** (`definition_finder.py` + corpus analysis)
+- Input: matched sections from Step 1; extract defined terms that appear in ≥ 50% of matched sections
+- Output: ranked defined terms by co-occurrence frequency
+- Action: populate `defined_term_dependencies` (top 10 terms), set `min_definition_dependency_overlap` (e.g., 0.3)
+
+**Step 6: Template Family Patterns** (`coverage_reporter.py`)
+- Input: family strategy (enriched from Steps 1-5); `--group-by template_family`
+- Output: per-template hit rates, structural fingerprints, template-specific heading variants
+- Action: populate `template_overrides` for templates with significantly different patterns; flag templates with low hit rates (< 0.50) for investigation
+
+#### Pipeline Orchestration
+
+- [ ] Build `scripts/discovery_seed_pipeline.py` — orchestrates Steps 1-6 for a single family
+  - Inputs: `--family-id`, `--db`, `--workspace`, `--strategy`
+  - Produces intermediate files in `workspaces/{family}/discovery/` (heading_results.json, dna_results.json, anti_dna_results.json, structural_map.json, term_deps.json, template_coverage.json)
+  - Produces enriched strategy JSON that merges all discovery results
+  - Runs `pattern_tester.py` before and after to measure improvement
+- [ ] Add `--dry-run` mode that shows what fields would change without writing
+- [ ] Add regression guard: enriched strategy must not decrease hit_rate or increase outlier_rate vs. baseline
+
+#### Per-Step Tasks
+
+**Heading Discovery (Step 1):**
+- [ ] Run `heading_discoverer.py` for each of the 49 families with current heading_patterns as seeds
+- [ ] Filter results: frequency ≥ 5, canonical mapping confirms family membership
+- [ ] Identify negative headings: high-frequency headings in matched articles that map to OTHER families
+- [ ] Merge discovered headings into `heading_patterns` (append, deduplicate)
+- [ ] Merge negative headings into `negative_heading_patterns`
+
+**DNA Discovery (Step 2):**
+- [ ] For each family, collect positive sections (sections matching enriched headings from Step 1)
+- [ ] Collect background sections (random 500 non-matching sections, stratified by template)
+- [ ] Run `dna_discoverer.py` with `--top-k 30 --min-section-rate 0.15 --max-bg-rate 0.08`
+- [ ] Tier the results: tier 1 (section_rate ≥ 0.30, bg_rate ≤ 0.03), tier 2 (remainder)
+- [ ] Merge into `dna_tier1` and `dna_tier2`
+
+**Anti-DNA Discovery (Step 3):**
+- [ ] Collect false-positive sections (sections scoring 0.15–0.30 that are NOT the target family)
+- [ ] Collect true-positive sections from Step 2 as background
+- [ ] Run `dna_discoverer.py` in inverted mode (false positives as positive, true positives as background)
+- [ ] Merge top results into `dna_negative_tier1` and `dna_negative_tier2`
+
+**Structural Position (Step 4):**
+- [ ] Run `structural_mapper.py` for each family with enriched strategy
+- [ ] Extract `typical_position.article_num` → `primary_articles`
+- [ ] Extract top section numbers → `primary_sections`
+- [ ] Extract top structural fingerprint tokens → `structural_fingerprint_allowlist`
+
+**Defined Term Dependencies (Step 5):**
+- [ ] For each family, collect all defined terms from matched documents
+- [ ] Rank by co-occurrence frequency (fraction of matched sections containing the term)
+- [ ] Select top 10 terms with co-occurrence ≥ 0.50 → `defined_term_dependencies`
+- [ ] Set `min_definition_dependency_overlap` based on empirical distribution (e.g., P25 of overlap fraction)
+
+**Template Patterns (Step 6):**
+- [ ] Run `coverage_reporter.py --group-by template_family` for each family
+- [ ] Identify templates with hit_rate < 0.50 (investigation needed)
+- [ ] Identify templates with significantly different heading patterns (e.g., "Limitation on Indebtedness" vs. "Borrowing" across template families)
+- [ ] Populate `template_overrides` for divergent templates
+
+#### Validation & Integration
+
+- [ ] Run `pattern_tester.py --sample 300` on each enriched family strategy
+- [ ] Compare before/after metrics: `hit_rate`, `heading_hit_rate`, `corpus_prevalence`, `outlier_rate`
+- [ ] Reject enrichment if hit_rate decreases by > 0.05 or outlier_rate increases by > 0.05
+- [ ] Save enriched strategies as `{family_id}_v002.json` via `strategy_writer.py`
+- [ ] Update `checkpoint.json` in each workspace
+- [ ] Build summary report: per-family discovery stats (headings added, DNA phrases found, structural position, metric deltas)
+
+### 3.7 Heading Super-Graph Analysis
+
+> Run `super_graph_analyzer.py` once across the entire corpus to identify ghost candidates (high-frequency headings not in any strategy's heading registry) and heading co-occurrence patterns.
+
+- [ ] Run `super_graph_analyzer.py --db corpus_index/main.duckdb --top-n 200 --ghost-min-frequency 5`
+- [ ] Review ghost candidates — these are common section headings that no current strategy claims
+- [ ] For each ghost candidate, determine: (a) does it belong to an existing family? → add to that family's `heading_patterns`; (b) is it a new concept not in the ontology? → flag for ontology review; (c) is it boilerplate/structural? → ignore
+- [ ] Use co-occurrence graph to identify heading clusters (headings that always appear together in the same article) — these clusters suggest which families co-locate
+- [ ] Feed co-occurrence data into Block 5 strategy back-propagation (which strategies overlap in the same articles)
+
+### 3.8 Begin Family-Level Strategy Finalization
+
+> The iterative corpus-testing loop: run each family strategy against the corpus, measure metrics, refine patterns, repeat until stable. This begins AFTER discovery seeding (3.6) has enriched all strategies.
+
+#### Finalization Criteria
+
+A family strategy is "finalized" (`validation_status: "corpus_validated"`) when ALL of the following are met:
+
+| Metric | Threshold | Rationale |
+|--------|-----------|-----------|
+| `heading_hit_rate` | ≥ 0.70 | At least 70% of hits come from heading matches (not just keyword/DNA) |
+| `hit_rate` (overall) | ≥ 0.75 | Strategy finds the concept in at least 75% of corpus documents |
+| `outlier_rate` | ≤ 0.10 | No more than 10% of hits are outliers |
+| `high_risk_rate` | ≤ 0.05 | No more than 5% are high-risk outliers |
+| `did_not_find coverage` | ≥ 0.85 | At most 15% of documents have no match |
+| `near_miss_rate` | ≤ 0.15 | Near-misses (score 0.24–0.30) are rare |
+| `template_stability` | group_hit_rate_gap ≤ 0.25 | Hit rate doesn't vary wildly across template families |
+| `confidence_distribution` | ≥ 60% "high" | Majority of hits have high confidence |
+| iterations | ≥ 3 | At least 3 refinement iterations completed |
+
+Strategies that fail finalization after 5 iterations get flagged for domain expert review (Block 5 golden set).
+
+#### Family Prioritization
+
+> Order the 49 families by a composite score of: (1) concept count (larger families = more downstream children), (2) corpus prevalence (how often the concept appears), (3) interconnectedness (how many other families reference this one). Families with bootstrap gap (3.5) are lowest priority since they start from scratch.
+
+**Tier 1 — Anchor families (refine first, highest downstream impact):**
+1. `debt_capacity.indebtedness` (480 concepts, universal in credit agreements)
+2. `debt_capacity.liens` (255 concepts, universal)
+3. `cash_flow.rp` (213 concepts, restricted payments — core negative covenant)
+4. `cash_flow.inv` (178 concepts, investments — core negative covenant)
+5. `cash_flow.dispositions` (136 concepts, asset sales)
+6. `cash_flow.mandatory_prepayment` (135 concepts)
+7. `credit_protection.lme_protections` (116 concepts, high market relevance)
+8. `cash_flow.available_amount` (102 concepts, builder basket)
+
+**Tier 2 — Core families (refine second):**
+9. `fin_framework.financial_covenant` (96 concepts)
+10. `fin_framework.ebitda` (88 concepts)
+11. `deal_econ.pricing` (100 concepts)
+12. `deal_econ.ddtl` (87 concepts)
+13. `credit_protection.events_of_default` (81 concepts)
+14. `governance.amendments_voting` (80 concepts)
+15. `governance.reps_conditions` (74 concepts)
+16. `cash_flow.restricted_debt_payments` (72 concepts)
+17. `governance.assignments` (66 concepts)
+18. `deal_econ.term_loan` (73 concepts, bootstrap gap)
+19. `credit_protection.corporate_structure` (62 concepts, bootstrap gap)
+20. `deal_econ.revolver` (59 concepts, bootstrap gap)
+
+**Tier 3 — Supporting families (refine third):**
+21-35. Remaining families with 30–60 concepts each: `fin_framework.leverage`, `fin_framework.equity_cure`, `governance.affiliate_txns`, `deal_econ.fees`, `deal_econ.second_lien`, `credit_protection.collateral`, `governance.reporting`, `fin_framework.lct`, `credit_protection.change_of_control`, `credit_protection.guarantees`, `governance.pre_closing`, `deal_econ.governance`, `fin_framework.accounting`, `cash_flow.dividend_blockers`, `cash_flow.cross_covenant`
+
+**Tier 4 — Small/niche families (refine last):**
+36-49. Families with < 30 concepts each: incremental sub-families (`free_clear`, `ratio`, `builders`, `mfn`, `ied`, `stacking_reclass`, `acquisition_debt`, `contribution_debt`, `subordinated_debt`, `structural_controls`), `side_by_side_revolvers`, `simultaneous_incurrence_netting`, `carve_outs`, `other_advisory_roles`
+
+#### Iteration Protocol
+
+For each family (in priority order):
+
+**Iteration N (N = 1, 2, 3, ...):**
+1. Run `pattern_tester.py --db <corpus> --strategy <current> --sample 300 --verbose`
+2. Analyze output:
+   - `hit_summary`: heading_hit_rate, avg_score, confidence_distribution
+   - `miss_summary`: top headings in misses (→ add to heading_patterns?), nearest_misses (→ lower threshold or add keywords?), structural_deviation (→ expand primary_articles?)
+   - `outlier_summary`: top_outliers with flags (→ add to negative_heading_patterns or negative_keyword_patterns?)
+   - `did_not_find_summary`: coverage, near_miss_rate (→ relax or tighten policies?)
+3. Refine strategy based on analysis:
+   - Add discovered heading variants to `heading_patterns`
+   - Add false-positive headings to `negative_heading_patterns`
+   - Adjust `keyword_anchors` based on keyword_precision
+   - Adjust DNA phrases based on outlier flags
+   - Tighten/relax policy thresholds
+4. Save via `strategy_writer.py --db <corpus>` (runs full gate pipeline)
+5. Collect evidence via `evidence_collector.py --matches <results> --workspace <ws>`
+6. Check finalization criteria — if all met, promote to `corpus_validated`
+
+**Tasks:**
+- [ ] Define finalization criteria in a shared config file (`data/finalization_criteria.json`)
+- [ ] Build `scripts/finalization_check.py` — reads pattern_tester output and checks all criteria, returns pass/fail with per-metric detail
+- [ ] Prioritize the 49 families per the tier ranking above
+- [ ] For Tier 1 families (top 8): complete ≥ 3 iterations each, targeting `corpus_validated`
+- [ ] For Tier 2 families (9-20): complete ≥ 2 iterations each, targeting `corpus_validated`
+- [ ] For Tier 3 families (21-35): complete ≥ 1 iteration, targeting improved bootstrap
+- [ ] For Tier 4 families (36-49): run initial pattern_tester baseline, defer full refinement
+- [ ] Track progress in dashboard Strategy Manager: per-family iteration count, current metrics, validation_status
+- [ ] Flag families failing after 5 iterations for domain expert review via Block 5 golden set
+
+### 3.9 Golden Set Integration for Strategy Evaluation
+
+> Connect Block 3 strategy work with Block 5 golden annotations. Golden-linked sections (from domain expert ontology linking) become the ground truth for strategy evaluation.
+
+- [ ] Add `--golden` flag to `pattern_tester.py` — when provided, also reports against golden-linked sections:
+  - "Of N golden-linked sections for this concept, how many did the strategy find?"
+  - "Of M strategy hits, how many are golden-confirmed vs. golden-flagged-false-positive?"
+- [ ] Add golden set recall/precision to finalization criteria (once golden set reaches ≥ 20 annotations per family)
+- [ ] Add `--golden-required` flag to `strategy_writer.py` — reject strategy if golden recall drops below threshold
+- [ ] Build golden set coverage dashboard: per-family golden annotation count, golden recall of current strategy, golden false positive count
 
 ---
 
 ## Block 4 — Pipeline Rebuild & Optimization
 
-> Given 12,583 documents and multiple parsing refinements expected today, the rebuild process must be optimized for rapid iteration. Ray-based parallel builders exist (`build_corpus_ray.py`, `build_corpus_ray_v2.py`) and need evaluation.
+> Given 3,000 documents and multiple parsing refinements expected today, the rebuild process must be optimized for rapid iteration. Ray-based parallel builders exist (`build_corpus_ray.py`, `build_corpus_ray_v2.py`) and need evaluation.
 
 ### 4.1 Rebuild Optimization
 
@@ -386,7 +1018,7 @@
 - **Ray builders**: `build_corpus_ray.py` (v1) uses Ray actors but has stale schema (missing new columns). `build_corpus_ray_v2.py` fixes schema but has untested error handling. Neither is production-ready without fixes.
 - **Incremental rebuild is feasible**: DuckDB supports `DELETE FROM table WHERE doc_id IN (...)` + re-insert. Need a manifest of changed doc_ids (based on file mtime or content hash).
 - **Table-specific rebuild**: The `_process_file()` function returns `{"doc": ..., "sections": ..., "clauses": ..., "definitions": ..., "section_texts": ...}`. Could skip sub-parsers and only recompute one table's data.
-- **Estimated times** (12,583 docs):
+- **Estimated times** (3,000 docs):
   - Current single-threaded: ~45–60 min (estimated)
   - With `lxml` normalization: ~15–20 min
   - With `lxml` + 8-process multiprocessing: ~3–5 min
@@ -412,7 +1044,7 @@
 
 ### 4.2 Apply Fixes & Full Rebuild
 - [ ] Apply all `build_corpus_index.py` fixes (facility size key, EBITDA column, admin_agent improvements)
-- [ ] Run full corpus rebuild (12,583 docs) using optimized pipeline
+- [ ] Run full corpus rebuild (3,000 docs) using optimized pipeline
 - [ ] Verify new columns populated: `facility_size_mm`, `closing_ebitda_mm`, `ebitda_confidence`
 - [ ] Verify facility size distribution is non-zero
 - [ ] Verify EBITDA distribution makes sense (plausible range: $50M–$5B for leveraged finance)
@@ -568,12 +1200,14 @@ A golden set is a collection of human-verified annotations at multiple granulari
 | Block | Items | Complete | Remaining |
 |-------|-------|----------|-----------|
 | 1. Parsing Quality (1.1–1.8) | 60 | 11 | 49 |
-| 2. Header & Numbering | 10 | 0 | 10 |
-| 3. Strategy Cleanup & Seeding (3.1–3.6) | 25 | 0 | 25 |
+| 2. Header & Numbering (Phases A–D + surveys) | 73 | 0 | 73 |
+| 3. Strategy Cleanup & Seeding (3.1–3.9) | 93 | 0 | 93 |
 | 4. Pipeline Rebuild & Optimization | 16 | 0 | 16 |
 | 5. Domain Expert Verification & Golden Set (5.1–5.7) | 47 | 0 | 47 |
-| **Total** | **158** | **11** | **147** |
+| **Total** | **289** | **11** | **278** |
 
 > **Note:** Item count increased from 97 → 111 after cross-project analysis surfaced specific implementation tasks for clause parser refactor (6 improvements), admin agent improvements, edge case taxonomy expansion (25 categories), and rebuild optimization steps.
 > Block 1.1 completed 2026-02-23: 5 new items checked off (zero-section investigation, categorization, regex expansion, validation, dashboard enrichment). Recovery rate 89% on 19-doc sample (17/19 recovered).
 > Block 5 added 2026-02-23: 47 new items for domain expert verification features (golden set storage, section verification, clause depth correction, ontology linking, strategy back-propagation, golden set dashboard, feedback integration).
+> Block 2 expanded 2026-02-23: Cross-project analysis of TermIntelligence, Vantage Platform, and Neutron identified 22 improvements across 4 phases (A: TOC/validation, B: heading extraction, C: taxonomy/survey, D: enrichment). Item count 10 → 73 (22 improvements with 63 sub-tasks + 13 survey items).
+> Block 3 expanded 2026-02-24: Deep analysis of workspace structure (41 workspaces, 440 strategy files), contamination root cause (substring matching, 14 files in 8 workspaces), ontology family mapping (49 families, 3,538 total nodes). Added: setup fix (3.1), contamination cleanup (3.2), v2 migration with starter policies (3.4), bootstrap gap strategies with seed patterns for 9 families (3.5), 6-step discovery pipeline with orchestration script (3.6), super-graph analysis (3.7), finalization criteria + 4-tier family prioritization + iteration protocol (3.8), golden set integration (3.9). Item count 25 → 93.

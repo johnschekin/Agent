@@ -1,0 +1,1274 @@
+[
+  {
+    "id": "debt_capacity.indebtedness.general_basket",
+    "name": "General Debt Basket",
+    "family_id": "debt_capacity.indebtedness",
+    "concept_area": "indebtedness",
+    "playbook_ref": "neg_cov_debt.general_basket",
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "other Indebtedness",
+        "other unsecured",
+        "General Debt Basket",
+        "in an aggregate principal amount not to exceed",
+        "aggregate principal amount"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_debt.general_basket] Never called 'general basket' in agreement text (0/9 verbatim). Only 2/9 (LendingTree, Viavi) define it as 'General Debt Basket'. Others use 'other Indebtedness of the Borrower or any Restricted Subsidiary in an aggregate principal amount not to exceed...' — 'in an aggregate principal amount not to exceed' is the most universal anchor. Removed 'not otherwise permitted hereunder' (1/9, near-dead)."
+      ],
+      "defined_term_dependencies": [
+        "Indebtedness",
+        "Debt",
+        "Consolidated EBITDA",
+        "Capital Lease Obligations",
+        "Finance Lease",
+        "Capitalized Lease",
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "Leverage Ratio",
+        "Consolidated Total Leverage Ratio",
+        "Unrestricted Subsidiary",
+        "Available Amount",
+        "Hedge Agreement",
+        "Cash Management Agreement"
+      ],
+      "fallback_escalation": "Search for 'shall not incur' or 'Permitted Indebtedness' or 'incurrence of Indebtedness'. If none found, search for 'other Indebtedness' or 'aggregate principal amount' near negative covenant headings.",
+      "heading_patterns": [
+        "Indebtedness",
+        "Limitation on Indebtedness",
+        "Borrowing",
+        "Debt"
+      ],
+      "keyword_anchors": [
+        "incur",
+        "incurrence",
+        "Permitted Indebtedness",
+        "Permitted Refinancing",
+        "Incremental Equivalent Debt",
+        "Disqualified Stock"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "assume",
+        "Leverage Ratio",
+        "intercompany",
+        "Guarantee"
+      ],
+      "source_file": "neg_cov_debt.json",
+      "xref_follow": [
+        "Section 1.01 for Indebtedness/Debt definition",
+        "Cross-references to ratio test / Leverage Ratio definition",
+        "Cross-references to Permitted Acquisition / Limited Condition Acquisition",
+        "Section 2.14/2.20 for Incremental Facility mechanics (incremental_facility basket lives there, not in neg cov section)"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.indebtedness.ratio_debt",
+    "name": "Ratio Debt",
+    "family_id": "debt_capacity.indebtedness",
+    "concept_area": "indebtedness",
+    "playbook_ref": "neg_cov_debt.ratio_debt_non_guarantor",
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "Incremental Equivalent Debt",
+        "Ratio Debt",
+        "pari passu",
+        "junior lien"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_debt.incremental_equiv_debt_cov] Incremental Equivalent Debt (5/9, 103 hits). Boyd calls its equivalent 'Ratio Debt' instead. Removed 'substantially equivalent' (0/9 in debt sections — only appears in definitions). Not present in Arch, Sleep Number, National Vision, Caesars (these deals lack IED mechanics entirely)."
+      ],
+      "defined_term_dependencies": [
+        "Indebtedness",
+        "Debt",
+        "Consolidated EBITDA",
+        "Capital Lease Obligations",
+        "Finance Lease",
+        "Capitalized Lease",
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "Leverage Ratio",
+        "Consolidated Total Leverage Ratio",
+        "Unrestricted Subsidiary",
+        "Available Amount",
+        "Hedge Agreement",
+        "Cash Management Agreement"
+      ],
+      "fallback_escalation": "Search for 'shall not incur' or 'Permitted Indebtedness' or 'incurrence of Indebtedness'. If none found, search for 'other Indebtedness' or 'aggregate principal amount' near negative covenant headings.",
+      "heading_patterns": [
+        "Indebtedness",
+        "Limitation on Indebtedness",
+        "Borrowing",
+        "Debt"
+      ],
+      "keyword_anchors": [
+        "incur",
+        "incurrence",
+        "Permitted Indebtedness",
+        "Permitted Refinancing",
+        "Incremental Equivalent Debt",
+        "Disqualified Stock"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "assume",
+        "Leverage Ratio",
+        "intercompany",
+        "Guarantee"
+      ],
+      "source_file": "neg_cov_debt.json",
+      "xref_follow": [
+        "Section 1.01 for Indebtedness/Debt definition",
+        "Cross-references to ratio test / Leverage Ratio definition",
+        "Cross-references to Permitted Acquisition / Limited Condition Acquisition",
+        "Section 2.14/2.20 for Incremental Facility mechanics (incremental_facility basket lives there, not in neg cov section)"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.indebtedness.incremental_equivalent",
+    "name": "Incremental Equivalent Debt (IED)",
+    "family_id": "debt_capacity.indebtedness",
+    "concept_area": "indebtedness",
+    "playbook_ref": "neg_cov_debt.incremental_equiv_debt_cov",
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "Incremental Equivalent Debt",
+        "Ratio Debt",
+        "pari passu",
+        "junior lien"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_debt.incremental_equiv_debt_cov] Incremental Equivalent Debt (5/9, 103 hits). Boyd calls its equivalent 'Ratio Debt' instead. Removed 'substantially equivalent' (0/9 in debt sections — only appears in definitions). Not present in Arch, Sleep Number, National Vision, Caesars (these deals lack IED mechanics entirely)."
+      ],
+      "defined_term_dependencies": [
+        "Indebtedness",
+        "Debt",
+        "Consolidated EBITDA",
+        "Capital Lease Obligations",
+        "Finance Lease",
+        "Capitalized Lease",
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "Leverage Ratio",
+        "Consolidated Total Leverage Ratio",
+        "Unrestricted Subsidiary",
+        "Available Amount",
+        "Hedge Agreement",
+        "Cash Management Agreement"
+      ],
+      "fallback_escalation": "Search for 'shall not incur' or 'Permitted Indebtedness' or 'incurrence of Indebtedness'. If none found, search for 'other Indebtedness' or 'aggregate principal amount' near negative covenant headings.",
+      "heading_patterns": [
+        "Indebtedness",
+        "Limitation on Indebtedness",
+        "Borrowing",
+        "Debt"
+      ],
+      "keyword_anchors": [
+        "incur",
+        "incurrence",
+        "Permitted Indebtedness",
+        "Permitted Refinancing",
+        "Incremental Equivalent Debt",
+        "Disqualified Stock"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "assume",
+        "Leverage Ratio",
+        "intercompany",
+        "Guarantee"
+      ],
+      "source_file": "neg_cov_debt.json",
+      "xref_follow": [
+        "Section 1.01 for Indebtedness/Debt definition",
+        "Cross-references to ratio test / Leverage Ratio definition",
+        "Cross-references to Permitted Acquisition / Limited Condition Acquisition",
+        "Section 2.14/2.20 for Incremental Facility mechanics (incremental_facility basket lives there, not in neg cov section)"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.indebtedness.acquisition_debt",
+    "name": "Acquisition Debt (Incurred + Assumed)",
+    "family_id": "debt_capacity.indebtedness",
+    "concept_area": "indebtedness",
+    "playbook_ref": null,
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "assumed in connection with",
+        "Permitted Acquisition",
+        "existed at the time",
+        "existing at the time"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_debt.acquisition_debt] Universal basket (9/9). Removed 'acquired' (4.3% precision) and 'acquisition' (9.1% precision) — both too noisy at document level. 'assumed in connection with' and 'existed/existing at the time' are high-precision anchors for this basket within the section."
+      ],
+      "defined_term_dependencies": [
+        "Indebtedness",
+        "Debt",
+        "Consolidated EBITDA",
+        "Capital Lease Obligations",
+        "Finance Lease",
+        "Capitalized Lease",
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "Leverage Ratio",
+        "Consolidated Total Leverage Ratio",
+        "Unrestricted Subsidiary",
+        "Available Amount",
+        "Hedge Agreement",
+        "Cash Management Agreement"
+      ],
+      "fallback_escalation": "Search for 'shall not incur' or 'Permitted Indebtedness' or 'incurrence of Indebtedness'. If none found, search for 'other Indebtedness' or 'aggregate principal amount' near negative covenant headings.",
+      "heading_patterns": [
+        "Indebtedness",
+        "Limitation on Indebtedness",
+        "Borrowing",
+        "Debt"
+      ],
+      "keyword_anchors": [
+        "incur",
+        "incurrence",
+        "Permitted Indebtedness",
+        "Permitted Refinancing",
+        "Incremental Equivalent Debt",
+        "Disqualified Stock"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "assume",
+        "Leverage Ratio",
+        "intercompany",
+        "Guarantee"
+      ],
+      "source_file": "neg_cov_debt.json",
+      "xref_follow": [
+        "Section 1.01 for Indebtedness/Debt definition",
+        "Cross-references to ratio test / Leverage Ratio definition",
+        "Cross-references to Permitted Acquisition / Limited Condition Acquisition",
+        "Section 2.14/2.20 for Incremental Facility mechanics (incremental_facility basket lives there, not in neg cov section)"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.indebtedness.available_amount",
+    "name": "Available Amount Debt",
+    "family_id": "debt_capacity.indebtedness",
+    "concept_area": "indebtedness",
+    "playbook_ref": null,
+    "search_strategy": {
+      "concept_specific_keywords": [],
+      "concept_specific_notes": [],
+      "defined_term_dependencies": [
+        "Indebtedness",
+        "Debt",
+        "Consolidated EBITDA",
+        "Capital Lease Obligations",
+        "Finance Lease",
+        "Capitalized Lease",
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "Leverage Ratio",
+        "Consolidated Total Leverage Ratio",
+        "Unrestricted Subsidiary",
+        "Available Amount",
+        "Hedge Agreement",
+        "Cash Management Agreement"
+      ],
+      "fallback_escalation": "Search for 'shall not incur' or 'Permitted Indebtedness' or 'incurrence of Indebtedness'. If none found, search for 'other Indebtedness' or 'aggregate principal amount' near negative covenant headings.",
+      "heading_patterns": [
+        "Indebtedness",
+        "Limitation on Indebtedness",
+        "Borrowing",
+        "Debt"
+      ],
+      "keyword_anchors": [
+        "incur",
+        "incurrence",
+        "Permitted Indebtedness",
+        "Permitted Refinancing",
+        "Incremental Equivalent Debt",
+        "Disqualified Stock"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "assume",
+        "Leverage Ratio",
+        "intercompany",
+        "Guarantee"
+      ],
+      "source_file": "neg_cov_debt.json",
+      "xref_follow": [
+        "Section 1.01 for Indebtedness/Debt definition",
+        "Cross-references to ratio test / Leverage Ratio definition",
+        "Cross-references to Permitted Acquisition / Limited Condition Acquisition",
+        "Section 2.14/2.20 for Incremental Facility mechanics (incremental_facility basket lives there, not in neg cov section)"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.indebtedness.contribution_debt",
+    "name": "Contribution Debt",
+    "family_id": "debt_capacity.indebtedness",
+    "concept_area": "indebtedness",
+    "playbook_ref": null,
+    "search_strategy": {
+      "concept_specific_keywords": [],
+      "concept_specific_notes": [],
+      "defined_term_dependencies": [
+        "Indebtedness",
+        "Debt",
+        "Consolidated EBITDA",
+        "Capital Lease Obligations",
+        "Finance Lease",
+        "Capitalized Lease",
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "Leverage Ratio",
+        "Consolidated Total Leverage Ratio",
+        "Unrestricted Subsidiary",
+        "Available Amount",
+        "Hedge Agreement",
+        "Cash Management Agreement"
+      ],
+      "fallback_escalation": "Search for 'shall not incur' or 'Permitted Indebtedness' or 'incurrence of Indebtedness'. If none found, search for 'other Indebtedness' or 'aggregate principal amount' near negative covenant headings.",
+      "heading_patterns": [
+        "Indebtedness",
+        "Limitation on Indebtedness",
+        "Borrowing",
+        "Debt"
+      ],
+      "keyword_anchors": [
+        "incur",
+        "incurrence",
+        "Permitted Indebtedness",
+        "Permitted Refinancing",
+        "Incremental Equivalent Debt",
+        "Disqualified Stock"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "assume",
+        "Leverage Ratio",
+        "intercompany",
+        "Guarantee"
+      ],
+      "source_file": "neg_cov_debt.json",
+      "xref_follow": [
+        "Section 1.01 for Indebtedness/Debt definition",
+        "Cross-references to ratio test / Leverage Ratio definition",
+        "Cross-references to Permitted Acquisition / Limited Condition Acquisition",
+        "Section 2.14/2.20 for Incremental Facility mechanics (incremental_facility basket lives there, not in neg cov section)"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.indebtedness.non_guarantor",
+    "name": "Non-Guarantor / Foreign Subsidiary Debt",
+    "family_id": "debt_capacity.indebtedness",
+    "concept_area": "indebtedness",
+    "playbook_ref": "neg_cov_debt.non_guarantor_debt",
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "intercompany",
+        "payable to any other",
+        "Loan Party to another Loan Party",
+        "not a Loan Party",
+        "Non-Guarantor Subsidiary"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_debt.intercompany] Universal basket (9/9). Fixed: replaced 'owing to'/'owing by' (3-4% precision) with 'payable to any other' which catches Arch's 'Loan Party payable to any other Loan Party' pattern. Added 'Non-Guarantor Subsidiary' for sub-basket limitations. Sleep Number uses 'Company from a Company' and 'Foreign Subsidiary by a Credit Party' — unique phrasing, covered by section-level matching."
+      ],
+      "defined_term_dependencies": [
+        "Indebtedness",
+        "Debt",
+        "Consolidated EBITDA",
+        "Capital Lease Obligations",
+        "Finance Lease",
+        "Capitalized Lease",
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "Leverage Ratio",
+        "Consolidated Total Leverage Ratio",
+        "Unrestricted Subsidiary",
+        "Available Amount",
+        "Hedge Agreement",
+        "Cash Management Agreement"
+      ],
+      "fallback_escalation": "Search for 'shall not incur' or 'Permitted Indebtedness' or 'incurrence of Indebtedness'. If none found, search for 'other Indebtedness' or 'aggregate principal amount' near negative covenant headings.",
+      "heading_patterns": [
+        "Indebtedness",
+        "Limitation on Indebtedness",
+        "Borrowing",
+        "Debt"
+      ],
+      "keyword_anchors": [
+        "incur",
+        "incurrence",
+        "Permitted Indebtedness",
+        "Permitted Refinancing",
+        "Incremental Equivalent Debt",
+        "Disqualified Stock"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "assume",
+        "Leverage Ratio",
+        "intercompany",
+        "Guarantee"
+      ],
+      "source_file": "neg_cov_debt.json",
+      "xref_follow": [
+        "Section 1.01 for Indebtedness/Debt definition",
+        "Cross-references to ratio test / Leverage Ratio definition",
+        "Cross-references to Permitted Acquisition / Limited Condition Acquisition",
+        "Section 2.14/2.20 for Incremental Facility mechanics (incremental_facility basket lives there, not in neg cov section)"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.indebtedness.capital_leases",
+    "name": "Capital Lease / Purchase Money Debt",
+    "family_id": "debt_capacity.indebtedness",
+    "concept_area": "indebtedness",
+    "playbook_ref": "neg_cov_debt.purchase_money",
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "Purchase Money",
+        "Capital Lease",
+        "Capitalized Lease Obligations",
+        "Capitalized Lease",
+        "Finance Lease",
+        "financing of"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_debt.purchase_money] Purchase Money (9/9) and Capital Lease (9/9) are universal. Finance Lease (3/9 — Boyd, Viavi, Red Rock) is newer GAAP terminology replacing Capital Lease. Capitalized Lease (6/9) is a common variant spelling."
+      ],
+      "defined_term_dependencies": [
+        "Indebtedness",
+        "Debt",
+        "Consolidated EBITDA",
+        "Capital Lease Obligations",
+        "Finance Lease",
+        "Capitalized Lease",
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "Leverage Ratio",
+        "Consolidated Total Leverage Ratio",
+        "Unrestricted Subsidiary",
+        "Available Amount",
+        "Hedge Agreement",
+        "Cash Management Agreement"
+      ],
+      "fallback_escalation": "Search for 'shall not incur' or 'Permitted Indebtedness' or 'incurrence of Indebtedness'. If none found, search for 'other Indebtedness' or 'aggregate principal amount' near negative covenant headings.",
+      "heading_patterns": [
+        "Indebtedness",
+        "Limitation on Indebtedness",
+        "Borrowing",
+        "Debt"
+      ],
+      "keyword_anchors": [
+        "incur",
+        "incurrence",
+        "Permitted Indebtedness",
+        "Permitted Refinancing",
+        "Incremental Equivalent Debt",
+        "Disqualified Stock"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "assume",
+        "Leverage Ratio",
+        "intercompany",
+        "Guarantee"
+      ],
+      "source_file": "neg_cov_debt.json",
+      "xref_follow": [
+        "Section 1.01 for Indebtedness/Debt definition",
+        "Cross-references to ratio test / Leverage Ratio definition",
+        "Cross-references to Permitted Acquisition / Limited Condition Acquisition",
+        "Section 2.14/2.20 for Incremental Facility mechanics (incremental_facility basket lives there, not in neg cov section)"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.indebtedness.intercompany_debt",
+    "name": "Intercompany Debt",
+    "family_id": "debt_capacity.indebtedness",
+    "concept_area": "indebtedness",
+    "playbook_ref": null,
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "intercompany",
+        "payable to any other",
+        "Loan Party to another Loan Party",
+        "not a Loan Party",
+        "Non-Guarantor Subsidiary"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_debt.intercompany] Universal basket (9/9). Fixed: replaced 'owing to'/'owing by' (3-4% precision) with 'payable to any other' which catches Arch's 'Loan Party payable to any other Loan Party' pattern. Added 'Non-Guarantor Subsidiary' for sub-basket limitations. Sleep Number uses 'Company from a Company' and 'Foreign Subsidiary by a Credit Party' — unique phrasing, covered by section-level matching."
+      ],
+      "defined_term_dependencies": [
+        "Indebtedness",
+        "Debt",
+        "Consolidated EBITDA",
+        "Capital Lease Obligations",
+        "Finance Lease",
+        "Capitalized Lease",
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "Leverage Ratio",
+        "Consolidated Total Leverage Ratio",
+        "Unrestricted Subsidiary",
+        "Available Amount",
+        "Hedge Agreement",
+        "Cash Management Agreement"
+      ],
+      "fallback_escalation": "Search for 'shall not incur' or 'Permitted Indebtedness' or 'incurrence of Indebtedness'. If none found, search for 'other Indebtedness' or 'aggregate principal amount' near negative covenant headings.",
+      "heading_patterns": [
+        "Indebtedness",
+        "Limitation on Indebtedness",
+        "Borrowing",
+        "Debt"
+      ],
+      "keyword_anchors": [
+        "incur",
+        "incurrence",
+        "Permitted Indebtedness",
+        "Permitted Refinancing",
+        "Incremental Equivalent Debt",
+        "Disqualified Stock"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "assume",
+        "Leverage Ratio",
+        "intercompany",
+        "Guarantee"
+      ],
+      "source_file": "neg_cov_debt.json",
+      "xref_follow": [
+        "Section 1.01 for Indebtedness/Debt definition",
+        "Cross-references to ratio test / Leverage Ratio definition",
+        "Cross-references to Permitted Acquisition / Limited Condition Acquisition",
+        "Section 2.14/2.20 for Incremental Facility mechanics (incremental_facility basket lives there, not in neg cov section)"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.indebtedness.securitization",
+    "name": "Securitization Facilities",
+    "family_id": "debt_capacity.indebtedness",
+    "concept_area": "indebtedness",
+    "playbook_ref": null,
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "Securitization",
+        "Receivables Facility",
+        "Receivables Financing",
+        "Qualified Receivables",
+        "Permitted Receivables"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_debt.securitization] Securitization (8/9, not Red Rock). Receivables Financing/Facility (7/9, 106 hits) is broader and catches more deals. Qualified/Permitted Receivables (5/9, 80 hits) is the defined term variant. Removed 'Qualified Securitization' (0/9 — completely dead) and 'factoring' (1/9, near-dead)."
+      ],
+      "defined_term_dependencies": [
+        "Indebtedness",
+        "Debt",
+        "Consolidated EBITDA",
+        "Capital Lease Obligations",
+        "Finance Lease",
+        "Capitalized Lease",
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "Leverage Ratio",
+        "Consolidated Total Leverage Ratio",
+        "Unrestricted Subsidiary",
+        "Available Amount",
+        "Hedge Agreement",
+        "Cash Management Agreement"
+      ],
+      "fallback_escalation": "Search for 'shall not incur' or 'Permitted Indebtedness' or 'incurrence of Indebtedness'. If none found, search for 'other Indebtedness' or 'aggregate principal amount' near negative covenant headings.",
+      "heading_patterns": [
+        "Indebtedness",
+        "Limitation on Indebtedness",
+        "Borrowing",
+        "Debt"
+      ],
+      "keyword_anchors": [
+        "incur",
+        "incurrence",
+        "Permitted Indebtedness",
+        "Permitted Refinancing",
+        "Incremental Equivalent Debt",
+        "Disqualified Stock"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "assume",
+        "Leverage Ratio",
+        "intercompany",
+        "Guarantee"
+      ],
+      "source_file": "neg_cov_debt.json",
+      "xref_follow": [
+        "Section 1.01 for Indebtedness/Debt definition",
+        "Cross-references to ratio test / Leverage Ratio definition",
+        "Cross-references to Permitted Acquisition / Limited Condition Acquisition",
+        "Section 2.14/2.20 for Incremental Facility mechanics (incremental_facility basket lives there, not in neg cov section)"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.indebtedness.sale_leaseback",
+    "name": "Sale-Leaseback Debt",
+    "family_id": "debt_capacity.indebtedness",
+    "concept_area": "indebtedness",
+    "playbook_ref": null,
+    "search_strategy": {
+      "concept_specific_keywords": [],
+      "concept_specific_notes": [],
+      "defined_term_dependencies": [
+        "Indebtedness",
+        "Debt",
+        "Consolidated EBITDA",
+        "Capital Lease Obligations",
+        "Finance Lease",
+        "Capitalized Lease",
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "Leverage Ratio",
+        "Consolidated Total Leverage Ratio",
+        "Unrestricted Subsidiary",
+        "Available Amount",
+        "Hedge Agreement",
+        "Cash Management Agreement"
+      ],
+      "fallback_escalation": "Search for 'shall not incur' or 'Permitted Indebtedness' or 'incurrence of Indebtedness'. If none found, search for 'other Indebtedness' or 'aggregate principal amount' near negative covenant headings.",
+      "heading_patterns": [
+        "Indebtedness",
+        "Limitation on Indebtedness",
+        "Borrowing",
+        "Debt"
+      ],
+      "keyword_anchors": [
+        "incur",
+        "incurrence",
+        "Permitted Indebtedness",
+        "Permitted Refinancing",
+        "Incremental Equivalent Debt",
+        "Disqualified Stock"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "assume",
+        "Leverage Ratio",
+        "intercompany",
+        "Guarantee"
+      ],
+      "source_file": "neg_cov_debt.json",
+      "xref_follow": [
+        "Section 1.01 for Indebtedness/Debt definition",
+        "Cross-references to ratio test / Leverage Ratio definition",
+        "Cross-references to Permitted Acquisition / Limited Condition Acquisition",
+        "Section 2.14/2.20 for Incremental Facility mechanics (incremental_facility basket lives there, not in neg cov section)"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.indebtedness.earnout_seller_notes",
+    "name": "Earnout / Seller Notes",
+    "family_id": "debt_capacity.indebtedness",
+    "concept_area": "indebtedness",
+    "playbook_ref": null,
+    "search_strategy": {
+      "concept_specific_keywords": [],
+      "concept_specific_notes": [],
+      "defined_term_dependencies": [
+        "Indebtedness",
+        "Debt",
+        "Consolidated EBITDA",
+        "Capital Lease Obligations",
+        "Finance Lease",
+        "Capitalized Lease",
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "Leverage Ratio",
+        "Consolidated Total Leverage Ratio",
+        "Unrestricted Subsidiary",
+        "Available Amount",
+        "Hedge Agreement",
+        "Cash Management Agreement"
+      ],
+      "fallback_escalation": "Search for 'shall not incur' or 'Permitted Indebtedness' or 'incurrence of Indebtedness'. If none found, search for 'other Indebtedness' or 'aggregate principal amount' near negative covenant headings.",
+      "heading_patterns": [
+        "Indebtedness",
+        "Limitation on Indebtedness",
+        "Borrowing",
+        "Debt"
+      ],
+      "keyword_anchors": [
+        "incur",
+        "incurrence",
+        "Permitted Indebtedness",
+        "Permitted Refinancing",
+        "Incremental Equivalent Debt",
+        "Disqualified Stock"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "assume",
+        "Leverage Ratio",
+        "intercompany",
+        "Guarantee"
+      ],
+      "source_file": "neg_cov_debt.json",
+      "xref_follow": [
+        "Section 1.01 for Indebtedness/Debt definition",
+        "Cross-references to ratio test / Leverage Ratio definition",
+        "Cross-references to Permitted Acquisition / Limited Condition Acquisition",
+        "Section 2.14/2.20 for Incremental Facility mechanics (incremental_facility basket lives there, not in neg cov section)"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.indebtedness.refinancing_debt",
+    "name": "Refinancing Debt",
+    "family_id": "debt_capacity.indebtedness",
+    "concept_area": "indebtedness",
+    "playbook_ref": null,
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "Permitted Refinancing",
+        "Refinancing Indebtedness",
+        "refinance",
+        "refund",
+        "renew"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_debt.refinancing] Permitted Refinancing (8/9, 160 hits) — very high precision. Refinancing Indebtedness (4/9, 23% precision). Removed 'Credit Agreement Refinancing' (0/9 in debt sections — only in definitions) and 'extend' (0.6% precision — extremely noisy, hits maturity extensions, time periods, etc.)."
+      ],
+      "defined_term_dependencies": [
+        "Indebtedness",
+        "Debt",
+        "Consolidated EBITDA",
+        "Capital Lease Obligations",
+        "Finance Lease",
+        "Capitalized Lease",
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "Leverage Ratio",
+        "Consolidated Total Leverage Ratio",
+        "Unrestricted Subsidiary",
+        "Available Amount",
+        "Hedge Agreement",
+        "Cash Management Agreement"
+      ],
+      "fallback_escalation": "Search for 'shall not incur' or 'Permitted Indebtedness' or 'incurrence of Indebtedness'. If none found, search for 'other Indebtedness' or 'aggregate principal amount' near negative covenant headings.",
+      "heading_patterns": [
+        "Indebtedness",
+        "Limitation on Indebtedness",
+        "Borrowing",
+        "Debt"
+      ],
+      "keyword_anchors": [
+        "incur",
+        "incurrence",
+        "Permitted Indebtedness",
+        "Permitted Refinancing",
+        "Incremental Equivalent Debt",
+        "Disqualified Stock"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "assume",
+        "Leverage Ratio",
+        "intercompany",
+        "Guarantee"
+      ],
+      "source_file": "neg_cov_debt.json",
+      "xref_follow": [
+        "Section 1.01 for Indebtedness/Debt definition",
+        "Cross-references to ratio test / Leverage Ratio definition",
+        "Cross-references to Permitted Acquisition / Limited Condition Acquisition",
+        "Section 2.14/2.20 for Incremental Facility mechanics (incremental_facility basket lives there, not in neg cov section)"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.indebtedness.hedging",
+    "name": "Hedging Obligations",
+    "family_id": "debt_capacity.indebtedness",
+    "concept_area": "indebtedness",
+    "playbook_ref": null,
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "Hedge Agreement",
+        "Hedging",
+        "Swap",
+        "Swap Agreement",
+        "Swap Obligation",
+        "derivative"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_debt.hedging_swap] Universal basket (9/9). Every deal permits hedging/swap obligations as a separate basket within the Indebtedness section. Typically short — 'Indebtedness in respect of Hedge Agreements' or 'Swap Obligations'. The defined terms 'Hedge Agreement' and 'Swap Agreement' are in Section 1.01."
+      ],
+      "defined_term_dependencies": [
+        "Indebtedness",
+        "Debt",
+        "Consolidated EBITDA",
+        "Capital Lease Obligations",
+        "Finance Lease",
+        "Capitalized Lease",
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "Leverage Ratio",
+        "Consolidated Total Leverage Ratio",
+        "Unrestricted Subsidiary",
+        "Available Amount",
+        "Hedge Agreement",
+        "Cash Management Agreement"
+      ],
+      "fallback_escalation": "Search for 'shall not incur' or 'Permitted Indebtedness' or 'incurrence of Indebtedness'. If none found, search for 'other Indebtedness' or 'aggregate principal amount' near negative covenant headings.",
+      "heading_patterns": [
+        "Indebtedness",
+        "Limitation on Indebtedness",
+        "Borrowing",
+        "Debt"
+      ],
+      "keyword_anchors": [
+        "incur",
+        "incurrence",
+        "Permitted Indebtedness",
+        "Permitted Refinancing",
+        "Incremental Equivalent Debt",
+        "Disqualified Stock"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "assume",
+        "Leverage Ratio",
+        "intercompany",
+        "Guarantee"
+      ],
+      "source_file": "neg_cov_debt.json",
+      "xref_follow": [
+        "Section 1.01 for Indebtedness/Debt definition",
+        "Cross-references to ratio test / Leverage Ratio definition",
+        "Cross-references to Permitted Acquisition / Limited Condition Acquisition",
+        "Section 2.14/2.20 for Incremental Facility mechanics (incremental_facility basket lives there, not in neg cov section)"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.indebtedness.lc_surety",
+    "name": "Letters of Credit / Surety Bonds",
+    "family_id": "debt_capacity.indebtedness",
+    "concept_area": "indebtedness",
+    "playbook_ref": null,
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "letter of credit",
+        "Letter of Credit",
+        "L/C",
+        "bankers' acceptance",
+        "bank guarantee"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_debt.letters_of_credit] Universal basket (9/9). L/C obligations are typically a separate basket within the Indebtedness section. Sometimes lumped with 'obligations under this Agreement' basket rather than standalone."
+      ],
+      "defined_term_dependencies": [
+        "Indebtedness",
+        "Debt",
+        "Consolidated EBITDA",
+        "Capital Lease Obligations",
+        "Finance Lease",
+        "Capitalized Lease",
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "Leverage Ratio",
+        "Consolidated Total Leverage Ratio",
+        "Unrestricted Subsidiary",
+        "Available Amount",
+        "Hedge Agreement",
+        "Cash Management Agreement"
+      ],
+      "fallback_escalation": "Search for 'shall not incur' or 'Permitted Indebtedness' or 'incurrence of Indebtedness'. If none found, search for 'other Indebtedness' or 'aggregate principal amount' near negative covenant headings.",
+      "heading_patterns": [
+        "Indebtedness",
+        "Limitation on Indebtedness",
+        "Borrowing",
+        "Debt"
+      ],
+      "keyword_anchors": [
+        "incur",
+        "incurrence",
+        "Permitted Indebtedness",
+        "Permitted Refinancing",
+        "Incremental Equivalent Debt",
+        "Disqualified Stock"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "assume",
+        "Leverage Ratio",
+        "intercompany",
+        "Guarantee"
+      ],
+      "source_file": "neg_cov_debt.json",
+      "xref_follow": [
+        "Section 1.01 for Indebtedness/Debt definition",
+        "Cross-references to ratio test / Leverage Ratio definition",
+        "Cross-references to Permitted Acquisition / Limited Condition Acquisition",
+        "Section 2.14/2.20 for Incremental Facility mechanics (incremental_facility basket lives there, not in neg cov section)"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.indebtedness.disqualified_stock",
+    "name": "Disqualified Stock / Preferred Equity",
+    "family_id": "debt_capacity.indebtedness",
+    "concept_area": "indebtedness",
+    "playbook_ref": null,
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "preferred stock"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_debt.disqualified_stock] Disqualified Stock (6/9, 99 hits) — appears alongside Indebtedness in incurrence tests. National Vision uses 'Disqualified Stock or preferred stock' formulation. Removed 'Disqualified Capital Stock' (0/9 in debt sections — only in definitions). Absent in Arch, Sleep Number, Red Rock."
+      ],
+      "defined_term_dependencies": [
+        "Indebtedness",
+        "Debt",
+        "Consolidated EBITDA",
+        "Capital Lease Obligations",
+        "Finance Lease",
+        "Capitalized Lease",
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "Leverage Ratio",
+        "Consolidated Total Leverage Ratio",
+        "Unrestricted Subsidiary",
+        "Available Amount",
+        "Hedge Agreement",
+        "Cash Management Agreement"
+      ],
+      "fallback_escalation": "Search for 'shall not incur' or 'Permitted Indebtedness' or 'incurrence of Indebtedness'. If none found, search for 'other Indebtedness' or 'aggregate principal amount' near negative covenant headings.",
+      "heading_patterns": [
+        "Indebtedness",
+        "Limitation on Indebtedness",
+        "Borrowing",
+        "Debt"
+      ],
+      "keyword_anchors": [
+        "incur",
+        "incurrence",
+        "Permitted Indebtedness",
+        "Permitted Refinancing",
+        "Incremental Equivalent Debt",
+        "Disqualified Stock"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "assume",
+        "Leverage Ratio",
+        "intercompany",
+        "Guarantee"
+      ],
+      "source_file": "neg_cov_debt.json",
+      "xref_follow": [
+        "Section 1.01 for Indebtedness/Debt definition",
+        "Cross-references to ratio test / Leverage Ratio definition",
+        "Cross-references to Permitted Acquisition / Limited Condition Acquisition",
+        "Section 2.14/2.20 for Incremental Facility mechanics (incremental_facility basket lives there, not in neg cov section)"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.indebtedness.credit_facility_debt",
+    "name": "Credit Facility Debt",
+    "family_id": "debt_capacity.indebtedness",
+    "concept_area": "indebtedness",
+    "playbook_ref": null,
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "Incremental Term Loan",
+        "Incremental Revolving",
+        "Incremental Facility",
+        "Incremental Commitment",
+        "Incremental Amendment",
+        "Maximum Incremental Facilities Amount",
+        "Incremental Cap"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_debt.incremental_facility] Incremental facility mechanics (7/9, absent in Sleep Number and Arch). IMPORTANT: The substantive incremental provisions live in Article II (loan mechanics), NOT in the Indebtedness covenant section. The neg cov section typically just has a cross-reference basket (e.g., 'Indebtedness under Section 2.14'). Search must follow the xref to Article II to find the actual terms. Added 'Maximum Incremental Facilities Amount' and 'Incremental Cap' for National Vision's variant phrasing.",
+        "[neg_cov_debt.incremental_facility] xref_scope: Section 2.14 or 2.20 (not in the Indebtedness section itself)"
+      ],
+      "defined_term_dependencies": [
+        "Indebtedness",
+        "Debt",
+        "Consolidated EBITDA",
+        "Capital Lease Obligations",
+        "Finance Lease",
+        "Capitalized Lease",
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "Leverage Ratio",
+        "Consolidated Total Leverage Ratio",
+        "Unrestricted Subsidiary",
+        "Available Amount",
+        "Hedge Agreement",
+        "Cash Management Agreement"
+      ],
+      "fallback_escalation": "Search for 'shall not incur' or 'Permitted Indebtedness' or 'incurrence of Indebtedness'. If none found, search for 'other Indebtedness' or 'aggregate principal amount' near negative covenant headings.",
+      "heading_patterns": [
+        "Indebtedness",
+        "Limitation on Indebtedness",
+        "Borrowing",
+        "Debt"
+      ],
+      "keyword_anchors": [
+        "incur",
+        "incurrence",
+        "Permitted Indebtedness",
+        "Permitted Refinancing",
+        "Incremental Equivalent Debt",
+        "Disqualified Stock"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "assume",
+        "Leverage Ratio",
+        "intercompany",
+        "Guarantee"
+      ],
+      "source_file": "neg_cov_debt.json",
+      "xref_follow": [
+        "Section 1.01 for Indebtedness/Debt definition",
+        "Cross-references to ratio test / Leverage Ratio definition",
+        "Cross-references to Permitted Acquisition / Limited Condition Acquisition",
+        "Section 2.14/2.20 for Incremental Facility mechanics (incremental_facility basket lives there, not in neg cov section)"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.indebtedness.management_advances",
+    "name": "Management Advances",
+    "family_id": "debt_capacity.indebtedness",
+    "concept_area": "indebtedness",
+    "playbook_ref": null,
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "employee",
+        "officer",
+        "director",
+        "deferred compensation",
+        "employment agreement"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_debt.employee_obligations] Present in 6/9 deals. Permits indebtedness to employees/officers/directors (usually for deferred compensation, stock repurchases, or relocation). Often has a dollar cap."
+      ],
+      "defined_term_dependencies": [
+        "Indebtedness",
+        "Debt",
+        "Consolidated EBITDA",
+        "Capital Lease Obligations",
+        "Finance Lease",
+        "Capitalized Lease",
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "Leverage Ratio",
+        "Consolidated Total Leverage Ratio",
+        "Unrestricted Subsidiary",
+        "Available Amount",
+        "Hedge Agreement",
+        "Cash Management Agreement"
+      ],
+      "fallback_escalation": "Search for 'shall not incur' or 'Permitted Indebtedness' or 'incurrence of Indebtedness'. If none found, search for 'other Indebtedness' or 'aggregate principal amount' near negative covenant headings.",
+      "heading_patterns": [
+        "Indebtedness",
+        "Limitation on Indebtedness",
+        "Borrowing",
+        "Debt"
+      ],
+      "keyword_anchors": [
+        "incur",
+        "incurrence",
+        "Permitted Indebtedness",
+        "Permitted Refinancing",
+        "Incremental Equivalent Debt",
+        "Disqualified Stock"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "assume",
+        "Leverage Ratio",
+        "intercompany",
+        "Guarantee"
+      ],
+      "source_file": "neg_cov_debt.json",
+      "xref_follow": [
+        "Section 1.01 for Indebtedness/Debt definition",
+        "Cross-references to ratio test / Leverage Ratio definition",
+        "Cross-references to Permitted Acquisition / Limited Condition Acquisition",
+        "Section 2.14/2.20 for Incremental Facility mechanics (incremental_facility basket lives there, not in neg cov section)"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.indebtedness.cash_management",
+    "name": "Cash Management Obligations",
+    "family_id": "debt_capacity.indebtedness",
+    "concept_area": "indebtedness",
+    "playbook_ref": null,
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "Cash Management",
+        "Cash Management Agreement",
+        "Cash Management Obligation",
+        "overdraft",
+        "netting services",
+        "treasury management"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_debt.cash_management] Present in 6/9 deals. Permits indebtedness under cash management/treasury services agreements. Defined term 'Cash Management Agreement' is in Section 1.01. Absent in simpler IG-style deals."
+      ],
+      "defined_term_dependencies": [
+        "Indebtedness",
+        "Debt",
+        "Consolidated EBITDA",
+        "Capital Lease Obligations",
+        "Finance Lease",
+        "Capitalized Lease",
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "Leverage Ratio",
+        "Consolidated Total Leverage Ratio",
+        "Unrestricted Subsidiary",
+        "Available Amount",
+        "Hedge Agreement",
+        "Cash Management Agreement"
+      ],
+      "fallback_escalation": "Search for 'shall not incur' or 'Permitted Indebtedness' or 'incurrence of Indebtedness'. If none found, search for 'other Indebtedness' or 'aggregate principal amount' near negative covenant headings.",
+      "heading_patterns": [
+        "Indebtedness",
+        "Limitation on Indebtedness",
+        "Borrowing",
+        "Debt"
+      ],
+      "keyword_anchors": [
+        "incur",
+        "incurrence",
+        "Permitted Indebtedness",
+        "Permitted Refinancing",
+        "Incremental Equivalent Debt",
+        "Disqualified Stock"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "assume",
+        "Leverage Ratio",
+        "intercompany",
+        "Guarantee"
+      ],
+      "source_file": "neg_cov_debt.json",
+      "xref_follow": [
+        "Section 1.01 for Indebtedness/Debt definition",
+        "Cross-references to ratio test / Leverage Ratio definition",
+        "Cross-references to Permitted Acquisition / Limited Condition Acquisition",
+        "Section 2.14/2.20 for Incremental Facility mechanics (incremental_facility basket lives there, not in neg cov section)"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.indebtedness.other_baskets",
+    "name": "Other Debt Baskets (Decomposed)",
+    "family_id": "debt_capacity.indebtedness",
+    "concept_area": "indebtedness",
+    "playbook_ref": "neg_cov_debt.credit_facility_debt",
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "Guarantee",
+        "guaranty",
+        "guaranties",
+        "Contingent Obligation",
+        "guaranteed by",
+        "existing on",
+        "outstanding on",
+        "Closing Date",
+        "Effective Date",
+        "Schedule",
+        "Existing Indebtedness",
+        "insurance premium",
+        "financing of insurance",
+        "surety bond",
+        "performance bond",
+        "bid bond",
+        "completion guarantee",
+        "workers' compensation",
+        "appeal bond",
+        "Subordinated Indebtedness",
+        "Subordinated Debt",
+        "Junior Financing",
+        "Junior Lien",
+        "subordinated to the",
+        "subordinated in right of payment"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_debt.guarantee] Universal basket (9/9). Added 'guaranties' (plural) — Sleep Number uses this exclusively. Contingent Obligation (7/9, 58 hits) is a defined term capturing guarantees and other contingent liabilities.",
+        "[neg_cov_debt.existing_indebtedness] Universal basket (9/9). Grandfather clause for debt existing at closing. Two patterns: (1) 'Indebtedness existing on the Closing Date and listed on Schedule X' (most deals), (2) Named defined term 'Existing Indebtedness' (some deals). Schedule reference is often the best anchor.",
+        "[neg_cov_debt.insurance_bonds] Insurance premium financing (8/9) and performance/surety bonds (8/9) are near-universal baskets. Often combined in a single basket clause. 'workers' compensation' and 'appeal bond' catch additional obligations that some deals include in the same basket.",
+        "[neg_cov_debt.subordinated] Two patterns: (1) Named basket with 'Subordinated Indebtedness'/'Subordinated Debt' as a defined term (4/9), (2) Subordination as a condition/requirement — 'subordinated to the Obligations' or 'subordinated in right of payment' (5/9 — Caesars, National Vision, Quidel use this). Removed 'Subordination Agreement' (0/9 in debt sections). Absent in Sleep Number (IG-style)."
+      ],
+      "defined_term_dependencies": [
+        "Indebtedness",
+        "Debt",
+        "Consolidated EBITDA",
+        "Capital Lease Obligations",
+        "Finance Lease",
+        "Capitalized Lease",
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "Leverage Ratio",
+        "Consolidated Total Leverage Ratio",
+        "Unrestricted Subsidiary",
+        "Available Amount",
+        "Hedge Agreement",
+        "Cash Management Agreement"
+      ],
+      "fallback_escalation": "Search for 'shall not incur' or 'Permitted Indebtedness' or 'incurrence of Indebtedness'. If none found, search for 'other Indebtedness' or 'aggregate principal amount' near negative covenant headings.",
+      "heading_patterns": [
+        "Indebtedness",
+        "Limitation on Indebtedness",
+        "Borrowing",
+        "Debt"
+      ],
+      "keyword_anchors": [
+        "incur",
+        "incurrence",
+        "Permitted Indebtedness",
+        "Permitted Refinancing",
+        "Incremental Equivalent Debt",
+        "Disqualified Stock"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "assume",
+        "Leverage Ratio",
+        "intercompany",
+        "Guarantee"
+      ],
+      "source_file": "neg_cov_debt.json",
+      "xref_follow": [
+        "Section 1.01 for Indebtedness/Debt definition",
+        "Cross-references to ratio test / Leverage Ratio definition",
+        "Cross-references to Permitted Acquisition / Limited Condition Acquisition",
+        "Section 2.14/2.20 for Incremental Facility mechanics (incremental_facility basket lives there, not in neg cov section)"
+      ]
+    }
+  }
+]

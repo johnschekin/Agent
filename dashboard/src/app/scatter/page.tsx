@@ -10,6 +10,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { ScatterPlot } from "@/components/charts/ScatterChart";
 import { HistogramChart } from "@/components/charts/HistogramChart";
 import { useScatter, useDistribution } from "@/lib/queries";
+import { CHART_COLORS } from "@/lib/colors";
 import { formatNumber, formatCompact } from "@/lib/formatters";
 import {
   METRICS,
@@ -56,7 +57,7 @@ export default function ScatterPage() {
   );
 
   const selectClass =
-    "bg-surface-tertiary border border-border rounded-sm px-2 py-1.5 text-sm text-text-primary focus:outline-none focus:ring-1 focus:ring-accent-blue";
+    "bg-surface-3 border border-border rounded-sm px-2 py-1.5 text-sm text-text-primary focus:outline-none focus:ring-1 focus:ring-accent-blue";
 
   return (
     <ViewContainer title="Scatter Analysis">
@@ -212,7 +213,7 @@ export default function ScatterPage() {
             <HistogramChart
               data={yDist.data.histogram}
               xLabel={metricLabel(yMetric)}
-              color="#27AE60"
+              color={CHART_COLORS.green}
               tooltipFormatter={metricFormatter(yMetric)}
             />
           ) : yDist.error ? (

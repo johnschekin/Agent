@@ -1,0 +1,2757 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Blocks all payments including scheduled P&I in manner adverse to lenders. Bank preferred (broadest scope).",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.restricted_debt_payments",
+              "id": "cash_flow.restricted_debt_payments.rdp_scope.payment_type.all_payments",
+              "level": 4,
+              "name": "All Payments (Broadest)",
+              "type": "sub_component"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Allows scheduled interest and principal; restricts only voluntary prepayments, redemptions, repurchases.",
+              "dls_ref": [
+                "DLS:69:Voluntary Prepayments",
+                "DLS:70:Mandatory Prepayments"
+              ],
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.restricted_debt_payments",
+              "id": "cash_flow.restricted_debt_payments.rdp_scope.payment_type.prepayments_only",
+              "level": 4,
+              "name": "Prepayments Only",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 69 (Voluntary Prepayments); DLS Preferred Row 70 (Mandatory Prepayments)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "High-yield style: all payments other than regularly scheduled P&I as permitted by subordination terms.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.restricted_debt_payments",
+              "id": "cash_flow.restricted_debt_payments.rdp_scope.payment_type.scheduled_permitted",
+              "level": 4,
+              "name": "Scheduled P&I Permitted",
+              "type": "sub_component"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Whether all payments (principal, interest, fees) or only prepayments are restricted. 58% all payments, 42% prepayments only. 35% embedded high-yield style allowing regularly scheduled P&I per subordination terms.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_scope.payment_type",
+          "kct_ref": [
+            "cat5.3"
+          ],
+          "level": 3,
+          "name": "Payment Types Restricted",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 112,
+              "term": "Negative Covenants – Restricted Debt Payments – Scope"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 5 Item 3; Review Template Row 112 (Negative Covenants – Restricted Debt Payments – Scope)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Debt contractually subordinated in right of payment to the credit facility obligations.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.restricted_debt_payments",
+              "id": "cash_flow.restricted_debt_payments.rdp_scope.debt_types_covered.subordinated",
+              "level": 4,
+              "name": "Subordinated Debt",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 13 (Leverage Ratios); DLS Preferred Row 85 (g. Restricted Debt Prepayments); DLS Preferred Row 88 (j. Other Negative Covenants)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Debt secured by liens on collateral that are junior/subordinate to the first lien obligations.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.restricted_debt_payments",
+              "id": "cash_flow.restricted_debt_payments.rdp_scope.debt_types_covered.junior_lien",
+              "level": 4,
+              "name": "Junior Lien Debt",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 13 (Leverage Ratios); DLS Preferred Row 85 (g. Restricted Debt Prepayments); DLS Preferred Row 88 (j. Other Negative Covenants)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Requirements that is structurally or contractually junior to the credit facility.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.restricted_debt_payments",
+              "id": "cash_flow.restricted_debt_payments.rdp_scope.debt_types_covered.unsecured",
+              "level": 4,
+              "name": "Unsecured Debt",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 85 (g. Restricted Debt Prepayments); DLS Preferred Row 88 (j. Other Negative Covenants); Review Template Row 25 (Incremental Amount – prepayments)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Specifically designated second lien obligations subject to an intercreditor agreement.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.restricted_debt_payments",
+              "id": "cash_flow.restricted_debt_payments.rdp_scope.debt_types_covered.second_lien",
+              "level": 4,
+              "name": "Second Lien Debt",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 143,
+                  "term": "Second Lien Facility"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "Review Template Row 143 (Second Lien Facility)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Debt incurred at the holding company level that is structurally subordinated.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.restricted_debt_payments",
+              "id": "cash_flow.restricted_debt_payments.rdp_scope.debt_types_covered.holdco",
+              "kct_ref": [
+                "cat1.2",
+                "cat4.5"
+              ],
+              "level": 4,
+              "name": "Holdco Debt",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 2; KCT Cat 4 Item 5"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Mezzanine or payment-in-kind debt that sits between senior secured and equity in the capital structure.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.restricted_debt_payments",
+              "id": "cash_flow.restricted_debt_payments.rdp_scope.debt_types_covered.mezzanine",
+              "level": 4,
+              "name": "Mezzanine / PIK Debt",
+              "type": "sub_component"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Which categories of debt are subject to RDP restrictions. Broad scope includes junior lien, unsecured, subordinated, and sometimes holdco debt.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_scope.debt_types_covered",
+          "level": 3,
+          "name": "Debt Types Covered",
+          "type": "sub_component",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:41.315568+00:00",
+              "term_packs": {
+                "RDP_SCOPE": {
+                  "label": "Restricted Debt Payments - Scope",
+                  "category": "RDP",
+                  "exactPhrases": [
+                    "Restricted Debt Payment",
+                    "Restricted Debt Payments means",
+                    "RDP shall mean",
+                    "junior debt payment",
+                    "subordinated debt payment",
+                    "unsecured debt payment",
+                    "junior lien payment",
+                    "subordinated in right of payment",
+                    "prepayment of junior debt",
+                    "purchase of subordinated debt",
+                    "any payment or prepayment of principal",
+                    "redemption, repurchase, defeasance",
+                    "second lien debt payment"
+                  ],
+                  "sectionHeaders": [
+                    "Restricted Debt Payments",
+                    "ARTICLE VII - NEGATIVE COVENANTS",
+                    "Section 7.12 - Restricted Debt Payments",
+                    "Section 7.13 - Junior Debt",
+                    "Definitions - Restricted Debt Payment",
+                    "Certain Defined Terms"
+                  ],
+                  "semanticVariants": [
+                    "payments on subordinated and junior debt",
+                    "restrictions on junior lien debt payments",
+                    "prohibited payments to junior creditors",
+                    "prepayment restrictions on subordinated debt",
+                    "junior debt service limitations",
+                    "coverage of debt payment restrictions"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.62,
+                    "minKeywordScore": 0.52,
+                    "minConfidence": 0.72,
+                    "escalationThreshold": 0.52,
+                    "humanEscalationThreshold": 0.32
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "Restricted Debt Payment",
+                  "Restricted Debt Payments means",
+                  "RDP shall mean",
+                  "junior debt payment",
+                  "subordinated debt payment",
+                  "unsecured debt payment",
+                  "junior lien payment",
+                  "subordinated in right of payment",
+                  "prepayment of junior debt",
+                  "purchase of subordinated debt",
+                  "any payment or prepayment of principal",
+                  "redemption, repurchase, defeasance",
+                  "second lien debt payment"
+                ],
+                "sectionHeaders": [
+                  "Restricted Debt Payments",
+                  "ARTICLE VII - NEGATIVE COVENANTS",
+                  "Section 7.12 - Restricted Debt Payments",
+                  "Section 7.13 - Junior Debt",
+                  "Definitions - Restricted Debt Payment",
+                  "Certain Defined Terms"
+                ],
+                "semanticVariants": [
+                  "payments on subordinated and junior debt",
+                  "restrictions on junior lien debt payments",
+                  "prohibited payments to junior creditors",
+                  "prepayment restrictions on subordinated debt",
+                  "junior debt service limitations",
+                  "coverage of debt payment restrictions"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "RDP_SCOPE",
+              "label": "Restricted Debt Payments - Scope",
+              "schema_file": "restricted-debt-payments-enhanced.schema.ts",
+              "field_count": 5,
+              "r1_domain": "cash_flow",
+              "mapping_confidence": 0.6139,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Minimum threshold below which junior debt is exempt from RDP restrictions. Avoids governance overhead for small junior debt positions.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_scope.threshold",
+          "level": 3,
+          "name": "Dollar/EBITDA Threshold",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 24 (Incremental Amount – freebie); Review Template Row 42 (Asset Sale Sweep - Threshold); Review Template Row 47 (ECF Sweep – Threshold)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "The scope of debt covered by the RDP covenant. Per DLS Preferred: 'Applies to junior lien, unsecured and subordinated indebtedness.' Alternative limits scope to subordinated indebtedness only. PC Term Comparison: 'PC client will want it to include sub debt and jr lien debt and, if possible unsecured debt or material unsecured debt. Aggressive UMM/BSLR will not include unsecured debt.' Additional scope issues: whether the covenant blocks all payments or just prepayments, principal only, and whether it includes amendments to junior debt documents.",
+      "dls_ref": [
+        "DLS:85:Restricted Debt Prepayments"
+      ],
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "restricted_debt_payments",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_jdp.covered_debt",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VIII",
+          "ARTICLE X",
+          "Section 10.06"
+        ],
+        "shape_ref": "neg_cov_jdp.covered_debt",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.265765+00:00",
+          "term_packs": {
+            "RDP_JUNIOR_DEBT": {
+              "label": "Restricted Debt Payments - Junior Debt",
+              "category": "RDP",
+              "exactPhrases": [
+                "junior debt payment",
+                "junior lien prepayment",
+                "second lien payment",
+                "subordinated debt payment",
+                "mezzanine payment",
+                "junior creditor payment",
+                "junior debt buyback",
+                "mandatory prepayment",
+                "payment waterfall",
+                "standstill",
+                "only after",
+                "intercreditor"
+              ],
+              "sectionHeaders": [
+                "Restricted Debt Payments",
+                "Junior Debt",
+                "Second Lien Provisions",
+                "Mandatory Prepayment",
+                "Payment Waterfall",
+                "Intercreditor Agreement"
+              ],
+              "semanticVariants": [
+                "junior debt mandatory prepayment sequencing",
+                "subordinated debt payment restrictions",
+                "second lien payment timing",
+                "intercreditor payment coordination",
+                "junior creditor standstill provisions",
+                "payment priority between tranches"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.62,
+                "minKeywordScore": 0.52,
+                "minConfidence": 0.72,
+                "escalationThreshold": 0.52,
+                "humanEscalationThreshold": 0.32
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "junior debt payment",
+              "junior lien prepayment",
+              "second lien payment",
+              "subordinated debt payment",
+              "mezzanine payment",
+              "junior creditor payment",
+              "junior debt buyback",
+              "mandatory prepayment",
+              "payment waterfall",
+              "standstill",
+              "only after",
+              "intercreditor"
+            ],
+            "sectionHeaders": [
+              "Restricted Debt Payments",
+              "Junior Debt",
+              "Second Lien Provisions",
+              "Mandatory Prepayment",
+              "Payment Waterfall",
+              "Intercreditor Agreement"
+            ],
+            "semanticVariants": [
+              "junior debt mandatory prepayment sequencing",
+              "subordinated debt payment restrictions",
+              "second lien payment timing",
+              "intercreditor payment coordination",
+              "junior creditor standstill provisions",
+              "payment priority between tranches"
+            ]
+          }
+        }
+      },
+      "family_id": "cash_flow.restricted_debt_payments",
+      "id": "cash_flow.restricted_debt_payments.rdp_scope",
+      "level": 2,
+      "name": "RDP Scope / Covered Debt Definition",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to subordinated indebtedness Other Restricted Debt Prepayment Baskets: (i) \"high yield style\" investments, restricted payments and restricted debt prepayments share baskets except for certain baskets only for the benefit of investments (ii) unlimited subject to compliance with a total leverage ratio and no default or event of default (iii) refinancings (including through exchanges, conversions and other cashless transactions) of junior secured, unsecured and/or subordinated debt with like (or junior/subordinated) debt or equity,",
+        "dls_source_rows": [
+          {
+            "label": "Restricted Debt Prepayments",
+            "row": 85
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Scope of covered debt (junior, unsecured, subordinated)",
+          "AHYDO catch-up payment exception",
+          "Fixed-dollar general basket size",
+          "Ratio-based unlimited RP basket",
+          "Ratio type for unlimited RP basket",
+          "High-yield style shared basket (RP+Inv+RDP)",
+          "Refinancing with like or junior debt/equity"
+        ],
+        "market_position": "Market standard for restricted debt prepayments reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "Applies to junior lien, unsecured and subordinated indebtedness (i) AHYDO catch up payments (ii) subject to no default or event of default continuing or resulting therefrom, general basket in an amount to be agreed",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "neg_cov_restricted_debt_payments.rdp_scope"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 111,
+          "term": "Negative Covenants – Restricted Debt Payments"
+        },
+        {
+          "coverage": "full",
+          "row": 112,
+          "term": "Negative Covenants – Restricted Debt Payments – Scope"
+        },
+        {
+          "coverage": "full",
+          "row": 113,
+          "term": "Negative Covenants – Restricted Debt Payments – Threshold"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 85: 'Applies to junior lien, unsecured and subordinated indebtedness.' Alt: 'Limited to subordinated indebtedness.' PC Term Comparison: 'PC client will want sub debt + jr lien + if possible unsecured. Aggressive UMM/BSLR will not include unsecured.'",
+      "neutron_field_refs": [
+        {
+          "term_type": "RDP_JUNIOR_DEBT",
+          "label": "Restricted Debt Payments - Junior Debt",
+          "schema_file": "restricted-debt-payments-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "cash_flow",
+          "mapping_confidence": 0.4712,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Absolute dollar cap on the general RDP basket. Typical range: $3-6M for middle market.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "easy",
+              "family_id": "cash_flow.restricted_debt_payments",
+              "id": "cash_flow.restricted_debt_payments.rdp_general_basket.cap_amount.fixed_dollar",
+              "level": 4,
+              "name": "Fixed Dollar Amount",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 79 (a. Indebtedness); DLS Preferred Row 80 (b. Liens); DLS Preferred Row 81 (c. Investments)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "EBITDA-scaled cap. Typical range: 5-10% of EBITDA. Often in a 'greater of' with fixed dollar.",
+              "dls_ref": [
+                "DLS:72:EBITDA"
+              ],
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "easy",
+              "family_id": "cash_flow.restricted_debt_payments",
+              "id": "cash_flow.restricted_debt_payments.rdp_general_basket.cap_amount.ebitda_pct",
+              "level": 4,
+              "name": "EBITDA Percentage",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 72 (EBITDA)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Whether the cap uses 'greater of' dollar/EBITDA percentage structure allowing growth.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "easy",
+              "family_id": "cash_flow.restricted_debt_payments",
+              "id": "cash_flow.restricted_debt_payments.rdp_general_basket.cap_amount.grower_formulation",
+              "level": 4,
+              "name": "Grower Formulation",
+              "type": "sub_component"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Maximum capacity of the general RDP basket. Expressed as fixed dollar, EBITDA percentage, or greater-of formulation.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_general_basket.cap_amount",
+          "level": 3,
+          "name": "Cap Amount",
+          "type": "sub_component"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Unused restricted payment general basket capacity available for restricted debt payment usage, permitting reallocation of RP headroom to junior debt prepayments when dividend and distribution capacity exceeds immediate needs.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.restricted_debt_payments",
+              "id": "cash_flow.restricted_debt_payments.rdp_general_basket.reallocation.from_rp",
+              "kct_ref": [
+                "cat4.1"
+              ],
+              "level": 4,
+              "name": "From RP General Basket",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 82,
+                  "term": "Negative Covenants – Indebtedness – General Basket"
+                },
+                {
+                  "coverage": "full",
+                  "row": 86,
+                  "term": "Negative Covenants – Liens – General Basket"
+                },
+                {
+                  "coverage": "full",
+                  "row": 92,
+                  "term": "Negative Covenants – Investments – General Basket"
+                },
+                {
+                  "coverage": "full",
+                  "row": 98,
+                  "term": "Negative Covenants – Dispositions – General Basket"
+                },
+                {
+                  "coverage": "full",
+                  "row": 104,
+                  "term": "Negative Covenants – Restricted Payments – General Basket"
+                },
+                {
+                  "coverage": "full",
+                  "row": 114,
+                  "term": "Negative Covenants – Restricted Debt Payments – General Basket"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "KCT Cat 4 Item 1; Review Template Row 82 (Negative Covenants – Indebtedness – General Basket); Review Template Row 86 (Negative Covenants – Liens – General Basket); Review Template Row 92 (Negative Covenants – Investments – General Basket); Review Template Row 98 (Negative Covenants – Dispositions – General Basket); Review Template Row 104 (Negative Covenants – Restricted Payments – General Basket); Review Template Row 114 (Negative Covenants – Restricted Debt Payments – General Basket)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Unused investment general basket capacity available for restricted debt payment usage, permitting reallocation of investment headroom to junior debt prepayments when investment capacity exceeds current deployment opportunities.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.restricted_debt_payments",
+              "id": "cash_flow.restricted_debt_payments.rdp_general_basket.reallocation.from_inv",
+              "level": 4,
+              "name": "From Investment General Basket",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 92,
+                  "term": "Negative Covenants – Investments – General Basket"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "Review Template Row 92 (Negative Covenants – Investments – General Basket)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Whether unused capacity from RP and/or Investment general baskets can be reallocated to the RDP general basket. Significantly increases effective RDP capacity -- a key negotiation point.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_general_basket.reallocation",
+          "level": 3,
+          "name": "Reallocation from Other Baskets",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 84 (Other); Review Template Row 92 (Negative Covenants – Investments – General Basket); Review Template Row 104 (Negative Covenants – Restricted Payments – General Basket)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether a no-default condition applies to general basket usage. Standard: no default or EoD required.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_general_basket.default_blocker",
+          "level": 3,
+          "name": "Default Blocker",
+          "red_flags": [
+            {
+              "category": "missing_protection",
+              "flag_id": "rf_cf_013",
+              "severity": "high",
+              "text": "RDP general basket has no default blocker -- permits junior debt payments during Events of Default when senior debt is at risk"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 121 (Negative Covenants – Available Amount – EoD Blocker)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "General fixed-dollar basket for restricted debt payments, subject to no default/EoD. Per DLS Preferred: 'subject to no default or event of default continuing or resulting therefrom, general basket in an amount to be agreed.' Often includes a grower based on EBITDA or total assets. PC Term Comparison: 'General basket and other material RDP baskets should be subject to a D/EofD stopper; for TTS Transactions Clients may accept bktcy/payment EoD.'",
+      "dls_ref": [
+        "DLS:85:Restricted Debt Prepayments"
+      ],
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "restricted_debt_payments",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_jdp.covered_debt",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VIII",
+          "ARTICLE X",
+          "Section 10.06"
+        ],
+        "shape_ref": "neg_cov_jdp.covered_debt",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.253384+00:00",
+          "term_packs": {
+            "RDP_GENERAL_BASKET": {
+              "label": "Restricted Debt Payments - General Basket",
+              "category": "RDP",
+              "exactPhrases": [
+                "general RDP basket",
+                "Restricted Debt Payments in an aggregate amount",
+                "greater of",
+                "LTM EBITDA",
+                "Consolidated EBITDA",
+                "not otherwise permitted",
+                "Available Amount",
+                "reallocation",
+                "shared basket",
+                "combined basket"
+              ],
+              "sectionHeaders": [
+                "Restricted Debt Payments",
+                "Section 7.12 - Restricted Debt Payments",
+                "Permitted Restricted Debt Payments",
+                "General Baskets",
+                "ARTICLE VII - NEGATIVE COVENANTS"
+              ],
+              "semanticVariants": [
+                "general junior debt payment capacity",
+                "discretionary RDP basket",
+                "general carveout for restricted debt payments",
+                "EBITDA-based RDP capacity",
+                "available amount for junior debt payments"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.62,
+                "minKeywordScore": 0.52,
+                "minConfidence": 0.72,
+                "escalationThreshold": 0.52,
+                "humanEscalationThreshold": 0.32
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 45000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "general RDP basket",
+              "Restricted Debt Payments in an aggregate amount",
+              "greater of",
+              "LTM EBITDA",
+              "Consolidated EBITDA",
+              "not otherwise permitted",
+              "Available Amount",
+              "reallocation",
+              "shared basket",
+              "combined basket"
+            ],
+            "sectionHeaders": [
+              "Restricted Debt Payments",
+              "Section 7.12 - Restricted Debt Payments",
+              "Permitted Restricted Debt Payments",
+              "General Baskets",
+              "ARTICLE VII - NEGATIVE COVENANTS"
+            ],
+            "semanticVariants": [
+              "general junior debt payment capacity",
+              "discretionary RDP basket",
+              "general carveout for restricted debt payments",
+              "EBITDA-based RDP capacity",
+              "available amount for junior debt payments"
+            ]
+          }
+        }
+      },
+      "family_id": "cash_flow.restricted_debt_payments",
+      "golden_record_benchmarks": [
+        {
+          "benchmark_type": "cap_range",
+          "high": "300M",
+          "low": "30M",
+          "override_key": "jdp_general_basket",
+          "source": "R16-B golden_record"
+        }
+      ],
+      "id": "cash_flow.restricted_debt_payments.rdp_general_basket",
+      "level": 2,
+      "name": "General RDP Basket",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to subordinated indebtedness Other Restricted Debt Prepayment Baskets: (i) \"high yield style\" investments, restricted payments and restricted debt prepayments share baskets except for certain baskets only for the benefit of investments (ii) unlimited subject to compliance with a total leverage ratio and no default or event of default (iii) refinancings (including through exchanges, conversions and other cashless transactions) of junior secured, unsecured and/or subordinated debt with like (or junior/subordinated) debt or equity,",
+        "dls_source_rows": [
+          {
+            "label": "Restricted Debt Prepayments",
+            "row": 85
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Scope of covered debt (junior, unsecured, subordinated)",
+          "AHYDO catch-up payment exception",
+          "Fixed-dollar general basket size",
+          "Ratio-based unlimited RP basket",
+          "Ratio type for unlimited RP basket",
+          "High-yield style shared basket (RP+Inv+RDP)",
+          "Refinancing with like or junior debt/equity"
+        ],
+        "market_position": "Market standard for restricted debt prepayments reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "Applies to junior lien, unsecured and subordinated indebtedness (i) AHYDO catch up payments (ii) subject to no default or event of default continuing or resulting therefrom, general basket in an amount to be agreed",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "neg_cov_restricted_debt_payments.general_rdp_basket"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 82,
+          "term": "Negative Covenants – Indebtedness – General Basket"
+        },
+        {
+          "coverage": "full",
+          "row": 86,
+          "term": "Negative Covenants – Liens – General Basket"
+        },
+        {
+          "coverage": "full",
+          "row": 92,
+          "term": "Negative Covenants – Investments – General Basket"
+        },
+        {
+          "coverage": "full",
+          "row": 98,
+          "term": "Negative Covenants – Dispositions – General Basket"
+        },
+        {
+          "coverage": "full",
+          "row": 104,
+          "term": "Negative Covenants – Restricted Payments – General Basket"
+        },
+        {
+          "coverage": "full",
+          "row": 114,
+          "term": "Negative Covenants – Restricted Debt Payments – General Basket"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 85(ii): 'subject to no default or event of default continuing or resulting therefrom, general basket in an amount to be agreed.' PC Term Comparison: 'General basket and other material RDP baskets should be subject to a D/EofD stopper.'",
+      "neutron_field_refs": [
+        {
+          "term_type": "RDP_GENERAL_BASKET",
+          "label": "Restricted Debt Payments - General Basket",
+          "schema_file": "restricted-debt-payments-enhanced.schema.ts",
+          "field_count": 5,
+          "r1_domain": "cash_flow",
+          "mapping_confidence": 0.588,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Which leverage ratio is tested: Total Net Leverage, First Lien Net, Secured Net, or Total Leverage.",
+              "dls_ref": [
+                "DLS:41:Maximum leverage"
+              ],
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.restricted_debt_payments",
+              "id": "cash_flow.restricted_debt_payments.rdp_ratio_basket.leverage_test.metric",
+              "level": 4,
+              "name": "Leverage Metric",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 41 (Maximum leverage)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "The ratio level required. Typically 1.0-2.0x inside closing leverage.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.restricted_debt_payments",
+              "id": "cash_flow.restricted_debt_payments.rdp_ratio_basket.leverage_test.threshold",
+              "level": 4,
+              "name": "Threshold Level",
+              "type": "sub_component"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Whether the test is applied on a pro forma basis after giving effect to the proposed payment.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.restricted_debt_payments",
+              "id": "cash_flow.restricted_debt_payments.rdp_ratio_basket.leverage_test.pro_forma",
+              "level": 4,
+              "name": "Pro Forma Requirement",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 9 (Accordion); DLS Preferred Row 14 (Delayed Draw Term Loans); DLS Preferred Row 15 (Limited Condition Acquisition)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Leverage ratio threshold for unlimited RDP capacity. Typically Total Net Leverage Ratio. Banks should set 1.0-2.0x inside closing leverage.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_ratio_basket.leverage_test",
+          "level": 3,
+          "name": "Leverage Test",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 115,
+              "term": "Negative Covenants – Restricted Debt Payments – Ratio Basket"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 115 (Negative Covenants – Restricted Debt Payments – Ratio Basket)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether a no-default condition applies in addition to the leverage test. Standard: yes, no payment or bankruptcy EoD.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_ratio_basket.eod_stopper",
+          "level": 3,
+          "name": "EoD Stopper",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Alternative satisfaction via 'no worse than closing' leverage. PC explicitly REJECTS this for RDPs: paying down debt is inherently leverage-neutral, so 'no worse' would always be satisfied, rendering the test meaningless.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_ratio_basket.no_worse_prong",
+          "level": 3,
+          "name": "No-Worse-Than-Closing Prong",
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Unlimited restricted debt payments when a specified leverage ratio is satisfied. Per Learning Material: 'typically based on a total net leverage ratio set somewhere between the level for unlimited dividends and the level for unlimited investments.' PC Term Comparison: Aggressive UMM at 1.0-1.5x inside closing leverage with EoD stopper; CMM/LMM at 1.0-2.25x inside closing leverage (0.5x-1.5x inside the AA Builder basket level). Typically EoD stopper and pro forma total leverage at 0.50-1.0x inside where the Available Amount level is set.",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "restricted_debt_payments",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_jdp.covered_debt",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VIII",
+          "ARTICLE X",
+          "Section 10.06"
+        ],
+        "shape_ref": "neg_cov_jdp.covered_debt",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.291729+00:00",
+          "term_packs": {
+            "RDP_RATIO_BASKET": {
+              "label": "Restricted Debt Payments - Ratio Basket",
+              "category": "RDP",
+              "exactPhrases": [
+                "unlimited Restricted Debt Payment",
+                "pro forma",
+                "Total Net Leverage Ratio",
+                "Total Leverage Ratio",
+                "First Lien Net Leverage Ratio",
+                "Senior Secured Leverage Ratio",
+                "no worse",
+                "would not exceed",
+                "would not be greater than",
+                "after giving pro forma effect",
+                "ratio-based",
+                "leverage-based"
+              ],
+              "sectionHeaders": [
+                "Restricted Debt Payments",
+                "Section 7.12 - Restricted Debt Payments",
+                "Ratio-Based Exceptions",
+                "Unlimited RDP",
+                "Leverage-Based Baskets"
+              ],
+              "semanticVariants": [
+                "unlimited junior debt payment at leverage threshold",
+                "ratio-based RDP capacity",
+                "leverage conditioned junior debt payments",
+                "pro forma compliance for restricted debt payments",
+                "deleveraging-based RDP flexibility"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.62,
+                "minKeywordScore": 0.52,
+                "minConfidence": 0.72,
+                "escalationThreshold": 0.52,
+                "humanEscalationThreshold": 0.32
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 45000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "unlimited Restricted Debt Payment",
+              "pro forma",
+              "Total Net Leverage Ratio",
+              "Total Leverage Ratio",
+              "First Lien Net Leverage Ratio",
+              "Senior Secured Leverage Ratio",
+              "no worse",
+              "would not exceed",
+              "would not be greater than",
+              "after giving pro forma effect",
+              "ratio-based",
+              "leverage-based"
+            ],
+            "sectionHeaders": [
+              "Restricted Debt Payments",
+              "Section 7.12 - Restricted Debt Payments",
+              "Ratio-Based Exceptions",
+              "Unlimited RDP",
+              "Leverage-Based Baskets"
+            ],
+            "semanticVariants": [
+              "unlimited junior debt payment at leverage threshold",
+              "ratio-based RDP capacity",
+              "leverage conditioned junior debt payments",
+              "pro forma compliance for restricted debt payments",
+              "deleveraging-based RDP flexibility"
+            ]
+          }
+        }
+      },
+      "family_id": "cash_flow.restricted_debt_payments",
+      "id": "cash_flow.restricted_debt_payments.rdp_ratio_basket",
+      "kct_ref": [
+        "cat4.1"
+      ],
+      "level": 2,
+      "name": "Unlimited Ratio RDP Basket",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to subordinated indebtedness Other Restricted Debt Prepayment Baskets: (i) \"high yield style\" investments, restricted payments and restricted debt prepayments share baskets except for certain baskets only for the benefit of investments (ii) unlimited subject to compliance with a total leverage ratio and no default or event of default (iii) refinancings (including through exchanges, conversions and other cashless transactions) of junior secured, unsecured and/or subordinated debt with like (or junior/subordinated) debt or equity,",
+        "dls_source_rows": [
+          {
+            "label": "Restricted Debt Prepayments",
+            "row": 85
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Scope of covered debt (junior, unsecured, subordinated)",
+          "AHYDO catch-up payment exception",
+          "Fixed-dollar general basket size",
+          "Ratio-based unlimited RP basket",
+          "Ratio type for unlimited RP basket",
+          "High-yield style shared basket (RP+Inv+RDP)",
+          "Refinancing with like or junior debt/equity"
+        ],
+        "market_position": "Market standard for restricted debt prepayments reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "Applies to junior lien, unsecured and subordinated indebtedness (i) AHYDO catch up payments (ii) subject to no default or event of default continuing or resulting therefrom, general basket in an amount to be agreed",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "neg_cov_restricted_debt_payments.ratio_rdp_basket"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 86,
+          "term": "Negative Covenants – Liens – General Basket"
+        },
+        {
+          "coverage": "full",
+          "row": 87,
+          "term": "Negative Covenants – Liens – Ratio Basket"
+        },
+        {
+          "coverage": "full",
+          "row": 97,
+          "term": "Negative Covenants – Dispositions – 75% Cash Consideration Basket"
+        },
+        {
+          "coverage": "full",
+          "row": 104,
+          "term": "Negative Covenants – Restricted Payments – General Basket"
+        },
+        {
+          "coverage": "full",
+          "row": 108,
+          "term": "Negative Covenants – Restricted Payments – Post-IPO Basket"
+        },
+        {
+          "coverage": "full",
+          "row": 115,
+          "term": "Negative Covenants – Restricted Debt Payments – Ratio Basket"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "Learning Material: 'typically based on a total net leverage ratio set between the level for unlimited dividends and the level for unlimited investments.' PC Term Comparison: 'Aggressive UMM: 1.0-1.5x inside closing leverage. CMM/LMM: 1.0-2.25x inside closing leverage.' 'Typically EofD stopper and ProForma Total Leverage equal to 0.50-1.0x inside where the AA level is set.'",
+      "market_benchmarks": {
+        "pctc_umm_aggressive": "1.0-1.5x inside closing leverage with EoD stopper",
+        "pctc_cmm_lmm": "1.0-2.25x inside closing leverage with EoD stopper (0.5x-1.5x inside the AA Builder basket level)",
+        "pctc_typical": "EoD stopper and ProForma Total Leverage equal to 0.50-1.0x inside where the Available Amount level is set",
+        "source": "PC Term Comparison, RDP section",
+        "_source": "PC Term Comparison, RDP section (lines 437-450)"
+      },
+      "pc_ref": [
+        ": 'Aggressive UMM: 1.0-1.5x inside closing leverage. CMM/LMM: 1.0-2.25x inside closing leverage.' 'Typically EofD stopper and ProForma Total Leverage equal to 0.50-1.0x inside where the AA level is set.'"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "RDP_RATIO_BASKET",
+          "label": "Restricted Debt Payments - Ratio Basket",
+          "schema_file": "restricted-debt-payments-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "cash_flow",
+          "mapping_confidence": 0.5891,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether leverage compliance is required to refinance junior debt. Standard for refinancing into pari passu debt.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_refinancing.ratio_test",
+          "level": 3,
+          "name": "Ratio Test Required",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 14 (Delayed Draw Term Loans); DLS Preferred Row 15 (Limited Condition Acquisition); DLS Preferred Row 73 (b. Covenant)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether replacement debt must have maturity at least as long as the original junior debt (standard: yes, no earlier maturity).",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_refinancing.maturity_constraint",
+          "level": 3,
+          "name": "Maturity Constraint",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether the refinancing principal is capped at the outstanding principal of the refinanced debt plus fees and premiums.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_refinancing.principal_cap",
+          "level": 3,
+          "name": "Principal Amount Cap",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether the refinancing debt must qualify as Permitted Indebtedness under the debt covenant. Prevents circular basket usage.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_refinancing.permitted_debt_alignment",
+          "level": 3,
+          "name": "Permitted Debt Alignment",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 3 (Debt Quantum); Review Template Row 32 (Incremental – terms)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Ability to refinance junior debt with new permitted debt. Per Learning Material: 'Exception for debt that is prepaid with the proceeds of permitted refinancing debt (because the lenders are not worse off in such case).' Per DLS Preferred row 85 alt(iii): 'refinancings (including through exchanges, conversions and other cashless transactions) of junior secured, unsecured and/or subordinated debt with like (or junior/subordinated) debt or equity.' Per PC Term Comparison: 'Do not permit jr debt to be refinanced with senior debt; check Permitted Refinancing definitions and baskets and RJDP baskets.'",
+      "dls_ref": [
+        "DLS:16:Refinancing Debt"
+      ],
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "restricted_debt_payments",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_jdp.covered_debt",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VIII",
+          "ARTICLE X",
+          "Section 10.06"
+        ],
+        "shape_ref": "neg_cov_jdp.covered_debt",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.304425+00:00",
+          "term_packs": {
+            "RDP_REFINANCING": {
+              "label": "Restricted Debt Payments - Refinancings",
+              "category": "RDP",
+              "exactPhrases": [
+                "refinancing",
+                "Permitted Refinancing",
+                "Refinancing Indebtedness",
+                "refinance with first lien",
+                "refinance with pari debt",
+                "junior debt refinancing",
+                "refinance subordinated debt",
+                "uptiering",
+                "uptier exchange",
+                "pari passu refinancing"
+              ],
+              "sectionHeaders": [
+                "Restricted Debt Payments",
+                "Section 7.12 - Restricted Debt Payments",
+                "Permitted Refinancing Debt",
+                "Refinancing",
+                "Definitions - Permitted Refinancing"
+              ],
+              "semanticVariants": [
+                "junior to pari debt refinancing provisions",
+                "subordinated debt refinancing with senior debt",
+                "uptiering restrictions",
+                "refinancing of junior lien into first lien",
+                "permitted refinancing of subordinated debt"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.62,
+                "minKeywordScore": 0.52,
+                "minConfidence": 0.72,
+                "escalationThreshold": 0.52,
+                "humanEscalationThreshold": 0.32
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "refinancing",
+              "Permitted Refinancing",
+              "Refinancing Indebtedness",
+              "refinance with first lien",
+              "refinance with pari debt",
+              "junior debt refinancing",
+              "refinance subordinated debt",
+              "uptiering",
+              "uptier exchange",
+              "pari passu refinancing"
+            ],
+            "sectionHeaders": [
+              "Restricted Debt Payments",
+              "Section 7.12 - Restricted Debt Payments",
+              "Permitted Refinancing Debt",
+              "Refinancing",
+              "Definitions - Permitted Refinancing"
+            ],
+            "semanticVariants": [
+              "junior to pari debt refinancing provisions",
+              "subordinated debt refinancing with senior debt",
+              "uptiering restrictions",
+              "refinancing of junior lien into first lien",
+              "permitted refinancing of subordinated debt"
+            ]
+          }
+        }
+      },
+      "family_id": "cash_flow.restricted_debt_payments",
+      "id": "cash_flow.restricted_debt_payments.rdp_refinancing",
+      "level": 2,
+      "name": "Refinancing Rights",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to subordinated indebtedness Other Restricted Debt Prepayment Baskets: (i) \"high yield style\" investments, restricted payments and restricted debt prepayments share baskets except for certain baskets only for the benefit of investments (ii) unlimited subject to compliance with a total leverage ratio and no default or event of default (iii) refinancings (including through exchanges, conversions and other cashless transactions) of junior secured, unsecured and/or subordinated debt with like (or junior/subordinated) debt or equity,",
+        "dls_source_rows": [
+          {
+            "label": "Restricted Debt Prepayments",
+            "row": 85
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Scope of covered debt (junior, unsecured, subordinated)",
+          "AHYDO catch-up payment exception",
+          "Fixed-dollar general basket size",
+          "Ratio-based unlimited RP basket",
+          "Ratio type for unlimited RP basket",
+          "High-yield style shared basket (RP+Inv+RDP)",
+          "Refinancing with like or junior debt/equity"
+        ],
+        "market_position": "Market standard for restricted debt prepayments reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "Applies to junior lien, unsecured and subordinated indebtedness (i) AHYDO catch up payments (ii) subject to no default or event of default continuing or resulting therefrom, general basket in an amount to be agreed",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "neg_cov_restricted_debt_payments.refinancing_rights"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 116,
+          "term": "Negative Covenants – Restricted Debt Payments – Refinancings"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "Learning Material Section (2): 'Exception for permitted refinancing debt (lenders not worse off).' DLS Preferred row 85 alt(iii): 'refinancings with like or junior debt or equity.' PC Term Comparison: 'Do not permit jr debt to be refinanced with senior debt.'",
+      "neutron_field_refs": [
+        {
+          "term_type": "RDP_REFINANCING",
+          "label": "Restricted Debt Payments - Refinancings",
+          "schema_file": "restricted-debt-payments-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "cash_flow",
+          "mapping_confidence": 0.5477,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Permitted acquisition methods: open market purchase, Dutch auction, privately negotiated transaction, tender offer.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_open_market.purchase_methods",
+          "level": 3,
+          "name": "Purchase Methods",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether repurchases must be below par (at a discount). Some baskets require purchase at less than face value.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_open_market.price_cap",
+          "level": 3,
+          "name": "Price Cap (Below Par)",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 58 (Financial Covenant – levels); Review Template Row 97 (Negative Covenants – Dispositions – 75% Cash Consideration Basket)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Fixed dollar or EBITDA percentage limit on open market purchases if treated as a separate basket.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_open_market.basket_cap",
+          "level": 3,
+          "name": "Dollar Cap on Open Market Purchases",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 74 (Negative Covenants – Indebtedness – Ratio Debt – non-guarantor cap); Review Template Row 108 (Negative Covenants – Restricted Payments – Post-IPO Basket); Review Template Row 126 (Negative Covenants – Transactions with Affiliates – Sponsor Management Fees)"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Below-par repurchases of junior debt via open market transactions, Dutch auctions, or privately negotiated purchases. Economically beneficial because below-par purchases create a gain for the borrower, but creates priority risk. Per PC Term Comparison: similar guardrails as borrower debt buybacks -- require cancellation, cap amounts, include EoD stopper, no revolver draw for funding.",
+      "dls_ref": [
+        "DLS:40:Market MAC",
+        "DLS:54:Clear market",
+        "DLS:61:Clear Market"
+      ],
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "restricted_debt_payments",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_jdp.covered_debt",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VIII",
+          "ARTICLE X",
+          "Section 10.06"
+        ],
+        "shape_ref": "neg_cov_jdp.covered_debt",
+        "secondary_playbook_refs": [
+          "assignments.open_market"
+        ],
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "cash_flow.restricted_debt_payments",
+      "id": "cash_flow.restricted_debt_payments.rdp_open_market",
+      "level": 2,
+      "name": "Open Market Purchases",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to subordinated indebtedness Other Restricted Debt Prepayment Baskets: (i) \"high yield style\" investments, restricted payments and restricted debt prepayments share baskets except for certain baskets only for the benefit of investments (ii) unlimited subject to compliance with a total leverage ratio and no default or event of default (iii) refinancings (including through exchanges, conversions and other cashless transactions) of junior secured, unsecured and/or subordinated debt with like (or junior/subordinated) debt or equity,",
+        "dls_source_rows": [
+          {
+            "label": "Restricted Debt Prepayments",
+            "row": 85
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Scope of covered debt (junior, unsecured, subordinated)",
+          "AHYDO catch-up payment exception",
+          "Fixed-dollar general basket size",
+          "Ratio-based unlimited RP basket",
+          "Ratio type for unlimited RP basket",
+          "High-yield style shared basket (RP+Inv+RDP)",
+          "Refinancing with like or junior debt/equity"
+        ],
+        "market_position": "Market standard for restricted debt prepayments reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "Applies to junior lien, unsecured and subordinated indebtedness (i) AHYDO catch up payments (ii) subject to no default or event of default continuing or resulting therefrom, general basket in an amount to be agreed",
+        "source": "R14-B"
+      },
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 133,
+          "term": "Assignments – open market purchases"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison: open market purchase guardrails per borrower buyback provisions. Learning Material: below-par repurchases as value creation mechanism.",
+      "pc_ref": [
+        ": open market purchase guardrails per borrower buyback provisions. Learning Material: below-par repurchases as value creation mechanism."
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Regular interest payments on permitted junior debt as scheduled in the instruments' original terms.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_scheduled_payments.interest",
+          "level": 3,
+          "name": "Scheduled Interest",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 13 (Leverage Ratios); DLS Preferred Row 93 (o. Voting)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Regular principal amortization on junior debt per original schedule. Distinct from voluntary prepayments.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_scheduled_payments.principal",
+          "level": 3,
+          "name": "Scheduled Principal",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 13 (Leverage Ratios); DLS Preferred Row 93 (o. Voting)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Payments permitted by the terms of the applicable subordination or intercreditor agreement.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_scheduled_payments.subordination_terms",
+          "level": 3,
+          "name": "Per Subordination Terms",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 94 (p. Assignments); Review Template Row 38 (Refinancing Facilities – Terms)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Exceptions allowing regularly scheduled interest and principal payments on permitted junior debt. Per Learning Material: 'the limitation on making Restricted Debt Payments is frequently structured as a separate covenant that prohibits the making of RDPs or listed as a subsection to the RP covenant; in either case, it is followed by a litany of exceptions.' Scheduled P&I per original terms is typically the most basic RDP exception, distinguishing between acceleration (restricted) and normal-course payments (permitted).",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "restricted_debt_payments",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_jdp.covered_debt",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VIII",
+          "ARTICLE X",
+          "Section 10.06"
+        ],
+        "shape_ref": "neg_cov_jdp.covered_debt",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=very_hard (playbook authority for extraction complexity)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.329799+00:00",
+          "term_packs": {
+            "RDP_THRESHOLD": {
+              "label": "Restricted Debt Payments - De Minimis Threshold",
+              "category": "RDP",
+              "exactPhrases": [
+                "does not exceed $",
+                "de minimis",
+                "threshold",
+                "in any fiscal year",
+                "in the aggregate",
+                "small amount",
+                "immaterial",
+                "Restricted Debt Payments in an aggregate amount not to exceed",
+                "principal amount not exceeding"
+              ],
+              "sectionHeaders": [
+                "Restricted Debt Payments",
+                "Section 7.12 - Restricted Debt Payments",
+                "Permitted Restricted Debt Payments",
+                "De Minimis Baskets"
+              ],
+              "semanticVariants": [
+                "de minimis threshold for junior debt payments",
+                "small amount RDP exception",
+                "immaterial restricted debt payment basket",
+                "threshold avoiding technical covenant breach",
+                "minimum amount for RDP restriction"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.62,
+                "minKeywordScore": 0.52,
+                "minConfidence": 0.72,
+                "escalationThreshold": 0.52,
+                "humanEscalationThreshold": 0.32
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "does not exceed $",
+              "de minimis",
+              "threshold",
+              "in any fiscal year",
+              "in the aggregate",
+              "small amount",
+              "immaterial",
+              "Restricted Debt Payments in an aggregate amount not to exceed",
+              "principal amount not exceeding"
+            ],
+            "sectionHeaders": [
+              "Restricted Debt Payments",
+              "Section 7.12 - Restricted Debt Payments",
+              "Permitted Restricted Debt Payments",
+              "De Minimis Baskets"
+            ],
+            "semanticVariants": [
+              "de minimis threshold for junior debt payments",
+              "small amount RDP exception",
+              "immaterial restricted debt payment basket",
+              "threshold avoiding technical covenant breach",
+              "minimum amount for RDP restriction"
+            ]
+          }
+        }
+      },
+      "family_id": "cash_flow.restricted_debt_payments",
+      "id": "cash_flow.restricted_debt_payments.rdp_scheduled_payments",
+      "kct_ref": [
+        "cat5.3"
+      ],
+      "level": 2,
+      "name": "Scheduled Payment Exceptions",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to subordinated indebtedness Other Restricted Debt Prepayment Baskets: (i) \"high yield style\" investments, restricted payments and restricted debt prepayments share baskets except for certain baskets only for the benefit of investments (ii) unlimited subject to compliance with a total leverage ratio and no default or event of default (iii) refinancings (including through exchanges, conversions and other cashless transactions) of junior secured, unsecured and/or subordinated debt with like (or junior/subordinated) debt or equity,",
+        "dls_source_rows": [
+          {
+            "label": "Restricted Debt Prepayments",
+            "row": 85
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Scope of covered debt (junior, unsecured, subordinated)",
+          "AHYDO catch-up payment exception",
+          "Fixed-dollar general basket size",
+          "Ratio-based unlimited RP basket",
+          "Ratio type for unlimited RP basket",
+          "High-yield style shared basket (RP+Inv+RDP)",
+          "Refinancing with like or junior debt/equity"
+        ],
+        "market_position": "Market standard for restricted debt prepayments reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "Applies to junior lien, unsecured and subordinated indebtedness (i) AHYDO catch up payments (ii) subject to no default or event of default continuing or resulting therefrom, general basket in an amount to be agreed",
+        "source": "R14-B"
+      },
+      "red_flags": [
+        {
+          "category": "missing_protection",
+          "flag_id": "rf_cf_011",
+          "severity": "high",
+          "text": "No payment blockage period in subordination agreement for junior debt -- junior debt payments continue during senior default periods"
+        }
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 48,
+          "term": "ECF Sweep – Credits"
+        },
+        {
+          "coverage": "full",
+          "row": 106,
+          "term": "Negative Covenants – Restricted Payments – Employee Stock Repurchases"
+        },
+        {
+          "coverage": "full",
+          "row": 110,
+          "term": "Negative Covenants – Restricted Payments – Permitted Tax Distribution"
+        },
+        {
+          "coverage": "full",
+          "row": 111,
+          "term": "Negative Covenants – Restricted Debt Payments"
+        },
+        {
+          "coverage": "full",
+          "row": 113,
+          "term": "Negative Covenants – Restricted Debt Payments – Threshold"
+        },
+        {
+          "coverage": "full",
+          "row": 116,
+          "term": "Negative Covenants – Restricted Debt Payments – Refinancings"
+        },
+        {
+          "coverage": "full",
+          "row": 117,
+          "term": "Negative Covenants – Restricted Debt Payments – Earnouts"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "Learning Material Section (1): RDP covenant structure 'followed by litany of exceptions.' Scheduled P&I as standard structural carve-out.",
+      "neutron_field_refs": [
+        {
+          "term_type": "RDP_THRESHOLD",
+          "label": "Restricted Debt Payments - De Minimis Threshold",
+          "schema_file": "restricted-debt-payments-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "cash_flow",
+          "mapping_confidence": 0.494,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Conversion of junior debt into common equity interests. Generally permitted without conditions as it improves capital structure.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_conversion_exchange.equity_conversion",
+          "level": 3,
+          "name": "Equity Conversion",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Exchange of existing junior debt for new junior debt instruments. Requires maturity, principal, and security constraints.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_conversion_exchange.debt_exchange",
+          "level": 3,
+          "name": "Debt-for-Debt Exchange",
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Conversion of junior debt to equity interests or exchange for new instruments. Per Learning Material: 'Exception for debt that is prepaid with the proceeds of permitted refinancing debt or prepayment by conversion into equity.' Equity conversion is generally beneficial to senior lenders as it reduces debt. Per DLS Preferred row 85 alt(iii): exchanges and conversions with like or junior debt or equity are permitted. Exchange into new debt instruments requires careful gating on maturity, amortization, and seniority.",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "restricted_debt_payments",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_jdp.covered_debt",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VIII",
+          "ARTICLE X",
+          "Section 10.06"
+        ],
+        "shape_ref": "neg_cov_jdp.covered_debt",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "cash_flow.restricted_debt_payments",
+      "id": "cash_flow.restricted_debt_payments.rdp_conversion_exchange",
+      "level": 2,
+      "market_benchmarks": {
+        "source": "R19-A_gap_noted",
+        "status": "audited_no_data_available"
+      },
+      "name": "Conversion / Exchange",
+      "type": "concept",
+      "definition_source": "Learning Material Section (2): 'prepayment by conversion into equity.' DLS Preferred row 85 alt(iii): 'exchanges, conversions and other cashless transactions.'"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Leverage test required for RDP usage of Available Amount capacity. May differ from RP leverage test level.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_aa_basket.leverage_condition",
+          "level": 3,
+          "name": "Leverage Condition",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 14 (Delayed Draw Term Loans)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Condition requiring that no event of default exists at the time the borrower uses Available Amount capacity to make restricted debt payments (prepayments, redemptions, or repurchases of junior debt). Prevents the borrower from retiring subordinated obligations when the senior credit is in distress, preserving the junior debt cushion that protects senior lender recovery.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_aa_basket.eod_blocker",
+          "level": 3,
+          "name": "EoD Blocker",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 121 (Negative Covenants – Available Amount – EoD Blocker)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether RDP usage under the AA basket reduces overall AA capacity available for RPs and investments.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_aa_basket.shared_pool_deduction",
+          "level": 3,
+          "name": "Shared Pool Deduction",
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "RDP usage of the Available Amount / builder basket capacity. Conditions are typically intermediate between RP (tightest) and Investment (lightest). Per PC Term Comparison: RDP leverage condition for CMM/LMM is 0.5-0.75x inside closing TLR (aggressive: 0.5x inside); UMM/BSLR at closing TLR. DLS Preferred requires pro forma leverage compliance for RDP usage. The high yield style allows investments, RPs and RDPs to share baskets except for certain baskets reserved for investments only.",
+      "dls_ref": [
+        "DLS:86:Available Amount"
+      ],
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "restricted_debt_payments",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_jdp.covered_debt",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VIII",
+          "ARTICLE X",
+          "Section 10.06"
+        ],
+        "shape_ref": "neg_cov_jdp.covered_debt",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.228051+00:00",
+          "term_packs": {
+            "RDP_AVAILABLE_AMOUNT": {
+              "label": "Restricted Debt Payments - Available Amount Basket",
+              "category": "RDP",
+              "exactPhrases": [
+                "prepayments of Restricted Debt in an amount not to exceed the Available Amount",
+                "redemption of Junior Debt from Available Amount",
+                "RDP basket utilizing Available Amount"
+              ],
+              "sectionHeaders": [
+                "Section [*] - Restricted Debt Payments",
+                "Permitted Restricted Debt Payments",
+                "ARTICLE VII - NEGATIVE COVENANTS"
+              ],
+              "semanticVariants": [
+                "RDP available amount basket",
+                "junior debt prepayment from builder",
+                "subordinated debt redemption capacity"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.65,
+                "minKeywordScore": 0.55,
+                "minConfidence": 0.78,
+                "escalationThreshold": 0.55,
+                "humanEscalationThreshold": 0.35
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "prepayments of Restricted Debt in an amount not to exceed the Available Amount",
+              "redemption of Junior Debt from Available Amount",
+              "RDP basket utilizing Available Amount"
+            ],
+            "sectionHeaders": [
+              "Section [*] - Restricted Debt Payments",
+              "Permitted Restricted Debt Payments",
+              "ARTICLE VII - NEGATIVE COVENANTS"
+            ],
+            "semanticVariants": [
+              "RDP available amount basket",
+              "junior debt prepayment from builder",
+              "subordinated debt redemption capacity"
+            ]
+          }
+        }
+      },
+      "family_id": "cash_flow.restricted_debt_payments",
+      "id": "cash_flow.restricted_debt_payments.rdp_aa_basket",
+      "level": 2,
+      "name": "Available Amount RDP Basket",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to subordinated indebtedness Other Restricted Debt Prepayment Baskets: (i) \"high yield style\" investments, restricted payments and restricted debt prepayments share baskets except for certain baskets only for the benefit of investments (ii) unlimited subject to compliance with a total leverage ratio and no default or event of default (iii) refinancings (including through exchanges, conversions and other cashless transactions) of junior secured, unsecured and/or subordinated debt with like (or junior/subordinated) debt or equity,",
+        "dls_source_rows": [
+          {
+            "label": "Restricted Debt Prepayments",
+            "row": 85
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Scope of covered debt (junior, unsecured, subordinated)",
+          "AHYDO catch-up payment exception",
+          "Fixed-dollar general basket size",
+          "Ratio-based unlimited RP basket",
+          "Ratio type for unlimited RP basket",
+          "High-yield style shared basket (RP+Inv+RDP)",
+          "Refinancing with like or junior debt/equity"
+        ],
+        "market_position": "Market standard for restricted debt prepayments reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "Applies to junior lien, unsecured and subordinated indebtedness (i) AHYDO catch up payments (ii) subject to no default or event of default continuing or resulting therefrom, general basket in an amount to be agreed",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "neg_cov_restricted_debt_payments.available_amount_rdp"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 84,
+          "term": "Other"
+        },
+        {
+          "coverage": "full",
+          "row": 95,
+          "term": "Negative Covenants – Investments – Other"
+        },
+        {
+          "coverage": "full",
+          "row": 103,
+          "term": "Negative Covenants – Restricted Payments –"
+        },
+        {
+          "coverage": "full",
+          "row": 118,
+          "term": "Negative Covenants – Available Amount"
+        },
+        {
+          "coverage": "full",
+          "row": 121,
+          "term": "Negative Covenants – Available Amount – EoD Blocker"
+        },
+        {
+          "coverage": "full",
+          "row": 122,
+          "term": "Negative Covenants – Available Amount – Ratio Test"
+        },
+        {
+          "coverage": "full",
+          "row": 123,
+          "term": "Negative Covenants – Available Amount – Other"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison: 'RJDPs: 0.5-0.75 inside; Aggressive 0.5 inside.' DLS Preferred row 85 alt: 'high yield style investments, restricted payments and restricted debt prepayments share baskets except for certain baskets only for the benefit of investments.'",
+      "pc_ref": [
+        ": 'RJDPs: 0.5-0.75 inside"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "RDP_AVAILABLE_AMOUNT",
+          "label": "Restricted Debt Payments - Available Amount Basket",
+          "schema_file": "available-amount-hub-enhanced.schema.ts",
+          "field_count": 2,
+          "r1_domain": "cash_flow",
+          "mapping_confidence": 0.5869,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Exception permitting AHYDO (Applicable High Yield Discount Obligation) catch-up payments on junior debt. Per DLS Preferred: 'AHYDO catch up payments' are a permitted exception to the RDP covenant. These mandatory tax-driven payments are required to avoid adverse tax consequences for the issuer of discount obligations.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_customary_payments.ahydo",
+          "level": 3,
+          "name": "AHYDO Catch-Up",
+          "r18_concept_ids": [
+            "neg_cov_restricted_debt_payments.ahydo_catch_up"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred row 85(i): 'AHYDO catch up payments.'"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Premiums payable upon early repayment of junior debt per original terms. Usually permitted as they were bargained for at issuance.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_customary_payments.make_whole",
+          "level": 3,
+          "name": "Make-Whole Premiums",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Customary administrative fees, agent fees, and out-of-pocket expenses on junior debt instruments.",
+          "dls_ref": [
+            "DLS:22:L/C Fronting Fees / L/C Fees",
+            "DLS:34:Breakup fees",
+            "DLS:36:Reimbursement of expenses"
+          ],
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_customary_payments.fees_expenses",
+          "level": 3,
+          "name": "Fees and Expenses",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 22 (L/C Fronting Fees / L/C Fees); DLS Preferred Row 34 (Breakup fees); DLS Preferred Row 36 (Reimbursement of expenses)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Carve-outs for customary fees, expenses, indemnities, and administrative payments on junior debt that are permitted regardless of other RDP restrictions. Per DLS Preferred row 85(i): 'AHYDO catch up payments' are a permitted exception. Also includes make-whole premiums, breakage costs, and ordinary administrative expenses. These are structural carve-outs, not basket-tested.",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "restricted_debt_payments",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_jdp.covered_debt",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VIII",
+          "ARTICLE X",
+          "Section 10.06"
+        ],
+        "shape_ref": "neg_cov_jdp.covered_debt",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=very_hard (playbook authority for extraction complexity)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.278755+00:00",
+          "term_packs": {
+            "RDP_OTHER": {
+              "label": "Restricted Debt Payments - Other Baskets",
+              "category": "RDP",
+              "exactPhrases": [
+                "other Restricted Debt Payment",
+                "additional RDP",
+                "RDP carveout",
+                "cashless exchange",
+                "conversion to equity",
+                "intercompany",
+                "litigation settlement",
+                "not otherwise permitted",
+                "catch-all"
+              ],
+              "sectionHeaders": [
+                "Restricted Debt Payments",
+                "Section 7.12 - Restricted Debt Payments",
+                "Permitted Restricted Debt Payments",
+                "Other Exceptions"
+              ],
+              "semanticVariants": [
+                "miscellaneous RDP exceptions",
+                "additional junior debt payment carveouts",
+                "other permitted restricted debt payments",
+                "catch-all RDP basket",
+                "specific purpose RDP carveouts"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.62,
+                "minKeywordScore": 0.52,
+                "minConfidence": 0.72,
+                "escalationThreshold": 0.52,
+                "humanEscalationThreshold": 0.32
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "other Restricted Debt Payment",
+              "additional RDP",
+              "RDP carveout",
+              "cashless exchange",
+              "conversion to equity",
+              "intercompany",
+              "litigation settlement",
+              "not otherwise permitted",
+              "catch-all"
+            ],
+            "sectionHeaders": [
+              "Restricted Debt Payments",
+              "Section 7.12 - Restricted Debt Payments",
+              "Permitted Restricted Debt Payments",
+              "Other Exceptions"
+            ],
+            "semanticVariants": [
+              "miscellaneous RDP exceptions",
+              "additional junior debt payment carveouts",
+              "other permitted restricted debt payments",
+              "catch-all RDP basket",
+              "specific purpose RDP carveouts"
+            ]
+          }
+        }
+      },
+      "family_id": "cash_flow.restricted_debt_payments",
+      "id": "cash_flow.restricted_debt_payments.rdp_customary_payments",
+      "level": 2,
+      "name": "Customary Payments and Fees",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to subordinated indebtedness Other Restricted Debt Prepayment Baskets: (i) \"high yield style\" investments, restricted payments and restricted debt prepayments share baskets except for certain baskets only for the benefit of investments (ii) unlimited subject to compliance with a total leverage ratio and no default or event of default (iii) refinancings (including through exchanges, conversions and other cashless transactions) of junior secured, unsecured and/or subordinated debt with like (or junior/subordinated) debt or equity,",
+        "dls_source_rows": [
+          {
+            "label": "Restricted Debt Prepayments",
+            "row": 85
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Scope of covered debt (junior, unsecured, subordinated)",
+          "AHYDO catch-up payment exception",
+          "Fixed-dollar general basket size",
+          "Ratio-based unlimited RP basket",
+          "Ratio type for unlimited RP basket",
+          "High-yield style shared basket (RP+Inv+RDP)",
+          "Refinancing with like or junior debt/equity"
+        ],
+        "market_position": "Market standard for restricted debt prepayments reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "Applies to junior lien, unsecured and subordinated indebtedness (i) AHYDO catch up payments (ii) subject to no default or event of default continuing or resulting therefrom, general basket in an amount to be agreed",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "neg_cov_restricted_debt_payments.ahydo_catch_up"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 109,
+          "term": "Negative Covenants – Restricted Payments – Management Agreement"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 85(i): 'AHYDO catch up payments.' Standard structural carve-outs for customary junior debt costs.",
+      "neutron_field_refs": [
+        {
+          "term_type": "RDP_OTHER",
+          "label": "Restricted Debt Payments - Other Baskets",
+          "schema_file": "restricted-debt-payments-enhanced.schema.ts",
+          "field_count": 5,
+          "r1_domain": "cash_flow",
+          "mapping_confidence": 0.5315,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Dollar cap on seller note payments permitted under the RDP covenant.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.restricted_debt_payments",
+              "id": "cash_flow.restricted_debt_payments.rdp_seller_note_earnout.seller_notes.cap",
+              "level": 4,
+              "name": "Seller Note Cap",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 19 (Swingline)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Whether seller notes must be subordinated to credit facility obligations.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.restricted_debt_payments",
+              "id": "cash_flow.restricted_debt_payments.rdp_seller_note_earnout.seller_notes.subordination",
+              "level": 4,
+              "name": "Subordination Required",
+              "type": "sub_component"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Payments on seller/vendor notes issued as part of acquisition consideration. Typically capped at original principal.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_seller_note_earnout.seller_notes",
+          "level": 3,
+          "name": "Seller Note Payments",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 104 (Negative Covenants – Restricted Payments – General Basket)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Whether earnout payments are classified as RDPs subject to covenant restrictions. Bank position: yes.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.restricted_debt_payments",
+              "id": "cash_flow.restricted_debt_payments.rdp_seller_note_earnout.earnout_obligations.treated_as_debt",
+              "level": 4,
+              "name": "Treated as Junior Debt",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 85 (g. Restricted Debt Prepayments); DLS Preferred Row 88 (j. Other Negative Covenants); Review Template Row 25 (Incremental Amount – prepayments)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Dollar cap on earnout payments if treated as RDPs.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.restricted_debt_payments",
+              "id": "cash_flow.restricted_debt_payments.rdp_seller_note_earnout.earnout_obligations.cap",
+              "level": 4,
+              "name": "Earnout Payment Cap",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 22 ([DDTL – conditions to draw])"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Contingent consideration payments tied to post-acquisition performance milestones.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_seller_note_earnout.earnout_obligations",
+          "level": 3,
+          "name": "Earnout Obligations",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 117 (Negative Covenants – Restricted Debt Payments – Earnouts)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Deferred acquisition purchase price payments that may constitute RDPs if the obligation is treated as debt.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_seller_note_earnout.deferred_purchase",
+          "level": 3,
+          "name": "Deferred Purchase Price",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 13 (Leverage Ratios); DLS Preferred Row 14 (Delayed Draw Term Loans); DLS Preferred Row 53 (p. Amendments to Acquisition Agreement)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Dedicated baskets for seller note payments and earn-out obligations within the RDP covenant. Whether earn-outs are treated as junior debt (and thus restricted) is a key negotiation point. Per PC Term Comparison: 'Earnouts: Aggressive UMM/BSLR: If not Indebtedness, no cap. Otherwise: Capped, subordinated and acceptable terms.' Per DLS Preferred framework: 'Seller Debt: Typically capped in all transactions. CMM/LMM: may require subordination terms and other acceptable terms (not cash pay, no covs, later maturity; at Holdco).'",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "restricted_debt_payments",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_jdp.covered_debt",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VIII",
+          "ARTICLE X",
+          "Section 10.06"
+        ],
+        "shape_ref": "neg_cov_jdp.covered_debt",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.240055+00:00",
+          "term_packs": {
+            "RDP_EARNOUTS": {
+              "label": "Restricted Debt Payments - Earnouts",
+              "category": "RDP",
+              "exactPhrases": [
+                "earnout",
+                "contingent consideration",
+                "deferred purchase price",
+                "contingent payment",
+                "earnout obligation",
+                "seller note",
+                "acquisition earnout",
+                "holdback",
+                "purchase price adjustment"
+              ],
+              "sectionHeaders": [
+                "Restricted Debt Payments",
+                "Investments",
+                "Definitions - Indebtedness",
+                "Permitted Acquisitions",
+                "Section 7.12 - Restricted Debt Payments"
+              ],
+              "semanticVariants": [
+                "earnout payment treatment in covenants",
+                "contingent consideration covenant classification",
+                "deferred acquisition payment restrictions",
+                "earnout as indebtedness or investment",
+                "contingent payment basket allocation"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.62,
+                "minKeywordScore": 0.52,
+                "minConfidence": 0.72,
+                "escalationThreshold": 0.52,
+                "humanEscalationThreshold": 0.32
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "earnout",
+              "contingent consideration",
+              "deferred purchase price",
+              "contingent payment",
+              "earnout obligation",
+              "seller note",
+              "acquisition earnout",
+              "holdback",
+              "purchase price adjustment"
+            ],
+            "sectionHeaders": [
+              "Restricted Debt Payments",
+              "Investments",
+              "Definitions - Indebtedness",
+              "Permitted Acquisitions",
+              "Section 7.12 - Restricted Debt Payments"
+            ],
+            "semanticVariants": [
+              "earnout payment treatment in covenants",
+              "contingent consideration covenant classification",
+              "deferred acquisition payment restrictions",
+              "earnout as indebtedness or investment",
+              "contingent payment basket allocation"
+            ]
+          }
+        }
+      },
+      "family_id": "cash_flow.restricted_debt_payments",
+      "id": "cash_flow.restricted_debt_payments.rdp_seller_note_earnout",
+      "level": 2,
+      "name": "Seller Notes / Earnout Payments",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to subordinated indebtedness Other Restricted Debt Prepayment Baskets: (i) \"high yield style\" investments, restricted payments and restricted debt prepayments share baskets except for certain baskets only for the benefit of investments (ii) unlimited subject to compliance with a total leverage ratio and no default or event of default (iii) refinancings (including through exchanges, conversions and other cashless transactions) of junior secured, unsecured and/or subordinated debt with like (or junior/subordinated) debt or equity,",
+        "dls_source_rows": [
+          {
+            "label": "Restricted Debt Prepayments",
+            "row": 85
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Scope of covered debt (junior, unsecured, subordinated)",
+          "AHYDO catch-up payment exception",
+          "Fixed-dollar general basket size",
+          "Ratio-based unlimited RP basket",
+          "Ratio type for unlimited RP basket",
+          "High-yield style shared basket (RP+Inv+RDP)",
+          "Refinancing with like or junior debt/equity"
+        ],
+        "market_position": "Market standard for restricted debt prepayments reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "Applies to junior lien, unsecured and subordinated indebtedness (i) AHYDO catch up payments (ii) subject to no default or event of default continuing or resulting therefrom, general basket in an amount to be agreed",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "neg_cov_restricted_debt_payments.earnout_treatment",
+        "neg_cov_restricted_debt_payments.seller_note_earnout_baskets"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 117,
+          "term": "Negative Covenants – Restricted Debt Payments – Earnouts"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison: 'Earnouts: Aggressive UMM/BSLR no cap if not Indebtedness",
+      "pc_ref": [
+        ": 'Earnouts: Aggressive UMM/BSLR no cap if not Indebtedness"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "RDP_EARNOUTS",
+          "label": "Restricted Debt Payments - Earnouts",
+          "schema_file": "restricted-debt-payments-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "cash_flow",
+          "mapping_confidence": 0.5256,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Payments among the borrower and restricted subsidiaries on intercompany obligations.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_intercompany.within_restricted_group",
+          "level": 3,
+          "name": "Within Restricted Group",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 102 (Negative Covenants – Dispositions – Other)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Restricted debt payment basket governing payments on intercompany obligations owed to unrestricted subsidiaries. These payments represent cash leaving the restricted group and flowing to entities not subject to the credit agreement's covenants, making them functionally equivalent to restricted payments and typically subject to heightened conditions or caps.",
+          "dls_ref": [
+            "DLS:92:Unrestricted Subsidiaries"
+          ],
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_intercompany.to_unrestricted",
+          "level": 3,
+          "name": "To Unrestricted Subsidiaries",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 71,
+              "term": "Negative Covenants – double dip"
+            },
+            {
+              "coverage": "full",
+              "row": 88,
+              "term": "Negative Covenants – Investments"
+            },
+            {
+              "coverage": "full",
+              "row": 107,
+              "term": "Negative Covenants – Restricted Payments – Unrestricted Subsidiary Stock"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 92 (Unrestricted Subsidiaries); Review Template Row 71 (Negative Covenants – double dip); Review Template Row 88 (Negative Covenants – Investments); Review Template Row 107 (Negative Covenants – Restricted Payments – Unrestricted Subsidiary Stock)"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Basket governing restricted debt payments made on intercompany obligations between members of the borrower group. Per PC Term Comparison: 'Double Dip: Require that intercompany debt owed by Loan Parties to non-Loan Parties is subordinated to the PC Client debt.' Per DLS Preferred: intercompany loans to non-Loan Parties are typically capped and shared with investment baskets. Subject to structuring requirements that prevent cash leakage from guarantor entities to non-guarantor subsidiaries.",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "neg_cov_jdp",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_jdp.covered_debt",
+        "shape_ref": "neg_cov_jdp.covered_debt",
+        "section_locations": [],
+        "specimen_patterns": [
+          "subordination_clause"
+        ],
+        "r15a_legacy": [
+          {
+            "added_by": "R15-A",
+            "patterns": [
+              "subordination_clause"
+            ],
+            "source": "LME Provision Language #7 sample clause"
+          }
+        ]
+      },
+      "family_id": "cash_flow.restricted_debt_payments",
+      "id": "cash_flow.restricted_debt_payments.rdp_intercompany",
+      "level": 2,
+      "market_benchmarks": {
+        "source": "R19-A_gap_noted",
+        "status": "audited_no_data_available"
+      },
+      "name": "Intercompany Subordinated Obligations",
+      "type": "concept",
+      "definition_source": "PC Term Comparison: 'Double Dip: Require intercompany debt owed by LPs to non-LPs is subordinated.' DLS Preferred: intercompany loans capped/shared baskets.",
+      "pc_ref": [
+        ": 'Double Dip: Require intercompany debt owed by LPs to non-LPs is subordinated.' DLS Preferred: intercompany loans capped/shared baskets."
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether a no-default or no-EoD condition applies to all RDP baskets as a baseline requirement.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_conditions.no_default",
+          "kct_ref": [
+            "cat3.10"
+          ],
+          "level": 3,
+          "name": "No Default Requirement",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 10"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Restrictions on amending subordinated debt terms in a manner adverse to senior lenders. Prevents shortening maturity, increasing interest, or loosening subordination terms.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_conditions.amendment_restrictions",
+          "level": 3,
+          "name": "Amendment Restrictions",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Requirement that junior debt have a stated maturity no earlier than 91 days after the credit facility maturity date.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_conditions.maturity_requirements",
+          "level": 3,
+          "name": "Maturity Requirements",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 14 (Delayed Draw Term Loans)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "General conditions applicable across all or most RDP baskets. Per Learning Material: the covenant also covers 'Limitation on Amendments to Junior Debt Documents. Purpose is to prevent the borrower from amending documents governing junior debt in a way that could circumvent other restrictions or that otherwise subverts the lenders expectations about the capital structure.' Per PC Term Comparison: 'General basket and other material RDP baskets should be subject to a D/EofD stopper.' Conditions include no-default requirements, amendment restrictions, and minimum maturity requirements.",
+      "dls_ref": [
+        "DLS:11:Conditions to incurrence: Bring down of ",
+        "DLS:58:Other conditions"
+      ],
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "restricted_debt_payments",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_jdp.covered_debt",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VIII",
+          "ARTICLE X",
+          "Section 10.06"
+        ],
+        "shape_ref": "neg_cov_jdp.covered_debt",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "cash_flow.restricted_debt_payments",
+      "id": "cash_flow.restricted_debt_payments.rdp_conditions",
+      "level": 2,
+      "name": "General RDP Conditions",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to subordinated indebtedness Other Restricted Debt Prepayment Baskets: (i) \"high yield style\" investments, restricted payments and restricted debt prepayments share baskets except for certain baskets only for the benefit of investments (ii) unlimited subject to compliance with a total leverage ratio and no default or event of default (iii) refinancings (including through exchanges, conversions and other cashless transactions) of junior secured, unsecured and/or subordinated debt with like (or junior/subordinated) debt or equity,",
+        "dls_source_rows": [
+          {
+            "label": "Restricted Debt Prepayments",
+            "row": 85
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Scope of covered debt (junior, unsecured, subordinated)",
+          "AHYDO catch-up payment exception",
+          "Fixed-dollar general basket size",
+          "Ratio-based unlimited RP basket",
+          "Ratio type for unlimited RP basket",
+          "High-yield style shared basket (RP+Inv+RDP)",
+          "Refinancing with like or junior debt/equity"
+        ],
+        "market_position": "Market standard for restricted debt prepayments reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "Applies to junior lien, unsecured and subordinated indebtedness (i) AHYDO catch up payments (ii) subject to no default or event of default continuing or resulting therefrom, general basket in an amount to be agreed",
+        "source": "R14-B"
+      },
+      "type": "concept",
+      "definition_source": "Learning Material Section (3): 'Limitation on Amendments to Junior Debt Documents.' PC Term Comparison: 'General RDP baskets subject to D/EofD stopper.'",
+      "pc_ref": [
+        ": 'General RDP baskets subject to D/EofD stopper.'"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Reallocation of unused RP basket capacity to RDP usage. May be automatic or require borrower election.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_redesignation.from_rp",
+          "level": 3,
+          "name": "From RP Baskets",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Reallocation of unused investment basket capacity to RDP usage.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_redesignation.from_inv",
+          "kct_ref": [
+            "cat4.2"
+          ],
+          "level": 3,
+          "name": "From Investment Baskets",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 2"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Bond-style approach where RP, investment, and RDP baskets are combined into a single unified basket. The borrower can allocate capacity across all three uses without separate tracking.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.restricted_debt_payments",
+          "id": "cash_flow.restricted_debt_payments.rdp_redesignation.bond_style_combined",
+          "level": 3,
+          "name": "Bond-Style Combined Basket",
+          "red_flags": [
+            {
+              "category": "capacity_excess",
+              "flag_id": "rf_cf_012",
+              "severity": "high",
+              "text": "Bond-style combined basket merges RP, RDP, and Investment into single pool -- full fungibility eliminates covenant segmentation"
+            }
+          ],
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Mechanics for reallocating capacity from non-RDP covenants (RP, investments) to RDP usage. Per Learning Material: 'Unused capacity under certain RDP baskets to be used to make Investments and (more rarely) RPs.' Reverse direction (Investment/RP to RDP) possible through bond-style combined basket treatment. Per DLS Preferred row 85 alt(i): 'high yield style investments, restricted payments and restricted debt prepayments share baskets.' Per PC Term Comparison: reallocation 'typically limited from RPs to RDPs/Investments and RDPs to Investments but not the other way.'",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "restricted_debt_payments",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_jdp.covered_debt",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VIII",
+          "ARTICLE X",
+          "Section 10.06"
+        ],
+        "shape_ref": "neg_cov_jdp.covered_debt",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "cash_flow.restricted_debt_payments",
+      "id": "cash_flow.restricted_debt_payments.rdp_redesignation",
+      "level": 2,
+      "market_benchmarks": {
+        "source": "R19-A_gap_noted",
+        "status": "audited_no_data_available"
+      },
+      "name": "RDP Redesignation / Reallocation",
+      "r18_concept_ids": [
+        "neg_cov_restricted_debt_payments.redesignation_mechanics"
+      ],
+      "type": "concept",
+      "definition_source": "Learning Material: RDP basket reallocation to Investments/RPs. DLS Preferred row 85 alt(i): 'high yield style shared baskets.' PC Term Comparison: reallocation one-directional."
+    }
+  ],
+  "corpus_prevalence": "high",
+  "definition": "The negative covenant limiting the borrower's ability to prepay, redeem, repurchase, defease, or discharge junior-ranking indebtedness prior to its stated maturity. Per Learning Material: 'Any prepayment, redemption, repurchase, defeasance or discharge of certain specified indebtedness prior to its stated maturity.' Per DLS Preferred: 'Applies to junior lien, unsecured and subordinated indebtedness.' RDP represents the third leakage channel -- cash flowing laterally to junior creditors. The RDP covenant mirrors RP baskets but with intermediate conditions -- tighter than investments but looser than equity distributions.",
+  "dls_ref": [
+    "DLS:79:Indebtedness",
+    "DLS:84:Restricted Payments",
+    "DLS:85:Restricted Debt Prepayments",
+    "DLS:91:Representations and Warranties",
+    "DLS:94:Assignments",
+    "DLS:95:Debt Fund Affiliates/Non-Debt Fund Affiliates"
+  ],
+  "domain_id": "cash_flow",
+  "edgar_analysis_refs": [
+    {
+      "file": "TERM_ANALYSIS_RDP_AVAILABLE_AMOUNT.md",
+      "topic": "RDP_AVAILABLE_AMOUNT"
+    },
+    {
+      "file": "TERM_ANALYSIS_RDP_COVERED_DEBT_DEFINITION.md",
+      "topic": "RDP_COVERED_DEBT_DEFINITION"
+    },
+    {
+      "file": "TERM_ANALYSIS_RDP_GENERAL_BASKET.md",
+      "topic": "RDP_GENERAL_BASKET"
+    },
+    {
+      "file": "TERM_ANALYSIS_RDP_OTHER_BASKETS.md",
+      "topic": "RDP_OTHER_BASKETS"
+    },
+    {
+      "file": "TERM_ANALYSIS_RDP_PAYMENT_TYPES.md",
+      "topic": "RDP_PAYMENT_TYPES"
+    },
+    {
+      "file": "TERM_ANALYSIS_RDP_REDESIGNATION.md",
+      "topic": "RDP_REDESIGNATION"
+    },
+    {
+      "file": "TERM_ANALYSIS_RDP_SELLER_NOTE_EARNOUT.md",
+      "topic": "RDP_SELLER_NOTE_EARNOUT"
+    },
+    {
+      "file": "TERM_ANALYSIS_RDP_UNLIMITED_RATIO.md",
+      "topic": "RDP_UNLIMITED_RATIO"
+    }
+  ],
+  "extraction_difficulty": "hard",
+  "family_id": "cash_flow.restricted_debt_payments",
+  "golden_record_benchmarks": [
+    {
+      "benchmark_type": "prevalence",
+      "override_key": "neg_cov_rp.junior_debt_payments",
+      "present_count": 5,
+      "prevalence_pct": 55.6,
+      "source": "R16-B golden_record",
+      "total_deals": 9
+    }
+  ],
+  "golden_record_ids": [
+    "neg_cov_jdp.other_notable"
+  ],
+  "golden_record_refs": [
+    {
+      "deal_count": 1,
+      "golden_concept_id": "neg_cov_jdp.other_notable",
+      "has_absence": false,
+      "parameter_count": 1,
+      "total_records": 1
+    }
+  ],
+  "id": "cash_flow.restricted_debt_payments",
+  "level": 1,
+  "market_benchmarks": {
+    "pctc_cmm_lmm": "1.0-2.25x inside closing leverage and EOD stopper (0.5x-1.5x inside the leverage level used for the AA Builder basket)",
+    "pctc_umm_bsl": "will not include unsecured debt. Make Client aware if otherwise"
+  },
+  "name": "Restricted Debt Payments / Junior Debt Prepayments",
+  "negotiation_spectrum": {
+    "aggressive_position": "Limited to subordinated indebtedness Other Restricted Debt Prepayment Baskets: (i) \"high yield style\" investments, restricted payments and restricted debt prepayments share baskets except for certain baskets only for the benefit of investments (ii) unlimited subject to compliance with a total leverage ratio and no default or event of default (iii) refinancings (including through exchanges, conversions and other cashless transactions) of junior secured, unsecured and/or subordinated debt with like (or junior/subordinated) debt or equity,",
+    "dls_source_rows": [
+      {
+        "label": "Restricted Debt Prepayments",
+        "row": 85
+      }
+    ],
+    "is_highlighted": true,
+    "key_negotiation_points": [
+      "Scope of covered debt (junior, unsecured, subordinated)",
+      "AHYDO catch-up payment exception",
+      "Fixed-dollar general basket size",
+      "Ratio-based unlimited RP basket",
+      "Ratio type for unlimited RP basket",
+      "High-yield style shared basket (RP+Inv+RDP)",
+      "Refinancing with like or junior debt/equity"
+    ],
+    "market_position": "Market standard for restricted debt prepayments reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+    "preferred_position": "Applies to junior lien, unsecured and subordinated indebtedness (i) AHYDO catch up payments (ii) subject to no default or event of default continuing or resulting therefrom, general basket in an amount to be agreed",
+    "source": "R14-B"
+  },
+  "r18_concept_ids": [
+    "neg_cov_restricted_debt_payments.ahydo_catch_up",
+    "neg_cov_restricted_debt_payments.available_amount_rdp",
+    "neg_cov_restricted_debt_payments.earnout_treatment",
+    "neg_cov_restricted_debt_payments.other_rdps",
+    "neg_cov_restricted_debt_payments.rdp_scope",
+    "neg_cov_restricted_debt_payments.redesignation_mechanics",
+    "neg_cov_restricted_debt_payments.refinancing_rights",
+    "neg_cov_restricted_debt_payments.seller_note_earnout_baskets"
+  ],
+  "review_ref": [
+    {
+      "coverage": "full",
+      "row": 23,
+      "term": "[DDTL – use of proceeds]"
+    },
+    {
+      "coverage": "full",
+      "row": 48,
+      "term": "ECF Sweep – Credits"
+    },
+    {
+      "coverage": "full",
+      "row": 88,
+      "term": "Negative Covenants – Investments"
+    },
+    {
+      "coverage": "full",
+      "row": 103,
+      "term": "Negative Covenants – Restricted Payments –"
+    },
+    {
+      "coverage": "full",
+      "row": 106,
+      "term": "Negative Covenants – Restricted Payments – Employee Stock Repurchases"
+    },
+    {
+      "coverage": "full",
+      "row": 107,
+      "term": "Negative Covenants – Restricted Payments – Unrestricted Subsidiary Stock"
+    },
+    {
+      "coverage": "full",
+      "row": 109,
+      "term": "Negative Covenants – Restricted Payments – Management Agreement"
+    },
+    {
+      "coverage": "full",
+      "row": 110,
+      "term": "Negative Covenants – Restricted Payments – Permitted Tax Distribution"
+    },
+    {
+      "coverage": "full",
+      "row": 111,
+      "term": "Negative Covenants – Restricted Debt Payments"
+    },
+    {
+      "coverage": "full",
+      "row": 112,
+      "term": "Negative Covenants – Restricted Debt Payments – Scope"
+    },
+    {
+      "coverage": "full",
+      "row": 113,
+      "term": "Negative Covenants – Restricted Debt Payments – Threshold"
+    },
+    {
+      "coverage": "full",
+      "row": 114,
+      "term": "Negative Covenants – Restricted Debt Payments – General Basket"
+    },
+    {
+      "coverage": "full",
+      "row": 115,
+      "term": "Negative Covenants – Restricted Debt Payments – Ratio Basket"
+    },
+    {
+      "coverage": "full",
+      "row": 116,
+      "term": "Negative Covenants – Restricted Debt Payments – Refinancings"
+    },
+    {
+      "coverage": "full",
+      "row": 117,
+      "term": "Negative Covenants – Restricted Debt Payments – Earnouts"
+    }
+  ],
+  "type": "family",
+  "definition_source": "Learning Material: 'Any prepayment, redemption, repurchase, defeasance or discharge of certain specified indebtedness prior to its stated maturity.' DLS Preferred row 85: 'Applies to junior lien, unsecured and subordinated indebtedness.' Intro Guide: leakage 'laterally to other creditors through the junior debt prepayments covenant.'"
+}

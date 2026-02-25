@@ -1,0 +1,2740 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "DDTL sized as a multiple of Consolidated EBITDA, providing acquisition firepower proportional to cash flow generation. Common sizing: 0.5x-1.0x EBITDA in private credit.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.ddtl",
+              "id": "deal_econ.ddtl.amount.dollar.ebitda_multiple",
+              "level": 4,
+              "market_benchmarks": {
+                "median_value": "0.5x EBITDA",
+                "observed_range": "0.3x-2.7x"
+              },
+              "name": "EBITDA Multiple Sizing",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 3 (Assumed Financing EBITDA as sizing basis); Review Template, Row 3 (DDTL sizing)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Size distribution across market segments. DealData (N=62 PC deals, used for quantitative statistics only): Small (<$20M, 13%), Standard ($20-50M, 65%), Large ($75-200M, 22%). Standard bucket dominates in private credit.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.ddtl",
+              "id": "deal_econ.ddtl.amount.dollar.market_buckets",
+              "level": 4,
+              "market_benchmarks": {
+                "large_pct": "22%",
+                "small_pct": "13%",
+                "standard_pct": "65%"
+              },
+              "name": "Market Size Buckets",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 14 (sizing framework)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Specific DDTL commitment amount in USD, stated in the commitment schedule or operative provisions. DLS Preferred (Row 14): commitment quantum expressed as the 'Maximum Delayed Draw Amount.'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.amount.dollar",
+          "level": 3,
+          "name": "Fixed Dollar Amount",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (Maximum Delayed Draw Amount)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "low",
+              "definition": "Tranches with different availability windows (e.g., 12/18/24 months), staggering access to acquisition capital over time. Allows borrower to maintain longer-dated acquisition optionality while giving lenders earlier commitment termination on initial tranches.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "hard",
+              "family_id": "deal_econ.ddtl",
+              "id": "deal_econ.ddtl.amount.multi_tranche.staged",
+              "level": 4,
+              "name": "Staged Availability",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 14 (commitment period structure); PC Term Comparison, DDTL section ('18 month commitment; occasionally 24 months')",
+              "pc_ref": [
+                "DDTL"
+              ]
+            },
+            {
+              "corpus_prevalence": "low",
+              "definition": "DDTL tranche earmarked for an identified target acquisition with specific closing conditions and often a shorter availability period. DLS Preferred (Row 14, condition x): documentation for the applicable Permitted Acquisition 'shall have been completed in form and substance [reasonably] satisfactory to the Delayed Draw Term Lenders.'",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "hard",
+              "family_id": "deal_econ.ddtl",
+              "id": "deal_econ.ddtl.amount.multi_tranche.acquisition_specific",
+              "level": 4,
+              "name": "Acquisition-Specific Tranche",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 14 (condition x: acquisition agreement approval)"
+            }
+          ],
+          "corpus_prevalence": "low",
+          "definition": "DDTL structured in multiple tranches with different availability windows, sizes, or purposes. DLS Preferred (Row 14) contemplates a single DDTL facility, but multi-tranche DDTLs appear in practice for staged acquisition programs.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.amount.multi_tranche",
+          "level": 3,
+          "name": "Multi-Tranche DDTL",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (single DDTL structure as baseline); Review Template, Row 21"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Total delayed draw term loan commitment available for drawing during the commitment period. DLS Preferred (Row 14): 'Available after the Closing Date until the earlier to occur of [___] and the date on which the Maximum Delayed Draw Amount has been drawn.' Review Template (Row 3): DDTL listed as a separate line item in the debt quantum framework.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": true,
+        "playbook_ref": "facility_structure.ddtl_max_draws",
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.01",
+          "Section 2.14",
+          "Section 2.17"
+        ],
+        "shape_ref": "facility_structure.ddtl_max_draws",
+        "aligned_difficulty": "hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=hard (playbook authority for extraction complexity)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.570248+00:00",
+          "term_packs": {
+            "TS_DDTL_QUANTUM": {
+              "label": "Term Sheet - DDTL Quantum",
+              "category": "TERM_SHEET",
+              "exactPhrases": [
+                "Delayed Draw Term Loan: $[•]",
+                "DDTL",
+                "DDTL Commitment",
+                "delayed draw term loan in an aggregate principal amount"
+              ],
+              "sectionHeaders": [
+                "Delayed Draw Term Loan",
+                "DDTL Commitment",
+                "Delayed Draw Facility",
+                "Summary of Principal Terms"
+              ],
+              "semanticVariants": [
+                "delayed draw quantum size",
+                "DDTL commitment amount",
+                "delayed draw capacity"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Delayed Draw Term Loan: $[•]",
+              "DDTL",
+              "DDTL Commitment",
+              "delayed draw term loan in an aggregate principal amount"
+            ],
+            "sectionHeaders": [
+              "Delayed Draw Term Loan",
+              "DDTL Commitment",
+              "Delayed Draw Facility",
+              "Summary of Principal Terms"
+            ],
+            "semanticVariants": [
+              "delayed draw quantum size",
+              "DDTL commitment amount",
+              "delayed draw capacity"
+            ]
+          }
+        }
+      },
+      "family_id": "deal_econ.ddtl",
+      "id": "deal_econ.ddtl.amount",
+      "kct_ref": [
+        "cat2.2"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "median_ebitda_multiple": "0.5x",
+        "prevalence": "51.6%",
+        "standard_range": "$20-50M (65%)"
+      },
+      "name": "DDTL Commitment Amount",
+      "r18_concept_ids": [
+        "facility_structure.ddtl"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 2,
+          "term": "Commitment Letter / Transaction Description"
+        },
+        {
+          "coverage": "full",
+          "row": 3,
+          "term": "Debt Quantum"
+        },
+        {
+          "coverage": "full",
+          "row": 8,
+          "term": "Expense Reimbursement"
+        },
+        {
+          "coverage": "full",
+          "row": 9,
+          "term": "Countersign date"
+        },
+        {
+          "coverage": "full",
+          "row": 15,
+          "term": "Revolver closing date draws"
+        },
+        {
+          "coverage": "full",
+          "row": 21,
+          "term": "[DDTL – availability period]"
+        },
+        {
+          "coverage": "full",
+          "row": 27,
+          "term": "Incremental DDTLs"
+        },
+        {
+          "coverage": "full",
+          "row": 161,
+          "term": "Delayed Draw Ticking Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 164,
+          "term": "Sponsor Participation"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 14 (Maximum Delayed Draw Amount); Review Template, Row 3 (Debt Quantum: 'Delayed Draw Term Loan: $[___]')",
+      "neutron_field_refs": [
+        {
+          "term_type": "TS_DDTL_QUANTUM",
+          "label": "Term Sheet - DDTL Quantum",
+          "schema_file": "term-sheet-facilities-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.5572,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "DDTL maturity matches initial term loan for fungibility and same-class treatment. DLS Preferred (Row 14, condition ii): terms 'identical to the terms of the Initial Term Loans, including... maturity.' Dominant market convention ensuring drawn DDTL participates in the same prepayment waterfall as the initial TL.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.maturity.same_as_initial",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "71%"
+          },
+          "name": "Same as Initial TL",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (condition ii: identical terms including maturity)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Explicit maturity tenor for a delayed draw facility set independently of the initial funded tranche. Creates separate-class treatment risk in amendment scenarios because the different maturity date may require independent consent of the DDTL lenders. Contrasts with the DLS Preferred identical-terms position.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.maturity.specific_tenure",
+          "level": 3,
+          "market_benchmarks": {
+            "observed_range": "4.5-7 years"
+          },
+          "name": "Specific Tenure",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (condition ii: identical terms as preferred position); Review Template, Row 21"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Maturity date for drawn DDTL amounts. DLS Preferred (Row 14, condition ii): DDTL terms 'shall be identical to the terms of the Initial Term Loans, including... maturity.' Same-as-initial-TL maturity is the bank-preferred position to achieve fungibility. Review Template (Row 3): standard TL-B maturity 7 years.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": true,
+        "playbook_ref": "facility_structure.maturity",
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.01",
+          "Section 2.14"
+        ],
+        "shape_ref": "facility_structure.maturity",
+        "aligned_difficulty": "hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "deal_econ.ddtl",
+      "id": "deal_econ.ddtl.maturity",
+      "level": 2,
+      "market_benchmarks": {
+        "same_as_tl_pct": "71%",
+        "specific_range": "4.5-7 years"
+      },
+      "name": "DDTL Maturity",
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 14 (condition ii: identical maturity); Review Template, Row 3 (Term B: 7 years)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Perfect fungibility through matching margins with the initial term loan. Simplifies administration and supports same-class treatment.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.applicable_margin.same_as_initial",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "61.3%"
+          },
+          "name": "Same as Initial TL",
+          "type": "sub_component"
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "corpus_prevalence": "medium",
+                  "definition": "Number of pricing grid tiers: 2-tier, 3-tier, 4+ tier. Distribution matches initial TL grid structure.",
+                  "domain_id": "deal_econ",
+                  "extraction_difficulty": "hard",
+                  "family_id": "deal_econ.ddtl",
+                  "id": "deal_econ.ddtl.applicable_margin.specified.step_down_grid.tiers",
+                  "level": 5,
+                  "name": "Grid Tier Count",
+                  "type": "parameter"
+                },
+                {
+                  "id": "deal_econ.ddtl.applicable_margin.specified.step_down_grid.trigger_metric",
+                  "name": "Grid Trigger Metric",
+                  "level": 5,
+                  "type": "sub_component",
+                  "domain_id": "deal_econ",
+                  "family_id": "deal_econ.ddtl",
+                  "corpus_prevalence": "medium",
+                  "extraction_difficulty": "hard",
+                  "definition": "A step-down grid has tiers, but also a trigger metric (which ratio drives it) and reset frequency."
+                }
+              ],
+              "corpus_prevalence": "medium",
+              "definition": "DDTL margin reductions at leverage ratio thresholds.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "hard",
+              "family_id": "deal_econ.ddtl",
+              "id": "deal_econ.ddtl.applicable_margin.specified.step_down_grid",
+              "level": 4,
+              "market_benchmarks": {
+                "prevalence": "41.9%",
+                "typical_step": "25 bps"
+              },
+              "name": "Leverage Step-Down Grid",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 26 (Incremental Amount – ratio); Review Template Row 62 (Leverage Ratio Calculations); Review Template Row 73 (Negative Covenants – Indebtedness – Ratio Debt – amount); Review Template Row 74 (Negative Covenants – Indebtedness – Ratio Debt – non-guarantor cap); Review Template Row 75 (Negative Covenants – Indebtedness – Ratio Debt – terms); Review Template Row 87 (Negative Covenants – Liens – Ratio Basket); Review Template Row 93 (Negative Covenants – Investments – Ratio Basket); Review Template Row 105 (Negative Covenants – Restricted Payments – Ratio Basket); Review Template Row 115 (Negative Covenants – Restricted Debt Payments – Ratio Basket); Review Template Row 122 (Negative Covenants – Available Amount – Ratio Test)"
+            },
+            {
+              "id": "deal_econ.ddtl.applicable_margin.specified.initial_rate",
+              "name": "Initial Spread (bps)",
+              "level": 4,
+              "type": "sub_component",
+              "domain_id": "deal_econ",
+              "family_id": "deal_econ.ddtl",
+              "corpus_prevalence": "medium",
+              "extraction_difficulty": "easy",
+              "definition": "the fixed SOFR/LIBOR spread in basis points that applies from closing until the first leverage-based step-down takes effect, establishing the starting yield for the DDTL tranche before any grid adjustments"
+            },
+            {
+              "id": "deal_econ.ddtl.applicable_margin.specified.benchmark_floor",
+              "name": "Benchmark Rate Floor",
+              "level": 4,
+              "type": "sub_component",
+              "domain_id": "deal_econ",
+              "family_id": "deal_econ.ddtl",
+              "corpus_prevalence": "medium",
+              "extraction_difficulty": "easy",
+              "definition": "the minimum reference rate (SOFR or LIBOR) below which the benchmark component cannot fall, protecting lender yield in low-rate environments; must be consistent across original and incremental tranches for MFN comparability",
+              "definition_source": "Review Template Row 139 (Floor)"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Explicit basis points over benchmark rate for DDTL. Range: 500-675 bps, average 582 bps. May differ from initial TL by +/- 25 bps.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.applicable_margin.specified",
+          "level": 3,
+          "market_benchmarks": {
+            "average_value": "582 bps",
+            "observed_range": "500-675 bps"
+          },
+          "name": "Specified Spread",
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Interest rate margin for drawn DDTL. Market standard: same as initial TL, promoting fungibility. When specified separately, range: 500-675 bps.",
+      "dls_ref": [
+        "DLS:21:Term Loan Margin"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.06",
+          "Section 2.13"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Delayed Draw Term Loan)"
+      },
+      "family_id": "deal_econ.ddtl",
+      "id": "deal_econ.ddtl.applicable_margin",
+      "level": 2,
+      "market_benchmarks": {
+        "average_value": "582 bps",
+        "observed_range": "500-675 bps",
+        "same_as_tl_pct": "61.3%"
+      },
+      "name": "DDTL Applicable Margin",
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 138,
+          "term": "Pricing"
+        },
+        {
+          "coverage": "full",
+          "row": 160,
+          "term": "Ticking Fee (Term/Revolver)"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 21 (Term Loan Margin); Review Template Row 138 (Pricing); Review Template Row 160 (Ticking Fee (Term/Revolver))"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "DDTL floor matches initial term loan. Ensures pricing parity for fungibility.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.floor.same_as_initial",
+          "level": 3,
+          "name": "Same as Initial TL",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Explicit SOFR floor for DDTL, typically 1.00% (21.9% of deals) or 0.75% (6.3%).",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.floor.specified_level",
+          "level": 3,
+          "market_benchmarks": {
+            "most_common_value": "1.00%"
+          },
+          "name": "Specified Floor Level",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 139 (Floor)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Minimum base rate for DDTL. Market standard: same as initial term loan or 1.00%. Protects lender yield on undrawn-then-drawn amounts.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.06",
+          "Section 2.13"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Delayed Draw Term Loan)"
+      },
+      "family_id": "deal_econ.ddtl",
+      "id": "deal_econ.ddtl.floor",
+      "kct_ref": [
+        "cat2.2"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "same_as_tl_pct": "56.2%",
+        "specified_1pct": "21.9%"
+      },
+      "name": "DDTL SOFR Floor",
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 4,
+          "term": "Commitment and giveaway"
+        },
+        {
+          "coverage": "full",
+          "row": 19,
+          "term": "Swingline"
+        },
+        {
+          "coverage": "full",
+          "row": 127,
+          "term": "Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing"
+        },
+        {
+          "coverage": "full",
+          "row": 138,
+          "term": "Pricing"
+        },
+        {
+          "coverage": "full",
+          "row": 139,
+          "term": "Floor"
+        },
+        {
+          "coverage": "full",
+          "row": 151,
+          "term": "Acquisition Agreement"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "KCT Cat 2 Item 2; Review Template Row 4 (Commitment and giveaway); Review Template Row 19 (Swingline); Review Template Row 127 (Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing); Review Template Row 138 (Pricing); Review Template Row 139 (Floor); Review Template Row 151 (Acquisition Agreement)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "DDTL CSA matches initial term loan CSA, maintaining pricing equivalence across the term loan complex.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.csa.same_as_initial",
+          "level": 3,
+          "name": "Same as Initial TL",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Explicit CSA for DDTL, typically 10 bps flat or tenor-differentiated (10/15/25 bps).",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.csa.specified_level",
+          "level": 3,
+          "name": "Specified CSA Level",
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "SOFR credit spread adjustment for DDTL. Standard: same as initial TL or 10 bps. LIBOR-SOFR transition artifact declining in newer deals.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.06",
+          "Section 2.13"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Delayed Draw Term Loan)"
+      },
+      "family_id": "deal_econ.ddtl",
+      "id": "deal_econ.ddtl.csa",
+      "level": 2,
+      "market_benchmarks": {
+        "same_as_tl_pct": "53.1%",
+        "specified_10bps": "15.6%"
+      },
+      "name": "DDTL Credit Spread Adjustment",
+      "type": "concept",
+      "definition_source": "Review Template Row 21 ([DDTL – availability period]); Review Template Row 22 ([DDTL – conditions to draw]); Review Template Row 23 ([DDTL – use of proceeds]); Review Template Row 141 (DDTL Commitment Fee); Review Template Row 161 (Delayed Draw Ticking Fee)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "A draw window measured in months or years from the closing date during which the borrower may request fundings. DLS Preferred (Row 14): 'Available after the Closing Date until the earlier to occur of [___] and the date on which the Maximum Delayed Draw Amount has been drawn.' PC Term Comparison: 'Typically at 18 month commitment; occasionally 24 months.'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.commitment_period.fixed",
+          "kct_ref": [
+            "cat2.2"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "most_common_value": "24 months",
+            "prevalence": "84%"
+          },
+          "name": "Fixed Period",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 9,
+              "term": "Countersign date"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (commitment period); PC Term Comparison, DDTL section",
+          "pc_ref": [
+            "DDTL"
+          ]
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Calendar date termination of DDTL availability, used when availability is tied to specific transaction timelines rather than a period from closing. DLS Preferred (Row 14): availability ends on 'the earlier to occur of [___]' — the blank may be a specific date.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.commitment_period.specific_date",
+          "level": 3,
+          "name": "Specific End Date",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (commitment expiration date)",
+          "extraction_refs": {}
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Different availability periods per DDTL tranche, staggering acquisition capacity over time. Each tranche's commitment terminates independently on its own expiration date.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.commitment_period.multi_tranche",
+          "kct_ref": [
+            "cat2.2"
+          ],
+          "level": 3,
+          "name": "Multi-Tranche Staging",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (single commitment period baseline); Review Template, Row 21 (DDTL availability period)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Commitment terminates upon acquisition failure or completion (e.g., 5 business days after acquisition closing). Ties DDTL availability to transaction execution. DLS Preferred (Row 14): acquisition-specific conditions must be satisfied before each draw.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.commitment_period.acquisition_specific",
+          "level": 3,
+          "name": "Acquisition-Tied Termination",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (acquisition-specific conditions); Review Template, Row 21"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Borrower's right to extend the DDTL commitment period subject to lender consent. Review Template (Row 21): 'each DDTL lender should have consent rights to extend.' Extension requires DDTL-specific lender consent, not general Required Lender approval.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.commitment_period.extension",
+          "kct_ref": [
+            "cat2.2"
+          ],
+          "level": 3,
+          "name": "Commitment Period Extension",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 21,
+              "term": "[DDTL – availability period]"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template, Row 21 ('each DDTL lender should have consent rights to extend')"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Period during which the borrower may request fundings under the delayed draw term loan facility. PC Term Comparison: 'Typically at 18 month commitment; occasionally 24 months.' DLS Preferred: 'Available after the Closing Date until the earlier to occur of [___] and the date on which the Maximum Delayed Draw Amount has been drawn.' Commitment terminates on the earlier of expiration date or full draw.",
+      "dls_ref": [
+        "DLS:5:Commitment Percentage",
+        "DLS:14:Delayed Draw Term Loans",
+        "DLS:24:Post-Close Flex Period",
+        "DLS:50:Marketing period"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": true,
+        "playbook_ref": "facility_structure.ddtl_commitment_period",
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.01",
+          "Section 2.14"
+        ],
+        "shape_ref": "facility_structure.ddtl_commitment_period",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.549712+00:00",
+          "term_packs": {
+            "TS_DDTL_AVAILABILITY": {
+              "label": "Term Sheet - DDTL Availability Period",
+              "category": "TERM_SHEET",
+              "exactPhrases": [
+                "DDTL Availability Period",
+                "Commitment Period",
+                "months from Closing Date",
+                "commitment termination",
+                "DDTL Commitment Termination Date"
+              ],
+              "sectionHeaders": [
+                "DDTL Availability Period",
+                "Commitment Period",
+                "Availability Window",
+                "Delayed Draw Term Loan"
+              ],
+              "semanticVariants": [
+                "DDTL availability window",
+                "draw period for delayed draw",
+                "commitment termination date",
+                "availability expiration"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "DDTL Availability Period",
+              "Commitment Period",
+              "months from Closing Date",
+              "commitment termination",
+              "DDTL Commitment Termination Date"
+            ],
+            "sectionHeaders": [
+              "DDTL Availability Period",
+              "Commitment Period",
+              "Availability Window",
+              "Delayed Draw Term Loan"
+            ],
+            "semanticVariants": [
+              "DDTL availability window",
+              "draw period for delayed draw",
+              "commitment termination date",
+              "availability expiration"
+            ]
+          }
+        }
+      },
+      "family_id": "deal_econ.ddtl",
+      "id": "deal_econ.ddtl.commitment_period",
+      "kct_ref": [
+        "cat2.2"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "market_standard_value": "24 months (65.6%)",
+        "observed_range": "12-36 months"
+      },
+      "name": "DDTL Commitment Period",
+      "r18_concept_ids": [
+        "facility_structure.ddtl"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 2,
+          "term": "Commitment Letter / Transaction Description"
+        },
+        {
+          "coverage": "full",
+          "row": 3,
+          "term": "Debt Quantum"
+        },
+        {
+          "coverage": "full",
+          "row": 4,
+          "term": "Commitment and giveaway"
+        },
+        {
+          "coverage": "partial",
+          "row": 6,
+          "term": "Information"
+        },
+        {
+          "coverage": "partial",
+          "row": 7,
+          "term": "Other advisory roles"
+        },
+        {
+          "coverage": "full",
+          "row": 8,
+          "term": "Expense Reimbursement"
+        },
+        {
+          "coverage": "full",
+          "row": 9,
+          "term": "Countersign date"
+        },
+        {
+          "coverage": "full",
+          "row": 10,
+          "term": "Termination of commitments"
+        },
+        {
+          "coverage": "full",
+          "row": 11,
+          "term": "Outside Date"
+        },
+        {
+          "coverage": "full",
+          "row": 12,
+          "term": "Minimum equity contribution"
+        },
+        {
+          "coverage": "full",
+          "row": 15,
+          "term": "Revolver closing date draws"
+        },
+        {
+          "coverage": "full",
+          "row": 16,
+          "term": "Revolver – borrowing notices"
+        },
+        {
+          "coverage": "full",
+          "row": 17,
+          "term": "Revolver – additional borrowers"
+        },
+        {
+          "coverage": "full",
+          "row": 21,
+          "term": "[DDTL – availability period]"
+        },
+        {
+          "coverage": "full",
+          "row": 22,
+          "term": "[DDTL – conditions to draw]"
+        },
+        {
+          "coverage": "full",
+          "row": 23,
+          "term": "[DDTL – use of proceeds]"
+        },
+        {
+          "coverage": "full",
+          "row": 27,
+          "term": "Incremental DDTLs"
+        },
+        {
+          "coverage": "full",
+          "row": 50,
+          "term": "Pro Forma Calculations"
+        },
+        {
+          "coverage": "full",
+          "row": 62,
+          "term": "Leverage Ratio Calculations"
+        },
+        {
+          "coverage": "full",
+          "row": 128,
+          "term": "Limited Conditionality Transactions"
+        },
+        {
+          "coverage": "full",
+          "row": 137,
+          "term": "Equity Co-Invest"
+        },
+        {
+          "coverage": "full",
+          "row": 140,
+          "term": "RCF Commitment Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 141,
+          "term": "DDTL Commitment Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 149,
+          "term": "Waiver"
+        },
+        {
+          "coverage": "full",
+          "row": 156,
+          "term": "Other"
+        },
+        {
+          "coverage": "full",
+          "row": 160,
+          "term": "Ticking Fee (Term/Revolver)"
+        },
+        {
+          "coverage": "full",
+          "row": 163,
+          "term": "Alternate Transaction Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 164,
+          "term": "Sponsor Participation"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 14; PC Term Comparison, DDTL section ('Typically at 18 month commitment; occasionally 24 months')",
+      "pc_ref": [
+        "DDTL"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "TS_DDTL_AVAILABILITY",
+          "label": "Term Sheet - DDTL Availability Period",
+          "schema_file": "term-sheet-facilities-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.5632,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Permitted purpose limiting delayed draw fundings to financing acquisitions or acquisition-related costs. DLS Preferred (Row 14, condition iv): 'Proceeds will be used by the Borrower after the Closing Date to consummate one or more Permitted Acquisitions and to pay costs and expenses incurred in connection therewith.' PC Term Comparison: 'Typically limited to Permitted Acquisitions.'",
+          "dls_ref": [
+            "DLS:82:Permitted Acquisitions"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.use_of_proceeds.acquisitions",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "62.5%"
+          },
+          "name": "Permitted Acquisitions",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (condition iv); PC Term Comparison, DDTL section",
+          "pc_ref": [
+            "DDTL"
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Permitted purpose limiting delayed draw fundings to capital expenditures, constraining deployment to asset-building investments that preserve or enhance collateral value. PC Term Comparison: 'you sometimes see growth cap ex as well' in addition to acquisitions.",
+          "dls_ref": [
+            "DLS:76:Capex"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.use_of_proceeds.capex",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "34.4%"
+          },
+          "name": "Capital Expenditures",
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, DDTL section ('Typically limited to Permitted Acquisitions but you sometimes see growth cap ex as well')",
+          "pc_ref": [
+            "DDTL"
+          ]
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Days allowed for retrospective refinancing of prior cash-funded acquisitions. PC Term Comparison: 'must be within 30-60 days.' Longer lookback is more borrower-friendly, providing greater flexibility to sequence acquisitions and funding.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.ddtl",
+              "id": "deal_econ.ddtl.use_of_proceeds.refinancing.lookback_period",
+              "level": 4,
+              "name": "Lookback Period",
+              "type": "sub_component",
+              "definition_source": "PC Term Comparison, DDTL section ('within 30-60 days')",
+              "pc_ref": [
+                "DDTL"
+              ]
+            },
+            {
+              "id": "deal_econ.ddtl.use_of_proceeds.refinancing.eligible_debt",
+              "name": "Eligible Prior Debt Types",
+              "level": 4,
+              "type": "sub_component",
+              "domain_id": "deal_econ",
+              "family_id": "deal_econ.ddtl",
+              "corpus_prevalence": "medium",
+              "extraction_difficulty": "hard",
+              "definition": "Types of prior debt eligible for refinancing with DDTL proceeds: typically revolver borrowings used for acquisitions, bridge facilities, and cash deployed from the balance sheet. Limitations on amount ensure DDTL refinancing does not exceed the original acquisition cost.",
+              "definition_source": "PC Term Comparison, DDTL section (replenishment mechanics); DLS Preferred, Row 14 (use-of-proceeds restrictions)",
+              "pc_ref": [
+                "DDTL"
+              ]
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Retrospective use to refinance prior cash- or revolver-funded acquisitions within a lookback period. PC Term Comparison: 'if replenishing cash used typically must be within 30-60 days.' Allows borrowers to deploy balance sheet cash for time-sensitive acquisitions and then backfill with DDTL proceeds.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.use_of_proceeds.refinancing",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "28.1%"
+          },
+          "name": "Refinancing / Replenishment",
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, DDTL section ('if replenishing cash used typically must be within 30-60 days')",
+          "pc_ref": [
+            "DDTL"
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Deferred acquisition consideration payments funded with DDTL proceeds. DLS Preferred (Row 14): DDTL proceeds used to 'consummate one or more Permitted Acquisitions and to pay costs and expenses incurred in connection therewith' — earn-outs are acquisition costs. PC Term Comparison addresses earn-outs as a component of acquisition consideration.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.use_of_proceeds.earn_outs",
+          "level": 3,
+          "market_benchmarks": {
+            "deferred_pp_pct": "40.6%",
+            "earnout_pct": "31.3%"
+          },
+          "name": "Earn-Outs / Deferred Purchase Price",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (acquisition costs); PC Term Comparison, DDTL section",
+          "pc_ref": [
+            "DDTL"
+          ]
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Broadest permitted purpose for delayed draw fundings, allowing deployment for any lawful corporate purpose without specific use restrictions. Review Template (Row 23): 'GCP includes restricted payments and restricted debt payments — confirm sponsor's intent and lender flex.' Maximizes borrower flexibility but reduces lender visibility.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.use_of_proceeds.general_corporate",
+          "level": 3,
+          "name": "General Corporate Purposes",
+          "type": "sub_component",
+          "definition_source": "Review Template, Row 23 ('GCP includes restricted payments and restricted debt payments')"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Permitted purposes for DDTL drawings. DLS Preferred: 'Proceeds will be used by the Borrower after the Closing Date to consummate one or more Permitted Acquisitions and to pay costs and expenses incurred in connection therewith.' PC Term Comparison: 'Typically limited to Permitted Acquisitions but you sometimes see growth cap ex as well; if replenishing cash used typically must be within 30-60 days.' Review Template: use of proceeds should be tailored, with 'general corporate purposes' including RPs and RDPs.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": true,
+        "playbook_ref": "facility_structure.ddtl_use_of_proceeds",
+        "section_locations": [
+          "ARTICLE II",
+          "ARTICLE V",
+          "Section 2.14",
+          "Section 5.08"
+        ],
+        "shape_ref": "facility_structure.ddtl_use_of_proceeds",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.577394+00:00",
+          "term_packs": {
+            "TS_DDTL_USE_OF_PROCEEDS": {
+              "label": "Term Sheet - DDTL Use of Proceeds",
+              "category": "TERM_SHEET",
+              "exactPhrases": [
+                "Can be used to replenish cash used for [•] within [•] days",
+                "Use of Proceeds",
+                "DDTL Use of Proceeds",
+                "Permitted Acquisitions",
+                "general corporate purposes"
+              ],
+              "sectionHeaders": [
+                "Use of Proceeds",
+                "DDTL Use of Proceeds",
+                "Permitted Uses",
+                "Application of Proceeds"
+              ],
+              "semanticVariants": [
+                "DDTL proceeds permitted uses",
+                "application of DDTL proceeds",
+                "how DDTL may be used",
+                "permitted DDTL deployment"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Can be used to replenish cash used for [•] within [•] days",
+              "Use of Proceeds",
+              "DDTL Use of Proceeds",
+              "Permitted Acquisitions",
+              "general corporate purposes"
+            ],
+            "sectionHeaders": [
+              "Use of Proceeds",
+              "DDTL Use of Proceeds",
+              "Permitted Uses",
+              "Application of Proceeds"
+            ],
+            "semanticVariants": [
+              "DDTL proceeds permitted uses",
+              "application of DDTL proceeds",
+              "how DDTL may be used",
+              "permitted DDTL deployment"
+            ]
+          }
+        }
+      },
+      "family_id": "deal_econ.ddtl",
+      "id": "deal_econ.ddtl.use_of_proceeds",
+      "kct_ref": [
+        "cat5.2"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "51.6% (of CAs with DDTLs)",
+        "restrictive": "Specific acquisition only",
+        "standard": "Permitted acquisitions and general corporate purposes"
+      },
+      "name": "DDTL Use of Proceeds",
+      "r18_concept_ids": [
+        "facility_structure.ddtl"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 23,
+          "term": "[DDTL – use of proceeds]"
+        },
+        {
+          "coverage": "full",
+          "row": 56,
+          "term": "Affirmative Covenants – other"
+        },
+        {
+          "coverage": "full",
+          "row": 162,
+          "term": "Agency Fee"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 14 (DDTL condition iv); PC Term Comparison, DDTL section; Review Template, Row 23 (DDTL use of proceeds)",
+      "pc_ref": [
+        "DDTL"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "TS_DDTL_USE_OF_PROCEEDS",
+          "label": "Term Sheet - DDTL Use of Proceeds",
+          "schema_file": "term-sheet-facilities-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.6839,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Carveout permitting rollover requests of existing drawn loans to be subject to a more lenient no-default construct rather than the full no-default condition that applies to new money drawdowns. Distinguishes between new funding (full conditions) and administrative rollover of existing exposure.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.ddtl",
+              "id": "deal_econ.ddtl.conditions_precedent.no_default.rollover_exception_for_existing_d",
+              "kct_ref": [
+                "KCT:Cat3:10"
+              ],
+              "level": 4,
+              "name": "Rollover exception for existing drawn loans",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 6 (Conversions/Continuations: 'Same notice periods as Borrowings'); Review Template, Row 22"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Exception under SunGard/certain-funds conditionality that relaxes the no-default condition for DDTL drawdowns financing a committed acquisition. DLS Preferred (Row 14, condition vi): 'subject to customary Sungard limitations to the extent the proceeds of any Delayed Draw Term Loans are being used to finance a Limited Condition Acquisition.' Only specified reps and limited conditions must be satisfied at closing.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.ddtl",
+              "id": "deal_econ.ddtl.conditions_precedent.no_default.sungard_certain_funds_carveout",
+              "kct_ref": [
+                "KCT:Cat3:10"
+              ],
+              "level": 4,
+              "name": "SunGard/certain funds carveout",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 148,
+                  "term": "Conditions Annex"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 14 (condition vi: Sungard limitations); DLS Preferred, Row 15 (Limited Condition Acquisition)"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Accommodation allowing the borrower to test the no-default condition at the signing date of a limited condition acquisition agreement rather than at the DDTL draw date. DLS Preferred (Row 15): borrower 'may elect to test any Ratios/Baskets/Conditions required to be complied with in connection with such LCA at the time of signing.' Only payment or bankruptcy EoD required at closing.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.ddtl",
+              "id": "deal_econ.ddtl.conditions_precedent.no_default.limited_condition_transaction_acc",
+              "kct_ref": [
+                "KCT:Cat3:10"
+              ],
+              "level": 4,
+              "name": "Limited Condition Transaction accommodation",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 148,
+                  "term": "Conditions Annex"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 15 (Limited Condition Acquisition testing); PC Term Comparison, DDTL conditions ('subject to LCT')",
+              "pc_ref": [
+                "DDTL conditions ('subject to LCT')"
+              ]
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Carveout permitting continued DDTL draws during a Default when the administrative agent determines in good faith that funding serves the best interests of the lender group by preserving going-concern value. Primarily an ABL-facility feature where continued funding protects collateral value.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.ddtl",
+              "id": "deal_econ.ddtl.conditions_precedent.no_default.abl_best_interest_funding_carveou",
+              "kct_ref": [
+                "KCT:Cat3:10"
+              ],
+              "level": 4,
+              "name": "ABL best-interest funding carveout",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 6 (agent discretion framework)"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Provision granting the administrative agent discretion to continue funding despite a default, where such discretion may not be revoked by the required lenders. Broader than standard 'best interest' fundings. Primarily in ABL facilities.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.ddtl",
+              "id": "deal_econ.ddtl.conditions_precedent.no_default.agent_discretion_to_continue_fund",
+              "kct_ref": [
+                "KCT:Cat3:10"
+              ],
+              "level": 4,
+              "name": "Agent discretion to continue funding",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 6 (agent authority); PCTC, Admin Agency Provisions section",
+              "pc_ref": [
+                "Admin Agency Provisions"
+              ]
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Condition requiring no existing Event of Default or Default at time of draw or after giving effect thereto. DLS Preferred (Row 14, condition vi): 'no default or event of default under the Credit Facilities would exist after giving effect thereto.' PC Term Comparison: 'No Default or Event of Default' listed as standard DDTL condition.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.conditions_precedent.no_default",
+          "kct_ref": [
+            "cat3.10"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "96.9%"
+          },
+          "name": "No Default / EoD",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (condition vi); PC Term Comparison, DDTL conditions",
+          "pc_ref": [
+            "DDTL conditions"
+          ]
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Specified Representations must remain true and correct in all material respects at time of DDTL funding. DLS Preferred (Row 14, condition vi): 'bring down of representations and warranties, subject to customary Sungard limitations to the extent the proceeds are being used to finance a Limited Condition Acquisition.' PC Term Comparison: 'Accuracy of Reps (subject to LCT).'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.conditions_precedent.reps_bringdown",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "90.6%"
+          },
+          "name": "Reps & Warranties Bring-Down",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (condition vi: reps bring-down); PC Term Comparison, DDTL conditions",
+          "pc_ref": [
+            "DDTL conditions"
+          ]
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Pro forma First Lien Net Leverage Ratio test at time of DDTL draw. DLS Preferred (Row 14, condition v): 'the Total Senior [Secured] [Net] Leverage Ratio... shall not exceed the... Total Senior [Secured] [Net] Leverage Ratio... as of the Closing Date.' Testing uses the most recently ended fiscal quarter, excluding DDTL cash proceeds from netting.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "hard",
+              "family_id": "deal_econ.ddtl",
+              "id": "deal_econ.ddtl.conditions_precedent.leverage_test.first_lien",
+              "level": 4,
+              "market_benchmarks": {
+                "average_value": "5.22x",
+                "observed_range": "3.25x-6.5x"
+              },
+              "name": "First Lien Net Leverage",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 159,
+                  "term": "Structuring Fee"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 14 (condition v: leverage test); PC Term Comparison, DDTL conditions ('Pro Forma closing leverage')",
+              "pc_ref": [
+                "DDTL conditions ('Pro Forma closing leverage')"
+              ]
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Pro forma Total Net Leverage Ratio test at time of DDTL draw. DLS Preferred (Row 14, condition v): 'the Total [Net] Leverage Ratio... shall not exceed the... Total [Net] Leverage Ratio... as of the Closing Date.' Measured as of the last day of the most recently ended fiscal quarter.",
+              "dls_ref": [
+                "DLS:13:Leverage Ratios"
+              ],
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "hard",
+              "family_id": "deal_econ.ddtl",
+              "id": "deal_econ.ddtl.conditions_precedent.leverage_test.total_net",
+              "level": 4,
+              "market_benchmarks": {
+                "average_value": "5.08x",
+                "observed_range": "4.0x-6.5x"
+              },
+              "name": "Total Net Leverage",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 14 (condition v: Total Net Leverage test)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Whether leverage test is calculated on a pro forma basis giving effect to the funded acquisition and the DDTL draw. DLS Preferred (Row 14, condition v): 'on a pro forma basis after giving effect to the incurrence of any such Delayed Draw Term Loans (assuming the full amount thereof is drawn) and after giving effect to the Permitted Acquisition... and all other appropriate pro forma adjustments (but excluding the cash proceeds of any Delayed Draw Term Loans... for the purposes of determining cash netting).'",
+              "dls_ref": [
+                "DLS:48:Pro Forma Financial Statements"
+              ],
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "hard",
+              "family_id": "deal_econ.ddtl",
+              "id": "deal_econ.ddtl.conditions_precedent.leverage_test.pro_forma_basis",
+              "kct_ref": [
+                "cat2.2"
+              ],
+              "level": 4,
+              "name": "Pro Forma Calculation",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 22,
+                  "term": "[DDTL – conditions to draw]"
+                },
+                {
+                  "coverage": "full",
+                  "row": 50,
+                  "term": "Pro Forma Calculations"
+                },
+                {
+                  "coverage": "full",
+                  "row": 128,
+                  "term": "Limited Conditionality Transactions"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 14 (condition v: pro forma calculation with cash netting exclusion)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Pro forma leverage test that must be satisfied at time of DDTL draw. DLS Preferred: the Total Senior [Secured] [Net] Leverage Ratio and Total [Net] Leverage Ratio, measured as of the last day of the most recently ended fiscal quarter, shall not exceed closing date levels (excluding cash proceeds of DDTL from netting). Review Template: 'Pro forma compliance with [___]x (subject to LCT).' PC Term Comparison: 'Pro Forma closing leverage (discuss with client whether stacking or excluding concurrent revolver draws permissible).'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.conditions_precedent.leverage_test",
+          "level": 3,
+          "market_benchmarks": {
+            "avg_first_lien": "5.22x",
+            "avg_total_net": "5.08x",
+            "prevalence": "84.4%"
+          },
+          "name": "Leverage Ratio Test",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (DDTL condition v); PC Term Comparison, DDTL section; Review Template, Row 22",
+          "pc_ref": [
+            "DDTL"
+          ],
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:41.564498+00:00",
+              "term_packs": {
+                "TS_DDTL_LEVERAGE_CONDITION": {
+                  "label": "Term Sheet - DDTL Leverage Testing",
+                  "category": "TERM_SHEET",
+                  "exactPhrases": [
+                    "Ratio can be tested either at commitment establishment",
+                    "with no need to deem such amounts fully drawn thereafter",
+                    "or at draw date",
+                    "DDTL Leverage Test",
+                    "Incremental DDTL Testing"
+                  ],
+                  "sectionHeaders": [
+                    "DDTL Leverage Test",
+                    "Incremental DDTL Testing",
+                    "Ratio Testing",
+                    "Leverage Condition"
+                  ],
+                  "semanticVariants": [
+                    "DDTL ratio testing timing",
+                    "leverage condition for DDTL",
+                    "when ratio is tested for delayed draw",
+                    "commitment vs draw date testing"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.58,
+                    "minKeywordScore": 0.48,
+                    "minConfidence": 0.65,
+                    "escalationThreshold": 0.48,
+                    "humanEscalationThreshold": 0.28
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "Ratio can be tested either at commitment establishment",
+                  "with no need to deem such amounts fully drawn thereafter",
+                  "or at draw date",
+                  "DDTL Leverage Test",
+                  "Incremental DDTL Testing"
+                ],
+                "sectionHeaders": [
+                  "DDTL Leverage Test",
+                  "Incremental DDTL Testing",
+                  "Ratio Testing",
+                  "Leverage Condition"
+                ],
+                "semanticVariants": [
+                  "DDTL ratio testing timing",
+                  "leverage condition for DDTL",
+                  "when ratio is tested for delayed draw",
+                  "commitment vs draw date testing"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "TS_DDTL_LEVERAGE_CONDITION",
+              "label": "Term Sheet - DDTL Leverage Testing",
+              "schema_file": "term-sheet-facilities-enhanced.schema.ts",
+              "field_count": 3,
+              "r1_domain": "deal_econ",
+              "mapping_confidence": 0.5308,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Limited Condition Transaction provisions modifying the testing date for DDTL conditions. DLS Preferred (Row 15): borrower may elect to test ratios at signing rather than closing of a Limited Condition Acquisition. PC Term Comparison: DDTL conditions 'subject to LCT.' At closing, only payment or bankruptcy EoD must be absent.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.conditions_precedent.lct",
+          "kct_ref": [
+            "cat3.10"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "56.2%"
+          },
+          "name": "LCT Provisions",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 15 (LCT testing provisions); PC Term Comparison, DDTL conditions ('subject to LCT')",
+          "pc_ref": [
+            "DDTL conditions ('subject to LCT')"
+          ]
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Minimum Consolidated EBITDA threshold required at time of draw, ensuring target quality for acquisitions funded with DDTL. DLS Preferred (Row 82, condition xi): for Permitted Acquisitions, 'the Target shall have positive EBITDA for its most recently completed fiscal year and the subsequent year to date period.'",
+          "dls_ref": [
+            "DLS:42:Minimum EBITDA"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.conditions_precedent.minimum_ebitda",
+          "level": 3,
+          "name": "Minimum EBITDA Test",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 82 (Permitted Acquisitions condition xi: positive EBITDA)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Requirement to deliver acquisition agreement, pro forma financials, and other transaction documentation as a condition to funding. DLS Preferred (Row 14, condition x): 'all documentation relating to the applicable [Permitted Acquisition], including the acquisition agreement... shall have been completed in form and substance [reasonably] satisfactory to the Delayed Draw Term Lenders.'",
+          "dls_ref": [
+            "DLS:15:Limited Condition Acquisition"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.conditions_precedent.acquisition_docs",
+          "level": 3,
+          "name": "Acquisition Documentation",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (condition x: acquisition documentation)"
+        },
+        {
+          "id": "deal_econ.ddtl.conditions_precedent.due_diligence",
+          "name": "Due Diligence Condition",
+          "definition": "Condition requiring administrative agent and/or DDTL lenders to have completed legal, collateral, tax, environmental, and accounting due diligence. DLS Preferred (Row 14, condition xii): 'the Delayed Draw Term Lenders shall have completed their business, financial, legal, collateral, tax environmental and accounting due diligence of the Target... and each such review shall be satisfactory to the Delayed Draw Term Lenders in their sole discretion.'",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.ddtl",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "DLS Preferred, Row 14 (condition xii: due diligence)"
+        },
+        {
+          "id": "deal_econ.ddtl.conditions_precedent.no_litigation",
+          "name": "Litigation Condition",
+          "definition": "Condition requiring no litigation pending or threatened that could have a material adverse effect. DLS Preferred (Row 14, condition xi): 'no litigation by any entity (private or governmental) shall be pending or threatened.'",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.ddtl",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "DLS Preferred, Row 14 (condition xi: no litigation)"
+        },
+        {
+          "id": "deal_econ.ddtl.conditions_precedent.minimum_equity",
+          "name": "Minimum Equity Contribution",
+          "definition": "Condition requiring borrower or sponsor to provide minimum equity contribution for the funded acquisition. DLS Preferred (Row 14, condition viii): 'the Borrower shall have received not less than [__]% of the purchase price of the applicable [Permitted Acquisition]... from equity financing at Holdings provided by the Sponsor.'",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.ddtl",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "DLS Preferred, Row 14 (condition viii: minimum equity contribution)",
+          "extraction_refs": {}
+        },
+        {
+          "id": "deal_econ.ddtl.conditions_precedent.agreement_approval",
+          "name": "Acquisition Agreement Approval",
+          "definition": "Condition requiring acquisition documentation to be completed satisfactorily. DLS Preferred (Row 14, condition x): acquisition agreement 'shall have been completed in form and substance [reasonably] satisfactory to the Delayed Draw Term Lenders and the [Permitted Acquisition] shall have been consummated in all [material] respects in accordance with the terms of the [Permitted Acquisition Agreement].' Key negotiation: reasonable vs. sole discretion standard.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.ddtl",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "DLS Preferred, Row 14 (condition x: acquisition agreement approval)"
+        },
+        {
+          "id": "deal_econ.ddtl.conditions_precedent.equity_contribution",
+          "name": "Permitted Acquisition Equity Contribution",
+          "definition": "Structural and qualitative requirements for the sponsor equity contribution. DLS Preferred (Row 14, condition viii): equity financing 'shall be on terms satisfactory to the Delayed Draw Term Lenders.' Condition ix further specifies co-investment opportunity: DDTL lenders can purchase equity 'at the same price and on the same terms... as Sponsor.'",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.ddtl",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "DLS Preferred, Row 14 (conditions viii and ix: equity contribution and co-invest)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Requirements that must be satisfied before each DDTL funding. DLS Preferred specifies twelve conditions including: pro forma financial covenant compliance, pro forma leverage ratio test, bring-down of representations (subject to LCT), no default, payment of fees, minimum equity contribution, acquisition agreement review, due diligence completion satisfactory to DDTL lenders, and no pending litigation. PC Term Comparison: conditions include 'Pro Forma closing leverage, prior notice, max number of draws, min amount, No Default or Event of Default, Accuracy of Reps (subject to LCT).'",
+      "dls_ref": [
+        "DLS:11:Conditions to incurrence: Bring down of "
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": true,
+        "playbook_ref": "facility_structure.ddtl_conditions",
+        "section_locations": [
+          "ARTICLE II",
+          "ARTICLE IV",
+          "Section 2.14",
+          "Section 4.02"
+        ],
+        "shape_ref": "facility_structure.ddtl_conditions",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.557228+00:00",
+          "term_packs": {
+            "TS_DDTL_CONDITIONS": {
+              "label": "Term Sheet - DDTL Conditions to Draw",
+              "category": "TERM_SHEET",
+              "exactPhrases": [
+                "Pro forma compliance with [•]x (subject to LCT)",
+                "No Default / EoD (subject to LCT)",
+                "Accuracy of reps (subject to LCT)",
+                "[•] BDs prior notice",
+                "Conditions to DDTL Borrowing"
+              ],
+              "sectionHeaders": [
+                "Conditions to DDTL Borrowing",
+                "DDTL Conditions Precedent",
+                "Conditions to Delayed Draw",
+                "DDTL Draw Requirements"
+              ],
+              "semanticVariants": [
+                "DDTL draw conditions",
+                "conditions to drawing DDTL",
+                "DDTL borrowing requirements",
+                "delayed draw conditions precedent"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Pro forma compliance with [•]x (subject to LCT)",
+              "No Default / EoD (subject to LCT)",
+              "Accuracy of reps (subject to LCT)",
+              "[•] BDs prior notice",
+              "Conditions to DDTL Borrowing"
+            ],
+            "sectionHeaders": [
+              "Conditions to DDTL Borrowing",
+              "DDTL Conditions Precedent",
+              "Conditions to Delayed Draw",
+              "DDTL Draw Requirements"
+            ],
+            "semanticVariants": [
+              "DDTL draw conditions",
+              "conditions to drawing DDTL",
+              "DDTL borrowing requirements",
+              "delayed draw conditions precedent"
+            ]
+          }
+        }
+      },
+      "family_id": "deal_econ.ddtl",
+      "id": "deal_econ.ddtl.conditions_precedent",
+      "kct_ref": [
+        "cat3.10"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "negotiated_conditions": "Pro forma compliance, minimum EBITDA, leverage test",
+        "prevalence": "51.6% (of CAs with DDTLs)",
+        "standard_conditions": "No default, reps true, compliance certificate"
+      },
+      "name": "DDTL Conditions Precedent",
+      "r18_concept_ids": [
+        "facility_structure.ddtl"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 20,
+          "term": "LCs"
+        },
+        {
+          "coverage": "full",
+          "row": 30,
+          "term": "Incremental – reclassification"
+        },
+        {
+          "coverage": "full",
+          "row": 148,
+          "term": "Conditions Annex"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 14 (DDTL conditions i-xii); PC Term Comparison, DDTL section; Review Template, Row 22 (DDTL conditions to draw)",
+      "pc_ref": [
+        "DDTL"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "TS_DDTL_CONDITIONS",
+          "label": "Term Sheet - DDTL Conditions to Draw",
+          "schema_file": "term-sheet-facilities-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.6558,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Advance notice required for DDTL draws. DLS Preferred (Row 14, condition i): 'the Borrower shall provide at least [fifteen (15)] business days prior written notice to the Administrative Agent (or such shorter period as agreed to by the Administrative Agent).' PC Term Comparison: 'prior notice' listed as standard condition.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.borrowing_mechanics.notice_period",
+          "level": 3,
+          "market_benchmarks": {
+            "market_standard_value": "5 BD (40.6%)",
+            "observed_range": "3-10 BD"
+          },
+          "name": "Notice Period",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (condition i: 15 BD notice); PC Term Comparison, DDTL conditions",
+          "pc_ref": [
+            "DDTL conditions"
+          ]
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Minimum per-draw amount for DDTL fundings. DLS Preferred (Row 14, condition i): 'each draw shall be in a principal amount of not less than [$[___]].' PC Term Comparison: 'min amount' listed as standard condition. Prevents excessive administrative burden from small draws.",
+          "dls_ref": [
+            "DLS:43:Minimum ratings"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.borrowing_mechanics.minimum_draw",
+          "level": 3,
+          "market_benchmarks": {
+            "market_standard_value": "$1M (46.9%)",
+            "observed_range": "$0.5M-$5M"
+          },
+          "name": "Minimum Draw Amount",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (condition i: minimum draw amount); PC Term Comparison, DDTL conditions ('min amount')",
+          "pc_ref": [
+            "DDTL conditions ('min amount')"
+          ]
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Limit on total number of separate DDTL drawings. DLS Preferred (Row 14, condition i): 'May be funded in up to [[___] separate draws].' PC Term Comparison: 'max number of draws' listed as standard condition. Caps protect lender administration costs.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.borrowing_mechanics.max_draws",
+          "level": 3,
+          "market_benchmarks": {
+            "standard_cap": "10 draws",
+            "uncapped_pct": "59.4%"
+          },
+          "name": "Maximum Number of Draws",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (condition i: max draws); PC Term Comparison, DDTL conditions ('max number of draws')",
+          "pc_ref": [
+            "DDTL conditions ('max number of draws')"
+          ]
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether each DDTL draw must be funded pro rata across all DDTL lenders based on their commitment percentages. DLS Preferred (Row 6): revolving loans funded pro rata; same principle applies to DDTL draws. Standard: all draws funded pro rata by commitment share.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.borrowing_mechanics.pro_rata_draw",
+          "level": 3,
+          "name": "Pro Rata Draw Requirement",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 20,
+              "term": "LCs"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (pro rata funding mechanics); DLS Preferred, Row 5 (Commitment Percentage)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether a DDTL borrowing request, once delivered, is irrevocable and binding on the borrower. Standard: irrevocable upon delivery. DLS Preferred borrowing mechanics imply irrevocability through the notice-funding sequence in Row 6.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.borrowing_mechanics.irrevocable_notice",
+          "level": 3,
+          "name": "Irrevocability of Borrowing Notice",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (borrowing notice mechanics — implied irrevocability)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Procedural requirements for DDTL drawings. DLS Preferred (Row 14, condition i): 'May be funded in up to [[___] separate draws] before the Delayed Draw Expiration Date, each draw shall be in a principal amount of not less than [$[___]] and the Borrower shall provide at least [fifteen (15)] business days prior written notice.' PC Term Comparison lists conditions including 'prior notice, max number of draws, min amount.'",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.02",
+          "Section 2.03",
+          "Section 2.14"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Delayed Draw Term Loan)"
+      },
+      "family_id": "deal_econ.ddtl",
+      "id": "deal_econ.ddtl.borrowing_mechanics",
+      "kct_ref": [
+        "cat3.10"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "minimum_draw": "$5-25M typical minimum draw amount",
+        "notice_period": "3-5 business days",
+        "prevalence": "51.6% (of CAs with DDTLs)"
+      },
+      "name": "DDTL Borrowing Mechanics",
+      "r18_concept_ids": [
+        "facility_structure.ddtl"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 16,
+          "term": "Revolver – borrowing notices"
+        },
+        {
+          "coverage": "full",
+          "row": 35,
+          "term": "Incremental – ROFR"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 14 (condition i: draws, notice, minimums); PC Term Comparison, DDTL section",
+      "pc_ref": [
+        "DDTL"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "DDTL amortization matches initial term loan schedule, supporting fungibility and same-class treatment. DLS Preferred (Row 14, condition ii): 'identical to the terms of the Initial Term Loans, including... amortization.' Dominant market convention.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.amortization.same_as_initial",
+          "level": 3,
+          "name": "Same as Initial TL",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (condition ii: identical amortization)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Explicit DDTL amortization schedule that may differ from the initial TL due to later draw date or different tranche economics. Creates separate-class treatment, contrasting with DLS Preferred identical-terms position.",
+          "dls_ref": [
+            "DLS:57:Specified Representations"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.amortization.specified_schedule",
+          "level": 3,
+          "name": "Specified Schedule",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (condition ii: identical terms as baseline); Review Template, Row 3"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "When DDTL amortization begins: first full quarter after draw, same schedule as initial TL (catch-up payments), or upon conversion to term loan. DLS Preferred (Row 14, condition ii): identical terms implies same amortization schedule, which may require catch-up payments to align with the initial TL schedule.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.amortization.commencement_timing",
+          "level": 3,
+          "name": "Commencement Timing",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (condition ii: identical terms including amortization); Review Template, Row 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Scheduled repayment for drawn DDTL amounts. DLS Preferred (Row 14, condition ii): terms 'identical to the terms of the Initial Term Loans, including... amortization.' Standard: matching the 0.25% quarterly / 1% annual rate of the initial TL (per DLS Row 8).",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": true,
+        "playbook_ref": "facility_structure.amortization",
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.07",
+          "Section 2.10",
+          "Section 2.14"
+        ],
+        "shape_ref": "facility_structure.amortization",
+        "readiness_reason": "playbook_match_found"
+      },
+      "family_id": "deal_econ.ddtl",
+      "id": "deal_econ.ddtl.amortization",
+      "level": 2,
+      "market_benchmarks": {
+        "market_standard_value": "0.25% quarterly (1% p.a.)",
+        "prevalence": "56.7%"
+      },
+      "name": "DDTL Amortization",
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 14 (condition ii: identical amortization); DLS Preferred, Row 8 ('0.25% per quarter')"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Conditions for same-class treatment: matching maturity, margin, amortization, and call protection. DLS Preferred (Row 14, condition ii): 'terms shall be identical to the terms of the Initial Term Loans, including, without limitation, as to pricing, fees, applicable margin, yield, prepayments, amortization, maturity.' Economic divergence in any dimension creates separate class.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.same_class.fungibility",
+          "level": 3,
+          "name": "Fungibility Requirements",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (condition ii: complete enumeration of identical-term requirements)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Same-class DDTL votes together with initial TL lenders in Required Lender calculations; separate class may have independent blocking rights on certain amendments. DLS Preferred (Row 93): Required Lenders defined as 'lenders holding more than 50% of the aggregate unused commitments and outstanding loans.'",
+          "dls_ref": [
+            "DLS:93:Voting"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.same_class.voting_implications",
+          "level": 3,
+          "name": "Voting Implications",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 93 (Voting — Required Lender definition); DLS Preferred, Row 14 (same-class treatment)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether drawn DDTL participates pro rata with initial TL in mandatory prepayment waterfall or receives separate treatment. DLS Preferred (Row 11): incremental facilities 'must share in mandatory and voluntary prepayments on a pro rata or less than pro rata basis.' Same-class DDTL participates pro rata by definition.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.same_class.waterfall_treatment",
+          "level": 3,
+          "name": "Waterfall Treatment",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 11 (pro rata prepayment sharing); DLS Preferred, Row 14 (same-class treatment)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Whether drawn DDTL constitutes the same class of loans as the initial term loan, determining economic fungibility. DLS Preferred (Row 14, condition ii): drawn DDTLs 'shall be the same class as, the outstanding Initial Term Loans.' Same-class treatment means identical pricing, maturity, amortization, and participation in the prepayment waterfall.",
+      "dls_ref": [
+        "DLS:14:Delayed Draw Term Loans"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.14",
+          "Section 2.17"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Delayed Draw Term Loan)"
+      },
+      "family_id": "deal_econ.ddtl",
+      "id": "deal_econ.ddtl.same_class",
+      "kct_ref": [
+        "cat2.2"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "same_class_pct": "53.1%",
+        "separate_class_pct": "31.3%"
+      },
+      "name": "DDTL Same Class Treatment",
+      "review_ref": [
+        {
+          "coverage": "partial",
+          "row": 7,
+          "term": "Other advisory roles"
+        },
+        {
+          "coverage": "full",
+          "row": 12,
+          "term": "Minimum equity contribution"
+        },
+        {
+          "coverage": "full",
+          "row": 17,
+          "term": "Revolver – additional borrowers"
+        },
+        {
+          "coverage": "full",
+          "row": 19,
+          "term": "Swingline"
+        },
+        {
+          "coverage": "full",
+          "row": 28,
+          "term": "Incremental – racking and stacking"
+        },
+        {
+          "coverage": "full",
+          "row": 31,
+          "term": "Incremental – netting"
+        },
+        {
+          "coverage": "full",
+          "row": 32,
+          "term": "Incremental – terms"
+        },
+        {
+          "coverage": "full",
+          "row": 34,
+          "term": "Incremental – MFN"
+        },
+        {
+          "coverage": "full",
+          "row": 50,
+          "term": "Pro Forma Calculations"
+        },
+        {
+          "coverage": "full",
+          "row": 62,
+          "term": "Leverage Ratio Calculations"
+        },
+        {
+          "coverage": "full",
+          "row": 127,
+          "term": "Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing"
+        },
+        {
+          "coverage": "full",
+          "row": 137,
+          "term": "Equity Co-Invest"
+        },
+        {
+          "coverage": "full",
+          "row": 140,
+          "term": "RCF Commitment Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 149,
+          "term": "Waiver"
+        },
+        {
+          "coverage": "full",
+          "row": 151,
+          "term": "Acquisition Agreement"
+        },
+        {
+          "coverage": "full",
+          "row": 158,
+          "term": "Commitment/Underwriting Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 163,
+          "term": "Alternate Transaction Fee"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 14 (condition ii: 'shall be the same class as, the outstanding Initial Term Loans')"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Single fee rate throughout the commitment period. 53.1% at 1.00% p.a. Simple and predictable commitment cost.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.ticking_fee.flat",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "53.1%",
+            "rate": "1.00%"
+          },
+          "name": "Flat Fee",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 140 (RCF Commitment Fee); Review Template Row 141 (DDTL Commitment Fee); Review Template Row 158 (Commitment/Underwriting Fee)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Fee increases over time to incentivize earlier drawing (e.g., 1.00% Year 1, 2.00% Year 2). Creates escalating cost for unused commitment.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.ticking_fee.step_up",
+          "level": 3,
+          "name": "Step-Up Structure",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Initial fee-free period before ticking fee begins accruing (e.g., 0% for 60 days, then 1.00%). Borrower-friendly feature reducing day-one cost.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.ticking_fee.delayed_start",
+          "level": 3,
+          "name": "Delayed Commencement",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 161 (Delayed Draw Ticking Fee)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "How the ticking fee accrues (daily on undrawn amount) and when it is payable (quarterly in arrears, or upon commitment termination/draw).",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.ticking_fee.accrual_basis",
+          "level": 3,
+          "name": "Accrual & Payment Mechanics",
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Annual fee on undrawn DDTL commitment, compensating lenders for holding capital available. Accrues from closing to draw or termination.",
+      "dls_ref": [
+        "DLS:20:Unused Line Fee",
+        "DLS:31:Revolving Facility underwriting fee",
+        "DLS:32:Ticking fee",
+        "DLS:33:Alternate transaction fee",
+        "DLS:35:Administration fee"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.09",
+          "Section 2.12"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Delayed Draw Term Loan)"
+      },
+      "family_id": "deal_econ.ddtl",
+      "id": "deal_econ.ddtl.ticking_fee",
+      "kct_ref": [
+        "cat2.2"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "market_standard_value": "1.00% p.a. (53.1%)",
+        "observed_range": "0.50%-2.00%"
+      },
+      "name": "DDTL Commitment / Ticking Fee",
+      "r18_concept_ids": [
+        "pricing.ticking_fee"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 2,
+          "term": "Commitment Letter / Transaction Description"
+        },
+        {
+          "coverage": "full",
+          "row": 4,
+          "term": "Commitment and giveaway"
+        },
+        {
+          "coverage": "partial",
+          "row": 6,
+          "term": "Information"
+        },
+        {
+          "coverage": "partial",
+          "row": 7,
+          "term": "Other advisory roles"
+        },
+        {
+          "coverage": "full",
+          "row": 8,
+          "term": "Expense Reimbursement"
+        },
+        {
+          "coverage": "full",
+          "row": 10,
+          "term": "Termination of commitments"
+        },
+        {
+          "coverage": "full",
+          "row": 11,
+          "term": "Outside Date"
+        },
+        {
+          "coverage": "full",
+          "row": 12,
+          "term": "Minimum equity contribution"
+        },
+        {
+          "coverage": "full",
+          "row": 14,
+          "term": "Term Sheet"
+        },
+        {
+          "coverage": "full",
+          "row": 15,
+          "term": "Revolver closing date draws"
+        },
+        {
+          "coverage": "full",
+          "row": 16,
+          "term": "Revolver – borrowing notices"
+        },
+        {
+          "coverage": "full",
+          "row": 17,
+          "term": "Revolver – additional borrowers"
+        },
+        {
+          "coverage": "full",
+          "row": 18,
+          "term": "Revolver currencies"
+        },
+        {
+          "coverage": "full",
+          "row": 20,
+          "term": "LCs"
+        },
+        {
+          "coverage": "full",
+          "row": 22,
+          "term": "[DDTL – conditions to draw]"
+        },
+        {
+          "coverage": "full",
+          "row": 23,
+          "term": "[DDTL – use of proceeds]"
+        },
+        {
+          "coverage": "full",
+          "row": 27,
+          "term": "Incremental DDTLs"
+        },
+        {
+          "coverage": "full",
+          "row": 128,
+          "term": "Limited Conditionality Transactions"
+        },
+        {
+          "coverage": "full",
+          "row": 137,
+          "term": "Equity Co-Invest"
+        },
+        {
+          "coverage": "full",
+          "row": 138,
+          "term": "Pricing"
+        },
+        {
+          "coverage": "full",
+          "row": 139,
+          "term": "Floor"
+        },
+        {
+          "coverage": "full",
+          "row": 140,
+          "term": "RCF Commitment Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 141,
+          "term": "DDTL Commitment Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 142,
+          "term": "LC Fronting Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 149,
+          "term": "Waiver"
+        },
+        {
+          "coverage": "full",
+          "row": 156,
+          "term": "Other"
+        },
+        {
+          "coverage": "full",
+          "row": 157,
+          "term": "Fee Letter"
+        },
+        {
+          "coverage": "full",
+          "row": 158,
+          "term": "Commitment/Underwriting Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 159,
+          "term": "Structuring Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 160,
+          "term": "Ticking Fee (Term/Revolver)"
+        },
+        {
+          "coverage": "full",
+          "row": 161,
+          "term": "Delayed Draw Ticking Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 162,
+          "term": "Agency Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 163,
+          "term": "Alternate Transaction Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 164,
+          "term": "Sponsor Participation"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 20 (Unused Line Fee); DLS Preferred Row 31 (Revolving Facility underwriting fee); DLS Preferred Row 32 (Ticking fee); DLS Preferred Row 33 (Alternate transaction fee); DLS Preferred Row 35 (Administration fee); KCT Cat 2 Item 2; Review Template Row 2 (Commitment Letter / Transaction Description); Review Template Row 4 (Commitment and giveaway); Review Template Row 6 (Information); Review Template Row 7 (Other advisory roles); Review Template Row 8 (Expense Reimbursement); Review Template Row 10 (Termination of commitments); Review Template Row 11 (Outside Date); Review Template Row 12 (Minimum equity contribution); Review Template Row 14 (Term Sheet); Review Template Row 15 (Revolver closing date draws); Review Template Row 16 (Revolver – borrowing notices); Review Template Row 17 (Revolver – additional borrowers); Review Template Row 18 (Revolver currencies); Review Template Row 20 (LCs); Review Template Row 22 ([DDTL – conditions to draw]); Review Template Row 23 ([DDTL – use of proceeds]); Review Template Row 27 (Incremental DDTLs); Review Template Row 128 (Limited Conditionality Transactions); Review Template Row 137 (Equity Co-Invest); Review Template Row 138 (Pricing); Review Template Row 139 (Floor); Review Template Row 140 (RCF Commitment Fee); Review Template Row 141 (DDTL Commitment Fee); Review Template Row 142 (LC Fronting Fee); Review Template Row 149 (Waiver); Review Template Row 156 (Other); Review Template Row 157 (Fee Letter); Review Template Row 158 (Commitment/Underwriting Fee); Review Template Row 159 (Structuring Fee); Review Template Row 160 (Ticking Fee (Term/Revolver)); Review Template Row 161 (Delayed Draw Ticking Fee); Review Template Row 162 (Agency Fee); Review Template Row 163 (Alternate Transaction Fee); Review Template Row 164 (Sponsor Participation)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Upon funding, drawn DDTL automatically converts to term loans under the same terms as the initial TL. DLS Preferred (Row 14, condition ii): 'shall be the same class as, the outstanding Initial Term Loans.' Automatic conversion is the bank-preferred mechanic, ensuring immediate fungibility.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.conversion_mechanics.automatic",
+          "level": 3,
+          "name": "Automatic Conversion",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (conditions ii and iii)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Borrower or agent election to convert drawn DDTL into initial TL class, potentially requiring lender consent or meeting fungibility conditions. Contrasts with the DLS Preferred automatic conversion approach.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.conversion_mechanics.elective",
+          "level": 3,
+          "name": "Elective Conversion",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (automatic same-class as preferred position)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Requirements for drawn DDTL principal to merge into the initial term loan tranche: the DDTL must share identical interest rate margin, maturity date, and amortization schedule with the existing TL. DLS Preferred (Row 14, condition ii) enumerates: 'pricing, fees, applicable margin, yield, prepayments, amortization, maturity, guarantees and collateral.' Failure to satisfy results in separate tranche with independent voting rights.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.conversion_mechanics.fungibility_conditions",
+          "level": 3,
+          "name": "Fungibility Conditions",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (condition ii: complete fungibility requirements)"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Mechanics governing the conversion of DDTL commitments to funded term loans upon drawing. DLS Preferred (Row 14, condition iii): 'amounts repaid may not be reborrowed' — once drawn, DDTL converts permanently to a term loan. Includes automatic vs. elective conversion, fungibility with initial TL, and CUSIP/ISIN considerations.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.14",
+          "Section 2.17"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Delayed Draw Term Loan)"
+      },
+      "family_id": "deal_econ.ddtl",
+      "id": "deal_econ.ddtl.conversion_mechanics",
+      "kct_ref": [
+        "cat2.2"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "30-40% (of CAs with DDTLs)",
+        "standard": "Converts to term loan upon draw, same amortization schedule",
+        "timing": "Typically at commitment period expiry"
+      },
+      "name": "DDTL Conversion Mechanics",
+      "r18_concept_ids": [
+        "facility_structure.ddtl"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 35,
+          "term": "Incremental – ROFR"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 14 (condition iii: no reborrowing); Review Template, Row 21"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Automatic termination of undrawn DDTL commitments on the commitment period end date. DLS Preferred (Row 14): the 'Delayed Draw Expiration Date' is the earlier of the specified date and the date on which the Maximum Delayed Draw Amount has been drawn. Unused commitments are permanently cancelled.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.termination_events.expiration",
+          "kct_ref": [
+            "cat2.2"
+          ],
+          "level": 3,
+          "name": "Scheduled Expiration",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (Delayed Draw Expiration Date)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Agent or lender right to terminate DDTL commitments upon occurrence of an Event of Default, preventing further draws during credit distress. Standard across all leveraged credit facilities. DLS Preferred (Row 90): Events of Default include acceleration mechanics.",
+          "dls_ref": [
+            "DLS:90:Events of Default"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.termination_events.default_termination",
+          "level": 3,
+          "name": "Default Termination",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 90 (Events of Default); DLS Preferred, Row 14 (DDTL conditions)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Borrower's right to permanently reduce or cancel undrawn DDTL commitments, typically without premium but with minimum reduction amounts. Reduces ticking fee accrual on unneeded commitment capacity.",
+          "dls_ref": [
+            "DLS:69:Voluntary Prepayments"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.termination_events.voluntary_cancellation",
+          "level": 3,
+          "name": "Voluntary Cancellation",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (commitment mechanics); DLS Preferred, Row 70 (commitment reduction framework)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Events triggering automatic reduction of DDTL commitments, such as partial draws reducing remaining availability. DLS Preferred (Row 14): 'the date on which the Maximum Delayed Draw Amount has been drawn' triggers full termination; partial draws reduce availability proportionally.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.ddtl",
+          "id": "deal_econ.ddtl.termination_events.mandatory_reduction",
+          "kct_ref": [
+            "cat2.2"
+          ],
+          "level": 3,
+          "name": "Mandatory Commitment Reduction",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (Maximum Delayed Draw Amount reduction)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Events causing DDTL commitments to terminate prior to scheduled expiration. DLS Preferred (Row 14): commitments available 'until the earlier to occur of [___] and the date on which the Maximum Delayed Draw Amount has been drawn.' Standard termination events include: commitment period expiry, full draw, change of control, event of default, and voluntary cancellation.",
+      "dls_ref": [
+        "DLS:38:Termination date"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.01",
+          "Section 2.14"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Delayed Draw Term Loan)"
+      },
+      "family_id": "deal_econ.ddtl",
+      "id": "deal_econ.ddtl.termination_events",
+      "kct_ref": [
+        "cat2.2"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "51.6% (of CAs with DDTLs)",
+        "standard": "Commitment period expiry, change of control, event of default",
+        "typical_period": "6-18 months from closing"
+      },
+      "name": "Commitment Termination Events",
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 10,
+          "term": "Termination of commitments"
+        },
+        {
+          "coverage": "full",
+          "row": 11,
+          "term": "Outside Date"
+        },
+        {
+          "coverage": "full",
+          "row": 56,
+          "term": "Affirmative Covenants – other"
+        },
+        {
+          "coverage": "full",
+          "row": 127,
+          "term": "Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 14 (commitment termination); Review Template, Row 21 (DDTL availability)"
+    },
+    {
+      "id": "deal_econ.ddtl.co_invest_rights",
+      "name": "Co-Investment Rights",
+      "definition": "Provision granting DDTL lenders the opportunity to purchase equity securities of the borrower's parent holding company. DLS Preferred (Row 14, condition ix): DDTL lenders receive opportunity 'to purchase equity securities of Holdings issued in the Permitted Acquisition Equity Contribution in a dollar amount equal to [___]% of the Delayed Draw Term Loans issued in connection with such [Permitted Acquisition] at the same price and on the same terms... as Sponsor.'",
+      "type": "concept",
+      "level": 2,
+      "domain_id": "deal_econ",
+      "family_id": "deal_econ.ddtl",
+      "corpus_prevalence": "low",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "shape_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.01",
+          "Section 2.14"
+        ],
+        "section_location_source": "family_siblings",
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Delayed Draw Term Loan)"
+      },
+      "definition_source": "DLS Preferred, Row 14 (condition ix: co-investment rights)"
+    }
+  ],
+  "corpus_prevalence": "high",
+  "definition": "Committed term loan facility available for drawing after closing during a specified availability period, used primarily for future permitted acquisitions and capital expenditures. DLS Preferred specifies detailed conditions including: pro forma leverage compliance, bring-down of representations, no default, prior written notice, maximum number of draws, minimum draw amounts, and identical terms to initial term loans. PC Term Comparison: 'Typically limited to Permitted Acquisitions; typically at 18 month commitment; occasionally 24 months; Ticking Fee typically 1%.'",
+  "dls_ref": [
+    "DLS:8:Term Loan",
+    "DLS:9:Accordion",
+    "DLS:14:Delayed Draw Term Loans",
+    "DLS:17:Amend and Extend",
+    "DLS:27:Other Flex",
+    "DLS:28:Successful Syndication",
+    "DLS:30:Term Loan",
+    "DLS:36:Reimbursement of expenses"
+  ],
+  "domain_id": "deal_econ",
+  "extraction_difficulty": "medium",
+  "family_id": "deal_econ.ddtl",
+  "id": "deal_econ.ddtl",
+  "kct_ref": [
+    "cat2.2"
+  ],
+  "level": 1,
+  "market_benchmarks": "18-24 months",
+  "name": "Delayed Draw Term Loan (DDTL)",
+  "r18_concept_ids": [
+    "facility_structure.ddtl",
+    "incremental.ddtl_mechanics",
+    "pricing.ticking_fee"
+  ],
+  "review_ref": [
+    {
+      "coverage": "full",
+      "row": 3,
+      "term": "Debt Quantum"
+    },
+    {
+      "coverage": "full",
+      "row": 14,
+      "term": "Term Sheet"
+    },
+    {
+      "coverage": "full",
+      "row": 34,
+      "term": "Incremental – MFN"
+    },
+    {
+      "coverage": "full",
+      "row": 141,
+      "term": "DDTL Commitment Fee"
+    },
+    {
+      "coverage": "full",
+      "row": 158,
+      "term": "Commitment/Underwriting Fee"
+    },
+    {
+      "coverage": "full",
+      "row": 161,
+      "term": "Delayed Draw Ticking Fee"
+    }
+  ],
+  "type": "family",
+  "definition_source": "DLS Preferred, Row 14 (Delayed Draw Term Loans); PC Term Comparison, DDTL section; Review Template, Rows 21-23 (DDTL)",
+  "pc_ref": [
+    "DDTL"
+  ]
+}

@@ -1,0 +1,2212 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Maximum basis point increase to applicable margin the arranger may exercise during flex period. Typically 25-75 bps depending on market conditions.",
+              "dls_ref": [
+                38
+              ],
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.pre_closing",
+              "id": "governance.pre_closing.market_flex.pricing_flex.spread_increase",
+              "level": 4,
+              "name": "Spread Increase Cap",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 38"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Original Issue Discount or upfront fee flexibility, calculated on 4-year average life basis. OID funded via revolver draw in some structures.",
+              "dls_ref": [
+                38
+              ],
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.pre_closing",
+              "id": "governance.pre_closing.market_flex.pricing_flex.oid_flex",
+              "level": 4,
+              "name": "OID / Upfront Fee Flex",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 38"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Right to increase applicable margin by up to specified basis points, adjust OID/upfront fees calculated on 4-year average life basis. Directly impacts borrower cost of capital.",
+          "dls_ref": [
+            "DLS:25:Pricing Flex"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "hard",
+          "family_id": "governance.pre_closing",
+          "id": "governance.pre_closing.market_flex.pricing_flex",
+          "level": 3,
+          "name": "Pricing Flex",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 25 (Pricing Flex)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Arranger's right to modify non-pricing structural terms: ECF sweep stepdowns, financial covenant levels, reporting requirements, maturity, and amortization schedule.",
+          "dls_ref": [
+            38
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.pre_closing",
+          "id": "governance.pre_closing.market_flex.structural_flex",
+          "level": 3,
+          "name": "Structural Flex",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 38"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Time window during which flex may be exercised: earlier of X days after closing and Successful Syndication. Bank preferred: 60 days; alternative: 45 days or Closing Date.",
+          "dls_ref": [
+            "DLS:24:Post-Close Flex Period"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.pre_closing",
+          "id": "governance.pre_closing.market_flex.flex_period",
+          "level": 3,
+          "market_benchmarks": {
+            "alternative_value": "45 days or Closing Date",
+            "bank_preferred": "60 days post-closing"
+          },
+          "name": "Flex Exercise Period",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 24 (Post-Close Flex Period)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether revolving facility automatically receives matching margin increases when term facility flex is exercised. Bank preferred includes tag-along.",
+          "dls_ref": [
+            38
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.pre_closing",
+          "id": "governance.pre_closing.market_flex.revolver_tag_along",
+          "level": 3,
+          "name": "Revolver Tag-Along",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 38"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Arranger's right to modify pricing and structural terms during syndication period to achieve successful placement. DLS Preferred section 2 (Market Flex) provides the complete framework: Post-Close Flex Period is earlier of 60 days after closing and Successful Syndication (alternative: 45 days or Closing Date). Pricing Flex includes margin increases (up to agreed bps), OID/upfront fees (with issue price floor), and revolver tag-along flex. Structure Flex and Other Flex are 'TBD based on deal structure.' The flex mechanism allows arrangers to adjust economics downward to clear the market while protecting the borrower through maximum flex limits. Review Template row 49 notes that where precedent includes flex, 'highlight issues in the precedent.'",
+      "dls_ref": [
+        "DLS:26:Structure Flex",
+        "DLS:27:Other Flex",
+        "DLS:40:Market MAC",
+        "DLS:54:Clear market",
+        "DLS:61:Clear Market"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "pre_closing_mechanics",
+        "extraction_ready": true,
+        "playbook_ref": "other.agency_provisions",
+        "section_locations": [
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE VIII",
+          "ARTICLE X",
+          "ARTICLE XII",
+          "Section 12.01"
+        ],
+        "shape_ref": "other.agency_provisions",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.380941+00:00",
+          "term_packs": {
+            "CL_FLEX": {
+              "label": "Market Flex",
+              "category": "COMMITMENT_LETTER",
+              "exactPhrases": [
+                "market flex",
+                "flex provisions",
+                "pricing flex",
+                "structure flex",
+                "arranger flex rights",
+                "syndication flex",
+                "flex to reduce or increase",
+                "right to modify pricing",
+                "adjust terms for successful syndication",
+                "OID flex",
+                "margin increase"
+              ],
+              "sectionHeaders": [
+                "MARKET FLEX",
+                "FLEX PROVISIONS",
+                "FEE LETTER",
+                "SYNDICATION",
+                "ARRANGER RIGHTS",
+                "PRICING FLEX",
+                "STRUCTURE FLEX"
+              ],
+              "semanticVariants": [
+                "arranger right to adjust terms",
+                "syndication pricing adjustment",
+                "market clearing flex",
+                "pricing modification rights",
+                "structure adjustment for syndication",
+                "underwriter flex provisions"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "market flex",
+              "flex provisions",
+              "pricing flex",
+              "structure flex",
+              "arranger flex rights",
+              "syndication flex",
+              "flex to reduce or increase",
+              "right to modify pricing",
+              "adjust terms for successful syndication",
+              "OID flex",
+              "margin increase"
+            ],
+            "sectionHeaders": [
+              "MARKET FLEX",
+              "FLEX PROVISIONS",
+              "FEE LETTER",
+              "SYNDICATION",
+              "ARRANGER RIGHTS",
+              "PRICING FLEX",
+              "STRUCTURE FLEX"
+            ],
+            "semanticVariants": [
+              "arranger right to adjust terms",
+              "syndication pricing adjustment",
+              "market clearing flex",
+              "pricing modification rights",
+              "structure adjustment for syndication",
+              "underwriter flex provisions"
+            ]
+          }
+        }
+      },
+      "family_id": "governance.pre_closing",
+      "id": "governance.pre_closing.market_flex",
+      "level": 2,
+      "market_benchmarks": {
+        "alternative_period": "45 days",
+        "bank_preferred_period": "60 days"
+      },
+      "name": "Market Flex Provisions",
+      "r18_concept_ids": [
+        "pre_closing_mechanics.market_flex"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 4,
+          "term": "Commitment and giveaway"
+        },
+        {
+          "coverage": "full",
+          "row": 49,
+          "term": "Documentation Precedent"
+        },
+        {
+          "coverage": "full",
+          "row": 133,
+          "term": "Assignments – open market purchases"
+        },
+        {
+          "coverage": "full",
+          "row": 135,
+          "term": "Assignments – Borrower buybacks"
+        },
+        {
+          "coverage": "full",
+          "row": 139,
+          "term": "Floor"
+        },
+        {
+          "coverage": "full",
+          "row": 160,
+          "term": "Ticking Fee (Term/Revolver)"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "Review Template row 49 (documentation precedent flex)",
+      "neutron_field_refs": [
+        {
+          "term_type": "CL_FLEX",
+          "label": "Market Flex",
+          "schema_file": "commitment-letter-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.5627,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Period during which borrower agrees not to issue competing debt that would interfere with syndication. Exceptions: indebtedness issued in lieu of committed facilities, separately committed bridge facilities or notes in lieu thereof.",
+          "dls_ref": [
+            "DLS:54:Clear market",
+            "DLS:61:Clear Market"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.pre_closing",
+          "id": "governance.pre_closing.syndication.clear_market",
+          "level": 3,
+          "market_benchmarks": {
+            "r17_gap_flagged": true
+          },
+          "name": "Clear Market Period",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 54 (Clear market); DLS Preferred Row 61 (Clear Market)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Framework for identifying and approving syndication participants. Lenders must be reasonably acceptable to borrower (consent not to be unreasonably withheld). Allocation subject to borrower consent (NTURW).",
+          "dls_ref": [
+            "DLS:60:Lender Selection"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.pre_closing",
+          "id": "governance.pre_closing.syndication.lender_selection",
+          "level": 3,
+          "market_benchmarks": {
+            "r17_gap_flagged": true
+          },
+          "name": "Lender Selection",
+          "negotiation_spectrum": {
+            "r17_gap_flagged": true
+          },
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 60 (Lender Selection)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Borrower obligations to support syndication: providing CIM and marketing materials, attending bank meetings, maintaining public/private information boundaries. Standard period: 60 days post-closing. [4): Ability to request KYC information only available up to date of commitment paper signing, or additional information limited to changes in rules and re]",
+          "dls_ref": [
+            "DLS:63:Syndication Assistance"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.pre_closing",
+          "id": "governance.pre_closing.syndication.assistance",
+          "kct_ref": [
+            "cat5.4"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "standard_period": "60 days post-closing"
+          },
+          "name": "Syndication Assistance Obligations",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 63 (Syndication Assistance); KCT Cat 5 Item 4"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Percentage of underwritten allocation that lead arrangers may place with additional lenders post-signing. Includes minimum economics requirements and timing constraints (typically 15 business days from signing). Neutron extraction context (CL_COMMITMENT_GIVEAWAY): Allocation of underwritten commitments to additional lenders including economics and timing. \"Giveaway\" describes how much of the underwritten allocation the leads may place with additional lenders post-signing and the minimum economics that must be offered.",
+          "dls_ref": [
+            39
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.pre_closing",
+          "id": "governance.pre_closing.syndication.commitment_giveaway",
+          "level": 3,
+          "market_benchmarks": {
+            "standard_timing": "15 business days"
+          },
+          "name": "Commitment Giveaway",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 4,
+              "term": "Commitment and giveaway"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 39; Review Template Row 4 (Commitment and giveaway)",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:40.369453+00:00",
+              "term_packs": {
+                "CL_COMMITMENT_GIVEAWAY": {
+                  "label": "Commitment and Giveaway",
+                  "category": "COMMITMENT_LETTER",
+                  "exactPhrases": [
+                    "handed papers",
+                    "additional lenders",
+                    "minimum economics",
+                    "greater economics than initial lenders",
+                    "not required to commit ratably",
+                    "giveaway",
+                    "underwritten allocation",
+                    "ticket allocation"
+                  ],
+                  "sectionHeaders": [
+                    "SYNDICATION",
+                    "COMMITMENT",
+                    "ALLOCATION",
+                    "ADDITIONAL COMMITMENTS",
+                    "GIVEAWAY RIGHTS",
+                    "COMMITMENT GIVEAWAY"
+                  ],
+                  "semanticVariants": [
+                    "ticket allocation",
+                    "commitment distribution",
+                    "syndication allocation",
+                    "lender placement",
+                    "commitment carveout",
+                    "sponsor allocation"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.58,
+                    "minKeywordScore": 0.48,
+                    "minConfidence": 0.65,
+                    "escalationThreshold": 0.48,
+                    "humanEscalationThreshold": 0.28
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "handed papers",
+                  "additional lenders",
+                  "minimum economics",
+                  "greater economics than initial lenders",
+                  "not required to commit ratably",
+                  "giveaway",
+                  "underwritten allocation",
+                  "ticket allocation"
+                ],
+                "sectionHeaders": [
+                  "SYNDICATION",
+                  "COMMITMENT",
+                  "ALLOCATION",
+                  "ADDITIONAL COMMITMENTS",
+                  "GIVEAWAY RIGHTS",
+                  "COMMITMENT GIVEAWAY"
+                ],
+                "semanticVariants": [
+                  "ticket allocation",
+                  "commitment distribution",
+                  "syndication allocation",
+                  "lender placement",
+                  "commitment carveout",
+                  "sponsor allocation"
+                ]
+              }
+            },
+            "neutron_definition_enrichment": {
+              "source": "Neutron schema term_type_index description/backgroundExplanation",
+              "imported_at": "2026-02-17T22:46:48.401716+00:00",
+              "entries": {
+                "CL_COMMITMENT_GIVEAWAY": {
+                  "term_type": "CL_COMMITMENT_GIVEAWAY",
+                  "schema_file": "commitment-letter-enhanced.schema.ts",
+                  "label": "Commitment and Giveaway",
+                  "mapping_mode": "domain_scored",
+                  "mapping_confidence": 0.6393,
+                  "label_similarity": 0.6667,
+                  "description": "Allocation of underwritten commitments to additional lenders including economics and timing.",
+                  "backgroundExplanation": "\"Giveaway\" describes how much of the underwritten allocation the leads may place with additional lenders post-signing and the minimum economics that must be offered. The commitment papers should define the number of \"handed\" tickets (pre-allocated to specific lenders), any sponsor-favored allocations, and a floor on economics to preserve parity among the lending group. Additional lenders should not receive greater economics than initial lenders to avoid undermining the original commitment. Giveaway provisions balance arranger flexibility to syndicate with lender protection of their economics.",
+                  "summary_used": "Allocation of underwritten commitments to additional lenders including economics and timing. \"Giveaway\" describes how much of the underwritten allocation the leads may place with additional lenders post-signing and the minimum economics that must be offered.",
+                  "ported_at": "2026-02-17T22:46:48.401716+00:00"
+                }
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "CL_COMMITMENT_GIVEAWAY",
+              "label": "Commitment and Giveaway",
+              "schema_file": "commitment-letter-enhanced.schema.ts",
+              "field_count": 3,
+              "r1_domain": "deal_econ",
+              "mapping_confidence": 0.6393,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Framework for placing underwritten commitments with additional lenders during syndication period. DLS Preferred section 2 establishes: post-close flex period of 60 days, successful syndication defined as '$0 (except to the extent has determined that it will hold a portion).' Learning Material section on Syndication Provisions covers clear market, lender meetings, CIM preparation, public vs. private information segregation, and DQ lenders. The syndication process includes information memorandum preparation, lender meetings/calls (up to 3), public/private side segregation of MNPI, and clear market restrictions preventing competing debt issuances until successful syndication or 60 days post-closing.",
+      "dls_ref": [
+        "DLS:28:Successful Syndication",
+        "DLS:63:Syndication Assistance",
+        "DLS:96:Buyback Provisions"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "pre_closing_mechanics",
+        "extraction_ready": true,
+        "playbook_ref": "other.agency_provisions",
+        "section_locations": [
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE VIII",
+          "ARTICLE X",
+          "ARTICLE XII",
+          "Section 12.01"
+        ],
+        "shape_ref": "other.agency_provisions",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.400688+00:00",
+          "term_packs": {
+            "CL_SYNDICATION": {
+              "label": "Syndication",
+              "category": "COMMITMENT_LETTER",
+              "exactPhrases": [
+                "syndication",
+                "marketing period",
+                "borrower cooperation",
+                "roadshow",
+                "information memorandum",
+                "lender meetings",
+                "book building",
+                "market clearing",
+                "syndication efforts",
+                "lead arranger"
+              ],
+              "sectionHeaders": [
+                "SYNDICATION",
+                "MARKETING",
+                "BORROWER COOPERATION",
+                "SYNDICATION PROCESS",
+                "INFORMATION MEMORANDUM",
+                "MARKETING PERIOD"
+              ],
+              "semanticVariants": [
+                "loan syndication process",
+                "marketing the facilities",
+                "lender placement",
+                "syndication timeline",
+                "borrower assistance with syndication",
+                "management presentations"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "syndication",
+              "marketing period",
+              "borrower cooperation",
+              "roadshow",
+              "information memorandum",
+              "lender meetings",
+              "book building",
+              "market clearing",
+              "syndication efforts",
+              "lead arranger"
+            ],
+            "sectionHeaders": [
+              "SYNDICATION",
+              "MARKETING",
+              "BORROWER COOPERATION",
+              "SYNDICATION PROCESS",
+              "INFORMATION MEMORANDUM",
+              "MARKETING PERIOD"
+            ],
+            "semanticVariants": [
+              "loan syndication process",
+              "marketing the facilities",
+              "lender placement",
+              "syndication timeline",
+              "borrower assistance with syndication",
+              "management presentations"
+            ]
+          }
+        }
+      },
+      "family_id": "governance.pre_closing",
+      "id": "governance.pre_closing.syndication",
+      "level": 2,
+      "name": "Syndication Provisions",
+      "negotiation_spectrum": {
+        "aggressive_position": "Shortened or no marketing period",
+        "dls_source": "DLS row 50",
+        "dls_stance": "moderate_lender",
+        "hot_button_items": [
+          "preferred_terms: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "duration: standard vs shortened vs none",
+          "financial_info_required: comprehensive vs limited"
+        ],
+        "market_position": "",
+        "preferred_position": "Customary marketing period for syndication",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "pre_closing_mechanics.syndication_provisions"
+      ],
+      "type": "concept",
+      "definition_source": "KCT Cat 1 Item 2; PC Term Comparison: 7. Events of Default - 8.Admin Agency Provisions",
+      "neutron_field_refs": [
+        {
+          "term_type": "CL_SYNDICATION",
+          "label": "Syndication",
+          "schema_file": "commitment-letter-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 1.0,
+          "mapping_mode": "manual_override",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Fee accruing during commitment period before closing. Flat 1.00% (PC market standard); escalating structures range from 1.75% to 3.50% in sophisticated structures (e.g., Geneva-type).",
+          "dls_ref": [
+            "DLS:32:Ticking fee"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.pre_closing",
+          "id": "governance.pre_closing.fee_letter.ticking_fee",
+          "level": 3,
+          "market_benchmarks": {
+            "market_standard_value": "1.00% flat",
+            "sophisticated_investors": "1.75%-3.50% escalating"
+          },
+          "name": "Ticking Fee",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 141,
+              "term": "DDTL Commitment Fee"
+            },
+            {
+              "coverage": "full",
+              "row": 161,
+              "term": "Delayed Draw Ticking Fee"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 32 (Ticking fee); Review Template Row 141 (DDTL Commitment Fee); Review Template Row 161 (Delayed Draw Ticking Fee)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Fee for underwriting commitment, typically same percentage as initial term loans. Standard split: 50% upfront at signing, 50% at each funding.",
+          "dls_ref": [
+            38
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.pre_closing",
+          "id": "governance.pre_closing.fee_letter.commitment_fee",
+          "level": 3,
+          "market_benchmarks": {
+            "standard_split": "50% upfront / 50% at funding"
+          },
+          "name": "Commitment / Underwriting Fee",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 2,
+              "term": "Commitment Letter / Transaction Description"
+            },
+            {
+              "coverage": "full",
+              "row": 141,
+              "term": "DDTL Commitment Fee"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 38; Review Template Row 2 (Commitment Letter / Transaction Description); Review Template Row 141 (DDTL Commitment Fee)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Fee payable if borrower uses alternate financing within specified period (typically 1 year). Bank preferred: 100% of all fees; alternative: 50%.",
+          "dls_ref": [
+            "DLS:33:Alternate transaction fee"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.pre_closing",
+          "id": "governance.pre_closing.fee_letter.alternate_transaction_fee",
+          "level": 3,
+          "market_benchmarks": {
+            "alternative_value": "50%",
+            "bank_preferred": "100%"
+          },
+          "name": "Alternate Transaction Fee",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 33 (Alternate transaction fee)",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:40.411300+00:00",
+              "term_packs": {
+                "CL_TRANSACTION_DESC": {
+                  "label": "Transaction Description",
+                  "category": "COMMITMENT_LETTER",
+                  "exactPhrases": [
+                    "financing packages with the acquisition structure",
+                    "definitions of Borrower, Holdings, Sponsor, Acquisition",
+                    "funding under the facilities occurs substantially concurrently",
+                    "acquisition agreement termination",
+                    "commitment letter description mirrors the M&A agreement",
+                    "acceptable to the arrangers",
+                    "Closing Date",
+                    "substantially concurrently with the acquisition close"
+                  ],
+                  "sectionHeaders": [
+                    "TRANSACTION DESCRIPTION",
+                    "RECITALS",
+                    "PURPOSE AND STRUCTURE",
+                    "THE ACQUISITION",
+                    "DESCRIPTION OF FINANCING",
+                    "OVERVIEW",
+                    "BACKGROUND"
+                  ],
+                  "semanticVariants": [
+                    "transaction overview",
+                    "financing structure",
+                    "acquisition financing",
+                    "deal description",
+                    "leveraged buyout structure",
+                    "sources and uses",
+                    "LBO structure",
+                    "sponsor-backed acquisition"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.58,
+                    "minKeywordScore": 0.48,
+                    "minConfidence": 0.65,
+                    "escalationThreshold": 0.48,
+                    "humanEscalationThreshold": 0.28
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "financing packages with the acquisition structure",
+                  "definitions of Borrower, Holdings, Sponsor, Acquisition",
+                  "funding under the facilities occurs substantially concurrently",
+                  "acquisition agreement termination",
+                  "commitment letter description mirrors the M&A agreement",
+                  "acceptable to the arrangers",
+                  "Closing Date",
+                  "substantially concurrently with the acquisition close"
+                ],
+                "sectionHeaders": [
+                  "TRANSACTION DESCRIPTION",
+                  "RECITALS",
+                  "PURPOSE AND STRUCTURE",
+                  "THE ACQUISITION",
+                  "DESCRIPTION OF FINANCING",
+                  "OVERVIEW",
+                  "BACKGROUND"
+                ],
+                "semanticVariants": [
+                  "transaction overview",
+                  "financing structure",
+                  "acquisition financing",
+                  "deal description",
+                  "leveraged buyout structure",
+                  "sources and uses",
+                  "LBO structure",
+                  "sponsor-backed acquisition"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "CL_TRANSACTION_DESC",
+              "label": "Transaction Description",
+              "schema_file": "commitment-letter-enhanced.schema.ts",
+              "field_count": 4,
+              "r1_domain": "deal_econ",
+              "mapping_confidence": 0.3641,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Separate confidential document governing pre-closing and commitment-period fee economics. DLS Preferred section 3 (Fees and Compensation) covers: Term Loan underwriting/arrangement fee (percentage of committed amount, payable at funding), Revolving Facility commitment/arrangement fee, ticking fee (TBD based on commitment length), alternate transaction fee (100% of fees if alternate transaction within one year, with exceptions for rejected opportunities and commitment breaches), breakup fee reimbursement, administration fee, and expense reimbursement (payable whether or not closing occurs). Review Template row 8 notes: 'Fees must be paid at closing and may be netted against proceeds; expenses must be invoiced at least three business days prior to closing.'",
+      "dls_ref": [
+        "DLS:20:Unused Line Fee",
+        "DLS:31:Revolving Facility underwriting fee",
+        "DLS:35:Administration fee"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "pre_closing_mechanics",
+        "extraction_ready": true,
+        "playbook_ref": "other.agency_provisions",
+        "section_locations": [
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE VIII",
+          "ARTICLE X",
+          "ARTICLE XII",
+          "Section 12.01"
+        ],
+        "shape_ref": "other.agency_provisions",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.377447+00:00",
+          "term_packs": {
+            "CL_DEBT_QUANTUM": {
+              "label": "Debt Quantum",
+              "category": "COMMITMENT_LETTER",
+              "exactPhrases": [
+                "Term Loan",
+                "Delayed Draw Term Loan",
+                "Revolver",
+                "Second Lien Term Loan",
+                "amortization",
+                "original principal",
+                "springing maturities",
+                "first amortization timing",
+                "aggregate commitments",
+                "facility amount"
+              ],
+              "sectionHeaders": [
+                "FACILITIES",
+                "DEBT QUANTUM",
+                "TERM LOAN FACILITY",
+                "REVOLVING CREDIT FACILITY",
+                "COMMITMENT AMOUNTS",
+                "SUMMARY OF PRINCIPAL TERMS",
+                "FACILITY SUMMARY"
+              ],
+              "semanticVariants": [
+                "facility sizes",
+                "commitment amounts",
+                "debt structure",
+                "financing quantum",
+                "loan amounts",
+                "tranche sizes",
+                "capital structure"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            },
+            "CL_EXPENSE_REIMBURSE": {
+              "label": "Expense Reimbursement",
+              "category": "COMMITMENT_LETTER",
+              "exactPhrases": [
+                "Cap on costs/expenses of Commitment Parties",
+                "Expenses only covered to the extent the closing date occurs",
+                "netted against proceeds",
+                "invoiced at least three business days prior to closing",
+                "out-of-pocket costs",
+                "fund upfront fees at closing",
+                "expense reimbursement",
+                "reasonable and documented"
+              ],
+              "sectionHeaders": [
+                "EXPENSES",
+                "EXPENSE REIMBURSEMENT",
+                "COSTS AND EXPENSES",
+                "INDEMNIFICATION AND EXPENSES",
+                "FEE AND EXPENSE PROVISIONS",
+                "REIMBURSEMENT"
+              ],
+              "semanticVariants": [
+                "cost reimbursement",
+                "arranger expenses",
+                "legal costs",
+                "syndication expenses",
+                "closing expenses",
+                "deal costs"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Term Loan",
+              "Delayed Draw Term Loan",
+              "Revolver",
+              "Second Lien Term Loan",
+              "amortization",
+              "original principal",
+              "springing maturities",
+              "first amortization timing",
+              "aggregate commitments",
+              "facility amount",
+              "Cap on costs/expenses of Commitment Parties",
+              "Expenses only covered to the extent the closing date occurs",
+              "netted against proceeds",
+              "invoiced at least three business days prior to closing",
+              "out-of-pocket costs",
+              "fund upfront fees at closing",
+              "expense reimbursement",
+              "reasonable and documented"
+            ],
+            "sectionHeaders": [
+              "FACILITIES",
+              "DEBT QUANTUM",
+              "TERM LOAN FACILITY",
+              "REVOLVING CREDIT FACILITY",
+              "COMMITMENT AMOUNTS",
+              "SUMMARY OF PRINCIPAL TERMS",
+              "FACILITY SUMMARY",
+              "EXPENSES",
+              "EXPENSE REIMBURSEMENT",
+              "COSTS AND EXPENSES",
+              "INDEMNIFICATION AND EXPENSES",
+              "FEE AND EXPENSE PROVISIONS",
+              "REIMBURSEMENT"
+            ],
+            "semanticVariants": [
+              "facility sizes",
+              "commitment amounts",
+              "debt structure",
+              "financing quantum",
+              "loan amounts",
+              "tranche sizes",
+              "capital structure",
+              "cost reimbursement",
+              "arranger expenses",
+              "legal costs",
+              "syndication expenses",
+              "closing expenses",
+              "deal costs"
+            ]
+          }
+        }
+      },
+      "family_id": "governance.pre_closing",
+      "id": "governance.pre_closing.fee_letter",
+      "level": 2,
+      "market_benchmarks": {
+        "r17_gap_flagged": true
+      },
+      "name": "Fee Letter Economics",
+      "negotiation_spectrum": {
+        "r17_gap_flagged": true
+      },
+      "r18_concept_ids": [
+        "pre_closing_mechanics.fee_letter"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 2,
+          "term": "Commitment Letter / Transaction Description"
+        },
+        {
+          "coverage": "full",
+          "row": 9,
+          "term": "Countersign date"
+        },
+        {
+          "coverage": "full",
+          "row": 139,
+          "term": "Floor"
+        },
+        {
+          "coverage": "full",
+          "row": 157,
+          "term": "Fee Letter"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred section 3 (complete fee specification: underwriting, commitment, ticking, alternate transaction, breakup, administration, expenses); Review Template row 8 (fee payment mechanics)",
+      "neutron_field_refs": [
+        {
+          "term_type": "CL_DEBT_QUANTUM",
+          "label": "Debt Quantum",
+          "schema_file": "commitment-letter-enhanced.schema.ts",
+          "field_count": 5,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.3254,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        },
+        {
+          "term_type": "CL_EXPENSE_REIMBURSE",
+          "label": "Expense Reimbursement",
+          "schema_file": "commitment-letter-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 1.0,
+          "mapping_mode": "manual_override",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "id": "governance.pre_closing.securities_demand.conversion_triggers",
+          "name": "Conversion Triggers",
+          "definition": "Events that trigger conversion of bridge loans to term loans or require take-out via securities issuance — typically 180-365 days post-closing without permanent financing, or borrower election to convert.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.pre_closing",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "id": "governance.pre_closing.securities_demand.takeout_provisions",
+          "name": "Take-Out Provisions",
+          "definition": "Mechanics for replacing bridge financing with permanent capital — securities demand by arranger requiring borrower to issue high-yield notes, exchange offers, or term loan conversion with step-up economics.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.pre_closing",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "hard",
+          "definition_source": "KCT Cat 2 Item 1; LME Provision Language, Protections Against Using a Credit Agreement's Amend-and-Extend Provisions to Carry Out a Non-Pro-Rata LME Exchange (Better Health)"
+        },
+        {
+          "id": "governance.pre_closing.securities_demand.maturity_extension",
+          "name": "Maturity Extension Mechanics",
+          "definition": "Roll and extension features if take-out is not completed — automatic conversion to term loan at higher spread, cap on total extensions (typically 1-2 years), and ultimate maturity backstop.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.pre_closing",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "id": "governance.pre_closing.securities_demand.economics_step_up",
+          "name": "Economics Step-Up Schedule",
+          "definition": "Escalating pricing on bridge facilities designed to incentivize take-out — spread increases of 25-50bps per quarter, OID adjustments, and the relationship between step-up economics and securities demand pricing.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.pre_closing",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 3 Item 6"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Right of arrangers to demand securities offering (high-yield notes) in lieu of term loan. Bridge facility converts to term loan if takeout financing is not completed within specified period.",
+      "dls_ref": [
+        "DLS:50:Marketing period"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "pre_closing_mechanics",
+        "extraction_ready": true,
+        "playbook_ref": "other.agency_provisions",
+        "section_locations": [
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE VIII",
+          "ARTICLE X",
+          "ARTICLE XII",
+          "Section 12.01"
+        ],
+        "shape_ref": "other.agency_provisions"
+      },
+      "family_id": "governance.pre_closing",
+      "id": "governance.pre_closing.securities_demand",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "medium -- standard in bridge/take-out structures",
+        "source": "R19-C_corpus_analysis",
+        "typical_trigger": "securities demand converts bridge to term loan or high-yield take-out"
+      },
+      "name": "Securities Demand / Bridge Facility",
+      "r18_concept_ids": [
+        "pre_closing_mechanics.securities_demand"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 50 (Marketing period)"
+    },
+    {
+      "children": [
+        {
+          "id": "governance.pre_closing.erroneous_payment.definition",
+          "name": "Erroneous Payment Definition",
+          "definition": "What constitutes an erroneous payment — any funds transferred by the administrative agent to a lender in error, regardless of amount, including overpayments, duplicate payments, and misdirected payments.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.pre_closing",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "easy",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "id": "governance.pre_closing.erroneous_payment.clawback_mechanics",
+          "name": "Clawback Mechanics",
+          "definition": "The agent's right to demand return of erroneously paid funds — typically within 2 business days of notice — overriding any discharge-for-value defense and establishing the payment as agent property until properly allocated.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.pre_closing",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "id": "governance.pre_closing.erroneous_payment.subrogation_rights",
+          "name": "Subrogation Rights",
+          "definition": "If the erroneous payment satisfied a borrower obligation, whether the agent is subrogated to the lender's rights against the borrower for the equivalent amount, preserving the claim rather than creating a windfall.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.pre_closing",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "hard",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "id": "governance.pre_closing.erroneous_payment.interest_on_recovery",
+          "name": "Interest on Recovery",
+          "definition": "Whether interest accrues on erroneous payments from the date of payment until return — typically at the federal funds rate or overnight bank funding rate — compensating the agent for time-value during the recovery period.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.pre_closing",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "easy",
+          "definition_source": "KCT Cat 1 Item 2; PC Term Comparison: 1. Key Definitions - Interest Coverage Ratio (if relevant)"
+        },
+        {
+          "id": "governance.pre_closing.erroneous_payment.lender_acknowledgement",
+          "name": "Lender Acknowledgement",
+          "definition": "Each lender's express agreement to the erroneous payment provisions, waiving discharge-for-value and similar defenses — a post-Citibank/Revlon standard designed to prevent lender retention of mistaken payments.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.pre_closing",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "easy",
+          "definition_source": "KCT Cat 2 Item 4"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Requires lenders to disgorge funds transmitted by Administrative Agent in error. Post-2021 LMA/LSTA standard provision (anti-Revlon) addressing Citibank v. Brigade Capital precedent. Now near-universal in new issuance.",
+      "dls_ref": [
+        "DLS:51:Payment of fees"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "pre_closing_mechanics",
+        "extraction_ready": true,
+        "playbook_ref": "other.agency_provisions",
+        "section_locations": [
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE VIII",
+          "ARTICLE X",
+          "ARTICLE XII",
+          "Section 12.01"
+        ],
+        "shape_ref": "other.agency_provisions",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "governance.pre_closing",
+      "id": "governance.pre_closing.erroneous_payment",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "high post-Citibank/Revlon (2020+)",
+        "source": "R19-C_corpus_analysis",
+        "standard": "discharge-for-value defense waiver, clawback within 2 business days"
+      },
+      "name": "Erroneous Payment Provision",
+      "r18_concept_ids": [
+        "pre_closing_mechanics.erroneous_payment"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 51 (Payment of fees)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Date after which commitments automatically terminate if closing has not occurred. Standard: acquisition agreement termination date plus 5 business day cushion. Neutron extraction context (CL_OUTSIDE_DATE): The date by which the acquisition must close and commitments remain available. The \"Outside Date\" in the commitment letter should track the acquisition agreement's termination date as of signing, typically with a five business day cushion. This keeps commitment availability coterminous with the M&A timeline and avoids having to renegotiate if the seller grants extensions within the acquisition agreement framework.",
+          "dls_ref": [
+            38
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.pre_closing",
+          "id": "governance.pre_closing.commitment_mechanics.outside_date",
+          "level": 3,
+          "market_benchmarks": {
+            "market_standard_value": "Acq agreement outside date + 5 BDs"
+          },
+          "name": "Outside Date",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 9,
+              "term": "Countersign date"
+            },
+            {
+              "coverage": "full",
+              "row": 11,
+              "term": "Outside Date"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 38; Review Template Row 9 (Countersign date); Review Template Row 11 (Outside Date)",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:40.390430+00:00",
+              "term_packs": {
+                "CL_OUTSIDE_DATE": {
+                  "label": "Outside Date",
+                  "category": "COMMITMENT_LETTER",
+                  "exactPhrases": [
+                    "outside date",
+                    "termination date",
+                    "commitment expiration",
+                    "days after acquisition agreement",
+                    "commitment availability period",
+                    "five business day cushion",
+                    "commitment expiration date"
+                  ],
+                  "sectionHeaders": [
+                    "OUTSIDE DATE",
+                    "TERMINATION",
+                    "COMMITMENT PERIOD",
+                    "EXPIRATION",
+                    "AVAILABILITY PERIOD"
+                  ],
+                  "semanticVariants": [
+                    "commitment expiration",
+                    "funding deadline",
+                    "availability window",
+                    "drop dead date",
+                    "commitment termination date"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.58,
+                    "minKeywordScore": 0.48,
+                    "minConfidence": 0.65,
+                    "escalationThreshold": 0.48,
+                    "humanEscalationThreshold": 0.28
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "outside date",
+                  "termination date",
+                  "commitment expiration",
+                  "days after acquisition agreement",
+                  "commitment availability period",
+                  "five business day cushion",
+                  "commitment expiration date"
+                ],
+                "sectionHeaders": [
+                  "OUTSIDE DATE",
+                  "TERMINATION",
+                  "COMMITMENT PERIOD",
+                  "EXPIRATION",
+                  "AVAILABILITY PERIOD"
+                ],
+                "semanticVariants": [
+                  "commitment expiration",
+                  "funding deadline",
+                  "availability window",
+                  "drop dead date",
+                  "commitment termination date"
+                ]
+              }
+            },
+            "neutron_definition_enrichment": {
+              "source": "Neutron schema term_type_index description/backgroundExplanation",
+              "imported_at": "2026-02-17T22:46:48.401716+00:00",
+              "entries": {
+                "CL_OUTSIDE_DATE": {
+                  "term_type": "CL_OUTSIDE_DATE",
+                  "schema_file": "commitment-letter-enhanced.schema.ts",
+                  "label": "Outside Date",
+                  "mapping_mode": "domain_scored",
+                  "mapping_confidence": 0.6059,
+                  "label_similarity": 1.0,
+                  "description": "The date by which the acquisition must close and commitments remain available.",
+                  "backgroundExplanation": "The \"Outside Date\" in the commitment letter should track the acquisition agreement's termination date as of signing, typically with a five business day cushion. This keeps commitment availability coterminous with the M&A timeline and avoids having to renegotiate if the seller grants extensions within the acquisition agreement framework. The outside date is critical because it determines when commitments automatically terminate if the acquisition has not closed. Some structures automatically track extensions to the M&A outside date while others require separate consent for extension.",
+                  "summary_used": "The date by which the acquisition must close and commitments remain available. The \"Outside Date\" in the commitment letter should track the acquisition agreement's termination date as of signing, typically with a five business day cushion. This keeps commitment availability coterminous with the M&A timeline and avoids having to renegotiate if the seller grants extensions within the acquisition agreement framework.",
+                  "ported_at": "2026-02-17T22:46:48.401716+00:00"
+                }
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "CL_OUTSIDE_DATE",
+              "label": "Outside Date",
+              "schema_file": "commitment-letter-enhanced.schema.ts",
+              "field_count": 3,
+              "r1_domain": "deal_econ",
+              "mapping_confidence": 0.6059,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Events automatically terminating commitment letter obligations: acquisition closes without drawing facility, acquisition agreement terminated, outside date elapses. Optional: non-ratable partial termination.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.pre_closing",
+          "id": "governance.pre_closing.commitment_mechanics.termination_triggers",
+          "level": 3,
+          "market_benchmarks": {
+            "r17_gap_flagged": true
+          },
+          "name": "Termination Triggers",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 5",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:40.406083+00:00",
+              "term_packs": {
+                "CL_TERMINATION": {
+                  "label": "Termination of Commitments",
+                  "category": "COMMITMENT_LETTER",
+                  "exactPhrases": [
+                    "termination commitments",
+                    "terminate in part in whole",
+                    "non-ratable termination",
+                    "automatic termination",
+                    "commitment termination events",
+                    "right to terminate",
+                    "termination by sponsor",
+                    "termination upon"
+                  ],
+                  "sectionHeaders": [
+                    "TERMINATION",
+                    "TERMINATION OF COMMITMENTS",
+                    "COMMITMENT TERMINATION",
+                    "TERMINATION EVENTS",
+                    "EXPIRATION AND TERMINATION"
+                  ],
+                  "semanticVariants": [
+                    "commitment expiration",
+                    "cancellation of commitments",
+                    "withdrawal of commitments",
+                    "ending commitments",
+                    "commitment lapse"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.58,
+                    "minKeywordScore": 0.48,
+                    "minConfidence": 0.65,
+                    "escalationThreshold": 0.48,
+                    "humanEscalationThreshold": 0.28
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "termination commitments",
+                  "terminate in part in whole",
+                  "non-ratable termination",
+                  "automatic termination",
+                  "commitment termination events",
+                  "right to terminate",
+                  "termination by sponsor",
+                  "termination upon"
+                ],
+                "sectionHeaders": [
+                  "TERMINATION",
+                  "TERMINATION OF COMMITMENTS",
+                  "COMMITMENT TERMINATION",
+                  "TERMINATION EVENTS",
+                  "EXPIRATION AND TERMINATION"
+                ],
+                "semanticVariants": [
+                  "commitment expiration",
+                  "cancellation of commitments",
+                  "withdrawal of commitments",
+                  "ending commitments",
+                  "commitment lapse"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "CL_TERMINATION",
+              "label": "Termination of Commitments",
+              "schema_file": "commitment-letter-enhanced.schema.ts",
+              "field_count": 4,
+              "r1_domain": "deal_econ",
+              "mapping_confidence": 0.52,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Minimum sponsor equity contribution as condition to closing. Calibrates leverage and establishes sponsor cash-at-risk. Expressed as percentage; may include preferred or qualifying equity. Neutron extraction context (CL_MINIMUM_EQUITY): Minimum sponsor equity contribution requirements and calculation methodology. Minimum equity dictates the sponsor cash at risk and calibrates leverage. Market formulations include preferred or similar qualifying equity, exclude revolver used for working capital, purchase price adjustments and fees from the total sources \"denominator,\" and measure at closing on a pro forma basis.",
+          "dls_ref": [
+            "DLS:39:Minimum equity"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.pre_closing",
+          "id": "governance.pre_closing.commitment_mechanics.minimum_equity",
+          "level": 3,
+          "market_benchmarks": {
+            "r17_gap_flagged": true
+          },
+          "name": "Minimum Equity Contribution",
+          "negotiation_spectrum": {
+            "r17_gap_flagged": true
+          },
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 39 (Minimum equity)",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:40.386703+00:00",
+              "term_packs": {
+                "CL_MINIMUM_EQUITY": {
+                  "label": "Minimum Equity Contribution",
+                  "category": "COMMITMENT_LETTER",
+                  "exactPhrases": [
+                    "minimum equity contribution",
+                    "sponsor equity requirement",
+                    "common preferred qualified equity",
+                    "denominator calculation sources",
+                    "Ironman style equity",
+                    "equity percentage",
+                    "cash equity contribution",
+                    "equity condition"
+                  ],
+                  "sectionHeaders": [
+                    "MINIMUM EQUITY",
+                    "EQUITY CONTRIBUTION",
+                    "CONDITIONS PRECEDENT",
+                    "SOURCES AND USES",
+                    "EQUITY REQUIREMENT"
+                  ],
+                  "semanticVariants": [
+                    "sponsor cash contribution",
+                    "equity financing",
+                    "capital contribution",
+                    "equity investment",
+                    "sponsor investment",
+                    "equity requirement"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.58,
+                    "minKeywordScore": 0.48,
+                    "minConfidence": 0.65,
+                    "escalationThreshold": 0.48,
+                    "humanEscalationThreshold": 0.28
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "minimum equity contribution",
+                  "sponsor equity requirement",
+                  "common preferred qualified equity",
+                  "denominator calculation sources",
+                  "Ironman style equity",
+                  "equity percentage",
+                  "cash equity contribution",
+                  "equity condition"
+                ],
+                "sectionHeaders": [
+                  "MINIMUM EQUITY",
+                  "EQUITY CONTRIBUTION",
+                  "CONDITIONS PRECEDENT",
+                  "SOURCES AND USES",
+                  "EQUITY REQUIREMENT"
+                ],
+                "semanticVariants": [
+                  "sponsor cash contribution",
+                  "equity financing",
+                  "capital contribution",
+                  "equity investment",
+                  "sponsor investment",
+                  "equity requirement"
+                ]
+              }
+            },
+            "neutron_definition_enrichment": {
+              "source": "Neutron schema term_type_index description/backgroundExplanation",
+              "imported_at": "2026-02-17T22:46:48.401716+00:00",
+              "entries": {
+                "CL_MINIMUM_EQUITY": {
+                  "term_type": "CL_MINIMUM_EQUITY",
+                  "schema_file": "commitment-letter-enhanced.schema.ts",
+                  "label": "Minimum Equity Contribution",
+                  "mapping_mode": "domain_scored",
+                  "mapping_confidence": 0.6587,
+                  "label_similarity": 1.0,
+                  "description": "Minimum sponsor equity contribution requirements and calculation methodology.",
+                  "backgroundExplanation": "Minimum equity dictates the sponsor cash at risk and calibrates leverage. Market formulations include preferred or similar qualifying equity, exclude revolver used for working capital, purchase price adjustments and fees from the total sources \"denominator,\" and measure at closing on a pro forma basis. This aligns with market \"Ironman\" style formulations that focus on cash equity actually contributed at closing. The minimum equity percentage is a key credit metric that determines the sponsor's skin in the game.",
+                  "summary_used": "Minimum sponsor equity contribution requirements and calculation methodology. Minimum equity dictates the sponsor cash at risk and calibrates leverage. Market formulations include preferred or similar qualifying equity, exclude revolver used for working capital, purchase price adjustments and fees from the total sources \"denominator,\" and measure at closing on a pro forma basis.",
+                  "ported_at": "2026-02-17T22:46:48.401716+00:00"
+                }
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "CL_MINIMUM_EQUITY",
+              "label": "Minimum Equity Contribution",
+              "schema_file": "commitment-letter-enhanced.schema.ts",
+              "field_count": 4,
+              "r1_domain": "deal_econ",
+              "mapping_confidence": 0.6587,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Governance framework for the period between commitment letter execution and facility closing. Learning Material sections on Commitment Letter Body cover: addressee, commitments (several not joint), titles/roles, economics giveaway (15 business days to allocate up to 35% to additional commitment parties), syndication assistance, information representation, indemnity, expense reimbursement, countersign date, termination of commitments (automatic upon acquisition close without use or agreement termination), and outside date (five business day cushion to acquisition agreement termination). Review Template rows 2-11 cover the commitment letter structure from transaction description through outside date.",
+      "dls_ref": [
+        "DLS:5:Commitment Percentage",
+        "DLS:38:Termination date",
+        "DLS:39:Minimum equity",
+        "DLS:43:Minimum ratings",
+        "DLS:50:Marketing period",
+        "DLS:55:Absence of other debt"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "pre_closing_mechanics",
+        "extraction_ready": true,
+        "playbook_ref": "other.agency_provisions",
+        "section_locations": [
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE VIII",
+          "ARTICLE X",
+          "ARTICLE XII",
+          "Section 12.01"
+        ],
+        "shape_ref": "other.agency_provisions",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.373772+00:00",
+          "term_packs": {
+            "CL_COUNTERSIGN_DATE": {
+              "label": "Countersign Date",
+              "category": "COMMITMENT_LETTER",
+              "exactPhrases": [
+                "countersign date",
+                "acceptance period",
+                "days from commitment letter",
+                "acceptance window",
+                "commitment expiration",
+                "countersignature deadline",
+                "valid until",
+                "offer expires"
+              ],
+              "sectionHeaders": [
+                "ACCEPTANCE",
+                "COUNTERSIGNATURE",
+                "EXPIRATION",
+                "TERM",
+                "EFFECTIVENESS"
+              ],
+              "semanticVariants": [
+                "acceptance deadline",
+                "signing window",
+                "offer validity",
+                "commitment acceptance",
+                "execution deadline"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.55,
+                "minKeywordScore": 0.45,
+                "minConfidence": 0.6,
+                "escalationThreshold": 0.45,
+                "humanEscalationThreshold": 0.25
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            },
+            "CL_REFINANCING": {
+              "label": "Closing Date Refinancing",
+              "category": "COMMITMENT_LETTER",
+              "exactPhrases": [
+                "closing date refinancing",
+                "existing debt payoff",
+                "release liens terminate commitments",
+                "letters of credit cash collateralize",
+                "rollover debt",
+                "refinancing condition",
+                "existing indebtedness",
+                "payoff letters"
+              ],
+              "sectionHeaders": [
+                "REFINANCING",
+                "CLOSING DATE REFINANCING",
+                "EXISTING DEBT",
+                "CONDITIONS PRECEDENT",
+                "USE OF PROCEEDS"
+              ],
+              "semanticVariants": [
+                "debt payoff",
+                "retiring existing debt",
+                "extinguishing loans",
+                "paying off credit facilities",
+                "discharging indebtedness",
+                "existing facility termination"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "countersign date",
+              "acceptance period",
+              "days from commitment letter",
+              "acceptance window",
+              "commitment expiration",
+              "countersignature deadline",
+              "valid until",
+              "offer expires",
+              "closing date refinancing",
+              "existing debt payoff",
+              "release liens terminate commitments",
+              "letters of credit cash collateralize",
+              "rollover debt",
+              "refinancing condition",
+              "existing indebtedness",
+              "payoff letters"
+            ],
+            "sectionHeaders": [
+              "ACCEPTANCE",
+              "COUNTERSIGNATURE",
+              "EXPIRATION",
+              "TERM",
+              "EFFECTIVENESS",
+              "REFINANCING",
+              "CLOSING DATE REFINANCING",
+              "EXISTING DEBT",
+              "CONDITIONS PRECEDENT",
+              "USE OF PROCEEDS"
+            ],
+            "semanticVariants": [
+              "acceptance deadline",
+              "signing window",
+              "offer validity",
+              "commitment acceptance",
+              "execution deadline",
+              "debt payoff",
+              "retiring existing debt",
+              "extinguishing loans",
+              "paying off credit facilities",
+              "discharging indebtedness",
+              "existing facility termination"
+            ]
+          }
+        }
+      },
+      "family_id": "governance.pre_closing",
+      "id": "governance.pre_closing.commitment_mechanics",
+      "level": 2,
+      "name": "Commitment Period Mechanics",
+      "negotiation_spectrum": {
+        "aggressive_position": "5 business days after Acquisition Agreement termination date",
+        "dls_source": "DLS row 38",
+        "dls_stance": "moderate_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "alignment: same_as_acq_agreement vs offset_5bd",
+          "maximum_period: fixed_days vs no_limit"
+        ],
+        "market_position": "",
+        "preferred_position": "Same as Acquisition Agreement termination date, expected no later than [x] days from signing",
+        "source": "R14-C"
+      },
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 2,
+          "term": "Commitment Letter / Transaction Description"
+        },
+        {
+          "coverage": "full",
+          "row": 8,
+          "term": "Expense Reimbursement"
+        },
+        {
+          "coverage": "full",
+          "row": 9,
+          "term": "Countersign date"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "Review Template rows 2-11 (commitment letter structure)",
+      "neutron_field_refs": [
+        {
+          "term_type": "CL_COUNTERSIGN_DATE",
+          "label": "Countersign Date",
+          "schema_file": "commitment-letter-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.3927,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        },
+        {
+          "term_type": "CL_REFINANCING",
+          "label": "Closing Date Refinancing",
+          "schema_file": "commitment-letter-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.368,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Categories of due diligence permitted or required: financial (books & records, quality of earnings), legal (litigation, regulatory), environmental (Phase I/II), insurance review, and real estate appraisals.",
+          "dls_ref": [
+            "DLS:45:Due diligence"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.pre_closing",
+          "id": "governance.pre_closing.due_diligence.scope",
+          "level": 3,
+          "name": "Diligence Scope",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 45 (Due diligence)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Legal standard defining when the due diligence condition precedent is considered satisfied, ranging from 'in the sole discretion of the administrative agent' (most lender-favorable) to 'reasonably satisfactory to the administrative agent' (market standard) to 'substantially consistent with the information provided during syndication' (most borrower-favorable in commitment letter contexts).",
+          "dls_ref": [
+            38
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "easy",
+          "family_id": "governance.pre_closing",
+          "id": "governance.pre_closing.due_diligence.satisfaction_standard",
+          "level": 3,
+          "name": "Satisfaction Standard",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 38"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Condition precedent requiring lenders to complete satisfactory review of the borrower's business. DLS Preferred row 14 (DDTL) condition (xii) specifies: 'the Delayed Draw Term Lenders shall have completed their business, financial, legal, collateral, tax environmental and accounting due diligence of the Target for such Permitted Acquisition and each such review shall be satisfactory to the Delayed Draw Term Lenders in their sole discretion.' DLS Preferred row 82 (Permitted Acquisitions) conditions (vii)-(ix) require delivery of: description of acquisition and agreement, historical financial statements for three years, pro forma information, QoE report from nationally recognized accounting firm, and environmental reports. Under SunGard conditionality for the initial closing, diligence is typically limited to specified closing conditions.",
+      "dls_ref": [
+        "DLS:43:Minimum ratings",
+        "DLS:45:Due diligence",
+        "DLS:58:Other conditions"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "pre_closing",
+        "extraction_ready": false,
+        "section_locations": [
+          "ARTICLE IV",
+          "Section 4.01"
+        ],
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "playbook_ref": null,
+        "section_location": "ARTICLE IV (Conditions Precedent) / Pre-Closing Covenants",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.380945+00:00",
+          "term_packs": {
+            "CL_INFORMATION": {
+              "label": "Information",
+              "category": "COMMITMENT_LETTER",
+              "exactPhrases": [
+                "Information limited to \"factual\" information",
+                "third party memos or reports",
+                "Supplementation of information cures all breaches",
+                "survival of information representations",
+                "no obligation to disclose to market data collectors",
+                "Specified Information",
+                "Rule 144A marketing",
+                "information memorandum"
+              ],
+              "sectionHeaders": [
+                "INFORMATION",
+                "INFORMATION COVENANTS",
+                "CONFIDENTIALITY",
+                "SYNDICATION MATERIALS",
+                "REPRESENTATIONS AND WARRANTIES",
+                "INFORMATION REQUIREMENTS"
+              ],
+              "semanticVariants": [
+                "borrower information requirements",
+                "syndication disclosure",
+                "diligence materials",
+                "marketing information",
+                "information representations",
+                "disclosure requirements"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Information limited to \"factual\" information",
+              "third party memos or reports",
+              "Supplementation of information cures all breaches",
+              "survival of information representations",
+              "no obligation to disclose to market data collectors",
+              "Specified Information",
+              "Rule 144A marketing",
+              "information memorandum"
+            ],
+            "sectionHeaders": [
+              "INFORMATION",
+              "INFORMATION COVENANTS",
+              "CONFIDENTIALITY",
+              "SYNDICATION MATERIALS",
+              "REPRESENTATIONS AND WARRANTIES",
+              "INFORMATION REQUIREMENTS"
+            ],
+            "semanticVariants": [
+              "borrower information requirements",
+              "syndication disclosure",
+              "diligence materials",
+              "marketing information",
+              "information representations",
+              "disclosure requirements"
+            ]
+          }
+        }
+      },
+      "family_id": "governance.pre_closing",
+      "id": "governance.pre_closing.due_diligence",
+      "level": 2,
+      "name": "Due Diligence",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited or no additional due diligence beyond Acquisition Agreement representations",
+        "dls_source": "DLS row 45",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "scope: comprehensive vs limited",
+          "environmental: required vs not_required",
+          "collateral: required vs not_required",
+          "satisfactory_standard: sole_discretion vs reasonable"
+        ],
+        "market_position": "",
+        "preferred_position": "Satisfactory completion of business, financial, legal, collateral, tax, environmental and accounting due diligence",
+        "source": "R14-C"
+      },
+      "type": "concept",
+      "definition_source": "DLS Preferred row 14 condition (xii) (DDTL: complete due diligence to lender satisfaction); DLS Preferred row 82 conditions (vii)-(ix) (acquisition diligence: financials, QoE, environmental)",
+      "neutron_field_refs": [
+        {
+          "term_type": "CL_INFORMATION",
+          "label": "Information",
+          "schema_file": "commitment-letter-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 1.0,
+          "mapping_mode": "manual_override",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Condition precedent requiring the borrower to obtain all governmental and regulatory approvals necessary for the credit facility and the underlying transaction. Includes HSR Act clearance for acquisitions, state insurance or banking regulatory approvals for regulated borrowers, and foreign investment approvals for cross-border transactions.",
+          "dls_ref": [
+            38
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "easy",
+          "family_id": "governance.pre_closing",
+          "id": "governance.pre_closing.third_party_consents.regulatory_approvals",
+          "level": 3,
+          "name": "Regulatory Approvals",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 38"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Condition precedent requiring the absence of material litigation or governmental proceedings that could reasonably be expected to have a material adverse effect on the borrower or the transactions. Scope is typically limited to proceedings commenced or threatened in writing after the commitment letter date, preventing pre-existing known litigation from blocking closing.",
+          "dls_ref": [
+            "DLS:46:Third-party consents / litigation"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.pre_closing",
+          "id": "governance.pre_closing.third_party_consents.no_material_litigation",
+          "level": 3,
+          "name": "No Material Litigation",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 46 (Third-party consents / litigation)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Pre-closing condition requiring receipt of material third-party consents (regulatory approvals, landlord consents, contract consents) and absence of material litigation that would impair the transaction or the collateral. DLS preferred: all material consents obtained and no material litigation pending as a condition to closing.",
+      "dls_ref": [
+        "DLS:46:Third-party consents / litigation"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "pre_closing",
+        "extraction_ready": false,
+        "section_locations": [
+          "ARTICLE IV",
+          "Section 4.01",
+          "Section 4.02"
+        ],
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "playbook_ref": null,
+        "section_location": "ARTICLE IV (Conditions Precedent) / Pre-Closing Covenants"
+      },
+      "family_id": "governance.pre_closing",
+      "id": "governance.pre_closing.third_party_consents",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "high -- standard in acquisition financing CPs",
+        "source": "R19-C_corpus_analysis",
+        "typical_scope": "material consents, regulatory approvals, HSR clearance"
+      },
+      "name": "Third-Party Consents / Litigation",
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 46 (Third-party consents / litigation)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Standard for lender/agent consent to acquisition agreement amendments: no amendment without agent consent (strongest), no 'material' amendment without agent consent (market), or no consent required (weakest / SunGard).",
+          "dls_ref": [
+            38
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "easy",
+          "family_id": "governance.pre_closing",
+          "id": "governance.pre_closing.acquisition_agreement_amendments.consent_standard",
+          "level": 3,
+          "name": "Consent Standard",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 38"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "What constitutes a 'material' amendment to the acquisition agreement: changes to purchase price (any vs. >X%), changes to closing conditions, changes to indemnification provisions, or changes 'adverse to lenders'.",
+          "dls_ref": [
+            "DLS:53:Amendments to Acquisition Agreement"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.pre_closing",
+          "id": "governance.pre_closing.acquisition_agreement_amendments.materiality_definition",
+          "level": 3,
+          "name": "Materiality Definition",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 53 (Amendments to Acquisition Agreement)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Restriction on the borrower's ability to amend, modify, or waive material terms of the acquisition agreement (purchase agreement, merger agreement) without lender consent after commitment but before closing. DLS preferred: no material amendments without agent consent. Critical because changes to purchase price, earnouts, reps/warranties, or closing conditions can materially alter the credit profile.",
+      "dls_ref": [
+        "DLS:15:Limited Condition Acquisition",
+        "DLS:38:Termination date",
+        "DLS:44:Business MAC",
+        "DLS:53:Amendments to Acquisition Agreement",
+        "DLS:55:Absence of other debt",
+        "DLS:58:Other conditions"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "pre_closing",
+        "extraction_ready": false,
+        "section_locations": [
+          "ARTICLE IV",
+          "Section 4.01"
+        ],
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "playbook_ref": null,
+        "section_location": "ARTICLE IV (Conditions Precedent) / Pre-Closing Covenants"
+      },
+      "family_id": "governance.pre_closing",
+      "id": "governance.pre_closing.acquisition_agreement_amendments",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "high in acquisition financing",
+        "source": "R19-C_corpus_analysis",
+        "typical_standard": "no material adverse amendment without lender consent"
+      },
+      "name": "Amendments to Acquisition Agreement",
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 10,
+          "term": "Termination of commitments"
+        },
+        {
+          "coverage": "full",
+          "row": 11,
+          "term": "Outside Date"
+        },
+        {
+          "coverage": "full",
+          "row": 153,
+          "term": "MAC"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 15 (Limited Condition Acquisition); DLS Preferred Row 38 (Termination date); DLS Preferred Row 44 (Business MAC); DLS Preferred Row 53 (Amendments to Acquisition Agreement); DLS Preferred Row 55 (Absence of other debt); DLS Preferred Row 58 (Other conditions); Review Template Row 10 (Termination of commitments); Review Template Row 11 (Outside Date); Review Template Row 153 (MAC)"
+    }
+  ],
+  "corpus_prevalence": "high",
+  "definition": "Pre-closing mechanics and conditions precedent that must be satisfied before the credit facility funds on the closing date. Under Sungard conditionality (the market standard for acquisition financing), closing conditions are intentionally limited to prevent 'conditionality creep' that could allow the arranger to refuse funding. DLS Preferred closing conditions include: termination date tied to acquisition agreement (with 5 BD cushion), minimum equity contribution (percentage of pro forma capitalization), business MAC (defined by reference to acquisition agreement), financial statements (3 years audited within 90 days, quarterly within 30 days, monthly within 30 days), pro forma financials including pro forma EBITDA, forecasts (quarterly for 12 months, annual for facility life), marketing period (20 consecutive BDs), payment of fees/expenses (invoiced 3 BDs prior), collateral delivery (stock certificates, UCC filings, IP filings at closing; remaining perfection within 30-60 days), Specified Representations accuracy, acquisition agreement amendments (no materially adverse changes without consent), absence of other debt, solvency certificate, and PATRIOT Act/KYC compliance.",
+  "dls_ref": [
+    "DLS:38:Termination date",
+    "DLS:39:Minimum equity",
+    "DLS:40:Market MAC",
+    "DLS:41:Maximum leverage",
+    "DLS:42:Minimum EBITDA",
+    "DLS:43:Minimum ratings",
+    "DLS:44:Business MAC",
+    "DLS:45:Due diligence",
+    "DLS:46:Third-party consents / litigation",
+    "DLS:49:Forecasts",
+    "DLS:50:Marketing period",
+    "DLS:53:Amendments to Acquisition Agreement",
+    "DLS:54:Clear market",
+    "DLS:55:Absence of other debt",
+    "DLS:56:Solvency",
+    "DLS:58:Other conditions",
+    "DLS:61:Clear Market",
+    "DLS:63:Syndication Assistance",
+    "DLS:94:Assignments"
+  ],
+  "domain_id": "governance",
+  "extraction_difficulty": "medium",
+  "family_id": "governance.pre_closing",
+  "id": "governance.pre_closing",
+  "level": 1,
+  "market_benchmarks": {
+    "r17_gap_flagged": true
+  },
+  "name": "Pre-Closing Mechanics",
+  "negotiation_spectrum": {
+    "r17_gap_flagged": true
+  },
+  "r18_concept_ids": [
+    "pre_closing_mechanics.market_flex",
+    "pre_closing_mechanics.syndication_provisions",
+    "pre_closing_mechanics.fee_letter",
+    "pre_closing_mechanics.securities_demand",
+    "pre_closing_mechanics.erroneous_payment"
+  ],
+  "type": "family",
+  "definition_source": "DLS Preferred rows 38-58 (complete closing conditions specification: 18 categories with preferred positions and alternatives); Review Template rows 51 (Reps/Conditions); Learning Material section 2 (Transaction Description/Conditions Precedent: 18 CP categories)"
+}

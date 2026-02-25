@@ -1,0 +1,279 @@
+[
+  {
+    "id": "governance.affiliate_txns.covenant_type",
+    "name": "Covenant Structure",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "Covenant Structure"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.general_prohibition",
+    "name": "General Prohibition & Arms-Length Standard",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "General Prohibition & Arms-Length Standard"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.approval_tiers",
+    "name": "Approval Tiers",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "Approval Tiers"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.de_minimis",
+    "name": "De Minimis Threshold",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "De Minimis Threshold"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.management_agreement",
+    "name": "Sponsor Management Agreement",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "Sponsor Management Agreement"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.tax_sharing",
+    "name": "Tax Sharing Arrangements",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "Tax Sharing Arrangements"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.employee_comp",
+    "name": "Employee Compensation Arrangements",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "Employee Compensation Arrangements"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.insurance_indem",
+    "name": "Insurance & Indemnification",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "Insurance & Indemnification"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.other_baskets",
+    "name": "Other Affiliate Baskets",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "Other Affiliate Baskets"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.affiliated_lender_restrictions",
+    "name": "Affiliated Lender Restrictions (NegCov)",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "Affiliated Lender Restrictions (NegCov)"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.unrestricted_subsidiary_controls",
+    "name": "Unrestricted Subsidiary Controls",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "Unrestricted Subsidiary Controls",
+        "unrestricted"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.hwm_ratchet",
+    "name": "Hwm Ratchet",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "Hwm Ratchet"
+      ]
+    }
+  }
+]

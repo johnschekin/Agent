@@ -1,0 +1,538 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Mechanism freezing the applicable version of GAAP at the closing date for covenant calculation purposes. Prevents future accounting standard changes (such as ASC 842 lease capitalization) from retroactively altering how financial covenants are measured. Standard in private credit. The freeze mechanism typically includes a borrower election right to adopt beneficial new standards, with agent consent required for standards that would tighten covenant metrics.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.accounting",
+          "id": "fin_framework.accounting.gaap_consistency.gaap_version_freeze",
+          "level": 3,
+          "name": "GAAP Version Freeze",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 1 Item 6; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 2; KCT Cat 3 Item 3; KCT Cat 3 Item 4; KCT Cat 3 Item 7; KCT Cat 3 Item 8; KCT Cat 3 Item 11; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 3 Item 14; KCT Cat 4 Item 1; KCT Cat 4 Item 4; KCT Cat 4 Item 5; KCT Cat 4 Item 7; KCT Cat 4 Item 8; KCT Cat 4 Item 10; KCT Cat 4 Item 11; KCT Cat 5 Item 1; KCT Cat 5 Item 3; KCT Cat 5 Item 4"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Borrower's right to report under IFRS (International Financial Reporting Standards) instead of US GAAP. Relevant for foreign private issuers or multinational borrowers. If elected, all financial definitions and covenant calculations are interpreted under IFRS consistently.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.accounting",
+          "id": "fin_framework.accounting.gaap_consistency.ifrs_alternative",
+          "level": 3,
+          "name": "IFRS Alternative",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 3; KCT Cat 3 Item 13; KCT Cat 3 Item 15; KCT Cat 4 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Borrower's right to elect between frozen GAAP and current GAAP for specific accounting standards or treatments. Common for specific standards like ASC 842 (lease accounting) where borrowers want to preserve pre-change treatment. Election typically must be made within a specified period after the new standard takes effect.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.accounting",
+          "id": "fin_framework.accounting.gaap_consistency.gaap_election",
+          "level": 3,
+          "name": "Borrower GAAP Treatment Election",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 3 Item 3; KCT Cat 3 Item 12; KCT Cat 4 Item 7"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Notice requirements when GAAP changes materially affect financial covenant calculations. Borrower must notify agent of any changes in GAAP or application thereof that would materially affect financial statements or compliance certificates. May trigger renegotiation of financial covenant levels.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.accounting",
+          "id": "fin_framework.accounting.gaap_consistency.gaap_change_notification",
+          "level": 3,
+          "name": "GAAP Change Notification",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 2; KCT Cat 3 Item 4; KCT Cat 3 Item 8; KCT Cat 3 Item 11; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 3 Item 14; KCT Cat 4 Item 1; KCT Cat 4 Item 3; KCT Cat 4 Item 4; KCT Cat 4 Item 5; KCT Cat 4 Item 11; KCT Cat 5 Item 1; KCT Cat 5 Item 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "All financial statements and calculations under the credit agreement must be prepared in accordance with GAAP applied consistently. DLS Preferred row 78 affirmative covenants clause (i) requires 'annual financial statements (prepared in accordance with GAAP)' with an audit opinion from a nationally recognized firm, and clause (ii) requires 'quarterly financial statements (prepared in accordance with GAAP).' The GAAP consistency requirement ensures comparability across test periods and prevents the borrower from selectively applying accounting principles to improve covenant metrics.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.reg_sx_adjustments",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01"
+        ],
+        "shape_ref": "financial_definitions.reg_sx_adjustments",
+        "aligned_difficulty": "hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.accounting",
+      "id": "fin_framework.accounting.gaap_consistency",
+      "level": 2,
+      "market_data": {
+        "prevalence": "44.1%"
+      },
+      "name": "GAAP Consistency Requirement",
+      "type": "concept",
+      "definition_source": "DLS Preferred row 78 clauses (i)-(ii) (GAAP-prepared annual and quarterly financial statements)"
+    },
+    {
+      "corpus_prevalence": "low",
+      "definition": "Agent/lender approval required for modifications to accounting principles or practices. Most protective approach but very uncommon in modern leveraged finance because it creates operational friction and potential lender hold-up on routine accounting elections.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.reg_sx_adjustments",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01"
+        ],
+        "shape_ref": "financial_definitions.reg_sx_adjustments",
+        "aligned_difficulty": "hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.accounting",
+      "id": "fin_framework.accounting.consent_based",
+      "level": 2,
+      "market_data": {
+        "prevalence": "5.1%"
+      },
+      "name": "Consent-Based Changes",
+      "type": "concept",
+      "children": [
+        {
+          "id": "fin_framework.accounting.consent_based.trigger_events",
+          "name": "Triggering Accounting Changes",
+          "definition": "Specific GAAP or regulatory changes (e.g., ASC 842 lease accounting, revenue recognition) that require lender consent before the borrower may adopt the new standard for covenant calculation purposes.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "fin_framework",
+          "family_id": "fin_framework.accounting",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 6; KCT Cat 2 Item 1; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 2; KCT Cat 3 Item 3; KCT Cat 3 Item 4; KCT Cat 3 Item 5; KCT Cat 3 Item 6; KCT Cat 3 Item 7; KCT Cat 3 Item 8; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 4 Item 5; KCT Cat 4 Item 8; KCT Cat 4 Item 11; KCT Cat 5 Item 1"
+        },
+        {
+          "id": "fin_framework.accounting.consent_based.approval_mechanics",
+          "name": "Approval Mechanics",
+          "definition": "The consent process — administrative agent sole discretion, required lender vote, or automatic adoption with freeze-date provisions — and interaction with the broader amendment/waiver framework.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "fin_framework",
+          "family_id": "fin_framework.accounting",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 3 Item 3; KCT Cat 3 Item 5; KCT Cat 3 Item 6; KCT Cat 3 Item 7; KCT Cat 3 Item 13; KCT Cat 4 Item 4; KCT Cat 4 Item 11; KCT Cat 5 Item 1"
+        },
+        {
+          "id": "fin_framework.accounting.consent_based.frozen_gaap_alternative",
+          "name": "Frozen GAAP Alternative",
+          "definition": "Option to freeze accounting standards as of the closing date for covenant calculations, avoiding the need for consent on subsequent changes.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "fin_framework",
+          "family_id": "fin_framework.accounting",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 4; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 5 Item 4"
+        }
+      ],
+      "definition_source": "KCT Cat 1 Item 3; KCT Cat 3 Item 5; KCT Cat 3 Item 6; KCT Cat 3 Item 7; KCT Cat 3 Item 13; KCT Cat 4 Item 1; KCT Cat 4 Item 3; KCT Cat 4 Item 4; KCT Cat 4 Item 11; KCT Cat 5 Item 1; KCT Cat 5 Item 3"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "GAAP frozen as of the closing date of the credit agreement. The standard formulation. All financial definitions interpreted using accounting standards in effect on the closing date regardless of subsequent changes.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.accounting",
+          "id": "fin_framework.accounting.freeze_date.closing_date_freeze",
+          "level": 3,
+          "name": "Closing Date Freeze",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 13 (Closing Date Refinancing); Review Template Row 15 (Revolver closing date draws); KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 2 Item 2; KCT Cat 2 Item 4; KCT Cat 3 Item 5; KCT Cat 3 Item 7; KCT Cat 3 Item 11; KCT Cat 3 Item 12; KCT Cat 4 Item 1; KCT Cat 4 Item 7; KCT Cat 4 Item 10; KCT Cat 5 Item 4"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Upon amendment and restatement, the GAAP freeze date updates to the A&R effective date. Allows the accounting baseline to be refreshed when the credit agreement is comprehensively renegotiated.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.accounting",
+          "id": "fin_framework.accounting.freeze_date.amendment_date_update",
+          "level": 3,
+          "name": "Amendment Date Update",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 4; KCT Cat 3 Item 7; KCT Cat 3 Item 11; KCT Cat 4 Item 1"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Borrower may elect to adopt specific new accounting standards while maintaining the freeze for others. Common carve-out: adopt revenue recognition (ASC 606) or lease (ASC 842) changes while maintaining frozen treatment for other standards.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.accounting",
+          "id": "fin_framework.accounting.freeze_date.selective_adoption",
+          "level": 3,
+          "name": "Selective New Standard Adoption",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 6; KCT Cat 2 Item 1; KCT Cat 2 Item 4; KCT Cat 3 Item 2; KCT Cat 3 Item 3; KCT Cat 3 Item 8; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 3 Item 14; KCT Cat 4 Item 7"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "The specific calendar date establishing the temporal reference point for GAAP freeze provisions, almost always the closing date of the credit agreement. All accounting standards in effect on this date govern covenant calculations regardless of subsequent FASB or IASB amendments. Distinguished from the freeze mechanism itself: the freeze date is a parameter (when), while the GAAP version freeze is the contractual rule (how).",
+      "dls_ref": [
+        "DLS:38:Termination date"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.reg_sx_adjustments",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01"
+        ],
+        "shape_ref": "financial_definitions.reg_sx_adjustments",
+        "aligned_difficulty": "hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.accounting",
+      "id": "fin_framework.accounting.freeze_date",
+      "level": 2,
+      "market_benchmarks": {
+        "alternative": "GAAP as amended with borrower election to freeze",
+        "prevalence": "90%+",
+        "standard": "GAAP as in effect on closing date (frozen GAAP)"
+      },
+      "name": "GAAP Freeze Date",
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 60,
+          "term": "Financial Covenant – first test date"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 38 (Termination date); Review Template Row 60 (Financial Covenant – first test date)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Changes required by FASB, IASB, or the SEC that must be adopted by all reporting entities. These flow through the GAAP freeze automatically. The credit agreement typically requires that if mandatory adoption materially affects covenant calculations, the parties negotiate in good faith to adjust.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.accounting",
+          "id": "fin_framework.accounting.required_changes.mandatory_adoption",
+          "level": 3,
+          "name": "Mandatory Standard Adoption",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 1; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 3; KCT Cat 3 Item 4; KCT Cat 3 Item 5; KCT Cat 3 Item 7; KCT Cat 3 Item 8; KCT Cat 3 Item 11; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 3 Item 15; KCT Cat 4 Item 1; KCT Cat 4 Item 5; KCT Cat 4 Item 7; KCT Cat 4 Item 10; KCT Cat 4 Item 11; KCT Cat 5 Item 3"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether a required GAAP change that materially affects financial covenants triggers a mandatory renegotiation period. Standard: 30-60 day good faith negotiation period; if no agreement, original metrics apply. Aggressive: automatic adjustment to neutralize the impact.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.accounting",
+          "id": "fin_framework.accounting.required_changes.renegotiation_trigger",
+          "level": 3,
+          "name": "Renegotiation Trigger",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 4; KCT Cat 3 Item 3; KCT Cat 3 Item 4; KCT Cat 3 Item 7; KCT Cat 3 Item 8; KCT Cat 3 Item 11; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 4 Item 1; KCT Cat 4 Item 5; KCT Cat 5 Item 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Exception for GAAP changes required by accounting standards bodies (FASB, IASB). Allows mandatory accounting changes to flow through even when GAAP is otherwise frozen. Without this exception, the borrower could face conflicts between credit agreement requirements and mandatory accounting standards.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.reg_sx_adjustments",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01"
+        ],
+        "shape_ref": "financial_definitions.reg_sx_adjustments",
+        "aligned_difficulty": "hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.accounting",
+      "id": "fin_framework.accounting.required_changes",
+      "level": 2,
+      "market_data": {
+        "prevalence": "40.7%"
+      },
+      "name": "Required/Regulatory Changes",
+      "type": "concept",
+      "definition_source": "KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 4; KCT Cat 3 Item 3; KCT Cat 3 Item 5; KCT Cat 3 Item 7; KCT Cat 3 Item 8; KCT Cat 3 Item 11; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 3 Item 15; KCT Cat 4 Item 1; KCT Cat 4 Item 11"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Borrower's right to elect that operating leases continue to be treated as operating leases (off-balance-sheet) for covenant calculation purposes, notwithstanding ASC 842 capitalization. Very common in post-2019 credit agreements. Without this election, adoption of ASC 842 could cause technical covenant default by increasing reported leverage.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.accounting",
+          "id": "fin_framework.accounting.asc842_lease.asc842_election",
+          "level": 3,
+          "name": "ASC 842 Freeze Election",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 2; KCT Cat 3 Item 3; KCT Cat 3 Item 4; KCT Cat 3 Item 8; KCT Cat 3 Item 9; KCT Cat 3 Item 11; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 4 Item 1; KCT Cat 4 Item 5; KCT Cat 4 Item 7; KCT Cat 4 Item 11; KCT Cat 5 Item 1; KCT Cat 5 Item 2; KCT Cat 5 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether leases classified as finance leases under ASC 842 are treated differently from operating leases for covenant purposes. Finance leases (formerly capital leases) are typically included in debt calculations; the issue is whether newly-capitalized operating leases should receive the same treatment or be excluded.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.accounting",
+          "id": "fin_framework.accounting.asc842_lease.operating_vs_finance",
+          "level": 3,
+          "name": "Operating vs. Finance Lease Treatment",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 4; KCT Cat 3 Item 15; KCT Cat 4 Item 5; KCT Cat 5 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether lease obligations are classified as Consolidated Total Debt for leverage ratio purposes. Capital/finance lease obligations are traditionally included; the question post-ASC 842 is whether operating lease liabilities newly appearing on the balance sheet are also captured. DLS preferred: Consolidated Total Debt includes capital lease obligations but not operating lease liabilities (per ASC 842 freeze).",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.accounting",
+          "id": "fin_framework.accounting.asc842_lease.lease_debt_classification",
+          "level": 3,
+          "name": "Lease Debt Classification",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 4; KCT Cat 3 Item 15; KCT Cat 4 Item 5; KCT Cat 4 Item 8"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Cap on the EBITDA impact of lease-related adjustments. If ASC 842 freeze is not elected, operating lease payments may be added back to EBITDA as a rent/occupancy expense. Cap prevents excessive EBITDA inflation from large operating lease portfolios (e.g., retail, logistics).",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.accounting",
+          "id": "fin_framework.accounting.asc842_lease.lease_adjustment_cap",
+          "level": 3,
+          "name": "Lease-Related EBITDA Adjustment Cap",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 6; KCT Cat 1 Item 7; KCT Cat 1 Item 8; KCT Cat 2 Item 4"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Treatment of the ASC 842 lease accounting standard change in covenant calculations. ASC 842 (effective 2019) requires operating leases to be capitalized on the balance sheet, which can materially increase reported debt and leverage ratios. Very common post-2019 for credit agreements to include an ASC 842 election allowing borrowers to freeze pre-ASC 842 lease treatment for covenant purposes.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.reg_sx_adjustments",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01"
+        ],
+        "shape_ref": "financial_definitions.reg_sx_adjustments"
+      },
+      "family_id": "fin_framework.accounting",
+      "id": "fin_framework.accounting.asc842_lease",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "80-90% (post-2019 CAs)",
+        "standard": "Election to treat operating leases as capitalized for covenant compliance",
+        "trigger": "ASC 842 / IFRS 16 adoption"
+      },
+      "name": "Lease Accounting (ASC 842)",
+      "type": "concept",
+      "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 12; KCT Cat 3 Item 14; KCT Cat 4 Item 1; KCT Cat 4 Item 4; KCT Cat 4 Item 5; KCT Cat 4 Item 7; KCT Cat 4 Item 8; KCT Cat 4 Item 10; KCT Cat 4 Item 11"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Which entities are included in 'Consolidated' financial statements for covenant purposes. Standard: the borrower and all restricted subsidiaries on a consolidated basis in accordance with GAAP. Key issue: variable interest entities (VIEs) that GAAP requires to be consolidated but that the credit agreement may exclude.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.accounting",
+          "id": "fin_framework.accounting.certain_definitions.consolidated_definition",
+          "level": 3,
+          "name": "Consolidated Definition Scope",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 2; KCT Cat 3 Item 3; KCT Cat 3 Item 4; KCT Cat 3 Item 7; KCT Cat 3 Item 8; KCT Cat 3 Item 11; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 4 Item 1; KCT Cat 4 Item 3; KCT Cat 4 Item 5; KCT Cat 4 Item 7; KCT Cat 4 Item 10; KCT Cat 4 Item 11; KCT Cat 5 Item 1; KCT Cat 5 Item 2; KCT Cat 5 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "How unrestricted subsidiary financials are excluded from consolidated calculations. Standard: unrestricted subsidiaries are excluded from all financial covenant and ratio calculations. The mechanism: treated as if they are not subsidiaries for GAAP consolidation purposes under the credit agreement, even if GAAP would otherwise require consolidation.",
+          "dls_ref": [
+            "DLS:92:Unrestricted Subsidiaries"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.accounting",
+          "id": "fin_framework.accounting.certain_definitions.unrestricted_sub_treatment",
+          "level": 3,
+          "name": "Unrestricted Subsidiary Exclusion",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 92 (Unrestricted Subsidiaries)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "How minority (non-controlling) interests in consolidated subsidiaries are treated in financial calculations. GAAP requires full consolidation with minority interest presentation; the credit agreement determines whether minority interest income/assets are included or excluded from EBITDA, Total Debt, and Net Worth calculations.",
+          "dls_ref": [
+            "DLS:18:Interest Rates"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.accounting",
+          "id": "fin_framework.accounting.certain_definitions.minority_interest_treatment",
+          "level": 3,
+          "name": "Minority Interest Treatment",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 18 (Interest Rates)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Treatment of discontinued operations in financial covenant calculations. GAAP requires separate presentation; the credit agreement specifies whether discontinued operations are excluded from EBITDA (standard) or included until actually disposed. Relevant for pro forma calculations.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.accounting",
+          "id": "fin_framework.accounting.certain_definitions.discontinued_operations",
+          "level": 3,
+          "name": "Discontinued Operations Treatment",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 1 Item 6; KCT Cat 2 Item 1; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 4; KCT Cat 3 Item 7; KCT Cat 3 Item 11; KCT Cat 3 Item 12; KCT Cat 4 Item 1; KCT Cat 4 Item 5; KCT Cat 4 Item 7; KCT Cat 4 Item 10"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Key defined terms whose meaning depends on accounting treatment and consolidation rules. How 'Consolidated' is defined, how unrestricted subsidiary financials are excluded, and how minority interests are treated all directly affect financial covenant calculations.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.reg_sx_adjustments",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01"
+        ],
+        "shape_ref": "financial_definitions.reg_sx_adjustments"
+      },
+      "family_id": "fin_framework.accounting",
+      "id": "fin_framework.accounting.certain_definitions",
+      "level": 2,
+      "market_benchmarks": {
+        "exception": "Borrower may elect to update specific definitions",
+        "prevalence": "85-95%",
+        "standard": "Key definitions (CNI, EBITDA, Total Debt) use closing-date GAAP"
+      },
+      "name": "Accounting-Related Definitions",
+      "r18_concept_ids": [
+        "financial_definitions.accounting_changes"
+      ],
+      "type": "concept",
+      "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 3; KCT Cat 3 Item 14; KCT Cat 4 Item 1"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Restrictions on the borrower changing its fiscal year-end without lender consent. Fiscal year changes affect the timing of financial statement delivery, compliance certificate deadlines, and ECF sweep calculations. Standard: no change without agent consent.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.accounting",
+          "id": "fin_framework.accounting.fiscal_periods.fiscal_year_change",
+          "level": 3,
+          "name": "Fiscal Year Change Restriction",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 4; KCT Cat 3 Item 2; KCT Cat 3 Item 3; KCT Cat 3 Item 4; KCT Cat 3 Item 5; KCT Cat 3 Item 6; KCT Cat 3 Item 8; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 4 Item 1; KCT Cat 4 Item 3; KCT Cat 4 Item 4; KCT Cat 4 Item 11; KCT Cat 5 Item 1; KCT Cat 5 Item 2; KCT Cat 5 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "The trailing four consecutive fiscal quarter period used as the measurement window for all ratio-based tests (leverage, coverage, FCCR). Standard: the most recently ended four consecutive fiscal quarters for which financial statements have been delivered. Some CAs allow the most recently ended period even if statements not yet delivered (more aggressive).",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "easy",
+          "family_id": "fin_framework.accounting",
+          "id": "fin_framework.accounting.fiscal_periods.test_period_definition",
+          "level": 3,
+          "name": "Test Period Definition",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 3 Item 15; KCT Cat 4 Item 1; KCT Cat 4 Item 8; KCT Cat 4 Item 11"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "How partial periods (the first period after closing that does not comprise a full four quarters) are handled for covenant testing. Standard: annualize the partial period, or use the closing date pro forma model until four full quarters of actual results are available. Some CAs provide a covenant holiday for the first 1-2 test periods after closing.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.accounting",
+          "id": "fin_framework.accounting.fiscal_periods.stub_period_treatment",
+          "level": 3,
+          "name": "Stub Period Treatment",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 2; KCT Cat 3 Item 3; KCT Cat 3 Item 7; KCT Cat 3 Item 9; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 4 Item 5; KCT Cat 4 Item 7; KCT Cat 4 Item 8; KCT Cat 5 Item 4"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Definitions governing fiscal year, test period, and stub period treatment that determine when and how financial covenants are tested. The test period definition (typically 4 consecutive fiscal quarters) is the denominator window for all ratio calculations.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.reg_sx_adjustments",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01"
+        ],
+        "shape_ref": "financial_definitions.reg_sx_adjustments",
+        "aligned_difficulty": "hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.accounting",
+      "id": "fin_framework.accounting.fiscal_periods",
+      "level": 2,
+      "market_benchmarks": {
+        "change_provision": "Fiscal year change requires Required Lender consent",
+        "prevalence": "99%+",
+        "standard": "Four fiscal quarters, trailing twelve months (TTM) for ratio tests"
+      },
+      "name": "Fiscal Year and Test Periods",
+      "type": "concept",
+      "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 11; KCT Cat 4 Item 1; KCT Cat 4 Item 8"
+    }
+  ],
+  "corpus_prevalence": "high",
+  "dealdata_benchmarks": {
+    "Accounting Changes?": {
+      "pc_dollar_median": "$1,000,000",
+      "pc_dollar_range": "$1,000,000-$1,000,000"
+    }
+  },
+  "definition": "Restrictions on modifying accounting principles/practices. 59.3% restrict changes.",
+  "domain_id": "fin_framework",
+  "extraction_difficulty": "medium",
+  "family_id": "fin_framework.accounting",
+  "id": "fin_framework.accounting",
+  "level": 1,
+  "market_data": {
+    "gaap_compliance": "44.1%",
+    "no_restriction": "30.5%",
+    "restriction_present": "59.3%"
+  },
+  "name": "Accounting Change Provisions",
+  "r18_concept_ids": [
+    "financial_definitions.accounting_changes"
+  ],
+  "term_analysis_sources": [
+    "TERM_ANALYSIS_ACCOUNTING_CHANGES.md"
+  ],
+  "type": "family",
+  "definition_source": "KCT Cat 2 Item 4; KCT Cat 3 Item 12"
+}

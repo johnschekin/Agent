@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useRef, useEffect, useCallback } from "react";
-import type { SectionRecord } from "@/lib/types";
+import type { SectionRecord, ArticleRecord } from "@/lib/types";
 import { formatNumber } from "@/lib/formatters";
 import { cn, SELECT_CLASS } from "@/lib/cn";
 
@@ -24,6 +24,7 @@ function groupByArticle(sections: SectionRecord[]): ArticleGroup[] {
 
 interface SectionTOCProps {
   sections: SectionRecord[];
+  articles?: ArticleRecord[];
   activeSectionNumber: string | null;
   onSelectSection: (sectionNumber: string) => void;
   searchQuery: string;
@@ -34,6 +35,7 @@ interface SectionTOCProps {
 
 export function SectionTOC({
   sections,
+  articles,
   activeSectionNumber,
   onSelectSection,
   searchQuery,
@@ -45,6 +47,13 @@ export function SectionTOC({
     () => new Set<number>()
   );
   const groups = useMemo(() => groupByArticle(sections), [sections]);
+  const articleMap = useMemo(() => {
+    const map = new Map<number, ArticleRecord>();
+    if (articles) {
+      for (const a of articles) map.set(a.article_num, a);
+    }
+    return map;
+  }, [articles]);
   const activeRef = useRef<HTMLButtonElement>(null);
 
   // Auto-expand the article containing the active section
@@ -87,12 +96,14 @@ export function SectionTOC({
             searchMatchSections &&
             group.sections.some((s) => searchMatchSections.has(s.section_number));
 
+          const article = articleMap.get(group.articleNum);
+
           return (
             <div key={group.articleNum}>
               {/* Article header */}
               <button
                 className={cn(
-                  "flex items-center gap-2 w-full px-3 py-1.5 hover:bg-surface-tertiary text-left",
+                  "flex items-center gap-2 w-full px-3 py-1.5 hover:bg-surface-3 text-left",
                   hasMatch && "bg-accent-blue/5"
                 )}
                 onClick={() => toggleArticle(group.articleNum)}
@@ -100,10 +111,17 @@ export function SectionTOC({
                 <span className="text-[10px] text-text-muted w-3">
                   {expanded ? "▾" : "▸"}
                 </span>
-                <span className="text-xs font-medium text-text-primary">
-                  Article {group.articleNum}
+                <span className="text-xs font-medium text-text-primary truncate">
+                  {article
+                    ? `${article.label}${article.title ? ` — ${article.title}` : ""}`
+                    : `Article ${group.articleNum}`}
                 </span>
-                <span className="text-[11px] text-text-muted ml-auto tabular-nums">
+                {article?.concept && (
+                  <span className="text-[10px] text-text-muted bg-surface-3 rounded px-1 py-0.5 flex-shrink-0">
+                    {article.concept}
+                  </span>
+                )}
+                <span className="text-[11px] text-text-muted ml-auto tabular-nums flex-shrink-0">
                   {group.sections.length}
                 </span>
               </button>
@@ -126,7 +144,7 @@ export function SectionTOC({
                           "w-full text-left flex items-center gap-1.5 px-2 py-1 text-xs rounded-sm transition-colors",
                           isActive
                             ? "bg-accent-blue/10 border-l-2 border-l-accent-blue text-text-primary"
-                            : "border-l-2 border-l-transparent hover:bg-surface-tertiary/50 text-text-secondary",
+                            : "border-l-2 border-l-transparent hover:bg-surface-3/50 text-text-secondary",
                           isSearchMatch &&
                             !isActive &&
                             "bg-accent-blue/5"

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "debt_capacity.incremental.stacking_reclass.stacking",
+    "name": "Stacking Mechanics",
+    "family_id": "debt_capacity.incremental.stacking_reclass",
+    "concept_area": "stacking_reclass",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Stacking Mechanics"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.stacking_reclass.reclassification",
+    "name": "Reclassification",
+    "family_id": "debt_capacity.incremental.stacking_reclass",
+    "concept_area": "stacking_reclass",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": []
+    }
+  }
+]

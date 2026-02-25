@@ -1,0 +1,461 @@
+[
+  {
+    "id": "deal_econ.pricing.applicable_margin",
+    "name": "Applicable Margin / Spread",
+    "family_id": "deal_econ.pricing",
+    "concept_area": "pricing",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Interest",
+        "Interest Rate",
+        "Applicable Rate",
+        "Applicable Margin"
+      ],
+      "keyword_anchors": [
+        "Applicable Rate",
+        "Applicable Margin",
+        "SOFR",
+        "Base Rate",
+        "interest rate",
+        "margin",
+        "floor"
+      ],
+      "concept_specific_keywords": [
+        "Applicable Margin / Spread"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.pricing.benchmark_rate",
+    "name": "Benchmark Rate",
+    "family_id": "deal_econ.pricing",
+    "concept_area": "pricing",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Interest",
+        "Interest Rate",
+        "Applicable Rate",
+        "Applicable Margin"
+      ],
+      "keyword_anchors": [
+        "Applicable Rate",
+        "Applicable Margin",
+        "SOFR",
+        "Base Rate",
+        "interest rate",
+        "margin",
+        "floor"
+      ],
+      "concept_specific_keywords": [
+        "Benchmark Rate"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.pricing.sofr_floor",
+    "name": "SOFR Floor",
+    "family_id": "deal_econ.pricing",
+    "concept_area": "pricing",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Interest",
+        "Interest Rate",
+        "Applicable Rate",
+        "Applicable Margin"
+      ],
+      "keyword_anchors": [
+        "Applicable Rate",
+        "Applicable Margin",
+        "SOFR",
+        "Base Rate",
+        "interest rate",
+        "margin",
+        "floor"
+      ],
+      "concept_specific_keywords": [
+        "SOFR Floor"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.pricing.credit_spread_adjustment",
+    "name": "Credit Spread Adjustment (CSA)",
+    "family_id": "deal_econ.pricing",
+    "concept_area": "pricing",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Interest",
+        "Interest Rate",
+        "Applicable Rate",
+        "Applicable Margin"
+      ],
+      "keyword_anchors": [
+        "Applicable Rate",
+        "Applicable Margin",
+        "SOFR",
+        "Base Rate",
+        "interest rate",
+        "margin",
+        "floor"
+      ],
+      "concept_specific_keywords": [
+        "Credit Spread Adjustment (CSA)"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.pricing.call_protection",
+    "name": "Call Protection / Prepayment Premium",
+    "family_id": "deal_econ.pricing",
+    "concept_area": "pricing",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Interest",
+        "Interest Rate",
+        "Applicable Rate",
+        "Applicable Margin"
+      ],
+      "keyword_anchors": [
+        "Applicable Rate",
+        "Applicable Margin",
+        "SOFR",
+        "Base Rate",
+        "interest rate",
+        "margin",
+        "floor"
+      ],
+      "concept_specific_keywords": [
+        "Call Protection / Prepayment Premium"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.pricing.default_interest",
+    "name": "Default Interest Rate",
+    "family_id": "deal_econ.pricing",
+    "concept_area": "pricing",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Interest",
+        "Interest Rate",
+        "Applicable Rate",
+        "Applicable Margin"
+      ],
+      "keyword_anchors": [
+        "Applicable Rate",
+        "Applicable Margin",
+        "SOFR",
+        "Base Rate",
+        "interest rate",
+        "margin",
+        "floor"
+      ],
+      "concept_specific_keywords": [
+        "Default Interest Rate"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.pricing.pik_toggle",
+    "name": "PIK (Payment-in-Kind) Interest",
+    "family_id": "deal_econ.pricing",
+    "concept_area": "pricing",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Interest",
+        "Interest Rate",
+        "Applicable Rate",
+        "Applicable Margin"
+      ],
+      "keyword_anchors": [
+        "Applicable Rate",
+        "Applicable Margin",
+        "SOFR",
+        "Base Rate",
+        "interest rate",
+        "margin",
+        "floor"
+      ],
+      "concept_specific_keywords": [
+        "PIK (Payment-in-Kind) Interest"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.pricing.interest_periods",
+    "name": "Interest Period Mechanics",
+    "family_id": "deal_econ.pricing",
+    "concept_area": "pricing",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Interest",
+        "Interest Rate",
+        "Applicable Rate",
+        "Applicable Margin"
+      ],
+      "keyword_anchors": [
+        "Applicable Rate",
+        "Applicable Margin",
+        "SOFR",
+        "Base Rate",
+        "interest rate",
+        "margin",
+        "floor"
+      ],
+      "concept_specific_keywords": [
+        "Interest Period Mechanics"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.pricing.yield_protection",
+    "name": "Yield Protection / Increased Costs",
+    "family_id": "deal_econ.pricing",
+    "concept_area": "pricing",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Interest",
+        "Interest Rate",
+        "Applicable Rate",
+        "Applicable Margin"
+      ],
+      "keyword_anchors": [
+        "Applicable Rate",
+        "Applicable Margin",
+        "SOFR",
+        "Base Rate",
+        "interest rate",
+        "margin",
+        "floor"
+      ],
+      "concept_specific_keywords": [
+        "Yield Protection / Increased Costs"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.pricing.mfn_protection",
+    "name": "Most Favored Nation (MFN) Protection",
+    "family_id": "deal_econ.pricing",
+    "concept_area": "pricing",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Interest",
+        "Interest Rate",
+        "Applicable Rate",
+        "Applicable Margin"
+      ],
+      "keyword_anchors": [
+        "Applicable Rate",
+        "Applicable Margin",
+        "SOFR",
+        "Base Rate",
+        "interest rate",
+        "margin",
+        "floor"
+      ],
+      "concept_specific_keywords": [
+        "Most Favored Nation (MFN) Protection"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.pricing.market_flex",
+    "name": "Market Flex Provisions",
+    "family_id": "deal_econ.pricing",
+    "concept_area": "pricing",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Interest",
+        "Interest Rate",
+        "Applicable Rate",
+        "Applicable Margin"
+      ],
+      "keyword_anchors": [
+        "Applicable Rate",
+        "Applicable Margin",
+        "SOFR",
+        "Base Rate",
+        "interest rate",
+        "margin",
+        "floor"
+      ],
+      "concept_specific_keywords": [
+        "Market Flex Provisions"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.pricing.esg_sustainability",
+    "name": "ESG / Sustainability-Linked Pricing",
+    "family_id": "deal_econ.pricing",
+    "concept_area": "pricing",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Interest",
+        "Interest Rate",
+        "Applicable Rate",
+        "Applicable Margin"
+      ],
+      "keyword_anchors": [
+        "Applicable Rate",
+        "Applicable Margin",
+        "SOFR",
+        "Base Rate",
+        "interest rate",
+        "margin",
+        "floor"
+      ],
+      "concept_specific_keywords": [
+        "ESG / Sustainability-Linked Pricing"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.pricing.oid_upfront_fee",
+    "name": "OID / Upfront Fee",
+    "family_id": "deal_econ.pricing",
+    "concept_area": "pricing",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Interest",
+        "Interest Rate",
+        "Applicable Rate",
+        "Applicable Margin"
+      ],
+      "keyword_anchors": [
+        "Applicable Rate",
+        "Applicable Margin",
+        "SOFR",
+        "Base Rate",
+        "interest rate",
+        "margin",
+        "floor"
+      ],
+      "concept_specific_keywords": [
+        "OID / Upfront Fee",
+        "Original Issue Discount"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.pricing.lc_fees",
+    "name": "Letter of Credit Fees",
+    "family_id": "deal_econ.pricing",
+    "concept_area": "pricing",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Interest",
+        "Interest Rate",
+        "Applicable Rate",
+        "Applicable Margin"
+      ],
+      "keyword_anchors": [
+        "Applicable Rate",
+        "Applicable Margin",
+        "SOFR",
+        "Base Rate",
+        "interest rate",
+        "margin",
+        "floor"
+      ],
+      "concept_specific_keywords": [
+        "Letter of Credit Fees"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.pricing.agency_fee",
+    "name": "Agency / Administrative Fee",
+    "family_id": "deal_econ.pricing",
+    "concept_area": "pricing",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Interest",
+        "Interest Rate",
+        "Applicable Rate",
+        "Applicable Margin"
+      ],
+      "keyword_anchors": [
+        "Applicable Rate",
+        "Applicable Margin",
+        "SOFR",
+        "Base Rate",
+        "interest rate",
+        "margin",
+        "floor"
+      ],
+      "concept_specific_keywords": [
+        "Agency / Administrative Fee"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.pricing.structuring_fee",
+    "name": "Structuring / Arrangement Fee",
+    "family_id": "deal_econ.pricing",
+    "concept_area": "pricing",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Interest",
+        "Interest Rate",
+        "Applicable Rate",
+        "Applicable Margin"
+      ],
+      "keyword_anchors": [
+        "Applicable Rate",
+        "Applicable Margin",
+        "SOFR",
+        "Base Rate",
+        "interest rate",
+        "margin",
+        "floor"
+      ],
+      "concept_specific_keywords": [
+        "Structuring / Arrangement Fee",
+        "Alternate Transaction Fee"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.structural_controls.pricing",
+    "name": "Pricing Restrictions",
+    "family_id": "debt_capacity.incremental.structural_controls",
+    "concept_area": "structural_controls",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Pricing Restrictions"
+      ]
+    }
+  }
+]

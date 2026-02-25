@@ -59,7 +59,7 @@ export default function ReviewJudgeHistoryPage() {
       {query.data && query.data.history.length > 0 && (
         <div className="overflow-auto border border-border rounded-md">
           <table className="w-full text-xs">
-            <thead className="bg-surface-tertiary text-text-muted uppercase">
+            <thead className="bg-surface-3 text-text-muted uppercase">
               <tr>
                 <th className="px-3 py-2 text-left">Version</th>
                 <th className="px-3 py-2 text-right">Strict Precision</th>
@@ -73,7 +73,7 @@ export default function ReviewJudgeHistoryPage() {
             </thead>
             <tbody>
               {query.data.history.map((row) => (
-                <tr key={row.version} className="border-t border-border hover:bg-surface-tertiary/40">
+                <tr key={row.version} className="border-t border-border hover:bg-surface-3/40">
                   <td className="px-3 py-2 font-mono">v{row.version.toString().padStart(3, "0")}</td>
                   <td className="px-3 py-2 text-right tabular-nums">{pct(row.precision_estimate)}</td>
                   <td className="px-3 py-2 text-right tabular-nums">{pct(row.weighted_precision_estimate)}</td>

@@ -1,0 +1,265 @@
+{
+  "_meta": {
+    "description": "Bootstrap family link rules for first-run bulk linking. Each rule provides the initial heading filter AST, article concept constraints, and optional clause/definition signals for locating ontology family sections in credit agreement documents.",
+    "version": "1.1.0",
+    "source": "Derived from ontology_family_notes.json location guidance",
+    "families_covered": 10,
+    "note": "These are starting-point rules. Strategy agents will refine them iteratively using corpus evidence. filter_dsl is the primary field; heading_filter_ast is kept for backward compat."
+  },
+  "rules": [
+    {
+      "rule_id": "bootstrap_indebtedness_v1",
+      "family_id": "debt_capacity.indebtedness",
+      "description": "Match indebtedness covenant sections in the negative covenants article. Covers 'Indebtedness', 'Limitation on Indebtedness', 'Incurrence of Indebtedness', and similar heading variants.",
+      "version": 1,
+      "status": "published",
+      "owner": "bootstrap",
+      "article_concepts": ["negative_covenants"],
+      "filter_dsl": "heading: Indebtedness | \"Limitation on Indebtedness\" | \"Incurrence of Indebtedness\" | \"Limitation on Incurrence of Indebtedness\"",
+      "heading_filter_ast": {
+        "type": "group",
+        "operator": "or",
+        "children": [
+          {"type": "match", "value": "Indebtedness"},
+          {"type": "match", "value": "Limitation on Indebtedness"},
+          {"type": "match", "value": "Incurrence of Indebtedness"},
+          {"type": "match", "value": "Limitation on Incurrence of Indebtedness"}
+        ]
+      },
+      "required_defined_terms": [
+        "Permitted Indebtedness",
+        "Indebtedness"
+      ],
+      "excluded_cue_phrases": null,
+      "template_overrides": null
+    },
+    {
+      "rule_id": "bootstrap_liens_v1",
+      "family_id": "debt_capacity.liens",
+      "description": "Match liens covenant sections in the negative covenants article. Covers 'Liens', 'Limitation on Liens', 'Negative Pledge', and similar heading variants.",
+      "version": 1,
+      "status": "published",
+      "owner": "bootstrap",
+      "article_concepts": ["negative_covenants"],
+      "filter_dsl": "heading: Liens | \"Limitation on Liens\" | \"Negative Pledge\" | \"Liens and Pledges\"",
+      "heading_filter_ast": {
+        "type": "group",
+        "operator": "or",
+        "children": [
+          {"type": "match", "value": "Liens"},
+          {"type": "match", "value": "Limitation on Liens"},
+          {"type": "match", "value": "Negative Pledge"},
+          {"type": "match", "value": "Liens and Pledges"}
+        ]
+      },
+      "required_defined_terms": [
+        "Permitted Liens",
+        "Lien"
+      ],
+      "excluded_cue_phrases": null,
+      "template_overrides": null
+    },
+    {
+      "rule_id": "bootstrap_restricted_payments_v1",
+      "family_id": "cash_flow.rp",
+      "description": "Match restricted payments covenant sections in the negative covenants article. Covers both standalone RP sections and bond-style combined sections.",
+      "version": 1,
+      "status": "published",
+      "owner": "bootstrap",
+      "article_concepts": ["negative_covenants"],
+      "filter_dsl": "heading: \"Restricted Payments\" | \"Limitation on Restricted Payments\" | \"Dividends and Distributions\" | \"Restricted Payments; Restricted Debt Payments\"",
+      "heading_filter_ast": {
+        "type": "group",
+        "operator": "or",
+        "children": [
+          {"type": "match", "value": "Restricted Payments"},
+          {"type": "match", "value": "Limitation on Restricted Payments"},
+          {"type": "match", "value": "Dividends and Distributions"},
+          {"type": "match", "value": "Restricted Payments; Restricted Debt Payments"}
+        ]
+      },
+      "required_defined_terms": [
+        "Restricted Payment",
+        "Permitted Payment"
+      ],
+      "excluded_cue_phrases": null,
+      "template_overrides": null
+    },
+    {
+      "rule_id": "bootstrap_investments_v1",
+      "family_id": "cash_flow.inv",
+      "description": "Match investments covenant sections in the negative covenants article. May be standalone or part of a combined bond-style section with restricted payments.",
+      "version": 1,
+      "status": "published",
+      "owner": "bootstrap",
+      "article_concepts": ["negative_covenants"],
+      "filter_dsl": "heading: Investments | \"Limitation on Investments\" | \"Loans and Investments\" | \"Investments, Loans and Advances\"",
+      "heading_filter_ast": {
+        "type": "group",
+        "operator": "or",
+        "children": [
+          {"type": "match", "value": "Investments"},
+          {"type": "match", "value": "Limitation on Investments"},
+          {"type": "match", "value": "Loans and Investments"},
+          {"type": "match", "value": "Investments, Loans and Advances"}
+        ]
+      },
+      "required_defined_terms": [
+        "Permitted Investments",
+        "Investment"
+      ],
+      "excluded_cue_phrases": null,
+      "template_overrides": null
+    },
+    {
+      "rule_id": "bootstrap_fundamental_changes_v1",
+      "family_id": "cash_flow.dispositions",
+      "description": "Match asset sale and disposition covenant sections in the negative covenants article.",
+      "version": 1,
+      "status": "published",
+      "owner": "bootstrap",
+      "article_concepts": ["negative_covenants"],
+      "filter_dsl": "heading: Dispositions | \"Asset Sales\" | \"Limitation on Asset Sales\" | \"Sales of Assets\"",
+      "heading_filter_ast": {
+        "type": "group",
+        "operator": "or",
+        "children": [
+          {"type": "match", "value": "Dispositions"},
+          {"type": "match", "value": "Asset Sales"},
+          {"type": "match", "value": "Limitation on Asset Sales"},
+          {"type": "match", "value": "Sales of Assets"}
+        ]
+      },
+      "required_defined_terms": [
+        "Disposition",
+        "Net Proceeds",
+        "Asset Sale"
+      ],
+      "excluded_cue_phrases": null,
+      "template_overrides": null
+    },
+    {
+      "rule_id": "bootstrap_financial_covenant_v1",
+      "family_id": "fin_framework.financial_covenant",
+      "description": "Match financial covenants sections. May be a standalone article or a section within the negative covenants article.",
+      "version": 1,
+      "status": "published",
+      "owner": "bootstrap",
+      "article_concepts": ["financial_covenants", "negative_covenants"],
+      "filter_dsl": "heading: \"Financial Covenant\" | \"Financial Covenants\" | \"Financial Performance Covenant\" | \"Financial Condition\"",
+      "heading_filter_ast": {
+        "type": "group",
+        "operator": "or",
+        "children": [
+          {"type": "match", "value": "Financial Covenant"},
+          {"type": "match", "value": "Financial Covenants"},
+          {"type": "match", "value": "Financial Performance Covenant"},
+          {"type": "match", "value": "Financial Condition"}
+        ]
+      },
+      "required_defined_terms": null,
+      "excluded_cue_phrases": null,
+      "template_overrides": null
+    },
+    {
+      "rule_id": "bootstrap_ebitda_v1",
+      "family_id": "fin_framework.ebitda",
+      "description": "Match EBITDA definitions in the defined terms section. Covers Consolidated EBITDA, EBITDA, and LTM variants.",
+      "version": 1,
+      "status": "published",
+      "owner": "bootstrap",
+      "article_concepts": ["definitions"],
+      "filter_dsl": "heading: \"Consolidated EBITDA\" | EBITDA | \"Last 12 Months EBITDA\" | \"Adjusted EBITDA\"",
+      "heading_filter_ast": {
+        "type": "group",
+        "operator": "or",
+        "children": [
+          {"type": "match", "value": "Consolidated EBITDA"},
+          {"type": "match", "value": "EBITDA"},
+          {"type": "match", "value": "Last 12 Months EBITDA"},
+          {"type": "match", "value": "Adjusted EBITDA"}
+        ]
+      },
+      "required_defined_terms": [
+        "Consolidated Net Income",
+        "Consolidated EBITDA"
+      ],
+      "excluded_cue_phrases": null,
+      "template_overrides": null
+    },
+    {
+      "rule_id": "bootstrap_restricted_debt_payments_v1",
+      "family_id": "cash_flow.restricted_debt_payments",
+      "description": "Match restricted debt payments sections. May be standalone, within RP section, or part of bond-style combined section.",
+      "version": 1,
+      "status": "published",
+      "owner": "bootstrap",
+      "article_concepts": ["negative_covenants"],
+      "filter_dsl": "heading: \"Restricted Debt Payments\" | \"Prepayments of Indebtedness\" | \"Limitation on Restricted Debt Payments\" | \"Payments on Junior Indebtedness\"",
+      "heading_filter_ast": {
+        "type": "group",
+        "operator": "or",
+        "children": [
+          {"type": "match", "value": "Restricted Debt Payments"},
+          {"type": "match", "value": "Prepayments of Indebtedness"},
+          {"type": "match", "value": "Limitation on Restricted Debt Payments"},
+          {"type": "match", "value": "Payments on Junior Indebtedness"}
+        ]
+      },
+      "required_defined_terms": null,
+      "excluded_cue_phrases": null,
+      "template_overrides": null
+    },
+    {
+      "rule_id": "bootstrap_mandatory_prepayment_v1",
+      "family_id": "cash_flow.mandatory_prepayment",
+      "description": "Match mandatory prepayment sections in Article II. May be standalone or within a general prepayments section.",
+      "version": 1,
+      "status": "published",
+      "owner": "bootstrap",
+      "article_concepts": ["term_and_repayment", "prepayments"],
+      "filter_dsl": "heading: \"Mandatory Prepayments\" | \"Mandatory Prepayment\" | Prepayments",
+      "heading_filter_ast": {
+        "type": "group",
+        "operator": "or",
+        "children": [
+          {"type": "match", "value": "Mandatory Prepayments"},
+          {"type": "match", "value": "Mandatory Prepayment"},
+          {"type": "match", "value": "Prepayments"}
+        ]
+      },
+      "required_defined_terms": [
+        "Excess Cash Flow",
+        "Net Proceeds"
+      ],
+      "excluded_cue_phrases": null,
+      "template_overrides": null
+    },
+    {
+      "rule_id": "bootstrap_incremental_v1",
+      "family_id": "debt_capacity.incremental",
+      "description": "Match incremental facility sections in Article II. Covers incremental commitments, incremental loans, and similar provisions.",
+      "version": 1,
+      "status": "published",
+      "owner": "bootstrap",
+      "article_concepts": ["incremental_facility", "term_and_repayment"],
+      "filter_dsl": "heading: Incremental | \"Incremental Commitments\" | \"Incremental Facility\" | \"Incremental Loans\"",
+      "heading_filter_ast": {
+        "type": "group",
+        "operator": "or",
+        "children": [
+          {"type": "match", "value": "Incremental"},
+          {"type": "match", "value": "Incremental Commitments"},
+          {"type": "match", "value": "Incremental Facility"},
+          {"type": "match", "value": "Incremental Loans"}
+        ]
+      },
+      "required_defined_terms": [
+        "Incremental Commitment",
+        "Incremental Loan"
+      ],
+      "excluded_cue_phrases": null,
+      "template_overrides": null
+    }
+  ]
+}

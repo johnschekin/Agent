@@ -1,0 +1,1484 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Complete prohibition on borrower mergers/consolidations. Maximum protection of borrower entity integrity.",
+          "dls_ref": [
+            89
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.merger_covenant.prohibition",
+          "level": 3,
+          "name": "Merger Prohibition",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 89"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "No Event of Default before or after giving effect to merger. Pro forma compliance required. Standard condition in all permitted merger formulations.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.corporate_structure",
+              "id": "credit_protection.corporate_structure.merger_covenant.conditional.no_default",
+              "kct_ref": [
+                "cat3.10"
+              ],
+              "level": 4,
+              "name": "No Default Condition",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 148,
+                  "term": "Conditions Annex"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 10; Review Template Row 148 (Conditions Annex)"
+            },
+            {
+              "corpus_prevalence": "low",
+              "definition": "Successor entity must be organized under laws of a U.S. jurisdiction. Ensures continued legal framework for enforcement.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.corporate_structure",
+              "id": "credit_protection.corporate_structure.merger_covenant.conditional.us_entity",
+              "level": 4,
+              "name": "US Entity Requirement",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 2"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Successor must formally assume all borrower obligations under the credit agreement through supplemental indenture or joinder. 87.1% when merger permitted.",
+              "dls_ref": [
+                89
+              ],
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.corporate_structure",
+              "id": "credit_protection.corporate_structure.merger_covenant.conditional.assumption",
+              "level": 4,
+              "name": "Assumption of Obligations",
+              "term_analysis_sources": [
+                "TERM_ANALYSIS_ASSUMPTION_OF_OBLIGATIONS.md"
+              ],
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 89"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Surviving entity must satisfy financial covenants on pro forma basis after giving effect to the merger and any related transactions. Leverage ratio tested most commonly.",
+              "dls_ref": [
+                "DLS:48:Pro Forma Financial Statements"
+              ],
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.corporate_structure",
+              "id": "credit_protection.corporate_structure.merger_covenant.conditional.pro_forma",
+              "level": 4,
+              "name": "Pro Forma Compliance",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 48 (Pro Forma Financial Statements)"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Mergers permitted via investment basket capacity or asset sale reinvestment. Leverage governor applies. Cross-references investment and disposition covenants.",
+              "dls_ref": [
+                89
+              ],
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.corporate_structure",
+              "id": "credit_protection.corporate_structure.merger_covenant.conditional.investment_pathway",
+              "level": 4,
+              "name": "Investment Covenant Pathway",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 89"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Merger permitted subject to safeguards: no EoD, US entity requirement, assumption of obligations.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.merger_covenant.conditional",
+          "level": 3,
+          "name": "Conditional Permission",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether guarantor subsidiaries may merge with each other or with borrower. Typically more permissive than borrower merger — no net reduction in guarantee coverage if survivor is a loan party.",
+          "dls_ref": [
+            89
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.merger_covenant.guarantor_merger",
+          "level": 3,
+          "name": "Guarantor Merger Permission",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 89"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Whether borrower can merge or consolidate with another entity. 55.9% prohibit; 44.1% permit with conditions. Prevents borrower from escaping covenant obligations through corporate reorganization.",
+      "dls_ref": [
+        "DLS:73:Covenant",
+        "DLS:74:Cushion/Covenant Levels",
+        "DLS:89:Other Covenant Considerations"
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_fundamental.merger_survivor",
+        "section_locations": [
+          "ARTICLE IX",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "Section 10.05",
+          "Section 5.11",
+          "Section 6.03"
+        ],
+        "shape_ref": "neg_cov_fundamental.merger_survivor"
+      },
+      "family_id": "credit_protection.corporate_structure",
+      "id": "credit_protection.corporate_structure.merger_covenant",
+      "level": 2,
+      "name": "Merger Covenant",
+      "negotiation_spectrum": {
+        "aggressive_position": "Dollar baskets include EBITDA/Total Assets grower; reclassification of baskets; exclude simultaneous fixed-amount incurrences from ratio tests; covenants run from Borrower/restricted subs down with passive holdco only for Holdings",
+        "dls_source": "DLS row 89",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "alternative_terms: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "grower_baskets: not_permitted vs ebitda_based vs total_assets_based",
+          "reclassification: not_permitted vs permitted",
+          "simultaneous_incurrence_exclusion: not_permitted vs permitted",
+          "covenant_entity_scope: holdings_down vs borrower_restricted_subs_down"
+        ],
+        "market_position": "",
+        "preferred_position": "No additional covenant flexibility mechanics",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "neg_cov_fundamental_changes.merger_survivor"
+      ],
+      "term_analysis_sources": [
+        "TERM_ANALYSIS_MERGER_COVENANT.md",
+        "TERM_ANALYSIS_BORROWER_MERGER_PERMISSIONS.md"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 73 (Covenant); DLS Preferred Row 74 (Cushion/Covenant Levels); DLS Preferred Row 89 (Other Covenant Considerations)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Prohibition on sale of substantially all assets of borrower and subsidiaries taken as a whole. 'Substantially all' undefined in most agreements — typically 75-90% of total assets by value.",
+          "dls_ref": [
+            89
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.asset_sale_restrictions.substantially_all",
+          "level": 3,
+          "name": "Substantially All Assets Test",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 89"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Individual asset sales governed by disposition covenant; substantially-all test governs aggregate effect. Must read both provisions together for complete picture.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.asset_sale_restrictions.disposition_cross_ref",
+          "level": 3,
+          "name": "Disposition Covenant Cross-Reference",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 2"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Structural protection restricting sale of substantially all assets outside the disposition covenant. Prevents borrower circumvention of the merger covenant through piecemeal asset sales that achieve the same economic effect. In the credit protection framework, this is a STRUCTURAL INTEGRITY control that prevents dissolution of the credit group's asset base through transactions that individually pass disposition basket tests but collectively destroy the collateral estate.",
+      "dls_ref": [
+        89
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_fundamental.merger_survivor",
+        "section_locations": [
+          "ARTICLE IX",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "Section 10.05",
+          "Section 5.11",
+          "Section 6.03"
+        ],
+        "shape_ref": "neg_cov_fundamental.merger_survivor"
+      },
+      "family_id": "credit_protection.corporate_structure",
+      "id": "credit_protection.corporate_structure.asset_sale_restrictions",
+      "level": 2,
+      "name": "Asset Sale Restrictions",
+      "negotiation_spectrum": {
+        "aggressive_position": "Dollar baskets include EBITDA/Total Assets grower; reclassification of baskets; exclude simultaneous fixed-amount incurrences from ratio tests; covenants run from Borrower/restricted subs down with passive holdco only for Holdings",
+        "dls_source": "DLS row 89",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "alternative_terms: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "grower_baskets: not_permitted vs ebitda_based vs total_assets_based",
+          "reclassification: not_permitted vs permitted",
+          "simultaneous_incurrence_exclusion: not_permitted vs permitted",
+          "covenant_entity_scope: holdings_down vs borrower_restricted_subs_down"
+        ],
+        "market_position": "",
+        "preferred_position": "No additional covenant flexibility mechanics",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "neg_cov_fundamental_changes.asset_sale"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 89"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Absolute prohibition on borrower voluntarily dissolving, liquidating, or winding up its affairs. Universal protection — no exceptions or carveouts.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.dissolution.borrower_prohibition",
+          "level": 3,
+          "name": "Borrower Dissolution Prohibition",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 12"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Subsidiaries may dissolve if: (1) assets transferred to another loan party, (2) no material assets at time of dissolution, (3) dissolution is in best interest of borrower. More permissive than borrower restriction.",
+          "dls_ref": [
+            89
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.dissolution.subsidiary_exceptions",
+          "level": 3,
+          "name": "Subsidiary Dissolution Exceptions",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 89"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Prohibition on voluntary dissolution, liquidation, or winding up of borrower and material subsidiaries. Prevents borrower from terminating its legal existence and escaping obligations.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_fundamental.merger_survivor",
+        "section_locations": [
+          "ARTICLE IX",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "Section 10.05",
+          "Section 5.11",
+          "Section 6.03"
+        ],
+        "shape_ref": "neg_cov_fundamental.merger_survivor"
+      },
+      "family_id": "credit_protection.corporate_structure",
+      "id": "credit_protection.corporate_structure.dissolution",
+      "level": 2,
+      "name": "Dissolution Restrictions",
+      "negotiation_spectrum": {
+        "aggressive_position": "Dollar baskets include EBITDA/Total Assets grower; reclassification of baskets; exclude simultaneous fixed-amount incurrences from ratio tests; covenants run from Borrower/restricted subs down with passive holdco only for Holdings",
+        "dls_source": "DLS row 89",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "alternative_terms: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "grower_baskets: not_permitted vs ebitda_based vs total_assets_based",
+          "reclassification: not_permitted vs permitted",
+          "simultaneous_incurrence_exclusion: not_permitted vs permitted",
+          "covenant_entity_scope: holdings_down vs borrower_restricted_subs_down"
+        ],
+        "market_position": "",
+        "preferred_position": "No additional covenant flexibility mechanics",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "neg_cov_fundamental_changes.dissolution_liquidation"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 88 (Other Negative Covenants)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Conditions for designating a subsidiary as unrestricted: no Event of Default, investment capacity available, pro forma financial covenant compliance. J.Crew blocks IP-holding subs.",
+          "dls_ref": [
+            89
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.unrestricted_subs.designation_conditions",
+          "level": 3,
+          "market_benchmarks": {
+            "pctc_cmm_lmm": "deals may be Closing Total Leverage.",
+            "pctc_conservative": "typical",
+            "pctc_umm_bsl": "may limit tobktcy/payment EOD; . Otherwise would be pro forma compliance with Financial Covenant (if there is one) and in more conservative CMM/LMM deals may be Closing Total Leverage.; Often absent; transactions may seek overall cap on assets andEbitda of Unrestricted Subs in the 5-10% range."
+          },
+          "name": "Designation Conditions",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 148,
+              "term": "Conditions Annex"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 89; Review Template Row 148 (Conditions Annex)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Right to redesignate unrestricted subsidiary back to restricted status. Requires: no EoD, pro forma compliance, debt of redesignated sub must be permitted. Creates flexibility for tax planning.",
+          "dls_ref": [
+            89
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.unrestricted_subs.redesignation",
+          "level": 3,
+          "name": "Redesignation Rights",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 89"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Designation treated as investment equal to FMV of the subsidiary. Must be made under an available investment basket (general, permitted acquisition, or RP capacity).",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.unrestricted_subs.investment_capacity",
+          "kct_ref": [
+            "cat4.2"
+          ],
+          "level": 3,
+          "name": "Investment Capacity Requirement",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 2"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether unrestricted subs can incur debt that would be prohibited for restricted subs or cross-default to the credit facility. Anti-cross-default provisions prevent contagion.",
+          "dls_ref": [
+            89
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.unrestricted_subs.cross_debt_restriction",
+          "level": 3,
+          "name": "Cross-Debt Restrictions",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 89"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Cannot designate a subsidiary representing a principal operating business as unrestricted. Prevents value stripping of core enterprise via designation mechanics.",
+          "dls_ref": [
+            92
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.unrestricted_subs.principal_sub_exclusion",
+          "level": 3,
+          "name": "Principal Subsidiary Exclusion",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 92"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Governance over designation of subsidiaries as unrestricted, exempting them from covenant compliance and removing them from the restricted group. Primary LME attack vector for value extraction.",
+      "dls_ref": [
+        "DLS:92:Unrestricted Subsidiaries"
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_fundamental.merger_survivor",
+        "section_locations": [
+          "ARTICLE IX",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "Section 10.05",
+          "Section 5.11",
+          "Section 6.03"
+        ],
+        "shape_ref": "neg_cov_fundamental.merger_survivor",
+        "secondary_playbook_refs": [
+          "neg_cov_other.unrestricted_subs"
+        ]
+      },
+      "family_id": "credit_protection.corporate_structure",
+      "id": "credit_protection.corporate_structure.unrestricted_subs",
+      "level": 2,
+      "name": "Unrestricted Subsidiaries",
+      "negotiation_spectrum": {
+        "aggressive_position": "Designation/re-designation permitted subject to: no EoD, pro forma compliance with closing-date leverage ratios (or financial covenant), no recourse to Loan Parties, no ownership of Borrower stock/debt, restricted sub under other debt docs, asset/EBITDA caps, financial statement reconciliation",
+        "dls_source": "DLS row 92",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "term_name: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "availability: not_permitted vs permitted",
+          "leverage_test: closing_date_ratios vs financial_covenant_compliance",
+          "eod_condition: required vs not_required",
+          "asset_cap: none vs percentage_of_total_assets",
+          "ebitda_cap: none vs percentage_of_total_ebitda",
+          "recourse_limitation: required vs not_required",
+          "cross_ownership_prohibition: required vs not_required",
+          "re_designation: permitted vs not_permitted",
+          "financial_reconciliation: required vs not_required"
+        ],
+        "market_position": "",
+        "preferred_position": "No ability to designate unrestricted subsidiaries",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "neg_cov_other.unrestricted_subsidiary_controls"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 67,
+          "term": "Unrestricted Subsidiaries - generally"
+        },
+        {
+          "coverage": "full",
+          "row": 68,
+          "term": "Negative Covenants – Unrestricted Subsidiaries – Envision"
+        },
+        {
+          "coverage": "full",
+          "row": 107,
+          "term": "Negative Covenants – Restricted Payments – Unrestricted Subsidiary Stock"
+        }
+      ],
+      "term_analysis_sources": [
+        "TERM_ANALYSIS_UNRESTRICTED_SUBSIDIARY.md"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 92 (Unrestricted Subsidiaries); Review Template Row 67 (Unrestricted Subsidiaries - generally); Review Template Row 68 (Negative Covenants – Unrestricted Subsidiaries – Envision); Review Template Row 107 (Negative Covenants – Restricted Payments – Unrestricted Subsidiary Stock)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "2.5% of consolidated total assets individually. Most common materiality test.",
+          "dls_ref": [
+            89
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.material_subs.asset_test",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "81.1%",
+            "threshold": "2.5%"
+          },
+          "name": "Asset-Based Test",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 89"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Revenue test for material subsidiary designation: subsidiaries exceeding a specified percentage (typically 2.5%) of consolidated revenues individually are classified as material and subject to enhanced reporting, guarantee, and covenant requirements.",
+          "dls_ref": [
+            89
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.material_subs.revenue_test",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "58.5%",
+            "threshold": "2.5%"
+          },
+          "name": "Revenue-Based Test",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 89"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "2.5% of consolidated EBITDA individually. Most sophisticated test, correlates with earning power rather than balance sheet value.",
+          "dls_ref": [
+            "DLS:42:Minimum EBITDA"
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.material_subs.ebitda_test",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "37.7%",
+            "threshold": "2.5%"
+          },
+          "name": "EBITDA-Based Test",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 42 (Minimum EBITDA)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "5% aggregate standard. Cumulative ceiling prevents aggregate exclusion of material value through multiple individually-immaterial subs.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.material_subs.aggregate",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "84.9%",
+            "threshold": "5%"
+          },
+          "name": "Aggregate Threshold",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Prevents asset-light but IP-critical subs from falling below materiality thresholds.",
+          "dls_ref": [
+            89
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.material_subs.ip_holder",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "15.1%"
+          },
+          "name": "IP Holder Override",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 89"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Financial thresholds for guarantee and collateral requirements. 85.5% coverage. Determines which entities must be loan parties.",
+      "dls_ref": [
+        "DLS:92:Unrestricted Subsidiaries"
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_fundamental.merger_survivor",
+        "section_locations": [
+          "ARTICLE IX",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "Section 10.05",
+          "Section 5.11",
+          "Section 6.03"
+        ],
+        "shape_ref": "neg_cov_fundamental.merger_survivor"
+      },
+      "family_id": "credit_protection.corporate_structure",
+      "id": "credit_protection.corporate_structure.material_subs",
+      "level": 2,
+      "market_benchmarks": {
+        "aggregate_value": "5%",
+        "individual_value": "2.5%"
+      },
+      "name": "Material Subsidiaries",
+      "negotiation_spectrum": {
+        "aggressive_position": "Dollar baskets include EBITDA/Total Assets grower; reclassification of baskets; exclude simultaneous fixed-amount incurrences from ratio tests; covenants run from Borrower/restricted subs down with passive holdco only for Holdings",
+        "dls_source": "DLS row 89",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "alternative_terms: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "grower_baskets: not_permitted vs ebitda_based vs total_assets_based",
+          "reclassification: not_permitted vs permitted",
+          "simultaneous_incurrence_exclusion: not_permitted vs permitted",
+          "covenant_entity_scope: holdings_down vs borrower_restricted_subs_down"
+        ],
+        "market_position": "",
+        "preferred_position": "No additional covenant flexibility mechanics",
+        "source": "R14-C"
+      },
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 39,
+          "term": "Collateral and Guarantors"
+        },
+        {
+          "coverage": "full",
+          "row": 51,
+          "term": "Reps and Warranties"
+        }
+      ],
+      "term_analysis_sources": [
+        "TERM_ANALYSIS_MATERIAL_SUBSIDIARIES.md"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 92 (Unrestricted Subsidiaries); Review Template Row 39 (Collateral and Guarantors); Review Template Row 51 (Reps and Warranties)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Holdco may only own equity of borrower and engage in limited permitted activities (tax compliance, regulatory filings, corporate governance). No active business conduct.",
+          "dls_ref": [
+            89
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.passive_holdco.standard",
+          "level": 3,
+          "name": "Standard Restriction",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 89"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Limited holdco debt permitted for intercompany loans to borrower that are on-lent and subordinated. Enables tax-efficient capital structure.",
+          "dls_ref": [
+            89
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.passive_holdco.debt_exception",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "3.3%"
+          },
+          "name": "Debt Incurrence Exception",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 89"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Some deals treat passive holdco violation as Event of Default rather than standalone negative covenant. Elevated consequences for breach.",
+          "dls_ref": [
+            89
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.passive_holdco.eod_trigger",
+          "level": 3,
+          "name": "EoD If Violated",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 89"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "KCT cat4.5 requires the protective mechanism 'holdco incurrence equivalence test (could have been incurred at opco)' but it is not adequately represented in the ontology.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.passive_holdco.holdco_incurrence_equivalen",
+          "kct_ref": [
+            "cat4.5"
+          ],
+          "level": 3,
+          "name": "Holdco Incurrence Equivalence Test",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 5"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Restricts holding company to passive ownership, preventing Holdings from conducting business or incurring obligations that could compete with or subordinate the credit facility claims. DLS Preferred row 88 includes 'Passive holding company covenant for Holdings' as a standard negative covenant, and row 89 (Other Covenant Considerations) specifies that 'Covenants run from Borrower and restricted subs down, with a passive holding company covenant only, with respect to Holdings.' This ensures Holdings exists solely to own the borrower's equity and does not create independent obligations that could structurally priority over the credit facility.",
+      "dls_ref": [
+        "DLS:88:Other Negative Covenants"
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_fundamental.merger_survivor",
+        "section_locations": [
+          "ARTICLE IX",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "Section 10.05",
+          "Section 5.11",
+          "Section 6.03"
+        ],
+        "shape_ref": "neg_cov_fundamental.merger_survivor"
+      },
+      "family_id": "credit_protection.corporate_structure",
+      "id": "credit_protection.corporate_structure.passive_holdco",
+      "kct_ref": [
+        "cat4.5"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "has_covenant": "62.3%",
+        "no_covenant": "11.5%"
+      },
+      "name": "Passive Holdco Covenant",
+      "negotiation_spectrum": {
+        "aggressive_position": "Dollar baskets include EBITDA/Total Assets grower; reclassification of baskets; exclude simultaneous fixed-amount incurrences from ratio tests; covenants run from Borrower/restricted subs down with passive holdco only for Holdings",
+        "dls_source": "DLS row 89",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "alternative_terms: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "grower_baskets: not_permitted vs ebitda_based vs total_assets_based",
+          "reclassification: not_permitted vs permitted",
+          "simultaneous_incurrence_exclusion: not_permitted vs permitted",
+          "covenant_entity_scope: holdings_down vs borrower_restricted_subs_down"
+        ],
+        "market_position": "",
+        "preferred_position": "No additional covenant flexibility mechanics",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "neg_cov_other.passive_holdco_covenant"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 39,
+          "term": "Collateral and Guarantors"
+        },
+        {
+          "coverage": "full",
+          "row": 51,
+          "term": "Reps and Warranties"
+        },
+        {
+          "coverage": "full",
+          "row": 67,
+          "term": "Unrestricted Subsidiaries - generally"
+        },
+        {
+          "coverage": "full",
+          "row": 68,
+          "term": "Negative Covenants – Unrestricted Subsidiaries – Envision"
+        },
+        {
+          "coverage": "full",
+          "row": 83,
+          "term": "Negative Covenants – Indebtedness – Non-guarantor/foreign subsidiary debt"
+        },
+        {
+          "coverage": "full",
+          "row": 107,
+          "term": "Negative Covenants – Restricted Payments – Unrestricted Subsidiary Stock"
+        },
+        {
+          "coverage": "full",
+          "row": 129,
+          "term": "Events of Default"
+        },
+        {
+          "coverage": "full",
+          "row": 130,
+          "term": "Change of Control"
+        },
+        {
+          "coverage": "full",
+          "row": 150,
+          "term": "Representations"
+        },
+        {
+          "coverage": "full",
+          "row": 154,
+          "term": "Closing Deliverables"
+        },
+        {
+          "coverage": "full",
+          "row": 156,
+          "term": "Other"
+        }
+      ],
+      "term_analysis_sources": [
+        "TERM_ANALYSIS_PASSIVE_HOLDCO_COVENANT.md"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 88 (passive holdco covenant in Other Negative Covenants); DLS Preferred row 89 (covenants run from Borrower down, passive holdco only for Holdings)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Must remain in same or related/similar/ancillary business as conducted at closing.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.line_of_business.standard",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "88.7%"
+          },
+          "name": "Standard Restriction",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Broadened language: 'similar, incidental, ancillary, supportive, synergistic or reasonably related.' 6.5% of deals. Greater operational flexibility.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.line_of_business.flexible",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "6.5%"
+          },
+          "name": "Flexible Formulation",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Restriction on entering new lines of business. DLS Preferred row 82 (Permitted Acquisitions) condition (ii) requires that 'after giving effect thereto, the Borrower is in compliance with the permitted lines of business covenant.' DLS Preferred row 88 includes 'Changes in line of business' as a standard negative covenant. This ensures the borrower remains in the business that lenders underwrote, preventing diversification into higher-risk or unfamiliar industries that could change the credit risk profile.",
+      "dls_ref": [
+        "DLS:20:Unused Line Fee",
+        "DLS:44:Business MAC"
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_fundamental.merger_survivor",
+        "section_locations": [
+          "ARTICLE IX",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "Section 10.05",
+          "Section 5.11",
+          "Section 6.03"
+        ],
+        "shape_ref": "neg_cov_fundamental.merger_survivor"
+      },
+      "family_id": "credit_protection.corporate_structure",
+      "id": "credit_protection.corporate_structure.line_of_business",
+      "level": 2,
+      "market_benchmarks": {
+        "has_covenant": "90.3%"
+      },
+      "name": "Line of Business Restriction",
+      "negotiation_spectrum": {
+        "aggressive_position": "Dollar baskets include EBITDA/Total Assets grower; reclassification of baskets; exclude simultaneous fixed-amount incurrences from ratio tests; covenants run from Borrower/restricted subs down with passive holdco only for Holdings",
+        "dls_source": "DLS row 89",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "alternative_terms: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "grower_baskets: not_permitted vs ebitda_based vs total_assets_based",
+          "reclassification: not_permitted vs permitted",
+          "simultaneous_incurrence_exclusion: not_permitted vs permitted",
+          "covenant_entity_scope: holdings_down vs borrower_restricted_subs_down"
+        ],
+        "market_position": "",
+        "preferred_position": "No additional covenant flexibility mechanics",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "neg_cov_fundamental_changes.change_of_business",
+        "neg_cov_other.line_of_business"
+      ],
+      "term_analysis_sources": [
+        "TERM_ANALYSIS_LINE_OF_BUSINESS.md"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 82 condition (ii) (line of business compliance for acquisitions); DLS Preferred row 88 (changes in line of business as negative covenant)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Covenant prohibiting the borrower from changing its fiscal year-end without lender consent. A fiscal year change would alter the measurement periods for financial covenant testing, excess cash flow calculations, and reporting obligations, potentially creating misalignment between the credit agreement's testing schedule and the borrower's actual financial reporting cycle.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.fiscal_year.prohibition",
+          "level": 3,
+          "name": "Prohibition",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Fiscal year changes required by GAAP or regulatory changes permitted without consent. Prevents covenant breach from mandatory accounting standard transitions.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.fiscal_year.accounting_exception",
+          "level": 3,
+          "name": "Accounting Changes Exception",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Restrictions on changes to the fiscal year end. Ensures financial reporting cadence matches covenant testing periods and compliance certificate delivery schedules.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_fundamental.merger_survivor",
+        "section_locations": [
+          "ARTICLE IX",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "Section 10.05",
+          "Section 5.11",
+          "Section 6.03"
+        ],
+        "shape_ref": "neg_cov_fundamental.merger_survivor"
+      },
+      "family_id": "credit_protection.corporate_structure",
+      "id": "credit_protection.corporate_structure.fiscal_year",
+      "kct_ref": [
+        "cat1.4"
+      ],
+      "level": 2,
+      "name": "Change of Fiscal Year",
+      "negotiation_spectrum": {
+        "aggressive_position": "Dollar baskets include EBITDA/Total Assets grower; reclassification of baskets; exclude simultaneous fixed-amount incurrences from ratio tests; covenants run from Borrower/restricted subs down with passive holdco only for Holdings",
+        "dls_source": "DLS row 89",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "alternative_terms: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "grower_baskets: not_permitted vs ebitda_based vs total_assets_based",
+          "reclassification: not_permitted vs permitted",
+          "simultaneous_incurrence_exclusion: not_permitted vs permitted",
+          "covenant_entity_scope: holdings_down vs borrower_restricted_subs_down"
+        ],
+        "market_position": "",
+        "preferred_position": "No additional covenant flexibility mechanics",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "neg_cov_fundamental_changes.change_of_fiscal_year"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 130,
+          "term": "Change of Control"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "KCT Cat 1 Item 4; Review Template Row 130 (Change of Control)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Only amendments 'materially adverse to lenders' are restricted. Borrower determines materiality in good faith. Creates subjectivity in compliance.",
+          "dls_ref": [
+            89
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.org_doc_amendments.materiality",
+          "level": 3,
+          "name": "Materiality Qualifier",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 89"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Restriction applies only to organizational documents of loan parties (borrower + guarantors). Non-guarantor subs may freely amend their org docs.",
+          "dls_ref": [
+            89
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.corporate_structure",
+          "id": "credit_protection.corporate_structure.org_doc_amendments.loan_parties_only",
+          "level": 3,
+          "name": "Loan Parties Only Scope",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 89"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Restriction on amendments to organizational documents (charter, bylaws, LLC agreement) that would be materially adverse to lenders. DLS Preferred row 88 includes 'Modifications to organizational documents that are materially adverse to the lenders' as a standard negative covenant. This prevents the borrower from restructuring its governance, ownership, or distribution mechanics in ways that could undermine lender rights or structural protections embedded in the organizational documents.",
+      "dls_ref": [
+        "DLS:53:Amendments to Acquisition Agreement"
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_fundamental.merger_survivor",
+        "section_locations": [
+          "ARTICLE IX",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "Section 10.05",
+          "Section 5.11",
+          "Section 6.03"
+        ],
+        "shape_ref": "neg_cov_fundamental.merger_survivor"
+      },
+      "family_id": "credit_protection.corporate_structure",
+      "id": "credit_protection.corporate_structure.org_doc_amendments",
+      "level": 2,
+      "name": "Organizational Document Amendments",
+      "negotiation_spectrum": {
+        "aggressive_position": "Dollar baskets include EBITDA/Total Assets grower; reclassification of baskets; exclude simultaneous fixed-amount incurrences from ratio tests; covenants run from Borrower/restricted subs down with passive holdco only for Holdings",
+        "dls_source": "DLS row 89",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "alternative_terms: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "grower_baskets: not_permitted vs ebitda_based vs total_assets_based",
+          "reclassification: not_permitted vs permitted",
+          "simultaneous_incurrence_exclusion: not_permitted vs permitted",
+          "covenant_entity_scope: holdings_down vs borrower_restricted_subs_down"
+        ],
+        "market_position": "",
+        "preferred_position": "No additional covenant flexibility mechanics",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "neg_cov_fundamental_changes.org_doc_amendments"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 88 (organizational document amendment restriction in Other Negative Covenants)"
+    },
+    {
+      "children": [
+        {
+          "id": "credit_protection.corporate_structure.intellectual_property_covenant.preservation_scope",
+          "name": "IP Preservation Scope",
+          "definition": "Which intellectual property must be maintained — patents, trademarks, copyrights, trade secrets material to the business — and the standard of care required (ordinary course, commercially reasonable efforts).",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.corporate_structure",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "id": "credit_protection.corporate_structure.intellectual_property_covenant.licensing_restrictions",
+          "name": "Licensing Restrictions",
+          "definition": "Limitations on licensing material IP to third parties, including prohibitions on exclusive licenses, requirements for arm's-length terms, and carve-outs for ordinary course licensing arrangements.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.corporate_structure",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "id": "credit_protection.corporate_structure.intellectual_property_covenant.enforcement_obligation",
+          "name": "Enforcement Obligation",
+          "definition": "Affirmative obligation to enforce and protect material intellectual property rights against infringement, including prosecution of infringers and maintenance of registrations and filings.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.corporate_structure",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 2"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Affirmative covenant requiring the borrower and its restricted subsidiaries to maintain, protect, and defend their material intellectual property rights, including timely prosecution of patent applications, renewal of trademark registrations, and enforcement against infringement. Protects the value of IP assets that support the borrower's competitive position and enterprise value.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "neg_cov_fundamental",
+        "extraction_ready": true,
+        "section_locations": [],
+        "readiness_reason": "no_playbook_ref_available",
+        "playbook_ref": "neg_cov_fundamental.merger_survivor",
+        "shape_ref": "neg_cov_fundamental.merger_survivor"
+      },
+      "family_id": "credit_protection.corporate_structure",
+      "id": "credit_protection.corporate_structure.intellectual_property_covenant",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "medium -- more common in IP-heavy borrowers",
+        "source": "R19-C_corpus_analysis",
+        "typical_standard": "maintain material IP in ordinary course"
+      },
+      "name": "Affirmative IP maintenance covenant",
+      "type": "concept",
+      "definition_source": "KCT Cat 1 Item 2"
+    },
+    {
+      "children": [
+        {
+          "id": "credit_protection.corporate_structure.speculative_hedging.permitted_purposes",
+          "name": "Permitted Hedging Purposes",
+          "definition": "The bona fide business purposes for which hedging is permitted — interest rate risk management, currency exposure, commodity price risk — with a blanket prohibition on speculative or trading activity.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.corporate_structure",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium"
+        },
+        {
+          "id": "credit_protection.corporate_structure.speculative_hedging.instrument_scope",
+          "name": "Permitted Instrument Types",
+          "definition": "Which derivative instruments are permitted (swaps, caps, collars, forwards) versus prohibited (options for speculative gain, credit default swaps on unrelated reference entities, leveraged derivatives).",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.corporate_structure",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "id": "credit_protection.corporate_structure.speculative_hedging.counterparty_requirements",
+          "name": "Counterparty Requirements",
+          "definition": "Requirements that hedging counterparties be lenders under the credit agreement or their affiliates, or meet specified credit ratings, to ensure hedge obligations benefit from the collateral package.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.corporate_structure",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "easy",
+          "definition_source": "KCT Cat 1 Item 3"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Negative covenant prohibiting the borrower from entering into derivative or hedging transactions for speculative purposes. DLS Preferred row 88 includes 'Speculative hedging' as a standard negative covenant. DLS Preferred row 78 affirmative covenants clause (xxii) requires 'interest rate protection' (highlighted), which is the counterpart requiring the borrower to maintain hedging for risk management. The speculative hedging prohibition ensures derivative positions serve only to mitigate business risks (interest rate, currency, commodity) rather than creating additional speculative exposure.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "neg_cov_fundamental",
+        "extraction_ready": true,
+        "section_locations": [],
+        "readiness_reason": "no_playbook_ref_available",
+        "playbook_ref": "neg_cov_fundamental.merger_survivor",
+        "shape_ref": "neg_cov_fundamental.merger_survivor"
+      },
+      "family_id": "credit_protection.corporate_structure",
+      "id": "credit_protection.corporate_structure.speculative_hedging",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "medium -- standard in leveraged CAs",
+        "source": "R19-C_corpus_analysis",
+        "typical_standard": "hedging for bona fide business purposes only"
+      },
+      "name": "Prohibition on speculative hedging",
+      "type": "concept",
+      "definition_source": "DLS Preferred row 88 (speculative hedging negative covenant); DLS Preferred row 78 clause (xxii) (highlighted: interest rate protection affirmative covenant)"
+    },
+    {
+      "children": [
+        {
+          "id": "credit_protection.corporate_structure.operating_lease_covenant.cap_structure",
+          "name": "Lease Payment Cap Structure",
+          "definition": "The annual or aggregate cap on operating lease payments — expressed as a fixed dollar amount, percentage of consolidated total assets, or percentage of EBITDA — limiting off-balance-sheet leverage.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.corporate_structure",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "id": "credit_protection.corporate_structure.operating_lease_covenant.asc842_treatment",
+          "name": "ASC 842 Treatment",
+          "definition": "How the covenant interacts with ASC 842 lease accounting — whether the restriction applies to operating lease expense, right-of-use asset value, or lease liability — with many pre-2019 covenants becoming less relevant post-adoption.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.corporate_structure",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "hard",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "id": "credit_protection.corporate_structure.operating_lease_covenant.excluded_leases",
+          "name": "Excluded Lease Types",
+          "definition": "Operating leases carved out from the cap — short-term leases under 12 months, real property leases in ordinary course, leases existing at closing — which reduce the effective bite of the restriction.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.corporate_structure",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 3"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Restriction limiting the borrower's aggregate operating lease obligations, typically expressed as a dollar cap on annual lease expense or total capitalized lease obligations. Constrains off-balance-sheet leverage created through operating leases that, while not classified as debt for covenant purposes, represent fixed obligations competing with debt service for operating cash flow.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "neg_cov_fundamental",
+        "extraction_ready": true,
+        "section_locations": [],
+        "readiness_reason": "no_playbook_ref_available",
+        "playbook_ref": "neg_cov_fundamental.merger_survivor",
+        "shape_ref": "neg_cov_fundamental.merger_survivor"
+      },
+      "family_id": "credit_protection.corporate_structure",
+      "id": "credit_protection.corporate_structure.operating_lease_covenant",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "low-medium -- declining post-ASC 842",
+        "source": "R19-C_corpus_analysis",
+        "typical_cap": "percentage of consolidated total assets or fixed dollar"
+      },
+      "name": "Operating lease cap/restriction",
+      "type": "concept",
+      "definition_source": "KCT Cat 1 Item 2"
+    },
+    {
+      "children": [
+        {
+          "id": "credit_protection.corporate_structure.sub_equity_issuance.issuance_prohibition",
+          "name": "General Issuance Prohibition",
+          "definition": "Blanket prohibition on restricted subsidiaries issuing equity to third parties, which would dilute the borrower's (and lenders') indirect claim on subsidiary assets and cash flows.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.corporate_structure",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "easy",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "id": "credit_protection.corporate_structure.sub_equity_issuance.permitted_issuances",
+          "name": "Permitted Issuances",
+          "definition": "Exceptions allowing subsidiary equity issuance — to the borrower or wholly-owned subsidiaries, qualifying preferred equity, de minimis director qualifying shares, and issuances in connection with permitted acquisitions.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.corporate_structure",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 2 Item 3"
+        },
+        {
+          "id": "credit_protection.corporate_structure.sub_equity_issuance.collateral_impact",
+          "name": "Collateral Dilution Impact",
+          "definition": "Consequences of permitted subsidiary equity issuance on the collateral package — pledge requirements for new equity, maintenance of ownership thresholds, and adjustment of guarantee obligations.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.corporate_structure",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "hard",
+          "definition_source": "KCT Cat 1 Item 2"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Covenant restricting subsidiaries from issuing equity interests to third parties (other than to the borrower or a wholly-owned subsidiary). DLS Preferred row 88 includes 'Issuance of capital stock of subsidiaries' as a standard negative covenant. KCT Category 2 item 3 flags: 'Permit uncapped issuance of preferred stock at a non-guarantor restricted subsidiary that would be structurally senior to lenders or excluded from debt incurrence or covenant calculations.' Unrestricted subsidiary equity issuance to third parties can dilute the consolidated group's claim on subsidiary assets and create structural subordination.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "neg_cov_fundamental",
+        "extraction_ready": true,
+        "section_locations": [],
+        "readiness_reason": "no_playbook_ref_available",
+        "playbook_ref": "neg_cov_fundamental.merger_survivor",
+        "shape_ref": "neg_cov_fundamental.merger_survivor"
+      },
+      "family_id": "credit_protection.corporate_structure",
+      "id": "credit_protection.corporate_structure.sub_equity_issuance",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "medium -- prevents dilution of collateral value",
+        "source": "R19-C_corpus_analysis",
+        "typical_exceptions": "issuance to parent, qualifying equity, de minimis"
+      },
+      "name": "Restriction on subsidiary equity issuance",
+      "type": "concept",
+      "definition_source": "DLS Preferred row 88 (subsidiary equity issuance restriction in Other Negative Covenants); KCT Category 2 item 3 (uncapped preferred stock at non-guarantor restricted subsidiary)"
+    },
+    {
+      "children": [
+        {
+          "id": "credit_protection.corporate_structure.fundamental_changes.successor_entity_conditions",
+          "name": "Successor Entity Conditions",
+          "definition": "Requirements the surviving or successor entity must satisfy — US jurisdiction, assumption of all obligations, no EoD, pro forma covenant compliance — to permit a merger or consolidation without lender consent.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.corporate_structure",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 3 Item 3"
+        },
+        {
+          "id": "credit_protection.corporate_structure.fundamental_changes.no_default_requirement",
+          "name": "No Default Requirement",
+          "definition": "Condition that no Default or Event of Default exists or would result from the fundamental change on a pro forma basis, tested both before and immediately after giving effect to the transaction.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.corporate_structure",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "id": "credit_protection.corporate_structure.fundamental_changes.collateral_continuation",
+          "name": "Collateral & Guarantee Continuation",
+          "definition": "Requirement that the collateral package and guarantee structure survive the fundamental change — successor assumes pledge obligations, no lien release without consent, security interests remain perfected.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.corporate_structure",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 2 Item 1; Learning Material: GUARANTEE AND COLLATERAL RELEASE PROVISIONS"
+        },
+        {
+          "id": "credit_protection.corporate_structure.fundamental_changes.permitted_transactions",
+          "name": "Permitted Fundamental Changes",
+          "definition": "Carve-outs from the merger restriction — subsidiary mergers into other loan parties, immaterial subsidiary dissolutions, and mergers where the borrower is the surviving entity — that do not require covenant compliance testing.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.corporate_structure",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 2"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Covenant restricting mergers, consolidations, and fundamental structural changes. Also known as the merger covenant. Covers requirements for successor entity to assume borrower obligations, conditions on asset sales that constitute effective mergers, and dissolution restrictions.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "corporate_structure",
+        "extraction_ready": true,
+        "playbook_ref": "other.change_of_control_def",
+        "section_locations": [
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "Section 7.04"
+        ],
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "credit_protection.corporate_structure",
+      "golden_record_benchmarks": [
+        {
+          "benchmark_type": "prevalence",
+          "override_key": "neg_cov_fundamental.successor_entity",
+          "present_count": 9,
+          "prevalence_pct": 100.0,
+          "source": "R16-B golden_record",
+          "total_deals": 9
+        }
+      ],
+      "id": "credit_protection.corporate_structure.fundamental_changes",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "high -- universal in leveraged CAs",
+        "source": "R19-C_corpus_analysis",
+        "typical_exceptions": "mergers where borrower is surviving entity and no EoD"
+      },
+      "name": "Fundamental Changes / Mergers",
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 88 (Other Negative Covenants)"
+    }
+  ],
+  "corpus_prevalence": "high",
+  "dealdata_benchmarks": {
+    "List other Noteworthy Covenants": {
+      "pc_dollar_median": "$2,000,000",
+      "pc_dollar_range": "$250,000-$300,000,000",
+      "pc_pct_range": "10.0%-50.0%",
+      "pc_ratio_median": "6.00x",
+      "pc_ratio_range": "6.00x-6.00x"
+    }
+  },
+  "definition": "Provisions governing mergers, subsidiary structure, line of business, organizational integrity, and structural protections. DLS Preferred row 88 (Other Negative Covenants) enumerates: modifications to junior/subordinated debt documents materially adverse to lenders; modifications to organizational documents materially adverse to lenders; burdensome agreements, negative pledge clauses, and agreements restricting subsidiary distributions; change in accounting policies or fiscal year; passive holding company covenant for Holdings; incurrence of guarantee or contingent obligations; speculative hedging; changes in line of business; issuance of capital stock of subsidiaries; operating leases. These structural protections ensure the corporate entity that borrowed the funds maintains its organizational integrity and cannot restructure itself to the detriment of lenders.",
+  "dls_ref": [
+    "DLS:26:Structure Flex",
+    "DLS:66:Guarantees",
+    "DLS:67:Security",
+    "DLS:88:Other Negative Covenants",
+    "DLS:92:Unrestricted Subsidiaries"
+  ],
+  "domain_id": "credit_protection",
+  "extraction_difficulty": "medium",
+  "family_id": "credit_protection.corporate_structure",
+  "id": "credit_protection.corporate_structure",
+  "level": 1,
+  "name": "Corporate Structure",
+  "r18_concept_ids": [
+    "neg_cov_fundamental_changes.dissolution_liquidation",
+    "neg_cov_fundamental_changes.org_doc_amendments"
+  ],
+  "term_analysis_sources": [
+    "TERM_ANALYSIS_MERGER_COVENANT.md",
+    "TERM_ANALYSIS_BORROWER_MERGER_PERMISSIONS.md",
+    "TERM_ANALYSIS_UNRESTRICTED_SUBSIDIARY.md",
+    "TERM_ANALYSIS_MATERIAL_SUBSIDIARIES.md",
+    "TERM_ANALYSIS_LINE_OF_BUSINESS.md",
+    "TERM_ANALYSIS_PASSIVE_HOLDCO_COVENANT.md"
+  ],
+  "type": "family",
+  "definition_source": "DLS Preferred row 88 (Other Negative Covenants: complete enumeration of 10 structural protection categories)"
+}

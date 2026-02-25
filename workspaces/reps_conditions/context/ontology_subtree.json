@@ -1,0 +1,2390 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Market standard 30-day cure period for representation breaches. Provides reasonable opportunity for correction.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.cure_period.thirty_day",
+          "kct_ref": [
+            "cat5.2"
+          ],
+          "level": 3,
+          "name": "30-Day Standard",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 5 Item 2"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Enhanced lender protection with shortened 15-day cure period for representation breaches.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.cure_period.fifteen_day",
+          "kct_ref": [
+            "cat5.2"
+          ],
+          "level": 3,
+          "name": "15-Day Accelerated",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 5 Item 2"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Cure period starts upon 'earlier of notice and knowledge' rather than formal notice only.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.cure_period.knowledge_trigger",
+          "level": 3,
+          "name": "Knowledge-Based Trigger",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Timeframe to remedy representation breaches before triggering Event of Default. 30-day standard, 15-day accelerated, no cure. 51.6% corpus coverage.",
+      "dls_ref": [
+        "DLS:50:Marketing period",
+        "DLS:91:Representations and Warranties"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "reps_conditions",
+        "extraction_ready": true,
+        "playbook_ref": "other.other_general",
+        "section_locations": [
+          "ARTICLE 3",
+          "ARTICLE I",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE V"
+        ],
+        "shape_ref": "other.other_general",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "governance.reps_conditions",
+      "id": "governance.reps_conditions.cure_period",
+      "kct_ref": [
+        "cat3.1",
+        "cat5.2"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "no_cure": "6.2%",
+        "notice_15_day": "15.6%",
+        "notice_30_day": "81.3%"
+      },
+      "name": "Reps & Warranties Cure Period",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to Borrower and restricted subs; Holdings only in limited circumstances",
+        "dls_source": "DLS row 91",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "entity_scope: holdings_and_all_subs vs borrower_restricted_subs",
+          "solvency_rep: at_closing vs ongoing",
+          "financial_projections: accuracy_rep vs reasonable_basis_only",
+          "environmental: comprehensive vs material_only",
+          "ip_rep: comprehensive vs material_only",
+          "perfection_rep: included vs excluded",
+          "specified_reps_carveout: narrow vs broad"
+        ],
+        "market_position": "",
+        "preferred_position": "34 enumerated representations applicable to Holdings and all subsidiaries: org status, capitalization, qualification, power/authority, enforceability, compliance, no defaults, no conflicts, consents, financial statements, no MAE, litigation, labor, property, environmental, taxes, ERISA, subs, margin regs, Investment Company Act, full disclosure, IP, solvency, Patriot/OFAC/FCPA, perfection/priority, location, insurance, holdco status, senior debt status, acquisition docs, use of proceeds, brokers",
+        "source": "R14-C"
+      },
+      "review_ref": [
+        {
+          "coverage": "partial",
+          "row": 6,
+          "term": "Information"
+        },
+        {
+          "coverage": "full",
+          "row": 9,
+          "term": "Countersign date"
+        },
+        {
+          "coverage": "full",
+          "row": 22,
+          "term": "[DDTL – conditions to draw]"
+        },
+        {
+          "coverage": "full",
+          "row": 49,
+          "term": "Documentation Precedent"
+        },
+        {
+          "coverage": "full",
+          "row": 51,
+          "term": "Reps and Warranties"
+        },
+        {
+          "coverage": "full",
+          "row": 54,
+          "term": "Financial Statements – annual audits"
+        },
+        {
+          "coverage": "full",
+          "row": 131,
+          "term": "Voting"
+        },
+        {
+          "coverage": "full",
+          "row": 132,
+          "term": "Assignments – consents"
+        },
+        {
+          "coverage": "full",
+          "row": 135,
+          "term": "Assignments – Borrower buybacks"
+        },
+        {
+          "coverage": "full",
+          "row": 156,
+          "term": "Other"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 50 (Marketing period); DLS Preferred Row 91 (Representations and Warranties); KCT Cat 3 Item 1; KCT Cat 5 Item 2; Review Template Row 6 (Information); Review Template Row 9 (Countersign date); Review Template Row 22 ([DDTL – conditions to draw]); Review Template Row 49 (Documentation Precedent); Review Template Row 51 (Reps and Warranties); Review Template Row 54 (Financial Statements – annual audits); Review Template Row 131 (Voting); Review Template Row 132 (Assignments – consents); Review Template Row 135 (Assignments – Borrower buybacks); Review Template Row 156 (Other)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Corporate/organizational existence and good standing representation. Universal specified rep across all deals.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.specified_reps.organization",
+          "kct_ref": [
+            "cat5.2"
+          ],
+          "level": 3,
+          "name": "Organization & Existence",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 5 Item 2"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Organizational power, authority to enter loan documents, and binding obligation representation. Covers due authorization and enforceability of obligations.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.specified_reps.authorization",
+          "kct_ref": [
+            "cat5.2"
+          ],
+          "level": 3,
+          "name": "Authorization & Enforceability",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 5 Item 2"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Representation that loan documents do not violate organizational documents, existing agreements, or applicable law. Scope of 'applicable law' is negotiated.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.specified_reps.no_conflict",
+          "kct_ref": [
+            "cat5.2"
+          ],
+          "level": 3,
+          "name": "No Conflict",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 5 Item 2"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Representation certified by CFO on consolidated group basis. Three tests: balance sheet (assets exceed liabilities), cash flow (can pay debts as they come due), and capital adequacy.",
+          "dls_ref": [
+            "DLS:56:Solvency"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.specified_reps.solvency",
+          "kct_ref": [
+            "cat5.2"
+          ],
+          "level": 3,
+          "name": "Solvency",
+          "r18_concept_ids": [
+            "reps_conditions.solvency_representation"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 56 (Solvency); KCT Cat 5 Item 2"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Borrower representation that no loan proceeds will be used to fund or facilitate transactions with persons subject to OFAC sanctions, or in sanctioned countries. Typically includes representation that no loan party or beneficial owner is a Sanctioned Person. Reinforced by anti-money-laundering and beneficial ownership certifications. Standard post-2010 requirement driven by bank regulatory obligations.",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.reps_conditions",
+              "id": "governance.reps_conditions.specified_reps.use_of_proceeds.sanctioned_person_repr",
+              "kct_ref": [
+                "cat5.2"
+              ],
+              "level": 4,
+              "name": "Sanctioned Person Representation",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 5 Item 2"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "KCT cat5.2 requires the protective mechanism 'no-sanctioned-person representation' but it is not adequately represented in the ontology.",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.reps_conditions",
+              "id": "governance.reps_conditions.specified_reps.use_of_proceeds.no_sanctioned_person_r",
+              "kct_ref": [
+                "cat5.2"
+              ],
+              "level": 4,
+              "name": "no-sanctioned-person representation",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 5 Item 2"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Representation that loan proceeds used solely for specified purposes (acquisition financing, refinancing, working capital). Margin regulation compliance (Reg U/X).",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.specified_reps.use_of_proceeds",
+          "kct_ref": [
+            "cat5.2"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "dual_rep_adoption_rate__person___use_of_proceeds_": "[cat5.2] KCT cat5.2 requires prevalence/severity data for 'dual-rep adoption rate (person + use of proceeds)' but no existing node provides this benchmark.",
+            "prevalence_of_sanctions_reps": "[cat5.2] KCT cat5.2 requires prevalence/severity data for 'prevalence of sanctions reps' but no existing node provides this benchmark.",
+            "sanctions_eod_severity": "[cat5.2] KCT cat5.2 requires prevalence/severity data for 'sanctions EoD severity' but no existing node provides this benchmark."
+          },
+          "name": "Use of Proceeds",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 5 Item 2"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Investment Company Act, FCPA, OFAC/Patriot Act/sanctions compliance representations. Federally mandated specified reps that cannot be waived.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.specified_reps.regulatory_compliance",
+          "kct_ref": [
+            "cat5.2"
+          ],
+          "level": 3,
+          "name": "Regulatory Compliance Reps",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 5 Item 2",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:41.345894+00:00",
+              "term_packs": {
+                "REP_ERISA_COMPLIANCE": {
+                  "label": "ERISA Compliance",
+                  "category": "REPRESENTATIONS_WARRANTIES",
+                  "exactPhrases": [
+                    "Employee Retirement Income Security Act",
+                    "ERISA",
+                    "ERISA Affiliate",
+                    "Multiemployer Plan",
+                    "Plan",
+                    "Pension Plan",
+                    "Title IV of ERISA",
+                    "PBGC",
+                    "prohibited transaction",
+                    "minimum funding standards",
+                    "Reportable Event",
+                    "ERISA Event",
+                    "withdrawal liability"
+                  ],
+                  "sectionHeaders": [
+                    "Representations and Warranties",
+                    "ERISA",
+                    "Employee Benefits",
+                    "Pension Plans",
+                    "Section 5.09",
+                    "Section 4.09",
+                    "Article V"
+                  ],
+                  "semanticVariants": [
+                    "ERISA compliance representation",
+                    "pension plan representations",
+                    "multiemployer plan liability",
+                    "employee benefit plan compliance",
+                    "PBGC requirements",
+                    "prohibited transaction exemption"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.6,
+                    "minKeywordScore": 0.5,
+                    "minConfidence": 0.7,
+                    "escalationThreshold": 0.5,
+                    "humanEscalationThreshold": 0.3
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "Employee Retirement Income Security Act",
+                  "ERISA",
+                  "ERISA Affiliate",
+                  "Multiemployer Plan",
+                  "Plan",
+                  "Pension Plan",
+                  "Title IV of ERISA",
+                  "PBGC",
+                  "prohibited transaction",
+                  "minimum funding standards",
+                  "Reportable Event",
+                  "ERISA Event",
+                  "withdrawal liability"
+                ],
+                "sectionHeaders": [
+                  "Representations and Warranties",
+                  "ERISA",
+                  "Employee Benefits",
+                  "Pension Plans",
+                  "Section 5.09",
+                  "Section 4.09",
+                  "Article V"
+                ],
+                "semanticVariants": [
+                  "ERISA compliance representation",
+                  "pension plan representations",
+                  "multiemployer plan liability",
+                  "employee benefit plan compliance",
+                  "PBGC requirements",
+                  "prohibited transaction exemption"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "REP_ERISA_COMPLIANCE",
+              "label": "ERISA Compliance",
+              "schema_file": "representations-warranties-enhanced.schema.ts",
+              "field_count": 3,
+              "r1_domain": "governance",
+              "mapping_confidence": 0.3605,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Creation, validity, and perfection of security interests in collateral. Ties to collateral scope and perfection requirements in credit protection domain.",
+          "dls_ref": [
+            "DLS:67:Security"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.specified_reps.security_interest",
+          "level": 3,
+          "name": "Security Interest Perfection",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 67 (Security)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Representations and warranties that apply only in specified circumstances (such as initial funding or incremental facility incurrence) rather than on every borrowing date. These are additional to the core 'specified representations' and give lenders extra diligence comfort for material events while avoiding impediments to routine revolving facility draws.",
+          "dls_ref": [
+            57
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.specified_reps.optional_reps",
+          "level": 3,
+          "name": "Optional Specified Reps",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 57"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "The subset of 10-12 representations that are actual closing conditions under the SunGard certain funds framework. Review Template row 51 lists common Specified Reps: 'existence, power, enforceability, solvency, margin regs, Investment Company Act, PATRIOT Act, OFAC/FCPA use-of-proceeds, creation/perfection.' DLS Preferred row 91 enumerates 34 representation categories, but under SunGard conditionality, only the Specified Reps must be accurate at closing. DLS Preferred row 11 alternative notes: 'Bring down of all representations and warranties only required if new incremental lenders require such condition; permit new lenders to only require bring down of specified reps if in connection with a Limited Condition Acquisition.' This tiering balances closing certainty against lender protection.",
+      "dls_ref": [
+        "DLS:49:Forecasts",
+        "DLS:56:Solvency",
+        "DLS:57:Specified Representations",
+        "DLS:91:Representations and Warranties"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "reps_conditions",
+        "extraction_ready": true,
+        "playbook_ref": "other.other_general",
+        "section_locations": [
+          "ARTICLE 3",
+          "ARTICLE I",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE V"
+        ],
+        "shape_ref": "other.other_general"
+      },
+      "family_id": "governance.reps_conditions",
+      "id": "governance.reps_conditions.specified_reps",
+      "kct_ref": [
+        "cat5.2"
+      ],
+      "level": 2,
+      "name": "Specified Representations",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to Borrower and restricted subs; Holdings only in limited circumstances",
+        "dls_source": "DLS row 91",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "entity_scope: holdings_and_all_subs vs borrower_restricted_subs",
+          "solvency_rep: at_closing vs ongoing",
+          "financial_projections: accuracy_rep vs reasonable_basis_only",
+          "environmental: comprehensive vs material_only",
+          "ip_rep: comprehensive vs material_only",
+          "perfection_rep: included vs excluded",
+          "specified_reps_carveout: narrow vs broad"
+        ],
+        "market_position": "",
+        "preferred_position": "34 enumerated representations applicable to Holdings and all subsidiaries: org status, capitalization, qualification, power/authority, enforceability, compliance, no defaults, no conflicts, consents, financial statements, no MAE, litigation, labor, property, environmental, taxes, ERISA, subs, margin regs, Investment Company Act, full disclosure, IP, solvency, Patriot/OFAC/FCPA, perfection/priority, location, insurance, holdco status, senior debt status, acquisition docs, use of proceeds, brokers",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "reps_conditions.specified_reps"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 148,
+          "term": "Conditions Annex"
+        },
+        {
+          "coverage": "full",
+          "row": 150,
+          "term": "Representations"
+        },
+        {
+          "coverage": "full",
+          "row": 156,
+          "term": "Other"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "Review Template row 51 (Specified Reps listing); DLS Preferred row 91 (34 representation categories); DLS Preferred row 11 (specified reps for incremental/LCA conditions)"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Documents required at closing: legal opinions (borrower + guarantor counsel), organizational certificates (good standing, incumbency), solvency certificate (CFO, consolidated basis), UCC filings, stock certificates.",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.reps_conditions",
+              "id": "governance.reps_conditions.conditions_precedent.closing.at_closing",
+              "level": 4,
+              "market_benchmarks": {
+                "r17_gap_flagged": true
+              },
+              "name": "At-Closing Deliverables",
+              "negotiation_spectrum": {
+                "r17_gap_flagged": true
+              },
+              "type": "sub_component",
+              "definition_source": "Review Template Row 154 (Unknown); KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Items deferred to 60-90 days post-closing: IP perfection filings (USPTO/USCO), foreign collateral perfection, mortgage recordings, DACAs, insurance certificates and endorsements.",
+              "dls_ref": [
+                "DLS:78:Affirmative covenants"
+              ],
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.reps_conditions",
+              "id": "governance.reps_conditions.conditions_precedent.closing.post_closing",
+              "level": 4,
+              "name": "Post-Closing Covenants",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 78 (Affirmative covenants)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Initial funding conditions: legal opinions, organizational certificates, solvency certificate, UCC filings, stock certificates, PATRIOT Act information (5 business days pre-closing), notice of borrowing. [4): Ability to request KYC information only available up to date of commitment paper signing, or additional information limited to changes in rules and re]",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.conditions_precedent.closing",
+          "kct_ref": [
+            "cat5.4"
+          ],
+          "level": 3,
+          "name": "Closing Conditions",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 5 Item 4"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Conditions for each subsequent borrowing: no default/EoD, specified reps true (materiality-qualified or flat bring-down), compliance certificate with pro forma calculations. []",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.conditions_precedent.ongoing",
+          "kct_ref": [
+            "cat3.10"
+          ],
+          "level": 3,
+          "name": "Ongoing Borrowing Conditions",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 10"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "SunGard provision allowing borrower to fix covenant metrics at signing date and test pro forma at closing. Scope: acquisitions (universal), investments, RPs, RDPs (expanding). Insulates from interim covenant drift.",
+          "domain_id": "governance",
+          "extraction_difficulty": "hard",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.conditions_precedent.lct_provision",
+          "kct_ref": [
+            "cat3.10"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "r17_gap_flagged": true
+          },
+          "name": "Limited Condition Transaction",
+          "negotiation_spectrum": {
+            "r17_gap_flagged": true
+          },
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 10",
+          "extraction_refs": {}
+        }
+      ],
+      "corpus_prevalence": "high",
+      "dealdata_benchmarks": {
+        "Conditions Precedent": {
+          "pc_dollar_median": "$10,000,000",
+          "pc_dollar_range": "$100,000-$10,000,000"
+        }
+      },
+      "definition": "Requirements that must be satisfied before initial or subsequent borrowings. DLS Preferred section 4 (Closing Conditions) establishes the framework. Review Template row 39 describes SunGard conditionality: 'UCC filings and stock certificates of borrower at close; other perfection steps move to post-closing.' Standard conditions for subsequent draws include: (i) no default or event of default, (ii) bring-down of representations, and (iii) delivery of borrowing notice. DLS Preferred row 14 (DDTL) lists 12 detailed conditions including pro forma leverage compliance, representation bring-down, environmental reports, QoE, and due diligence. KCT Category 3 item 10 flags that 'The existence of a Default should prohibit any borrowing of loans.'",
+      "domain_id": "governance",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "reps_conditions",
+        "extraction_ready": true,
+        "playbook_ref": "other.other_general",
+        "section_locations": [
+          "ARTICLE 3",
+          "ARTICLE I",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE V"
+        ],
+        "shape_ref": "other.other_general"
+      },
+      "family_id": "governance.reps_conditions",
+      "id": "governance.reps_conditions.conditions_precedent",
+      "kct_ref": [
+        "cat5.4"
+      ],
+      "level": 2,
+      "name": "Conditions Precedent",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to Borrower and restricted subs; Holdings only in limited circumstances",
+        "dls_source": "DLS row 91",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "entity_scope: holdings_and_all_subs vs borrower_restricted_subs",
+          "solvency_rep: at_closing vs ongoing",
+          "financial_projections: accuracy_rep vs reasonable_basis_only",
+          "environmental: comprehensive vs material_only",
+          "ip_rep: comprehensive vs material_only",
+          "perfection_rep: included vs excluded",
+          "specified_reps_carveout: narrow vs broad"
+        ],
+        "market_position": "",
+        "preferred_position": "34 enumerated representations applicable to Holdings and all subsidiaries: org status, capitalization, qualification, power/authority, enforceability, compliance, no defaults, no conflicts, consents, financial statements, no MAE, litigation, labor, property, environmental, taxes, ERISA, subs, margin regs, Investment Company Act, full disclosure, IP, solvency, Patriot/OFAC/FCPA, perfection/priority, location, insurance, holdco status, senior debt status, acquisition docs, use of proceeds, brokers",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "reps_conditions.sungard_conditionality"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 148,
+          "term": "Conditions Annex"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred section 4 (Closing Conditions framework); DLS Preferred row 14 (12 DDTL conditions); Review Template row 39 (SunGard collateral conditionality); KCT Category 3 item 10 (Default prohibition on borrowings)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Transaction MAC (tied to specific acquisition — standard in PC) vs Market MAC (broad economic/market conditions — more common in BSL). Transaction MAC runs from signing to closing.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.mac_definition.type",
+          "kct_ref": [
+            "cat3.8"
+          ],
+          "level": 3,
+          "name": "MAC Type",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 153,
+              "term": "MAC"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 8; Review Template Row 153 (MAC)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Events excluded from MAC determination: war/hostilities, pandemic/epidemic, natural disaster, broad market changes, industry-wide changes, regulatory/legal changes. KCT flags war/hostilities carveouts as risk elevation.",
+          "domain_id": "governance",
+          "extraction_difficulty": "hard",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.mac_definition.carveouts",
+          "kct_ref": [
+            "cat3.8",
+            "cat3.11",
+            "cat3.14"
+          ],
+          "level": 3,
+          "name": "MAC Carveouts",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 8; KCT Cat 3 Item 11; KCT Cat 3 Item 14"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether carved-out events must 'disproportionately' affect the borrower relative to peers to be excluded. Merger agreement-type formulation requiring comparative analysis.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.mac_definition.disproportionate_effect",
+          "kct_ref": [
+            "cat3.8"
+          ],
+          "level": 3,
+          "name": "Disproportionate Effect Qualifier",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 8"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Importing M&A MAC carveouts into credit agreements creates a higher bar for calling a MAC, requiring comparative industry analysis rather than absolute deterioration.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.mac_definition.seasonal_fluctuation_exclusion",
+          "kct_ref": [
+            "KCT:Cat3:8"
+          ],
+          "level": 3,
+          "name": "Seasonal fluctuation exclusion",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Material Adverse Change/Effect definition determining whether significant deterioration has occurred between signing and closing. KCT Category 3 item 8 flags: 'MAE language has \"merger agreement\" type carve-outs which require that an event disproportionately affect the borrower.' KCT footnote 12 explains: '\"Merger Agreement\" carveouts are those found in a purchase and sale agreement and typically limit the ability to call a MAE on the target by carving out certain business events which do not qualify as a MAE.' KCT Category 3 item 11(b) further flags: 'the MAE or MAC definition in a credit agreement expressly carves out act(s) of war, hostilities, or escalation(s) of such act(s) of war or hostilities.' The MAC is a critical protection that allows lenders to refuse funding if the borrower's business has materially deteriorated.",
+      "dls_ref": [
+        "DLS:40:Market MAC",
+        "DLS:44:Business MAC",
+        "DLS:45:Due diligence"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "reps_conditions",
+        "extraction_ready": true,
+        "playbook_ref": "other.other_general",
+        "section_locations": [
+          "ARTICLE 3",
+          "ARTICLE I",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE V"
+        ],
+        "shape_ref": "other.other_general",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.358614+00:00",
+          "term_packs": {
+            "REP_MATERIAL_ADVERSE_CHANGE": {
+              "label": "Material Adverse Change/Effect (MAC/MAE)",
+              "category": "REPRESENTATIONS_WARRANTIES",
+              "exactPhrases": [
+                "Material Adverse Change",
+                "Material Adverse Effect",
+                "MAC",
+                "MAE",
+                "no Material Adverse Change",
+                "could reasonably be expected to have a Material Adverse Effect",
+                "would not reasonably be expected",
+                "individually or in the aggregate",
+                "material adverse change in",
+                "material adverse effect on"
+              ],
+              "sectionHeaders": [
+                "Definitions",
+                "Material Adverse Effect",
+                "Material Adverse Change",
+                "Representations and Warranties",
+                "Conditions Precedent",
+                "Events of Default",
+                "Section 1.01",
+                "Article I - Definitions"
+              ],
+              "semanticVariants": [
+                "MAC clause definition and scope",
+                "material adverse effect carve-outs",
+                "what constitutes material adverse change",
+                "MAC representation bring-down",
+                "material adverse effect qualifications",
+                "MAE exclusions and exceptions"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.6,
+                "minKeywordScore": 0.5,
+                "minConfidence": 0.7,
+                "escalationThreshold": 0.5,
+                "humanEscalationThreshold": 0.3
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Material Adverse Change",
+              "Material Adverse Effect",
+              "MAC",
+              "MAE",
+              "no Material Adverse Change",
+              "could reasonably be expected to have a Material Adverse Effect",
+              "would not reasonably be expected",
+              "individually or in the aggregate",
+              "material adverse change in",
+              "material adverse effect on"
+            ],
+            "sectionHeaders": [
+              "Definitions",
+              "Material Adverse Effect",
+              "Material Adverse Change",
+              "Representations and Warranties",
+              "Conditions Precedent",
+              "Events of Default",
+              "Section 1.01",
+              "Article I - Definitions"
+            ],
+            "semanticVariants": [
+              "MAC clause definition and scope",
+              "material adverse effect carve-outs",
+              "what constitutes material adverse change",
+              "MAC representation bring-down",
+              "material adverse effect qualifications",
+              "MAE exclusions and exceptions"
+            ]
+          }
+        }
+      },
+      "family_id": "governance.reps_conditions",
+      "id": "governance.reps_conditions.mac_definition",
+      "kct_ref": [
+        "cat3.8"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "kct_cat3_benchmark_addition": "Add market benchmarks for prevalence and aggressiveness of MAE Merger-Agreement Carve-outs provisions across PC/BSL segments."
+      },
+      "name": "Material Adverse Effect Definition",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to Borrower and restricted subs; Holdings only in limited circumstances",
+        "dls_source": "DLS row 91",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "entity_scope: holdings_and_all_subs vs borrower_restricted_subs",
+          "solvency_rep: at_closing vs ongoing",
+          "financial_projections: accuracy_rep vs reasonable_basis_only",
+          "environmental: comprehensive vs material_only",
+          "ip_rep: comprehensive vs material_only",
+          "perfection_rep: included vs excluded",
+          "specified_reps_carveout: narrow vs broad"
+        ],
+        "market_position": "",
+        "preferred_position": "34 enumerated representations applicable to Holdings and all subsidiaries: org status, capitalization, qualification, power/authority, enforceability, compliance, no defaults, no conflicts, consents, financial statements, no MAE, litigation, labor, property, environmental, taxes, ERISA, subs, margin regs, Investment Company Act, full disclosure, IP, solvency, Patriot/OFAC/FCPA, perfection/priority, location, insurance, holdco status, senior debt status, acquisition docs, use of proceeds, brokers",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "reps_conditions.mac_definition"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 5,
+          "term": "Disqualified Institutions"
+        },
+        {
+          "coverage": "partial",
+          "row": 6,
+          "term": "Information"
+        },
+        {
+          "coverage": "full",
+          "row": 11,
+          "term": "Outside Date"
+        },
+        {
+          "coverage": "full",
+          "row": 49,
+          "term": "Documentation Precedent"
+        },
+        {
+          "coverage": "full",
+          "row": 131,
+          "term": "Voting"
+        },
+        {
+          "coverage": "full",
+          "row": 132,
+          "term": "Assignments – consents"
+        },
+        {
+          "coverage": "full",
+          "row": 150,
+          "term": "Representations"
+        },
+        {
+          "coverage": "full",
+          "row": 153,
+          "term": "MAC"
+        },
+        {
+          "coverage": "full",
+          "row": 156,
+          "term": "Other"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "KCT Category 3 item 8 and footnote 12 (MAE merger-agreement carveouts, disproportionate effect requirement); KCT Category 3 item 11(b) (MAE carveout for war/hostilities)",
+      "neutron_field_refs": [
+        {
+          "term_type": "REP_MATERIAL_ADVERSE_CHANGE",
+          "label": "Material Adverse Change/Effect (MAC/MAE)",
+          "schema_file": "representations-warranties-enhanced.schema.ts",
+          "field_count": 5,
+          "r1_domain": "governance",
+          "mapping_confidence": 0.4924,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "id": "governance.reps_conditions.no_default_rep.scope",
+          "name": "Default Scope Coverage",
+          "definition": "Whether the representation covers Defaults only, Events of Default only, or both — and whether it extends to defaults under other material agreements beyond the credit agreement itself.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reps_conditions",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "id": "governance.reps_conditions.no_default_rep.bring_down_timing",
+          "name": "Bring-Down Timing",
+          "definition": "When the no-default representation must be true — at closing, at each borrowing date, at each interest period date — and whether bring-down applies to both incurrence and ongoing conditions.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reps_conditions",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "id": "governance.reps_conditions.no_default_rep.sungard_carveout",
+          "name": "SunGard/Certain Funds Carve-Out",
+          "definition": "Under SunGard conditionality, whether the no-default condition is limited to payment and bankruptcy defaults only — excluding financial covenant breaches and other technical defaults during the certain-funds period.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reps_conditions",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 1"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Borrower certifies no Default or Event of Default exists or will result from the borrowing. KCT Category 3 item 10 flags: 'The existence of a Default should prohibit any borrowing of loans -- i.e., there should be no ability to borrow any loans if a Default is continuing.' KCT footnote 13 notes: 'Rollover requests of existing drawn loans can be subject to no EoD or other more lenient constructs. This applies only to new money drawdowns that are not subject to Sungard or similar certain funds provisions.' The no-default condition is one of the standard conditions to subsequent borrowings alongside bring-down of representations and delivery of borrowing notice.",
+      "dls_ref": [
+        "DLS:90:Events of Default"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "reps_conditions",
+        "extraction_ready": true,
+        "playbook_ref": "other.other_general",
+        "section_locations": [
+          "ARTICLE 3",
+          "ARTICLE I",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE V"
+        ],
+        "shape_ref": "other.other_general",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "governance.reps_conditions",
+      "id": "governance.reps_conditions.no_default_rep",
+      "kct_ref": [
+        "cat3.10",
+        "cat5.2"
+      ],
+      "level": 2,
+      "name": "No Default / No EoD Representation",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to Borrower and restricted subs; Holdings only in limited circumstances",
+        "dls_source": "DLS row 91",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "entity_scope: holdings_and_all_subs vs borrower_restricted_subs",
+          "solvency_rep: at_closing vs ongoing",
+          "financial_projections: accuracy_rep vs reasonable_basis_only",
+          "environmental: comprehensive vs material_only",
+          "ip_rep: comprehensive vs material_only",
+          "perfection_rep: included vs excluded",
+          "specified_reps_carveout: narrow vs broad"
+        ],
+        "market_position": "",
+        "preferred_position": "34 enumerated representations applicable to Holdings and all subsidiaries: org status, capitalization, qualification, power/authority, enforceability, compliance, no defaults, no conflicts, consents, financial statements, no MAE, litigation, labor, property, environmental, taxes, ERISA, subs, margin regs, Investment Company Act, full disclosure, IP, solvency, Patriot/OFAC/FCPA, perfection/priority, location, insurance, holdco status, senior debt status, acquisition docs, use of proceeds, brokers",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "reps_conditions.no_default_rep"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 22,
+          "term": "[DDTL – conditions to draw]"
+        },
+        {
+          "coverage": "full",
+          "row": 132,
+          "term": "Assignments – consents"
+        },
+        {
+          "coverage": "full",
+          "row": 135,
+          "term": "Assignments – Borrower buybacks"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "KCT Category 3 item 10 and footnote 13 (Default prohibition on borrowings; rollover exception)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether reps must be true 'in all material respects' (standard) or 'in all respects' (bank preferred). Double-materiality scrub: reps already containing materiality qualifiers should not receive additional materiality overlay.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.bring_down.materiality_qualifier",
+          "level": 3,
+          "name": "Materiality Qualification",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 1"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "All representations must be true as of borrowing date, not just as of original representation date. More protective for lenders; captures intervening deterioration.",
+          "dls_ref": [
+            "DLS:11:Conditions to incurrence: Bring down of "
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.bring_down.flat_bringdown",
+          "kct_ref": [
+            "cat5.2"
+          ],
+          "level": 3,
+          "name": "Flat Bring-Down",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 11 (Conditions to incurrence: Bring down of); KCT Cat 5 Item 2"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Accuracy standard for representations at each borrowing: material respects qualification (standard), flat bring-down (all respects — more protective), or specified-rep-only bring-down (SunGard minimum).",
+      "dls_ref": [
+        "DLS:11:Conditions to incurrence: Bring down of ",
+        "DLS:57:Specified Representations"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "reps_conditions",
+        "extraction_ready": true,
+        "playbook_ref": "other.other_general",
+        "section_locations": [
+          "ARTICLE 3",
+          "ARTICLE I",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE V"
+        ],
+        "shape_ref": "other.other_general",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "governance.reps_conditions",
+      "id": "governance.reps_conditions.bring_down",
+      "kct_ref": [
+        "cat5.2"
+      ],
+      "level": 2,
+      "name": "Bring-Down Mechanics",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to Borrower and restricted subs; Holdings only in limited circumstances",
+        "dls_source": "DLS row 91",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "entity_scope: holdings_and_all_subs vs borrower_restricted_subs",
+          "solvency_rep: at_closing vs ongoing",
+          "financial_projections: accuracy_rep vs reasonable_basis_only",
+          "environmental: comprehensive vs material_only",
+          "ip_rep: comprehensive vs material_only",
+          "perfection_rep: included vs excluded",
+          "specified_reps_carveout: narrow vs broad"
+        ],
+        "market_position": "",
+        "preferred_position": "34 enumerated representations applicable to Holdings and all subsidiaries: org status, capitalization, qualification, power/authority, enforceability, compliance, no defaults, no conflicts, consents, financial statements, no MAE, litigation, labor, property, environmental, taxes, ERISA, subs, margin regs, Investment Company Act, full disclosure, IP, solvency, Patriot/OFAC/FCPA, perfection/priority, location, insurance, holdco status, senior debt status, acquisition docs, use of proceeds, brokers",
+        "source": "R14-C"
+      },
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 22,
+          "term": "[DDTL – conditions to draw]"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 11 (Conditions to incurrence: Bring down of); DLS Preferred Row 57 (Specified Representations); KCT Cat 5 Item 2; Review Template Row 22 ([DDTL – conditions to draw])"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Minimum dollar amount of defaulted third-party indebtedness required to trigger a cross-default event of default under the credit agreement. The threshold (typically $25M-$75M, scaled to borrower size) prevents immaterial defaults on trade obligations or minor facilities from cascading into the credit facility, while ensuring that defaults on material obligations are captured.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.cross_default.dollar_threshold",
+          "level": 3,
+          "name": "Dollar Threshold",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "EBITDA-based percentage threshold for cross-default (10-35% of Consolidated EBITDA). Provides company-size scaling.",
+          "dls_ref": [
+            "DLS:42:Minimum EBITDA",
+            "DLS:72:EBITDA"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.cross_default.ebitda_percentage",
+          "level": 3,
+          "name": "EBITDA Percentage",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 42 (Minimum EBITDA); DLS Preferred Row 72 (EBITDA)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Materiality standards for cross-default triggers linking defaults under other debt instruments to the credit facility. DLS Preferred row 90 clause (v) specifies 'cross default and cross acceleration to material indebtedness' (highlighted for negotiation). The cross-default trigger is calibrated through the definition of 'material indebtedness' (typically a dollar threshold) and whether cross-default (any default under other debt) or only cross-acceleration (other lenders have actually accelerated) triggers the EoD. Alternative: limited to 'material' restricted subsidiaries or a group that would be material.",
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "reps_conditions",
+        "extraction_ready": true,
+        "playbook_ref": "other.other_general",
+        "section_locations": [
+          "ARTICLE 3",
+          "ARTICLE I",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE V"
+        ],
+        "shape_ref": "other.other_general",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "governance.reps_conditions",
+      "id": "governance.reps_conditions.cross_default",
+      "level": 2,
+      "market_benchmarks": {
+        "combined_value": "37.1%",
+        "dollar_only_flag": "61.3%"
+      },
+      "name": "Cross-Default Thresholds",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to Borrower and restricted subs; Holdings only in limited circumstances",
+        "dls_source": "DLS row 91",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "entity_scope: holdings_and_all_subs vs borrower_restricted_subs",
+          "solvency_rep: at_closing vs ongoing",
+          "financial_projections: accuracy_rep vs reasonable_basis_only",
+          "environmental: comprehensive vs material_only",
+          "ip_rep: comprehensive vs material_only",
+          "perfection_rep: included vs excluded",
+          "specified_reps_carveout: narrow vs broad"
+        ],
+        "market_position": "",
+        "preferred_position": "34 enumerated representations applicable to Holdings and all subsidiaries: org status, capitalization, qualification, power/authority, enforceability, compliance, no defaults, no conflicts, consents, financial statements, no MAE, litigation, labor, property, environmental, taxes, ERISA, subs, margin regs, Investment Company Act, full disclosure, IP, solvency, Patriot/OFAC/FCPA, perfection/priority, location, insurance, holdco status, senior debt status, acquisition docs, use of proceeds, brokers",
+        "source": "R14-C"
+      },
+      "type": "concept",
+      "definition_source": "DLS Preferred row 90 clause (v) (highlighted: cross default and cross acceleration to material indebtedness)"
+    },
+    {
+      "children": [
+        {
+          "id": "governance.reps_conditions.inconsistent_agreements.covered_agreements_scope",
+          "name": "Covered Agreements Scope",
+          "definition": "Which agreements are tested for inconsistency — organizational documents, material contracts, other debt instruments, joint venture agreements — and whether the rep covers the borrower only or extends to all restricted subsidiaries.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reps_conditions",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 6"
+        },
+        {
+          "id": "governance.reps_conditions.inconsistent_agreements.inconsistency_standard",
+          "name": "Inconsistency Standard",
+          "definition": "The threshold for what constitutes an 'inconsistency' — direct conflict with credit agreement terms, material adverse effect on lender rights, or any provision that could limit the borrower's ability to perform its obligations.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reps_conditions",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "hard",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "id": "governance.reps_conditions.inconsistent_agreements.remediation_obligation",
+          "name": "Remediation Obligation",
+          "definition": "Whether the borrower must cure inconsistencies discovered post-closing — amend conflicting agreements, obtain waivers, or report to lenders — and the timeframe for remediation before it becomes a default.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reps_conditions",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 2"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Negative covenant prohibiting contractual arrangements inconsistent with loan document obligations. Only 16.7% adopt this covenant; 77.8% have no such restriction.",
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "reps_conditions",
+        "extraction_ready": true,
+        "playbook_ref": "other.other_general",
+        "section_locations": [
+          "ARTICLE 3",
+          "ARTICLE I",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE V"
+        ],
+        "shape_ref": "other.other_general",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "governance.reps_conditions",
+      "id": "governance.reps_conditions.inconsistent_agreements",
+      "level": 2,
+      "name": "Inconsistent Agreements",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to Borrower and restricted subs; Holdings only in limited circumstances",
+        "dls_source": "DLS row 91",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "entity_scope: holdings_and_all_subs vs borrower_restricted_subs",
+          "solvency_rep: at_closing vs ongoing",
+          "financial_projections: accuracy_rep vs reasonable_basis_only",
+          "environmental: comprehensive vs material_only",
+          "ip_rep: comprehensive vs material_only",
+          "perfection_rep: included vs excluded",
+          "specified_reps_carveout: narrow vs broad"
+        ],
+        "market_position": "",
+        "preferred_position": "34 enumerated representations applicable to Holdings and all subsidiaries: org status, capitalization, qualification, power/authority, enforceability, compliance, no defaults, no conflicts, consents, financial statements, no MAE, litigation, labor, property, environmental, taxes, ERISA, subs, margin regs, Investment Company Act, full disclosure, IP, solvency, Patriot/OFAC/FCPA, perfection/priority, location, insurance, holdco status, senior debt status, acquisition docs, use of proceeds, brokers",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "neg_cov_fundamental_changes.inconsistent_agreements"
+      ],
+      "type": "concept",
+      "definition_source": "KCT Cat 2 Item 4"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Lender right to request updated KYC and beneficial ownership information from the borrower on an ongoing basis post-closing, including changes in control persons, 25% equity holders, and management certification.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.beneficial_ownership.information_rights",
+          "kct_ref": [
+            "cat5.4"
+          ],
+          "level": 3,
+          "name": "Information Rights",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 5 Item 4"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether KYC information requests are limited to information available as of the commitment paper signing date, creating a temporal cutoff that prevents lenders from imposing additional diligence requirements after commitment.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.beneficial_ownership.commitment_paper_kyc_cutoff",
+          "kct_ref": [
+            "cat5.4"
+          ],
+          "level": 3,
+          "name": "Commitment Paper Kyc Cutoff",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 5 Item 4"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Right to request additional beneficial ownership information necessitated by changes in applicable anti-money-laundering, sanctions, or know-your-customer regulations occurring after the closing date.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.beneficial_ownership.regulatory_change_information_ri",
+          "kct_ref": [
+            "cat5.4"
+          ],
+          "level": 3,
+          "name": "Regulatory Change Information Rights",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 5 Item 4"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "KCT cat5.4 requires the protective mechanism 'ongoing KYC information rights' but it is not adequately represented in the ontology.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.beneficial_ownership.ongoing_kyc_information_rights",
+          "kct_ref": [
+            "cat5.4"
+          ],
+          "level": 3,
+          "name": "ongoing KYC information rights",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 5 Item 4"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "KYC and beneficial ownership compliance certification required under the Corporate Transparency Act and FinCEN Beneficial Ownership Rule. Must be delivered pre-closing and updated upon material changes.",
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "reps_conditions",
+        "extraction_ready": true,
+        "playbook_ref": "other.other_general",
+        "section_locations": [
+          "ARTICLE 3",
+          "ARTICLE I",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE V"
+        ],
+        "shape_ref": "other.other_general",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "governance.reps_conditions",
+      "id": "governance.reps_conditions.beneficial_ownership",
+      "kct_ref": [
+        "cat5.4"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "commitment_paper_cutoff_adoption_rate": "[cat5.4] KCT cat5.4 requires prevalence/severity data for 'commitment-paper-cutoff adoption rate' but no existing node provides this benchmark.",
+        "prevalence_of_kyc_limitations": "[cat5.4] KCT cat5.4 requires prevalence/severity data for 'prevalence of KYC limitations' but no existing node provides this benchmark."
+      },
+      "name": "Beneficial Ownership Certification",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to Borrower and restricted subs; Holdings only in limited circumstances",
+        "dls_source": "DLS row 91",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "entity_scope: holdings_and_all_subs vs borrower_restricted_subs",
+          "solvency_rep: at_closing vs ongoing",
+          "financial_projections: accuracy_rep vs reasonable_basis_only",
+          "environmental: comprehensive vs material_only",
+          "ip_rep: comprehensive vs material_only",
+          "perfection_rep: included vs excluded",
+          "specified_reps_carveout: narrow vs broad"
+        ],
+        "market_position": "",
+        "preferred_position": "34 enumerated representations applicable to Holdings and all subsidiaries: org status, capitalization, qualification, power/authority, enforceability, compliance, no defaults, no conflicts, consents, financial statements, no MAE, litigation, labor, property, environmental, taxes, ERISA, subs, margin regs, Investment Company Act, full disclosure, IP, solvency, Patriot/OFAC/FCPA, perfection/priority, location, insurance, holdco status, senior debt status, acquisition docs, use of proceeds, brokers",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "reps_conditions.beneficial_ownership"
+      ],
+      "type": "concept",
+      "definition_source": "KCT Cat 5 Item 4"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Force majeure guarantee releases reduce the credit package during exactly the kind of systemic event when protection is most needed.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.force_majeure.escalation_clause_scope",
+          "kct_ref": [
+            "KCT:Cat3:11"
+          ],
+          "level": 3,
+          "name": "Escalation clause scope",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "provision releasing a guarantor from guarantee obligations or carving out from the MAE/MAC definition act(s) of war, hostilities, escalation of hostilities, or terrorism, flagged as a key risk that undermines lender protection during geopolitical crises",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.force_majeure.war_terrorism_hostilities_carve_out",
+          "kct_ref": [
+            "KCT:Cat3:14"
+          ],
+          "level": 3,
+          "name": "War/terrorism/hostilities carve-out",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "carve-out from excluded event or force majeure provisions for cyber-attacks or cyber-security incidents, an emerging risk category that may release guarantors or prevent MAE triggers during digital disruption events; not yet standardized but gaining focus alongside war and terrorism carve-outs",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.force_majeure.cyber_attack_carve_out",
+          "kct_ref": [
+            "KCT:Cat3:14"
+          ],
+          "level": 3,
+          "name": "Cyber-attack carve-out",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 1"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "effect of force majeure or excluded event provisions that prevent covenant breaches caused by the excluded event from maturing into events of default, thereby suspending the lenders' ability to accelerate or exercise remedies during systemic disruptions",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.force_majeure.eod_trigger_prevention",
+          "kct_ref": [
+            "KCT:Cat3:14"
+          ],
+          "level": 3,
+          "name": "EoD trigger prevention",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "effect of force majeure or excluded event provisions that prevent the excluded event from triggering a drawstop condition, allowing borrowers to continue drawing on revolving facilities even when the event would otherwise constitute a default barring new borrowings",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.force_majeure.drawstop_prevention",
+          "kct_ref": [
+            "KCT:Cat3:14"
+          ],
+          "level": 3,
+          "name": "Drawstop prevention",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "delineation of which obligations are affected by the force majeure carve-out: whether limited to guarantee release, MAE/MAC definition only, or extending to affirmative and negative covenant compliance, with guarantee and MAE treated as separate scope dimensions",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.force_majeure.scope_limitation_which_covenants_affect",
+          "kct_ref": [
+            "KCT:Cat3:14"
+          ],
+          "level": 3,
+          "name": "Scope limitation (which covenants affected)",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 112 (Unknown); KCT Cat 1 Item 1"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "temporal boundary on the duration of a force majeure carve-out, limiting how long the suspension of guarantee obligations, MAE triggers, or covenant compliance can persist; absence of a time limit is a risk factor analogous to missing outside dates in LCT provisions",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reps_conditions",
+          "id": "governance.reps_conditions.force_majeure.time_limitation_on_carve_out",
+          "kct_ref": [
+            "KCT:Cat3:14"
+          ],
+          "level": 3,
+          "name": "Time limitation on carve-out",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 4"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Whether guarantor obligations are released upon force majeure events (war, hostilities, terrorism). KCT Category 3 item 11 flags two separate concerns: '(a) Guarantee that expressly releases a guarantor of its obligations to perform under the guarantee in the event of act(s) of war, hostilities, or escalation(s) of such act(s) of war or hostilities or any Force Majeure clauses' and '(b) the MAE or MAC definition in a credit agreement expressly carves out act(s) of war, hostilities, or escalation(s) of such act(s) of war or hostilities.' KCT Category 3 item 14 separately flags 'Excluded Matter/Permitted Transaction type carve-outs which expressly include items such as anything related to any pandemic, epidemic, natural disaster, act(s) of war, terrorism' resulting in inability to trigger EoD and/or drawstop.",
+      "domain_id": "governance",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "reps_conditions",
+        "extraction_ready": true,
+        "playbook_ref": "other.other_general",
+        "section_locations": [
+          "ARTICLE 3",
+          "ARTICLE I",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE V"
+        ],
+        "shape_ref": "other.other_general"
+      },
+      "family_id": "governance.reps_conditions",
+      "id": "governance.reps_conditions.force_majeure",
+      "kct_ref": [
+        "cat3.11",
+        "cat3.14"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "kct_cat3_benchmark_enrichment": "Enrich benchmarks with segment-specific data (LMM/CMM/UMM/BSL) for Force Majeure Guarantee Release / MAE War Carveout."
+      },
+      "name": "Force Majeure / War Guarantee Release",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to Borrower and restricted subs; Holdings only in limited circumstances",
+        "dls_source": "DLS row 91",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "entity_scope: holdings_and_all_subs vs borrower_restricted_subs",
+          "solvency_rep: at_closing vs ongoing",
+          "financial_projections: accuracy_rep vs reasonable_basis_only",
+          "environmental: comprehensive vs material_only",
+          "ip_rep: comprehensive vs material_only",
+          "perfection_rep: included vs excluded",
+          "specified_reps_carveout: narrow vs broad"
+        ],
+        "market_position": "",
+        "preferred_position": "34 enumerated representations applicable to Holdings and all subsidiaries: org status, capitalization, qualification, power/authority, enforceability, compliance, no defaults, no conflicts, consents, financial statements, no MAE, litigation, labor, property, environmental, taxes, ERISA, subs, margin regs, Investment Company Act, full disclosure, IP, solvency, Patriot/OFAC/FCPA, perfection/priority, location, insurance, holdco status, senior debt status, acquisition docs, use of proceeds, brokers",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "reps_conditions.force_majeure_guarantee"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 49,
+          "term": "Documentation Precedent"
+        },
+        {
+          "coverage": "full",
+          "row": 131,
+          "term": "Voting"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "KCT Category 3 item 11 (force majeure: guarantee release and MAE carveout); KCT Category 3 item 14 (Excluded Matter carveouts for pandemic/war/terrorism)"
+    },
+    {
+      "children": [
+        {
+          "id": "governance.reps_conditions.sungard_conditionality.specified_representations",
+          "name": "Specified Representations List",
+          "definition": "The enumerated subset of representations (typically 10-12 of 34) required to be true under SunGard certain funds conditionality — organization, authority, enforceability, no conflict, solvency, investment company, OFAC/sanctions, PATRIOT Act.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reps_conditions",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "medium",
+          "definition_source": "DLS Preferred Row 57 (Unknown); Review Template Row 150 (Unknown); KCT Cat 1 Item 3",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:41.364050+00:00",
+              "term_packs": {
+                "REP_SANCTIONS_REPRESENTATIONS": {
+                  "label": "Sanctions Representations",
+                  "category": "REPRESENTATIONS_WARRANTIES",
+                  "exactPhrases": [
+                    "Sanctions",
+                    "Sanctioned Person",
+                    "Sanctioned Country",
+                    "OFAC",
+                    "Office of Foreign Assets Control",
+                    "SDN List",
+                    "Specially Designated Nationals",
+                    "sanctions laws",
+                    "Anti-Terrorism Laws",
+                    "USA PATRIOT Act",
+                    "Executive Order",
+                    "blocked person",
+                    "designated person"
+                  ],
+                  "sectionHeaders": [
+                    "Representations and Warranties",
+                    "Sanctions",
+                    "Anti-Terrorism",
+                    "OFAC",
+                    "Section 5.18",
+                    "Section 4.18",
+                    "Article V"
+                  ],
+                  "semanticVariants": [
+                    "sanctions compliance representation",
+                    "OFAC compliance requirements",
+                    "sanctioned country restrictions",
+                    "sanctions screening representation",
+                    "anti-terrorism compliance",
+                    "sanctions laws compliance"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.6,
+                    "minKeywordScore": 0.5,
+                    "minConfidence": 0.7,
+                    "escalationThreshold": 0.5,
+                    "humanEscalationThreshold": 0.3
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "Sanctions",
+                  "Sanctioned Person",
+                  "Sanctioned Country",
+                  "OFAC",
+                  "Office of Foreign Assets Control",
+                  "SDN List",
+                  "Specially Designated Nationals",
+                  "sanctions laws",
+                  "Anti-Terrorism Laws",
+                  "USA PATRIOT Act",
+                  "Executive Order",
+                  "blocked person",
+                  "designated person"
+                ],
+                "sectionHeaders": [
+                  "Representations and Warranties",
+                  "Sanctions",
+                  "Anti-Terrorism",
+                  "OFAC",
+                  "Section 5.18",
+                  "Section 4.18",
+                  "Article V"
+                ],
+                "semanticVariants": [
+                  "sanctions compliance representation",
+                  "OFAC compliance requirements",
+                  "sanctioned country restrictions",
+                  "sanctions screening representation",
+                  "anti-terrorism compliance",
+                  "sanctions laws compliance"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "REP_SANCTIONS_REPRESENTATIONS",
+              "label": "Sanctions Representations",
+              "schema_file": "representations-warranties-enhanced.schema.ts",
+              "field_count": 4,
+              "r1_domain": "governance",
+              "mapping_confidence": 0.4119,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "id": "governance.reps_conditions.sungard_conditionality.limited_conditions_precedent",
+          "name": "Limited Conditions Precedent",
+          "definition": "The reduced set of closing conditions applicable during the certain-funds period — delivery of acquisition agreement, specified reps true, no payment/bankruptcy default, no MAE — versus full closing conditions for non-acquisition draws.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reps_conditions",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 2; Learning Material: 2) Transaction Description / Conditions Precedent"
+        },
+        {
+          "id": "governance.reps_conditions.sungard_conditionality.bring_down_standard",
+          "name": "Bring-Down Standard",
+          "definition": "Whether specified representations must be true in all material respects or in all respects at funding, and whether bring-down applies as of signing date or funding date — the precision of the truth-testing standard.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reps_conditions",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "hard",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "id": "governance.reps_conditions.sungard_conditionality.expanded_scope_creep",
+          "name": "Expanded Scope Beyond Acquisitions",
+          "definition": "Modern expansions of SunGard conditionality beyond acquisitions to cover other incurrence baskets — restricted payments, investments, incremental facilities — where limited conditions now apply to non-acquisition covenant usage.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reps_conditions",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "hard",
+          "definition_source": "KCT Cat 1 Item 2"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Framework limiting closing conditions to Specified Reps plus Specified Acquisition Agreement Reps plus essential collateral, providing the borrower with closing certainty while preserving lender protections. Named after the 2005 SunGard LBO that established the template. Review Template row 51: 'Specified Representations' include existence, power, enforceability, solvency, margin regulations, Investment Company Act, PATRIOT Act, OFAC/FCPA, use-of-proceeds, creation/perfection. Review Template row 39: UCC filings and stock certificates at closing, other perfection post-closing. Learning Material section on Conditions Precedent covers the certain funds framework in detail. The framework ensures the sponsor can close the M&A transaction on time (closing certainty) while the bank receives minimum baseline protections.",
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "reps_conditions",
+        "extraction_ready": true,
+        "playbook_ref": "reps_conditions.aff_covenants_other",
+        "section_locations": [
+          "ARTICLE IV",
+          "Section 4.01",
+          "Section 4.02"
+        ],
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.400683+00:00",
+          "term_packs": {
+            "CL_SUNGARD_CONDITIONS": {
+              "label": "SunGard Conditions",
+              "category": "COMMITMENT_LETTER",
+              "exactPhrases": [
+                "SunGard conditions",
+                "limited conditions",
+                "conditions precedent",
+                "collateral delivery",
+                "perfection",
+                "UCC filings",
+                "stock certificates",
+                "post-closing",
+                "closing deliverables",
+                "certain funds"
+              ],
+              "sectionHeaders": [
+                "CONDITIONS PRECEDENT",
+                "CONDITIONS TO CLOSING",
+                "CLOSING CONDITIONS",
+                "SUNGARD CONDITIONS",
+                "LIMITED CONDITIONS",
+                "COLLATERAL REQUIREMENTS",
+                "POST-CLOSING MATTERS"
+              ],
+              "semanticVariants": [
+                "limited closing conditions",
+                "certain funds closing",
+                "SunGard style conditionality",
+                "borrower-friendly conditions",
+                "closing deliverable requirements",
+                "perfection requirements",
+                "collateral at closing"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            },
+            "REP_ANTI_CORRUPTION": {
+              "label": "Anti-Corruption (FCPA/Anti-Bribery)",
+              "category": "REPRESENTATIONS_WARRANTIES",
+              "exactPhrases": [
+                "Anti-Corruption Laws",
+                "FCPA",
+                "Foreign Corrupt Practices Act",
+                "UK Bribery Act",
+                "anti-bribery",
+                "anti-corruption",
+                "corrupt payment",
+                "government official",
+                "foreign official",
+                "improper payment",
+                "facilitation payment",
+                "anti-money laundering",
+                "bribery"
+              ],
+              "sectionHeaders": [
+                "Representations and Warranties",
+                "Anti-Corruption",
+                "FCPA",
+                "Compliance with Laws",
+                "Section 5.17",
+                "Section 4.17",
+                "Article V"
+              ],
+              "semanticVariants": [
+                "FCPA compliance representation",
+                "anti-bribery representation",
+                "anti-corruption compliance",
+                "foreign official payment restrictions",
+                "improper payment prohibition",
+                "anti-money laundering compliance"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.6,
+                "minKeywordScore": 0.5,
+                "minConfidence": 0.7,
+                "escalationThreshold": 0.5,
+                "humanEscalationThreshold": 0.3
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "SunGard conditions",
+              "limited conditions",
+              "conditions precedent",
+              "collateral delivery",
+              "perfection",
+              "UCC filings",
+              "stock certificates",
+              "post-closing",
+              "closing deliverables",
+              "certain funds",
+              "Anti-Corruption Laws",
+              "FCPA",
+              "Foreign Corrupt Practices Act",
+              "UK Bribery Act",
+              "anti-bribery",
+              "anti-corruption",
+              "corrupt payment",
+              "government official",
+              "foreign official",
+              "improper payment",
+              "facilitation payment",
+              "anti-money laundering",
+              "bribery"
+            ],
+            "sectionHeaders": [
+              "CONDITIONS PRECEDENT",
+              "CONDITIONS TO CLOSING",
+              "CLOSING CONDITIONS",
+              "SUNGARD CONDITIONS",
+              "LIMITED CONDITIONS",
+              "COLLATERAL REQUIREMENTS",
+              "POST-CLOSING MATTERS",
+              "Representations and Warranties",
+              "Anti-Corruption",
+              "FCPA",
+              "Compliance with Laws",
+              "Section 5.17",
+              "Section 4.17",
+              "Article V"
+            ],
+            "semanticVariants": [
+              "limited closing conditions",
+              "certain funds closing",
+              "SunGard style conditionality",
+              "borrower-friendly conditions",
+              "closing deliverable requirements",
+              "perfection requirements",
+              "collateral at closing",
+              "FCPA compliance representation",
+              "anti-bribery representation",
+              "anti-corruption compliance",
+              "foreign official payment restrictions",
+              "improper payment prohibition",
+              "anti-money laundering compliance"
+            ]
+          }
+        }
+      },
+      "family_id": "governance.reps_conditions",
+      "id": "governance.reps_conditions.sungard_conditionality",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "high in acquisition financing",
+        "source": "R19-C_corpus_analysis",
+        "standard": "limited conditions: no MAE, specified reps, no EoD from payment default"
+      },
+      "name": "Sungard Conditionality",
+      "type": "concept",
+      "definition_source": "Review Template rows 39, 51 (Sungard collateral and specified reps); Learning Material section on Conditions Precedent (certain funds framework)",
+      "neutron_field_refs": [
+        {
+          "term_type": "CL_SUNGARD_CONDITIONS",
+          "label": "SunGard Conditions",
+          "schema_file": "commitment-letter-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.5321,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        },
+        {
+          "term_type": "REP_ANTI_CORRUPTION",
+          "label": "Anti-Corruption (FCPA/Anti-Bribery)",
+          "schema_file": "representations-warranties-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "governance",
+          "mapping_confidence": 0.332,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "id": "governance.reps_conditions.jury_trial_waiver",
+      "name": "Jury Trial Waiver",
+      "definition": "Mutual waiver of jury trial rights in any litigation arising under or relating to the credit agreement. Standard in virtually all leveraged finance credit agreements. Reduces litigation uncertainty and is considered a fundamental borrower-lender protection.",
+      "type": "concept",
+      "level": 2,
+      "domain_id": "governance",
+      "family_id": "governance.reps_conditions",
+      "corpus_prevalence": "high",
+      "extraction_difficulty": "easy",
+      "children": [
+        {
+          "id": "governance.reps_conditions.jury_trial_waiver.scope",
+          "name": "Waiver Scope",
+          "definition": "Defines which parties are bound by the jury trial waiver (borrower, guarantors, administrative agent, all lenders, letter of credit issuers) and which claims are covered (contract, tort, statutory). Broadest formulations cover 'any proceeding arising out of or relating to' the loan documents, while narrow versions limit to disputes under the credit agreement itself.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reps_conditions",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "easy",
+          "definition_source": "Review Template Row 149 (Unknown); KCT Cat 1 Item 2"
+        },
+        {
+          "id": "governance.reps_conditions.jury_trial_waiver.enforceability",
+          "name": "Enforceability Considerations",
+          "definition": "State-law variations affecting enforceability of pre-dispute jury trial waivers. Most states enforce contractual jury waivers between sophisticated commercial parties, but certain jurisdictions impose heightened standards (knowing, voluntary, intelligent waiver). California historically disfavored pre-dispute waivers, though federal courts in California generally enforce them under diversity jurisdiction.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reps_conditions",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "easy",
+          "definition_source": "KCT Cat 2 Item 1"
+        },
+        {
+          "id": "governance.reps_conditions.jury_trial_waiver.standard_language",
+          "name": "Standard / LSTA Model Language",
+          "definition": "The LSTA model credit agreement includes a standard mutual jury trial waiver provision, typically in the miscellaneous article (Article X or XI). Language is largely boilerplate with minimal negotiation, though certain borrowers may resist inclusion where governing law jurisdiction does not clearly enforce pre-dispute waivers. Presence/absence is binary — there is no graduated version.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reps_conditions",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "easy",
+          "definition_source": "KCT Cat 1 Item 2"
+        }
+      ],
+      "extraction_refs": {
+        "search_strategy": "Full-text search for jury trial waiver, waiver of jury trial, JURY TRIAL",
+        "typical_location": "ARTICLE IX or ARTICLE X (Miscellaneous)",
+        "extraction_shape": "binary_presence",
+        "notes": "Standard boilerplate provision; look for WAIVER OF JURY TRIAL heading or inline waiver language",
+        "concept_area": "reps_conditions",
+        "extraction_ready": true,
+        "playbook_ref": "reps_conditions.aff_covenants_other",
+        "section_locations": [],
+        "shape_ref": "reps_conditions.aff_covenants_other"
+      },
+      "definition_source": "Review Template Row 149 (Unknown); KCT Cat 1 Item 3"
+    },
+    {
+      "id": "governance.reps_conditions.labor_matters",
+      "name": "Labor Matters Representation",
+      "definition": "Representation that no material labor disputes, strikes, or collective bargaining issues exist that could reasonably be expected to have a Material Adverse Effect. May include affirmative covenant to maintain labor relations.",
+      "type": "concept",
+      "level": 2,
+      "domain_id": "governance",
+      "family_id": "governance.reps_conditions",
+      "corpus_prevalence": "medium",
+      "extraction_difficulty": "easy",
+      "children": [
+        {
+          "id": "governance.reps_conditions.labor_matters.scope",
+          "name": "Scope of Labor Matters Covered",
+          "definition": "Defines the categories of labor-related issues subject to the representation: strikes, lockouts, work stoppages, unfair labor practice charges, collective bargaining agreements (CBAs), union organizing activities, WARN Act compliance, and ERISA/benefit plan matters. Broader formulations include wage-and-hour compliance and independent contractor classification disputes.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reps_conditions",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "easy",
+          "definition_source": "KCT Cat 1 Item 2",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:41.341527+00:00",
+              "term_packs": {
+                "REP_ENVIRONMENTAL_MATTERS": {
+                  "label": "Environmental Matters",
+                  "category": "REPRESENTATIONS_WARRANTIES",
+                  "exactPhrases": [
+                    "Environmental Laws",
+                    "Hazardous Materials",
+                    "environmental compliance",
+                    "environmental permits",
+                    "environmental liabilities",
+                    "environmental claims",
+                    "Release",
+                    "CERCLA",
+                    "Superfund",
+                    "RCRA",
+                    "Clean Air Act",
+                    "Clean Water Act",
+                    "underground storage tanks",
+                    "asbestos",
+                    "contamination"
+                  ],
+                  "sectionHeaders": [
+                    "Representations and Warranties",
+                    "Environmental Matters",
+                    "Environmental Compliance",
+                    "Hazardous Materials",
+                    "Section 5.10",
+                    "Section 4.10",
+                    "Article V"
+                  ],
+                  "semanticVariants": [
+                    "environmental compliance representation",
+                    "hazardous materials disclosure",
+                    "environmental permit requirements",
+                    "contamination disclosure",
+                    "environmental liability representation",
+                    "CERCLA compliance"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.6,
+                    "minKeywordScore": 0.5,
+                    "minConfidence": 0.7,
+                    "escalationThreshold": 0.5,
+                    "humanEscalationThreshold": 0.3
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "Environmental Laws",
+                  "Hazardous Materials",
+                  "environmental compliance",
+                  "environmental permits",
+                  "environmental liabilities",
+                  "environmental claims",
+                  "Release",
+                  "CERCLA",
+                  "Superfund",
+                  "RCRA",
+                  "Clean Air Act",
+                  "Clean Water Act",
+                  "underground storage tanks",
+                  "asbestos",
+                  "contamination"
+                ],
+                "sectionHeaders": [
+                  "Representations and Warranties",
+                  "Environmental Matters",
+                  "Environmental Compliance",
+                  "Hazardous Materials",
+                  "Section 5.10",
+                  "Section 4.10",
+                  "Article V"
+                ],
+                "semanticVariants": [
+                  "environmental compliance representation",
+                  "hazardous materials disclosure",
+                  "environmental permit requirements",
+                  "contamination disclosure",
+                  "environmental liability representation",
+                  "CERCLA compliance"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "REP_ENVIRONMENTAL_MATTERS",
+              "label": "Environmental Matters",
+              "schema_file": "representations-warranties-enhanced.schema.ts",
+              "field_count": 4,
+              "r1_domain": "governance",
+              "mapping_confidence": 0.3355,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "id": "governance.reps_conditions.labor_matters.materiality_qualifier",
+          "name": "Materiality Qualifier",
+          "definition": "The threshold at which labor matters become reportable or constitute a breach of the representation. Most CAs use the standard 'could reasonably be expected to have a Material Adverse Effect' qualifier, though some add 'individually or in the aggregate' language. Key negotiation point: whether the MAE qualifier applies to all sub-categories or only to certain types of labor disputes (e.g., CBA status may be reported without MAE qualification).",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reps_conditions",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "easy",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "id": "governance.reps_conditions.labor_matters.ongoing_obligation",
+          "name": "Ongoing Obligation / Affirmative Covenant",
+          "definition": "Whether the labor matters representation is supplemented by an affirmative covenant requiring the borrower to maintain satisfactory labor relations or to notify the administrative agent of material labor disputes as they arise. Some CAs include labor matters in the event-notice affirmative covenant rather than as a standalone obligation. The bring-down mechanics (closing only vs. each credit extension) affect the ongoing nature.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reps_conditions",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "easy",
+          "definition_source": "KCT Cat 1 Item 1"
+        }
+      ],
+      "extraction_refs": {
+        "search_strategy": "Full-text search for labor matters, employment matters, collective bargaining, WARN Act",
+        "typical_location": "ARTICLE III (Representations and Warranties) or ARTICLE V (Affirmative Covenants)",
+        "extraction_shape": "structured_representation",
+        "notes": "Look for labor disputes, strikes, lockouts, CBAs, WARN Act compliance, ERISA matters",
+        "concept_area": "reps_conditions",
+        "extraction_ready": true,
+        "playbook_ref": "reps_conditions.aff_covenants_other",
+        "section_locations": [],
+        "shape_ref": "reps_conditions.aff_covenants_other"
+      },
+      "definition_source": "Review Template Row 150 (Representations)"
+    },
+    {
+      "id": "governance.reps_conditions.minimum_ratings",
+      "name": "Minimum Credit Ratings Requirement",
+      "domain_id": "governance",
+      "family_id": "governance.reps_conditions",
+      "level": 2,
+      "type": "concept",
+      "corpus_prevalence": "low",
+      "extraction_difficulty": "medium",
+      "definition": "Condition precedent or ongoing covenant requiring the borrower to obtain or maintain minimum credit ratings from specified agencies. DLS Row 43: Preferred position is no minimum rating requirement, but with 'undertaking to use commercially reasonable efforts to obtain ratings.' Alternative: required for syndicated deals only. More common in broadly syndicated leveraged loans where ratings affect CLO eligibility and secondary market trading.",
+      "dls_ref": [
+        "DLS:43:Minimum ratings"
+      ],
+      "extraction_refs": {
+        "concept_area": "reps_conditions",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE IV",
+          "ARTICLE V",
+          "COMMITMENT LETTER"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "low_prevalence_concept"
+      },
+      "children": [
+        {
+          "id": "governance.reps_conditions.minimum_ratings.agencies",
+          "name": "Rating Agencies",
+          "domain_id": "governance",
+          "family_id": "governance.reps_conditions",
+          "level": 3,
+          "type": "sub_component",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "easy",
+          "definition": "Specified rating agencies from which ratings must be obtained: S&P Global Ratings, Moody's Investors Service, and/or Fitch Ratings. Typically requires ratings from at least two of the three major agencies.",
+          "definition_source": "KCT Cat 3 Item 12"
+        },
+        {
+          "id": "governance.reps_conditions.minimum_ratings.minimum_levels",
+          "name": "Minimum Rating Levels",
+          "domain_id": "governance",
+          "family_id": "governance.reps_conditions",
+          "level": 3,
+          "type": "sub_component",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition": "Minimum credit rating levels that must be maintained. For leveraged loans, typically B-/B3 corporate family rating. For investment-grade crossover facilities, BBB-/Baa3. May specify separate corporate and facility-level ratings.",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "id": "governance.reps_conditions.minimum_ratings.consequences_of_downgrade",
+          "name": "Consequences of Downgrade",
+          "domain_id": "governance",
+          "family_id": "governance.reps_conditions",
+          "level": 3,
+          "type": "sub_component",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition": "Remedial actions or consequences triggered by a credit rating downgrade: pricing step-up (margin increase), additional collateral posting requirements, mandatory prepayment triggers, or event of default. May distinguish between downgrade below minimum and withdrawal of rating.",
+          "definition_source": "KCT Cat 1 Item 1"
+        }
+      ],
+      "definition_source": "DLS Preferred Row 43 (Minimum ratings)"
+    },
+    {
+      "id": "governance.reps_conditions.business_mac",
+      "name": "Business MAC (Material Adverse Change)",
+      "domain_id": "governance",
+      "family_id": "governance.reps_conditions",
+      "level": 2,
+      "type": "concept",
+      "corpus_prevalence": "high",
+      "extraction_difficulty": "hard",
+      "definition": "Closing condition requiring no material adverse change in the borrower's business, financial condition, or operations since a specified date, distinct from the ongoing MAE definition used in representations and warranties. DLS Row 44: Defined in commitment papers and aligned with the acquisition agreement's MAC definition as in effect on the date of the commitment letter. The acquisition agreement MAC definition is subject to satisfactory review prior to signing, and subsequent changes are deemed materially adverse to lenders. This is a key condition precedent that determines whether the committed financing must fund.",
+      "dls_ref": [
+        "DLS:44:Business MAC"
+      ],
+      "extraction_refs": {
+        "concept_area": "reps_conditions",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "COMMITMENT LETTER",
+          "ARTICLE IV",
+          "CONDITIONS PRECEDENT"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "commitment_letter_provision_cross_references_acq_agreement"
+      },
+      "children": [
+        {
+          "id": "governance.reps_conditions.business_mac.baseline_date",
+          "name": "Baseline Date",
+          "domain_id": "governance",
+          "family_id": "governance.reps_conditions",
+          "level": 3,
+          "type": "sub_component",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "medium",
+          "definition": "Reference date from which material adverse change is measured. Typically the date of the most recent audited financial statements delivered prior to signing or the date of the acquisition agreement. The lookback period determines the scope of business performance that must be maintained.",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "id": "governance.reps_conditions.business_mac.carveouts",
+          "name": "MAC Carveouts",
+          "domain_id": "governance",
+          "family_id": "governance.reps_conditions",
+          "level": 3,
+          "type": "sub_component",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "hard",
+          "definition": "Exclusions from the business MAC determination: changes in general economic conditions, industry-wide conditions, financial market disruptions, changes in law or GAAP, pandemic or public health conditions, acts of war or terrorism, and seasonal fluctuations. Heavily negotiated; breadth of carveouts determines practical invocability of the MAC condition.",
+          "definition_source": "Review Template Row 153 (Unknown); KCT Cat 1 Item 1"
+        },
+        {
+          "id": "governance.reps_conditions.business_mac.sunlight_provisions",
+          "name": "Sunlight Provisions",
+          "domain_id": "governance",
+          "family_id": "governance.reps_conditions",
+          "level": 3,
+          "type": "sub_component",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "hard",
+          "definition": "SunGard-style provisions that limit the lender's ability to invoke the business MAC condition. May require that the MAC must be material to the target and its subsidiaries taken as a whole, may limit MAC invocation to the same standard as the acquisition agreement, or may provide a disproportionate-effect qualifier requiring that the impact affect the borrower more than similarly situated companies.",
+          "definition_source": "KCT Cat 1 Item 1; PC Term Comparison: 7. Events of Default - 8.Admin Agency Provisions"
+        }
+      ],
+      "definition_source": "DLS Preferred Row 44 (Business MAC)"
+    }
+  ],
+  "corpus_prevalence": "high",
+  "definition": "Framework of representations and warranties (risk-allocation statements about the borrower's condition) and conditions precedent (requirements that must be satisfied before funding). DLS Preferred specifies 34 categories of representations and warranties covering organizational status, capitalization, power/authority, enforceability, compliance with laws, no defaults, no conflicts, consents, financial statements, no MAE, litigation, labor, property, environmental, taxes, ERISA, subsidiaries, margin regulations, Investment Company Act, disclosure, IP, solvency, sanctions/OFAC/FCPA, liens/perfection, collateral location, insurance, holdco status, senior debt status, acquisition documents, use of proceeds, and broker fees. For acquisition financing under Sungard conditionality, closing date reps are limited to 'Specified Representations' (existence, power, enforceability, solvency, margin regulations, Investment Company Act, PATRIOT Act, OFAC/FCPA use of proceeds, lien creation/perfection) plus 'Acquisition Agreement Representations' (only to the extent the borrower has the right to terminate the acquisition). All other reps are brought down at each subsequent credit extension, qualified by materiality (with no double-materiality).",
+  "dls_ref": [
+    "DLS:56:Solvency",
+    "DLS:57:Specified Representations",
+    "DLS:58:Other conditions",
+    "DLS:63:Syndication Assistance",
+    "DLS:91:Representations and Warranties"
+  ],
+  "domain_id": "governance",
+  "extraction_difficulty": "medium",
+  "family_id": "governance.reps_conditions",
+  "id": "governance.reps_conditions",
+  "kct_ref": [
+    "cat5.2"
+  ],
+  "level": 1,
+  "market_benchmarks": {
+    "r17_gap_flagged": true
+  },
+  "name": "Reps & Conditions",
+  "negotiation_spectrum": {
+    "r17_gap_flagged": true
+  },
+  "r18_concept_ids": [
+    "reps_conditions.beneficial_ownership",
+    "reps_conditions.force_majeure_guarantee",
+    "reps_conditions.mac_definition",
+    "reps_conditions.no_default_rep",
+    "reps_conditions.payment_obligation_notice"
+  ],
+  "review_ref": [
+    {
+      "coverage": "full",
+      "row": 148,
+      "term": "Conditions Annex"
+    }
+  ],
+  "type": "family",
+  "definition_source": "DLS Preferred rows 57 (Specified Representations with complete enumeration), 91 (34 R&W categories); Review Template rows 51 (Reps and Warranties); Intro Guide Representations and Warranties section (MAE qualification, materiality qualification, knowledge qualification, bring-down mechanics)"
+}

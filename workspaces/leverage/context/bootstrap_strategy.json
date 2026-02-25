@@ -1,0 +1,229 @@
+[
+  {
+    "id": "debt_capacity.incremental.ratio.leverage_metric",
+    "name": "Leverage Metric Selection",
+    "family_id": "debt_capacity.incremental.ratio",
+    "concept_area": "ratio",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Leverage Metric Selection"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.leverage.total_debt",
+    "name": "Consolidated Total Debt",
+    "family_id": "fin_framework.leverage",
+    "concept_area": "leverage",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Defined Terms",
+        "Definitions",
+        "Leverage Ratio"
+      ],
+      "keyword_anchors": [
+        "Leverage Ratio",
+        "Total Leverage",
+        "Secured Leverage",
+        "First Lien",
+        "Net Leverage",
+        "Consolidated Total Debt"
+      ],
+      "concept_specific_keywords": [
+        "Consolidated Total Debt"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.leverage.first_lien",
+    "name": "Consolidated First Lien Debt",
+    "family_id": "fin_framework.leverage",
+    "concept_area": "leverage",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Defined Terms",
+        "Definitions",
+        "Leverage Ratio"
+      ],
+      "keyword_anchors": [
+        "Leverage Ratio",
+        "Total Leverage",
+        "Secured Leverage",
+        "First Lien",
+        "Net Leverage",
+        "Consolidated Total Debt"
+      ],
+      "concept_specific_keywords": [
+        "Consolidated First Lien Debt"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.leverage.secured_debt",
+    "name": "Consolidated Secured Debt",
+    "family_id": "fin_framework.leverage",
+    "concept_area": "leverage",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Defined Terms",
+        "Definitions",
+        "Leverage Ratio"
+      ],
+      "keyword_anchors": [
+        "Leverage Ratio",
+        "Total Leverage",
+        "Secured Leverage",
+        "First Lien",
+        "Net Leverage",
+        "Consolidated Total Debt"
+      ],
+      "concept_specific_keywords": [
+        "Consolidated Secured Debt",
+        "Secured Net Leverage Ratio"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.leverage.cash_netting",
+    "name": "Cash Netting Provisions",
+    "family_id": "fin_framework.leverage",
+    "concept_area": "leverage",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Defined Terms",
+        "Definitions",
+        "Leverage Ratio"
+      ],
+      "keyword_anchors": [
+        "Leverage Ratio",
+        "Total Leverage",
+        "Secured Leverage",
+        "First Lien",
+        "Net Leverage",
+        "Consolidated Total Debt"
+      ],
+      "concept_specific_keywords": [
+        "Cash Netting Provisions"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.leverage.noteworthy_provisions",
+    "name": "Noteworthy Ratio Provisions",
+    "family_id": "fin_framework.leverage",
+    "concept_area": "leverage",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Defined Terms",
+        "Definitions",
+        "Leverage Ratio"
+      ],
+      "keyword_anchors": [
+        "Leverage Ratio",
+        "Total Leverage",
+        "Secured Leverage",
+        "First Lien",
+        "Net Leverage",
+        "Consolidated Total Debt"
+      ],
+      "concept_specific_keywords": [
+        "Noteworthy Ratio Provisions"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.leverage.ratio_types",
+    "name": "Leverage Ratio Types",
+    "family_id": "fin_framework.leverage",
+    "concept_area": "leverage",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Defined Terms",
+        "Definitions",
+        "Leverage Ratio"
+      ],
+      "keyword_anchors": [
+        "Leverage Ratio",
+        "Total Leverage",
+        "Secured Leverage",
+        "First Lien",
+        "Net Leverage",
+        "Consolidated Total Debt"
+      ],
+      "concept_specific_keywords": [
+        "Leverage Ratio Types"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.leverage.pro_forma",
+    "name": "Pro Forma Leverage Mechanics",
+    "family_id": "fin_framework.leverage",
+    "concept_area": "leverage",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Defined Terms",
+        "Definitions",
+        "Leverage Ratio"
+      ],
+      "keyword_anchors": [
+        "Leverage Ratio",
+        "Total Leverage",
+        "Secured Leverage",
+        "First Lien",
+        "Net Leverage",
+        "Consolidated Total Debt"
+      ],
+      "concept_specific_keywords": [
+        "Pro Forma Leverage Mechanics",
+        "Limited Condition Transaction"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.leverage.test_period",
+    "name": "Test Period Mechanics",
+    "family_id": "fin_framework.leverage",
+    "concept_area": "leverage",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Defined Terms",
+        "Definitions",
+        "Leverage Ratio"
+      ],
+      "keyword_anchors": [
+        "Leverage Ratio",
+        "Total Leverage",
+        "Secured Leverage",
+        "First Lien",
+        "Net Leverage",
+        "Consolidated Total Debt"
+      ],
+      "concept_specific_keywords": [
+        "Test Period Mechanics"
+      ]
+    }
+  }
+]

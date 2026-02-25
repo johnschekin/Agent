@@ -1,0 +1,583 @@
+[
+  {
+    "id": "cash_flow.dispositions.disp_general_basket",
+    "name": "General Disposition Basket",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "General Disposition Basket"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_ratio_basket",
+    "name": "Ratio Disposition Basket",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "Ratio Disposition Basket",
+        "Total Net Leverage Ratio",
+        "Secured Net Leverage Ratio"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_fair_market_value",
+    "name": "Fair Market Value Requirement",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "Fair Market Value Requirement"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.consideration_req",
+    "name": "Consideration Requirements",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "Consideration Requirements",
+        "cash"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_proceeds_application",
+    "name": "Proceeds Application",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "Proceeds Application"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_reinvestment_period",
+    "name": "Reinvestment Period",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "Reinvestment Period"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_excluded_dispositions",
+    "name": "Excluded Dispositions",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "Excluded Dispositions"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_intercompany_transfers",
+    "name": "Intercompany Transfers",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "Intercompany Transfers"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_sale_leaseback",
+    "name": "Sale-Leaseback Transactions",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "Sale-Leaseback Transactions"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_casualty_condemnation",
+    "name": "Casualty and Condemnation Events",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "Casualty and Condemnation Events"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_permitted_asset_swaps",
+    "name": "Permitted Asset Swaps",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "Permitted Asset Swaps",
+        "like-kind exchanges"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_de_minimis_threshold",
+    "name": "De Minimis Threshold",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "De Minimis Threshold",
+        "double de minimis"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_conditions",
+    "name": "General Conditions",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "General Conditions"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_excess_proceeds",
+    "name": "Excess Proceeds Treatment",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "Excess Proceeds Treatment",
+        "Available Amount"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_cross_covenant_links",
+    "name": "Cross-Covenant Links",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "Cross-Covenant Links",
+        "cascade effect"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_delaware_divisions",
+    "name": "Delaware Divisions (Post-2018)",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "Delaware Divisions (Post-2018)"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_non_collateral",
+    "name": "Non-Collateral Dispositions",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "Non-Collateral Dispositions",
+        "s security interest. 75% prevalence. In the cash flow framework, this basket defines the borrower"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_securitization",
+    "name": "Securitization Transactions",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "Securitization Transactions"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_ip_licensing",
+    "name": "Exclusive IP Licensing",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "Exclusive IP Licensing"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_non_guarantor",
+    "name": "Dispositions to Non-Guarantor Restricted Subs",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "Dispositions to Non-Guarantor Restricted Subs"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_unrestricted_sub_equity",
+    "name": "Unrestricted Subsidiary Equity Dispositions",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "Unrestricted Subsidiary Equity Dispositions",
+        "Available Amount"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_other_baskets",
+    "name": "Other Disposition Baskets",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "Other Disposition Baskets"
+      ]
+    }
+  }
+]

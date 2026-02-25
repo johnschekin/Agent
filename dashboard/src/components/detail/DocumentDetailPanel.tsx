@@ -19,7 +19,7 @@ export function DocumentDetailPanel({ docId, onClose }: DocumentDetailPanelProps
   return (
     <div
       className={cn(
-        "fixed top-0 right-0 h-full bg-surface-secondary border-l border-border",
+        "fixed top-0 right-0 h-full bg-surface-2 border-l border-border",
         "w-[480px] max-w-[calc(100vw-260px)]",
         "transform transition-transform duration-200 ease-in-out z-30",
         "flex flex-col overflow-hidden",
@@ -27,7 +27,7 @@ export function DocumentDetailPanel({ docId, onClose }: DocumentDetailPanelProps
       )}
     >
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-surface-tertiary flex-shrink-0">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-surface-3 flex-shrink-0">
         <h3 className="text-sm font-medium text-text-primary truncate pr-4">
           {data?.doc.borrower || docId || "Document Detail"}
         </h3>
@@ -121,7 +121,7 @@ export function DocumentDetailPanel({ docId, onClose }: DocumentDetailPanelProps
               <h4 className="text-xs font-medium text-text-muted uppercase tracking-wide mb-2">
                 Structure ({data.sections.length} sections)
               </h4>
-              <SectionTree sections={data.sections} />
+              <SectionTree sections={data.sections} articles={data.articles} />
             </div>
           </>
         )}

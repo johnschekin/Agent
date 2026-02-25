@@ -12,7 +12,7 @@ const DEPTH_BORDER_COLORS = [
   "border-l-accent-blue",
   "border-l-accent-green",
   "border-l-accent-orange",
-  "border-l-[#8F56BF]",
+  "border-l-[#A855F7]",
   "border-l-accent-red",
   "border-l-accent-teal",
 ];
@@ -235,10 +235,10 @@ export function SectionViewer({
   return (
     <div className="flex flex-col h-full">
       {/* Section header */}
-      <div className="flex items-center gap-3 px-4 py-2.5 border-b border-border bg-surface-tertiary flex-shrink-0">
+      <div className="flex items-center gap-3 px-4 py-2.5 border-b border-border bg-surface-3 flex-shrink-0">
         <button
           className={cn(
-            "text-xs px-1.5 py-0.5 rounded text-text-muted hover:text-text-primary hover:bg-surface-tertiary transition-colors",
+            "text-xs px-1.5 py-0.5 rounded text-text-muted hover:text-text-primary hover:bg-surface-3 transition-colors",
             !onPrevSection && "invisible"
           )}
           onClick={onPrevSection ?? undefined}
@@ -266,7 +266,7 @@ export function SectionViewer({
 
         <button
           className={cn(
-            "text-xs px-1.5 py-0.5 rounded text-text-muted hover:text-text-primary hover:bg-surface-tertiary transition-colors",
+            "text-xs px-1.5 py-0.5 rounded text-text-muted hover:text-text-primary hover:bg-surface-3 transition-colors",
             !onNextSection && "invisible"
           )}
           onClick={onNextSection ?? undefined}
@@ -301,7 +301,7 @@ export function SectionViewer({
                       "border-l-2 pl-3 py-1 cursor-pointer transition-colors",
                       isSelected
                         ? "bg-accent-blue/8 border-l-accent-blue"
-                        : `${depthColor} hover:bg-surface-tertiary/40`
+                        : `${depthColor} hover:bg-surface-3/40`
                     )}
                     onClick={() => handleClauseClick(seg.clause!.clause_id)}
                     onKeyDown={(e) => {

@@ -1,0 +1,203 @@
+[
+  {
+    "id": "cash_flow.mandatory_prepayment.ecf_sweep",
+    "name": "ECF Sweep (Excess Cash Flow)",
+    "family_id": "cash_flow.mandatory_prepayment",
+    "concept_area": "mandatory_prepayment",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Mandatory Prepayments",
+        "Mandatory Repayments",
+        "Prepayments"
+      ],
+      "keyword_anchors": [
+        "mandatory prepayment",
+        "Excess Cash Flow",
+        "Net Cash Proceeds",
+        "Asset Sale",
+        "Debt Issuance",
+        "prepay"
+      ],
+      "concept_specific_keywords": [
+        "ECF Sweep (Excess Cash Flow)"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.mandatory_prepayment.asset_sale_sweep",
+    "name": "Asset Sale Sweep",
+    "family_id": "cash_flow.mandatory_prepayment",
+    "concept_area": "mandatory_prepayment",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Mandatory Prepayments",
+        "Mandatory Repayments",
+        "Prepayments"
+      ],
+      "keyword_anchors": [
+        "mandatory prepayment",
+        "Excess Cash Flow",
+        "Net Cash Proceeds",
+        "Asset Sale",
+        "Debt Issuance",
+        "prepay"
+      ],
+      "concept_specific_keywords": [
+        "Asset Sale Sweep"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.mandatory_prepayment.debt_incurrence",
+    "name": "Debt Proceeds Sweep",
+    "family_id": "cash_flow.mandatory_prepayment",
+    "concept_area": "mandatory_prepayment",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Mandatory Prepayments",
+        "Mandatory Repayments",
+        "Prepayments"
+      ],
+      "keyword_anchors": [
+        "mandatory prepayment",
+        "Excess Cash Flow",
+        "Net Cash Proceeds",
+        "Asset Sale",
+        "Debt Issuance",
+        "prepay"
+      ],
+      "concept_specific_keywords": [
+        "Debt Proceeds Sweep"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.mandatory_prepayment.equity_issuance",
+    "name": "Equity Issuance Sweep",
+    "family_id": "cash_flow.mandatory_prepayment",
+    "concept_area": "mandatory_prepayment",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Mandatory Prepayments",
+        "Mandatory Repayments",
+        "Prepayments"
+      ],
+      "keyword_anchors": [
+        "mandatory prepayment",
+        "Excess Cash Flow",
+        "Net Cash Proceeds",
+        "Asset Sale",
+        "Debt Issuance",
+        "prepay"
+      ],
+      "concept_specific_keywords": [
+        "Equity Issuance Sweep"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.mandatory_prepayment.insurance_condemnation",
+    "name": "Insurance / Condemnation Sweep",
+    "family_id": "cash_flow.mandatory_prepayment",
+    "concept_area": "mandatory_prepayment",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Mandatory Prepayments",
+        "Mandatory Repayments",
+        "Prepayments"
+      ],
+      "keyword_anchors": [
+        "mandatory prepayment",
+        "Excess Cash Flow",
+        "Net Cash Proceeds",
+        "Asset Sale",
+        "Debt Issuance",
+        "prepay"
+      ],
+      "concept_specific_keywords": [
+        "Insurance / Condemnation Sweep"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.mandatory_prepayment.change_of_control",
+    "name": "Change of Control Prepayment",
+    "family_id": "cash_flow.mandatory_prepayment",
+    "concept_area": "mandatory_prepayment",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Mandatory Prepayments",
+        "Mandatory Repayments",
+        "Prepayments"
+      ],
+      "keyword_anchors": [
+        "mandatory prepayment",
+        "Excess Cash Flow",
+        "Net Cash Proceeds",
+        "Asset Sale",
+        "Debt Issuance",
+        "prepay"
+      ],
+      "concept_specific_keywords": [
+        "Change of Control Prepayment"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.mandatory_prepayment.application_waterfall",
+    "name": "Application & Waterfall Mechanics",
+    "family_id": "cash_flow.mandatory_prepayment",
+    "concept_area": "mandatory_prepayment",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Mandatory Prepayments",
+        "Mandatory Repayments",
+        "Prepayments"
+      ],
+      "keyword_anchors": [
+        "mandatory prepayment",
+        "Excess Cash Flow",
+        "Net Cash Proceeds",
+        "Asset Sale",
+        "Debt Issuance",
+        "prepay"
+      ],
+      "concept_specific_keywords": [
+        "Application & Waterfall Mechanics"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.mandatory_prepayment.declined_proceeds",
+    "name": "Declined Proceeds Mechanics",
+    "family_id": "cash_flow.mandatory_prepayment",
+    "concept_area": "mandatory_prepayment",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Mandatory Prepayments",
+        "Mandatory Repayments",
+        "Prepayments"
+      ],
+      "keyword_anchors": [
+        "mandatory prepayment",
+        "Excess Cash Flow",
+        "Net Cash Proceeds",
+        "Asset Sale",
+        "Debt Issuance",
+        "prepay"
+      ],
+      "concept_specific_keywords": [
+        "Declined Proceeds Mechanics",
+        "Available Amount"
+      ]
+    }
+  }
+]

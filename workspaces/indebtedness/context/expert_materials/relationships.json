@@ -1,0 +1,107 @@
+{
+  "_meta": {
+    "description": "Relationships involving the Indebtedness Covenant — how the debt basket ecosystem connects to other credit agreement provisions",
+    "generated": "2026-02-12"
+  },
+  "relationship_types_used": ["shares_capacity_with", "feeds_into", "interacts_with", "constrains", "reclassifiable_to", "conditional_on"],
+  "relationships": [
+    {
+      "type": "shares_capacity_with",
+      "from": "Incremental Equivalent Debt (Covenant)",
+      "to": "Incremental Facility (Accordion)",
+      "evidence": "DLS Row 12: IED 'may be issued in lieu of the accordion, and any such debt shall be subject to the same terms and conditions.' Review Template Row 73: 'Shared starter with incremental debt.' Rinchem: 'Unused amounts under the fixed-dollar basket of the accordion...plus uncapped subject to the same ratio tests.' Learning Material line 1417: 'unused portion of the general debt basket may be reallocated to incremental capacity.'",
+      "mechanism": "IED and incremental facilities draw from the same capacity pools — free-and-clear basket, ratio capacity, and sometimes the general debt basket. The interaction is bidirectional: incremental can absorb general basket capacity, and IED mirrors incremental terms."
+    },
+    {
+      "type": "shares_capacity_with",
+      "from": "General Debt Basket",
+      "to": "Incremental Free-and-Clear Basket",
+      "evidence": "Learning Material line 1417-1418: 'Sometimes also includes the unused portion of the general debt basket, which may be reallocated to the incremental capacity.' Rinchem: 'Unused capacity under the general debt basket [clause (I)(a)(ii) of definition of Incremental Cap].' Intro Guide line 233: 'Includes unused capacity under other baskets? Unused capacity under the general debt basket.'",
+      "mechanism": "Unused general debt capacity can flow into incremental capacity, effectively expanding the incremental free-and-clear basket beyond its nominal size."
+    },
+    {
+      "type": "shares_capacity_with",
+      "from": "Non-Guarantor Cap (Ratio Debt)",
+      "to": "Non-Guarantor Cap (Acquisition Debt)",
+      "evidence": "Review Template Row 74: 'Greater of $[X] / [Y]% LTM EBITDA [shared with Incurred Acquisition Debt].' DealData: many deals show shared non-guarantor caps across ratio and acquisition debt (e.g., Risepoint: 'Subject to shared $16.8mm/15% EBITDA non-guarantor cap').",
+      "mechanism": "Non-guarantor caps are shared across multiple debt baskets to create a single limit on structurally senior debt. This prevents circumvention by splitting debt across baskets."
+    },
+    {
+      "type": "feeds_into",
+      "from": "Available Amount Builder",
+      "to": "Indebtedness (Available Amount Basket Debt)",
+      "evidence": "Review Template Row 84: 'Includes Available Amount basket [and can automatically be secured].' Learning Material line 1995-1999: '(w) unsecured Indebtedness in the amount equal to the Available RP Capacity Amount.' Multiple DealData deals reference AA basket capacity for debt incurrence.",
+      "mechanism": "Available Amount builder basket capacity can be used to incur debt (not just RPs/investments). This creates a path from retained ECF → AA builder → debt incurrence, completing the AA→Indebtedness loop."
+    },
+    {
+      "type": "feeds_into",
+      "from": "Equity Contributions (Post-Closing)",
+      "to": "Contribution Debt",
+      "evidence": "Geneva: '100% of cash contributions and FMV of in-kind contributions of cash equivalents, marketable securities, or Qualified Proceeds in exchange for Qualified Equity Interests [Section 6.01(a)(xxvii)].' Review Template Row 76: '[X]%, with no time limit on incurrence.' PC line 402: 'typically 100% and unsecured.'",
+      "mechanism": "Equity injected after closing creates 1:1 (or potentially 2:1 in aggressive deals) debt capacity. This leverages the equity contribution, effectively turning a dollar of equity into a dollar of debt capacity."
+    },
+    {
+      "type": "interacts_with",
+      "from": "Indebtedness Covenant",
+      "to": "Liens Covenant",
+      "evidence": "PC line 407: 'Avoid having both a general liens basket and a crossing lien to general debt basket.' Geneva: Multiple liens baskets cross-reference specific indebtedness baskets (6.02(s)(iii) references ratio debt basket, 6.02(aa) references contribution debt). Review Template Row 84: 'can [automatically] be secured.'",
+      "mechanism": "Liens baskets mirror indebtedness baskets. Debt incurred under a specific basket must have corresponding lien permission. The two covenants must be coordinated — otherwise, debt can be permitted but unsecurable (or vice versa)."
+    },
+    {
+      "type": "interacts_with",
+      "from": "Indebtedness Baskets",
+      "to": "Financial Covenant Calculation",
+      "evidence": "KCT Cat 1 Item 5: 'Debt incurred under fixed baskets (such as freebie, non-guarantor debt basket, general debt basket, or acquisition debt basket) excluded or allowed to be excluded from calculating compliance with financial covenant.' KCT Cat 2 Item 1: 'Note if Consolidated Total Debt or Fixed Charge Coverage Ratio are not a true total debt calculation and exclude certain types of debt.'",
+      "mechanism": "Certain debt baskets may be excluded from the financial covenant leverage calculation. This means the borrower can incur significant debt outside the covenant's view — the maintenance test underreports actual leverage."
+    },
+    {
+      "type": "conditional_on",
+      "from": "Ratio Debt / IED / Acquisition Debt (ratio prong)",
+      "to": "Consolidated EBITDA (incurrence test)",
+      "evidence": "DealData: ratio-based debt universally requires pro forma leverage test. Geneva/Rinchem/Scientific Games: FLLR for pari, total net for junior/unsecured. Financial Definitions analysis: EBITDA inflation propagates directly to debt capacity.",
+      "mechanism": "Ratio-based debt capacity is unlimited subject to the leverage test. Since EBITDA is the denominator of the leverage ratio, EBITDA inflation directly increases ratio debt capacity. This is the EBITDA multiplier effect applied to debt creation."
+    },
+    {
+      "type": "constrains",
+      "from": "MFN Protection",
+      "to": "Incremental Equivalent Debt / Ratio Debt",
+      "evidence": "PC line 381: 'MFN will generally apply in all transactions including Aggressive UMM/BSLR.' DLS Row 12: 'No MFN on pari passu notes.' PC line 247: 'Maturity/WALM: would also apply to IED, Ratio Debt, incurred acquisition debt etc.'",
+      "mechanism": "MFN ensures new pari debt doesn't price above existing facilities. Without MFN, the borrower could issue cheaper-than-existing debt, economically diluting existing lenders."
+    },
+    {
+      "type": "constrains",
+      "from": "Maturity / WAL Restrictions",
+      "to": "Ratio Debt / IED / Acquisition Debt",
+      "evidence": "PC line 248: 'Avoid inside maturity exception other than customary bridges and escrow arrangements.' PC line 249: 'Aggressive UMM/BSLR: may give a basket up to 50-100% of EBITDA' for inside-maturing debt.",
+      "mechanism": "Inside-maturity restrictions prevent structural seniority through earlier repayment dates. Without them, new debt could mature before existing facilities, getting repaid first."
+    },
+    {
+      "type": "interacts_with",
+      "from": "Intercompany Debt",
+      "to": "Investment Covenant (Non-Loan Party Investments)",
+      "evidence": "PC line 398: 'Intercompany loans to non-Loan Parties capped/shared baskets with investments in non Loan Parties.' LME Provision Language line 144: intercompany debt from loan party to non-loan party must be subordinated.",
+      "mechanism": "Intercompany loans ARE investments. Lending to a non-loan party subsidiary uses both the intercompany debt basket and the investment basket (via shared cap). This prevents double-dipping."
+    },
+    {
+      "type": "reclassifiable_to",
+      "from": "Available RP Capacity",
+      "to": "Indebtedness (Available RP Capacity Debt)",
+      "evidence": "Learning Material line 1998-1999: 'Available RP Capacity Amount shall mean the amount of Restricted Payments that may be made... minus the sum of the amount utilized by the U.S. Borrower to (A) make Restricted Payments and (B) incur Indebtedness pursuant to Section 10.1(w).' Review Template Row 84: 'Includes Available RP Capacity basket.'",
+      "mechanism": "Unused RP capacity can be redesignated to incur debt. This makes the RP and indebtedness covenants partially fungible — capacity not used for leakage can be used for leverage."
+    },
+    {
+      "type": "interacts_with",
+      "from": "Earnout / Seller Notes",
+      "to": "Acquisition Basket / Investment Covenant",
+      "evidence": "PC line 395: 'If not Indebtedness no cap.' Review Template Row 84: 'Describe how earnouts and/or seller debt is treated and any caps.' Learning Material: earnout payments may be RDPs or investments depending on structure.",
+      "mechanism": "Whether earnouts are classified as 'Indebtedness' determines whether they consume debt basket capacity. If excluded from indebtedness, they may consume investment or RP capacity instead — or nothing at all."
+    },
+    {
+      "type": "feeds_into",
+      "from": "Debt Sweep (Mandatory Prepayment)",
+      "to": "Indebtedness Covenant",
+      "evidence": "ECF Sweep analysis: 100% mandatory prepayment from non-permitted debt incurrence. Learning Material line 1267-1270: 'Debt Sweep: Generally applies only to debt not permitted by the credit agreement, other than Refinancing Facilities.'",
+      "mechanism": "The debt sweep is the backstop mechanism — if debt is incurred outside permitted baskets, 100% of proceeds must prepay the term loan. This makes unpermitted debt economically pointless."
+    }
+  ]
+}

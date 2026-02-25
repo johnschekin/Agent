@@ -1,0 +1,342 @@
+[
+  {
+    "id": "debt_capacity.incremental.free_clear.ebitda_correlation",
+    "name": "EBITDA Size Correlation",
+    "family_id": "debt_capacity.incremental.free_clear",
+    "concept_area": "free_clear",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "EBITDA Size Correlation"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.ebitda.cni",
+    "name": "Consolidated Net Income",
+    "family_id": "fin_framework.ebitda",
+    "concept_area": "ebitda",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Defined Terms",
+        "Definitions",
+        "EBITDA"
+      ],
+      "keyword_anchors": [
+        "Consolidated EBITDA",
+        "EBITDA",
+        "Consolidated Net Income",
+        "add-back",
+        "pro forma"
+      ],
+      "concept_specific_keywords": [
+        "Consolidated Net Income"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.ebitda.standard_addbacks",
+    "name": "Standard Addbacks",
+    "family_id": "fin_framework.ebitda",
+    "concept_area": "ebitda",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Defined Terms",
+        "Definitions",
+        "EBITDA"
+      ],
+      "keyword_anchors": [
+        "Consolidated EBITDA",
+        "EBITDA",
+        "Consolidated Net Income",
+        "add-back",
+        "pro forma"
+      ],
+      "concept_specific_keywords": [
+        "Standard Addbacks"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.ebitda.cost_savings",
+    "name": "Cost Savings & Synergies Addback",
+    "family_id": "fin_framework.ebitda",
+    "concept_area": "ebitda",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Defined Terms",
+        "Definitions",
+        "EBITDA"
+      ],
+      "keyword_anchors": [
+        "Consolidated EBITDA",
+        "EBITDA",
+        "Consolidated Net Income",
+        "add-back",
+        "pro forma"
+      ],
+      "concept_specific_keywords": [
+        "Cost Savings & Synergies Addback"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.ebitda.acquired_ebitda",
+    "name": "Acquired EBITDA Adjustments",
+    "family_id": "fin_framework.ebitda",
+    "concept_area": "ebitda",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Defined Terms",
+        "Definitions",
+        "EBITDA"
+      ],
+      "keyword_anchors": [
+        "Consolidated EBITDA",
+        "EBITDA",
+        "Consolidated Net Income",
+        "add-back",
+        "pro forma"
+      ],
+      "concept_specific_keywords": [
+        "Acquired EBITDA Adjustments"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.ebitda.pre_opening",
+    "name": "Pre-Opening Losses",
+    "family_id": "fin_framework.ebitda",
+    "concept_area": "ebitda",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Defined Terms",
+        "Definitions",
+        "EBITDA"
+      ],
+      "keyword_anchors": [
+        "Consolidated EBITDA",
+        "EBITDA",
+        "Consolidated Net Income",
+        "add-back",
+        "pro forma"
+      ],
+      "concept_specific_keywords": [
+        "Pre-Opening Losses"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.ebitda.revenue_synergies",
+    "name": "Revenue Synergies",
+    "family_id": "fin_framework.ebitda",
+    "concept_area": "ebitda",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Defined Terms",
+        "Definitions",
+        "EBITDA"
+      ],
+      "keyword_anchors": [
+        "Consolidated EBITDA",
+        "EBITDA",
+        "Consolidated Net Income",
+        "add-back",
+        "pro forma"
+      ],
+      "concept_specific_keywords": [
+        "Revenue Synergies"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.ebitda.qoe",
+    "name": "Quality of Earnings / Sponsor Model",
+    "family_id": "fin_framework.ebitda",
+    "concept_area": "ebitda",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Defined Terms",
+        "Definitions",
+        "EBITDA"
+      ],
+      "keyword_anchors": [
+        "Consolidated EBITDA",
+        "EBITDA",
+        "Consolidated Net Income",
+        "add-back",
+        "pro forma"
+      ],
+      "concept_specific_keywords": [
+        "Quality of Earnings / Sponsor Model"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.ebitda.cap_architecture",
+    "name": "Overall Cap Architecture",
+    "family_id": "fin_framework.ebitda",
+    "concept_area": "ebitda",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Defined Terms",
+        "Definitions",
+        "EBITDA"
+      ],
+      "keyword_anchors": [
+        "Consolidated EBITDA",
+        "EBITDA",
+        "Consolidated Net Income",
+        "add-back",
+        "pro forma"
+      ],
+      "concept_specific_keywords": [
+        "Overall Cap Architecture"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.ebitda.deductions",
+    "name": "EBITDA Deductions (Minus Items)",
+    "family_id": "fin_framework.ebitda",
+    "concept_area": "ebitda",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Defined Terms",
+        "Definitions",
+        "EBITDA"
+      ],
+      "keyword_anchors": [
+        "Consolidated EBITDA",
+        "EBITDA",
+        "Consolidated Net Income",
+        "add-back",
+        "pro forma"
+      ],
+      "concept_specific_keywords": [
+        "EBITDA Deductions (Minus Items)"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.ebitda.pro_forma",
+    "name": "Pro Forma EBITDA Mechanics",
+    "family_id": "fin_framework.ebitda",
+    "concept_area": "ebitda",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Defined Terms",
+        "Definitions",
+        "EBITDA"
+      ],
+      "keyword_anchors": [
+        "Consolidated EBITDA",
+        "EBITDA",
+        "Consolidated Net Income",
+        "add-back",
+        "pro forma"
+      ],
+      "concept_specific_keywords": [
+        "Pro Forma EBITDA Mechanics"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.ebitda.growers",
+    "name": "EBITDA Grower Mechanics",
+    "family_id": "fin_framework.ebitda",
+    "concept_area": "ebitda",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Defined Terms",
+        "Definitions",
+        "EBITDA"
+      ],
+      "keyword_anchors": [
+        "Consolidated EBITDA",
+        "EBITDA",
+        "Consolidated Net Income",
+        "add-back",
+        "pro forma"
+      ],
+      "concept_specific_keywords": [
+        "EBITDA Grower Mechanics",
+        "greater of $X and Y% of LTM EBITDA"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.ebitda.reg_sx",
+    "name": "Regulation S-X Provisions",
+    "family_id": "fin_framework.ebitda",
+    "concept_area": "ebitda",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Defined Terms",
+        "Definitions",
+        "EBITDA"
+      ],
+      "keyword_anchors": [
+        "Consolidated EBITDA",
+        "EBITDA",
+        "Consolidated Net Income",
+        "add-back",
+        "pro forma"
+      ],
+      "concept_specific_keywords": [
+        "Regulation S-X Provisions",
+        "an aggressive private company could take advantage of this change to effectively overwrite any caps on consolidated EBITDA."
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.ebitda.asset_stripping_scheme_move_sell_dividend",
+    "name": "Asset-stripping scheme (move→sell→dividend)",
+    "family_id": "fin_framework.ebitda",
+    "concept_area": "ebitda",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Defined Terms",
+        "Definitions",
+        "EBITDA"
+      ],
+      "keyword_anchors": [
+        "Consolidated EBITDA",
+        "EBITDA",
+        "Consolidated Net Income",
+        "add-back",
+        "pro forma"
+      ],
+      "concept_specific_keywords": [
+        "Asset-stripping scheme (move→sell→dividend)",
+        "Unrestricted Sub Dividends"
+      ]
+    }
+  }
+]

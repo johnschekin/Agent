@@ -1,0 +1,2193 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Total committed principal across all lenders in a funded debt facility, stated in the commitment schedule or first operative section. Defines the maximum draw amount at closing and the baseline for pro rata shares, amortization schedules, and mandatory prepayment allocations.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.amount.dollar.aggregate",
+              "level": 4,
+              "name": "Aggregate Principal",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 8; Learning Material, Part 3 Section 3 (Commitments)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Individual lender commitment amounts per the commitment schedule, defining each lender's pro rata share of term loan principal and its proportionate obligation to fund borrowings.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.amount.dollar.per_lender",
+              "level": 4,
+              "name": "Per-Lender Allocation",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 5 (Commitment Percentage); Learning Material, Part 3 Section 3"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Fixed dollar commitment amount for the term loan, specified as an aggregate principal amount in the recitals or commitment schedule. DLS Preferred: 'At least $[___]' (Row 8). The dollar amount establishes the maximum funded amount at closing and the denominator for all percentage-based baskets.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.amount.dollar",
+          "level": 3,
+          "name": "Dollar Amount",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 8 (Term Loan); Review Template, Row 3 (Debt Quantum)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Pro rata term loan tranche held by relationship banks, with escalating amortization (typically 4-5% annual) and shorter maturity (5 years). Priced together with the revolving facility. Review Template: 'Term A (varies; escalates).'",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.amount.multi_tranche.term_a",
+              "level": 4,
+              "market_benchmarks": {
+                "amortization": "4-5% annual",
+                "investor_base": "banks",
+                "maturity": "5 years"
+              },
+              "name": "Term A Facility",
+              "type": "sub_component",
+              "definition_source": "Review Template, Row 3 (Debt Quantum: 'Term A (varies; escalates)'); DLS Preferred, Row 8"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Institutional term loan tranche with minimal amortization (0.25% per quarter / 1% annual of original principal) and longer maturity (7 years typical), held by CLOs and institutional investors. DLS Preferred: 'Amortization: 0.25% per quarter, bullet at maturity.' Review Template: 'Term B (7 years; 1% per year of original principal).'",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.amount.multi_tranche.term_b",
+              "level": 4,
+              "market_benchmarks": {
+                "amortization": "1% annual",
+                "investor_base": "institutional",
+                "maturity": "7 years"
+              },
+              "name": "Term B Facility",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 8; Review Template, Row 3 (Debt Quantum)"
+            },
+            {
+              "corpus_prevalence": "low",
+              "definition": "Additional institutional tranche occasionally used for split structures or add-on financing with distinct economics from Term B, typically arising from incremental facilities or repricing transactions.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.amount.multi_tranche.term_c",
+              "level": 4,
+              "name": "Term C Facility",
+              "type": "sub_component",
+              "definition_source": "Review Template, Row 3 (Debt Quantum — implied by multi-tranche structure)"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Term loan split into multiple tranches (Term A, Term B, and occasionally Term C) with different economics, amortization profiles, and investor bases. Review Template specifies standard tenors: Term A (varies, escalating amortization), Term B (7 years, 1% per year of original principal), and Second Lien (7.5-8 years, no amortization).",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.amount.multi_tranche",
+          "level": 3,
+          "name": "Multi-Tranche Structure",
+          "r18_concept_ids": [
+            "facility_structure.term_loan.tla",
+            "facility_structure.term_loan.tlb"
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template, Row 3 (Debt Quantum analysis guidelines)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "The aggregate principal amount of the initial term loan facility as stated in the recitals, commitment schedule, or first operative section of the credit agreement. DLS Preferred specifies 'At least $[___]' as the minimum commitment quantum. Establishes the denominator for percentage-based covenant baskets and the basis for pro rata share calculations.",
+      "dls_ref": [
+        "DLS:5:Commitment Percentage",
+        "DLS:27:Other Flex"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": true,
+        "playbook_ref": "facility_structure.term_loan_amount",
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.01"
+        ],
+        "shape_ref": "facility_structure.term_loan_amount",
+        "aligned_difficulty": "hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=hard (playbook authority for extraction complexity)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.666000+00:00",
+          "term_packs": {
+            "TS_TERM_LOAN_QUANTUM": {
+              "label": "Term Sheet - Term Loan Quantum",
+              "category": "TERM_SHEET",
+              "exactPhrases": [
+                "[First Lien] Term Loan: [•]-year; $[•]mm; [•]% amort",
+                "Term Loan Facility",
+                "Term B Loan",
+                "Term Loan in an aggregate principal amount",
+                "Initial Term Loan"
+              ],
+              "sectionHeaders": [
+                "Term Loan Facility",
+                "Term Loan Commitments",
+                "Term B Loan",
+                "Summary of Principal Terms",
+                "Facilities"
+              ],
+              "semanticVariants": [
+                "term loan principal amount",
+                "TLB quantum size",
+                "term loan facility size",
+                "senior secured term loan amount"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "[First Lien] Term Loan: [•]-year; $[•]mm; [•]% amort",
+              "Term Loan Facility",
+              "Term B Loan",
+              "Term Loan in an aggregate principal amount",
+              "Initial Term Loan"
+            ],
+            "sectionHeaders": [
+              "Term Loan Facility",
+              "Term Loan Commitments",
+              "Term B Loan",
+              "Summary of Principal Terms",
+              "Facilities"
+            ],
+            "semanticVariants": [
+              "term loan principal amount",
+              "TLB quantum size",
+              "term loan facility size",
+              "senior secured term loan amount"
+            ]
+          }
+        }
+      },
+      "family_id": "deal_econ.term_loan",
+      "golden_record_benchmarks": [
+        {
+          "max": 2500000000.0,
+          "median": 600000000.0,
+          "metric": "commitment_amount_range",
+          "min": 20000000.0,
+          "n_deals": 9,
+          "source": "R16-A golden_record"
+        }
+      ],
+      "id": "deal_econ.term_loan.amount",
+      "level": 2,
+      "market_benchmarks": {
+        "bsl_range": "$500M-$5B",
+        "median_pc": "$175M",
+        "pc_range": "$100M-$300M"
+      },
+      "name": "Term Loan Commitment Amount",
+      "negotiation_spectrum": {
+        "aggressive_position": "Soft call protection in connection with repricings only (subject to carve outs for IPO, change of control transactions and transformative acquisitions/transactions)",
+        "dls_source_rows": [
+          {
+            "label": "Voluntary Prepayments",
+            "row": 69
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Call protection type (hard call vs soft call)",
+          "Call protection schedule (102/101/par)",
+          "Hard call vs soft call (repricing only)",
+          "Repricing protection carve-outs",
+          "Carve-outs (IPO, CoC, transformative acquisitions)",
+          "ECF sweep percentage (75%/50%/25%/0% step-downs)",
+          "Leverage-based step-down schedule for ECF",
+          "Deductions from ECF (investments, RPs, capex, acquisitions)",
+          "Dollar-for-dollar credit for voluntary prepayments",
+          "ECF sweep holiday (deferral of first payment)",
+          "Minimum ECF threshold before sweep required",
+          "Reinvestment period for asset sale proceeds",
+          "Extension period for committed reinvestment",
+          "Leverage-based step-downs for asset sale sweep",
+          "De minimis threshold per sale/annual",
+          "Equity issuance sweep (100% vs none)",
+          "Non-permitted debt proceeds sweep",
+          "Declined mandatory prepayment proceeds build Available Amount"
+        ],
+        "market_position": "Market standard for voluntary prepayments reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "Minimum term loan commitment amount of $X; 0.25% quarterly amortization with bullet at maturity",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "facility_structure.term_loan"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 3,
+          "term": "Debt Quantum"
+        },
+        {
+          "coverage": "full",
+          "row": 10,
+          "term": "Termination of commitments"
+        },
+        {
+          "coverage": "full",
+          "row": 14,
+          "term": "Term Sheet"
+        },
+        {
+          "coverage": "full",
+          "row": 25,
+          "term": "Incremental Amount – prepayments"
+        },
+        {
+          "coverage": "full",
+          "row": 57,
+          "term": "Financial Covenant – application"
+        },
+        {
+          "coverage": "full",
+          "row": 141,
+          "term": "DDTL Commitment Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 158,
+          "term": "Commitment/Underwriting Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 164,
+          "term": "Sponsor Participation"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 8 (Term Loan); Review Template, Row 3 (Debt Quantum)",
+      "neutron_field_refs": [
+        {
+          "term_type": "TS_TERM_LOAN_QUANTUM",
+          "label": "Term Sheet - Term Loan Quantum",
+          "schema_file": "term-sheet-facilities-enhanced.schema.ts",
+          "field_count": 2,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.5044,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Exact maturity date specified as a calendar date (e.g., 'June 30, 2030'), commonly used in private credit deals where the closing date is known at execution. This is the simpler of two expression patterns; the other is anniversary-based.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.maturity.specific_date",
+          "level": 3,
+          "name": "Specific Calendar Date",
+          "type": "sub_component",
+          "definition_source": "Review Template, Row 3 (maturity expression patterns); DLS Preferred, Row 8 ('Maturity: [___] years' — anniversary-based variant)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Maturity expressed as the Nth anniversary of the closing date (e.g., '7th anniversary of the Closing Date'), requiring resolution against the closing date parameter. DLS Preferred uses this pattern: 'Maturity: [___] years.' Review Template standard: Term B at 7 years.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.maturity.anniversary",
+          "level": 3,
+          "name": "Anniversary Formula",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 8 (anniversary-based maturity); Review Template, Row 3"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Number of days prior to other debt maturity that triggers the springing mechanism, defining the look-ahead window for maturity acceleration. Typically 91 days, chosen to be inside the 90-day bankruptcy preference period. Review Template flags springing maturities as a key deviation item.",
+              "dls_ref": [
+                "DLS:38:Termination date"
+              ],
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "hard",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.maturity.springing.trigger_date",
+              "level": 4,
+              "name": "Trigger Date",
+              "type": "sub_component",
+              "definition_source": "Review Template, Row 3 ('Flag any deviation, springing maturities')"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "The specific debt instrument whose maturity triggers the springing mechanism — typically senior notes, holdco debt, or second lien facilities. The reference must be precise enough to identify the instrument's actual maturity date for automatic acceleration calculation.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "hard",
+              "extraction_refs": {
+                "concept_area": "available_amount",
+                "extraction_ready": true,
+                "playbook_ref": "available_amount.other",
+                "primary_section_pattern": "X.01",
+                "section_locations": [
+                  "1.01",
+                  "10.5(a)(iii)"
+                ],
+                "shape_ref": "available_amount.other"
+              },
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.maturity.springing.other_debt_ref",
+              "level": 4,
+              "name": "Other Debt Reference",
+              "type": "sub_component",
+              "definition_source": "Review Template, Row 3 (springing maturities); Learning Material, Section 16 (inside maturity restrictions)"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Exception to springing maturity if the triggering debt is refinanced with longer-maturity debt before the trigger date, eliminating the structural subordination concern that motivated the spring. Standard carveout in all springing maturity provisions.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "hard",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.maturity.springing.refinancing_exception",
+              "level": 4,
+              "name": "Refinancing Exception",
+              "type": "sub_component",
+              "definition_source": "Review Template, Row 3 (springing maturity deviations); DLS Preferred, Row 16 (Refinancing Debt — maturity must not be inside)"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Maturity date that accelerates earlier if other specified debt (senior notes, holdco debt, or second lien) remains outstanding within a specified window of its own maturity, protecting against structural subordination through payment timing. Review Template flags 'springing maturities' and 'first amortization timing' as key deviation items.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.maturity.springing",
+          "level": 3,
+          "name": "Springing Maturity",
+          "r18_concept_ids": [
+            "facility_structure.maturity.springing_maturity"
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template, Row 3 (Debt Quantum: 'Flag any deviation, springing maturities')"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Convention that certain facilities (revolver, TL-A) mature before the institutional term loan to avoid effective payment subordination through timing. Review Template: standard tenors place Revolver at 5-6 years inside TL-B at 7 years. Learning Material: incremental facilities generally must not mature inside the initial term loan, subject to limited 'inside maturity basket' exceptions.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.maturity.inside_maturity",
+          "level": 3,
+          "market_benchmarks": {
+            "revolver_offset": "1 year inside TL",
+            "tla_tl_offset": "same or earlier"
+          },
+          "name": "Inside Maturity Principle",
+          "r18_concept_ids": [
+            "facility_structure.maturity.inside_maturity"
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template, Row 3; Learning Material, Section 16 (Limitations on Incremental Facilities); Review Template, Row 33 (Inside Maturity Basket)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Latest permissible maturity for incremental and extension tranches, establishing the outer boundary for the capital structure. DLS Preferred (Row 11): 'Maturity Date: No earlier than the maturity date of the Term Facility.' Review Template (Row 33): inside maturity basket exceptions for small amounts, bridges, and escrowed amounts. PCTC: 'Avoid inside maturity exception other than customary bridges and escrow arrangements.'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.maturity.outside_maturity",
+          "level": 3,
+          "name": "Outside Maturity Date",
+          "r18_concept_ids": [
+            "facility_structure.maturity.outside_maturity"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 11 (incremental maturity); Review Template, Row 33 (inside maturity basket); PC Term Comparison, Incremental section",
+          "pc_ref": [
+            "Incremental"
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Compound sub-clause maturity format defining separate maturity dates per facility type within a single operative section (e.g., '(a) Revolving: Aug 21, 2030, (b) Term A: Aug 21, 2030, (c) Term B: Aug 21, 2032'). Review Template (Row 3) standard tenors: Revolver 5-6 years, Term A varies, Term B 7 years, Second Lien 7.5-8 years.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.maturity.compound",
+          "level": 3,
+          "name": " sub-component under deal_econ.term_loan.maturity",
+          "source_system": "R16-A",
+          "type": "sub_component",
+          "definition_source": "Review Template, Row 3 (Debt Quantum: standard tenors per facility type)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "The final maturity date of the term loan facility, defining the outer boundary for all principal repayment. DLS Preferred: 'Maturity: [___] years.' Review Template standard tenors: Term B 7 years, Term A varies, Revolver 5-6 years. Inside/outside maturity conventions and springing mechanics create layered maturity profiles across the capital stack.",
+      "dls_ref": [
+        "DLS:8:Term Loan",
+        "DLS:30:Term Loan"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": true,
+        "playbook_ref": "facility_structure.maturity",
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.01"
+        ],
+        "shape_ref": "facility_structure.maturity",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.672532+00:00",
+          "term_packs": {
+            "TS_TERM_LOAN_TENOR": {
+              "label": "Term Sheet - Term Loan Tenor",
+              "category": "TERM_SHEET",
+              "exactPhrases": [
+                "[•]-year",
+                "7 years",
+                "seventh anniversary of the Closing Date",
+                "Term Loan Maturity Date"
+              ],
+              "sectionHeaders": [
+                "Maturity Date",
+                "Term Loan Maturity",
+                "Final Maturity",
+                "ARTICLE II"
+              ],
+              "semanticVariants": [
+                "term loan tenor length",
+                "TLB maturity date",
+                "term loan final maturity"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "[•]-year",
+              "7 years",
+              "seventh anniversary of the Closing Date",
+              "Term Loan Maturity Date"
+            ],
+            "sectionHeaders": [
+              "Maturity Date",
+              "Term Loan Maturity",
+              "Final Maturity",
+              "ARTICLE II"
+            ],
+            "semanticVariants": [
+              "term loan tenor length",
+              "TLB maturity date",
+              "term loan final maturity"
+            ]
+          }
+        }
+      },
+      "family_id": "deal_econ.term_loan",
+      "id": "deal_econ.term_loan.maturity",
+      "level": 2,
+      "market_benchmarks": {
+        "bsl_tla": "5 years",
+        "bsl_tlb": "7 years",
+        "pc_standard": "5 years"
+      },
+      "name": "Term Loan Maturity",
+      "r18_concept_ids": [
+        "facility_structure.maturity"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 3,
+          "term": "Debt Quantum"
+        },
+        {
+          "coverage": "full",
+          "row": 14,
+          "term": "Term Sheet"
+        },
+        {
+          "coverage": "full",
+          "row": 29,
+          "term": "Incremental – RCF sub-limit"
+        },
+        {
+          "coverage": "full",
+          "row": 33,
+          "term": "Incremental – inside maturity basket"
+        },
+        {
+          "coverage": "full",
+          "row": 34,
+          "term": "Incremental – MFN"
+        },
+        {
+          "coverage": "full",
+          "row": 57,
+          "term": "Financial Covenant – application"
+        },
+        {
+          "coverage": "full",
+          "row": 158,
+          "term": "Commitment/Underwriting Fee"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 8 (Term Loan); Review Template, Row 3 (Debt Quantum)",
+      "neutron_field_refs": [
+        {
+          "term_type": "TS_TERM_LOAN_TENOR",
+          "label": "Term Sheet - Term Loan Tenor",
+          "schema_file": "term-sheet-facilities-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.5641,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Standard quarterly amortization rate expressed as a percentage of initial aggregate principal amount. DLS Preferred: 0.25% per quarter for Term B (1% annual). Term A: 1.00-1.25% per quarter (4-5% annual). The dominant expression pattern in leveraged credit agreements.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.amortization.percentage.quarterly_pct",
+              "level": 4,
+              "market_benchmarks": {
+                "tla_value": "1.00-1.25%/quarter",
+                "tlb_value": "0.25%/quarter"
+              },
+              "name": "Quarterly Percentage",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 8 (Amortization: 0.25% per quarter); Review Template, Row 3"
+            },
+            {
+              "corpus_prevalence": "low",
+              "definition": "Amortization rate that increases over the life of the loan (e.g., Year 1-2: 1.25%, Year 3+: 2.50%), typically seen in Term A structures to accelerate paydown for relationship bank lenders. Review Template: Term A amortization 'varies; escalates.'",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.amortization.percentage.step_up",
+              "level": 4,
+              "name": "Step-Up Schedule",
+              "r18_concept_ids": [
+                "facility_structure.amortization.step_up_schedule"
+              ],
+              "type": "sub_component",
+              "definition_source": "Review Template, Row 3 (Term A: 'varies; escalates')"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Amortization expressed as a percentage of initial aggregate principal amount per payment period. DLS Preferred (Row 8): '0.25% per quarter' for Term B. The percentage-based pattern is the dominant expression in leveraged credit, applied to the original principal amount regardless of voluntary prepayments received.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.term_loan",
+          "golden_record_benchmarks": [
+            {
+              "evidence": [
+                {
+                  "deal": "arch",
+                  "quarterly_pct": 16.7,
+                  "raw": "~16.7% quarterly (non-standard — small deal rapid paydown)"
+                },
+                {
+                  "deal": "boyd",
+                  "quarterly_pct": 1.25,
+                  "raw": "TL-A: 1.25% quarterly (5% annual)"
+                },
+                {
+                  "deal": "caesars",
+                  "quarterly_pct": 1.25,
+                  "raw": "TL-A: 1.25% quarterly (5% annual), TL-B: 0.25% quarterly (1% annual)"
+                },
+                {
+                  "deal": "lendingtree",
+                  "quarterly_pct": 0.25,
+                  "raw": "TL-B: 0.25% quarterly (1% annual)"
+                },
+                {
+                  "deal": "national_vision",
+                  "quarterly_pct": 1.25,
+                  "raw": "~1.25% quarterly (5% annual) based on $150M"
+                },
+                {
+                  "deal": "quidel",
+                  "quarterly_pct": 1.25,
+                  "raw": "TL-A: 1.25% quarterly (5% annual), TL-B: 0.25% quarterly (1% annual)"
+                },
+                {
+                  "deal": "red_rock",
+                  "quarterly_pct": 0.25,
+                  "raw": "TL-B-1: 0.25% quarterly (1% annual), TL-A tranches: per schedule (Annex C/D)"
+                },
+                {
+                  "deal": "sleep_number",
+                  "quarterly_pct": 1.25,
+                  "raw": "~1.25% quarterly (5% annual) based on $200M initial draw"
+                },
+                {
+                  "deal": "viavi",
+                  "quarterly_pct": 0.25,
+                  "raw": "0.25% quarterly (1% annual — TL-B-style even though not labeled 'B')"
+                }
+              ],
+              "metric": "amortization_quarterly_rates",
+              "n_deals": 0,
+              "observed_rates": [
+                0.25,
+                1.25,
+                16.7
+              ],
+              "patterns": {
+                "tl_a_typical": "1.00-1.25% quarterly (4-5% annual)",
+                "tl_b_typical": "0.25% quarterly (1% annual)"
+              },
+              "source": "R16-A golden_record"
+            }
+          ],
+          "id": "deal_econ.term_loan.amortization.percentage",
+          "level": 3,
+          "name": "Percentage-Based",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 8 ('Amortization: 0.25% per quarter, bullet at maturity')"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Structured table mapping specific payment dates to dollar amounts, typically found in Schedule II or Annex A of the credit agreement. Requires cross-reference resolution to extract the actual payment amounts.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "hard",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.amortization.dollar_schedule.payment_table",
+              "level": 4,
+              "name": "Payment Date Table",
+              "type": "sub_component",
+              "definition_source": "Review Template, Row 3 (amortization schedules)"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "External annex or schedule reference (e.g., Annex C, Annex D) containing the full amortization table, requiring cross-document resolution to extract the payment schedule. The annex typically contains a date-amount table.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "hard",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.amortization.dollar_schedule.annex_ref",
+              "level": 4,
+              "name": "Annex Reference",
+              "type": "sub_component",
+              "definition_source": "Review Template, Row 3 (schedule references)"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Fixed dollar amounts per payment date, often specified in a schedule or annex rather than as a percentage of original principal. Less common than percentage-based amortization in institutional tranches but used in TL-A and certain private credit structures.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.amortization.dollar_schedule",
+          "level": 3,
+          "name": "Dollar-Amount Schedule",
+          "type": "sub_component",
+          "definition_source": "Review Template, Row 3 (amortization expression patterns); DLS Preferred, Row 8 (percentage-based standard)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "When amortization payments begin — typically the first full fiscal quarter after the closing date. DLS Preferred (Row 8) implies commencement immediately post-closing with '0.25% per quarter.' Review Template (Row 3) flags 'first amortization timing where a full fiscal quarter would pass post-closing without payment.'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.amortization.commencement",
+          "level": 3,
+          "name": "Commencement Timing",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 8; Review Template, Row 3 ('first amortization timing')"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Remaining outstanding principal balance payable at maturity after all scheduled amortization payments. DLS Preferred (Row 8): 'bullet at maturity.' For TL-B at 1% annual amortization, approximately 93-95% of original principal remains at maturity over a 7-year term.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.amortization.bullet_at_maturity",
+          "level": 3,
+          "market_benchmarks": {
+            "tlb_bullet_pct": "~93-95% of original principal"
+          },
+          "name": "Bullet at Maturity",
+          "r18_concept_ids": [
+            "facility_structure.amortization.bullet_at_maturity"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 8 ('bullet at maturity'); Review Template, Row 3 ('1% per year of original principal')"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether mandatory prepayments from excess cash flow sweeps reduce future scheduled amortization payments, effectively crediting ECF sweeps against the amortization obligation. DLS Preferred (Row 70): ECF sweep includes 'dollar-for-dollar credit for voluntary prepayments of any Term Loans... made during such fiscal year.' Voluntary prepayments reduce amortization; ECF sweeps may or may not, depending on negotiated terms.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.amortization.ecf_sweep_credit",
+          "level": 3,
+          "name": "ECF Sweep Credit",
+          "r18_concept_ids": [
+            "facility_structure.amortization.excess_cash_flow_credit"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 70 (Mandatory Prepayments — dollar-for-dollar credit provisions)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Scheduled principal repayment requirements for the term loan, reducing outstanding principal through periodic mandatory payments. DLS Preferred: 'Amortization: 0.25% per quarter, bullet at maturity.' Review Template standard: Term B at 1% per year of original principal. Amortization mechanics interact with ECF sweeps, voluntary prepayments, and incremental facilities to determine effective deleveraging.",
+      "dls_ref": [
+        "DLS:8:Term Loan",
+        "DLS:30:Term Loan",
+        "DLS:69:Voluntary Prepayments"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": true,
+        "playbook_ref": "facility_structure.amortization",
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.07",
+          "Section 2.10"
+        ],
+        "shape_ref": "facility_structure.amortization",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.659176+00:00",
+          "term_packs": {
+            "TS_TERM_LOAN_AMORT": {
+              "label": "Term Sheet - Term Loan Amortization",
+              "category": "TERM_SHEET",
+              "exactPhrases": [
+                "[•]% amort",
+                "1% per annum",
+                "equal quarterly installments",
+                "0.25% per quarter",
+                "scheduled amortization",
+                "principal payments"
+              ],
+              "sectionHeaders": [
+                "Amortization",
+                "Scheduled Repayments",
+                "Principal Payments",
+                "ARTICLE II"
+              ],
+              "semanticVariants": [
+                "term loan amortization schedule",
+                "scheduled principal payments",
+                "quarterly amortization installments"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "[•]% amort",
+              "1% per annum",
+              "equal quarterly installments",
+              "0.25% per quarter",
+              "scheduled amortization",
+              "principal payments"
+            ],
+            "sectionHeaders": [
+              "Amortization",
+              "Scheduled Repayments",
+              "Principal Payments",
+              "ARTICLE II"
+            ],
+            "semanticVariants": [
+              "term loan amortization schedule",
+              "scheduled principal payments",
+              "quarterly amortization installments"
+            ]
+          }
+        }
+      },
+      "family_id": "deal_econ.term_loan",
+      "id": "deal_econ.term_loan.amortization",
+      "level": 2,
+      "market_benchmarks": {
+        "tla_range": "1.0-1.25%/quarter (4-5% annual)",
+        "tlb_standard": "0.25%/quarter (1% annual)",
+        "source": "DLS Preferred Row 8: 'Amortization: 0.25% per quarter, bullet at maturity'; Review Template Row 3: 'Term B 1% per year of original principal'",
+        "_source": "DLS Preferred Row 8; Review Template Row 3"
+      },
+      "name": "Term Loan Amortization",
+      "r18_concept_ids": [
+        "facility_structure.amortization"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 3,
+          "term": "Debt Quantum"
+        },
+        {
+          "coverage": "full",
+          "row": 14,
+          "term": "Term Sheet"
+        },
+        {
+          "coverage": "full",
+          "row": 33,
+          "term": "Incremental – inside maturity basket"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 8; Review Template, Row 3 (Debt Quantum)",
+      "neutron_field_refs": [
+        {
+          "term_type": "TS_TERM_LOAN_AMORT",
+          "label": "Term Sheet - Term Loan Amortization",
+          "schema_file": "term-sheet-facilities-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.6673,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "CME-published forward-looking secured overnight financing rate for specified tenors (1-month, 3-month, or 6-month). Now the universal benchmark in post-LIBOR leveraged credit, replacing USD LIBOR as the floating-rate reference. Combined with a credit spread adjustment (CSA) and the applicable margin to determine all-in borrowing cost.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.interest_rate.benchmark.term_sofr",
+              "level": 4,
+              "name": "Term SOFR",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 127 (Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing)"
+            },
+            {
+              "corpus_prevalence": "low",
+              "definition": "Daily compounded SOFR for overnight-rate-based loans, used as alternative to term SOFR in some structures.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.interest_rate.benchmark.daily_sofr",
+              "level": 4,
+              "name": "Daily Simple SOFR",
+              "type": "sub_component"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Alternate Base Rate defined as the highest of: (a) prime rate, (b) federal funds rate + 0.50%, and (c) Term SOFR + 1.00%. Used for short-term and swingline borrowings.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.interest_rate.benchmark.base_rate",
+              "level": 4,
+              "name": "Base Rate / ABR",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 19,
+                  "term": "Swingline"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "Review Template Row 19 (Swingline)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Base reference rate (Term SOFR, Daily SOFR, or legacy LIBOR/LIBO Rate) against which the applicable margin is added.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.interest_rate.benchmark",
+          "level": 3,
+          "name": "Benchmark Rate",
+          "r18_concept_ids": [
+            "pricing.benchmark_rate",
+            "pricing.libor_sofr_transition"
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 127 (Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing); Review Template Row 138 (Pricing)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Single fixed margin for all periods (e.g., SOFR + 575 bps), most common in private credit unitranche structures.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.interest_rate.applicable_margin.fixed",
+              "level": 4,
+              "market_benchmarks": {
+                "pc_median": "575 bps",
+                "pc_range": "500-625 bps"
+              },
+              "name": "Fixed Spread",
+              "type": "sub_component"
+            },
+            {
+              "children": [
+                {
+                  "corpus_prevalence": "medium",
+                  "definition": "Number and leverage thresholds of grid tiers (e.g., >5.0x: 600 bps, 4.5-5.0x: 575 bps, <4.5x: 550 bps). Typically 2-4 levels.",
+                  "dls_ref": [
+                    "DLS:25:Pricing Flex"
+                  ],
+                  "domain_id": "deal_econ",
+                  "extraction_difficulty": "hard",
+                  "family_id": "deal_econ.term_loan",
+                  "id": "deal_econ.term_loan.interest_rate.applicable_margin.leverage_grid.levels",
+                  "level": 5,
+                  "name": "Pricing Levels",
+                  "type": "parameter",
+                  "definition_source": "DLS Preferred Row 25 (Pricing Flex)"
+                },
+                {
+                  "corpus_prevalence": "medium",
+                  "definition": "Basis point reduction per grid level (typically 25 bps per tier), defining the economic reward for deleveraging.",
+                  "domain_id": "deal_econ",
+                  "extraction_difficulty": "medium",
+                  "family_id": "deal_econ.term_loan",
+                  "id": "deal_econ.term_loan.interest_rate.applicable_margin.leverage_grid.step_size",
+                  "level": 5,
+                  "market_benchmarks": {
+                    "typical_step": "25 bps"
+                  },
+                  "name": "Step-Down Size",
+                  "type": "parameter"
+                },
+                {
+                  "corpus_prevalence": "medium",
+                  "definition": "Leverage metric driving the grid (Total Net Leverage, First Lien Net Leverage, or Consolidated Total Leverage), cross-referencing financial covenant definitions.",
+                  "domain_id": "deal_econ",
+                  "extraction_difficulty": "medium",
+                  "family_id": "deal_econ.term_loan",
+                  "id": "deal_econ.term_loan.interest_rate.applicable_margin.leverage_grid.metric",
+                  "level": 5,
+                  "name": "Reference Metric",
+                  "type": "parameter"
+                }
+              ],
+              "corpus_prevalence": "medium",
+              "definition": "Margin that steps down as the leverage ratio improves, typically with 2-4 pricing levels and 25 bps per tier step-down.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "hard",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.interest_rate.applicable_margin.leverage_grid",
+              "level": 4,
+              "name": "Leverage-Based Grid",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 26 (Incremental Amount – ratio); Review Template Row 62 (Leverage Ratio Calculations); Review Template Row 73 (Negative Covenants – Indebtedness – Ratio Debt – amount); Review Template Row 74 (Negative Covenants – Indebtedness – Ratio Debt – non-guarantor cap); Review Template Row 75 (Negative Covenants – Indebtedness – Ratio Debt – terms); Review Template Row 87 (Negative Covenants – Liens – Ratio Basket); Review Template Row 93 (Negative Covenants – Investments – Ratio Basket); Review Template Row 105 (Negative Covenants – Restricted Payments – Ratio Basket); Review Template Row 115 (Negative Covenants – Restricted Debt Payments – Ratio Basket); Review Template Row 122 (Negative Covenants – Available Amount – Ratio Test)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Credit spread over the benchmark rate, either a single fixed spread or a leverage-based pricing grid that adjusts based on financial performance.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.interest_rate.applicable_margin",
+          "level": 3,
+          "name": "Applicable Margin / Rate",
+          "r18_concept_ids": [
+            "pricing.applicable_margin"
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 127 (Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing); Review Template Row 138 (Pricing)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Specific SOFR floor percentage (0.75%-1.25% range, 1.00% standard in PC market).",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.interest_rate.floor.sofr_floor",
+              "level": 4,
+              "name": "SOFR Floor Level",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 139 (Floor)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Base rate / ABR floor, typically 1.00% or 1.25% above the SOFR floor.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.interest_rate.floor.abr_floor",
+              "level": 4,
+              "name": "ABR Floor Level",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 139 (Floor)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Structural pattern for floor expression: standalone 'Floor' defined term vs. inline proviso vs. 'SOFR Floor' definition. Affects extraction logic.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.interest_rate.floor.expression_pattern",
+              "level": 4,
+              "name": "Expression Pattern",
+              "type": "sub_component"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Minimum benchmark rate protecting lender yield against low-rate environments.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.interest_rate.floor",
+          "level": 3,
+          "market_benchmarks": {
+            "bsl_range": "0.00-0.75%",
+            "pc_standard": "1.00% SOFR floor"
+          },
+          "name": "Interest Rate Floor",
+          "r18_concept_ids": [
+            "pricing.sofr_floor"
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 139 (Floor)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Single credit spread adjustment regardless of interest period tenor (typically 10 bps).",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.interest_rate.csa.flat",
+              "level": 4,
+              "name": "Flat CSA",
+              "type": "sub_component"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Different CSA by interest period tenor (10/15/25 bps for 1/3/6 month respectively), matching ARRC recommended values.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.interest_rate.csa.tenor_based",
+              "level": 4,
+              "name": "Tenor-Based CSA",
+              "type": "sub_component"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "SOFR adjustment for LIBOR-to-SOFR basis differential, compensating for the difference between term and overnight rates. Standard: 10 bps for 1-month SOFR.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.interest_rate.csa",
+          "level": 3,
+          "market_benchmarks": {
+            "standard_1m": "10 bps",
+            "standard_3m": "15 bps",
+            "standard_6m": "25 bps"
+          },
+          "name": "Credit Spread Adjustment",
+          "r18_concept_ids": [
+            "pricing.credit_spread_adjustment"
+          ],
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Available interest period tenors for SOFR borrowings (1-month, 3-month, 6-month, occasionally 12-month), affecting rate reset frequency and hedging alignment.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.interest_rate.interest_period",
+          "level": 3,
+          "market_benchmarks": {
+            "market_standard_value": "1, 3, 6 months",
+            "period_12_month": "rarely available"
+          },
+          "name": "Interest Period Options",
+          "r18_concept_ids": [
+            "facility_structure.borrowing_mechanics.interest_periods"
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 127 (Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing); Review Template Row 138 (Pricing)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Incremental interest rate applied during an Event of Default, typically 200 bps above the otherwise applicable rate. Accrues automatically or upon agent/lender election. Neutron extraction context (DEFAULT_RATE): Increased interest rate applicable during Event of Default, typically 2% above the otherwise applicable rate. May apply automatically or upon notice. The default rate is an increased interest rate (typically 2% above the otherwise applicable rate) that accrues during an Event of Default. This serves as both compensation for increased risk and incentive for prompt cure.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.interest_rate.default_rate",
+          "level": 3,
+          "market_benchmarks": {
+            "standard_increment": "200 bps"
+          },
+          "name": "Default Interest Rate",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 127 (Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing); Review Template Row 138 (Pricing)",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:40.550367+00:00",
+              "term_packs": {
+                "DEFAULT_RATE": {
+                  "label": "Default Interest Rate",
+                  "category": "DEFAULT_CURE",
+                  "exactPhrases": [
+                    "default rate",
+                    "Default Rate",
+                    "default interest",
+                    "during the continuance of an Event of Default",
+                    "upon the occurrence and during the continuance",
+                    "interest rate shall be increased by",
+                    "plus [2]% per annum",
+                    "at a rate per annum equal to [•]% above"
+                  ],
+                  "sectionHeaders": [
+                    "Interest",
+                    "Default Interest",
+                    "Default Rate",
+                    "Section [•] - Interest Rates",
+                    "Pricing"
+                  ],
+                  "semanticVariants": [
+                    "increased interest rate during default",
+                    "penalty interest rate",
+                    "default penalty rate",
+                    "interest premium during event of default"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.6,
+                    "minKeywordScore": 0.5,
+                    "minConfidence": 0.7,
+                    "escalationThreshold": 0.5,
+                    "humanEscalationThreshold": 0.3
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "default rate",
+                  "Default Rate",
+                  "default interest",
+                  "during the continuance of an Event of Default",
+                  "upon the occurrence and during the continuance",
+                  "interest rate shall be increased by",
+                  "plus [2]% per annum",
+                  "at a rate per annum equal to [•]% above"
+                ],
+                "sectionHeaders": [
+                  "Interest",
+                  "Default Interest",
+                  "Default Rate",
+                  "Section [•] - Interest Rates",
+                  "Pricing"
+                ],
+                "semanticVariants": [
+                  "increased interest rate during default",
+                  "penalty interest rate",
+                  "default penalty rate",
+                  "interest premium during event of default"
+                ]
+              }
+            },
+            "neutron_definition_enrichment": {
+              "source": "Neutron schema term_type_index description/backgroundExplanation",
+              "imported_at": "2026-02-17T22:46:48.401716+00:00",
+              "entries": {
+                "DEFAULT_RATE": {
+                  "term_type": "DEFAULT_RATE",
+                  "schema_file": "default-cure-enhanced.schema.ts",
+                  "label": "Default Interest Rate",
+                  "mapping_mode": "domain_scored",
+                  "mapping_confidence": 0.8001,
+                  "label_similarity": 1.0,
+                  "description": "Increased interest rate applicable during Event of Default, typically 2% above the otherwise applicable rate. May apply automatically or upon notice.",
+                  "backgroundExplanation": "The default rate is an increased interest rate (typically 2% above the otherwise applicable rate) that accrues during an Event of Default. This serves as both compensation for increased risk and incentive for prompt cure. Key negotiation points include: (1) whether default rate applies automatically or requires notice, (2) which defaults trigger it (all vs. payment defaults only), (3) whether it compounds, and (4) maximum duration. Some jurisdictions have usury concerns that may limit enforceable default rates. The sources note that automatic application upon any EoD is more lender-favorable; borrowers prefer notice requirement and limitation to payment defaults.",
+                  "summary_used": "Increased interest rate applicable during Event of Default, typically 2% above the otherwise applicable rate. May apply automatically or upon notice. The default rate is an increased interest rate (typically 2% above the otherwise applicable rate) that accrues during an Event of Default. This serves as both compensation for increased risk and incentive for prompt cure.",
+                  "ported_at": "2026-02-17T22:46:48.401716+00:00"
+                }
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "DEFAULT_RATE",
+              "label": "Default Interest Rate",
+              "schema_file": "default-cure-enhanced.schema.ts",
+              "field_count": 4,
+              "r1_domain": "deal_econ",
+              "mapping_confidence": 0.8001,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Benchmark rate plus applicable margin for the term loan, defining the all-in cost of borrowing. Comprises the reference rate, credit spread, floor, and any adjustment for LIBOR-SOFR transition. Neutron extraction context (PRICING_TL_RATE): Interest rate on the term loan facility, typically expressed as SOFR + margin with potential step-downs tied to leverage improvements or IPO. Includes hardwired pricing through initial quarters post-closing. Pricing includes SOFR margins, OID/upfront fees, and potential step-downs upon leverage improvement or an IPO.",
+      "dls_ref": [
+        "DLS:18:Interest Rates"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.06",
+          "Section 2.07",
+          "Section 2.13"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Commitments / Loans)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.212796+00:00",
+          "term_packs": {
+            "PRICING_TL_RATE": {
+              "label": "Term Loan Interest Rate",
+              "category": "PRICING",
+              "exactPhrases": [
+                "Hardwired pricing through delivery of financials for [•] quarter post-closing",
+                "[•]% of interest rate margin starting [•] and increasing to [•]% at [•]",
+                "additional step down of [•] bps upon consummation of an IPO",
+                "PIK Interest",
+                "SOFR + [•] bps",
+                "Term SOFR plus [•]%",
+                "Applicable Margin",
+                "Adjusted Term SOFR"
+              ],
+              "sectionHeaders": [
+                "Applicable Rate",
+                "Applicable Margin",
+                "Interest Rate",
+                "Pricing",
+                "Term Loan Pricing",
+                "Interest",
+                "Section [X] - Interest"
+              ],
+              "semanticVariants": [
+                "term loan margin and spread pricing",
+                "interest rate margin for term loan facility",
+                "SOFR-based pricing with leverage step-downs",
+                "benchmark rate plus applicable margin",
+                "hardwired pricing period post-closing",
+                "margin step-down tied to leverage ratio"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.65,
+                "minKeywordScore": 0.55,
+                "minConfidence": 0.8,
+                "escalationThreshold": 0.55,
+                "humanEscalationThreshold": 0.35
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 40000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Hardwired pricing through delivery of financials for [•] quarter post-closing",
+              "[•]% of interest rate margin starting [•] and increasing to [•]% at [•]",
+              "additional step down of [•] bps upon consummation of an IPO",
+              "PIK Interest",
+              "SOFR + [•] bps",
+              "Term SOFR plus [•]%",
+              "Applicable Margin",
+              "Adjusted Term SOFR"
+            ],
+            "sectionHeaders": [
+              "Applicable Rate",
+              "Applicable Margin",
+              "Interest Rate",
+              "Pricing",
+              "Term Loan Pricing",
+              "Interest",
+              "Section [X] - Interest"
+            ],
+            "semanticVariants": [
+              "term loan margin and spread pricing",
+              "interest rate margin for term loan facility",
+              "SOFR-based pricing with leverage step-downs",
+              "benchmark rate plus applicable margin",
+              "hardwired pricing period post-closing",
+              "margin step-down tied to leverage ratio"
+            ]
+          }
+        },
+        "neutron_definition_enrichment": {
+          "source": "Neutron schema term_type_index description/backgroundExplanation",
+          "imported_at": "2026-02-17T22:46:48.401716+00:00",
+          "entries": {
+            "PRICING_TL_RATE": {
+              "term_type": "PRICING_TL_RATE",
+              "schema_file": "pricing-enhanced.schema.ts",
+              "label": "Term Loan Interest Rate",
+              "mapping_mode": "domain_scored",
+              "mapping_confidence": 0.6517,
+              "label_similarity": 1.0,
+              "description": "Interest rate on the term loan facility, typically expressed as SOFR + margin with potential step-downs tied to leverage improvements or IPO. Includes hardwired pricing through initial quarters post-closing.",
+              "backgroundExplanation": "Pricing includes SOFR margins, OID/upfront fees, and potential step-downs upon leverage improvement or an IPO. For bridges, total yield caps and step-ups are standard; sources advise ensuring MFN calculations use all-in yield and allowing flex to convert margin increases into OID if needed for syndication. The interest rate structure is a fundamental economics term that directly impacts borrower cash flow and lender returns.",
+              "summary_used": "Interest rate on the term loan facility, typically expressed as SOFR + margin with potential step-downs tied to leverage improvements or IPO. Includes hardwired pricing through initial quarters post-closing. Pricing includes SOFR margins, OID/upfront fees, and potential step-downs upon leverage improvement or an IPO.",
+              "ported_at": "2026-02-17T22:46:48.401716+00:00"
+            }
+          }
+        }
+      },
+      "family_id": "deal_econ.term_loan",
+      "id": "deal_econ.term_loan.interest_rate",
+      "level": 2,
+      "market_benchmarks": {
+        "bsl_margin_range": "250-400 bps",
+        "pc_margin_range": "500-625 bps over SOFR"
+      },
+      "name": "Term Loan Interest Rate",
+      "r18_concept_ids": [
+        "pricing.applicable_margin",
+        "pricing.benchmark_rate"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 10,
+          "term": "Termination of commitments"
+        },
+        {
+          "coverage": "full",
+          "row": 19,
+          "term": "Swingline"
+        },
+        {
+          "coverage": "full",
+          "row": 34,
+          "term": "Incremental – MFN"
+        },
+        {
+          "coverage": "full",
+          "row": 127,
+          "term": "Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing"
+        },
+        {
+          "coverage": "full",
+          "row": 138,
+          "term": "Pricing"
+        },
+        {
+          "coverage": "full",
+          "row": 160,
+          "term": "Ticking Fee (Term/Revolver)"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 18 (Interest Rates); Review Template Row 10 (Termination of commitments); Review Template Row 19 (Swingline); Review Template Row 34 (Incremental – MFN); Review Template Row 127 (Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing); Review Template Row 138 (Pricing); Review Template Row 160 (Ticking Fee (Term/Revolver))",
+      "neutron_field_refs": [
+        {
+          "term_type": "PRICING_TL_RATE",
+          "label": "Term Loan Interest Rate",
+          "schema_file": "pricing-enhanced.schema.ts",
+          "field_count": 5,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.6517,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Single term loan without revolver or DDTL, typically in smaller deals or refinancings where working capital needs are minimal. This structure eliminates commitment fee costs and administrative complexity of revolving facilities.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.facility_types.tl_only",
+          "level": 3,
+          "name": "Term Loan Only",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 8 (single TL); Review Template, Row 3 (facility combinations)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Standard two-facility structure with term loan for acquisition financing and revolver for working capital. DLS Preferred specifies both Revolver (Row 6) and Term Loan (Row 8) as standard components. Review Template (Row 3): Revolver 5-6 years alongside Term B 7 years. The most common configuration in leveraged credit.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.facility_types.tl_plus_rcf",
+          "level": 3,
+          "name": "Term Loan + Revolver",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Rows 6 and 8 (Revolver + Term Loan); Review Template, Row 3"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Three-facility structure with pro rata bank tranche (TL-A, escalating amortization), institutional tranche (TL-B, 1% annual amortization), and revolver. Review Template (Row 3): standard tenors for TL-A (varies; escalates) and TL-B (7 years; 1% per year). More common in larger BSL deals with both bank and institutional investor bases.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.facility_types.tla_tlb_rcf",
+          "level": 3,
+          "name": "TL-A + TL-B + Revolver",
+          "type": "sub_component",
+          "definition_source": "Review Template, Row 3 (TL-A + TL-B + Revolver specification)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Complex structure with multiple historic and active tranches from successive amendments, repricing transactions, and incremental facilities. DLS Preferred (Row 17): Amend and Extend provisions describe creating new tranche classes with different economics from original tranches.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.facility_types.multi_tranche_amended",
+          "level": 3,
+          "name": "Multi-Tranche Amended",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 17 (Amend and Extend); Review Template, Row 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Single-tranche term loan blending first lien and second lien economics, predominant in private credit. May have an Agreement Among Lenders (AAL) creating first-out/last-out splits. PC Term Comparison segments private credit by LMM/CMM/UMM, with unitranche as the dominant structure across all PC segments.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.facility_types.unitranche",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence_pc": "dominant in PC market"
+          },
+          "name": "Unitranche",
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison (private credit market segmentation); Learning Material, unitranche references",
+          "pc_ref": [
+            "(private credit market segmentation)"
+          ]
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Classification of term loan facility structures observed in the market: single-tranche unitranche (dominant in PC), TL-A + TL-B (bank + institutional, common in BSL), TL + DDTL, and multi-tranche amended structures. Review Template (Row 3) standard framework: Term A, Term B, Revolver, DDTL, Second Lien. DLS Preferred (Row 8) specifies a single term loan facility.",
+      "dls_ref": [
+        "DLS:31:Revolving Facility underwriting fee"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": true,
+        "playbook_ref": "facility_structure.debt_structure",
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.01"
+        ],
+        "shape_ref": "facility_structure.debt_structure"
+      },
+      "family_id": "deal_econ.term_loan",
+      "golden_record_benchmarks": [
+        {
+          "counts": {
+            "Letter of Credit": 7,
+            "Revolver": 7,
+            "Swingline": 7,
+            "Term A": 6,
+            "Term B": 4,
+            "Term Loan (generic)": 3
+          },
+          "metric": "facility_type_frequency",
+          "n_deals": 9,
+          "source": "R16-A golden_record"
+        },
+        {
+          "count": 23,
+          "median": 1000000,
+          "parameter": "dollar_amount_1:dollars",
+          "range": "0 - 1000000000",
+          "reason": "Parameter distribution data available but no ontology benchmark",
+          "source": "R16-D golden_record",
+          "source_file": "parameter_distributions.json"
+        }
+      ],
+      "id": "deal_econ.term_loan.facility_types",
+      "level": 2,
+      "market_benchmarks": {
+        "common_structures": "Single TLB (most common), TLA+TLB (bank+institutional), TLB+DDTL",
+        "pc_standard": "Single term loan tranche",
+        "prevalence": "99%+ (virtually all leveraged CAs)"
+      },
+      "name": "Facility Type Taxonomy",
+      "r18_concept_ids": [
+        "facility_structure.debt_structure"
+      ],
+      "type": "concept",
+      "definition_source": "Review Template, Row 3 (facility type enumeration); DLS Preferred, Row 8 (single TL structure)"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Percentage premium declining over time (e.g., 102% Year 1, 101% Year 2, par thereafter) that applies to all prepayments regardless of source. PC Term Comparison: 'Hard call is standard. 1Ls: typically 2/1/0.' DLS Preferred includes mandatory prepayments and acceleration in scope.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.voluntary_prepayment.call_protection.hard_call",
+              "level": 4,
+              "market_benchmarks": {
+                "market_standard_value": "102/101/par"
+              },
+              "name": "Hard Call Schedule",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 69; PC Term Comparison, Call Protection section",
+              "pc_ref": [
+                "Call Protection"
+              ]
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Premium applying only to Repricing Transactions (refinancings with lower yield) rather than all prepayments. Learning Material: 'standard is a 101% soft call' for Term B. Geneva expert extraction: 101 soft call for 6 months with broad carveouts for IPO, CoC, and transformative transactions. PCTC: 'Rarely see soft call' in PC.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.voluntary_prepayment.call_protection.soft_call",
+              "level": 4,
+              "market_benchmarks": {
+                "bsl_typical": "101% for 6 months"
+              },
+              "name": "Soft Call Protection",
+              "type": "sub_component",
+              "definition_source": "Learning Material, Section on Prepayment Premiums; PC Term Comparison, Call Protection",
+              "pc_ref": [
+                "Call Protection"
+              ]
+            },
+            {
+              "corpus_prevalence": "low",
+              "definition": "Premium calculated as the present value of remaining interest payments to a specified date, providing full yield-to-maturity protection. Rare in leveraged loans; primarily a feature of second lien, mezzanine, or senior secured notes. PCTC: '2Ls: typically 3/2/1/0 or NC-1/2/1/0' — the NC period may include make-whole in some structures.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "hard",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.voluntary_prepayment.call_protection.make_whole",
+              "level": 4,
+              "name": "Make-Whole Premium",
+              "type": "sub_component",
+              "definition_source": "PC Term Comparison, Call Protection section (2L structures); Learning Material, Prepayment Premiums section",
+              "pc_ref": [
+                "Call Protection"
+              ]
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Premium specifically targeting repricing transactions (amendment to reduce margin or replacement facility at lower pricing) within a specified period.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.voluntary_prepayment.call_protection.repricing_protection",
+              "level": 4,
+              "market_benchmarks": {
+                "bsl_typical": "101% for 6 months",
+                "pc_typical": "included in hard call"
+              },
+              "name": "Repricing Protection",
+              "type": "sub_component"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Which prepayment events trigger the premium: voluntary only, all mandatory, debt sweep, yank-a-bank, or acceleration. DLS preferred: applies to all.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "hard",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.voluntary_prepayment.call_protection.trigger_scope",
+              "level": 4,
+              "name": "Trigger Scope",
+              "type": "sub_component"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Premium required for voluntary prepayment in early years, protecting lender yield against rapid refinancing. DLS Preferred position: hard call at 102/101/par, applying to voluntary, mandatory, yank-a-bank, and acceleration events. PC Term Comparison: 'Hard call is standard [in PC]. Rarely see soft call. Applies to voluntary, debt sweep, yank a bank AND acceleration. 1Ls: typically 2/1/0. 2Ls: typically 3/2/1/0 or NC-1/2/1/0.'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.voluntary_prepayment.call_protection",
+          "level": 3,
+          "market_benchmarks": {
+            "dls_position": "hard call including mandatory prepays",
+            "market_standard_value": "102/101/par (2-year hard call)"
+          },
+          "name": "Call Protection / Prepayment Premium",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 69; PC Term Comparison, Call Protection section",
+          "pc_ref": [
+            "Call Protection"
+          ]
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Borrower's right to prepay at par (100% of principal, no premium) after the call protection period expires. DLS Preferred (Row 69): '102/101/par' — the 'par' period begins after Year 2 in the standard hard call schedule. Standard in all market segments after the call protection window closes.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.voluntary_prepayment.at_par_rights",
+          "level": 3,
+          "name": "At-Par Prepayment Rights",
+          "r18_concept_ids": [
+            "facility_structure.voluntary_prepayment.par_prepayment"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 69 (Voluntary Prepayments — par after Year 2)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Minimum principal amount for voluntary prepayments and minimum increments, preventing administrative burden from small prepayments. DLS Preferred (Row 6): 'Minimum Borrowings: $[___]/$[___]' (for revolving; similar applies to TL). Typical: $1M minimum, $0.5M increments.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.voluntary_prepayment.minimum_amounts",
+          "level": 3,
+          "market_benchmarks": {
+            "typical_value": "$1M minimum, $0.5M increments"
+          },
+          "name": "Minimum Prepayment Amounts",
+          "r18_concept_ids": [
+            "facility_structure.voluntary_prepayment.minimum_amounts"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (Minimum Borrowings)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Advance notice required for voluntary prepayments. DLS Preferred (Row 6): LIBOR/SOFR Loans require '3 business day prior' notice; Base Rate Loans require '1 business day prior' notice. Conditional/revocable notice provisions may be negotiated, particularly for SOFR loans where broken funding costs apply.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.voluntary_prepayment.notice_requirements",
+          "kct_ref": [
+            "cat5.3"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "abr_notice_period": "1 business day",
+            "sofr_notice_period": "3-5 business days"
+          },
+          "name": "Prepayment Notice Period",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 16,
+              "term": "Revolver – borrowing notices"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (LIBOR notice: 3 BD, Base Rate notice: 1 BD)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Prepayment applied ratably across all term loan tranches and lenders based on outstanding principal. DLS Preferred (Row 11): mandatory prepayments 'always pro rata (other than permitted refinancings of a tranche).' Pro rata is the standard application for all prepayment types in bank-preferred terms.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.voluntary_prepayment.application.pro_rata",
+              "level": 4,
+              "name": "Pro Rata Application",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 11 ('Mandatory Prepayments always pro rata')"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Prepayment applied first to longest-maturity tranche, reducing the most distant principal obligation first. Borrower-favorable: preserves near-term amortization while reducing the longest-dated bullet. Contrasts with the DLS Preferred pro rata standard.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.voluntary_prepayment.application.inverse_maturity",
+              "level": 4,
+              "name": "Inverse Order of Maturity",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 11 (pro rata as standard vs. inverse as alternative)"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether voluntary prepayments reduce future scheduled amortization payments (in direct or inverse order of maturity). DLS Preferred (Row 70): 'dollar-for-dollar credit for voluntary prepayments of any Term Loans... made during such fiscal year.' The credit may apply to ECF sweep calculations rather than the amortization schedule directly.",
+              "dls_ref": [
+                "DLS:7:Letters of Credit"
+              ],
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.term_loan",
+              "id": "deal_econ.term_loan.voluntary_prepayment.application.amort_credit",
+              "level": 4,
+              "name": "Amortization Credit",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 70 (Mandatory Prepayments — dollar-for-dollar credit)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "How voluntary prepayments are applied across tranches and against scheduled amortization. DLS Preferred (Row 11): voluntary prepayments of incrementals can be 'on a pro rata, less than pro rata or greater than pro rata basis.' DLS Row 70: mandatory prepayments include 'dollar-for-dollar credit for voluntary prepayments.'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.voluntary_prepayment.application",
+          "level": 3,
+          "name": "Application of Prepayments",
+          "r18_concept_ids": [
+            "facility_structure.voluntary_prepayment.application"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 11 (voluntary prepayment application); DLS Preferred, Row 70 (dollar-for-dollar credit)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Borrower's right to repay term loan principal before the scheduled maturity date, subject to minimum amount requirements, notice periods, and any applicable prepayment premium during the call protection window. DLS Preferred specifies '102/101/par; hard call (which will include any voluntary prepayments, mandatory prepayments in respect of non-permitted debt refinancing or permitted refinancings, mandatory assignments and applicable to any acceleration of Term Loans).'",
+      "dls_ref": [
+        "DLS:5:Commitment Percentage",
+        "DLS:28:Successful Syndication",
+        "DLS:69:Voluntary Prepayments"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.09",
+          "Section 2.10",
+          "Section 2.11"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Commitments / Loans)"
+      },
+      "family_id": "deal_econ.term_loan",
+      "id": "deal_econ.term_loan.voluntary_prepayment",
+      "kct_ref": [
+        "cat5.3"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "dls_preferred": "102/101/par hard call",
+        "pc_standard": "2-year hard call"
+      },
+      "name": "Voluntary Prepayment",
+      "r18_concept_ids": [
+        "facility_structure.voluntary_prepayment"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 4,
+          "term": "Commitment and giveaway"
+        },
+        {
+          "coverage": "partial",
+          "row": 6,
+          "term": "Information"
+        },
+        {
+          "coverage": "partial",
+          "row": 7,
+          "term": "Other advisory roles"
+        },
+        {
+          "coverage": "full",
+          "row": 10,
+          "term": "Termination of commitments"
+        },
+        {
+          "coverage": "full",
+          "row": 12,
+          "term": "Minimum equity contribution"
+        },
+        {
+          "coverage": "full",
+          "row": 15,
+          "term": "Revolver closing date draws"
+        },
+        {
+          "coverage": "full",
+          "row": 16,
+          "term": "Revolver – borrowing notices"
+        },
+        {
+          "coverage": "full",
+          "row": 17,
+          "term": "Revolver – additional borrowers"
+        },
+        {
+          "coverage": "full",
+          "row": 18,
+          "term": "Revolver currencies"
+        },
+        {
+          "coverage": "full",
+          "row": 19,
+          "term": "Swingline"
+        },
+        {
+          "coverage": "full",
+          "row": 22,
+          "term": "[DDTL – conditions to draw]"
+        },
+        {
+          "coverage": "full",
+          "row": 23,
+          "term": "[DDTL – use of proceeds]"
+        },
+        {
+          "coverage": "full",
+          "row": 25,
+          "term": "Incremental Amount – prepayments"
+        },
+        {
+          "coverage": "full",
+          "row": 28,
+          "term": "Incremental – racking and stacking"
+        },
+        {
+          "coverage": "full",
+          "row": 29,
+          "term": "Incremental – RCF sub-limit"
+        },
+        {
+          "coverage": "full",
+          "row": 30,
+          "term": "Incremental – reclassification"
+        },
+        {
+          "coverage": "full",
+          "row": 32,
+          "term": "Incremental – terms"
+        },
+        {
+          "coverage": "full",
+          "row": 33,
+          "term": "Incremental – inside maturity basket"
+        },
+        {
+          "coverage": "full",
+          "row": 34,
+          "term": "Incremental – MFN"
+        },
+        {
+          "coverage": "full",
+          "row": 127,
+          "term": "Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing"
+        },
+        {
+          "coverage": "full",
+          "row": 137,
+          "term": "Equity Co-Invest"
+        },
+        {
+          "coverage": "full",
+          "row": 138,
+          "term": "Pricing"
+        },
+        {
+          "coverage": "full",
+          "row": 147,
+          "term": "Mandatory Prepayments"
+        },
+        {
+          "coverage": "full",
+          "row": 151,
+          "term": "Acquisition Agreement"
+        },
+        {
+          "coverage": "full",
+          "row": 156,
+          "term": "Other"
+        },
+        {
+          "coverage": "full",
+          "row": 158,
+          "term": "Commitment/Underwriting Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 163,
+          "term": "Alternate Transaction Fee"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 69 (Voluntary Prepayments); PC Term Comparison, Call Protection section",
+      "pc_ref": [
+        "Call Protection"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Business days advance notice required for borrowings. DLS Preferred (Row 6): SOFR/LIBOR borrowings require written notice to Administrative Agent '3 business day prior to the requested borrowing'; Base Rate Loans require '1 business day prior.' Review Template (Row 16): 'Confirm operational notice periods to avoid liquidity friction.'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.borrowing_mechanics.notice_periods",
+          "level": 3,
+          "market_benchmarks": {
+            "abr_notice_period": "1 BD",
+            "sofr_notice_period": "3 BD"
+          },
+          "name": "Borrowing Notice Periods",
+          "r18_concept_ids": [
+            "facility_structure.borrowing_mechanics.notice_periods"
+          ],
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 16,
+              "term": "Revolver – borrowing notices"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (LIBOR: 3 BD, Base Rate: 1 BD); Review Template, Row 16"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Minimum principal for each borrowing and minimum amounts for continuations and conversions. DLS Preferred (Row 6): 'Minimum Borrowings: $[___]/$[___]' — separate minimums for SOFR and Base Rate borrowings. Standard: $1M for SOFR, $0.5M for ABR in leveraged credit.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.borrowing_mechanics.minimum_amounts",
+          "level": 3,
+          "market_benchmarks": {
+            "abr_floor": "$0.5M",
+            "sofr_floor": "$1M"
+          },
+          "name": "Minimum Borrowing Amounts",
+          "r18_concept_ids": [
+            "facility_structure.borrowing_mechanics.minimum_amounts"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (Minimum Borrowings: '$[___]/$[___]')"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Borrower's right to select interest period tenor upon borrowing or continuation (1, 3, or 6 months for SOFR), determining rate reset frequency and breakage exposure. DLS Preferred (Row 6): Borrowing Notice 'shall specify, among other things, the type of Borrowing (i.e. LIBOR vs. Base Rate), the amount of borrowing and the interest period.' ABR borrowings have no interest period (daily reset).",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.borrowing_mechanics.interest_period_selection",
+          "level": 3,
+          "name": "Interest Period Selection",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (Borrowing Notice specification)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Indemnification for lender losses from prepayment on a date other than the last day of an interest period for SOFR loans, creating economic friction for mid-period prepayment. Standard yield protection provision in all leveraged loan agreements. Review Template notes this as a standard provision requiring no special attention.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.term_loan",
+          "id": "deal_econ.term_loan.borrowing_mechanics.breakage_costs",
+          "level": 3,
+          "name": "Breakage Costs",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (implied by SOFR borrowing mechanics); Learning Material, broken funding references"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Procedural requirements for term loan borrowings: notice periods, minimum amounts, interest period selection, and continuation/conversion mechanics. DLS Preferred (Row 6) specifies the full borrowing framework: LIBOR/SOFR Loans 3 BD notice, Base Rate Loans 1 BD notice, Minimum Borrowings $[___], no more than [5] series outstanding, and conversion/continuation mechanics with same notice periods.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.02",
+          "Section 2.03"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Commitments / Loans)"
+      },
+      "family_id": "deal_econ.term_loan",
+      "id": "deal_econ.term_loan.borrowing_mechanics",
+      "level": 2,
+      "market_benchmarks": {
+        "minimum_borrowing": "$1M increments, $5M minimum",
+        "prevalence": "99%+ (standard provision)",
+        "standard_notice": "3 business days (SOFR), 1 business day (ABR)"
+      },
+      "name": "Borrowing Mechanics",
+      "r18_concept_ids": [
+        "facility_structure.borrowing_mechanics"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 6 (Revolver borrowing mechanics, applicable to TL); Review Template, Row 16 (borrowing notices)"
+    }
+  ],
+  "corpus_prevalence": "high",
+  "definition": "Senior secured funded debt facility drawn in full at closing with scheduled amortization and a bullet maturity. DLS Preferred specifies: 'At least $[___]; Amortization: 0.25% per quarter, bullet at maturity; Maturity: [___] years.' In BSL, structured as Term A (pro rata, 4-5% annual amortization, 5-year maturity, held by relationship banks) or Term B (1% annual amortization, 7-year maturity, held by CLOs and institutional investors). In private credit, typically a single unitranche facility.",
+  "dls_ref": [
+    "DLS:4:Funded Debt at Closing",
+    "DLS:5:Commitment Percentage",
+    "DLS:8:Term Loan",
+    "DLS:9:Accordion",
+    "DLS:10:Incremental Term Loans may only be used ",
+    "DLS:14:Delayed Draw Term Loans",
+    "DLS:17:Amend and Extend",
+    "DLS:21:Term Loan Margin",
+    "DLS:30:Term Loan",
+    "DLS:69:Voluntary Prepayments"
+  ],
+  "domain_id": "deal_econ",
+  "extraction_difficulty": "medium",
+  "family_id": "deal_econ.term_loan",
+  "id": "deal_econ.term_loan",
+  "level": 1,
+  "market_benchmarks": {
+    "amortization": "0.25%/quarter TL-B, 1%+/quarter TL-A",
+    "margin_range": "LMM: S+500-625, CMM: S+450-575, UMM: S+350-475, BSL: S+250-400",
+    "maturity": "TL-A: 5 years, TL-B: 7 years (Review Template)",
+    "source": "DLS Preferred Row 8: '0.25% per quarter, bullet at maturity'; Review Template Row 3: 'Term B (7 years; 1% per year)'; analysis/pricing/components.json market_ranges",
+    "_source": "DLS Preferred Row 8; Review Template Row 3; analysis/pricing/components.json"
+  },
+  "name": "Term Loan",
+  "negotiation_spectrum": {
+    "aggressive_position": "Soft call protection in connection with repricings only (subject to carve outs for IPO, change of control transactions and transformative acquisitions/transactions)",
+    "dls_source_rows": [
+      {
+        "label": "Voluntary Prepayments",
+        "row": 69
+      }
+    ],
+    "is_highlighted": true,
+    "key_negotiation_points": [
+      "Call protection type (hard call vs soft call)",
+      "Call protection schedule (102/101/par)",
+      "Hard call vs soft call (repricing only)",
+      "Repricing protection carve-outs",
+      "Carve-outs (IPO, CoC, transformative acquisitions)",
+      "ECF sweep percentage (75%/50%/25%/0% step-downs)",
+      "Leverage-based step-down schedule for ECF",
+      "Deductions from ECF (investments, RPs, capex, acquisitions)",
+      "Dollar-for-dollar credit for voluntary prepayments",
+      "ECF sweep holiday (deferral of first payment)",
+      "Minimum ECF threshold before sweep required",
+      "Reinvestment period for asset sale proceeds",
+      "Extension period for committed reinvestment",
+      "Leverage-based step-downs for asset sale sweep",
+      "De minimis threshold per sale/annual",
+      "Equity issuance sweep (100% vs none)",
+      "Non-permitted debt proceeds sweep",
+      "Declined mandatory prepayment proceeds build Available Amount"
+    ],
+    "market_position": "Market standard for voluntary prepayments reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+    "preferred_position": "Hard call protection 102/101/par covering voluntary prepayments, mandatory prepayments, repricings, and acceleration",
+    "source": "R14-B"
+  },
+  "r18_concept_ids": [
+    "facility_structure.term_loan",
+    "facility_structure.borrowing_mechanics"
+  ],
+  "type": "family",
+  "definition_source": "DLS Preferred, Row 8 (Term Loan); Review Template, Row 3 (Debt Quantum); Learning Material, Part 3 Section 7 (Maturity and Amortization)"
+}

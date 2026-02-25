@@ -1,0 +1,254 @@
+[
+  {
+    "id": "governance.assignments.assignment_mechanics",
+    "name": "Assignment Mechanics",
+    "family_id": "governance.assignments",
+    "concept_area": "assignments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Assignments",
+        "Participations",
+        "Transfers"
+      ],
+      "keyword_anchors": [
+        "assignment",
+        "participation",
+        "transfer",
+        "Register",
+        "Eligible Assignee",
+        "Disqualified Institution"
+      ],
+      "concept_specific_keywords": [
+        "Assignment Mechanics"
+      ]
+    }
+  },
+  {
+    "id": "governance.assignments.dq_list",
+    "name": "Disqualified Lenders List",
+    "family_id": "governance.assignments",
+    "concept_area": "assignments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Assignments",
+        "Participations",
+        "Transfers"
+      ],
+      "keyword_anchors": [
+        "assignment",
+        "participation",
+        "transfer",
+        "Register",
+        "Eligible Assignee",
+        "Disqualified Institution"
+      ],
+      "concept_specific_keywords": [
+        "Disqualified Lenders List"
+      ]
+    }
+  },
+  {
+    "id": "governance.assignments.affiliated_lender",
+    "name": "Affiliated Lender Restrictions",
+    "family_id": "governance.assignments",
+    "concept_area": "assignments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Assignments",
+        "Participations",
+        "Transfers"
+      ],
+      "keyword_anchors": [
+        "assignment",
+        "participation",
+        "transfer",
+        "Register",
+        "Eligible Assignee",
+        "Disqualified Institution"
+      ],
+      "concept_specific_keywords": [
+        "Affiliated Lender Restrictions"
+      ]
+    }
+  },
+  {
+    "id": "governance.assignments.borrower_buybacks",
+    "name": "Borrower Buybacks",
+    "family_id": "governance.assignments",
+    "concept_area": "assignments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Assignments",
+        "Participations",
+        "Transfers"
+      ],
+      "keyword_anchors": [
+        "assignment",
+        "participation",
+        "transfer",
+        "Register",
+        "Eligible Assignee",
+        "Disqualified Institution"
+      ],
+      "concept_specific_keywords": [
+        "Borrower Buybacks"
+      ]
+    }
+  },
+  {
+    "id": "governance.assignments.participations",
+    "name": "Participation Mechanics",
+    "family_id": "governance.assignments",
+    "concept_area": "assignments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Assignments",
+        "Participations",
+        "Transfers"
+      ],
+      "keyword_anchors": [
+        "assignment",
+        "participation",
+        "transfer",
+        "Register",
+        "Eligible Assignee",
+        "Disqualified Institution"
+      ],
+      "concept_specific_keywords": [
+        "Participation Mechanics"
+      ]
+    }
+  },
+  {
+    "id": "governance.assignments.sponsor_debt",
+    "name": "Sponsor Debt Limitation",
+    "family_id": "governance.assignments",
+    "concept_area": "assignments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Assignments",
+        "Participations",
+        "Transfers"
+      ],
+      "keyword_anchors": [
+        "assignment",
+        "participation",
+        "transfer",
+        "Register",
+        "Eligible Assignee",
+        "Disqualified Institution"
+      ],
+      "concept_specific_keywords": [
+        "Sponsor Debt Limitation"
+      ]
+    }
+  },
+  {
+    "id": "governance.assignments.assignment_restrictions",
+    "name": "Assignment Amendment Restrictions",
+    "family_id": "governance.assignments",
+    "concept_area": "assignments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Assignments",
+        "Participations",
+        "Transfers"
+      ],
+      "keyword_anchors": [
+        "assignment",
+        "participation",
+        "transfer",
+        "Register",
+        "Eligible Assignee",
+        "Disqualified Institution"
+      ],
+      "concept_specific_keywords": [
+        "Assignment Amendment Restrictions",
+        "Required Lender"
+      ]
+    }
+  },
+  {
+    "id": "governance.assignments.modification_covenants",
+    "name": "Modification Covenants",
+    "family_id": "governance.assignments",
+    "concept_area": "assignments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Assignments",
+        "Participations",
+        "Transfers"
+      ],
+      "keyword_anchors": [
+        "assignment",
+        "participation",
+        "transfer",
+        "Register",
+        "Eligible Assignee",
+        "Disqualified Institution"
+      ],
+      "concept_specific_keywords": [
+        "Modification Covenants"
+      ]
+    }
+  },
+  {
+    "id": "governance.assignments.net_short",
+    "name": "Net Short Lender Disenfranchisement",
+    "family_id": "governance.assignments",
+    "concept_area": "assignments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Assignments",
+        "Participations",
+        "Transfers"
+      ],
+      "keyword_anchors": [
+        "assignment",
+        "participation",
+        "transfer",
+        "Register",
+        "Eligible Assignee",
+        "Disqualified Institution"
+      ],
+      "concept_specific_keywords": [
+        "Net Short Lender Disenfranchisement"
+      ]
+    }
+  },
+  {
+    "id": "governance.assignments.additional_agents",
+    "name": "Right to Appoint Additional Agents",
+    "family_id": "governance.assignments",
+    "concept_area": "assignments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Assignments",
+        "Participations",
+        "Transfers"
+      ],
+      "keyword_anchors": [
+        "assignment",
+        "participation",
+        "transfer",
+        "Register",
+        "Eligible Assignee",
+        "Disqualified Institution"
+      ],
+      "concept_specific_keywords": [
+        "Right to Appoint Additional Agents",
+        "Administrative Agent"
+      ]
+    }
+  }
+]

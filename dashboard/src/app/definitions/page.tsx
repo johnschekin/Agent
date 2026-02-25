@@ -34,7 +34,7 @@ function TermRow({
         "border-t border-border cursor-pointer transition-colors border-l-2",
         isSelected
           ? "bg-accent-blue/10 border-l-accent-blue"
-          : "border-l-transparent hover:bg-surface-tertiary/50"
+          : "border-l-transparent hover:bg-surface-3/50"
       )}
       onClick={() => onSelect(term.term)}
     >
@@ -55,7 +55,7 @@ function TermRow({
           {term.engines.map((e) => (
             <span
               key={e}
-              className="inline-block px-1.5 py-0.5 rounded text-[10px] bg-surface-tertiary text-text-muted border border-border"
+              className="inline-block px-1.5 py-0.5 rounded text-[10px] bg-surface-3 text-text-muted border border-border"
             >
               {e}
             </span>
@@ -106,7 +106,7 @@ function VariantPanel({
           return (
             <div
               key={`${v.doc_id}_${i}`}
-              className="border border-border rounded-sm p-3 bg-surface-primary"
+              className="border border-border rounded-sm p-3 bg-surface-1"
             >
               <div className="flex items-center gap-2 mb-2">
                 <button
@@ -264,7 +264,7 @@ export default function DefinitionsPage() {
                 ) : (
                   <div className="overflow-auto max-h-[500px]">
                     <table className="w-full text-sm" aria-label="Definition term frequency">
-                      <thead className="sticky top-0 bg-surface-tertiary z-10">
+                      <thead className="sticky top-0 bg-surface-3 z-10">
                         <tr className="text-left text-xs text-text-muted uppercase">
                           <th className="px-3 py-2">Term</th>
                           <th className="px-3 py-2 text-right">Documents</th>

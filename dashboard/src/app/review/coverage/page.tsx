@@ -82,7 +82,7 @@ export default function ReviewCoverageHeatmapPage() {
       {query.data && query.data.concepts.length > 0 && (
         <div className="overflow-auto border border-border rounded-md max-h-[72vh]">
           <table className="text-xs min-w-[900px]">
-            <thead className="bg-surface-tertiary text-text-muted uppercase sticky top-0 z-10">
+            <thead className="bg-surface-3 text-text-muted uppercase sticky top-0 z-10">
               <tr>
                 <th className="px-3 py-2 text-left min-w-[280px]">Concept</th>
                 {query.data.templates.map((t) => (

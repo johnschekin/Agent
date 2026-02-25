@@ -28,7 +28,7 @@ function ClauseRow({
   return (
     <>
       <tr
-        className="border-t border-border hover:bg-surface-tertiary/50 cursor-pointer transition-colors"
+        className="border-t border-border hover:bg-surface-3/50 cursor-pointer transition-colors"
         onClick={() => setExpanded(!expanded)}
       >
         <td className="px-3 py-2">
@@ -50,7 +50,7 @@ function ClauseRow({
           {item.clause_path}
         </td>
         <td className="px-3 py-2">
-          <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-medium bg-surface-tertiary text-text-secondary border border-border">
+          <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-medium bg-surface-3 text-text-secondary border border-border">
             {item.clause_label}
           </span>
         </td>
@@ -65,7 +65,7 @@ function ClauseRow({
         </td>
       </tr>
       {expanded && (
-        <tr className="bg-surface-tertiary/30">
+        <tr className="bg-surface-3/30">
           <td colSpan={8} className="px-6 py-3">
             <pre className="text-xs font-mono text-text-secondary whitespace-pre-wrap max-h-40 overflow-auto leading-relaxed">
               {item.clause_text || "(no text)"}
@@ -297,7 +297,7 @@ export default function ClausesPage() {
             ) : (
               <div className="overflow-auto max-h-[500px]">
                 <table className="w-full text-sm" aria-label="Clause matches">
-                  <thead className="sticky top-0 bg-surface-tertiary z-10">
+                  <thead className="sticky top-0 bg-surface-3 z-10">
                     <tr className="text-left text-xs text-text-muted uppercase">
                       <th className="px-3 py-2">Doc ID</th>
                       <th className="px-3 py-2">Section</th>

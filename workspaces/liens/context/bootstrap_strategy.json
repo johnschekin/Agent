@@ -1,0 +1,1009 @@
+[
+  {
+    "id": "debt_capacity.liens.general_basket",
+    "name": "General Liens Basket",
+    "family_id": "debt_capacity.liens",
+    "concept_area": "liens",
+    "playbook_ref": "neg_cov_liens.general_basket",
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "other Liens",
+        "greater of",
+        "at any time outstanding"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_liens.general_basket] Universal catch-all basket (9/9). Always near the end of the permitted liens list. Phrased as 'other Liens' in all 9 deals (64% precision). Usually capped as 'greater of $X and Y% of Consolidated EBITDA' (7/9). Caps range from $5M (Arch, Sleep Number) to $750M (Caesars). Pass 2: removed 'aggregate' (noisy, <10% precision)."
+      ],
+      "defined_term_dependencies": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "Permitted Lien",
+        "Lien",
+        "Ratio Debt",
+        "Permitted Ratio Debt",
+        "Purchase Money Obligation",
+        "Capital Lease Obligation",
+        "Permitted Refinancing"
+      ],
+      "fallback_escalation": "Search for 'Permitted Liens' or 'Permitted Encumbrances' in Section 1.01 defined terms. If inline, search for 'other Liens' or 'materialmen' near negative covenant headings. 'Permitted Liens' (5/9) and 'Permitted Encumbrances' (2/9) have complementary coverage — need both.",
+      "heading_patterns": [
+        "Liens",
+        "Limitation on Liens",
+        "Liens; Negative Pledge",
+        "Negative Pledge",
+        "Basket and Ratio Calculations",
+        "Restricted Payments"
+      ],
+      "keyword_anchors": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "other Liens",
+        "securing Indebtedness",
+        "materialmen",
+        "Restricted Payment"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "incur",
+        "assume",
+        "pledge",
+        "mortgage",
+        "encumbrance"
+      ],
+      "source_file": "neg_cov_liens.json",
+      "xref_follow": [
+        "Section 1.01 for 'Permitted Liens' definition (Arch, National Vision) or 'Permitted Encumbrances' definition (LendingTree, Viavi) — baskets may be split between covenant section and defined term",
+        "Cross-references to specific Indebtedness section baskets (e.g., 'Liens securing Section 10.01(j) Indebtedness')",
+        "Intercreditor Agreement references for lien priority mechanics"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.liens.ratio_liens",
+    "name": "Ratio Liens",
+    "family_id": "debt_capacity.liens",
+    "concept_area": "liens",
+    "playbook_ref": "neg_cov_liens.ratio_liens",
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "Leverage Ratio",
+        "Total Secured Leverage Ratio",
+        "First Lien Leverage Ratio",
+        "Secured Leverage Ratio",
+        "Ratio Debt",
+        "Permitted Ratio Debt",
+        "Incremental Equivalent Debt"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_liens.ratio_liens] Ratio-tested lien basket — present in 4/9 deals. Two patterns: (1) Inline ratio test (Caesars: 'Total Secured Leverage Ratio'; Viavi: 'First Lien Leverage Ratio'/'Secured Leverage Ratio'), (2) Cross-reference to defined term (Boyd: 'Ratio Debt', LendingTree: 'Permitted Ratio Debt'). Pass 2: removed 'Senior Secured Leverage Ratio' (0/9 — dead)."
+      ],
+      "defined_term_dependencies": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "Permitted Lien",
+        "Lien",
+        "Ratio Debt",
+        "Permitted Ratio Debt",
+        "Purchase Money Obligation",
+        "Capital Lease Obligation",
+        "Permitted Refinancing"
+      ],
+      "fallback_escalation": "Search for 'Permitted Liens' or 'Permitted Encumbrances' in Section 1.01 defined terms. If inline, search for 'other Liens' or 'materialmen' near negative covenant headings. 'Permitted Liens' (5/9) and 'Permitted Encumbrances' (2/9) have complementary coverage — need both.",
+      "heading_patterns": [
+        "Liens",
+        "Limitation on Liens",
+        "Liens; Negative Pledge",
+        "Negative Pledge",
+        "Basket and Ratio Calculations",
+        "Restricted Payments"
+      ],
+      "keyword_anchors": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "other Liens",
+        "securing Indebtedness",
+        "materialmen",
+        "Restricted Payment"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "incur",
+        "assume",
+        "pledge",
+        "mortgage",
+        "encumbrance"
+      ],
+      "source_file": "neg_cov_liens.json",
+      "xref_follow": [
+        "Section 1.01 for 'Permitted Liens' definition (Arch, National Vision) or 'Permitted Encumbrances' definition (LendingTree, Viavi) — baskets may be split between covenant section and defined term",
+        "Cross-references to specific Indebtedness section baskets (e.g., 'Liens securing Section 10.01(j) Indebtedness')",
+        "Intercreditor Agreement references for lien priority mechanics"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.liens.permitted_pari_passu_liens",
+    "name": "Permitted Pari Passu Liens",
+    "family_id": "debt_capacity.liens",
+    "concept_area": "liens",
+    "playbook_ref": "neg_cov_liens.agent_ica",
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "Pari Passu Intercreditor",
+        "Second Lien Intercreditor",
+        "First Priority",
+        "Second Priority",
+        "Intercreditor Agreement",
+        "junior to"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_liens.intercreditor_priority] Present in 5/9 deals (Boyd, Caesars, National Vision, Red Rock, Viavi). Liens securing first/second priority debt subject to an intercreditor agreement. Pass 2: removed 'senior to' (0/9 — dead)."
+      ],
+      "defined_term_dependencies": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "Permitted Lien",
+        "Lien",
+        "Ratio Debt",
+        "Permitted Ratio Debt",
+        "Purchase Money Obligation",
+        "Capital Lease Obligation",
+        "Permitted Refinancing"
+      ],
+      "fallback_escalation": "Search for 'Permitted Liens' or 'Permitted Encumbrances' in Section 1.01 defined terms. If inline, search for 'other Liens' or 'materialmen' near negative covenant headings. 'Permitted Liens' (5/9) and 'Permitted Encumbrances' (2/9) have complementary coverage — need both.",
+      "heading_patterns": [
+        "Liens",
+        "Limitation on Liens",
+        "Liens; Negative Pledge",
+        "Negative Pledge",
+        "Basket and Ratio Calculations",
+        "Restricted Payments"
+      ],
+      "keyword_anchors": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "other Liens",
+        "securing Indebtedness",
+        "materialmen",
+        "Restricted Payment"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "incur",
+        "assume",
+        "pledge",
+        "mortgage",
+        "encumbrance"
+      ],
+      "source_file": "neg_cov_liens.json",
+      "xref_follow": [
+        "Section 1.01 for 'Permitted Liens' definition (Arch, National Vision) or 'Permitted Encumbrances' definition (LendingTree, Viavi) — baskets may be split between covenant section and defined term",
+        "Cross-references to specific Indebtedness section baskets (e.g., 'Liens securing Section 10.01(j) Indebtedness')",
+        "Intercreditor Agreement references for lien priority mechanics"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.liens.junior_liens",
+    "name": "Junior Liens",
+    "family_id": "debt_capacity.liens",
+    "concept_area": "liens",
+    "playbook_ref": "neg_cov_liens.agent_ica",
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "Pari Passu Intercreditor",
+        "Second Lien Intercreditor",
+        "First Priority",
+        "Second Priority",
+        "Intercreditor Agreement",
+        "junior to"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_liens.intercreditor_priority] Present in 5/9 deals (Boyd, Caesars, National Vision, Red Rock, Viavi). Liens securing first/second priority debt subject to an intercreditor agreement. Pass 2: removed 'senior to' (0/9 — dead)."
+      ],
+      "defined_term_dependencies": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "Permitted Lien",
+        "Lien",
+        "Ratio Debt",
+        "Permitted Ratio Debt",
+        "Purchase Money Obligation",
+        "Capital Lease Obligation",
+        "Permitted Refinancing"
+      ],
+      "fallback_escalation": "Search for 'Permitted Liens' or 'Permitted Encumbrances' in Section 1.01 defined terms. If inline, search for 'other Liens' or 'materialmen' near negative covenant headings. 'Permitted Liens' (5/9) and 'Permitted Encumbrances' (2/9) have complementary coverage — need both.",
+      "heading_patterns": [
+        "Liens",
+        "Limitation on Liens",
+        "Liens; Negative Pledge",
+        "Negative Pledge",
+        "Basket and Ratio Calculations",
+        "Restricted Payments"
+      ],
+      "keyword_anchors": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "other Liens",
+        "securing Indebtedness",
+        "materialmen",
+        "Restricted Payment"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "incur",
+        "assume",
+        "pledge",
+        "mortgage",
+        "encumbrance"
+      ],
+      "source_file": "neg_cov_liens.json",
+      "xref_follow": [
+        "Section 1.01 for 'Permitted Liens' definition (Arch, National Vision) or 'Permitted Encumbrances' definition (LendingTree, Viavi) — baskets may be split between covenant section and defined term",
+        "Cross-references to specific Indebtedness section baskets (e.g., 'Liens securing Section 10.01(j) Indebtedness')",
+        "Intercreditor Agreement references for lien priority mechanics"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.liens.non_collateral_liens",
+    "name": "Liens on Non-Collateral Assets",
+    "family_id": "debt_capacity.liens",
+    "concept_area": "liens",
+    "playbook_ref": "neg_cov_liens.agent_ica",
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "Non-Credit Party",
+        "non-Guarantor",
+        "not required to be pledged",
+        "Foreign Subsidiary"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_liens.non_loan_party] Present in 5/9 deals. Pass 2: removed 'Non-Loan Party' (0/9 — dead; deals use 'Non-Credit Party' or 'non-Guarantor' instead)."
+      ],
+      "defined_term_dependencies": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "Permitted Lien",
+        "Lien",
+        "Ratio Debt",
+        "Permitted Ratio Debt",
+        "Purchase Money Obligation",
+        "Capital Lease Obligation",
+        "Permitted Refinancing"
+      ],
+      "fallback_escalation": "Search for 'Permitted Liens' or 'Permitted Encumbrances' in Section 1.01 defined terms. If inline, search for 'other Liens' or 'materialmen' near negative covenant headings. 'Permitted Liens' (5/9) and 'Permitted Encumbrances' (2/9) have complementary coverage — need both.",
+      "heading_patterns": [
+        "Liens",
+        "Limitation on Liens",
+        "Liens; Negative Pledge",
+        "Negative Pledge",
+        "Basket and Ratio Calculations",
+        "Restricted Payments"
+      ],
+      "keyword_anchors": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "other Liens",
+        "securing Indebtedness",
+        "materialmen",
+        "Restricted Payment"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "incur",
+        "assume",
+        "pledge",
+        "mortgage",
+        "encumbrance"
+      ],
+      "source_file": "neg_cov_liens.json",
+      "xref_follow": [
+        "Section 1.01 for 'Permitted Liens' definition (Arch, National Vision) or 'Permitted Encumbrances' definition (LendingTree, Viavi) — baskets may be split between covenant section and defined term",
+        "Cross-references to specific Indebtedness section baskets (e.g., 'Liens securing Section 10.01(j) Indebtedness')",
+        "Intercreditor Agreement references for lien priority mechanics"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.liens.operational_liens",
+    "name": "Operational / Permitted Encumbrances",
+    "family_id": "debt_capacity.liens",
+    "concept_area": "liens",
+    "playbook_ref": "neg_cov_liens.agent_ica",
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "materialmen",
+        "warehousemen",
+        "carrier",
+        "mechanic",
+        "landlord",
+        "repairmen",
+        "maritime",
+        "Taxes",
+        "assessments",
+        "governmental charges",
+        "not yet due",
+        "contested",
+        "unemployment insurance",
+        "social security",
+        "workers",
+        "surety bond",
+        "performance bond",
+        "bids",
+        "tenders",
+        "easement",
+        "zoning",
+        "rights-of-way",
+        "encroachment",
+        "title defect",
+        "building codes",
+        "judgment",
+        "judgments",
+        "not constituting an Event of Default",
+        "license",
+        "sublicense",
+        "sublease",
+        "Intellectual Property",
+        "software",
+        "technology",
+        "covenants not to sue"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_liens.statutory_liens] Universal basket (9/9). Statutory/trade liens arising in ordinary course of business. 'materialmen' (9/9, 100% precision) is the single best Liens-section indicator across the entire strategy. Sleep Number uses 'warehousers' instead of 'warehousemen'. Boyd and Red Rock include 'maritime liens'.",
+        "[neg_cov_liens.tax_liens] Universal basket (9/9). Always the first or second basket. Permits liens for taxes/assessments not yet due or being contested in good faith. Very standard language across all deals.",
+        "[neg_cov_liens.workers_comp_bonds] Universal basket (9/9). Workers comp/social security/unemployment insurance deposits + performance bonds/surety bonds for bids, tenders, contracts, leases. 'unemployment insurance' (8/9, 100% precision) is the best anchor.",
+        "[neg_cov_liens.real_property] Universal basket (9/9). Real property encumbrances that don't materially interfere with business operations. Pass 2: removed singular 'right-of-way' (0/9 — deals use plural 'rights-of-way' exclusively).",
+        "[neg_cov_liens.judgment_liens] Universal basket (9/9). Judgment liens that do not constitute an Event of Default under the cross-default provisions. Usually references the EoD section (e.g., Section 11.01(h)).",
+        "[neg_cov_liens.ip_licenses_subleases] Present in 8/9 deals (all except Sleep Number). Two sub-types: (1) Liens from granting licenses/subleases to others in ordinary course, (2) Liens from IP/software/technology licenses granted to the borrower group. Viavi includes 'covenants not to sue'."
+      ],
+      "defined_term_dependencies": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "Permitted Lien",
+        "Lien",
+        "Ratio Debt",
+        "Permitted Ratio Debt",
+        "Purchase Money Obligation",
+        "Capital Lease Obligation",
+        "Permitted Refinancing"
+      ],
+      "fallback_escalation": "Search for 'Permitted Liens' or 'Permitted Encumbrances' in Section 1.01 defined terms. If inline, search for 'other Liens' or 'materialmen' near negative covenant headings. 'Permitted Liens' (5/9) and 'Permitted Encumbrances' (2/9) have complementary coverage — need both.",
+      "heading_patterns": [
+        "Liens",
+        "Limitation on Liens",
+        "Liens; Negative Pledge",
+        "Negative Pledge",
+        "Basket and Ratio Calculations",
+        "Restricted Payments"
+      ],
+      "keyword_anchors": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "other Liens",
+        "securing Indebtedness",
+        "materialmen",
+        "Restricted Payment"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "incur",
+        "assume",
+        "pledge",
+        "mortgage",
+        "encumbrance"
+      ],
+      "source_file": "neg_cov_liens.json",
+      "xref_follow": [
+        "Section 1.01 for 'Permitted Liens' definition (Arch, National Vision) or 'Permitted Encumbrances' definition (LendingTree, Viavi) — baskets may be split between covenant section and defined term",
+        "Cross-references to specific Indebtedness section baskets (e.g., 'Liens securing Section 10.01(j) Indebtedness')",
+        "Intercreditor Agreement references for lien priority mechanics"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.liens.purchase_money_capital_lease_liens",
+    "name": "Purchase Money / Capital Lease Liens",
+    "family_id": "debt_capacity.liens",
+    "concept_area": "liens",
+    "playbook_ref": "neg_cov_liens.agent_ica",
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "Purchase Money",
+        "Capital Lease",
+        "Finance Lease",
+        "purchase money",
+        "property being acquired",
+        "property being financed",
+        "equipment being financed",
+        "equipment financed",
+        "property or equipment"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_liens.purchase_money_lease] Universal basket (9/9). Liens securing purchase money obligations and capital/finance lease obligations. Pass 2: removed 'Capitalized Lease' (redundant with 'Capital Lease'). Added 'equipment being financed', 'equipment financed', 'property or equipment' (fixes National Vision miss — cross-refs S10.1(d) with equipment financing language)."
+      ],
+      "defined_term_dependencies": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "Permitted Lien",
+        "Lien",
+        "Ratio Debt",
+        "Permitted Ratio Debt",
+        "Purchase Money Obligation",
+        "Capital Lease Obligation",
+        "Permitted Refinancing"
+      ],
+      "fallback_escalation": "Search for 'Permitted Liens' or 'Permitted Encumbrances' in Section 1.01 defined terms. If inline, search for 'other Liens' or 'materialmen' near negative covenant headings. 'Permitted Liens' (5/9) and 'Permitted Encumbrances' (2/9) have complementary coverage — need both.",
+      "heading_patterns": [
+        "Liens",
+        "Limitation on Liens",
+        "Liens; Negative Pledge",
+        "Negative Pledge",
+        "Basket and Ratio Calculations",
+        "Restricted Payments"
+      ],
+      "keyword_anchors": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "other Liens",
+        "securing Indebtedness",
+        "materialmen",
+        "Restricted Payment"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "incur",
+        "assume",
+        "pledge",
+        "mortgage",
+        "encumbrance"
+      ],
+      "source_file": "neg_cov_liens.json",
+      "xref_follow": [
+        "Section 1.01 for 'Permitted Liens' definition (Arch, National Vision) or 'Permitted Encumbrances' definition (LendingTree, Viavi) — baskets may be split between covenant section and defined term",
+        "Cross-references to specific Indebtedness section baskets (e.g., 'Liens securing Section 10.01(j) Indebtedness')",
+        "Intercreditor Agreement references for lien priority mechanics"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.liens.agent_ica_authority",
+    "name": "Agent ICA Authority",
+    "family_id": "debt_capacity.liens",
+    "concept_area": "liens",
+    "playbook_ref": "neg_cov_liens.agent_ica",
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "Pari Passu Intercreditor",
+        "Second Lien Intercreditor",
+        "First Priority",
+        "Second Priority",
+        "Intercreditor Agreement",
+        "junior to"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_liens.intercreditor_priority] Present in 5/9 deals (Boyd, Caesars, National Vision, Red Rock, Viavi). Liens securing first/second priority debt subject to an intercreditor agreement. Pass 2: removed 'senior to' (0/9 — dead)."
+      ],
+      "defined_term_dependencies": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "Permitted Lien",
+        "Lien",
+        "Ratio Debt",
+        "Permitted Ratio Debt",
+        "Purchase Money Obligation",
+        "Capital Lease Obligation",
+        "Permitted Refinancing"
+      ],
+      "fallback_escalation": "Search for 'Permitted Liens' or 'Permitted Encumbrances' in Section 1.01 defined terms. If inline, search for 'other Liens' or 'materialmen' near negative covenant headings. 'Permitted Liens' (5/9) and 'Permitted Encumbrances' (2/9) have complementary coverage — need both.",
+      "heading_patterns": [
+        "Liens",
+        "Limitation on Liens",
+        "Liens; Negative Pledge",
+        "Negative Pledge",
+        "Basket and Ratio Calculations",
+        "Restricted Payments"
+      ],
+      "keyword_anchors": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "other Liens",
+        "securing Indebtedness",
+        "materialmen",
+        "Restricted Payment"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "incur",
+        "assume",
+        "pledge",
+        "mortgage",
+        "encumbrance"
+      ],
+      "source_file": "neg_cov_liens.json",
+      "xref_follow": [
+        "Section 1.01 for 'Permitted Liens' definition (Arch, National Vision) or 'Permitted Encumbrances' definition (LendingTree, Viavi) — baskets may be split between covenant section and defined term",
+        "Cross-references to specific Indebtedness section baskets (e.g., 'Liens securing Section 10.01(j) Indebtedness')",
+        "Intercreditor Agreement references for lien priority mechanics"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.liens.redesignation",
+    "name": "Liens Redesignation from Other Covenants",
+    "family_id": "debt_capacity.liens",
+    "concept_area": "liens",
+    "playbook_ref": "neg_cov_liens.agent_ica",
+    "search_strategy": {
+      "concept_specific_keywords": [],
+      "concept_specific_notes": [],
+      "defined_term_dependencies": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "Permitted Lien",
+        "Lien",
+        "Ratio Debt",
+        "Permitted Ratio Debt",
+        "Purchase Money Obligation",
+        "Capital Lease Obligation",
+        "Permitted Refinancing"
+      ],
+      "fallback_escalation": "Search for 'Permitted Liens' or 'Permitted Encumbrances' in Section 1.01 defined terms. If inline, search for 'other Liens' or 'materialmen' near negative covenant headings. 'Permitted Liens' (5/9) and 'Permitted Encumbrances' (2/9) have complementary coverage — need both.",
+      "heading_patterns": [
+        "Liens",
+        "Limitation on Liens",
+        "Liens; Negative Pledge",
+        "Negative Pledge",
+        "Basket and Ratio Calculations",
+        "Restricted Payments"
+      ],
+      "keyword_anchors": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "other Liens",
+        "securing Indebtedness",
+        "materialmen",
+        "Restricted Payment"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "incur",
+        "assume",
+        "pledge",
+        "mortgage",
+        "encumbrance"
+      ],
+      "source_file": "neg_cov_liens.json",
+      "xref_follow": [
+        "Section 1.01 for 'Permitted Liens' definition (Arch, National Vision) or 'Permitted Encumbrances' definition (LendingTree, Viavi) — baskets may be split between covenant section and defined term",
+        "Cross-references to specific Indebtedness section baskets (e.g., 'Liens securing Section 10.01(j) Indebtedness')",
+        "Intercreditor Agreement references for lien priority mechanics"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.liens.other_liens",
+    "name": "Other Liens Baskets",
+    "family_id": "debt_capacity.liens",
+    "concept_area": "liens",
+    "playbook_ref": "neg_cov_liens.non_collateral_liens",
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "setoff",
+        "set-off",
+        "banker",
+        "netting",
+        "deposit account",
+        "sweep",
+        "Loan Document",
+        "Security Documents",
+        "Cash Collateralization",
+        "existing on",
+        "existing as of",
+        "listed on",
+        "consignment",
+        "conditional sale",
+        "title retention",
+        "precautionary",
+        "intercompany",
+        "in favor of Holdings",
+        "in favor of the Borrower",
+        "Receivables Financing",
+        "Receivables Facility",
+        "Securitization",
+        "receivables and related assets",
+        "Qualified Receivables",
+        "earnest money",
+        "escrow deposits",
+        "purchase price",
+        "letter of intent",
+        "Permitted Investments",
+        "insurance premium",
+        "insurance policies",
+        "defeasance",
+        "discharge",
+        "deposited",
+        "escrowed",
+        "Escrowed Proceeds",
+        "Gaming",
+        "Gaming/Racing",
+        "Gaming Laws",
+        "Vessel",
+        "Permitted Vessel Liens",
+        "customs",
+        "revenue authorities",
+        "importation of goods",
+        "customs duties",
+        "Swap Agreement",
+        "Swap Contract",
+        "Hedging Obligations",
+        "Cash Management Services",
+        "joint venture",
+        "put and call",
+        "Equity Interests in joint ventures",
+        "organizational documents",
+        "title of a lessor",
+        "interest of a lessor",
+        "title of a licensor",
+        "initial deposits",
+        "margin deposits",
+        "commodity trading",
+        "brokerage accounts",
+        "Sale and Lease-Back",
+        "Sale Leaseback",
+        "Permitted Sale Lease-Back"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_liens.banker_setoff] Universal basket (9/9). Statutory/common law banker's liens, rights of setoff, and netting agreements on deposit/securities accounts. Deals vary between 'set-off' and 'setoff' spelling.",
+        "[neg_cov_liens.loan_document_liens] Universal basket (9/9). Liens created under the loan/credit documents themselves (the foundational security interest). Pass 2: removed 'Loan Documents' (plural), 'Credit Documents', 'Administrative Agent', 'Collateral Agent' (all noisy — appear in many baskets within the section). Added singular 'Loan Document' (fixes Quidel miss). Retained 'Security Documents' and 'Cash Collateralization' as distinctive anchors.",
+        "[neg_cov_liens.existing_liens] Universal basket (9/9). Grandfather clause for liens existing at closing, usually identified by a schedule reference. Pass 2: removed 'Schedule', 'Closing Date', 'Effective Date', 'set forth on' (all <10% precision — appear throughout document, not distinctive to this basket). Added 'existing as of' and 'listed on' as higher-precision alternatives.",
+        "[neg_cov_liens.conditional_sale_consignment] Present in 8/9 deals (all except Sleep Number). Liens from conditional sale, title retention, and consignment arrangements + precautionary UCC filings. Pass 2: removed 'UCC' (noisy — appears in many unrelated contexts). 'consignment' (7/9, 100% precision) and 'precautionary' (6/9, 75% precision) remain excellent anchors.",
+        "[neg_cov_liens.intercompany_liens] Present in 6/9 deals. Pass 2: removed 'in favor of any Guarantor' (0/9 — dead), 'between Loan Parties' (0/9 — dead).",
+        "[neg_cov_liens.receivables_securitization] Present in 6/9 deals (Arch, Caesars, LendingTree, National Vision, Quidel, Viavi). Liens on receivables and related assets for permitted receivables financing/securitization facilities.",
+        "[neg_cov_liens.earnest_money_deposits] Present in 7/9 deals. Pass 2: removed 'cash deposits' (0/9 — dead), 'Permitted Acquisitions' (0/9 — dead). Added 'escrow deposits', 'purchase price', 'letter of intent' (fixes Viavi miss).",
+        "[neg_cov_liens.insurance_premium] Present in 5/9 deals. Pass 2: removed 'financing of insurance' (0/9 — dead).",
+        "[neg_cov_liens.defeasance_discharge] Present in 6/9 deals (Arch, Caesars, National Vision, Quidel, Red Rock, Viavi). Liens on cash/investments deposited or escrowed for defeasance, discharge, or satisfaction of indebtedness.",
+        "[neg_cov_liens.gaming_vessel] Industry-specific, present in 3/9 deals (Boyd, Caesars, Red Rock — all gaming companies). Liens required by gaming/racing laws, gaming leases, and permitted vessel liens.",
+        "[neg_cov_liens.customs_revenue] Present in 6/9 deals (Boyd, Caesars, National Vision, Quidel, Red Rock, Viavi). Liens in favor of customs and revenue authorities arising as a matter of law to secure payment of customs duties in connection with importation of goods.",
+        "[neg_cov_liens.swap_hedging] Present in 4/9 deals (Boyd, Caesars, National Vision, Viavi). Liens securing swap/hedging obligations and cash management services.",
+        "[neg_cov_liens.joint_venture_equity] Present in 5/9 deals (Boyd, Caesars, National Vision, Red Rock, Viavi). Put/call arrangements and restrictions on disposition related to equity interests in joint ventures, often arising from organizational documents.",
+        "[neg_cov_liens.lessor_title_interest] Present in 7/9 deals (Arch, Boyd, Caesars, LendingTree, Quidel, Red Rock, Viavi). Any interest or title of a lessor, sublessor, licensor, or sublicensor under leases or licenses. Near-universal basket.",
+        "[neg_cov_liens.initial_deposits_margin] Present in 5/9 deals (Boyd, Caesars, National Vision, Quidel, Viavi). Reasonable customary initial deposits and margin deposits attaching to commodity trading or brokerage accounts.",
+        "[neg_cov_liens.sale_leaseback] Present in 3/9 deals (Caesars, Quidel, Viavi). Liens arising out of permitted sale and leaseback transactions."
+      ],
+      "defined_term_dependencies": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "Permitted Lien",
+        "Lien",
+        "Ratio Debt",
+        "Permitted Ratio Debt",
+        "Purchase Money Obligation",
+        "Capital Lease Obligation",
+        "Permitted Refinancing"
+      ],
+      "fallback_escalation": "Search for 'Permitted Liens' or 'Permitted Encumbrances' in Section 1.01 defined terms. If inline, search for 'other Liens' or 'materialmen' near negative covenant headings. 'Permitted Liens' (5/9) and 'Permitted Encumbrances' (2/9) have complementary coverage — need both.",
+      "heading_patterns": [
+        "Liens",
+        "Limitation on Liens",
+        "Liens; Negative Pledge",
+        "Negative Pledge",
+        "Basket and Ratio Calculations",
+        "Restricted Payments"
+      ],
+      "keyword_anchors": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "other Liens",
+        "securing Indebtedness",
+        "materialmen",
+        "Restricted Payment"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "incur",
+        "assume",
+        "pledge",
+        "mortgage",
+        "encumbrance"
+      ],
+      "source_file": "neg_cov_liens.json",
+      "xref_follow": [
+        "Section 1.01 for 'Permitted Liens' definition (Arch, National Vision) or 'Permitted Encumbrances' definition (LendingTree, Viavi) — baskets may be split between covenant section and defined term",
+        "Cross-references to specific Indebtedness section baskets (e.g., 'Liens securing Section 10.01(j) Indebtedness')",
+        "Intercreditor Agreement references for lien priority mechanics"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.liens.excluded_property_liens",
+    "name": "Liens on Excluded Property",
+    "family_id": "debt_capacity.liens",
+    "concept_area": "liens",
+    "playbook_ref": "neg_cov_liens.agent_ica",
+    "search_strategy": {
+      "concept_specific_keywords": [],
+      "concept_specific_notes": [],
+      "defined_term_dependencies": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "Permitted Lien",
+        "Lien",
+        "Ratio Debt",
+        "Permitted Ratio Debt",
+        "Purchase Money Obligation",
+        "Capital Lease Obligation",
+        "Permitted Refinancing"
+      ],
+      "fallback_escalation": "Search for 'Permitted Liens' or 'Permitted Encumbrances' in Section 1.01 defined terms. If inline, search for 'other Liens' or 'materialmen' near negative covenant headings. 'Permitted Liens' (5/9) and 'Permitted Encumbrances' (2/9) have complementary coverage — need both.",
+      "heading_patterns": [
+        "Liens",
+        "Limitation on Liens",
+        "Liens; Negative Pledge",
+        "Negative Pledge",
+        "Basket and Ratio Calculations",
+        "Restricted Payments"
+      ],
+      "keyword_anchors": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "other Liens",
+        "securing Indebtedness",
+        "materialmen",
+        "Restricted Payment"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "incur",
+        "assume",
+        "pledge",
+        "mortgage",
+        "encumbrance"
+      ],
+      "source_file": "neg_cov_liens.json",
+      "xref_follow": [
+        "Section 1.01 for 'Permitted Liens' definition (Arch, National Vision) or 'Permitted Encumbrances' definition (LendingTree, Viavi) — baskets may be split between covenant section and defined term",
+        "Cross-references to specific Indebtedness section baskets (e.g., 'Liens securing Section 10.01(j) Indebtedness')",
+        "Intercreditor Agreement references for lien priority mechanics"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.liens.silent_liens",
+    "name": "Silent Liens",
+    "family_id": "debt_capacity.liens",
+    "concept_area": "liens",
+    "playbook_ref": "neg_cov_liens.agent_ica",
+    "search_strategy": {
+      "concept_specific_keywords": [],
+      "concept_specific_notes": [],
+      "defined_term_dependencies": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "Permitted Lien",
+        "Lien",
+        "Ratio Debt",
+        "Permitted Ratio Debt",
+        "Purchase Money Obligation",
+        "Capital Lease Obligation",
+        "Permitted Refinancing"
+      ],
+      "fallback_escalation": "Search for 'Permitted Liens' or 'Permitted Encumbrances' in Section 1.01 defined terms. If inline, search for 'other Liens' or 'materialmen' near negative covenant headings. 'Permitted Liens' (5/9) and 'Permitted Encumbrances' (2/9) have complementary coverage — need both.",
+      "heading_patterns": [
+        "Liens",
+        "Limitation on Liens",
+        "Liens; Negative Pledge",
+        "Negative Pledge",
+        "Basket and Ratio Calculations",
+        "Restricted Payments"
+      ],
+      "keyword_anchors": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "other Liens",
+        "securing Indebtedness",
+        "materialmen",
+        "Restricted Payment"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "incur",
+        "assume",
+        "pledge",
+        "mortgage",
+        "encumbrance"
+      ],
+      "source_file": "neg_cov_liens.json",
+      "xref_follow": [
+        "Section 1.01 for 'Permitted Liens' definition (Arch, National Vision) or 'Permitted Encumbrances' definition (LendingTree, Viavi) — baskets may be split between covenant section and defined term",
+        "Cross-references to specific Indebtedness section baskets (e.g., 'Liens securing Section 10.01(j) Indebtedness')",
+        "Intercreditor Agreement references for lien priority mechanics"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.liens.refinancing_liens",
+    "name": "Refinancing Liens",
+    "family_id": "debt_capacity.liens",
+    "concept_area": "liens",
+    "playbook_ref": "neg_cov_liens.agent_ica",
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "Permitted Refinancing",
+        "refunding",
+        "after-acquired property"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_liens.refinancing_liens] Present in 8/9 deals (all except Sleep Number). Liens securing refinancing of permitted indebtedness, limited to the same property (no 'spreading'). Pass 2: removed 'refinancing' (noisy — 'Permitted Refinancing' is much higher precision)."
+      ],
+      "defined_term_dependencies": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "Permitted Lien",
+        "Lien",
+        "Ratio Debt",
+        "Permitted Ratio Debt",
+        "Purchase Money Obligation",
+        "Capital Lease Obligation",
+        "Permitted Refinancing"
+      ],
+      "fallback_escalation": "Search for 'Permitted Liens' or 'Permitted Encumbrances' in Section 1.01 defined terms. If inline, search for 'other Liens' or 'materialmen' near negative covenant headings. 'Permitted Liens' (5/9) and 'Permitted Encumbrances' (2/9) have complementary coverage — need both.",
+      "heading_patterns": [
+        "Liens",
+        "Limitation on Liens",
+        "Liens; Negative Pledge",
+        "Negative Pledge",
+        "Basket and Ratio Calculations",
+        "Restricted Payments"
+      ],
+      "keyword_anchors": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "other Liens",
+        "securing Indebtedness",
+        "materialmen",
+        "Restricted Payment"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "incur",
+        "assume",
+        "pledge",
+        "mortgage",
+        "encumbrance"
+      ],
+      "source_file": "neg_cov_liens.json",
+      "xref_follow": [
+        "Section 1.01 for 'Permitted Liens' definition (Arch, National Vision) or 'Permitted Encumbrances' definition (LendingTree, Viavi) — baskets may be split between covenant section and defined term",
+        "Cross-references to specific Indebtedness section baskets (e.g., 'Liens securing Section 10.01(j) Indebtedness')",
+        "Intercreditor Agreement references for lien priority mechanics"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.liens.non_consensual_liens",
+    "name": "Non-Consensual Liens",
+    "family_id": "debt_capacity.liens",
+    "concept_area": "liens",
+    "playbook_ref": "neg_cov_liens.agent_ica",
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "materialmen",
+        "warehousemen",
+        "carrier",
+        "mechanic",
+        "landlord",
+        "repairmen",
+        "maritime",
+        "Taxes",
+        "assessments",
+        "governmental charges",
+        "not yet due",
+        "contested",
+        "judgment",
+        "judgments",
+        "not constituting an Event of Default"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_liens.statutory_liens] Universal basket (9/9). Statutory/trade liens arising in ordinary course of business. 'materialmen' (9/9, 100% precision) is the single best Liens-section indicator across the entire strategy. Sleep Number uses 'warehousers' instead of 'warehousemen'. Boyd and Red Rock include 'maritime liens'.",
+        "[neg_cov_liens.tax_liens] Universal basket (9/9). Always the first or second basket. Permits liens for taxes/assessments not yet due or being contested in good faith. Very standard language across all deals.",
+        "[neg_cov_liens.judgment_liens] Universal basket (9/9). Judgment liens that do not constitute an Event of Default under the cross-default provisions. Usually references the EoD section (e.g., Section 11.01(h))."
+      ],
+      "defined_term_dependencies": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "Permitted Lien",
+        "Lien",
+        "Ratio Debt",
+        "Permitted Ratio Debt",
+        "Purchase Money Obligation",
+        "Capital Lease Obligation",
+        "Permitted Refinancing"
+      ],
+      "fallback_escalation": "Search for 'Permitted Liens' or 'Permitted Encumbrances' in Section 1.01 defined terms. If inline, search for 'other Liens' or 'materialmen' near negative covenant headings. 'Permitted Liens' (5/9) and 'Permitted Encumbrances' (2/9) have complementary coverage — need both.",
+      "heading_patterns": [
+        "Liens",
+        "Limitation on Liens",
+        "Liens; Negative Pledge",
+        "Negative Pledge",
+        "Basket and Ratio Calculations",
+        "Restricted Payments"
+      ],
+      "keyword_anchors": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "other Liens",
+        "securing Indebtedness",
+        "materialmen",
+        "Restricted Payment"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "incur",
+        "assume",
+        "pledge",
+        "mortgage",
+        "encumbrance"
+      ],
+      "source_file": "neg_cov_liens.json",
+      "xref_follow": [
+        "Section 1.01 for 'Permitted Liens' definition (Arch, National Vision) or 'Permitted Encumbrances' definition (LendingTree, Viavi) — baskets may be split between covenant section and defined term",
+        "Cross-references to specific Indebtedness section baskets (e.g., 'Liens securing Section 10.01(j) Indebtedness')",
+        "Intercreditor Agreement references for lien priority mechanics"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.liens.cash_collateral_liens",
+    "name": "Cash Collateral Liens",
+    "family_id": "debt_capacity.liens",
+    "concept_area": "liens",
+    "playbook_ref": "neg_cov_liens.agent_ica",
+    "search_strategy": {
+      "concept_specific_keywords": [],
+      "concept_specific_notes": [],
+      "defined_term_dependencies": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "Permitted Lien",
+        "Lien",
+        "Ratio Debt",
+        "Permitted Ratio Debt",
+        "Purchase Money Obligation",
+        "Capital Lease Obligation",
+        "Permitted Refinancing"
+      ],
+      "fallback_escalation": "Search for 'Permitted Liens' or 'Permitted Encumbrances' in Section 1.01 defined terms. If inline, search for 'other Liens' or 'materialmen' near negative covenant headings. 'Permitted Liens' (5/9) and 'Permitted Encumbrances' (2/9) have complementary coverage — need both.",
+      "heading_patterns": [
+        "Liens",
+        "Limitation on Liens",
+        "Liens; Negative Pledge",
+        "Negative Pledge",
+        "Basket and Ratio Calculations",
+        "Restricted Payments"
+      ],
+      "keyword_anchors": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "other Liens",
+        "securing Indebtedness",
+        "materialmen",
+        "Restricted Payment"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "incur",
+        "assume",
+        "pledge",
+        "mortgage",
+        "encumbrance"
+      ],
+      "source_file": "neg_cov_liens.json",
+      "xref_follow": [
+        "Section 1.01 for 'Permitted Liens' definition (Arch, National Vision) or 'Permitted Encumbrances' definition (LendingTree, Viavi) — baskets may be split between covenant section and defined term",
+        "Cross-references to specific Indebtedness section baskets (e.g., 'Liens securing Section 10.01(j) Indebtedness')",
+        "Intercreditor Agreement references for lien priority mechanics"
+      ]
+    }
+  }
+]

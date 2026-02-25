@@ -15,7 +15,11 @@ import {
   fetchQualitySummary,
   fetchQualityAnomalies,
   fetchEdgeCases,
+  fetchEdgeCaseClauseDetail,
   fetchSectionFrequency,
+  fetchArticleConcepts,
+  fetchCorpusQuery,
+  type CorpusQueryParams,
   fetchHeadingDiscovery,
   fetchPatternTest,
   fetchDnaDiscovery,
@@ -203,6 +207,15 @@ export function useEdgeCases(params: EdgeCaseParams) {
   });
 }
 
+export function useEdgeCaseClauseDetail(docId: string | null, category: string | null) {
+  return useQuery({
+    queryKey: ["edge-cases", "clause-detail", docId, category],
+    queryFn: () => fetchEdgeCaseClauseDetail(docId!, category!),
+    enabled: !!docId && !!category,
+    staleTime: 60_000,
+  });
+}
+
 // --- Section Frequency ---
 
 export function useSectionFrequency(params: SectionFrequencyParams) {
@@ -211,6 +224,24 @@ export function useSectionFrequency(params: SectionFrequencyParams) {
     queryFn: () => fetchSectionFrequency(params),
     staleTime: 60_000,
     placeholderData: keepPreviousData,
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Corpus Query Builder
+// ---------------------------------------------------------------------------
+
+export function useArticleConcepts(cohortOnly = true) {
+  return useQuery({
+    queryKey: ["articles", "concepts", cohortOnly],
+    queryFn: () => fetchArticleConcepts(cohortOnly),
+    staleTime: 300_000,
+  });
+}
+
+export function useCorpusQuery() {
+  return useMutation({
+    mutationFn: (params: CorpusQueryParams) => fetchCorpusQuery(params),
   });
 }
 
@@ -530,6 +561,1126 @@ export function useConceptsWithEvidence() {
   return useQuery({
     queryKey: ["ml", "concepts-with-evidence"],
     queryFn: fetchConceptsWithEvidence,
+    staleTime: 60_000,
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Phase 3: Bulk Section-to-Ontology-Family Linking
+// ---------------------------------------------------------------------------
+
+import {
+  fetchLinks,
+  fetchLink,
+  fetchLinkSummary,
+  unlinkLink,
+  relinkLink,
+  bookmarkLink,
+  addLinkNote,
+  deferLink,
+  updateLinkRole,
+  batchUnlink,
+  batchRelink,
+  batchBookmark,
+  fetchWhyMatched,
+  fetchContextStrip,
+  fetchComparables,
+  fetchReassignSuggestions,
+  reassignLink,
+  createPreview,
+  fetchPreviewCandidates,
+  fetchPreviewCandidatesPage,
+  updateCandidateVerdicts,
+  applyPreview,
+  fetchLinkRules,
+  fetchLinkRule,
+  createLinkRule,
+  updateLinkRule,
+  deleteLinkRule,
+  publishLinkRule,
+  archiveLinkRule,
+  fetchRulePins,
+  createRulePin,
+  deleteRulePin,
+  evaluateRulePins,
+  validateDslStandalone,
+  fetchConflicts,
+  fetchConflictPolicies,
+  createConflictPolicy,
+  fetchMacros,
+  createMacro,
+  deleteMacro,
+  fetchTemplateBaselines,
+  createTemplateBaseline,
+  createSession,
+  fetchSession,
+  updateSessionCursor,
+  addReviewMark,
+  claimSessionBatch,
+  undoLastAction,
+  redoLastAction,
+  fetchLinkRuns,
+  fetchLinkJobs,
+  fetchLinkJobStatus,
+  cancelLinkJob,
+  submitLinkJob,
+  exportLinks,
+  fetchDriftAlerts,
+  fetchDriftChecks,
+  fetchAnalyticsDashboard,
+  fetchCalibrations,
+  fetchCrossrefPeek,
+  fetchCounterfactual,
+  fetchNodeLinks,
+  fetchNodeLinkRules,
+  createChildLinkPreview,
+  applyChildLinks,
+  unlinkNodeLink,
+  fetchEmbeddingsStats,
+  computeEmbeddings,
+  fetchFamilyCentroids,
+  fetchStarterKits,
+  fetchStarterKit,
+  fetchCompoundCovenants,
+  resolveCompoundCovenant,
+  fetchTemplateBaselineText,
+  fetchCoverageGaps,
+  fetchWhyNotCoverage,
+  fetchExpandTerm,
+  fetchRuleAutocomplete,
+  fetchQueryCount,
+  fetchSemanticCandidates,
+  fetchCanaryApply,
+  createPreviewFromAst,
+  evaluateRuleText,
+  compareLinkRules,
+  acknowledgeDriftAlert,
+  importLabels,
+  cloneLinkRule,
+  promoteRule,
+  lockRule,
+  unlockRule,
+  checkPromotionGates,
+  fetchVintageHeatmap,
+  type LinksQueryParams,
+  type LinkRulesQueryParams,
+  type TemplateBaselinesQueryParams,
+} from "./api";
+
+// ── Links ──────────────────────────────────────────────────────────────────
+
+export function useLinks(params: LinksQueryParams = {}) {
+  return useQuery({
+    queryKey: ["links", "list", params],
+    queryFn: () => fetchLinks(params),
+    staleTime: 15_000,
+    placeholderData: keepPreviousData,
+  });
+}
+
+export function useLink(linkId: string | null) {
+  return useQuery({
+    queryKey: ["links", "detail", linkId],
+    queryFn: () => fetchLink(linkId!),
+    enabled: !!linkId,
+    staleTime: 30_000,
+  });
+}
+
+export function useLinkSummary() {
+  return useQuery({
+    queryKey: ["links", "summary"],
+    queryFn: fetchLinkSummary,
+    staleTime: 15_000,
+  });
+}
+
+export function useUnlinkMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ linkId, reason }: { linkId: string; reason: string }) =>
+      unlinkLink(linkId, reason),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links"] });
+    },
+  });
+}
+
+export function useRelinkMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (linkId: string) => relinkLink(linkId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links"] });
+    },
+  });
+}
+
+export function useBookmarkMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (linkId: string) => bookmarkLink(linkId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links"] });
+    },
+  });
+}
+
+export function useAddNoteMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ linkId, note }: { linkId: string; note: string }) =>
+      addLinkNote(linkId, note),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links"] });
+    },
+  });
+}
+
+export function useDeferMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (linkId: string) => deferLink(linkId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links"] });
+    },
+  });
+}
+
+export function useUpdateRoleMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ linkId, role }: { linkId: string; role: string }) =>
+      updateLinkRole(linkId, role),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links"] });
+    },
+  });
+}
+
+export function useBatchUnlinkMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ linkIds, reason }: { linkIds: string[]; reason: string }) =>
+      batchUnlink(linkIds, reason),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links"] });
+    },
+  });
+}
+
+export function useBatchRelinkMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (linkIds: string[]) => batchRelink(linkIds),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links"] });
+    },
+  });
+}
+
+export function useBatchBookmarkMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (linkIds: string[]) => batchBookmark(linkIds),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links"] });
+    },
+  });
+}
+
+// ── Why matched ────────────────────────────────────────────────────────────
+
+export function useWhyMatched(linkId: string | null) {
+  return useQuery({
+    queryKey: ["links", "why-matched", linkId],
+    queryFn: () => fetchWhyMatched(linkId!),
+    enabled: !!linkId,
+    staleTime: 60_000,
+  });
+}
+
+// ── Context strip ──────────────────────────────────────────────────────────
+
+export function useContextStrip(linkId: string | null) {
+  return useQuery({
+    queryKey: ["links", "context-strip", linkId],
+    queryFn: () => fetchContextStrip(linkId!),
+    enabled: !!linkId,
+    staleTime: 60_000,
+  });
+}
+
+// ── Comparables ────────────────────────────────────────────────────────────
+
+export function useComparables(linkId: string | null) {
+  return useQuery({
+    queryKey: ["links", "comparables", linkId],
+    queryFn: () => fetchComparables(linkId!),
+    enabled: !!linkId,
+    staleTime: 60_000,
+  });
+}
+
+// ── Reassign ───────────────────────────────────────────────────────────────
+
+export function useReassignSuggestions(linkId: string | null) {
+  return useQuery({
+    queryKey: ["links", "reassign-suggestions", linkId],
+    queryFn: () => fetchReassignSuggestions(linkId!),
+    enabled: !!linkId,
+    staleTime: 60_000,
+  });
+}
+
+export function useReassignMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ linkId, newFamilyId }: { linkId: string; newFamilyId: string }) =>
+      reassignLink(linkId, newFamilyId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links"] });
+    },
+  });
+}
+
+// ── Preview / Apply ────────────────────────────────────────────────────────
+
+export function useCreatePreviewMutation() {
+  return useMutation({
+    mutationFn: ({ familyId, ruleId }: { familyId: string; ruleId?: string }) =>
+      createPreview(familyId, ruleId),
+  });
+}
+
+export function usePreviewCandidates(
+  previewId: string | null,
+  params: {
+    pageSize?: number;
+    confidenceTier?: import("./types").ConfidenceTier;
+    afterScore?: number | null;
+    afterDocId?: string | null;
+  } = {},
+) {
+  return useQuery({
+    queryKey: ["links", "preview-candidates", previewId, params],
+    queryFn: () =>
+      Object.keys(params).length > 0
+        ? fetchPreviewCandidatesPage(previewId!, params)
+        : fetchPreviewCandidates(previewId!),
+    enabled: !!previewId,
+    staleTime: 30_000,
+  });
+}
+
+export function useUpdateVerdictsMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      previewId,
+      verdicts,
+    }: {
+      previewId: string;
+      verdicts: { doc_id: string; section_number: string; verdict: string }[];
+    }) => updateCandidateVerdicts(previewId, verdicts),
+    onSuccess: (_data, variables) => {
+      qc.invalidateQueries({
+        queryKey: ["links", "preview-candidates", variables.previewId],
+      });
+    },
+  });
+}
+
+export function useApplyPreviewMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      previewId,
+      candidateSetHash,
+    }: {
+      previewId: string;
+      candidateSetHash: string;
+    }) => applyPreview(previewId, candidateSetHash),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links"] });
+    },
+  });
+}
+
+// ── Rules ──────────────────────────────────────────────────────────────────
+
+export function useLinkRules(params: LinkRulesQueryParams = {}) {
+  return useQuery({
+    queryKey: ["links", "rules", params],
+    queryFn: () => fetchLinkRules(params),
+    staleTime: 30_000,
+    placeholderData: keepPreviousData,
+  });
+}
+
+export function useLinkRule(ruleId: string | null) {
+  return useQuery({
+    queryKey: ["links", "rules", "detail", ruleId],
+    queryFn: () => fetchLinkRule(ruleId!),
+    enabled: !!ruleId,
+    staleTime: 30_000,
+  });
+}
+
+export function useCreateRuleMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: createLinkRule,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links", "rules"] });
+    },
+  });
+}
+
+export function useUpdateRuleMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ ruleId, data }: { ruleId: string; data: Record<string, unknown> }) =>
+      updateLinkRule(ruleId, data),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links", "rules"] });
+    },
+  });
+}
+
+export function useDeleteRuleMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (ruleId: string) => deleteLinkRule(ruleId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links", "rules"] });
+    },
+  });
+}
+
+export function usePublishRuleMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (ruleId: string) => publishLinkRule(ruleId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links", "rules"] });
+    },
+  });
+}
+
+export function useArchiveRuleMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (ruleId: string) => archiveLinkRule(ruleId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links", "rules"] });
+    },
+  });
+}
+
+// ── Rule comparison ────────────────────────────────────────────────────
+
+export function useRuleCompareMutation() {
+  return useMutation({
+    mutationFn: ({ ruleIdA, ruleIdB }: { ruleIdA: string; ruleIdB: string }) =>
+      compareLinkRules(ruleIdA, ruleIdB),
+  });
+}
+
+// ── Rule pins ──────────────────────────────────────────────────────────────
+
+export function useRulePins(ruleId: string | null) {
+  return useQuery({
+    queryKey: ["links", "rule-pins", ruleId],
+    queryFn: () => fetchRulePins(ruleId!),
+    enabled: !!ruleId,
+    staleTime: 30_000,
+  });
+}
+
+export function useCreatePinMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      ruleId,
+      data,
+    }: {
+      ruleId: string;
+      data: {
+        doc_id: string;
+        section_number: string;
+        expected_verdict: "true_positive" | "true_negative";
+        note?: string;
+      };
+    }) => createRulePin(ruleId, data),
+    onSuccess: (_d, v) => {
+      qc.invalidateQueries({ queryKey: ["links", "rule-pins", v.ruleId] });
+    },
+  });
+}
+
+export function useDeletePinMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ ruleId, pinId }: { ruleId: string; pinId: string }) =>
+      deleteRulePin(ruleId, pinId),
+    onSuccess: (_d, v) => {
+      qc.invalidateQueries({ queryKey: ["links", "rule-pins", v.ruleId] });
+    },
+  });
+}
+
+export function useEvaluatePinsMutation() {
+  return useMutation({
+    mutationFn: (ruleId: string) => evaluateRulePins(ruleId),
+  });
+}
+
+// ── DSL validation ─────────────────────────────────────────────────────────
+
+export function useValidateDslMutation() {
+  return useMutation({
+    mutationFn: (text: string) => validateDslStandalone(text),
+  });
+}
+
+// ── Conflicts ──────────────────────────────────────────────────────────────
+
+export function useConflicts() {
+  return useQuery({
+    queryKey: ["links", "conflicts"],
+    queryFn: fetchConflicts,
+    staleTime: 30_000,
+  });
+}
+
+export function useConflictPolicies() {
+  return useQuery({
+    queryKey: ["links", "conflict-policies"],
+    queryFn: fetchConflictPolicies,
+    staleTime: 60_000,
+  });
+}
+
+export function useCreateConflictPolicyMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: createConflictPolicy,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links", "conflict-policies"] });
+      qc.invalidateQueries({ queryKey: ["links", "conflicts"] });
+    },
+  });
+}
+
+// ── Macros ─────────────────────────────────────────────────────────────────
+
+export function useMacros() {
+  return useQuery({
+    queryKey: ["links", "macros"],
+    queryFn: fetchMacros,
+    staleTime: 60_000,
+  });
+}
+
+export function useCreateMacroMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: createMacro,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links", "macros"] });
+    },
+  });
+}
+
+export function useDeleteMacroMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (name: string) => deleteMacro(name),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links", "macros"] });
+    },
+  });
+}
+
+// ── Template baselines ─────────────────────────────────────────────────────
+
+export function useTemplateBaselines(params: TemplateBaselinesQueryParams = {}) {
+  return useQuery({
+    queryKey: ["links", "template-baselines", params],
+    queryFn: () => fetchTemplateBaselines(params),
+    staleTime: 60_000,
+  });
+}
+
+export function useCreateBaselineMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: createTemplateBaseline,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links", "template-baselines"] });
+    },
+  });
+}
+
+// ── Sessions ───────────────────────────────────────────────────────────────
+
+export function useCreateSessionMutation() {
+  return useMutation({
+    mutationFn: (familyId?: string) => createSession(familyId),
+  });
+}
+
+export function useSession(sessionId: string | null) {
+  return useQuery({
+    queryKey: ["links", "session", sessionId],
+    queryFn: () => fetchSession(sessionId!),
+    enabled: !!sessionId,
+    staleTime: 10_000,
+    refetchInterval: 30_000,
+  });
+}
+
+export function useUpdateCursorMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ sessionId, cursor }: { sessionId: string; cursor: string }) =>
+      updateSessionCursor(sessionId, cursor),
+    onSuccess: (_d, v) => {
+      qc.invalidateQueries({ queryKey: ["links", "session", v.sessionId] });
+    },
+  });
+}
+
+export function useAddReviewMarkMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      sessionId,
+      data,
+    }: {
+      sessionId: string;
+      data: { link_id: string; action: string; reason?: string };
+    }) => addReviewMark(sessionId, data),
+    onSuccess: (_d, v) => {
+      qc.invalidateQueries({ queryKey: ["links", "session", v.sessionId] });
+      qc.invalidateQueries({ queryKey: ["links"] });
+    },
+  });
+}
+
+export function useClaimSessionBatchMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ sessionId, batchSize }: { sessionId: string; batchSize?: number }) =>
+      claimSessionBatch(sessionId, batchSize ?? 50),
+    onSuccess: (_d, variables) => {
+      qc.invalidateQueries({ queryKey: ["links", "session", variables.sessionId] });
+      qc.invalidateQueries({ queryKey: ["links"] });
+    },
+  });
+}
+
+// ── Undo / Redo ────────────────────────────────────────────────────────────
+
+export function useUndoMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: undoLastAction,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links"] });
+    },
+  });
+}
+
+export function useRedoMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: redoLastAction,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links"] });
+    },
+  });
+}
+
+// ── Runs ───────────────────────────────────────────────────────────────────
+
+export function useLinkRuns() {
+  return useQuery({
+    queryKey: ["links", "runs"],
+    queryFn: fetchLinkRuns,
+    staleTime: 30_000,
+  });
+}
+
+// ── Link Jobs ──────────────────────────────────────────────────────────────
+
+export function useLinkJobs() {
+  return useQuery({
+    queryKey: ["links", "jobs"],
+    queryFn: fetchLinkJobs,
+    staleTime: 15_000,
+    refetchInterval: 10_000,
+  });
+}
+
+export function useLinkJobStatus(jobId: string | null) {
+  return useQuery({
+    queryKey: ["links", "job-status", jobId],
+    queryFn: () => fetchLinkJobStatus(jobId!),
+    enabled: !!jobId,
+    staleTime: 5_000,
+    refetchInterval: 3_000,
+  });
+}
+
+export function useCancelLinkJobMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (jobId: string) => cancelLinkJob(jobId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links", "jobs"] });
+    },
+  });
+}
+
+export function useSubmitLinkJobMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: submitLinkJob,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links", "jobs"] });
+    },
+  });
+}
+
+// ── Export ──────────────────────────────────────────────────────────────────
+
+export function useExportLinksMutation() {
+  return useMutation({
+    mutationFn: ({ format, familyId }: { format: string; familyId?: string }) =>
+      exportLinks(format, familyId),
+  });
+}
+
+// ── Drift & Analytics ──────────────────────────────────────────────────────
+
+export function useDriftAlerts() {
+  return useQuery({
+    queryKey: ["links", "drift-alerts"],
+    queryFn: fetchDriftAlerts,
+    staleTime: 30_000,
+  });
+}
+
+export function useDriftChecks() {
+  return useQuery({
+    queryKey: ["links", "drift-checks"],
+    queryFn: fetchDriftChecks,
+    staleTime: 60_000,
+  });
+}
+
+export function useAnalyticsDashboard() {
+  return useQuery({
+    queryKey: ["links", "analytics"],
+    queryFn: fetchAnalyticsDashboard,
+    staleTime: 30_000,
+  });
+}
+
+// ── Calibrations ───────────────────────────────────────────────────────────
+
+export function useCalibrations() {
+  return useQuery({
+    queryKey: ["links", "calibrations"],
+    queryFn: fetchCalibrations,
+    staleTime: 60_000,
+  });
+}
+
+// ── Crossref peek ──────────────────────────────────────────────────────────
+
+export function useCrossrefPeek(sectionRef: string | null) {
+  return useQuery({
+    queryKey: ["links", "crossref-peek", sectionRef],
+    queryFn: () => fetchCrossrefPeek(sectionRef!),
+    enabled: !!sectionRef,
+    staleTime: 120_000,
+  });
+}
+
+// ── Counterfactual ─────────────────────────────────────────────────────────
+
+export function useCounterfactualMutation() {
+  return useMutation({
+    mutationFn: fetchCounterfactual,
+  });
+}
+
+// ── Child-node linking ─────────────────────────────────────────────────────
+
+export function useNodeLinks(linkId: string | null) {
+  return useQuery({
+    queryKey: ["links", "node-links", linkId],
+    queryFn: () => fetchNodeLinks(linkId!),
+    enabled: !!linkId,
+    staleTime: 30_000,
+  });
+}
+
+export function useNodeLinkRules(familyId?: string) {
+  return useQuery({
+    queryKey: ["links", "node-rules", familyId],
+    queryFn: () => fetchNodeLinkRules(familyId),
+    staleTime: 60_000,
+  });
+}
+
+export function useCreateChildLinkPreviewMutation() {
+  return useMutation({
+    mutationFn: ({ linkId, familyId }: { linkId: string; familyId?: string }) =>
+      createChildLinkPreview(linkId, familyId),
+  });
+}
+
+export function useApplyChildLinksMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      linkId,
+      previewId,
+      verdicts,
+    }: {
+      linkId: string;
+      previewId: string;
+      verdicts?: { clause_id: string; doc_id: string; verdict: "accepted" | "rejected" }[];
+    }) => applyChildLinks(linkId, previewId, verdicts),
+    onSuccess: (_d, v) => {
+      qc.invalidateQueries({ queryKey: ["links", "node-links", v.linkId] });
+    },
+  });
+}
+
+export function useUnlinkNodeLinkMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ nodeLinkId, reason }: { nodeLinkId: string; reason?: string }) =>
+      unlinkNodeLink(nodeLinkId, reason),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links", "node-links"] });
+    },
+  });
+}
+
+// ── Embeddings ─────────────────────────────────────────────────────────────
+
+export function useEmbeddingsStats() {
+  return useQuery({
+    queryKey: ["links", "embeddings-stats"],
+    queryFn: fetchEmbeddingsStats,
+    staleTime: 60_000,
+  });
+}
+
+export function useComputeEmbeddingsMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (familyId?: string) => computeEmbeddings(familyId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links", "embeddings-stats"] });
+    },
+  });
+}
+
+export function useFamilyCentroids() {
+  return useQuery({
+    queryKey: ["links", "centroids"],
+    queryFn: fetchFamilyCentroids,
+    staleTime: 60_000,
+  });
+}
+
+// ── Starter kits ───────────────────────────────────────────────────────────
+
+export function useStarterKits() {
+  return useQuery({
+    queryKey: ["links", "starter-kits"],
+    queryFn: fetchStarterKits,
+    staleTime: 120_000,
+  });
+}
+
+export function useStarterKit(familyId: string | null) {
+  return useQuery({
+    queryKey: ["links", "starter-kits", familyId],
+    queryFn: () => fetchStarterKit(familyId!),
+    enabled: !!familyId,
+    staleTime: 120_000,
+  });
+}
+
+// ── Compound covenants ─────────────────────────────────────────────────────
+
+export function useCompoundCovenants() {
+  return useQuery({
+    queryKey: ["links", "compound-covenants"],
+    queryFn: fetchCompoundCovenants,
+    staleTime: 30_000,
+  });
+}
+
+export function useResolveCompoundMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      docId,
+      sectionNumber,
+      resolution,
+    }: {
+      docId: string;
+      sectionNumber: string;
+      resolution: string;
+    }) => resolveCompoundCovenant(docId, sectionNumber, resolution),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links", "compound-covenants"] });
+      qc.invalidateQueries({ queryKey: ["links", "conflicts"] });
+    },
+  });
+}
+
+// ── Template baseline text ─────────────────────────────────────────────────
+
+export function useTemplateBaselineText(familyId: string | null, template: string | null) {
+  return useQuery({
+    queryKey: ["links", "baseline-text", familyId, template],
+    queryFn: () => fetchTemplateBaselineText(familyId!, template!),
+    enabled: !!familyId && !!template,
+    staleTime: 120_000,
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Phase 4: Coverage, Query, Conflicts hooks
+// ---------------------------------------------------------------------------
+
+export function useCoverageGaps(familyId?: string) {
+  return useQuery({
+    queryKey: ["links", "coverage-gaps", familyId],
+    queryFn: () => fetchCoverageGaps(familyId),
+    staleTime: 30_000,
+  });
+}
+
+export function useQueryCount(familyId?: string, headingAst?: Record<string, unknown> | null) {
+  return useQuery({
+    queryKey: ["links", "query-count", familyId, headingAst],
+    queryFn: ({ signal }) =>
+      fetchQueryCount(familyId, headingAst ?? undefined, undefined, signal),
+    enabled: !!headingAst,
+    staleTime: 10_000,
+    placeholderData: keepPreviousData,
+  });
+}
+
+export function useQueryCountWithMeta(
+  familyId?: string,
+  headingAst?: Record<string, unknown> | null,
+  metaFilters?: Record<string, unknown> | null,
+  filterDsl?: string,
+) {
+  const hasFilter = !!filterDsl || !!headingAst || (!!metaFilters && Object.keys(metaFilters).length > 0);
+  return useQuery({
+    queryKey: ["links", "query-count", familyId, headingAst, metaFilters, filterDsl],
+    queryFn: ({ signal }) =>
+      fetchQueryCount(
+        familyId,
+        headingAst ?? undefined,
+        metaFilters ?? undefined,
+        signal,
+        filterDsl,
+      ),
+    enabled: hasFilter,
+    staleTime: 10_000,
+    placeholderData: keepPreviousData,
+  });
+}
+
+export function useSemanticCandidates(familyId: string | null) {
+  return useQuery({
+    queryKey: ["links", "semantic-candidates", familyId],
+    queryFn: () => fetchSemanticCandidates(familyId!),
+    enabled: !!familyId,
+    staleTime: 60_000,
+  });
+}
+
+export function useExpandTermMutation() {
+  return useMutation({
+    mutationFn: (term: string) => fetchExpandTerm(term),
+  });
+}
+
+export function useRuleAutocompleteMutation() {
+  return useMutation({
+    mutationFn: ({
+      field,
+      prefix,
+      limit,
+    }: {
+      field: "heading" | "article" | "clause" | "section" | "defined_term" | "template" | "admin_agent" | "vintage" | "market" | "doc_type" | "facility_size_mm" | "macro";
+      prefix?: string;
+      limit?: number;
+    }) => fetchRuleAutocomplete(field, prefix ?? "", limit ?? 8),
+  });
+}
+
+export function useWhyNotCoverageMutation() {
+  return useMutation({
+    mutationFn: ({
+      docId,
+      ruleId,
+      sectionNumber,
+    }: {
+      docId: string;
+      ruleId: string;
+      sectionNumber?: string;
+    }) => fetchWhyNotCoverage(docId, ruleId, sectionNumber),
+  });
+}
+
+export function useCanaryApplyMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ previewId, limit }: { previewId: string; limit?: number }) =>
+      fetchCanaryApply(previewId, limit),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links"] });
+    },
+  });
+}
+
+export function useSaveAsRuleMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: createLinkRule,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links", "rules"] });
+    },
+  });
+}
+
+export function useEvaluateTextMutation() {
+  return useMutation({
+    mutationFn: (data: {
+      rule_ast: Record<string, unknown>;
+      raw_text: string;
+      heading?: string;
+    }) => evaluateRuleText(data),
+  });
+}
+
+export function useCreatePreviewFromAstMutation() {
+  return useMutation({
+    mutationFn: ({
+      familyId,
+      ast,
+      metaFilters,
+      textFields,
+      filterDsl,
+      resultGranularity,
+    }: {
+      familyId: string;
+      ast: Record<string, unknown>;
+      metaFilters?: Record<string, unknown>;
+      textFields?: Record<string, unknown>;
+      filterDsl?: string;
+      resultGranularity?: "section" | "clause";
+    }) => createPreviewFromAst(familyId, ast, metaFilters, textFields, filterDsl, resultGranularity),
+  });
+}
+
+// ── Phase 5: Acknowledge drift alert ────────────────────────────────────────
+
+export function useAcknowledgeDriftAlertMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (alertId: string) =>
+      acknowledgeDriftAlert(alertId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links", "drift-alerts"] });
+    },
+  });
+}
+
+// ── Phase 5: Import labels ──────────────────────────────────────────────────
+
+export function useImportLabelsMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (file: File) => importLabels(file),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links"] });
+    },
+  });
+}
+
+// ── Phase 5: Clone rule ─────────────────────────────────────────────────────
+
+export function useCloneRuleMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (ruleId: string) => cloneLinkRule(ruleId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links", "rules"] });
+    },
+  });
+}
+
+// ── Phase 5: Promote rule ───────────────────────────────────────────────────
+
+export function usePromoteRuleMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ ruleIdFrom, ruleIdTo }: { ruleIdFrom: string; ruleIdTo: string }) =>
+      promoteRule(ruleIdFrom, ruleIdTo),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links", "rules"] });
+    },
+  });
+}
+
+// ── Phase 5: Lock/unlock rule ───────────────────────────────────────────────
+
+export function useLockRuleMutation() {
+  return useMutation({
+    mutationFn: (ruleId: string) => lockRule(ruleId),
+  });
+}
+
+export function useUnlockRuleMutation() {
+  return useMutation({
+    mutationFn: (ruleId: string) => unlockRule(ruleId),
+  });
+}
+
+// ── Phase 5: Promotion gates ────────────────────────────────────────────────
+
+export function usePromotionGates(ruleId: string | null) {
+  return useQuery({
+    queryKey: ["links", "promotion-gates", ruleId],
+    queryFn: () => checkPromotionGates(ruleId!),
+    enabled: !!ruleId,
+    staleTime: 30_000,
+  });
+}
+
+// ── Phase 5: Vintage heatmap data ───────────────────────────────────────────
+
+export function useVintageHeatmap(familyId?: string) {
+  return useQuery({
+    queryKey: ["links", "vintage-heatmap", familyId],
+    queryFn: () => fetchVintageHeatmap(familyId),
     staleTime: 60_000,
   });
 }

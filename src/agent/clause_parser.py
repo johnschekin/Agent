@@ -307,6 +307,7 @@ def _label_key(em: EnumeratorMatch) -> str:
     inner = em.raw_label.strip()
     if inner.startswith("(") and inner.endswith(")"):
         inner = inner[1:-1].strip()
+    inner = inner.rstrip(".")
     return inner
 
 
@@ -410,7 +411,7 @@ def _build_tree(
         base_id = node_id
         counter = 2
         while node_id in node_map:
-            node_id = f"{base_id}_{counter}"
+            node_id = f"{base_id}_dup{counter}"
             counter += 1
 
         header_start = chosen.match_end

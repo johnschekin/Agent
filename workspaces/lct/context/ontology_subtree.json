@@ -1,0 +1,1261 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Original SunGard formulation. Borrower elects LCT treatment at signing of definitive acquisition agreement.",
+          "dls_ref": [
+            "DLS:82:Permitted Acquisitions"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.scope.acquisitions",
+          "level": 3,
+          "market_data": {
+            "prevalence": "87.5%"
+          },
+          "name": "Permitted Acquisitions",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 82 (Permitted Acquisitions)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Broader scope covering investments beyond acquisitions. Allows testing at the time of commitment rather than funding for investment baskets.",
+          "dls_ref": [
+            "DLS:81:Investments"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.scope.investments",
+          "level": 3,
+          "market_data": {
+            "prevalence": "60.7%"
+          },
+          "name": "Investment Extension",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 81 (Investments)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Transaction must not be conditioned on obtaining third-party financing to qualify for LCT treatment. DLS preferred position. Prevents use of LCT when deal is contingent on separate financing that could change risk profile.",
+          "dls_ref": [
+            "DLS:46:Third-party consents / litigation"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.scope.no_third_party_financing",
+          "level": 3,
+          "market_data": {
+            "prevalence": "83.9%"
+          },
+          "name": "Third-Party Financing Exclusion",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 46 (Third-party consents / litigation)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "LCT for acquisition financing. The original SunGard (2005) formulation. Borrower elects signing-date testing for permitted acquisitions whose consummation is not conditioned on third-party financing availability. DLS preferred: only available for acquisitions to be consummated within 120 days of signing.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "medium",
+              "family_id": "fin_framework.lct",
+              "id": "fin_framework.lct.scope.qualifying_transactions.acquisition_lct",
+              "kct_ref": [
+                "cat3.10"
+              ],
+              "level": 4,
+              "name": "Acquisition LCT",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 10"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "LCT treatment for restricted payments made pursuant to irrevocable notice. Alternative/aggressive position per DLS. Allows borrower to lock in covenant compliance at the time the irrevocable notice is delivered rather than when the RP is actually made.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "medium",
+              "family_id": "fin_framework.lct",
+              "id": "fin_framework.lct.scope.qualifying_transactions.rp_lct",
+              "level": 4,
+              "name": "RP LCT",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 3 Item 2; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 4 Item 1; KCT Cat 4 Item 5; KCT Cat 4 Item 7; KCT Cat 5 Item 3"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "LCT treatment for investment baskets. Allows testing at commitment date rather than funding date. Broader than acquisition-only LCT because investments include minority stakes, JV contributions, and other non-acquisition deployment of capital.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "medium",
+              "family_id": "fin_framework.lct",
+              "id": "fin_framework.lct.scope.qualifying_transactions.investment_lct",
+              "level": 4,
+              "name": "Investment LCT",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 4; KCT Cat 3 Item 13; KCT Cat 4 Item 1; KCT Cat 4 Item 2; KCT Cat 4 Item 3; KCT Cat 4 Item 6; KCT Cat 4 Item 7; KCT Cat 4 Item 8; KCT Cat 5 Item 1; KCT Cat 5 Item 4"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "LCT treatment for restricted debt payments pursuant to irrevocable notice. Alternative/aggressive position per DLS. Enables prepayment of junior debt to be tested at the notice date rather than payment date.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "medium",
+              "family_id": "fin_framework.lct",
+              "id": "fin_framework.lct.scope.qualifying_transactions.rdp_lct",
+              "level": 4,
+              "name": "RDP LCT",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 2; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 3 Item 13; KCT Cat 4 Item 1; KCT Cat 4 Item 5; KCT Cat 4 Item 7; KCT Cat 4 Item 8; KCT Cat 4 Item 9"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "The defined list of transaction types eligible for LCT election. Narrow: acquisitions only (DLS preferred). Expanded: acquisitions + investments + irrevocable RPs + irrevocable RDPs. Aggressive: any transaction regardless of conditionality or irrevocable nature.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.scope.qualifying_transactions",
+          "level": 3,
+          "name": "Qualifying Transaction Definition",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 3 Item 11; KCT Cat 3 Item 13; KCT Cat 3 Item 14; KCT Cat 4 Item 2; KCT Cat 4 Item 3; KCT Cat 4 Item 6"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "What transactions qualify for LCT election. DLS Preferred row 15 defines: 'Any acquisition by the Borrower or its subsidiaries permitted under the Credit Facility whose consummation is not conditioned on the availability of third party financing.' Alternative formulations 'Can be expanded to include \"irrevocable\" restricted payments and restricted debt prepayments for which an irrevocable notice has been sent. Some Sponsors also permitted to use this concept for any transaction regardless of conditionality not requiring financing or \"irrevocable\" nature of the transaction.' The LCT scope has expanded significantly from the original SunGard acquisition-only formulation to potentially cover any irrevocable transaction.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.lct",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01",
+          "Section 1.01 / 1.05(b)",
+          "Section 1.02"
+        ],
+        "shape_ref": "financial_definitions.lct",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.099095+00:00",
+          "term_packs": {
+            "LCT_SCOPE": {
+              "label": "LCT - Scope",
+              "category": "VOTING_ASSIGNMENTS",
+              "exactPhrases": [
+                "Applies not only to permitted acquisitions",
+                "consummation of which financing is not a condition",
+                "also other investments, RPs, RDPs, dispositions and similar transactions",
+                "Subsequent tests are pro forma",
+                "[and also actual basis for RPs and RDPs]",
+                "[RCF draws subject to LCT provisions]",
+                "Limited Condition Transaction",
+                "LCT",
+                "testing date",
+                "date of determination",
+                "at the election of the Borrower",
+                "calculated as of the date",
+                "pro forma effect"
+              ],
+              "sectionHeaders": [
+                "Limited Condition Transactions",
+                "LCT",
+                "Definitions",
+                "Permitted Acquisitions",
+                "Section [X] - Definitions"
+              ],
+              "semanticVariants": [
+                "limited conditionality transaction scope",
+                "frozen testing metrics for acquisitions",
+                "testing date election for acquisitions",
+                "pro forma testing for LCT",
+                "LCT basket testing",
+                "acquisition financing conditions"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Applies not only to permitted acquisitions",
+              "consummation of which financing is not a condition",
+              "also other investments, RPs, RDPs, dispositions and similar transactions",
+              "Subsequent tests are pro forma",
+              "[and also actual basis for RPs and RDPs]",
+              "[RCF draws subject to LCT provisions]",
+              "Limited Condition Transaction",
+              "LCT",
+              "testing date",
+              "date of determination",
+              "at the election of the Borrower",
+              "calculated as of the date",
+              "pro forma effect"
+            ],
+            "sectionHeaders": [
+              "Limited Condition Transactions",
+              "LCT",
+              "Definitions",
+              "Permitted Acquisitions",
+              "Section [X] - Definitions"
+            ],
+            "semanticVariants": [
+              "limited conditionality transaction scope",
+              "frozen testing metrics for acquisitions",
+              "testing date election for acquisitions",
+              "pro forma testing for LCT",
+              "LCT basket testing",
+              "acquisition financing conditions"
+            ]
+          }
+        }
+      },
+      "family_id": "fin_framework.lct",
+      "id": "fin_framework.lct.scope",
+      "level": 2,
+      "market_benchmarks": {
+        "negotiated": "Extension to all actions requiring representation compliance",
+        "prevalence": "85-95%",
+        "standard": "Permitted acquisitions, permitted investments, restricted payments, incremental facilities"
+      },
+      "name": "Transaction Scope",
+      "r18_concept_ids": [
+        "financial_definitions.limited_condition_transactions.scope",
+        "cure_rights.lct_mechanics"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 149,
+          "term": "Waiver"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 15 (LCT scope: acquisitions not conditioned on third-party financing; alternatives expanding to irrevocable RPs, RDPs, and any non-conditioned transaction)",
+      "neutron_field_refs": [
+        {
+          "term_type": "LCT_SCOPE",
+          "label": "LCT - Scope",
+          "schema_file": "voting-assignments-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "governance",
+          "mapping_confidence": 0.4919,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Compliance locked in at signing of definitive agreement. Most common approach. All ratio tests, basket conditions, and representations are measured as of the date the borrower signs (or delivers irrevocable notice for non-acquisition LCTs).",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.test_date.signing",
+          "level": 3,
+          "name": "Signing Date Standard",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 153,
+              "term": "MAC"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 153 (MAC)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Maximum period between signing and consummation during which the LCT election remains valid. 90-day, 120-day (DLS preferred), or custom/unlimited window. DLS alternative: no time limit.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.test_date.timing_window",
+          "level": 3,
+          "market_data": {
+            "90_day": "17.9%",
+            "custom": "30.4%",
+            "dls_preferred": "120 days"
+          },
+          "name": "Timing Window",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 4; KCT Cat 2 Item 4"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "The exact date at which compliance is frozen for LCT testing. Typically the date of signing the definitive agreement, but can also be the date of the binding commitment letter or the date of the initial indication of interest. The freeze date determines which financial statements are used for pro forma calculations.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.test_date.freeze_date",
+          "level": 3,
+          "name": "Freeze Date Mechanics",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 4; KCT Cat 3 Item 7; KCT Cat 3 Item 8; KCT Cat 4 Item 8; KCT Cat 5 Item 4"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Borrower may elect to re-test ratios at closing for a better result. The 'pick-better-of' mechanic: if conditions improve between signing and closing, borrower can use the closing-date test instead. Most borrower-friendly variant of LCT testing. R18E mapped from financial_definitions.limited_condition_transactions.retest_option.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.test_date.retest_option",
+          "level": 3,
+          "name": "Retest at Closing Option",
+          "r18_concept_ids": [
+            "financial_definitions.limited_condition_transactions.retest_option"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 4; KCT Cat 3 Item 12; KCT Cat 4 Item 1; KCT Cat 4 Item 8; KCT Cat 5 Item 2; KCT Cat 5 Item 3; KCT Cat 5 Item 4"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Both freeze-date and closing-date tests must be satisfied. DLS preferred position for subsequent testing: requires compliance both (i) as-if-consummated and (ii) on standalone non-pro-forma basis. More protective than pick-better-of because borrower cannot game favorable timing.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.test_date.dual_test",
+          "level": 3,
+          "name": "Dual Test Requirement",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 3 Item 7; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 4 Item 1; KCT Cat 5 Item 2"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Pro forma calculation methodology at the freeze date. Target EBITDA and assumed debt are included from the test date. Synergies calculated as of the freeze date. Standard: give effect to the acquisition and related debt incurrence as if they occurred on the first day of the test period.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.test_date.pro_forma_at_freeze",
+          "level": 3,
+          "name": "Pro Forma at Freeze Date",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 48 (Pro Forma Financial Statements); Review Template Row 50 (Pro Forma Calculations); KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 5; KCT Cat 1 Item 6; KCT Cat 1 Item 7; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 7; KCT Cat 4 Item 8"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "How events between the freeze date and closing affect the LCT election. Key question: if leverage deteriorates between signing and closing, does the LCT election still hold? DLS preferred: payment/bankruptcy EoD still tested at closing. Aggressive position: complete freeze with no intervening-event check.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.test_date.intervening_events",
+          "level": 3,
+          "name": "Intervening Events Treatment",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 3 Item 8; KCT Cat 3 Item 13; KCT Cat 3 Item 14; KCT Cat 4 Item 1; KCT Cat 4 Item 7; KCT Cat 5 Item 1; KCT Cat 5 Item 4"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "When compliance is measured for LCT purposes. DLS Preferred row 15 specifies: 'Borrower may elect to test any Ratios/Baskets/Conditions required to be complied with in connection with such LCA at the time of signing the definitive documentation related to the LCA. If the Borrower makes such election, the Borrower does not have to comply with such tests at the time of consummating the LCA.' However, 'if no payment or bankruptcy event of default is a condition to any such LCA, such test must be complied with' at consummation. The alternative removes the 'no payment/bankruptcy event of default' requirement at consummation entirely.",
+      "dls_ref": [
+        "DLS:38:Termination date"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.lct",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01",
+          "Section 1.01 / 1.05(b)",
+          "Section 1.02"
+        ],
+        "shape_ref": "financial_definitions.lct",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.lct",
+      "id": "fin_framework.lct.test_date",
+      "level": 2,
+      "market_benchmarks": {
+        "dls_preferred": "As of date of entering into definitive documentation",
+        "prevalence": "85-95%",
+        "standard": "Date of signing definitive documentation for the applicable transaction"
+      },
+      "name": "Test Date Mechanics",
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 60,
+          "term": "Financial Covenant – first test date"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 15 (test date: signing of definitive documentation, with payment/bankruptcy EoD required at consummation; alternative removes EoD check)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "At consummation, payment defaults and bankruptcy events must not exist. DLS preferred position. Ensures the most fundamental credit protections are maintained even when other covenant tests are frozen at signing date.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.eod_testing.payment_bankruptcy",
+          "level": 3,
+          "name": "Payment/Bankruptcy EoD Check",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 2 Item 1; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 4; KCT Cat 3 Item 13; KCT Cat 3 Item 14; KCT Cat 4 Item 1; KCT Cat 4 Item 6; KCT Cat 4 Item 7; KCT Cat 5 Item 4"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "No Event of Default condition at closing -- complete freeze. Alternative/ aggressive position. Borrower can consummate the LCT even if payment default has occurred between signing and closing. DLS explicitly flags this as a concession.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.eod_testing.no_eod_check",
+          "level": 3,
+          "name": "No EoD Check at Closing",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 2 Item 1; KCT Cat 3 Item 2; KCT Cat 3 Item 8; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 4 Item 7; KCT Cat 5 Item 1; KCT Cat 5 Item 3"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "All Events of Default (not just payment/bankruptcy) must be absent at closing. Most protective for lenders but largely defeats the purpose of LCT election. Rare in modern leveraged finance.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.eod_testing.full_eod_check",
+          "level": 3,
+          "name": "Full EoD Check at Closing",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 3 Item 13; KCT Cat 3 Item 14; KCT Cat 3 Item 15; KCT Cat 4 Item 3; KCT Cat 4 Item 7; KCT Cat 5 Item 1"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Whether any Events of Default must still be checked at closing despite the LCT freeze-date election. DLS Preferred row 15 preferred: 'at the time of such LCA if no payment or bankruptcy event of default is a condition to any such LCA, such test must be complied with.' This ensures that even when ratio testing is frozen at signing, the most severe defaults (payment failure and bankruptcy) still block consummation. The alternative removes this requirement entirely. Similarly for incremental DDTLs, DLS Preferred row 11 specifies conditions include 'no default or event of default' but 'always subject to no payment or bankruptcy default or event of default unless required lenders under existing facility waive such requirement.'",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.lct",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01",
+          "Section 1.01 / 1.05(b)",
+          "Section 1.02"
+        ],
+        "shape_ref": "financial_definitions.lct",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.lct",
+      "id": "fin_framework.lct.eod_testing",
+      "level": 2,
+      "market_data": {
+        "payment_bankruptcy_eod": "50%"
+      },
+      "name": "EOD Testing at Consummation",
+      "type": "concept",
+      "definition_source": "DLS Preferred row 15 (payment/bankruptcy EoD at consummation); DLS Preferred row 11 (incremental conditions: payment/bankruptcy EoD minimum)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Acquired entity's EBITDA included in pro forma calculation from the test date. Standard: full LTM EBITDA of target as if acquired on first day of test period. Aggressive: include projected/run-rate EBITDA of target.",
+          "dls_ref": [
+            "DLS:72:EBITDA"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.pro_forma.target_ebitda",
+          "level": 3,
+          "name": "Target EBITDA Inclusion",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 72 (EBITDA)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Debt assumed or incurred in connection with the LCT included in pro forma leverage calculation. Acquisition debt, assumed target debt, and any refinancing debt all factor into the pro forma ratio test.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.pro_forma.assumed_debt",
+          "level": 3,
+          "name": "Assumed Debt Treatment",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 79; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 4; KCT Cat 3 Item 4; KCT Cat 3 Item 7; KCT Cat 3 Item 13; KCT Cat 3 Item 15; KCT Cat 4 Item 4; KCT Cat 4 Item 5; KCT Cat 4 Item 8; KCT Cat 4 Item 11"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether projected cost savings and synergies are included in pro forma EBITDA at the freeze date. Standard: subject to the general synergy add-back provisions (capped, 24-month realization). Aggressive: uncapped projected synergies from the target.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.pro_forma.synergy_calculation",
+          "kct_ref": [
+            "cat1.7"
+          ],
+          "level": 3,
+          "name": "Synergy Calculation at Freeze",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 7"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Target EBITDA and assumed debt included from test date. Synergies calculated as of test date. The pro forma calculation for LCT purposes follows the same methodology as the general pro forma definition but is applied at the freeze date rather than the actual closing date.",
+      "dls_ref": [
+        "DLS:48:Pro Forma Financial Statements"
+      ],
+      "dna_pattern_refs": [
+        "DEFINITION:EBITDA_ADDBACK:CLOSING_MODEL_QOFE:FUTURE_ACQUISITION_QOFE:BIG_FOUR_OR_AGENT_APPROVED:PERPETUAL_RECURRENCE",
+        "DEFINITION:EBITDA_ADDBACK:MODEL_QOE:UNCAPPED:ACQUISITION_LINKED"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.lct",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01",
+          "Section 1.01 / 1.05(b)",
+          "Section 1.02"
+        ],
+        "shape_ref": "financial_definitions.lct"
+      },
+      "family_id": "fin_framework.lct",
+      "golden_record_ids": [
+        "financial_definitions.pro_forma_calcs"
+      ],
+      "id": "fin_framework.lct.pro_forma",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "85-95%",
+        "refinement": "Both at signing and at closing for leverage tests",
+        "standard": "Pro forma compliance measured as of most recent test period"
+      },
+      "name": "Pro Forma Adjustments",
+      "playbook_ref": {
+        "concept_id": "financial_definitions.pro_forma_calcs",
+        "dependency_count": 2,
+        "extraction_difficulty": "hard",
+        "phase": 1
+      },
+      "r18_concept_ids": [
+        "financial_definitions.pro_forma_calculations"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 50,
+          "term": "Pro Forma Calculations"
+        },
+        {
+          "coverage": "full",
+          "row": 128,
+          "term": "Limited Conditionality Transactions"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 48 (Pro Forma Financial Statements); Review Template Row 50 (Pro Forma Calculations); Review Template Row 128 (Limited Conditionality Transactions)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "The broad vs. narrow formulation of the qualifying transaction definition. Narrow (DLS preferred): limited to acquisitions not conditioned on third-party financing, to be consummated within 120 days. Broad: any transaction for which irrevocable notice has been delivered or binding agreement entered. Some sponsors negotiate 'any transaction regardless of conditionality.'",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.scope_expansion.expanded_definition",
+          "level": 3,
+          "name": "Expanded LCT Definition",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 2 Item 4; KCT Cat 3 Item 7; KCT Cat 3 Item 8; KCT Cat 3 Item 11; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 3 Item 14; KCT Cat 4 Item 5; KCT Cat 4 Item 6; KCT Cat 4 Item 11"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether debt incurrence qualifies as a Limited Condition Transaction. Allows borrower to lock in leverage ratios at commitment rather than funding for new debt. Particularly relevant for incremental facilities and refinancing debt. DLS does not include in preferred scope.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.scope_expansion.debt_incurrence_lct",
+          "level": 3,
+          "name": "Debt Incurrence as LCT",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 6; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 3 Item 13; KCT Cat 3 Item 14; KCT Cat 3 Item 15; KCT Cat 4 Item 1; KCT Cat 4 Item 5; KCT Cat 4 Item 8; KCT Cat 4 Item 9; KCT Cat 4 Item 12; KCT Cat 5 Item 2; KCT Cat 5 Item 4"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether dispositions can be treated as Limited Condition Transactions. Allows testing of post-disposition compliance at signing rather than closing of the sale. Less common because dispositions typically reduce leverage and thus pass ratio tests more easily.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.scope_expansion.disposition_lct",
+          "level": 3,
+          "name": "Disposition as LCT",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 4; KCT Cat 4 Item 1; KCT Cat 4 Item 4; KCT Cat 4 Item 5; KCT Cat 4 Item 8; KCT Cat 5 Item 4"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether designation of a subsidiary as unrestricted qualifies for LCT treatment. Would allow testing at the time of board resolution rather than the effective date of designation. Very aggressive -- enables locking in compliance before asset stripping effects are felt.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.scope_expansion.designation_lct",
+          "level": 3,
+          "name": "Subsidiary Designation as LCT",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 15; KCT Cat 4 Item 1; KCT Cat 4 Item 3; KCT Cat 4 Item 8"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "The broadening of qualifying transaction types beyond the original acquisition-only formulation. Post-2015 trend toward expanding LCT to cover debt incurrence, dispositions, and subsidiary designation. Each expansion creates an additional vector for borrowers to lock in favorable testing dates.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.lct",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01",
+          "Section 1.01 / 1.05(b)",
+          "Section 1.02"
+        ],
+        "shape_ref": "financial_definitions.lct"
+      },
+      "family_id": "fin_framework.lct",
+      "id": "fin_framework.lct.scope_expansion",
+      "level": 2,
+      "market_benchmarks": {
+        "borrower_favorable": "Extended to investments, RPs, and debt incurrence",
+        "prevalence": "40-60%",
+        "standard": "Limited to acquisitions only"
+      },
+      "name": "Scope Expansion Mechanics",
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 15 (Limited Condition Acquisition); Review Template Row 128 (Limited Conditionality Transactions)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Future testing of any Ratios/Baskets/Conditions tested (i) assuming LCT has been consummated and counting related debt/RP/EBITDA, AND (ii) on a standalone non-pro-forma basis as if LCT had not been consummated. DLS preferred. Applies until earlier of consummation or termination of the LCT. The standalone prong prevents gaming via target EBITDA inclusion.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.subsequent_testing.two_prong",
+          "level": 3,
+          "name": "Two-Prong Test (DLS Preferred)",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 1 Item 6; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 7; KCT Cat 3 Item 13; KCT Cat 3 Item 14; KCT Cat 3 Item 15; KCT Cat 4 Item 1; KCT Cat 4 Item 2; KCT Cat 4 Item 4; KCT Cat 4 Item 5; KCT Cat 4 Item 6; KCT Cat 4 Item 7; KCT Cat 4 Item 8; KCT Cat 4 Item 11; KCT Cat 5 Item 1"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Future testing only on an as-if-consummated basis, including target EBITDA and assumed debt. Omits the standalone test. DLS alternative position. More borrower-friendly because the target's EBITDA inflates the denominator, making subsequent transactions easier to pass.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.subsequent_testing.single_prong",
+          "level": 3,
+          "name": "Single Prong (As-If-Consummated Only)",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 6; KCT Cat 1 Item 7; KCT Cat 2 Item 2; KCT Cat 2 Item 4; KCT Cat 3 Item 3; KCT Cat 3 Item 13; KCT Cat 4 Item 1; KCT Cat 4 Item 3; KCT Cat 4 Item 4; KCT Cat 4 Item 12"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether other baskets can be used during the pendency of an LCT. Key question: can the borrower stack additional transactions on top of a pending LCT? DLS position: subsequent testing applies to all ratio and basket tests. Aggressive: only ratio tests affected, leaving fixed-dollar baskets available without adjustment.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.subsequent_testing.stacking_during_lct",
+          "level": 3,
+          "name": "Stacking During Pending LCT",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 4; KCT Cat 3 Item 2; KCT Cat 3 Item 4; KCT Cat 3 Item 5; KCT Cat 3 Item 13; KCT Cat 3 Item 15; KCT Cat 4 Item 1; KCT Cat 4 Item 2; KCT Cat 4 Item 3; KCT Cat 4 Item 4; KCT Cat 4 Item 7; KCT Cat 4 Item 8; KCT Cat 4 Item 11; KCT Cat 5 Item 4"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "What happens if the LCT fails to close within the timing window or is otherwise terminated. DLS preferred: the two-prong testing ceases upon termination. Key issue: are actions taken during pendency (using subsequent testing) retroactively invalidated? Standard: no retroactive effect; transactions completed during pendency remain valid.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.subsequent_testing.failed_closing_consequences",
+          "level": 3,
+          "name": "Failed Closing Consequences",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 2 Item 4; KCT Cat 3 Item 3; KCT Cat 3 Item 12; KCT Cat 3 Item 14"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "How ratio/basket/condition tests are applied to subsequent transactions while an LCT is pending. DLS Preferred row 15 specifies two-prong testing: 'future testing of any Ratios/Baskets/Conditions will be tested (i) assuming such LCA has been consummated and counting any related debt incurrence, RP and EBITDA of such acquired business and (ii) on a stand alone non-pro forma basis as if such LCA had not been consummated.' This dual test continues until the LCA is consummated or terminated. The alternative eliminates the standalone test, allowing more favorable pro forma treatment during the pendency period.",
+      "dls_ref": [
+        "DLS:15:Limited Condition Acquisition"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.lct",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01",
+          "Section 1.01 / 1.05(b)",
+          "Section 1.02"
+        ],
+        "shape_ref": "financial_definitions.lct"
+      },
+      "family_id": "fin_framework.lct",
+      "id": "fin_framework.lct.subsequent_testing",
+      "level": 2,
+      "market_benchmarks": {
+        "lender_favorable": "Re-testing at closing for financial covenants",
+        "prevalence": "70-85%",
+        "standard": "No subsequent testing required at closing (frozen at signing)"
+      },
+      "name": "Subsequent Transaction Testing",
+      "type": "concept",
+      "definition_source": "DLS Preferred row 15 (subsequent testing: dual-prong pro forma + standalone until consummation or termination; alternative removes standalone test)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "LCT freeze-date testing never applies to financial maintenance covenant. Universal exception in both DLS preferred and alternative. Financial covenant is tested quarterly on actual results, not at LCT signing date.",
+          "dls_ref": [
+            "DLS:47:Financial statements"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.lct_exceptions.financial_covenant",
+          "kct_ref": [
+            "cat1.1"
+          ],
+          "level": 3,
+          "name": "Financial Covenant Exception",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 55,
+              "term": "Financial Statements – going concern"
+            },
+            {
+              "coverage": "full",
+              "row": 57,
+              "term": "Financial Covenant – application"
+            },
+            {
+              "coverage": "full",
+              "row": 58,
+              "term": "Financial Covenant – levels"
+            },
+            {
+              "coverage": "full",
+              "row": 59,
+              "term": "Financial Covenant – testing thresholds"
+            },
+            {
+              "coverage": "full",
+              "row": 60,
+              "term": "Financial Covenant – first test date"
+            },
+            {
+              "coverage": "full",
+              "row": 61,
+              "term": "Financial Covenant – equity cure"
+            },
+            {
+              "coverage": "full",
+              "row": 146,
+              "term": "Cross-default"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 47 (Financial statements); KCT Cat 1 Item 1; Review Template Row 55 (Financial Statements – going concern); Review Template Row 57 (Financial Covenant – application); Review Template Row 58 (Financial Covenant – levels); Review Template Row 59 (Financial Covenant – testing thresholds); Review Template Row 60 (Financial Covenant – first test date); Review Template Row 61 (Financial Covenant – equity cure); Review Template Row 146 (Cross-default)",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:40.737576+00:00",
+              "term_packs": {
+                "FIN_COV_EQUITY_CURE": {
+                  "label": "Financial Covenant - Equity Cure",
+                  "category": "FINANCIAL_COVENANTS",
+                  "exactPhrases": [
+                    "Permits deduction of debt actually prepaid",
+                    "including for the FQ in which the cure is made",
+                    "May take the form of subordinated or unsecured debt",
+                    "disqualified equity",
+                    "Cure Amount",
+                    "Cure Right",
+                    "no more than two times in any four consecutive fiscal quarter period",
+                    "no more than five times during the term"
+                  ],
+                  "sectionHeaders": [
+                    "Financial Covenant - equity cure",
+                    "Equity Cure Rights",
+                    "Cure Amount",
+                    "Section 7.01",
+                    "Financial Covenant"
+                  ],
+                  "semanticVariants": [
+                    "equity cure contribution",
+                    "cure contribution mechanics",
+                    "post-period equity injection",
+                    "sponsor equity injection",
+                    "cure a testing shortfall",
+                    "covenant cure",
+                    "equity cure right"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.65,
+                    "minKeywordScore": 0.55,
+                    "minConfidence": 0.78,
+                    "escalationThreshold": 0.55,
+                    "humanEscalationThreshold": 0.35
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "Permits deduction of debt actually prepaid",
+                  "including for the FQ in which the cure is made",
+                  "May take the form of subordinated or unsecured debt",
+                  "disqualified equity",
+                  "Cure Amount",
+                  "Cure Right",
+                  "no more than two times in any four consecutive fiscal quarter period",
+                  "no more than five times during the term"
+                ],
+                "sectionHeaders": [
+                  "Financial Covenant - equity cure",
+                  "Equity Cure Rights",
+                  "Cure Amount",
+                  "Section 7.01",
+                  "Financial Covenant"
+                ],
+                "semanticVariants": [
+                  "equity cure contribution",
+                  "cure contribution mechanics",
+                  "post-period equity injection",
+                  "sponsor equity injection",
+                  "cure a testing shortfall",
+                  "covenant cure",
+                  "equity cure right"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "FIN_COV_EQUITY_CURE",
+              "label": "Financial Covenant - Equity Cure",
+              "schema_file": "financial-covenants-enhanced.schema.ts",
+              "field_count": 4,
+              "r1_domain": "fin_framework",
+              "mapping_confidence": 0.4189,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "LCT testing not available for calculating ECF sweep step-downs. DLS preferred position. Prevents borrower from locking in a lower sweep percentage based on signing-date leverage.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.lct_exceptions.ecf_ratio",
+          "level": 3,
+          "name": "ECF Sweep Ratio Exception",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 45 (ECF Sweep – Holiday); Review Template Row 46 (ECF Sweep – Percentages); Review Template Row 47 (ECF Sweep – Threshold); Review Template Row 48 (ECF Sweep – Credits); KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 1; KCT Cat 2 Item 4; KCT Cat 4 Item 3; KCT Cat 4 Item 8; KCT Cat 5 Item 3; KCT Cat 5 Item 4; Learning Material ((4) Ratio Exception for Unlimited Investments:)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "LCT testing not available for incurrence ratios governing incremental facilities. DLS preferred. Prevents circular benefit: using LCT to freeze leverage to incur incremental debt that itself increases leverage.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.lct_exceptions.incremental_ratio",
+          "level": 3,
+          "name": "Incremental Facility Ratio Exception",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 26 (Incremental Amount – ratio); KCT Cat 1 Item 3; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 4; KCT Cat 3 Item 13; KCT Cat 3 Item 15; KCT Cat 4 Item 1; KCT Cat 4 Item 5; KCT Cat 4 Item 7; KCT Cat 4 Item 8; KCT Cat 4 Item 9; KCT Cat 4 Item 10; KCT Cat 4 Item 12; Learning Material ((4) Ratio Exception for Unlimited Investments:)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "LCT testing not available for ratios determining pricing grid step-downs. Included in both DLS preferred and alternative. Prevents margin benefit from stale signing-date ratios.",
+          "dls_ref": [
+            "DLS:25:Pricing Flex"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.lct_exceptions.pricing_ratio",
+          "level": 3,
+          "name": "Pricing Ratio Exception",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 25 (Pricing Flex)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "LCT testing not available for revolving loan borrowing conditions. DLS preferred position. Alternative position: revolver draws during LCT pendency tested at signing date (more aggressive).",
+          "dls_ref": [
+            "DLS:6:Revolver",
+            "DLS:19:Revolver"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.lct_exceptions.revolver_incurrence",
+          "kct_ref": [
+            "cat3.10"
+          ],
+          "level": 3,
+          "name": "Revolver Incurrence Exception",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 6 (Revolver); DLS Preferred Row 19 (Revolver); KCT Cat 3 Item 10"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Tests and calculations where LCT freeze-date testing does NOT apply. DLS Preferred row 15 specifies: 'LCA Testing provisions only Available for LCAs to be consummated within 120 days. Exceptions: LCA testing (and pro forma effect for such acquisition) will not be available for purposes of calculating the financial covenant, the ratios related to ECF, incurrence ratios in respect of Incremental Loans or Revolving Loans [or ratios related to pricing].' Alternative formulations narrow exceptions to only 'financial covenant and pricing ratios.' These carveouts ensure that the LCT election cannot be used to circumvent maintenance testing or to inflate incremental capacity.",
+      "dls_ref": [
+        "DLS:15:Limited Condition Acquisition",
+        "DLS:63:Syndication Assistance"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.lct",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01",
+          "Section 1.01 / 1.05(b)",
+          "Section 1.02"
+        ],
+        "shape_ref": "financial_definitions.lct",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.095828+00:00",
+          "term_packs": {
+            "LCT_OUTSIDE_DATE": {
+              "label": "LCT - Outside Date",
+              "category": "VOTING_ASSIGNMENTS",
+              "exactPhrases": [
+                "[Includes outside date of [x] days]",
+                "outside date",
+                "LCT outside date",
+                "shall expire",
+                "shall terminate",
+                "shall cease to apply",
+                "[180] days",
+                "[210] days",
+                "after the date of election",
+                "following the execution"
+              ],
+              "sectionHeaders": [
+                "Limited Condition Transactions",
+                "LCT",
+                "Definitions",
+                "Section [X] - Definitions"
+              ],
+              "semanticVariants": [
+                "LCT expiration date",
+                "limited conditionality outside date",
+                "frozen metrics expiry",
+                "LCT termination date",
+                "testing freeze duration",
+                "LCT election duration"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "[Includes outside date of [x] days]",
+              "outside date",
+              "LCT outside date",
+              "shall expire",
+              "shall terminate",
+              "shall cease to apply",
+              "[180] days",
+              "[210] days",
+              "after the date of election",
+              "following the execution"
+            ],
+            "sectionHeaders": [
+              "Limited Condition Transactions",
+              "LCT",
+              "Definitions",
+              "Section [X] - Definitions"
+            ],
+            "semanticVariants": [
+              "LCT expiration date",
+              "limited conditionality outside date",
+              "frozen metrics expiry",
+              "LCT termination date",
+              "testing freeze duration",
+              "LCT election duration"
+            ]
+          }
+        }
+      },
+      "family_id": "fin_framework.lct",
+      "id": "fin_framework.lct.lct_exceptions",
+      "kct_ref": [
+        "cat3.10"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "negotiated": "Exception for EoD testing during LCT period",
+        "prevalence": "50-70%",
+        "standard": "Financial covenants always tested at closing (not frozen)"
+      },
+      "name": "LCT Exceptions / Carve-Outs",
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 57,
+          "term": "Financial Covenant – application"
+        },
+        {
+          "coverage": "full",
+          "row": 58,
+          "term": "Financial Covenant – levels"
+        },
+        {
+          "coverage": "full",
+          "row": 59,
+          "term": "Financial Covenant – testing thresholds"
+        },
+        {
+          "coverage": "full",
+          "row": 63,
+          "term": "EBITDA Addbacks"
+        },
+        {
+          "coverage": "full",
+          "row": 128,
+          "term": "Limited Conditionality Transactions"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 15 (LCT exceptions: 120-day limit; excluded from financial covenant, ECF ratios, incremental/revolver incurrence, pricing ratios; alternative narrows to financial covenant and pricing only)",
+      "neutron_field_refs": [
+        {
+          "term_type": "LCT_OUTSIDE_DATE",
+          "label": "LCT - Outside Date",
+          "schema_file": "voting-assignments-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "governance",
+          "mapping_confidence": 0.339,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "The original SunGard Systems (2005) LBO credit agreement formulation. Acquisition-only scope, 120-day consummation window, payment/bankruptcy EoD tested at closing, dual-prong subsequent testing. The baseline from which all modern LCT expansions derive.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.market_evolution.sungard_original",
+          "kct_ref": [
+            "cat3.10"
+          ],
+          "level": 3,
+          "name": "SunGard Original (2005)",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 10"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Of LCT scope beyond acquisitions to include investments, restricted payments, restricted debt payments, and in some deals any transaction regardless of type. Driven by sponsor negotiating leverage in borrower-friendly market conditions.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.market_evolution.modern_expansion",
+          "level": 3,
+          "name": "Post-2015 Expansion",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 7; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 3 Item 3; KCT Cat 3 Item 8; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 3 Item 14; KCT Cat 4 Item 1; KCT Cat 4 Item 2; KCT Cat 4 Item 3; KCT Cat 4 Item 4; KCT Cat 4 Item 5; KCT Cat 4 Item 6; KCT Cat 4 Item 7; KCT Cat 4 Item 11; KCT Cat 4 Item 12"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Most borrower-friendly LCT variant: borrower can elect to test at whichever date (signing or closing) produces the better result. Eliminates the risk that conditions worsen between signing and closing while preserving upside if conditions improve. DLS does not include in preferred or standard alternative.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.lct",
+          "id": "fin_framework.lct.market_evolution.pick_better_of",
+          "level": 3,
+          "name": "Pick-Better-Of Variant",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 2; KCT Cat 3 Item 3; KCT Cat 3 Item 8; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 3 Item 14; KCT Cat 4 Item 7; KCT Cat 4 Item 8; KCT Cat 5 Item 3; KCT Cat 5 Item 4"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Historical evolution of LCT provisions from the SunGard (2005) original through modern expansion. The LCT concept has been one of the most aggressively expanded borrower-side provisions in leveraged finance, evolving from a narrow acquisition testing tool to a broad compliance-freezing mechanism.",
+      "dls_ref": [
+        "DLS:40:Market MAC",
+        "DLS:54:Clear market",
+        "DLS:61:Clear Market"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.lct",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01",
+          "Section 1.01 / 1.05(b)",
+          "Section 1.02"
+        ],
+        "shape_ref": "financial_definitions.lct",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.lct",
+      "id": "fin_framework.lct.market_evolution",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "85-95% (modern CAs)",
+        "trend": "Expanded scope from acquisitions-only to broader LCT coverage",
+        "vintage_break": "Pre-2015: acquisitions only; post-2018: broad LCT provisions"
+      },
+      "name": "Market Evolution",
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 40 (Market MAC); DLS Preferred Row 54 (Clear market); DLS Preferred Row 61 (Clear Market)"
+    }
+  ],
+  "corpus_prevalence": "high",
+  "dealdata_benchmarks": {
+    "Limited Condition Transactions": {
+      "pc_dollar_median": "$25,388,275",
+      "pc_dollar_range": "$25,388,275-$25,388,275",
+      "pc_pct_range": "50.0%-50.0%"
+    }
+  },
+  "definition": "Limited Condition Transaction provisions permitting the borrower to elect to test ratios, baskets, and conditions required for a permitted acquisition (and related debt incurrence, RPs, etc.) at the time of signing the definitive M&A documentation rather than at consummation. DLS Preferred position: available only for acquisitions whose consummation is not conditioned on third-party financing availability, with a 120-day outside date. If elected, no payment or bankruptcy EoD must be a condition at consummation. Dual-track testing applies during the pendency: (i) assuming the LCA has been consummated (counting related debt and EBITDA of the target) and (ii) on a standalone basis as if it had not been consummated. DLS Preferred exceptions: LCT testing not available for financial covenant calculations, ECF-related ratios, incremental loan or revolving loan incurrence ratios, or pricing ratios. Alternative (aggressive) formulations: expand to 'irrevocable' restricted payments and restricted debt prepayments, no payment/bankruptcy EoD requirement at consummation, no standalone test, no time limit, and exceptions only for financial covenant and pricing ratios.",
+  "dls_ref": [
+    "DLS:15:Limited Condition Acquisition",
+    "DLS:76:Capex",
+    "DLS:87:Transactions with Affiliates"
+  ],
+  "dna_pattern_refs": [
+    "ABSENCE:LCT:NOT_APPLICABLE:BANK_LED_FACILITY",
+    "ABSENCE:NO_LCT_DEFINITION:DISTRIBUTED_FUNCTIONALITY",
+    "DEFINITION:LCT:180_DAY:DUAL_TEST:MARGIN_CARVEOUT:FIN_COV_CARVEOUT",
+    "DEFINITION:LCT:ACQUISITIONS+RDPS+RPS:IRREVOCABLE_NOTICE:WITH_PRO_FORMA_SUBSEQUENT:WITH_FLUCTUATION_PROTECTION",
+    "DEFINITION:LCT:ACQ_ONLY:NO_3P_FINANCING:UK_CODE:TESTING_AT_SIGNING:PRO_FORMA_SUBSEQUENT:CNI_EXCLUSION_FOR_RP",
+    "DEFINITION:LCT:BROAD_SCOPE:ACQUISITIONS:INVESTMENTS:DEBT_REDEMPTION:NO_FINANCING_CONDITION",
+    "DEFINITION:LCT:BROAD_SCOPE:LOI:REVOLVER:UK_CITY_CODE",
+    "DEFINITION:LCT:COMMITTED_ACQUISITIONS:NO_FINANCING_CONDITION:DUAL_PRO_FORMA_TEST:DEFAULT_FREEZE:REP_FREEZE",
+    "DEFINITION:LCT:THREE_PRONG:ACQUISITION+IRREVOCABLE_NOTICE+DIVIDENDS:DEFAGREEMENT_OR_LOI:WITH_REDETERMINATION:STACKING_REQUIRED",
+    "DEFINITION:LCT:TWO_LIMB:WITH_REVOLVER_CARVEOUT"
+  ],
+  "domain_id": "fin_framework",
+  "extraction_difficulty": "very_hard",
+  "family_id": "fin_framework.lct",
+  "golden_record_ids": [
+    "financial_definitions.lct"
+  ],
+  "golden_record_refs": [
+    {
+      "deal_count": 10,
+      "golden_concept_id": "financial_definitions.lct",
+      "has_absence": true,
+      "parameter_count": 3,
+      "total_records": 10
+    }
+  ],
+  "id": "fin_framework.lct",
+  "kg_concept_ids": [
+    "financial_definitions.lct"
+  ],
+  "level": 1,
+  "market_data": {
+    "acquisition_coverage": "87.5%",
+    "investment_coverage": "60.7%",
+    "prevalence": "90.3%"
+  },
+  "name": "LCT / Limited Condition Transactions",
+  "playbook_ref": {
+    "concept_id": "financial_definitions.lct",
+    "dependency_count": 12,
+    "extraction_difficulty": "very_hard",
+    "phase": 1
+  },
+  "r18_concept_ids": [
+    "cure_rights.lct_mechanics",
+    "cure_rights.specified_transaction_mechanics",
+    "financial_definitions.limited_condition_transactions"
+  ],
+  "term_analysis_sources": [
+    "TERM_ANALYSIS_LCT_PROVISIONS.md",
+    "TERM_ANALYSIS_LIMITED_CONDITION_TRANSACTIONS.md"
+  ],
+  "type": "family",
+  "definition_source": "DLS Preferred row 15 (complete LCT specification with dual-track testing, exceptions, and alternative formulations); Review Template row 50 (Pro Forma Calculations)"
+}

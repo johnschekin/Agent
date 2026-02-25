@@ -1,0 +1,2969 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Opening spread at closing before any stepdowns apply, fixed for a hardwired period (typically 2 quarters post-closing). PC Term Comparison segments initial margins: LMM S+500-625, CMM S+450-575, UMM S+350-475, BSL S+250-400. DLS Preferred (Row 21): 'L + [___] bps' — the blank is filled based on deal-specific credit quality and market conditions. DealData (N=62, quantitative only): modal margin S+550 bps.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.applicable_margin.initial_margin",
+          "level": 3,
+          "market_benchmarks": {
+            "bsl": "S+250-400",
+            "cmm": "S+450-575",
+            "lmm": "S+500-625",
+            "umm": "S+350-475"
+          },
+          "name": "Initial Margin",
+          "r18_concept_ids": [
+            "pricing.applicable_margin.initial_margin"
+          ],
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Applicable Margin (segment ranges); DLS Preferred, Row 21 (margin specification)",
+          "pc_ref": [
+            "Applicable Margin (segment ranges)"
+          ]
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Specific leverage ratio breakpoints that trigger margin reductions. Geneva expert extraction: 25 bps stepdown at 5.20x First Lien Net Leverage Ratio. Rinchem expert extraction: 25 bps stepdown at 4.75x FLNLR. Thresholds are set relative to closing leverage, with stepdowns typically 0.25-0.50x inside closing levels.",
+              "dls_ref": [
+                "DLS:13:Leverage Ratios"
+              ],
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "hard",
+              "family_id": "deal_econ.pricing",
+              "id": "deal_econ.pricing.applicable_margin.leverage_stepdowns.threshold_levels",
+              "level": 4,
+              "name": "Leverage Threshold Levels",
+              "r18_concept_ids": [],
+              "type": "sub_component",
+              "definition_source": "PC Term Comparison, Applicable Margin",
+              "pc_ref": [
+                "Applicable Margin"
+              ]
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Basis point reduction per leverage tier. PC Term Comparison: '25bps stepdowns' as market standard. UMM/BSL may have 2 stepdowns of 25 bps each for total 50 bps maximum reduction. Larger step sizes (50 bps per tier) are uncommon and borrower-aggressive.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.pricing",
+              "id": "deal_econ.pricing.applicable_margin.leverage_stepdowns.step_size",
+              "level": 4,
+              "name": "Step-Down Size",
+              "r18_concept_ids": [],
+              "type": "sub_component",
+              "definition_source": "PC Term Comparison, Applicable Margin ('25bps stepdowns')",
+              "pc_ref": [
+                "Applicable Margin ('25bps stepdowns')"
+              ]
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "How often leverage is tested for stepdown eligibility, typically quarterly coinciding with compliance certificate delivery dates. DLS Preferred (Row 73): financial covenant 'Tested quarterly on the last day of each fiscal quarter for which financial statements have been delivered.' Margin stepdowns follow the same measurement cadence.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.pricing",
+              "id": "deal_econ.pricing.applicable_margin.leverage_stepdowns.measurement_frequency",
+              "level": 4,
+              "name": "Measurement Frequency",
+              "r18_concept_ids": [],
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 73 (quarterly financial covenant testing); Review Template (compliance certificate timing)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Margin reductions triggered when leverage ratio improves below specified thresholds. PC Term Comparison: 'One or two 25bps stepdowns not atypical.' DealData (N=62, quantitative only): approximately 60% of deals include 1-2 stepdowns of 25 bps each. Stepdown thresholds typically reference first lien net leverage ratio. DLS Preferred (Row 19 alternative): 'Pricing step downs based on leverage ratios.'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.applicable_margin.leverage_stepdowns",
+          "level": 3,
+          "name": "Leverage-Based Step-Downs",
+          "r18_concept_ids": [
+            "pricing.applicable_margin.leverage_stepdowns"
+          ],
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Applicable Margin ('One or two 25bps stepdowns not atypical'); DLS Preferred, Row 19 (leverage-based step-downs)",
+          "pc_ref": [
+            "Applicable Margin ('One or two 25bps stepdowns not atypical')"
+          ],
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:41.188278+00:00",
+              "term_packs": {
+                "PRICING_STEPDOWNS": {
+                  "label": "Pricing Stepdowns",
+                  "category": "PRICING",
+                  "exactPhrases": [
+                    "step down of [•] bps",
+                    "stepdown(s) at [•]x",
+                    "margin reduction",
+                    "pricing grid",
+                    "grid pricing",
+                    "upon achievement of"
+                  ],
+                  "sectionHeaders": [
+                    "Pricing Stepdowns",
+                    "Margin Step-Downs",
+                    "Grid Pricing",
+                    "Pricing Grid",
+                    "Applicable Margin"
+                  ],
+                  "semanticVariants": [
+                    "leverage-based pricing step-downs",
+                    "performance-based margin reductions",
+                    "pricing grid based on leverage",
+                    "margin adjustments for deleveraging"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.65,
+                    "minKeywordScore": 0.55,
+                    "minConfidence": 0.8,
+                    "escalationThreshold": 0.55,
+                    "humanEscalationThreshold": 0.35
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 40000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "step down of [•] bps",
+                  "stepdown(s) at [•]x",
+                  "margin reduction",
+                  "pricing grid",
+                  "grid pricing",
+                  "upon achievement of"
+                ],
+                "sectionHeaders": [
+                  "Pricing Stepdowns",
+                  "Margin Step-Downs",
+                  "Grid Pricing",
+                  "Pricing Grid",
+                  "Applicable Margin"
+                ],
+                "semanticVariants": [
+                  "leverage-based pricing step-downs",
+                  "performance-based margin reductions",
+                  "pricing grid based on leverage",
+                  "margin adjustments for deleveraging"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "PRICING_STEPDOWNS",
+              "label": "Pricing Stepdowns",
+              "schema_file": "pricing-enhanced.schema.ts",
+              "field_count": 4,
+              "r1_domain": "deal_econ",
+              "mapping_confidence": 0.5714,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Additional 25 bps margin reduction triggered by initial public offering of borrower equity. PC Term Comparison: 'Will sometimes see an additional 25bps step-down post IPO in TTS transactions.' DealData (N=62, quantitative only): approximately 50% of deals include this feature. Becoming standard in top-tier sponsor transactions.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.applicable_margin.ipo_stepdown",
+          "level": 3,
+          "name": "IPO Step-Down",
+          "r18_concept_ids": [
+            "pricing.applicable_margin.ipo_stepdown"
+          ],
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Applicable Margin ('additional 25bps step-down post IPO in TTS transactions')",
+          "pc_ref": [
+            "Applicable Margin ('additional 25bps step-down post IPO in TTS transactions')"
+          ]
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Post-closing quarters during which the initial margin is fixed regardless of actual leverage performance, typically 2 quarters. Prevents immediate stepdown if closing leverage was conservatively calculated. After the hardwired period, margin resets to the grid level corresponding to actual leverage.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.applicable_margin.hardwired_period",
+          "level": 3,
+          "name": "Hardwired Pricing Period",
+          "r18_concept_ids": [
+            "pricing.applicable_margin.hardwired_period"
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template (post-closing margin mechanics)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Count of distinct margin levels in the pricing grid. BSL: typically 4-6 tiers spanning a wider range. PC: typically 2-3 tiers (initial margin + 1-2 stepdowns). The number of tiers reflects the granularity of the pricing-leverage relationship and is correlated with market segment sophistication.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.pricing",
+              "id": "deal_econ.pricing.applicable_margin.grid_pricing.tier_count",
+              "level": 4,
+              "name": "Number of Pricing Tiers",
+              "r18_concept_ids": [],
+              "type": "sub_component",
+              "definition_source": "PC Term Comparison, Applicable Margin (PC vs BSL grid complexity)",
+              "pc_ref": [
+                "Applicable Margin (PC vs BSL grid complexity)"
+              ]
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Spread range from lowest to highest tier for SOFR borrowings. PC Term Comparison segments: LMM S+500-625, CMM S+450-575, UMM S+350-475, BSL S+250-400. The range between lowest and highest tier is typically 50-75 bps in PC (1-2 stepdowns of 25 bps) but 100-150 bps in BSL (multi-step grid).",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.pricing",
+              "id": "deal_econ.pricing.applicable_margin.grid_pricing.sofr_margin_range",
+              "level": 4,
+              "name": "SOFR Margin Range",
+              "r18_concept_ids": [],
+              "type": "sub_component",
+              "definition_source": "PC Term Comparison, Applicable Margin (segment-specific margin ranges)",
+              "pc_ref": [
+                "Applicable Margin (segment-specific margin ranges)"
+              ]
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Spread range from lowest to highest tier for ABR (Alternate Base Rate) borrowings. Typically SOFR margin minus 100 bps across all tiers. DLS Preferred (Row 19): specifies 'L + [___] bps' for revolver — the ABR equivalent is set at SOFR margin less the standard differential.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.pricing",
+              "id": "deal_econ.pricing.applicable_margin.grid_pricing.abr_margin_range",
+              "level": 4,
+              "name": "ABR Margin Range",
+              "r18_concept_ids": [],
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 19 (margin specification)"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Multi-level pricing grid tied to leverage ratios with 3-6 margin tiers. More common in BSL than PC. DLS Preferred (Row 19 alternative): 'Pricing step downs based on leverage ratios' — the alternative envisions a full grid. Each tier specifies SOFR margin and ABR margin at corresponding leverage breakpoints. PC deals typically use 2-3 tiers (initial + 1-2 stepdowns) rather than a full grid.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.applicable_margin.grid_pricing",
+          "level": 3,
+          "name": "Grid Pricing",
+          "r18_concept_ids": [
+            "pricing.applicable_margin.grid_pricing"
+          ],
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 137,
+              "term": "Equity Co-Invest"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 19 (leverage-based pricing grid as alternative); PC Term Comparison, Applicable Margin",
+          "pc_ref": [
+            "Applicable Margin"
+          ]
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether borrower must repay the margin differential if leverage was miscalculated and margin should have been higher during a prior period. Absence is borrower-friendly. Rinchem expert extraction: flagged as a missing lender protection — no true-up clause means the borrower benefits from any EBITDA addback aggressiveness that temporarily reduced reported leverage.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.applicable_margin.true_up",
+          "level": 3,
+          "name": "True-Up Clause",
+          "r18_concept_ids": [
+            "pricing.applicable_margin.true_up"
+          ],
+          "type": "sub_component",
+          "definition_source": null
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether margin reverts to the highest grid level upon an Event of Default. PC Term Comparison, Interest section: 'UMM/BSLR: Will match the BSL market (triggered by bktcy/payment EOD only and increase only on past due amounts). CMM/LMM: In Aggressive deals will match BSL terms; otherwise trigger is any EOD and increase is on entire loan.' This applies to both default interest and margin reversion.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.applicable_margin.eod_reversion",
+          "level": 3,
+          "market_benchmarks": {
+            "lmm_cmm": "Any EoD triggers reversion",
+            "umm_bsl": "Payment/bankruptcy EoD only"
+          },
+          "name": "EoD Margin Reversion",
+          "r18_concept_ids": [
+            "pricing.applicable_margin.eod_reversion"
+          ],
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Interest section (EoD trigger by segment)",
+          "pc_ref": [
+            "Interest"
+          ]
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "The spread over the benchmark rate (SOFR) that determines the primary cost of borrowing, applied to all facility types (term loan, revolver, DDTL). DLS Preferred: Revolver 'L + [___] bps', Term Loan 'L + [___] bps'. PC Term Comparison: 'One or two 25bps stepdowns not atypical; IPO stepdown: additional 25bps in TTS transactions.' Geneva expert extraction: Dollar TL S+350 with 25 bps step-down at 5.2x FLNLR. analysis/pricing/components.json market ranges: LMM S+500-625, CMM S+450-575, UMM S+350-475, BSL S+250-400.",
+      "dls_ref": [
+        "DLS:21:Term Loan Margin"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": true,
+        "playbook_ref": "pricing.margin",
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.06",
+          "Section 2.13"
+        ],
+        "shape_ref": "pricing.margin",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.158034+00:00",
+          "term_packs": {
+            "PRICING_DDTL_RATE": {
+              "label": "DDTL Interest Rate",
+              "category": "PRICING",
+              "exactPhrases": [
+                "DDTL: SOFR + [•] bps",
+                "DDTL margin",
+                "delayed draw term loan rate",
+                "same as Term Loan",
+                "matching term loan pricing"
+              ],
+              "sectionHeaders": [
+                "DDTL Rate",
+                "DDTL Pricing",
+                "Delayed Draw Term Loan Interest",
+                "DDTL Interest Rate",
+                "Interest"
+              ],
+              "semanticVariants": [
+                "delayed draw term loan interest rate",
+                "DDTL margin and spread",
+                "delayed draw pricing",
+                "DDTL facility rate"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.65,
+                "minKeywordScore": 0.55,
+                "minConfidence": 0.8,
+                "escalationThreshold": 0.55,
+                "humanEscalationThreshold": 0.35
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 40000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "DDTL: SOFR + [•] bps",
+              "DDTL margin",
+              "delayed draw term loan rate",
+              "same as Term Loan",
+              "matching term loan pricing"
+            ],
+            "sectionHeaders": [
+              "DDTL Rate",
+              "DDTL Pricing",
+              "Delayed Draw Term Loan Interest",
+              "DDTL Interest Rate",
+              "Interest"
+            ],
+            "semanticVariants": [
+              "delayed draw term loan interest rate",
+              "DDTL margin and spread",
+              "delayed draw pricing",
+              "DDTL facility rate"
+            ]
+          }
+        }
+      },
+      "family_id": "deal_econ.pricing",
+      "id": "deal_econ.pricing.applicable_margin",
+      "level": 2,
+      "market_benchmarks": {
+        "bsl": "S+250-400 bps",
+        "cmm": "S+450-575 bps",
+        "lmm": "S+500-625 bps",
+        "umm": "S+350-475 bps",
+        "source": "analysis/pricing/components.json, applicable_margin.market_ranges (sourced from PC Term Comparison step-down guidance and DealData modal analysis)",
+        "_source": "analysis/pricing/components.json, applicable_margin.market_ranges"
+      },
+      "name": "Applicable Margin / Spread",
+      "r18_concept_ids": [
+        "pricing.applicable_margin"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 138,
+          "term": "Pricing"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Rows 19, 21 (Revolver/TL Margin); PC Term Comparison, Applicable Margin section",
+      "pc_ref": [
+        "Applicable Margin"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "PRICING_DDTL_RATE",
+          "label": "DDTL Interest Rate",
+          "schema_file": "pricing-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.5018,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Forward-looking reference rate published by CME Group based on SOFR futures, used as the floating-rate benchmark in leveraged credit agreements post-LIBOR transition. Available in 1-month, 3-month, and 6-month tenors corresponding to interest period elections. DLS Preferred (Rows 19, 21): references 'LIBOR' — the pre-transition benchmark now replaced by Term SOFR in all new originations. Geneva expert extraction: Term SOFR used across all facilities.",
+          "dls_ref": [
+            "DLS:14:Delayed Draw Term Loans"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.benchmark_rate.term_sofr",
+          "level": 3,
+          "name": "Term SOFR",
+          "r18_concept_ids": [
+            "pricing.benchmark_rate.term_sofr"
+          ],
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 14,
+              "term": "Term Sheet"
+            },
+            {
+              "coverage": "full",
+              "row": 127,
+              "term": "Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Rows 19/21 (benchmark rate references)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Alternative SOFR calculation method using daily compounding or simple averaging rather than forward-looking Term SOFR. Less common in leveraged loans but used in some bilateral facilities and revolving credit facilities where daily rate resets provide operational simplicity.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.benchmark_rate.daily_sofr",
+          "level": 3,
+          "name": "Daily Simple SOFR",
+          "r18_concept_ids": [
+            "pricing.benchmark_rate.daily_sofr"
+          ],
+          "type": "sub_component",
+          "definition_source": "Learning Material (SOFR calculation methods)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Alternate Base Rate — the higher of the Prime Rate, the Federal Funds Effective Rate plus 0.50%, and one-month Term SOFR plus 1.00%. Provides a fixed-rate alternative for short-duration borrowings. DLS Preferred (Row 6): 'Base Rate Loans' specified as separate borrowing type with 1 business day notice. ABR margin is typically SOFR margin minus 100 bps.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.benchmark_rate.abr",
+          "level": 3,
+          "name": "Alternate Base Rate (ABR)",
+          "r18_concept_ids": [
+            "pricing.benchmark_rate.abr"
+          ],
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 19,
+              "term": "Swingline"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (Base Rate Loans: 1 BD notice)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Euro Interbank Offered Rate — benchmark for EUR-denominated tranches in multi-currency facilities. Geneva expert extraction: Euro Term Loan at different margin than USD (implicit currency premium). Multi-currency facilities may specify separate EURIBOR floors.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.benchmark_rate.euribor",
+          "level": 3,
+          "name": "EURIBOR",
+          "r18_concept_ids": [
+            "pricing.benchmark_rate.euribor"
+          ],
+          "type": "sub_component",
+          "definition_source": null
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Sterling Overnight Index Average — the risk-free rate published by the Bank of England, used as benchmark for GBP-denominated tranches in multi-currency facilities. Analogous to SOFR for USD and EURIBOR for EUR.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.benchmark_rate.sonia",
+          "level": 3,
+          "name": "SONIA",
+          "r18_concept_ids": [
+            "pricing.benchmark_rate.sonia"
+          ],
+          "type": "sub_component",
+          "definition_source": "Learning Material (post-LIBOR benchmark rates)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Automatic fallback to SOFR (or successor rate) upon benchmark cessation trigger event without amendment. Pre-defined waterfall: (1) Term SOFR, (2) Daily Simple SOFR, (3) agent-selected rate. Recommended by ARRC for all new facilities. DealData (N=62, quantitative only): 56% SOFR-native deals (no replacement mechanic needed).",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.pricing",
+              "id": "deal_econ.pricing.benchmark_rate.replacement_mechanics.hardwired",
+              "level": 4,
+              "name": "Hardwired Approach",
+              "r18_concept_ids": [
+                "pricing.libor_sofr_transition.hardwired"
+              ],
+              "type": "sub_component",
+              "definition_source": "Learning Material (ARRC hardwired approach)"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Benchmark replacement via amendment, typically using negative consent — deemed approved unless required lenders object within 5 business days of notification. More common in older vintage deals originated before the hardwired approach became standard.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.pricing",
+              "id": "deal_econ.pricing.benchmark_rate.replacement_mechanics.amendment",
+              "level": 4,
+              "name": "Amendment Approach",
+              "r18_concept_ids": [
+                "pricing.libor_sofr_transition.amendment"
+              ],
+              "type": "sub_component",
+              "definition_source": "Learning Material (benchmark transition approaches)"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Allows agent and borrower to transition to SOFR before the mandatory cessation trigger event, subject to notification to lenders with a negative consent period. Designed to permit orderly transition without waiting for benchmark discontinuation.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.pricing",
+              "id": "deal_econ.pricing.benchmark_rate.replacement_mechanics.early_opt_in",
+              "level": 4,
+              "name": "Early Opt-In Election",
+              "r18_concept_ids": [],
+              "type": "sub_component",
+              "definition_source": "Learning Material (LIBOR transition timeline)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Framework for transitioning to a successor benchmark rate upon cessation of the current benchmark. Two approaches: hardwired (automatic fallback to pre-defined waterfall) and amendment-based (requires lender consent). DLS Preferred (Row 18): interest rate provisions establish the benchmark framework. Post-2023 LIBOR cessation, new deals are SOFR-native and this mechanic is vestigial.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.benchmark_rate.replacement_mechanics",
+          "level": 3,
+          "name": "Benchmark Replacement Mechanics",
+          "r18_concept_ids": [
+            "pricing.benchmark_rate.replacement_mechanics",
+            "pricing.libor_sofr_transition"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 18 (Interest Rate section); Learning Material (LIBOR transition mechanics)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Base reference rate for floating rate calculation. Post-LIBOR transition, Term SOFR (published by CME Group based on SOFR futures) is the dominant benchmark for USD leveraged credit. Multi-currency facilities include EURIBOR (EUR) and SONIA (GBP). Alternate Base Rate (ABR) provides a fixed-rate option. DLS Preferred references 'LIBOR' throughout (pre-transition vintage); current market standard is Term SOFR with 1, 3, and 6-month tenors.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.06",
+          "Section 2.13",
+          "Section 2.14"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II / Definitions (Interest Rates & Fees)"
+      },
+      "family_id": "deal_econ.pricing",
+      "id": "deal_econ.pricing.benchmark_rate",
+      "level": 2,
+      "market_benchmarks": {
+        "fallback": "ABR (Alternate Base Rate) as secondary option",
+        "prevalence": "99%+ (all leveraged CAs)",
+        "standard": "Term SOFR (universal post-2023)"
+      },
+      "name": "Benchmark Rate",
+      "r18_concept_ids": [
+        "pricing.benchmark_rate"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 19,
+          "term": "Swingline"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Rows 19, 21 (LIBOR references)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Floor on the term loan benchmark rate, the most critical floor for yield protection. DLS Preferred (Row 21): 'LIBOR Floor: [___]%.' Market standard per analysis/pricing/components.json: 1.00% for LMM/CMM, 0.50-1.00% for UMM, 0.00-0.50% for BSL. DealData (N=62, quantitative only): 1.00% is the modal floor at 23% of deals. Neutron extraction context (PRICING_TL_FLOOR): Benchmark floor that protects lender yield when reference rates fall below a minimum level. Must be consistent across original and incremental tranches for MFN comparability. Benchmark floors protect lender yield when reference rates fall.",
+          "dls_ref": [
+            "DLS:8:Term Loan",
+            "DLS:21:Term Loan Margin",
+            "DLS:30:Term Loan"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.sofr_floor.term_loan_floor",
+          "level": 3,
+          "name": "Term Loan Floor",
+          "r18_concept_ids": [
+            "pricing.sofr_floor.term_loan_floor"
+          ],
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 14,
+              "term": "Term Sheet"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 21 (LIBOR/SOFR Floor)",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:41.198865+00:00",
+              "term_packs": {
+                "PRICING_TL_FLOOR": {
+                  "label": "Term Loan Floor",
+                  "category": "PRICING",
+                  "exactPhrases": [
+                    "SOFR floor of [•]%",
+                    "floor of [•] basis points",
+                    "floor shall not be less than",
+                    "Term SOFR shall be deemed to be",
+                    "subject to a floor",
+                    "in no event less than"
+                  ],
+                  "sectionHeaders": [
+                    "Floor",
+                    "Benchmark Floor",
+                    "SOFR Floor",
+                    "Interest Rate Floor",
+                    "Interest",
+                    "Applicable Rate"
+                  ],
+                  "semanticVariants": [
+                    "benchmark floor protection",
+                    "minimum interest rate floor",
+                    "SOFR floor for term loan",
+                    "interest rate floor provision",
+                    "lender yield protection floor"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.65,
+                    "minKeywordScore": 0.55,
+                    "minConfidence": 0.8,
+                    "escalationThreshold": 0.55,
+                    "humanEscalationThreshold": 0.35
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 40000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "SOFR floor of [•]%",
+                  "floor of [•] basis points",
+                  "floor shall not be less than",
+                  "Term SOFR shall be deemed to be",
+                  "subject to a floor",
+                  "in no event less than"
+                ],
+                "sectionHeaders": [
+                  "Floor",
+                  "Benchmark Floor",
+                  "SOFR Floor",
+                  "Interest Rate Floor",
+                  "Interest",
+                  "Applicable Rate"
+                ],
+                "semanticVariants": [
+                  "benchmark floor protection",
+                  "minimum interest rate floor",
+                  "SOFR floor for term loan",
+                  "interest rate floor provision",
+                  "lender yield protection floor"
+                ]
+              }
+            },
+            "neutron_definition_enrichment": {
+              "source": "Neutron schema term_type_index description/backgroundExplanation",
+              "imported_at": "2026-02-17T22:46:48.401716+00:00",
+              "entries": {
+                "PRICING_TL_FLOOR": {
+                  "term_type": "PRICING_TL_FLOOR",
+                  "schema_file": "pricing-enhanced.schema.ts",
+                  "label": "Term Loan Floor",
+                  "mapping_mode": "domain_scored",
+                  "mapping_confidence": 0.6608,
+                  "label_similarity": 1.0,
+                  "description": "Benchmark floor that protects lender yield when reference rates fall below a minimum level. Must be consistent across original and incremental tranches for MFN comparability.",
+                  "backgroundExplanation": "Benchmark floors protect lender yield when reference rates fall. Although the sources don't fix specific levels, ensure floor levels align with fee letter flex (and MFN \"all-in yield\" math) and are consistent across original and incremental tranches for comparability. The floor effectively sets a minimum SOFR rate for interest calculations, providing downside protection to lenders in low-rate environments.",
+                  "summary_used": "Benchmark floor that protects lender yield when reference rates fall below a minimum level. Must be consistent across original and incremental tranches for MFN comparability. Benchmark floors protect lender yield when reference rates fall.",
+                  "ported_at": "2026-02-17T22:46:48.401716+00:00"
+                }
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "PRICING_TL_FLOOR",
+              "label": "Term Loan Floor",
+              "schema_file": "pricing-enhanced.schema.ts",
+              "field_count": 3,
+              "r1_domain": "deal_econ",
+              "mapping_confidence": 0.6608,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Floor on the revolver benchmark rate, which may differ from the term loan floor. DLS Preferred (Row 19): 'LIBOR Floor: [___]%' for revolver — specified separately from term loan. Geneva expert extraction: 0% on revolver vs 0.50% on term loan, demonstrating that revolver floors are commonly lower to reduce borrowing costs on working capital facilities.",
+          "dls_ref": [
+            "DLS:6:Revolver",
+            "DLS:19:Revolver"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.sofr_floor.revolver_floor",
+          "level": 3,
+          "name": "Revolver Floor",
+          "r18_concept_ids": [
+            "pricing.sofr_floor.revolver_floor"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 19 (revolver floor)",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:41.183565+00:00",
+              "term_packs": {
+                "PRICING_RCF_RATE": {
+                  "label": "Revolver Interest Rate",
+                  "category": "PRICING",
+                  "exactPhrases": [
+                    "Revolver: SOFR + [•] bps",
+                    "RCF margin of [•]",
+                    "revolver pricing",
+                    "[•] bps with [•] stepdown(s)",
+                    "Revolving Facility Interest"
+                  ],
+                  "sectionHeaders": [
+                    "Revolver Rate",
+                    "RCF Interest Rate",
+                    "Revolving Facility Pricing",
+                    "Applicable Margin - Revolver",
+                    "Interest"
+                  ],
+                  "semanticVariants": [
+                    "revolving credit facility interest rate",
+                    "revolver margin pricing",
+                    "RCF spread over benchmark",
+                    "revolving facility pricing grid"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.65,
+                    "minKeywordScore": 0.55,
+                    "minConfidence": 0.8,
+                    "escalationThreshold": 0.55,
+                    "humanEscalationThreshold": 0.35
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 40000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "Revolver: SOFR + [•] bps",
+                  "RCF margin of [•]",
+                  "revolver pricing",
+                  "[•] bps with [•] stepdown(s)",
+                  "Revolving Facility Interest"
+                ],
+                "sectionHeaders": [
+                  "Revolver Rate",
+                  "RCF Interest Rate",
+                  "Revolving Facility Pricing",
+                  "Applicable Margin - Revolver",
+                  "Interest"
+                ],
+                "semanticVariants": [
+                  "revolving credit facility interest rate",
+                  "revolver margin pricing",
+                  "RCF spread over benchmark",
+                  "revolving facility pricing grid"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "PRICING_RCF_RATE",
+              "label": "Revolver Interest Rate",
+              "schema_file": "pricing-enhanced.schema.ts",
+              "field_count": 3,
+              "r1_domain": "deal_econ",
+              "mapping_confidence": 0.5062,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Floor on the alternate base rate component, typically 0% or 1.00%. Less frequently negotiated than the SOFR floor because the ABR inherently has a higher floor through its composite rate calculation (higher of Prime, Fed Funds + 50 bps, and 1-month SOFR + 100 bps).",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.sofr_floor.abr_floor",
+          "level": 3,
+          "name": "ABR Floor",
+          "r18_concept_ids": [
+            "pricing.sofr_floor.abr_floor"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Rows 19/21 (interest rate framework)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Different floor rates by currency for multi-currency facilities. Geneva expert extraction: USD 0.50%, EUR/Revolver 0%. EURIBOR and SONIA may have separate floor levels reflecting different base rate environments in each currency market.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.sofr_floor.multi_currency",
+          "level": 3,
+          "name": "Multi-Currency Floors",
+          "r18_concept_ids": [
+            "pricing.sofr_floor.multi_currency"
+          ],
+          "type": "sub_component",
+          "definition_source": null
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Higher SOFR floor on incremental debt contributes to all-in yield for MFN calculation purposes. DLS Preferred (Row 11 alternative): MFN 'all-in yield' includes 'interest rate floors' — a floor-only differential triggers the MFN pop-up. Floor differentials may be cured by increasing the floor on existing loans rather than increasing the margin, per DLS Row 11 alternative: 'the interest rate margin increase shall be effectuated solely by increasing the interest rate floor.'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.sofr_floor.mfn_interaction",
+          "level": 3,
+          "name": "Floor-MFN Interaction",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 11 (MFN all-in yield includes floors; floor-only cure mechanic)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Minimum benchmark rate protecting lenders when base rates are low, ensuring minimum all-in yield regardless of rate environment. DLS Preferred: 'LIBOR Floor: [___]%' for both revolver and term loan. analysis/pricing/components.json: market standard 1.00% for SOFR in private credit; LMM/CMM 1.00%, UMM 0.50-1.00%, BSL 0.00-0.50%. Geneva expert extraction: Dollar TL 0.50%, Revolver/Euro TL 0%. Floor interacts with MFN calculation as higher floor on incremental triggers pop-up via yield comparison.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": true,
+        "playbook_ref": "pricing.floor",
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.06",
+          "Section 2.13"
+        ],
+        "shape_ref": "pricing.floor",
+        "aligned_difficulty": "hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "deal_econ.pricing",
+      "id": "deal_econ.pricing.sofr_floor",
+      "level": 2,
+      "market_benchmarks": {
+        "bank_preferred": "1.00% or higher",
+        "bsl": "0.00-0.50%",
+        "lmm_cmm": "1.00% (standard)",
+        "umm": "0.50-1.00%",
+        "source": "analysis/pricing/components.json, sofr_floor.market_ranges; Geneva expert extraction (Dollar TL 0.50%, EUR/Revolver 0%)",
+        "_source": "analysis/pricing/components.json, sofr_floor.market_ranges"
+      },
+      "name": "SOFR Floor",
+      "r18_concept_ids": [
+        "pricing.sofr_floor"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 139,
+          "term": "Floor"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Rows 19, 21 (LIBOR Floor)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Single CSA applied regardless of interest period tenor, typically 10 bps. Simpler but less precise than tenor-based approach. Declining in prevalence as SOFR-native deals eliminate the need for any CSA.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.credit_spread_adjustment.flat_csa",
+          "level": 3,
+          "name": "Flat CSA",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "Learning Material (LIBOR-SOFR basis)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "CSA differentiated by interest period length reflecting the historical LIBOR-SOFR basis differential: 1-month (10 bps), 3-month (15 bps), 6-month (25 bps). More precise than flat CSA. ARRC-recommended spreads. Declining in post-transition deals where SOFR is the native benchmark.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.credit_spread_adjustment.tenor_based",
+          "level": 3,
+          "name": "Tenor-Based CSA",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "Learning Material (ARRC spread recommendations)"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Adjustment to benchmark rate compensating for basis difference between legacy LIBOR and SOFR. DealData (N=62, quantitative only): 56% N/A (SOFR-native), 42% have CSA, 2% ARRC-explicit. Standard ARRC-recommended spread: 10 bps (1-month), 15 bps (3-month), 25 bps (6-month). Post-2023 transition, new originations are SOFR-native with no CSA.",
+      "dls_ref": [
+        "DLS:7:Letters of Credit"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": true,
+        "playbook_ref": "pricing.credit_spread_adjustment",
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.06",
+          "Section 2.13"
+        ],
+        "shape_ref": "pricing.credit_spread_adjustment"
+      },
+      "family_id": "deal_econ.pricing",
+      "id": "deal_econ.pricing.credit_spread_adjustment",
+      "level": 2,
+      "market_benchmarks": {
+        "post_transition": "N/A for SOFR-native deals",
+        "transition_era": "10-26 bps ARRC recommended"
+      },
+      "name": "Credit Spread Adjustment (CSA)",
+      "r18_concept_ids": [
+        "pricing.credit_spread_adjustment"
+      ],
+      "type": "concept",
+      "definition_source": null
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Year-by-year premium percentages. DLS Preferred (Row 69): '102/101/par' — 2% in Year 1, 1% in Year 2, par thereafter. DealData (N=62, quantitative only): 102/101/par is the most common at 24%, followed by 102/101 (13%) and 103/102/101 (10%). Premium declines to par over a 2-3 year horizon.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.pricing",
+              "id": "deal_econ.pricing.call_protection.hard_call.premium_schedule",
+              "level": 4,
+              "name": "Premium Schedule",
+              "r18_concept_ids": [
+                "pricing.call_protection.premium_schedule"
+              ],
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 69 (102/101/par schedule)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Duration of call protection measured from the closing date. DealData (N=62, quantitative only): 2 years (56.5% of deals), 3 years (13%), 1 year (8.7%), 18 months (4.3%). DLS Preferred (Row 69): 102/101/par implies a 2-year hard call period (Year 1 at 102, Year 2 at 101).",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.pricing",
+              "id": "deal_econ.pricing.call_protection.hard_call.period",
+              "level": 4,
+              "name": "Protection Period",
+              "r18_concept_ids": [],
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 69 (implied 2-year period from 102/101/par)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "What prepayment events trigger the premium. DLS Preferred (Row 69): hard call 'will include any voluntary prepayments, mandatory prepayments in respect of non-permitted debt refinancing or permitted refinancings, mandatory assignments and applicable to any acceleration of Term Loans.' PC Term Comparison: 'Applies to voluntary, debt sweep, yank a bank AND acceleration (Aggressive UMM/BSL transactions may not include acceleration).'",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.pricing",
+              "id": "deal_econ.pricing.call_protection.hard_call.trigger_scope",
+              "level": 4,
+              "name": "Trigger Scope",
+              "r18_concept_ids": [
+                "pricing.call_protection.scope"
+              ],
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 69 (trigger scope enumeration); PC Term Comparison, Call Protection ('Applies to voluntary, debt sweep, yank a bank AND acceleration')",
+              "pc_ref": [
+                "Call Protection ('Applies to voluntary, debt sweep, yank a bank AND acceleration')"
+              ]
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Premium on any prepayment regardless of reason, the standard protection type for private credit. DLS Preferred (Row 69): '102/101/par; hard call (which will include any voluntary prepayments, mandatory prepayments in respect of non-permitted debt refinancing or permitted refinancings, mandatory assignments and applicable to any acceleration of Term Loans).' DealData (N=62, quantitative only): 92% hard call prevalence.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.call_protection.hard_call",
+          "level": 3,
+          "market_benchmarks": {
+            "pctc_umm_bsl": "transactions may not include acceleration).; occasionally (but not often) may see additional exceptions to the call premium consistent with BSL soft call protections (ie, transformation dispositions, non permitted acquisitions , ipo, change of control)"
+          },
+          "name": "Hard Call Protection",
+          "r18_concept_ids": [
+            "pricing.call_protection.hard_vs_soft"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 69 (hard call: 102/101/par, scope includes acceleration)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "low",
+              "definition": "What constitutes a repricing transaction: refinancing with same or lower principal, lower interest rate or fees, with no change in borrower. The scope of this definition determines when soft call premium actually applies. Narrower definitions exclude transactions that are technically refinancings but involve different economic terms.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.pricing",
+              "id": "deal_econ.pricing.call_protection.soft_call.repricing_definition",
+              "level": 4,
+              "name": "Repricing Transaction Definition",
+              "r18_concept_ids": [],
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 69 (repricing context)"
+            },
+            {
+              "corpus_prevalence": "low",
+              "definition": "Period after which soft call expires, allowing the borrower to reprice freely. Standard: 6 months post-closing. Rinchem expert extraction: 101 soft call for 6 months. PC Term Comparison: soft call is uncommon but when present, has shorter protection period than hard call.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.pricing",
+              "id": "deal_econ.pricing.call_protection.soft_call.sunset_period",
+              "level": 4,
+              "name": "Soft Call Sunset",
+              "r18_concept_ids": [],
+              "type": "sub_component",
+              "definition_source": "PC Term Comparison, Call Protection",
+              "pc_ref": [
+                "Call Protection"
+              ]
+            }
+          ],
+          "corpus_prevalence": "low",
+          "definition": "Premium only on repricing transactions — refinancings with same or lower principal and lower rate/fees. DLS Preferred (Row 69 alternative): 'Soft call protection in connection with repricings only (subject to carve outs for IPO, change of control transactions and transformative acquisitions/transactions).' PC Term Comparison: 'Rarely see soft call.' DealData (N=62, quantitative only): 3.2% soft-call-only prevalence.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.call_protection.soft_call",
+          "level": 3,
+          "name": "Soft Call / Repricing Protection",
+          "r18_concept_ids": [
+            "pricing.call_protection.repricing_definition"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 69 (soft call as alternative); PC Term Comparison, Call Protection ('Rarely see soft call')",
+          "pc_ref": [
+            "Call Protection ('Rarely see soft call')"
+          ]
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Reduced or eliminated premium on prepayment following IPO. PC Term Comparison: 'Clients in an LBO esp those that buy co-invest equity more likely to give the CofC and IPO exceptions since typically unlikely to sell the company that quickly and an exit/ipo would likely result in gains on their equity investment.' DealData (N=62, quantitative only): 24% include IPO exception.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.pricing",
+              "id": "deal_econ.pricing.call_protection.exceptions.ipo",
+              "level": 4,
+              "name": "IPO Exception",
+              "r18_concept_ids": [],
+              "type": "sub_component",
+              "definition_source": "PC Term Comparison, Call Protection (IPO exception rationale)",
+              "pc_ref": [
+                "Call Protection (IPO exception rationale)"
+              ]
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "ECF sweeps, casualty events, and condemnation proceeds typically excluded from premium. Standard in all market segments. DLS Preferred (Row 69): hard call includes 'mandatory prepayments in respect of non-permitted debt refinancing' — implying ECF sweeps and asset sale sweeps may be carved out from premium depending on negotiation.",
+              "dls_ref": [
+                "DLS:70:Mandatory Prepayments"
+              ],
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.pricing",
+              "id": "deal_econ.pricing.call_protection.exceptions.mandatory_prepay",
+              "level": 4,
+              "name": "Mandatory Prepayment Exception",
+              "r18_concept_ids": [],
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 69 (mandatory prepayment scope)"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Reduced premium on Change of Control prepayment. PC Term Comparison: 'Occasionally reduced (eg 2/1/0 becomes 1/0) premium or no premium for repayment in connection with Change of Control.' More common in UMM/BSL. May require repayment at par plus reduced premium.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.pricing",
+              "id": "deal_econ.pricing.call_protection.exceptions.coc",
+              "kct_ref": [
+                "cat3.12"
+              ],
+              "level": 4,
+              "name": "Change of Control Exception",
+              "r18_concept_ids": [],
+              "type": "sub_component",
+              "definition_source": "PC Term Comparison, Call Protection ('reduced premium or no premium for Change of Control')",
+              "pc_ref": [
+                "Call Protection ('reduced premium or no premium for Change of Control')"
+              ]
+            },
+            {
+              "corpus_prevalence": "low",
+              "definition": "UMM/BSL carveout: no premium for prepayment from transformative acquisitions, material dispositions, or non-permitted transactions. PC Term Comparison: 'Aggressive UMM/BSLR: occasionally may see additional exceptions consistent with BSL soft call protections (ie, transformation dispositions, non permitted acquisitions, ipo, change of control).' Can render call protection largely decorative when combined with other exceptions.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.pricing",
+              "id": "deal_econ.pricing.call_protection.exceptions.transformative",
+              "level": 4,
+              "name": "Transformative Transaction Exception",
+              "r18_concept_ids": [],
+              "type": "sub_component",
+              "definition_source": "PC Term Comparison, Call Protection ('transformation dispositions, non permitted acquisitions' as UMM/BSL exceptions)",
+              "pc_ref": [
+                "Call Protection ('transformation dispositions, non permitted acquisitions' as UMM/BSL exceptions)"
+              ]
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Carveouts from call premium. PC Term Comparison: 'Occasionally reduced premium or no premium for repayment in connection with Change of Control or IPO but not for Transformative Acquisitions. Aggressive UMM/BSLR: occasionally may see additional exceptions consistent with BSL soft call protections (ie, transformation dispositions, non permitted acquisitions, ipo, change of control).' Broader carveouts erode call protection value.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.call_protection.exceptions",
+          "level": 3,
+          "name": "Call Protection Exceptions",
+          "r18_concept_ids": [
+            "pricing.call_protection.exceptions"
+          ],
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Call Protection (exception categories by segment); DLS Preferred, Row 69 (scope)",
+          "pc_ref": [
+            "Call Protection (exception categories by segment)"
+          ]
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Discounted present value of remaining interest payments providing full yield-to-maturity compensation. Rare in leveraged loans (DealData N=62, quantitative only: 1.6%). Primarily a second lien or mezzanine feature. PC Term Comparison: '2Ls: typically 3/2/1/0 or NC-1/2/1/0' — the NC (non-call) period may include make-whole in some structures.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.call_protection.make_whole",
+          "level": 3,
+          "name": "Make-Whole Premium",
+          "r18_concept_ids": [
+            "pricing.call_protection.make_whole"
+          ],
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Call Protection (2L schedules with NC periods)",
+          "pc_ref": [
+            "Call Protection (2L schedules with NC periods)"
+          ]
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Premium required for voluntary (and sometimes mandatory) prepayment in early years, protecting lender yield against rapid refinancing. PC Term Comparison: 'Hard call is standard. Applies to voluntary, debt sweep, yank a bank AND acceleration (Aggressive UMM/BSL transactions may not include acceleration). 1Ls: typically 2/1/0. 2Ls: typically 3/2/1/0 or NC-1/2/1/0.' Exceptions: occasionally reduced for CoC or IPO. DLS Preferred: '102/101/par; hard call.' Learning Material: 'For a Term Loan B, the standard is a 101% soft call.'",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": true,
+        "playbook_ref": "pricing.call_protection",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE II",
+          "Section 1.01",
+          "Section 2.10"
+        ],
+        "shape_ref": "pricing.call_protection",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.194376+00:00",
+          "term_packs": {
+            "PRICING_TL_CALL_PROTECTION": {
+              "label": "Term Loan Call Protection",
+              "category": "PRICING",
+              "exactPhrases": [
+                "soft call of [•]% for [•] months",
+                "prepayment premium of [•]%",
+                "101 soft call",
+                "101 call for [•] months",
+                "repricing premium",
+                "call protection",
+                "make-whole premium",
+                "prepayable at par after"
+              ],
+              "sectionHeaders": [
+                "Call Protection",
+                "Prepayment Premium",
+                "Soft Call",
+                "Voluntary Prepayments",
+                "Repricing",
+                "Prepayments"
+              ],
+              "semanticVariants": [
+                "prepayment premium protection",
+                "call protection for term loan",
+                "soft call repricing premium",
+                "early repayment penalty",
+                "refinancing premium period"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.65,
+                "minKeywordScore": 0.55,
+                "minConfidence": 0.8,
+                "escalationThreshold": 0.55,
+                "humanEscalationThreshold": 0.35
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 40000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "soft call of [•]% for [•] months",
+              "prepayment premium of [•]%",
+              "101 soft call",
+              "101 call for [•] months",
+              "repricing premium",
+              "call protection",
+              "make-whole premium",
+              "prepayable at par after"
+            ],
+            "sectionHeaders": [
+              "Call Protection",
+              "Prepayment Premium",
+              "Soft Call",
+              "Voluntary Prepayments",
+              "Repricing",
+              "Prepayments"
+            ],
+            "semanticVariants": [
+              "prepayment premium protection",
+              "call protection for term loan",
+              "soft call repricing premium",
+              "early repayment penalty",
+              "refinancing premium period"
+            ]
+          }
+        }
+      },
+      "family_id": "deal_econ.pricing",
+      "id": "deal_econ.pricing.call_protection",
+      "level": 2,
+      "market_benchmarks": {
+        "bsl": "101 soft call + full repricing carveouts",
+        "lmm_cmm": "102/101/par (hard call); scope includes acceleration",
+        "umm": "102/101 or 101 soft call (6 months), broad carveouts",
+        "source": "PC Term Comparison, Call Protection: '1Ls: typically 2/1/0. 2Ls: typically 3/2/1/0 or NC-1/2/1/0'; DLS Preferred Row 69: '102/101/par; hard call'",
+        "_source": "PC Term Comparison, Call Protection section; DLS Preferred, Row 69"
+      },
+      "name": "Call Protection / Prepayment Premium",
+      "r18_concept_ids": [
+        "pricing.call_protection"
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison, Call Protection section; DLS Preferred, Row 69; Learning Material, Prepayment Premiums section",
+      "pc_ref": [
+        "Call Protection"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "PRICING_TL_CALL_PROTECTION",
+          "label": "Term Loan Call Protection",
+          "schema_file": "pricing-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.6086,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Additional basis points added to the contractual interest rate during default. Market standard: +200 bps on overdue amounts. PC Term Comparison, Interest section: default rate mechanics vary by segment. DealData (N=62, quantitative only): 13% have explicit default rate language. Some deals specify +300 bps or the greater of 200 bps and a specified minimum rate.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.default_interest.rate_increment",
+          "level": 3,
+          "name": "Rate Increment",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Interest section (default rate by segment)",
+          "pc_ref": [
+            "Interest"
+          ]
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether default rate applies to the entire outstanding loan balance (conservative/lender-friendly) or only past-due amounts (aggressive/borrower-friendly). PC Term Comparison: 'UMM/BSLR: increase only on past due amounts. CMM/LMM: increase is on entire loan.' Critical dollar-impact negotiation point.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.default_interest.scope",
+          "level": 3,
+          "market_benchmarks": {
+            "aggressive_value": "Past-due amounts only",
+            "conservative_value": "Entire loan"
+          },
+          "name": "Default Rate Scope",
+          "r18_concept_ids": [
+            "pricing.default_interest.scope"
+          ],
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Interest section ('increase only on past due amounts' vs 'increase is on entire loan')",
+          "pc_ref": [
+            "Interest"
+          ]
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Which Events of Default activate default interest. PC Term Comparison: 'UMM/BSLR: triggered by bktcy/payment EOD only. CMM/LMM: trigger is any EOD.' Conservative (bank-preferred): any EoD triggers default rate. Aggressive: only payment and bankruptcy EoD.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.default_interest.trigger",
+          "level": 3,
+          "market_benchmarks": {
+            "aggressive_value": "Payment/bankruptcy EoD only",
+            "conservative_value": "Any EoD"
+          },
+          "name": "Default Rate Trigger",
+          "r18_concept_ids": [
+            "pricing.default_interest.trigger"
+          ],
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Interest section ('triggered by bktcy/payment EOD only' vs 'any EOD')",
+          "pc_ref": [
+            "Interest"
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether default rate applies automatically upon EoD or requires affirmative election by required lenders (or agent). Automatic is standard in PC; election-based is more borrower-friendly. DLS Preferred (Row 93): consent of Required Lenders needed 'to waive default interest' — implying default rate is automatic and requires waiver to suspend.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.default_interest.automatic_vs_election",
+          "level": 3,
+          "name": "Automatic vs Election",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 93 (Required Lender consent to waive default interest); PC Term Comparison, Interest section",
+          "pc_ref": [
+            "Interest"
+          ]
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Additional interest rate applied during Events of Default as punitive pricing to incentivize prompt cure. Typical increment: +200 bps. PC Term Comparison: UMM/BSL 'triggered by bktcy/payment EOD only and increase only on past due amounts'; CMM/LMM 'In Aggressive deals will match BSL terms; otherwise trigger is any EOD and increase is on entire loan.' Scope (entire loan vs. past-due amounts) and trigger events are key negotiation points with material dollar impact.",
+      "dls_ref": [
+        "DLS:18:Interest Rates",
+        "DLS:90:Events of Default"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.06",
+          "Section 2.13"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II / Definitions (Interest Rates & Fees)"
+      },
+      "family_id": "deal_econ.pricing",
+      "id": "deal_econ.pricing.default_interest",
+      "level": 2,
+      "market_benchmarks": {
+        "lmm_cmm": "Any EoD, entire outstanding loan",
+        "umm_bsl": "Payment/bankruptcy EoD only, past-due amounts only",
+        "source": "PC Term Comparison, Interest section: 'UMM/BSLR: Will match the BSL market (ie triggered by bktcy/payment EOD only and increase only on past due amounts); CMM/LMM: In Aggressive deals will match BSL terms; otherwise trigger is any EOD and increase is on entire loan'",
+        "_source": "PC Term Comparison, Interest section"
+      },
+      "name": "Default Interest Rate",
+      "r18_concept_ids": [
+        "pricing.default_interest"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 138,
+          "term": "Pricing"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison, Interest section (default interest)",
+      "pc_ref": [
+        "Interest"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Allocation between cash-pay and PIK components of the interest coupon. PC Term Comparison: PIK interest 'Extremely rare in PC 1L transactions; may see if 2Ls occasionally; Typically in sub debt; Holdco Loans typically all PIK or PIK/Toggle.' Example from DealData (quantitative only): USDP S+4.25% cash + 2.00% PIK. Total coupon typically higher than all-cash rate to compensate for deferred payment risk.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.pik_toggle.cash_pik_split",
+          "kct_ref": [
+            "cat4.6"
+          ],
+          "level": 3,
+          "name": "Cash/PIK Split",
+          "r18_concept_ids": [
+            "pricing.pik_toggle.cash_pik_split"
+          ],
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Interest section (PIK rarity in 1L, common in sub debt/holdco)",
+          "pc_ref": [
+            "Interest"
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Maximum PIK periods, minimum cash interest requirements, and PIK capitalization limits. PC Term Comparison: 'Cap on amount of margin that can be PIKed / Min cash interest condition in each period / Limits on number of PIK periods/window during which PIK can be used / Increase in rate when PIK is used.' Standard protective features limiting total PIK exposure.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.pik_toggle.pik_caps",
+          "kct_ref": [
+            "cat4.6"
+          ],
+          "level": 3,
+          "name": "PIK Caps and Limits",
+          "r18_concept_ids": [
+            "pricing.pik_toggle.pik_caps"
+          ],
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Interest section (PIK caps enumeration: margin cap, min cash, period limits, rate increase)",
+          "pc_ref": [
+            "Interest"
+          ]
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether capitalized PIK amount is subject to call premium on prepayment. PC Term Comparison: 'Whether prepayment premium is due on capitalized PIK' listed as a key PIK negotiation term. If PIK is exempt from premium, borrower can capitalize interest then repay the capitalized amount without penalty, eroding call protection value.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.pik_toggle.prepayment_premium_on_pik",
+          "kct_ref": [
+            "cat4.6"
+          ],
+          "level": 3,
+          "name": "PIK Prepayment Premium",
+          "r18_concept_ids": [
+            "pricing.pik_toggle.prepayment_premium"
+          ],
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Interest section ('Whether prepayment premium is due on capitalized PIK')",
+          "pc_ref": [
+            "Interest"
+          ]
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Process for borrower to elect PIK interest: advance notice requirements, frequency of election (per interest period), and whether election is irrevocable for the period. PC Term Comparison: 'Limits on PIK tied to use of RP basket' — some deals tie PIK election to RP capacity rather than unrestricted borrower choice.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.pik_toggle.election_mechanics",
+          "kct_ref": [
+            "cat4.6"
+          ],
+          "level": 3,
+          "name": "PIK Election Mechanics",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Interest section (PIK election mechanics and RP basket linkage)",
+          "pc_ref": [
+            "Interest"
+          ]
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Additional spread charged on PIK portion versus cash-pay portion, compensating lender for deferred cash flow. PC Term Comparison: 'Increase in rate when PIK is used' — a PIK premium of 100-300 bps above cash-pay rate is standard. The differential reflects time value of money and increased credit risk from balance growth.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.pik_toggle.pik_rate_differential",
+          "kct_ref": [
+            "cat4.6"
+          ],
+          "level": 3,
+          "name": "PIK Rate Differential",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Interest section ('Increase in rate when PIK is used')",
+          "pc_ref": [
+            "Interest"
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Provision suspending the borrower's right to elect PIK interest during the continuance of an Event of Default. Prevents the borrower from conserving cash by toggling to non-cash interest precisely when lender claims are at greatest risk. Standard protective feature in PIK structures.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.pik_toggle.eod_stopper_on_pik_elections",
+          "kct_ref": [
+            "cat4.6"
+          ],
+          "level": 3,
+          "name": "EoD stopper on PIK elections",
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Interest section (PIK protective terms)",
+          "pc_ref": [
+            "Interest"
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Rules governing whether PIK interest is added to the outstanding principal balance (compounding) or tracked separately as a non-compounding accrual. Compounding PIK increases the base on which future interest is calculated, accelerating balance growth. Non-compounding PIK limits the debt spiral effect. PC Term Comparison: 'How to calculate make-whole relative to future interest payments' — compounding treatment directly affects make-whole calculations.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.pik_toggle.pik_compounding_treatment",
+          "kct_ref": [
+            "cat4.6"
+          ],
+          "level": 3,
+          "name": "PIK compounding treatment",
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Interest section (PIK make-whole calculation)",
+          "pc_ref": [
+            "Interest"
+          ]
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Option to capitalize interest rather than pay cash, allowing the borrower to defer current interest payments by adding them to outstanding principal. PC Term Comparison: 'Extremely rare in PC 1L transactions; may see if 2Ls occasionally; Typically in sub debt; Holdco Loans typically all PIK or PIK/Toggle.' Includes protective features: cap on amount of margin that can be PIKed, minimum cash interest, limits on number of PIK periods, rate increase when PIK is used, and whether prepayment premium is due on capitalized PIK.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.06",
+          "Section 2.13"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II / Definitions (Interest Rates & Fees)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.166665+00:00",
+          "term_packs": {
+            "PRICING_PIK_TOGGLE": {
+              "label": "PIK Toggle",
+              "category": "PRICING",
+              "exactPhrases": [
+                "PIK Interest",
+                "PIK toggle",
+                "payment in kind",
+                "paid in kind",
+                "PIK election",
+                "in lieu of cash interest"
+              ],
+              "sectionHeaders": [
+                "PIK Toggle",
+                "Payment in Kind",
+                "PIK Interest",
+                "Interest Payment Elections",
+                "Interest"
+              ],
+              "semanticVariants": [
+                "payment in kind interest option",
+                "PIK toggle election",
+                "non-cash interest payment",
+                "interest capitalization option"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.65,
+                "minKeywordScore": 0.55,
+                "minConfidence": 0.8,
+                "escalationThreshold": 0.55,
+                "humanEscalationThreshold": 0.35
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 40000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "PIK Interest",
+              "PIK toggle",
+              "payment in kind",
+              "paid in kind",
+              "PIK election",
+              "in lieu of cash interest"
+            ],
+            "sectionHeaders": [
+              "PIK Toggle",
+              "Payment in Kind",
+              "PIK Interest",
+              "Interest Payment Elections",
+              "Interest"
+            ],
+            "semanticVariants": [
+              "payment in kind interest option",
+              "PIK toggle election",
+              "non-cash interest payment",
+              "interest capitalization option"
+            ]
+          }
+        }
+      },
+      "family_id": "deal_econ.pricing",
+      "id": "deal_econ.pricing.pik_toggle",
+      "kct_ref": [
+        "cat4.6"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "first_lien_value": "Rare (stressed/holdco only)",
+        "holdco_collateral": "Standard (all PIK or PIK/Toggle)",
+        "pik_prevalence_in_direct_lending_vs_bsl": "[cat4.6] KCT cat4.6 requires prevalence/severity data for 'PIK prevalence in direct lending vs BSL' but no existing node provides this benchmark.",
+        "second_lien_sub_value": "Common with PIK toggle",
+        "typical_pik_caps": "[cat4.6] KCT cat4.6 requires prevalence/severity data for 'typical PIK caps' but no existing node provides this benchmark.",
+        "typical_pik_rate_differentials": "[cat4.6] KCT cat4.6 requires prevalence/severity data for 'typical PIK rate differentials' but no existing node provides this benchmark."
+      },
+      "name": "PIK (Payment-in-Kind) Interest",
+      "r18_concept_ids": [
+        "pricing.pik_toggle"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 12,
+          "term": "Minimum equity contribution"
+        },
+        {
+          "coverage": "full",
+          "row": 137,
+          "term": "Equity Co-Invest"
+        },
+        {
+          "coverage": "full",
+          "row": 138,
+          "term": "Pricing"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison, PIK Interest section",
+      "pc_ref": [
+        "PIK Interest"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "PRICING_PIK_TOGGLE",
+          "label": "PIK Toggle",
+          "schema_file": "pricing-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.6191,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Interest period options: 1-month, 3-month, and 6-month SOFR. Some deals offer 12-month with lender consent. DLS Preferred (Row 6): specifies interest period as part of borrowing notice. ABR borrowings have no interest period (daily reset). Maximum number of outstanding SOFR tranches is limited — DLS Row 6: 'No more than [5] series.'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.interest_periods.available_tenors",
+          "level": 3,
+          "name": "Available Tenor Lengths",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (interest period selection; max [5] series outstanding)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Borrower indemnity for prepaying a SOFR loan before the end of its interest period, compensating lenders for redeployment costs and lost margin. Standard yield protection provision in all leveraged loan agreements. DLS Preferred (Row 6): SOFR borrowing mechanics imply broken funding exposure through the interest period structure.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.interest_periods.broken_funding",
+          "level": 3,
+          "name": "Broken Funding Indemnity",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (SOFR borrowing mechanics implying breakage); Learning Material (broken funding indemnity)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Minimum principal for SOFR borrowings and minimum number of outstanding SOFR tranches. DLS Preferred (Row 6): 'Minimum Borrowings: $[___]/$[___]' and 'No more than [5] series of Revolving Loans may be outstanding at any one time.' Prevents administrative burden from small SOFR lots and excessive interest period fragmentation.",
+          "dls_ref": [
+            "DLS:43:Minimum ratings"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.interest_periods.minimum_borrowing",
+          "level": 3,
+          "name": "Minimum Borrowing Amount",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (Minimum Borrowings and max series limits)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Available interest period lengths and associated mechanics for SOFR borrowings. DLS Preferred (Row 6): Borrowing Notice 'shall specify, among other things, the type of Borrowing (i.e. LIBOR vs. Base Rate), the amount of borrowing and the interest period.' Standard periods: 1-month, 3-month, 6-month. Selection affects rate reset frequency and broken funding cost exposure.",
+      "dls_ref": [
+        "DLS:18:Interest Rates"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.06",
+          "Section 2.13"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II / Definitions (Interest Rates & Fees)"
+      },
+      "family_id": "deal_econ.pricing",
+      "id": "deal_econ.pricing.interest_periods",
+      "level": 2,
+      "market_benchmarks": {
+        "optional": "2-week, 12-month (if available)",
+        "prevalence": "99%+",
+        "standard": "1, 3, 6 months"
+      },
+      "name": "Interest Period Mechanics",
+      "r18_concept_ids": [],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 6 (Borrowing Notice interest period specification)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Contractual right entitling lenders to additional compensation when regulatory changes (Basel III/IV, Dodd-Frank, or successor frameworks) increase their cost of maintaining commitments or making SOFR-based loans. Covers higher capital requirements, liquidity coverage obligations, and reserve mandates. Standard provision but the specific categories of recoverable costs are negotiable.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.yield_protection.increased_costs",
+          "level": 3,
+          "name": "Increased Costs",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "Learning Material (yield protection provisions)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Reimbursement for increased capital requirements imposed by banking regulators. Interacts with risk-weighted asset calculations under Basel III/IV. Standard boilerplate in leveraged loan agreements but the calculation methodology and notice requirements are negotiable.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.yield_protection.capital_adequacy",
+          "level": 3,
+          "name": "Capital Adequacy",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "Learning Material (capital adequacy provisions)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Borrower obligation to gross up payments so lenders receive full interest after any required tax withholding. Exceptions for FATCA withholding and failures by lenders to deliver required tax documentation (IRS Forms W-8/W-9). The gross-up obligation ensures non-US lenders receive the same net economic return as domestic lenders.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.yield_protection.withholding_tax_grossup",
+          "level": 3,
+          "name": "Withholding Tax Gross-Up",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "Learning Material (withholding tax provisions)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Provisions compensating lenders for increased regulatory or tax costs of maintaining the facility. Includes increased costs (Basel III/IV regulatory changes), capital adequacy charges, and withholding tax gross-up mechanics. Standard boilerplate in all leveraged loan agreements.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "ARTICLE III",
+          "Section 2.15",
+          "Section 2.16",
+          "Section 3.01"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II / Definitions (Interest Rates & Fees)"
+      },
+      "family_id": "deal_econ.pricing",
+      "id": "deal_econ.pricing.yield_protection",
+      "level": 2,
+      "market_benchmarks": {
+        "negotiated": "Breakage costs, illegality provisions",
+        "prevalence": "95%+",
+        "standard": "Increased costs, capital adequacy, withholding tax gross-up"
+      },
+      "name": "Yield Protection / Increased Costs",
+      "r18_concept_ids": [],
+      "type": "concept",
+      "definition_source": "Learning Material (yield protection provisions)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether MFN compares all-in yield (margin + floor + OID/upfront fees amortized over 4-year average life) or margin only. Bank preferred: all-in yield. Aggressive: margin only (allows OID arbitrage).",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.mfn_protection.yield_vs_margin",
+          "level": 3,
+          "market_benchmarks": {
+            "aggressive_value": "Margin only",
+            "bank_preferred": "All-in yield"
+          },
+          "name": "Yield vs Margin Comparison",
+          "r18_concept_ids": [],
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Period after which MFN protection expires. Bank preferred: no sunset (perpetual). LMM/CMM: no sunset standard. UMM/BSL: 12-18 month sunset. After sunset, incremental can price freely.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.mfn_protection.sunset",
+          "level": 3,
+          "market_benchmarks": {
+            "lmm_cmm": "No sunset",
+            "umm_bsl": "12-18 months"
+          },
+          "name": "MFN Sunset Period",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 34 (Incremental – MFN)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Which debt types are subject to MFN. Conservative: all pari passu debt including IED and ratio debt. Aggressive: pari term loans only, excluding revolvers, acquisition-funded incrementals, different maturity debt.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.mfn_protection.scope",
+          "level": 3,
+          "name": "MFN Scope (Covered Debt)",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 73 (Negative Covenants – Indebtedness – Ratio Debt – amount); Review Template Row 74 (Negative Covenants – Indebtedness – Ratio Debt – non-guarantor cap); Review Template Row 75 (Negative Covenants – Indebtedness – Ratio Debt – terms); Review Template Row 77 (Negative Covenants – Indebtedness – Incurred Acquisition Debt – amount); Review Template Row 78 (Negative Covenants – Indebtedness – Incurred Acquisition Debt – non-guarantor cap); Review Template Row 79 (Negative Covenants – Indebtedness – Assumed Acquisition Debt); Review Template Row 112 (Negative Covenants – Restricted Debt Payments – Scope); Review Template Row 115 (Negative Covenants – Restricted Debt Payments – Ratio Basket)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Dollar or EBITDA-based amount of incremental debt exempt from MFN. Aggressive UMM/BSL: up to 50% of EBITDA. Allows limited incremental issuance without triggering pop-up.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.mfn_protection.capped_amount",
+          "level": 3,
+          "name": "MFN Capped Amount Carveout",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 24 (Incremental Amount – freebie); Review Template Row 25 (Incremental Amount – prepayments); Review Template Row 26 (Incremental Amount – ratio); Review Template Row 34 (Incremental – MFN); Review Template Row 73 (Negative Covenants – Indebtedness – Ratio Debt – amount); Review Template Row 77 (Negative Covenants – Indebtedness – Incurred Acquisition Debt – amount)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Pricing protection preventing incremental debt from being priced above existing debt by more than the trigger threshold (universally 50 bps). 77.4% adoption. If triggered, existing debt margin pops up. The most complex pricing sub-system.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.14",
+          "Section 2.17"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II / Definitions (Interest Rates & Fees)"
+      },
+      "family_id": "deal_econ.pricing",
+      "id": "deal_econ.pricing.mfn_protection",
+      "level": 2,
+      "market_benchmarks": {
+        "scope_bank_preferred": "All pari debt including IED",
+        "sunset_bsl": "12-18 months",
+        "sunset_pc": "None (perpetual)",
+        "trigger_value": "50 bps (universal)"
+      },
+      "name": "Most Favored Nation (MFN) Protection",
+      "r18_concept_ids": [
+        "pricing.applicable_margin"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 127,
+          "term": "Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing"
+        },
+        {
+          "coverage": "full",
+          "row": 137,
+          "term": "Equity Co-Invest"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "Review Template Row 127 (Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing); Review Template Row 137 (Equity Co-Invest)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Arranger right to increase applicable margin, add OID, or increase upfront fees to clear syndication. DLS Preferred (Row 25): 'Increase the applicable margin on the Term Loan Facility by up to [___] bps; provided, that (a) up to [___] bps of such increase may be effected in the form of OID or upfront fees (based on an assumed four-year average life to maturity) so long as the aggregate OID and upfront fees... shall not result in the issue price being less than [___]%.'",
+          "dls_ref": [
+            "DLS:25:Pricing Flex"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.market_flex.pricing_flex",
+          "level": 3,
+          "name": "Pricing Flex",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 25 (Pricing Flex: margin increase cap, OID conversion, minimum issue price)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Right to modify covenant levels, sweep mechanics, reporting requirements, and other non-pricing terms to attract syndication participants. DLS Preferred (Row 26): 'Structure Flex: TBD based on deal structure.' Less quantifiable than pricing flex, as structural modifications depend on specific investor feedback during syndication.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.market_flex.structural_flex",
+          "level": 3,
+          "name": "Structural Flex",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 26 (Structure Flex); DLS Preferred, Row 27 (Other Flex)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Duration of flex rights from closing until syndication is complete. DLS Preferred (Row 24): 'Earlier of 60 days after closing and Successful Syndication.' Alternative: '45 days or Closing Date.' The flex period establishes the window during which the arranger can adjust economics to clear the market.",
+          "dls_ref": [
+            "DLS:24:Post-Close Flex Period"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.market_flex.flex_period",
+          "level": 3,
+          "name": "Flex Period",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 24 (Post-Close Flex Period: 'Earlier of 60 days after closing and Successful Syndication')"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Revolver gets matching margin increase when term loan margin is flexed up, protecting revolver lenders from being below-market after flex exercise. DLS Preferred (Row 25): 'Revolving Facility get Tag Along Flex to Term Facility.' Alternative: 'Tag Along Flex, provided Revolving Facility margin is [___] bps lower than Term Facility / No Tag Along.'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.market_flex.revolver_tag_along",
+          "level": 3,
+          "name": "Revolver Tag-Along",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 25 ('Revolving Facility get Tag Along Flex to Term Facility')"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Arranger right to modify pricing and structural terms during the syndication period to facilitate successful placement. DLS Preferred: 'Increase the applicable margin on the Term Loan Facility by up to [___] bps; up to [___] bps may be effected in the form of OID or upfront fees (based on assumed four-year average life to maturity); OID resulting from market flex can be funded by revolver draw. Revolving Facility gets Tag Along Flex to Term Facility.' Confidential provisions in the fee letter, not the credit agreement.",
+      "dls_ref": [
+        "DLS:25:Pricing Flex",
+        "DLS:26:Structure Flex",
+        "DLS:27:Other Flex",
+        "DLS:40:Market MAC",
+        "DLS:54:Clear market",
+        "DLS:61:Clear Market"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "FEE LETTER"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II / Definitions (Interest Rates & Fees)"
+      },
+      "family_id": "deal_econ.pricing",
+      "id": "deal_econ.pricing.market_flex",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "85%+ (in commitment letters)",
+        "standard": "Margin flex +/- 50 bps, OID flex 98.0-99.5",
+        "timing": "Exercised during syndication period only"
+      },
+      "name": "Market Flex Provisions",
+      "r18_concept_ids": [
+        "pre_closing_mechanics.market_flex"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 38,
+          "term": "Refinancing Facilities – Terms"
+        },
+        {
+          "coverage": "full",
+          "row": 139,
+          "term": "Floor"
+        },
+        {
+          "coverage": "full",
+          "row": 157,
+          "term": "Fee Letter"
+        },
+        {
+          "coverage": "full",
+          "row": 160,
+          "term": "Ticking Fee (Term/Revolver)"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 25 (Pricing Flex); Review Template, Row 49 (Documentation Precedent)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "low",
+          "definition": "Sustainability key performance indicators that drive margin adjustments: emissions reduction targets, diversity metrics, waste reduction, water usage. Typically 2-4 KPIs per facility. KPIs must be measurable, verifiable, and material to the borrower's business. Third-party verification increasingly required.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.esg_sustainability.kpi_selection",
+          "level": 3,
+          "name": "KPI Selection",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "Learning Material (ESG-linked loan provisions)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Basis point adjustment range tied to KPI performance. Typically symmetric: +/-2.5 to +/-5 bps per KPI. Total adjustment capped at 10-25 bps in either direction. Some facilities only provide downward adjustments (margin reduction for meeting targets) without upward penalties.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.esg_sustainability.margin_ratchet",
+          "level": 3,
+          "name": "ESG Margin Ratchet",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "Learning Material"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Margin adjustments (up or down, typically 2.5-5 bps each way) tied to ESG or sustainability performance metrics (KPIs). Growing market feature, predominantly in BSL and investment-grade crossover markets. Not addressed in DLS Preferred or PC Term Comparison, confirming it is not yet standard in private credit.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": true,
+        "playbook_ref": "pricing.esg_sustainability",
+        "section_locations": [
+          "ARTICLE V"
+        ],
+        "shape_ref": "pricing.esg_sustainability"
+      },
+      "family_id": "deal_econ.pricing",
+      "id": "deal_econ.pricing.esg_sustainability",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "10-20% (growing trend)",
+        "standard": "+/- 2.5 bps per KPI, 3-5 KPIs typical",
+        "trend": "Rapid adoption since 2021, more common in BSL"
+      },
+      "name": "ESG / Sustainability-Linked Pricing",
+      "r18_concept_ids": [
+        "pricing.esg_sustainability"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred and PC Term Comparison (absence confirms non-standard in PC)",
+      "pc_ref": [
+        "(absence confirms non-standard in PC)"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Percentage discount on face value of the loan. Example: 99% issue price = 1% OID = 100 bps. Larger OID in challenging syndication or higher-risk credits.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.oid_upfront_fee.oid_amount",
+          "level": 3,
+          "name": "OID Amount",
+          "r18_concept_ids": [],
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Method for converting OID to annualized yield for MFN comparison: OID / average life (typically 4 years). 1% OID over 4-year life = ~25 bps annual yield equivalent.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.oid_upfront_fee.yield_equivalence",
+          "level": 3,
+          "name": "OID-to-Yield Conversion",
+          "r18_concept_ids": [],
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Floor on aggregate issue price (OID + upfront fee combined). DLS: aggregate cannot result in issue price below [___]%. Protects against excessive yield engineering via OID.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.oid_upfront_fee.minimum_issue_price",
+          "level": 3,
+          "name": "Minimum Issue Price",
+          "r18_concept_ids": [],
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Original Issue Discount or upfront fee paid at closing. Component of all-in yield for MFN calculation. Typical: 0.50-2.00% (amortized over 4-year average life for yield calculation). DLS: OID/upfront fees may be funded via revolver draw.",
+      "dls_ref": [
+        "DLS:20:Unused Line Fee"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "FEE LETTER",
+          "Section 2.09",
+          "Section 2.12"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II / Definitions (Interest Rates & Fees)"
+      },
+      "family_id": "deal_econ.pricing",
+      "id": "deal_econ.pricing.oid_upfront_fee",
+      "level": 2,
+      "market_benchmarks": {
+        "typical_value": "0.50-2.00%",
+        "yield_conversion": "4-year average life amortization"
+      },
+      "name": "OID / Upfront Fee",
+      "r18_concept_ids": [
+        "pricing.oid_upfront_fee"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 8,
+          "term": "Expense Reimbursement"
+        },
+        {
+          "coverage": "full",
+          "row": 15,
+          "term": "Revolver closing date draws"
+        },
+        {
+          "coverage": "full",
+          "row": 139,
+          "term": "Floor"
+        },
+        {
+          "coverage": "full",
+          "row": 140,
+          "term": "RCF Commitment Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 142,
+          "term": "LC Fronting Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 157,
+          "term": "Fee Letter"
+        },
+        {
+          "coverage": "full",
+          "row": 163,
+          "term": "Alternate Transaction Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 164,
+          "term": "Sponsor Participation"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 20 (Unused Line Fee); Review Template Row 8 (Expense Reimbursement); Review Template Row 15 (Revolver closing date draws); Review Template Row 139 (Floor); Review Template Row 140 (RCF Commitment Fee); Review Template Row 142 (LC Fronting Fee); Review Template Row 157 (Fee Letter); Review Template Row 163 (Alternate Transaction Fee); Review Template Row 164 (Sponsor Participation)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Fee charged on undrawn LC face amount, shared pro rata among revolving lenders. Typically equal to applicable margin on revolver borrowings.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.lc_fees.issuance_fee",
+          "level": 3,
+          "name": "Issuance / Participation Fee",
+          "r18_concept_ids": [
+            "pricing.lc_fees.issuance_fee"
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 140 (RCF Commitment Fee); Review Template Row 142 (LC Fronting Fee); Review Template Row 160 (Ticking Fee (Term/Revolver))"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Separate fee paid directly to the LC issuing bank for fronting risk. Typically 0.125-0.25% per annum on LC face amount. Retained entirely by issuing bank. Neutron extraction context (PRICING_RCF_FRONTING_FEE): Fee paid to the letter of credit issuing bank for fronting risk. Separate from LC participation fee payable to revolver lenders. LC fronting fees compensate the issuing bank for LC exposure; calibrate to precedent for transaction size and LC usage profile. Ensure consistency with LC participation fees payable to revolver lenders and with any multi-currency LC program.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.lc_fees.fronting_fee",
+          "level": 3,
+          "name": "Fronting Fee",
+          "r18_concept_ids": [
+            "pricing.lc_fees.fronting_fee"
+          ],
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 142,
+              "term": "LC Fronting Fee"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 142 (LC Fronting Fee)",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:41.177555+00:00",
+              "term_packs": {
+                "PRICING_RCF_FRONTING_FEE": {
+                  "label": "LC Fronting Fee",
+                  "category": "PRICING",
+                  "exactPhrases": [
+                    "fronting fee of [•]%",
+                    "LC fronting fee",
+                    "issuing bank fee",
+                    "[•] bps per annum",
+                    "letter of credit fronting fee"
+                  ],
+                  "sectionHeaders": [
+                    "LC Fronting Fee",
+                    "Fronting Fee",
+                    "Letter of Credit Fee",
+                    "Issuing Bank Fee",
+                    "Fees"
+                  ],
+                  "semanticVariants": [
+                    "letter of credit fronting fee",
+                    "LC issuance fee",
+                    "fronting commission",
+                    "issuing bank fronting fee"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.65,
+                    "minKeywordScore": 0.55,
+                    "minConfidence": 0.8,
+                    "escalationThreshold": 0.55,
+                    "humanEscalationThreshold": 0.35
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 40000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "fronting fee of [•]%",
+                  "LC fronting fee",
+                  "issuing bank fee",
+                  "[•] bps per annum",
+                  "letter of credit fronting fee"
+                ],
+                "sectionHeaders": [
+                  "LC Fronting Fee",
+                  "Fronting Fee",
+                  "Letter of Credit Fee",
+                  "Issuing Bank Fee",
+                  "Fees"
+                ],
+                "semanticVariants": [
+                  "letter of credit fronting fee",
+                  "LC issuance fee",
+                  "fronting commission",
+                  "issuing bank fronting fee"
+                ]
+              }
+            },
+            "neutron_definition_enrichment": {
+              "source": "Neutron schema term_type_index description/backgroundExplanation",
+              "imported_at": "2026-02-17T22:46:48.401716+00:00",
+              "entries": {
+                "PRICING_RCF_FRONTING_FEE": {
+                  "term_type": "PRICING_RCF_FRONTING_FEE",
+                  "schema_file": "pricing-enhanced.schema.ts",
+                  "label": "LC Fronting Fee",
+                  "mapping_mode": "domain_scored",
+                  "mapping_confidence": 0.736,
+                  "label_similarity": 0.6667,
+                  "description": "Fee paid to the letter of credit issuing bank for fronting risk. Separate from LC participation fee payable to revolver lenders.",
+                  "backgroundExplanation": "LC fronting fees compensate the issuing bank for LC exposure; calibrate to precedent for transaction size and LC usage profile. Ensure consistency with LC participation fees payable to revolver lenders and with any multi-currency LC program. The fronting fee is separate from and in addition to the LC participation fee (which equals the applicable margin).",
+                  "summary_used": "Fee paid to the letter of credit issuing bank for fronting risk. Separate from LC participation fee payable to revolver lenders. LC fronting fees compensate the issuing bank for LC exposure; calibrate to precedent for transaction size and LC usage profile. Ensure consistency with LC participation fees payable to revolver lenders and with any multi-currency LC program.",
+                  "ported_at": "2026-02-17T22:46:48.401716+00:00"
+                }
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "PRICING_RCF_FRONTING_FEE",
+              "label": "LC Fronting Fee",
+              "schema_file": "pricing-enhanced.schema.ts",
+              "field_count": 2,
+              "r1_domain": "deal_econ",
+              "mapping_confidence": 0.736,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Pro rata share of LC fees distributed among revolving lenders based on their commitments. Part of revolver economics, separate from fronting fee.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.lc_fees.participation_fee",
+          "level": 3,
+          "name": "Participation Fee",
+          "r18_concept_ids": [
+            "pricing.lc_fees.participation_fee"
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 140 (RCF Commitment Fee); Review Template Row 142 (LC Fronting Fee); Review Template Row 160 (Ticking Fee (Term/Revolver))"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Fee structure for LC sub-facility: issuance/participation fee (typically equal to revolver applicable margin) plus fronting fee (0.125-0.25% to issuing bank). 15% of DealData deals have explicit LC sublimit.",
+      "dls_ref": [
+        "DLS:22:L/C Fronting Fees / L/C Fees",
+        "DLS:34:Breakup fees",
+        "DLS:51:Payment of fees"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.05",
+          "Section 2.09",
+          "Section 2.12"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II / Definitions (Interest Rates & Fees)"
+      },
+      "family_id": "deal_econ.pricing",
+      "id": "deal_econ.pricing.lc_fees",
+      "level": 2,
+      "market_benchmarks": {
+        "fronting_fee": "0.125-0.25% per annum",
+        "prevalence": "60%+ (CAs with revolving facility)",
+        "standard": "Equal to applicable margin for revolving loans"
+      },
+      "name": "Letter of Credit Fees",
+      "r18_concept_ids": [
+        "pricing.lc_fees"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 142,
+          "term": "LC Fronting Fee"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 22 (L/C Fronting Fees / L/C Fees); DLS Preferred Row 34 (Breakup fees); DLS Preferred Row 51 (Payment of fees); Review Template Row 142 (LC Fronting Fee)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Annual fee to administrative agent for loan servicing: payment processing, notice distribution, compliance tracking, borrowing base administration (if ABL).",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.agency_fee.admin_agent_fee",
+          "level": 3,
+          "name": "Administrative Agent Fee",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 160 (Ticking Fee (Term/Revolver))",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:41.152817+00:00",
+              "term_packs": {
+                "PRICING_ADMIN_FEE": {
+                  "label": "Administrative/Agency Fee",
+                  "category": "PRICING",
+                  "exactPhrases": [
+                    "agency fee of $[•]",
+                    "administrative agent fee",
+                    "collateral agent fee",
+                    "annual agent fee",
+                    "$[•] per annum"
+                  ],
+                  "sectionHeaders": [
+                    "Agency Fee",
+                    "Administrative Fee",
+                    "Agent Fee",
+                    "Collateral Agent Fee",
+                    "Fees"
+                  ],
+                  "semanticVariants": [
+                    "administrative agent annual fee",
+                    "collateral agent fee",
+                    "facility administration fee",
+                    "agent fee for administration"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.6,
+                    "minKeywordScore": 0.5,
+                    "minConfidence": 0.75,
+                    "escalationThreshold": 0.5,
+                    "humanEscalationThreshold": 0.3
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 40000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "agency fee of $[•]",
+                  "administrative agent fee",
+                  "collateral agent fee",
+                  "annual agent fee",
+                  "$[•] per annum"
+                ],
+                "sectionHeaders": [
+                  "Agency Fee",
+                  "Administrative Fee",
+                  "Agent Fee",
+                  "Collateral Agent Fee",
+                  "Fees"
+                ],
+                "semanticVariants": [
+                  "administrative agent annual fee",
+                  "collateral agent fee",
+                  "facility administration fee",
+                  "agent fee for administration"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "PRICING_ADMIN_FEE",
+              "label": "Administrative/Agency Fee",
+              "schema_file": "pricing-enhanced.schema.ts",
+              "field_count": 3,
+              "r1_domain": "deal_econ",
+              "mapping_confidence": 0.6722,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "KCT cat5.1 requires the protective mechanism 'agent-act carve-out scope limitation' but it is not adequately represented in the ontology.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.pricing",
+              "id": "deal_econ.pricing.agency_fee.collateral_agent_fee.agent_act_carve_out_scope_limitation",
+              "kct_ref": [
+                "cat5.1"
+              ],
+              "level": 4,
+              "name": "agent-act carve-out scope limitation",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 162,
+                  "term": "Agency Fee"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "KCT Cat 5 Item 1; Review Template Row 162 (Agency Fee)"
+            },
+            {
+              "id": "deal_econ.pricing.agency_fee.collateral_agent_fee.annual_amount",
+              "name": "Annual Fee Amount",
+              "level": 4,
+              "type": "sub_component",
+              "domain_id": "deal_econ",
+              "family_id": "deal_econ.pricing",
+              "corpus_prevalence": "medium",
+              "extraction_difficulty": "easy",
+              "definition": "the fixed dollar amount payable annually to the collateral agent for administering the security package, calibrated to transaction complexity and collateral scope using recent precedent with similar lien packages"
+            },
+            {
+              "id": "deal_econ.pricing.agency_fee.collateral_agent_fee.reimbursement_scope",
+              "name": "Expense Reimbursement Scope",
+              "level": 4,
+              "type": "sub_component",
+              "domain_id": "deal_econ",
+              "family_id": "deal_econ.pricing",
+              "corpus_prevalence": "medium",
+              "extraction_difficulty": "easy",
+              "definition": "the boundary of out-of-pocket costs and expenses the collateral agent is entitled to have reimbursed by the borrower, typically covering reasonable legal, appraisal, environmental, and perfection expenses incurred in connection with the collateral",
+              "definition_source": "Review Template Row 8 (Expense Reimbursement)"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Separate annual fee to collateral agent for managing security interests, UCC filings, lien perfection, and collateral release processing. May be same or different entity from admin agent.",
+          "dls_ref": [
+            "DLS:52:Collateral"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.pricing",
+          "id": "deal_econ.pricing.agency_fee.collateral_agent_fee",
+          "kct_ref": [
+            "cat5.1"
+          ],
+          "level": 3,
+          "name": "Collateral Agent Fee",
+          "r18_concept_ids": [],
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 162,
+              "term": "Agency Fee"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 52 (Collateral); KCT Cat 5 Item 1; Review Template Row 162 (Agency Fee)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Annual fee paid to administrative agent for facility administration, account maintenance, compliance monitoring, and payment processing. Typical range: $25,000-$75,000 per annum depending on facility size and complexity.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "FEE LETTER",
+          "Section 2.09",
+          "Section 2.12"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II / Definitions (Interest Rates & Fees)"
+      },
+      "family_id": "deal_econ.pricing",
+      "id": "deal_econ.pricing.agency_fee",
+      "level": 2,
+      "market_benchmarks": {
+        "typical_value": "$25k-$75k per annum"
+      },
+      "name": "Agency / Administrative Fee",
+      "r18_concept_ids": [
+        "pricing.agency_fee"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 162,
+          "term": "Agency Fee"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "Review Template Row 162 (Agency Fee)"
+    },
+    {
+      "corpus_prevalence": "medium",
+      "definition": "One-time fee at closing for structuring and arranging the credit facility. Typically set in fee letter. DLS Row 33: Alternate Transaction Fee = 100% of all fees (preferred) or 50% (alternative).",
+      "dls_ref": [
+        "DLS:31:Revolving Facility underwriting fee",
+        "DLS:32:Ticking fee",
+        "DLS:33:Alternate transaction fee",
+        "DLS:35:Administration fee",
+        "DLS:36:Reimbursement of expenses"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "FEE LETTER"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II / Definitions (Interest Rates & Fees)"
+      },
+      "family_id": "deal_econ.pricing",
+      "id": "deal_econ.pricing.structuring_fee",
+      "level": 2,
+      "market_benchmarks": {
+        "payment": "Payable at closing",
+        "prevalence": "70-80% (in fee letters)",
+        "standard": "Confidential, typically 0.50-1.50% of commitment"
+      },
+      "name": "Structuring / Arrangement Fee",
+      "r18_concept_ids": [
+        "pricing.structuring_fee"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 17,
+          "term": "Revolver – additional borrowers"
+        },
+        {
+          "coverage": "full",
+          "row": 157,
+          "term": "Fee Letter"
+        },
+        {
+          "coverage": "full",
+          "row": 163,
+          "term": "Alternate Transaction Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 164,
+          "term": "Sponsor Participation"
+        }
+      ],
+      "type": "concept",
+      "children": [
+        {
+          "id": "deal_econ.pricing.structuring_fee.scope",
+          "name": "Fee Scope & Payors",
+          "definition": "Identifies which parties pay the structuring/arrangement fee — typically the borrower/sponsor — and whether the fee applies to the full commitment or only funded amounts at closing.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.pricing",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "easy",
+          "definition_source": "Review Template Row 140 (RCF Commitment Fee); Review Template Row 141 (DDTL Commitment Fee); Review Template Row 158 (Commitment/Underwriting Fee); Review Template Row 159 (Structuring Fee)"
+        },
+        {
+          "id": "deal_econ.pricing.structuring_fee.calculation_basis",
+          "name": "Calculation Basis",
+          "definition": "The computation method for the structuring fee, typically expressed as a percentage of total commitments (0.50-1.50%), with variants for funded vs. unfunded, or flat dollar amounts in smaller deals.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.pricing",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "easy"
+        },
+        {
+          "id": "deal_econ.pricing.structuring_fee.payment_timing",
+          "name": "Payment Timing",
+          "definition": "When the structuring fee is payable — overwhelmingly at closing from initial loan proceeds, though some structures permit deferred payment or installments tied to subsequent fundings.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.pricing",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "easy"
+        },
+        {
+          "id": "deal_econ.pricing.structuring_fee.fee_letter_treatment",
+          "name": "Fee Letter Treatment",
+          "definition": "Whether the structuring fee is disclosed in the credit agreement or confined to a separate confidential fee letter, and the implications for syndication disclosure and MFN calculations.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.pricing",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "medium",
+          "definition_source": "Review Template Row 157 (Fee Letter); Review Template Row 159 (Structuring Fee)"
+        }
+      ],
+      "definition_source": "DLS Preferred Row 31 (Revolving Facility underwriting fee); DLS Preferred Row 32 (Ticking fee); DLS Preferred Row 33 (Alternate transaction fee); DLS Preferred Row 35 (Administration fee); DLS Preferred Row 36 (Reimbursement of expenses); Review Template Row 17 (Revolver – additional borrowers); Review Template Row 157 (Fee Letter); Review Template Row 163 (Alternate Transaction Fee); Review Template Row 164 (Sponsor Participation)"
+    }
+  ],
+  "definition": "Economic terms governing the all-in cost of borrowing: benchmark rate plus applicable margin, interest rate floors, credit spread adjustments, call protection premiums, MFN protection, yield protection, and ancillary pricing features. Pricing is primarily market-driven and set at closing, but leverage-based stepdowns and MFN protections create ongoing mechanical interactions with the broader covenant architecture. DLS Preferred addresses pricing through interest rates (Row 18-21), market flex (Rows 24-27), and MFN (Row 11).",
+  "dls_ref": [
+    "DLS:9:Accordion",
+    "DLS:18:Interest Rates",
+    "DLS:21:Term Loan Margin",
+    "DLS:25:Pricing Flex",
+    "DLS:28:Successful Syndication"
+  ],
+  "domain_id": "deal_econ",
+  "family_id": "deal_econ.pricing",
+  "golden_record_benchmarks": [
+    {
+      "count": 3,
+      "max": 10000000,
+      "median": 1000000,
+      "min": 250000,
+      "parameter": "dollar_amount_1:dollars",
+      "reason": "Cross-deal parameter range available but no ontology benchmark",
+      "source": "R16-D golden_record",
+      "source_file": "cross_deal_comparison.json"
+    },
+    {
+      "count": 6,
+      "median": 50279500.0,
+      "parameter": "dollar_amount_2:dollars",
+      "range": "1 - 225000000",
+      "reason": "Parameter distribution data available but no ontology benchmark",
+      "source": "R16-D golden_record",
+      "source_file": "parameter_distributions.json"
+    },
+    {
+      "count": 3,
+      "median": 3000000,
+      "parameter": "dollar_amount_3:dollars",
+      "range": "1000000 - 225000000",
+      "reason": "Parameter distribution data available but no ontology benchmark",
+      "source": "R16-D golden_record",
+      "source_file": "parameter_distributions.json"
+    },
+    {
+      "count": 3,
+      "median": 5000000,
+      "parameter": "dollar_amount_4:dollars",
+      "range": "3000000 - 225000000",
+      "reason": "Parameter distribution data available but no ontology benchmark",
+      "source": "R16-D golden_record",
+      "source_file": "parameter_distributions.json"
+    }
+  ],
+  "id": "deal_econ.pricing",
+  "level": 1,
+  "name": "Pricing Economics",
+  "r18_concept_ids": [
+    "pricing.agency_fee",
+    "pricing.applicable_margin",
+    "pricing.benchmark_rate",
+    "pricing.call_protection",
+    "pricing.commitment_fee",
+    "pricing.credit_spread_adjustment",
+    "pricing.default_interest",
+    "pricing.esg_sustainability",
+    "pricing.lc_fees",
+    "pricing.libor_sofr_transition",
+    "pricing.oid_upfront_fee",
+    "pricing.pik_toggle",
+    "pricing.sofr_floor",
+    "pricing.structuring_fee"
+  ],
+  "type": "family",
+  "corpus_prevalence": "high",
+  "extraction_difficulty": "medium",
+  "definition_source": "DLS Preferred, Rows 18-21 (Interest Rates), Rows 24-27 (Market Flex)"
+}

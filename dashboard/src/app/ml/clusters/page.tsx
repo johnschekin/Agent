@@ -110,7 +110,7 @@ export default function ClustersPage() {
 
           {/* Strategy patterns reference */}
           {clustersQuery.data.strategy_heading_patterns.length > 0 && (
-            <div className="mb-4 rounded-md border border-border bg-surface-secondary p-3">
+            <div className="mb-4 rounded-md border border-border bg-surface-2 p-3">
               <div className="text-xs font-semibold text-text-primary mb-1.5">
                 Strategy Heading Patterns ({clustersQuery.data.strategy_heading_patterns.length})
               </div>
@@ -136,7 +136,7 @@ export default function ClustersPage() {
           ) : (
             <div className="overflow-auto border border-border rounded-md max-h-[65vh]">
               <table className="w-full text-xs">
-                <thead className="bg-surface-tertiary text-text-muted uppercase sticky top-0 z-10">
+                <thead className="bg-surface-3 text-text-muted uppercase sticky top-0 z-10">
                   <tr>
                     <th className="px-3 py-2 text-left">Heading</th>
                     <th className="px-3 py-2 text-right">Docs</th>
@@ -154,8 +154,8 @@ export default function ClustersPage() {
                         className={cn(
                           "border-t border-border cursor-pointer transition-colors",
                           expandedHeading === c.heading_normalized
-                            ? "bg-surface-secondary"
-                            : "hover:bg-surface-tertiary/40"
+                            ? "bg-surface-2"
+                            : "hover:bg-surface-3/40"
                         )}
                         onClick={() =>
                           setExpandedHeading(
@@ -200,7 +200,7 @@ export default function ClustersPage() {
                         <tr key={`${c.heading_normalized}_docs`}>
                           <td
                             colSpan={6}
-                            className="px-4 py-3 bg-surface-secondary/50"
+                            className="px-4 py-3 bg-surface-2/50"
                           >
                             <div className="text-[11px] font-semibold text-text-primary mb-1.5">
                               Documents ({c.doc_count}
@@ -213,7 +213,7 @@ export default function ClustersPage() {
                               {c.doc_ids.map((d) => (
                                 <span
                                   key={d}
-                                  className="px-1.5 py-0.5 rounded text-[10px] bg-surface-tertiary text-text-secondary font-mono"
+                                  className="px-1.5 py-0.5 rounded text-[10px] bg-surface-3 text-text-secondary font-mono"
                                 >
                                   {d}
                                 </span>

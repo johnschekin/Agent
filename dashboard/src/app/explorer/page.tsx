@@ -72,7 +72,7 @@ export default function ExplorerPage() {
             setSearch(e.target.value);
             setPage(0);
           }}
-          className="px-3 py-1.5 text-sm bg-surface-tertiary border border-border rounded text-text-primary placeholder:text-text-muted w-64 focus:outline-none focus:border-accent-blue"
+          className="px-3 py-1.5 text-sm bg-surface-3 border border-border rounded text-text-primary placeholder:text-text-muted w-64 focus:outline-none focus:border-accent-blue"
         />
         <select
           value={docType}
@@ -81,7 +81,7 @@ export default function ExplorerPage() {
             setDocType(e.target.value);
             setPage(0);
           }}
-          className="px-3 py-1.5 text-sm bg-surface-tertiary border border-border rounded text-text-primary focus:outline-none focus:border-accent-blue"
+          className="px-3 py-1.5 text-sm bg-surface-3 border border-border rounded text-text-primary focus:outline-none focus:border-accent-blue"
         >
           <option value="">All Doc Types</option>
           <option value="credit_agreement">Credit Agreement</option>
@@ -100,7 +100,7 @@ export default function ExplorerPage() {
             setMarketSegment(e.target.value);
             setPage(0);
           }}
-          className="px-3 py-1.5 text-sm bg-surface-tertiary border border-border rounded text-text-primary focus:outline-none focus:border-accent-blue"
+          className="px-3 py-1.5 text-sm bg-surface-3 border border-border rounded text-text-primary focus:outline-none focus:border-accent-blue"
         >
           <option value="">All Segments</option>
           <option value="leveraged">Leveraged</option>
@@ -115,7 +115,7 @@ export default function ExplorerPage() {
               setCohortOnly(e.target.checked);
               setPage(0);
             }}
-            className="rounded bg-surface-tertiary border-border"
+            className="rounded bg-surface-3 border-border"
           />
           Cohort Only
         </label>
@@ -129,7 +129,7 @@ export default function ExplorerPage() {
       {/* Table + Detail Panel */}
       <div className="flex-1 min-h-0 flex">
         <div
-          className="flex-1 min-w-0 bg-surface-secondary rounded border border-border overflow-hidden"
+          className="flex-1 min-w-0 bg-surface-2 rounded border border-border overflow-hidden"
           style={{ marginRight: selectedDocId ? 480 : 0, transition: "margin-right 200ms" }}
         >
           {isLoading ? (

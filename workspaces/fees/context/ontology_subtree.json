@@ -1,0 +1,1532 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Single fixed percentage on unfunded revolver amount. DLS Preferred (Row 20): '50.0 bps.' PC Term Comparison does not list separate commitment fee guidance, but the DLS 50 bps rate is confirmed as the standard PC rate. UMM facilities may negotiate down to 37.5 bps. Accrues daily, payable quarterly in arrears.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.commitment_fee.flat_rate",
+          "level": 3,
+          "name": "Flat Rate",
+          "r18_concept_ids": [
+            "pricing.commitment_fee.flat_rate"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 20 ('Unused Line Fee: 50.0 bps')"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Fee varies inversely with utilization level. DLS Preferred (Row 20 alternative): 'Step downs to 37.5bps and 25bps based on [___] leverage ratios TBD.' More common in UMM/BSL facilities where utilization-based pricing provides an economic incentive for higher revolver usage.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.commitment_fee.utilization_grid",
+          "level": 3,
+          "name": "Utilization-Based Grid",
+          "r18_concept_ids": [
+            "pricing.commitment_fee.utilization_grid"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 20 (alternative: step-downs to 37.5/25 bps based on leverage ratios)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether fee is computed on daily unused commitment (standard) or average unused commitment over the quarter. LC exposure reduces the unfunded base for fee calculation in standard formulation. DLS Preferred (Row 6): revolving loans plus LC face amount cannot exceed aggregate revolving commitments — implying LC exposure reduces availability and therefore the fee base.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.commitment_fee.calculation_basis",
+          "level": 3,
+          "name": "Calculation Basis",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (revolving capacity = commitment - loans - LCs); DLS Preferred, Row 20 (unused line fee)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Fee on unfunded revolving credit facility commitments, compensating lenders for maintaining capital availability. DLS Preferred (Row 20, Unused Line Fee): preferred rate '50.0 bps'; alternatives: 'Step downs to 37.5bps and 25bps based on leverage ratios.' analysis/pricing/components.json: LMM/CMM 0.50% flat; UMM/BSL 0.25-0.375% sometimes with utilization grid. Expressed as basis points per annum on daily unused commitment, accrued daily and payable quarterly.",
+      "dls_ref": [
+        "DLS:5:Commitment Percentage",
+        "DLS:20:Unused Line Fee",
+        "DLS:31:Revolving Facility underwriting fee",
+        "DLS:33:Alternate transaction fee"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": true,
+        "playbook_ref": "pricing.commitment_fee",
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.09",
+          "Section 2.12"
+        ],
+        "shape_ref": "pricing.commitment_fee",
+        "aligned_difficulty": "hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "deal_econ.fees",
+      "id": "deal_econ.fees.commitment_fee",
+      "level": 2,
+      "market_benchmarks": {
+        "lmm_cmm": "0.50% flat",
+        "umm_bsl": "0.25-0.375%, sometimes with utilization grid",
+        "source": "DLS Preferred Row 20: '50.0 bps' preferred; analysis/pricing/components.json commitment_fee.market_ranges",
+        "_source": "DLS Preferred, Row 20; analysis/pricing/components.json"
+      },
+      "name": "Commitment Fee (Revolver)",
+      "r18_concept_ids": [
+        "pricing.commitment_fee"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 2,
+          "term": "Commitment Letter / Transaction Description"
+        },
+        {
+          "coverage": "full",
+          "row": 8,
+          "term": "Expense Reimbursement"
+        },
+        {
+          "coverage": "full",
+          "row": 9,
+          "term": "Countersign date"
+        },
+        {
+          "coverage": "full",
+          "row": 17,
+          "term": "Revolver – additional borrowers"
+        },
+        {
+          "coverage": "full",
+          "row": 21,
+          "term": "[DDTL – availability period]"
+        },
+        {
+          "coverage": "full",
+          "row": 140,
+          "term": "RCF Commitment Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 141,
+          "term": "DDTL Commitment Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 142,
+          "term": "LC Fronting Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 163,
+          "term": "Alternate Transaction Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 164,
+          "term": "Sponsor Participation"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 20 (Unused Line Fee: '50.0 bps'); PC Term Comparison (inferred from fee structures)",
+      "pc_ref": [
+        "(inferred from fee structures)"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Single fixed rate for entire DDTL commitment period. PC Term Comparison: 'Ticking Fee typically 1%.' The flat rate structure is simpler than escalating alternatives. DLS Preferred (Row 32): 'Ticking fee: TBD based on commitment length' — the blank rate is filled based on expected deployment timeline.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.ticking_fee.flat_rate",
+          "level": 3,
+          "name": "Flat Ticking Fee Rate",
+          "r18_concept_ids": [
+            "pricing.ticking_fee.flat"
+          ],
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 160,
+              "term": "Ticking Fee (Term/Revolver)"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, DDTL section ('Ticking Fee typically 1%'); DLS Preferred, Row 32 (ticking fee)",
+          "pc_ref": [
+            "DDTL"
+          ]
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "low",
+              "definition": "Day ranges and corresponding rates for each escalation tier. Geneva expert extraction: initial period (days 1-60 at base rate), middle period (days 61-120 at 1.75%), final period (days 121+ at 3.50%). Typically 2-3 tiers with increasing rates to incentivize prompt deployment of DDTL capacity.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.fees",
+              "id": "deal_econ.fees.ticking_fee.escalating_rate.tier_schedule",
+              "level": 4,
+              "name": "Escalation Tier Schedule",
+              "r18_concept_ids": [],
+              "type": "sub_component",
+              "definition_source": null
+            },
+            {
+              "id": "deal_econ.fees.ticking_fee.escalating_rate.initial_rate",
+              "name": "Initial Ticking Rate",
+              "level": 4,
+              "type": "sub_component",
+              "domain_id": "deal_econ",
+              "family_id": "deal_econ.fees",
+              "corpus_prevalence": "low",
+              "extraction_difficulty": "medium",
+              "definition": "Base rate level at the start of the escalating ticking fee schedule and the event that triggers escalation to higher tiers. Geneva expert extraction: escalation begins at day 61, implying initial period of 60 days at base rate (or zero). DLS Preferred (Row 32): 'TBD based on commitment length.'",
+              "definition_source": "DLS Preferred, Row 32"
+            }
+          ],
+          "corpus_prevalence": "low",
+          "definition": "Rate increases over time to create deployment pressure. Geneva expert extraction: 1.75% days 61-120, 3.50% days 121+ (Dollar TL); 2.00%/4.00% (Euro TL). DLS Preferred (Row 32): 'TBD based on commitment length' — escalating structures tie the rate to elapsed commitment time. Stronger incentive to draw or terminate quickly.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.ticking_fee.escalating_rate",
+          "level": 3,
+          "name": "Escalating Ticking Fee",
+          "r18_concept_ids": [
+            "pricing.ticking_fee.escalating"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 32"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "When ticking fee begins accruing, typically 30-90 days after the closing date. DLS Preferred (Row 32): 'TBD based on commitment length' — start date is negotiated based on expected deployment timeline. Delayed start provides the borrower a grace period for initial acquisitions without fee accrual.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.ticking_fee.start_date",
+          "level": 3,
+          "name": "Ticking Fee Start Date",
+          "r18_concept_ids": [],
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 161,
+              "term": "Delayed Draw Ticking Fee"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 32 (ticking fee: TBD based on commitment length); PC Term Comparison, DDTL section",
+          "pc_ref": [
+            "DDTL"
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Events that stop ticking fee accrual: full draw of DDTL, expiration of commitment period, termination of DDTL commitments by borrower. DLS Preferred (Row 14): commitment available 'until the earlier to occur of [___] and the date on which the Maximum Delayed Draw Amount has been drawn.' Partial draws reduce the accrual base proportionally.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.ticking_fee.termination",
+          "level": 3,
+          "name": "Fee Termination Events",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 14 (DDTL commitment termination events); PC Term Comparison, DDTL section",
+          "pc_ref": [
+            "DDTL"
+          ]
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Fee on unfunded DDTL commitments accruing during the commitment period, compensating lenders for holding capital available for delayed draws. DLS Preferred (Row 32): 'TBD based on commitment length.' PC Term Comparison: 'Ticking Fee typically 1%'; 'Commitment/Funding Fee: typically same % as initial term loans but split 50% upfront and 50% with each funding.' Geneva expert extraction: escalating rate of 1.75% (days 61-120) then 3.50% (days 121+) for Dollar TL, 2.00%/4.00% for Euro TL.",
+      "dls_ref": [
+        "DLS:32:Ticking fee"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.09",
+          "Section 2.12"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Fees) / Fee Letters",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.162769+00:00",
+          "term_packs": {
+            "PRICING_DDTL_TICKING_FEE": {
+              "label": "DDTL Ticking Fee",
+              "category": "PRICING",
+              "exactPhrases": [
+                "[•]% of interest rate margin starting [•] and increasing to [•]% at [•]",
+                "ticking fee of [•]%",
+                "50% of SOFR margin",
+                "50% stepping to 100%",
+                "DDTL ticking fee"
+              ],
+              "sectionHeaders": [
+                "Ticking Fee",
+                "Delayed Draw Ticking Fee",
+                "DDTL Ticking Fee",
+                "DDTL Commitment Fee",
+                "Fees"
+              ],
+              "semanticVariants": [
+                "DDTL ticking fee accrual",
+                "delayed draw commitment fee",
+                "DDTL availability fee",
+                "ticking fee on undrawn DDTL"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.65,
+                "minKeywordScore": 0.55,
+                "minConfidence": 0.8,
+                "escalationThreshold": 0.55,
+                "humanEscalationThreshold": 0.35
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 40000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "[•]% of interest rate margin starting [•] and increasing to [•]% at [•]",
+              "ticking fee of [•]%",
+              "50% of SOFR margin",
+              "50% stepping to 100%",
+              "DDTL ticking fee"
+            ],
+            "sectionHeaders": [
+              "Ticking Fee",
+              "Delayed Draw Ticking Fee",
+              "DDTL Ticking Fee",
+              "DDTL Commitment Fee",
+              "Fees"
+            ],
+            "semanticVariants": [
+              "DDTL ticking fee accrual",
+              "delayed draw commitment fee",
+              "DDTL availability fee",
+              "ticking fee on undrawn DDTL"
+            ]
+          }
+        }
+      },
+      "family_id": "deal_econ.fees",
+      "id": "deal_econ.fees.ticking_fee",
+      "level": 2,
+      "market_benchmarks": {
+        "escalating": "1.75% days 61-120, 3.50% days 121+ (Geneva)",
+        "market_standard_value": "1.00% p.a. (flat)"
+      },
+      "name": "Ticking Fee (DDTL)",
+      "r18_concept_ids": [
+        "pricing.ticking_fee",
+        "pre_closing_mechanics.fee_letter"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 140,
+          "term": "RCF Commitment Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 141,
+          "term": "DDTL Commitment Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 160,
+          "term": "Ticking Fee (Term/Revolver)"
+        },
+        {
+          "coverage": "full",
+          "row": 161,
+          "term": "Delayed Draw Ticking Fee"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 32 (Ticking fee); PC Term Comparison, DDTL section",
+      "pc_ref": [
+        "DDTL"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "PRICING_DDTL_TICKING_FEE",
+          "label": "DDTL Ticking Fee",
+          "schema_file": "pricing-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.4991,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Discount to par value expressed as a percentage. DLS Preferred (Row 25): OID subject to cap such that 'aggregate OID and upfront fees... shall not result in the issue price being less than [___]%.' DLS Row 30: 'Upfront Fee/OID: [___].' A 1% OID means the lender funds 99% but the borrower owes 100%, with the discount amortized over the loan's average life for yield calculation.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.oid_upfront.oid_percentage",
+          "level": 3,
+          "name": "OID Percentage",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 25 (OID cap in pricing flex)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Explicit upfront fee paid at closing in addition to or instead of OID. DLS Preferred (Row 30): 'Upfront Fee/OID: [___].' Functionally equivalent to OID but structured as a fee rather than loan discount. DLS Row 25: included in 'all-in yield' for MFN calculation purposes 'based on an assumed four-year average life to maturity.'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.oid_upfront.upfront_fee",
+          "level": 3,
+          "name": "Upfront Fee Percentage",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 30 (Upfront Fee specification)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "OID/upfront fees may be funded via revolver draw at closing. DLS Preferred (Row 25): 'OID and upfront fees resulting from market flex can be funded, at Borrower's option in its sole discretion, by revolver draw.' DLS Row 6 alternative: 'Availability at closing... (a) unlimited amounts to finance any OID and/or upfront fees resulting from the exercise of any market flex.' Increases day-1 revolver utilization.",
+          "dls_ref": [
+            "DLS:6:Revolver",
+            "DLS:14:Delayed Draw Term Loans",
+            "DLS:19:Revolver"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.oid_upfront.revolver_draw_funding",
+          "level": 3,
+          "name": "Revolver Draw Funding",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 25 (revolver funding of flex OID)"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Original Issue Discount or upfront fee paid at closing, representing either a discount on the face value of the loan (OID) or an explicit upfront fee percentage. DLS Preferred (Row 30): 'Upfront Fee/OID: [___]' for term loan. Row 25 (Pricing Flex): aggregate OID and upfront fees cannot result in issue price below [___]%, and OID is amortized using a four-year average life to maturity for yield calculation. Included in MFN all-in yield calculation.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "FEE LETTER",
+          "Section 2.09",
+          "Section 2.12"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Fees) / Fee Letters",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.206377+00:00",
+          "term_packs": {
+            "PRICING_TL_OID": {
+              "label": "Term Loan Original Issue Discount",
+              "category": "PRICING",
+              "exactPhrases": [
+                "[•]% of commitments [at signing] / [at closing]",
+                "OID of [•]%",
+                "upfront fee of [•]%",
+                "discount to par",
+                "issue price of [•]%",
+                "purchase price"
+              ],
+              "sectionHeaders": [
+                "Original Issue Discount",
+                "OID",
+                "Upfront Fee",
+                "Commitment/Underwriting Fee",
+                "Fees",
+                "Economics"
+              ],
+              "semanticVariants": [
+                "original issue discount for term loan",
+                "upfront fee economics",
+                "effective yield calculation",
+                "all-in yield for MFN purposes",
+                "discount to par value"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.65,
+                "minKeywordScore": 0.55,
+                "minConfidence": 0.8,
+                "escalationThreshold": 0.55,
+                "humanEscalationThreshold": 0.35
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 40000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "[•]% of commitments [at signing] / [at closing]",
+              "OID of [•]%",
+              "upfront fee of [•]%",
+              "discount to par",
+              "issue price of [•]%",
+              "purchase price"
+            ],
+            "sectionHeaders": [
+              "Original Issue Discount",
+              "OID",
+              "Upfront Fee",
+              "Commitment/Underwriting Fee",
+              "Fees",
+              "Economics"
+            ],
+            "semanticVariants": [
+              "original issue discount for term loan",
+              "upfront fee economics",
+              "effective yield calculation",
+              "all-in yield for MFN purposes",
+              "discount to par value"
+            ]
+          }
+        }
+      },
+      "family_id": "deal_econ.fees",
+      "id": "deal_econ.fees.oid_upfront",
+      "level": 2,
+      "market_benchmarks": {
+        "dls_control": "Minimum issue price floor",
+        "typical_range": "0.50-2.00%"
+      },
+      "name": "Original Issue Discount / Upfront Fee",
+      "r18_concept_ids": [
+        "pricing.oid_upfront_fee"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 139,
+          "term": "Floor"
+        },
+        {
+          "coverage": "full",
+          "row": 157,
+          "term": "Fee Letter"
+        },
+        {
+          "coverage": "full",
+          "row": 158,
+          "term": "Commitment/Underwriting Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 163,
+          "term": "Alternate Transaction Fee"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 30 (Term Loan fees), Row 25 (Pricing Flex OID provisions)",
+      "neutron_field_refs": [
+        {
+          "term_type": "PRICING_TL_OID",
+          "label": "Term Loan Original Issue Discount",
+          "schema_file": "pricing-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.5784,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Annual fee for loan administration services: payment processing, notice distribution, compliance certificate tracking, borrowing/prepayment processing. DLS Preferred (Row 35): 'Administration fee: $[___].' Paid quarterly or annually to the administrative agent.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.agency_fees.admin_agent_annual",
+          "level": 3,
+          "name": "Administrative Agent Annual Fee",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 35 (Administration fee: '$[___]')"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Separate annual fee for collateral management: UCC filing maintenance, lien perfection monitoring, collateral release processing, periodic collateral audits. May be bundled with the administrative agent fee or charged separately if the collateral agent is a different institution.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.agency_fees.collateral_agent_annual",
+          "level": 3,
+          "name": "Collateral Agent Annual Fee",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 35 (administration fee framework); Learning Material (collateral agent services)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "One-time fee for accepting agency appointment at closing. Covers initial setup: account establishment, UCC filings, closing documentation review. DLS Preferred (Row 35): administration fee is specified as ongoing; the upfront acceptance fee is a separate closing-date charge.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.agency_fees.upfront_acceptance",
+          "level": 3,
+          "name": "Upfront Agency Acceptance Fee",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 35 (agency fee framework); DLS Preferred, Row 30 (closing-date fee structure)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Annual fees paid to the administrative agent and collateral agent for ongoing facility servicing including payment processing, notice distribution, compliance monitoring, and general loan administration. DLS Preferred (Row 35): Administration fee '$[___].' Typically specified in a separate fee letter rather than the credit agreement body.",
+      "dls_ref": [
+        "DLS:22:L/C Fronting Fees / L/C Fees",
+        "DLS:34:Breakup fees",
+        "DLS:51:Payment of fees"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE IX",
+          "FEE LETTER",
+          "Section 9.06"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Fees) / Fee Letters"
+      },
+      "family_id": "deal_econ.fees",
+      "id": "deal_econ.fees.agency_fees",
+      "level": 2,
+      "market_benchmarks": {
+        "typical_value": "$25k-$75k per annum"
+      },
+      "name": "Agency Fees",
+      "r18_concept_ids": [
+        "pricing.agency_fee"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 8,
+          "term": "Expense Reimbursement"
+        },
+        {
+          "coverage": "full",
+          "row": 157,
+          "term": "Fee Letter"
+        },
+        {
+          "coverage": "full",
+          "row": 162,
+          "term": "Agency Fee"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 35 (Administration fee)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Fee on undrawn LC face amount shared pro rata among revolving lenders. DLS Preferred (Row 22): 'Letter of Credit Fee: LIBOR margin applicable to revolving loans and paid to all Revolving Lenders.' Equal to the applicable revolving margin, compensating all revolving lenders for their pro rata LC exposure.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.lc_fees.participation_fee",
+          "level": 3,
+          "name": "LC Participation Fee",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 22 ('Letter of Credit Fee: LIBOR margin applicable to revolving loans')"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Separate fee paid to the LC issuing bank for bearing fronting risk — the risk that participating lenders fail to reimburse their pro rata share of a drawing. DLS Preferred (Row 22): 'Fronting Fee: 12.5 bps per annum to LC Issuer or such other fee as agreed between Borrower and LC Issuer.' Retained entirely by the issuing bank.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.lc_fees.fronting_fee",
+          "level": 3,
+          "name": "LC Fronting Fee",
+          "r18_concept_ids": [],
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 142,
+              "term": "LC Fronting Fee"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 22 ('Fronting Fee: 12.5 bps per annum to LC Issuer')",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:41.584044+00:00",
+              "term_packs": {
+                "TS_LC_FRONTING": {
+                  "label": "Term Sheet - LC Fronting Fee",
+                  "category": "TERM_SHEET",
+                  "exactPhrases": [
+                    "fronting fee",
+                    "[ ]%",
+                    "fronting bank fee",
+                    "issuing bank fee",
+                    "LC fronting",
+                    "per annum on the face amount"
+                  ],
+                  "sectionHeaders": [
+                    "LC Fronting Fee",
+                    "Fronting Fee",
+                    "Letter of Credit Fees",
+                    "LC Fees"
+                  ],
+                  "semanticVariants": [
+                    "fronting bank compensation",
+                    "LC issuance fee",
+                    "fronting commission",
+                    "issuing bank fronting charge"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.58,
+                    "minKeywordScore": 0.48,
+                    "minConfidence": 0.65,
+                    "escalationThreshold": 0.48,
+                    "humanEscalationThreshold": 0.28
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "fronting fee",
+                  "[ ]%",
+                  "fronting bank fee",
+                  "issuing bank fee",
+                  "LC fronting",
+                  "per annum on the face amount"
+                ],
+                "sectionHeaders": [
+                  "LC Fronting Fee",
+                  "Fronting Fee",
+                  "Letter of Credit Fees",
+                  "LC Fees"
+                ],
+                "semanticVariants": [
+                  "fronting bank compensation",
+                  "LC issuance fee",
+                  "fronting commission",
+                  "issuing bank fronting charge"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "TS_LC_FRONTING",
+              "label": "Term Sheet - LC Fronting Fee",
+              "schema_file": "term-sheet-facilities-enhanced.schema.ts",
+              "field_count": 2,
+              "r1_domain": "deal_econ",
+              "mapping_confidence": 0.4653,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Per-issuance administrative charges for LC processing, amendments, and drawings. DLS Preferred (Row 22): 'LC Issuer to also receive processing, issuance and other fees and customary charges in connection with Issuing Letters of Credit.' Separate from ongoing participation and fronting fees.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.lc_fees.issuance_charges",
+          "level": 3,
+          "name": "LC Issuance Charges",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 22 (LC processing, issuance and customary charges)"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Fee structure for the letter of credit sub-facility. DLS Preferred (Row 22): Fronting Fee '12.5 bps per annum to LC Issuer or such other fee as agreed.' LC participation fee equal to LIBOR/SOFR margin applicable to revolving loans, paid to all revolving lenders. Issuance processing, amendment, and customary charges also apply. Geneva expert extraction: LC Sublimit $100M.",
+      "dls_ref": [
+        "DLS:7:Letters of Credit",
+        "DLS:22:L/C Fronting Fees / L/C Fees"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.05",
+          "Section 2.09",
+          "Section 2.12"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Fees) / Fee Letters"
+      },
+      "family_id": "deal_econ.fees",
+      "id": "deal_econ.fees.lc_fees",
+      "level": 2,
+      "market_benchmarks": {
+        "fronting_fee": "0.125-0.25% p.a.",
+        "issuance_fee": "Equal to applicable margin on revolver"
+      },
+      "name": "Letter of Credit Fees",
+      "r18_concept_ids": [
+        "pricing.lc_fees"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 8,
+          "term": "Expense Reimbursement"
+        },
+        {
+          "coverage": "full",
+          "row": 15,
+          "term": "Revolver closing date draws"
+        },
+        {
+          "coverage": "full",
+          "row": 20,
+          "term": "LCs"
+        },
+        {
+          "coverage": "full",
+          "row": 142,
+          "term": "LC Fronting Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 164,
+          "term": "Sponsor Participation"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 22 (L/C Fronting Fees / L/C Fees)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Fee to lead arranger(s) for structuring and distributing the credit facility. DLS Preferred (Row 31): 'Commitment/Arrangement Fee: [___]%, payable on the amount of the Revolving Facility actually committed on the date of the commitment letter, payable at closing.' DLS Row 30: term loan underwriting/arrangement fee '[___]%, payable on the amount of the Term Facility committed.'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.structuring_fee.arrangement_fee",
+          "level": 3,
+          "name": "Arrangement Fee",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 31 (Revolving arrangement fee)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Fee for underwriting commitment risk during the syndication period, compensating the arranger for guaranteeing full facility funding regardless of syndication outcome. DLS Preferred (Row 30): 'Underwriting/Arrangement Fee: [___]%, payable on the amount of the Term Facility committed to on the date of the commitment letters, payable at funding.' DLS Row 30 alternative: 'Fee based on amount of Term Facility funded on the Closing Date.'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.structuring_fee.underwriting_fee",
+          "level": 3,
+          "name": "Underwriting Fee",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 30 (Underwriting Fee: commitment-based vs funding-based)"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "One-time fee at closing for deal structuring, arrangement, and underwriting services. DLS Preferred (Row 30): 'Underwriting/Arrangement Fee: [___]%, payable on the amount of the Term Facility committed to on the date of the commitment letters, payable at funding.' Row 31: 'Commitment/Arrangement Fee: [___]%, payable on the amount of the Revolving Facility actually committed on the date of the commitment letter, payable at closing.' Specified in the fee letter.",
+      "dls_ref": [
+        "DLS:31:Revolving Facility underwriting fee",
+        "DLS:36:Reimbursement of expenses"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "FEE LETTER"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Fees) / Fee Letters"
+      },
+      "family_id": "deal_econ.fees",
+      "id": "deal_econ.fees.structuring_fee",
+      "level": 2,
+      "market_benchmarks": {
+        "payment_timing": "Payable at closing from proceeds",
+        "prevalence": "70-80% (in fee letters)",
+        "standard": "0.50-1.50% of total commitment"
+      },
+      "name": "Structuring / Arrangement Fee",
+      "r18_concept_ids": [
+        "pricing.structuring_fee"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 17,
+          "term": "Revolver – additional borrowers"
+        },
+        {
+          "coverage": "full",
+          "row": 139,
+          "term": "Floor"
+        },
+        {
+          "coverage": "full",
+          "row": 157,
+          "term": "Fee Letter"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 30 (Term Loan fees), Row 31 (Revolver fees)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "low",
+          "definition": "Percentage of total committed fees payable as alternate transaction fee. DLS Preferred (Row 33): '100% of all fees payable to entities under the commitment letter (excluding any Administrative Agency fees) calculated as if the closing date had occurred with full funding of the Credit Facilities.' Alternative: '50% of fees.'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.alternate_transaction_fee.percentage",
+          "level": 3,
+          "name": "Fee Percentage",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 33 (Alternate Transaction Fee: 100% preferred, 50% alternative)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Events that trigger alternate transaction fee: borrower closes alternative financing, acquisition terminates, commitment period expires without closing. DLS Preferred (Row 33): 'Applies to any alternate transaction that occurs within one year in which the Borrower... purchases/merges with the target... with bank or other credit facilities, debt securities or other debt in lieu of the Credit Facilities.'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.alternate_transaction_fee.trigger_events",
+          "level": 3,
+          "name": "Trigger Events",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 33 (trigger: alternate transaction within one year, full enumeration of triggering events)"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Fee payable if borrower/sponsor uses alternate financing instead of the committed facility within one year of commitment. DLS Preferred (Row 33): '100% of all fees payable to entities under the commitment letter (excluding any Administrative Agency fees) calculated as if the closing date had occurred with full funding of the Credit Facilities.' Alternative: 50% of fees. Exceptions if bank rejects financing opportunity or breaches commitment.",
+      "dls_ref": [
+        "DLS:20:Unused Line Fee",
+        "DLS:27:Other Flex",
+        "DLS:31:Revolving Facility underwriting fee",
+        "DLS:33:Alternate transaction fee",
+        "DLS:35:Administration fee",
+        "DLS:36:Reimbursement of expenses"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "FEE LETTER"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Fees) / Fee Letters"
+      },
+      "family_id": "deal_econ.fees",
+      "id": "deal_econ.fees.alternate_transaction_fee",
+      "level": 2,
+      "market_benchmarks": {
+        "alternative_value": "50% of all fees",
+        "bank_preferred": "100% of all fees"
+      },
+      "name": "Alternate Transaction Fee",
+      "r18_concept_ids": [
+        "pre_closing_mechanics.fee_letter"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 2,
+          "term": "Commitment Letter / Transaction Description"
+        },
+        {
+          "coverage": "partial",
+          "row": 7,
+          "term": "Other advisory roles"
+        },
+        {
+          "coverage": "full",
+          "row": 12,
+          "term": "Minimum equity contribution"
+        },
+        {
+          "coverage": "full",
+          "row": 15,
+          "term": "Revolver closing date draws"
+        },
+        {
+          "coverage": "full",
+          "row": 163,
+          "term": "Alternate Transaction Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 164,
+          "term": "Sponsor Participation"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 33 (Alternate transaction fee)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Year-by-year premium schedule for voluntary prepayments. Most common in PC: 102/101/par (Year 1/Year 2/Year 3+). 97% coverage in DealData.",
+          "dls_ref": [
+            "DLS:69:Voluntary Prepayments"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.prepayment_premium.voluntary_schedule",
+          "level": 3,
+          "market_benchmarks": {
+            "most_common_value": "102/101/par",
+            "prevalence": "24% of deals"
+          },
+          "name": "Voluntary Prepayment Schedule",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 69 (Voluntary Prepayments)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether prepayment premium applies to mandatory prepayments (ECF sweeps, asset sale sweeps, casualty proceeds). Standard: premium does NOT apply to mandatory prepayments.",
+          "dls_ref": [
+            "DLS:70:Mandatory Prepayments"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.prepayment_premium.mandatory_prepay_treatment",
+          "level": 3,
+          "name": "Mandatory Prepayment Treatment",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 70 (Mandatory Prepayments)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "A fee payable upon voluntary or mandatory repayment of funded debt during a specified protection period (typically 12-24 months post-closing). Commonly structured as a percentage of par (101-102%) or a make-whole premium tied to treasury rates. Compensates lenders for lost yield when loans are refinanced, and is a core component of all-in pricing particularly in private credit transactions.",
+      "dls_ref": [
+        "DLS:28:Successful Syndication"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.09",
+          "Section 2.10",
+          "Section 2.11"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Fees) / Fee Letters"
+      },
+      "family_id": "deal_econ.fees",
+      "id": "deal_econ.fees.prepayment_premium",
+      "level": 2,
+      "market_benchmarks": {
+        "bsl_standard": "Soft call 101 for 6 months (repricing only)",
+        "pc_standard": "2-year hard call: 102/101/par",
+        "prevalence": "85%+ (PC), 60%+ (BSL)"
+      },
+      "name": "Prepayment Premium",
+      "r18_concept_ids": [
+        "pricing.call_protection"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 28 (Successful Syndication)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Fee paid to each lender that votes in favor of a proposed amendment or waiver. Typically 10-25 bps of outstanding commitment. Early-bird mechanics may offer higher fees for early consent to accelerate the amendment process.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.amendment_fees.consent_fee",
+          "level": 3,
+          "name": "Consent Fee",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Amendments section; DLS Preferred, Row 93 (amendment consent framework)",
+          "pc_ref": [
+            "Amendments"
+          ]
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Fee paid to the administrative agent or arrangers for work associated with processing amendments and modifications. Covers legal, administrative, and coordination costs. DLS Preferred (Row 94): '$3,500 agency fee per assignment' — a similar per-transaction fee model applies to amendment processing.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.fees",
+          "id": "deal_econ.fees.amendment_fees.work_fee",
+          "level": 3,
+          "name": "Work / Modification Fee",
+          "r18_concept_ids": [],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 94 ($3,500 agency fee per assignment as analogous framework); PC Term Comparison",
+          "pc_ref": [
+            "PC Term Comparison"
+          ]
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Fees paid to consenting lenders in connection with amendments, waivers, or consent solicitations. Typically 10-25 bps of commitment. PC Term Comparison, Amendments section: 'Vote: Clients currently focused on Incora Blockers/Pro Forma Required Lenders votes/Commitments voting.' Amendment fees incentivize lender participation in the amendment process.",
+      "dls_ref": [
+        "DLS:34:Breakup fees",
+        "DLS:51:Payment of fees"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE X",
+          "Section 10.01"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Fees) / Fee Letters"
+      },
+      "family_id": "deal_econ.fees",
+      "id": "deal_econ.fees.amendment_fees",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "40-60%",
+        "standard": "12.5-25 bps per consenting lender",
+        "trigger": "Material amendments, extension, increase"
+      },
+      "name": "Amendment / Consent Fees",
+      "r18_concept_ids": [],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 21,
+          "term": "[DDTL – availability period]"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison, Amendments section (amendment/consent process); DLS Preferred, Row 93 (voting framework)",
+      "pc_ref": [
+        "Amendments"
+      ]
+    },
+    {
+      "corpus_prevalence": "low",
+      "definition": "Fee payable upon certain exit or disposition events. Rare in standard leveraged loans but appears in distressed, DIP, and specialty finance facilities. May be tied to change of control, IPO, or sale of all/substantially all assets. DLS Preferred and PC Term Comparison do not address exit fees, confirming their non-standard status in mainstream leveraged credit.",
+      "dls_ref": [
+        "DLS:20:Unused Line Fee",
+        "DLS:33:Alternate transaction fee",
+        "DLS:35:Administration fee"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.09",
+          "Section 2.10"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Fees) / Fee Letters"
+      },
+      "family_id": "deal_econ.fees",
+      "id": "deal_econ.fees.exit_fee",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "10-20% (mostly direct lending / unitranche)",
+        "standard": "1-2% of outstanding principal",
+        "trigger": "Maturity, prepayment, or refinancing"
+      },
+      "name": "Exit Fee",
+      "r18_concept_ids": [],
+      "type": "concept",
+      "children": [
+        {
+          "id": "deal_econ.fees.exit_fee.trigger_events",
+          "name": "Trigger Events",
+          "definition": "Specific events triggering exit fee payment — maturity, voluntary prepayment, mandatory prepayment, refinancing, or change of control — each with potentially different fee schedules. When present, exit fee triggers are narrowly defined to distinguish from standard call protection.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.fees",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "Learning Material (specialty fee structures)"
+        },
+        {
+          "id": "deal_econ.fees.exit_fee.calculation",
+          "name": "Calculation Method",
+          "definition": "Formula for computing the exit fee, typically a declining percentage of outstanding principal (e.g., 2%/1%/0% over years 1/2/3+). Some exit fees include make-whole or minimum return provisions ensuring lenders achieve a target IRR regardless of repayment timing.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.fees",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "Learning Material (minimum return provisions)"
+        },
+        {
+          "id": "deal_econ.fees.exit_fee.exceptions",
+          "name": "Exceptions & Carve-Outs",
+          "definition": "Circumstances where the exit fee is waived or reduced: permitted refinancing by the same lender group, asset sale sweeps, or excess cash flow sweeps that constitute mandatory (not voluntary) prepayment events. Carveouts ensure the exit fee does not penalize routine credit agreement mechanics.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.fees",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "Learning Material"
+        },
+        {
+          "id": "deal_econ.fees.exit_fee.market_prevalence",
+          "name": "Market Prevalence Patterns",
+          "definition": "Exit fees are concentrated in direct lending and unitranche structures where lenders seek minimum return protection. Not present in DLS Preferred or PC Term Comparison frameworks, confirming rarity in mainstream leveraged credit and standard private credit transactions.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.fees",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "easy",
+          "definition_source": "PC Term Comparison (absence)",
+          "pc_ref": [
+            "(absence)"
+          ]
+        }
+      ],
+      "definition_source": "PC Term Comparison (absence confirms non-standard)",
+      "pc_ref": [
+        "(absence confirms non-standard)"
+      ]
+    },
+    {
+      "id": "deal_econ.fees.breakup_fee",
+      "name": "Breakup Fee / Deal Termination Fee",
+      "domain_id": "deal_econ",
+      "family_id": "deal_econ.fees",
+      "level": 2,
+      "type": "concept",
+      "corpus_prevalence": "medium",
+      "extraction_difficulty": "easy",
+      "definition": "Fee payable to arrangers or lenders if the acquisition transaction fails to close, compensating for commitment of capital and opportunity cost. DLS Preferred (Row 34): 'If break-up fees are payable under the Acquisition Agreement, to be reimbursed for its reasonable expenses after Sponsor has been reimbursed for its reasonable expenses.' Alternative: capped expenses.",
+      "dls_ref": [
+        "DLS:34:Breakup fees"
+      ],
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "COMMITMENT LETTER",
+          "FEE LETTER"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "commitment_letter_provision_not_in_ca_body"
+      },
+      "children": [
+        {
+          "id": "deal_econ.fees.breakup_fee.amount",
+          "name": "Fee Amount",
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.fees",
+          "level": 3,
+          "type": "sub_component",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "easy",
+          "definition": "Amount of the breakup fee, specified either as a fixed dollar amount or as a percentage of total commitment. DLS Preferred (Row 34): 'If break-up fees are payable under the Acquisition Agreement, to be reimbursed for its reasonable expenses after Sponsor has been reimbursed for its reasonable expenses.' Alternative: 'Cap on expenses.'",
+          "definition_source": "DLS Preferred, Row 34 (Breakup fees: 'reasonable expenses' preferred, 'Cap on expenses' alternative)"
+        },
+        {
+          "id": "deal_econ.fees.breakup_fee.trigger_events",
+          "name": "Trigger Events",
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.fees",
+          "level": 3,
+          "type": "sub_component",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "easy",
+          "definition": "Events that cause the breakup fee to become payable: failure to close the acquisition by the outside date, termination of the acquisition agreement, failure to satisfy conditions precedent, or withdrawal by the sponsor. DLS Preferred (Row 33): alternate transaction fee has separate triggers — breakup fees are distinct from alternate transaction fees.",
+          "definition_source": "DLS Preferred, Row 34 (breakup fee triggers); DLS Preferred, Row 33 (alternate transaction fee — separate)"
+        },
+        {
+          "id": "deal_econ.fees.breakup_fee.offset_against_upfront",
+          "name": "Offset Against Upfront Fee",
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.fees",
+          "level": 3,
+          "type": "sub_component",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "easy",
+          "definition": "Whether breakup fee amounts are credited against or offset by upfront fees if the deal ultimately closes. May provide that expenses reimbursed under breakup provisions reduce the upfront fee payable at closing, preventing double-payment of closing costs.",
+          "definition_source": "DLS Preferred, Row 34 (breakup/expense reimbursement); DLS Preferred, Row 30 (upfront fee)"
+        }
+      ],
+      "definition_source": "DLS Preferred, Row 34 (Breakup fees)"
+    },
+    {
+      "id": "deal_econ.fees.unused_line_fee",
+      "name": "Unused Line Fee",
+      "domain_id": "deal_econ",
+      "family_id": "deal_econ.fees",
+      "level": 2,
+      "type": "concept",
+      "corpus_prevalence": "high",
+      "extraction_difficulty": "easy",
+      "definition": "Fee on the undrawn portion of the revolving commitment, compensating lenders for maintaining available capacity. DLS Preferred (Row 20): preferred rate '50.0 bps'; alternative: 'Step downs to 37.5bps and 25bps based on [___] leverage ratios TBD.' While often synonymous with commitment fee, DLS treats this as a distinct concept emphasizing application specifically to unused capacity.",
+      "dls_ref": [
+        "DLS:20:Unused Line Fee"
+      ],
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": true,
+        "playbook_ref": "pricing.commitment_fee",
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.09",
+          "Section 2.12"
+        ],
+        "shape_ref": "pricing.commitment_fee"
+      },
+      "market_benchmarks": {
+        "dls_preferred": "50 bps",
+        "alternative_low": "25 bps",
+        "alternative_mid": "37.5 bps",
+        "step_down_basis": "leverage ratio tiers",
+        "source": "DLS Preferred, Row 20: '50.0 bps' preferred; 'Step downs to 37.5bps and 25bps based on leverage ratios'",
+        "_source": "DLS Preferred, Row 20"
+      },
+      "children": [
+        {
+          "id": "deal_econ.fees.unused_line_fee.calculation_basis",
+          "name": "Calculation Basis",
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.fees",
+          "level": 3,
+          "type": "sub_component",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "easy",
+          "definition": "Whether the fee is calculated on unused revolving commitment (total commitment minus outstanding revolving loans and LC exposure) or on the full undrawn amount excluding only revolving loans. DLS Preferred (Row 6): revolving loans plus LC face amount cannot exceed aggregate commitments — the standard calculation base is total commitment minus revolving loans outstanding minus LC exposure.",
+          "definition_source": "DLS Preferred, Row 6 (revolving availability = commitment - loans - LCs); DLS Preferred, Row 20 (unused line fee)"
+        },
+        {
+          "id": "deal_econ.fees.unused_line_fee.rate",
+          "name": "Fee Rate",
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.fees",
+          "level": 3,
+          "type": "sub_component",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "easy",
+          "definition": "Basis point rate for the unused line fee. DLS Preferred (Row 20): '50.0 bps' as preferred rate. Alternative: 'Step downs to 37.5bps and 25bps based on [___] leverage ratios TBD.' Typical PC range: 25-50 bps. BSL: 25-37.5 bps.",
+          "definition_source": "DLS Preferred, Row 20 ('50.0 bps' preferred; step-down to 37.5/25 bps alternative)"
+        },
+        {
+          "id": "deal_econ.fees.unused_line_fee.payment_frequency",
+          "name": "Payment Frequency",
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.fees",
+          "level": 3,
+          "type": "sub_component",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "easy",
+          "definition": "Timing of unused line fee payments. Standard: quarterly in arrears, payable on each quarterly payment date and on the revolving facility maturity date. Accrues daily based on the daily unused amount. Aligned with the quarterly reporting and compliance certificate delivery schedule.",
+          "definition_source": "DLS Preferred, Row 20 (unused line fee); DLS Preferred, Row 73 (quarterly testing cadence)"
+        }
+      ],
+      "definition_source": "DLS Preferred, Row 20 (Unused Line Fee)"
+    },
+    {
+      "id": "deal_econ.fees.administration_fee",
+      "name": "Administration Fee",
+      "domain_id": "deal_econ",
+      "family_id": "deal_econ.fees",
+      "level": 2,
+      "type": "concept",
+      "corpus_prevalence": "high",
+      "extraction_difficulty": "easy",
+      "definition": "Annual fee payable to the administrative agent for performing agency functions. DLS Preferred (Row 35): specified as a dollar amount '$[___].' Covers ongoing administrative burden of payment processing, notice distribution, compliance monitoring, and general loan administration. Typically specified in a separate fee letter.",
+      "dls_ref": [
+        "DLS:35:Administration fee"
+      ],
+      "extraction_refs": {
+        "concept_area": "pricing",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "FEE LETTER",
+          "ARTICLE IX",
+          "Section 9.06"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "fee_letter_provision_not_in_ca_body"
+      },
+      "children": [
+        {
+          "id": "deal_econ.fees.administration_fee.amount_structure",
+          "name": "Amount Structure",
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.fees",
+          "level": 3,
+          "type": "sub_component",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "easy",
+          "definition": "How the administration fee is structured. DLS Preferred (Row 35): 'Administration fee: $[___]' — a flat annual fee is the standard structure. Typical range: $25,000-$75,000 depending on facility size and complexity. May include annual escalation clauses or be scaled by number of lenders.",
+          "definition_source": "DLS Preferred, Row 35 (Administration fee: '$[___]')"
+        },
+        {
+          "id": "deal_econ.fees.administration_fee.payment_timing",
+          "name": "Payment Timing",
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.fees",
+          "level": 3,
+          "type": "sub_component",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "easy",
+          "definition": "When the administration fee is payable: annually in advance (most common), annually in arrears, or on a different schedule. First payment typically due on the closing date with subsequent payments on each anniversary of the closing date.",
+          "definition_source": "DLS Preferred, Row 35 (administration fee)"
+        }
+      ],
+      "definition_source": "DLS Preferred, Row 35 (Administration fee: '$[___]')"
+    }
+  ],
+  "definition": "Non-interest economic charges spanning the lifecycle of a credit facility. DLS Preferred Section 3 covers: term loan underwriting/arrangement fee, revolver commitment/arrangement fee, ticking fee, alternate transaction fee, breakup fee, and administration fee. These charges constitute a material component of all-in yield and are a key negotiation point alongside the stated interest rate margin.",
+  "dls_ref": [
+    "DLS:17:Amend and Extend",
+    "DLS:22:L/C Fronting Fees / L/C Fees",
+    "DLS:26:Structure Flex",
+    "DLS:32:Ticking fee",
+    "DLS:34:Breakup fees",
+    "DLS:35:Administration fee",
+    "DLS:36:Reimbursement of expenses",
+    "DLS:51:Payment of fees"
+  ],
+  "domain_id": "deal_econ",
+  "family_id": "deal_econ.fees",
+  "id": "deal_econ.fees",
+  "level": 1,
+  "name": "Fee Structure",
+  "r18_concept_ids": [
+    "pre_closing_mechanics.fee_letter",
+    "pricing.agency_fee",
+    "pricing.call_protection",
+    "pricing.commitment_fee",
+    "pricing.lc_fees",
+    "pricing.oid_upfront_fee",
+    "pricing.structuring_fee",
+    "pricing.ticking_fee"
+  ],
+  "type": "family",
+  "corpus_prevalence": "high",
+  "extraction_difficulty": "medium",
+  "definition_source": "DLS Preferred, Section 3 (Fees and Compensation, Rows 30-36)"
+}

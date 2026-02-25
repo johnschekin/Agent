@@ -6,7 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:phase2": "playwright test e2e/phase2/",
+    "test:e2e:phase3": "playwright test e2e/phase3/",
+    "test:e2e:phase4": "playwright test e2e/phase4/",
+    "test:e2e:phase5": "playwright test e2e/phase5/",
+    "test:e2e:smoke": "playwright test e2e/smoke/",
+    "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.21",
@@ -27,6 +35,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.35",
     "postcss": "^8",
+    "@playwright/test": "^1.49.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

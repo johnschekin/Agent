@@ -108,6 +108,20 @@ class SectionRecord:
 
 
 @dataclass(frozen=True, slots=True)
+class ArticleRecord:
+    """An article-level record in the corpus index."""
+
+    doc_id: str
+    article_num: int
+    label: str
+    title: str
+    concept: str | None
+    char_start: int
+    char_end: int
+    is_synthetic: bool
+
+
+@dataclass(frozen=True, slots=True)
 class ClauseRecord:
     """A clause node in the corpus index."""
 
@@ -380,6 +394,34 @@ class CorpusIndex:
         cols = [desc[0] for desc in self._conn.description]
         d = dict(zip(cols, row, strict=True))
         return self._doc_from_row(d)
+
+    def get_articles(self, doc_id: str) -> list[ArticleRecord]:
+        """Get article-level records for a document.
+
+        Returns empty list when the ``articles`` table is absent
+        (backward compatibility with older corpus builds).
+        """
+        if "articles" not in self._table_names:
+            return []
+        rows = self._conn.execute(
+            "SELECT doc_id, article_num, label, title, concept, "
+            "char_start, char_end, is_synthetic "
+            "FROM articles WHERE doc_id = ? ORDER BY article_num",
+            [doc_id],
+        ).fetchall()
+        return [
+            ArticleRecord(
+                doc_id=str(r[0]),
+                article_num=int(r[1]),
+                label=str(r[2]),
+                title=str(r[3]),
+                concept=str(r[4]) if r[4] is not None else None,
+                char_start=int(r[5]),
+                char_end=int(r[6]),
+                is_synthetic=bool(r[7]),
+            )
+            for r in rows
+        ]
 
     def search_sections(
         self,

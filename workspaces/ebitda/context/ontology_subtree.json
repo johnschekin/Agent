@@ -1,0 +1,2379 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Gains and losses classified as extraordinary under GAAP.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "medium",
+              "family_id": "fin_framework.ebitda",
+              "id": "fin_framework.ebitda.cni.exclusions.extraordinary",
+              "kct_ref": [
+                "cat1.8"
+              ],
+              "level": 4,
+              "name": "Extraordinary Items",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 8"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Income from unconsolidated entities accounted for under equity method.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "medium",
+              "family_id": "fin_framework.ebitda",
+              "id": "fin_framework.ebitda.cni.exclusions.equity_method",
+              "kct_ref": [
+                "cat1.8"
+              ],
+              "level": 4,
+              "name": "Equity Method Income",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 8"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Income from designated unrestricted subsidiaries excluded from consolidated group.",
+              "dna_pattern_refs": [
+                "DEFINITION:ABSENCE:NO_UNRESTRICTED_SUB_DIVIDENDS_IN_EBITDA",
+                "DEFINITION:CNI_EXCLUSION:EQUITY_METHOD_ENTITIES:WITH_DIVIDEND_INCLUSION:CASH_ONLY",
+                "DEFINITION:CNI_EXCLUSION:UNRESTRICTED_SUB_INCOME:WITH_CASH_DIVIDEND_ADDBACK:INCLUDES_EQUITY_METHOD"
+              ],
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "medium",
+              "extraction_refs": {
+                "concept_area": "financial_definitions",
+                "extraction_ready": true,
+                "playbook_ref": "financial_definitions.unrestricted_sub_dividends",
+                "primary_section_pattern": "X.01",
+                "section_locations": [
+                  "1.01"
+                ],
+                "shape_ref": "financial_definitions.unrestricted_sub_dividends"
+              },
+              "family_id": "fin_framework.ebitda",
+              "golden_record_ids": [
+                "financial_definitions.unrestricted_sub_dividends"
+              ],
+              "golden_record_refs": [
+                {
+                  "deal_count": 3,
+                  "golden_concept_id": "financial_definitions.unrestricted_sub_dividends",
+                  "has_absence": true,
+                  "parameter_count": 0,
+                  "total_records": 3
+                }
+              ],
+              "id": "fin_framework.ebitda.cni.exclusions.unrestricted_sub",
+              "kct_ref": [
+                "cat1.8"
+              ],
+              "level": 4,
+              "name": "Unrestricted Subsidiary Income",
+              "playbook_ref": {
+                "concept_id": "financial_definitions.unrestricted_sub_dividends",
+                "dependency_count": 3,
+                "extraction_difficulty": "hard",
+                "phase": 1
+              },
+              "r18_concept_ids": [
+                "financial_definitions.unrestricted_sub_dividends"
+              ],
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 8"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Stock-based compensation expense excluded as non-cash item.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "medium",
+              "family_id": "fin_framework.ebitda",
+              "id": "fin_framework.ebitda.cni.exclusions.noncash_stock_comp",
+              "kct_ref": [
+                "cat1.8"
+              ],
+              "level": 4,
+              "name": "Non-Cash Stock Compensation",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 8"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Adjustments for minority or non-controlling interest share of subsidiary net income. Excluded from CNI to avoid overstating earnings attributable to the borrower group. Treatment varies: full exclusion, cash-only inclusion, or proportionate.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "medium",
+              "family_id": "fin_framework.ebitda",
+              "id": "fin_framework.ebitda.cni.exclusions.minority_interest",
+              "kct_ref": [
+                "cat1.8"
+              ],
+              "level": 4,
+              "name": "Minority/Non-Controlling Interest",
+              "r18_concept_ids": [
+                "financial_definitions.consolidated_net_income"
+              ],
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 8"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Standard items excluded from the Consolidated Net Income calculation: extraordinary gains and losses, income from unconsolidated entities accounted for under the equity method, income attributable to designated unrestricted subsidiaries, cumulative effects of accounting changes, non-cash stock-based compensation expense, and minority/non-controlling interest share of subsidiary earnings. These exclusions ensure CNI reflects only the operational performance of the consolidated restricted group that supports the credit.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.cni.exclusions",
+          "kct_ref": [
+            "cat1.8"
+          ],
+          "level": 3,
+          "name": "Standard Exclusions",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred row 72 clause (ii) (non-cash adjustments including stock options, purchase accounting)"
+        },
+        {
+          "id": "fin_framework.ebitda.cni.base_calculation",
+          "name": "Base Calculation Starting Point",
+          "level": 3,
+          "type": "sub_component",
+          "domain_id": "fin_framework",
+          "family_id": "fin_framework.ebitda",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "medium",
+          "definition": "Consolidated Net Income has standard exclusions, but also a base calculation starting point and inclusion rules.",
+          "definition_source": "KCT Cat 2 Item 1; KCT Cat 3 Item 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Net income of the borrower and its restricted subsidiaries on a consolidated basis, computed in accordance with GAAP, serving as the starting point from which all EBITDA addbacks and deductions are calculated. Standard exclusions include: extraordinary or unusual gains/losses, income from unconsolidated entities accounted for under the equity method, income from designated unrestricted subsidiaries (excluded from the consolidated group), non-cash stock-based compensation expense, minority/non-controlling interest adjustments, cumulative accounting changes, and unrealized foreign exchange gains/losses. The CNI definition itself can contain addbacks (particularly in Available Amount builder basket calculations where CNI is the builder base), and should be reviewed alongside the EBITDA definition to avoid double-counting.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.ebitda_cost_savings",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01",
+          "Section 1.1"
+        ],
+        "shape_ref": "financial_definitions.ebitda_cost_savings",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.ebitda",
+      "id": "fin_framework.ebitda.cni",
+      "kct_ref": [
+        "cat1.8"
+      ],
+      "kg_concept_ids": [
+        "financial_definitions.consolidated_net_income"
+      ],
+      "level": 2,
+      "market_data": {
+        "prevalence": "100% -- universal starting point"
+      },
+      "name": "Consolidated Net Income",
+      "negotiation_spectrum": {
+        "aggressive_position": "No cap and no officer's certificate No cap (or cap calculated \"after\" giving effect to the add-back); no officer's certificate Includes synergies and operating expense reductions No details on what the savings/synergies have to be No officers certificate Actions are taken or \"expected to be taken\" within 12/24/36 months No requirement that benefits be realized in a certain time period No cap (calc",
+        "dls_source_rows": [
+          {
+            "label": "EBITDA Definition & Addbacks",
+            "row": 72
+          }
+        ],
+        "is_highlighted": false,
+        "key_negotiation_points": [
+          "Sponsor management fee addback scope",
+          "Non-cash charge addback breadth",
+          "Transaction/closing cost addback",
+          "Non-recurring expense addback cap (10-15% of EBITDA)",
+          "Cost savings/synergies addback cap",
+          "Cost savings realization period (12/24/36 months)",
+          "Officer certification for cost savings",
+          "Quality of earnings addback scope",
+          "Combined cap for non-recurring + cost savings",
+          "EBITDA deduction items (subtractions)",
+          "EBITDA or Total Assets grower for dollar baskets",
+          "Reclassification of baskets",
+          "Exclude simultaneous fixed-amount incurrences from ratio calc",
+          "Passive holding company covenant"
+        ],
+        "market_position": "Market standard for ebitda definition & addbacks reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "EBITDA Add-Backs (subject to caps to be agreed): (i) all management fees and reimbursement of reasonable expenses paid to Sponsor or an affiliate thereof in accordance with the management agreement, to the extent permitted by the Credit Facility (ii) all non-cash losses or reasonable and documented expenses (or minus non-cash income or gain), including non-cash adjustments resulting from the appli",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "financial_definitions.consolidated_net_income"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 72 (EBITDA starting from CNI with subtractions for corresponding income items in clause (B)); Review Template row 63 (EBITDA Addbacks noting 'Check CNI definition for addbacks')"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Non-cash losses and expenses added back to EBITDA, including non-cash adjustments from purchase accounting, non-cash expenses from stock appreciation rights/options/restricted stock grants, non-cash goodwill and intangible asset impairment, and unrealized non-cash gains/losses on interest rate and currency hedging instruments. DLS Preferred specifies two critical exclusions from the non-cash addback: (a) any non-cash loss that is an accrual of a reserve for a future cash expenditure, and (b) write-downs/write-offs/reserves with respect to accounts receivable or inventory. Corresponding non-cash income and gain items must be subtracted.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.standard_addbacks.noncash",
+          "kct_ref": [
+            "cat1.6",
+            "cat1.7"
+          ],
+          "level": 3,
+          "market_data": {
+            "cap": "Uncapped universally",
+            "prevalence": "100%"
+          },
+          "name": "Non-Cash Charges",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred row 72 clause (ii) (complete non-cash addback specification with exclusion carveouts)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Market variations: 'extraordinary' (strict GAAP), 'non-recurring' (broader), 'unusual or infrequent' (most flexible), 'exceptional' (UK influence).",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "medium",
+              "family_id": "fin_framework.ebitda",
+              "id": "fin_framework.ebitda.standard_addbacks.nonrecurring.definition_precision",
+              "kct_ref": [
+                "cat1.6"
+              ],
+              "level": 4,
+              "name": "Definition Precision",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 6"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Same type limited to once per 2 years; aggregate frequency caps; agent challenge rights.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "medium",
+              "family_id": "fin_framework.ebitda",
+              "id": "fin_framework.ebitda.standard_addbacks.nonrecurring.frequency_limits",
+              "kct_ref": [
+                "cat1.6"
+              ],
+              "level": 4,
+              "name": "Frequency Limitations",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 6"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Non-recurring or unusual out-of-pocket expenses added back to EBITDA, including severance costs, lease termination costs, relocation costs, restructuring charges, retention/completion bonuses, signing costs, and other non-recurring expenses not otherwise added back under another category. DLS Preferred position caps these at 10-15% of EBITDA for any trailing four-quarter period. The cap may be standalone or shared with run-rate cost savings. Alternative (aggressive) formulations eliminate the cap, remove the officer's certificate requirement, or calculate the cap 'after' giving effect to the addback (which inflates the denominator).",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.standard_addbacks.nonrecurring",
+          "kct_ref": [
+            "cat1.6"
+          ],
+          "level": 3,
+          "market_data": {
+            "prevalence": "95%"
+          },
+          "name": "Extraordinary/Non-Recurring Items",
+          "r18_concept_ids": [
+            "financial_definitions.consolidated_ebitda"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred row 72 clause (vi) (Non-Recurring Expenses with 10-15% cap); PC Term Comparison EBITDA section (extraordinary/unusual losses: 'Highlight for Clients and try to cap either separately or shared cap with run-rate cost savings')",
+          "pc_ref": [
+            "EBITDA"
+          ]
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "EBITDA addback for fees and reasonable documented out-of-pocket expenses incurred in connection with (a) negotiation, execution, and delivery of the credit facilities documentation and consummation of the closing date transactions (DLS clause iii), (b) amendments or waivers to the credit facility or related documentation, to the extent disclosed to the Administrative Agent (DLS clause iv), and (c) unconsummated transactions -- permitted acquisitions, dispositions, debt incurrences, or equity issuances that are not consummated but were permitted under the credit facility, subject to a dollar or percentage-of-EBITDA cap and officer certification (DLS clause v). The transaction fees addback typically covers investment banking, legal, accounting, due diligence, and advisory fees.",
+          "dls_ref": [
+            "DLS:22:L/C Fronting Fees / L/C Fees",
+            "DLS:34:Breakup fees"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.standard_addbacks.transaction_fees",
+          "kct_ref": [
+            "cat1.6"
+          ],
+          "level": 3,
+          "market_data": {
+            "prevalence": "95%",
+            "typical_cap": "$5-15M or within shared cap"
+          },
+          "name": "Transaction Fees",
+          "r18_concept_ids": [
+            "financial_definitions.consolidated_ebitda"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred row 72 clauses (iii), (iv), (v) (three separate transaction fee addback categories with specific conditions)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Employee severance payments, retention bonuses, relocation allowances, and workforce transition costs. Typically within the shared restructuring cap. PC guidance: highlight if uncapped or if scope extends beyond true involuntary terminations.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "medium",
+              "family_id": "fin_framework.ebitda",
+              "id": "fin_framework.ebitda.standard_addbacks.restructuring.severance",
+              "kct_ref": [
+                "cat1.6",
+                "cat1.7"
+              ],
+              "level": 4,
+              "name": "Severance & Relocation Costs",
+              "r18_concept_ids": [
+                "financial_definitions.consolidated_ebitda"
+              ],
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 6; KCT Cat 1 Item 7"
+            },
+            {
+              "id": "fin_framework.ebitda.standard_addbacks.restructuring.facility_closure",
+              "name": "Facility Closure & Exit Costs",
+              "level": 4,
+              "type": "sub_component",
+              "domain_id": "fin_framework",
+              "family_id": "fin_framework.ebitda",
+              "corpus_prevalence": "high",
+              "extraction_difficulty": "medium",
+              "definition": "Restructuring charges include severance and facility closure/exit costs.",
+              "definition_source": "KCT Cat 2 Item 1"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "EBITDA addback for non-recurring restructuring charges arising from integration and optimization activities. DLS Preferred includes this within the broader Non-Recurring Expenses category (clause vi) covering severance, lease termination, relocation, restructuring charges, and retention/completion bonuses. Subject to a 10-15% of EBITDA cap, potentially shared with run-rate cost savings. Aggressive alternatives include uncapped formulations, no officer's certificate, and post-addback cap calculation.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.standard_addbacks.restructuring",
+          "kct_ref": [
+            "cat1.6"
+          ],
+          "level": 3,
+          "market_data": {
+            "prevalence": "90%"
+          },
+          "name": "Restructuring Charges",
+          "r18_concept_ids": [
+            "financial_definitions.consolidated_ebitda"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred row 72 clause (vi) (Non-Recurring Expenses including restructuring charges with 10-15% cap)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether cash-settled stock appreciation rights, phantom equity, and similar awards that result in actual cash outflows to employees are included within the non-cash compensation addback. Bank/lender position per PC Term Comparison: compensation expense addback should be limited to 'non-cash' items; if cash compensation is included, it must be funded with qualified equity not otherwise applied. Drafting risk: loose language permitting 'cash comp expense/creative bonus payments (including phantom equity payments) to be added back' inflates EBITDA with real cash outflows, reducing actual cash available for debt service while appearing to improve leverage ratios.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "medium",
+              "family_id": "fin_framework.ebitda",
+              "id": "fin_framework.ebitda.standard_addbacks.stock_comp.cash_settlement",
+              "level": 4,
+              "name": "Cash-Settled Equity Awards",
+              "type": "sub_component",
+              "definition_source": "PC Term Comparison EBITDA section line 126 ('Compensation expense addback should be limited to non-cash items or if cash must be funded with qualified equity not otherwise applied; highlight loose language that could permit cash comp expense/creative bonus payments (including phantom equity payments) to be added back')",
+              "pc_ref": [
+                "EBITDA"
+              ]
+            },
+            {
+              "id": "fin_framework.ebitda.standard_addbacks.stock_comp.noncash_treatment",
+              "name": "Non-Cash Equity Award Addback",
+              "level": 4,
+              "type": "sub_component",
+              "domain_id": "fin_framework",
+              "family_id": "fin_framework.ebitda",
+              "corpus_prevalence": "high",
+              "extraction_difficulty": "medium",
+              "definition": "Stock-based compensation addback includes the core non-cash addback treatment alongside cash-settled treatment.",
+              "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 2 Item 3; KCT Cat 3 Item 13; Learning Material (Equity Interests in Non-Wholly Owned Subsidiaries)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Non-cash equity-based compensation expense added back to EBITDA, covering stock option expense, restricted stock/RSU amortization, and stock appreciation right charges. Falls within the broader non-cash charges addback category. Critical negotiation point: whether cash-settled equity awards (phantom equity, cash-settled SARs) are included in the addback. PC Term Comparison guidance states that compensation expense addbacks should be limited to 'non-cash' items, or if cash compensation is included, it must be funded with qualified equity not otherwise applied. Loose language permitting cash comp/creative bonus payments (including phantom equity payments) to be added back is a risk flag.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.standard_addbacks.stock_comp",
+          "level": 3,
+          "market_data": {
+            "prevalence": "85%"
+          },
+          "name": "Stock-Based Compensation",
+          "r18_concept_ids": [
+            "financial_definitions.consolidated_ebitda"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred row 72 clause (ii) (non-cash expenses from grants of stock appreciation rights, stock options, restricted stock); PC Term Comparison EBITDA section line 126 (cash comp limitation guidance)",
+          "pc_ref": [
+            "EBITDA"
+          ]
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Technology platform consolidation, ERP migration, data center integration, and systems harmonization costs. Increasingly material as technology spend rises. Typically within shared cap but some deals carve out as separate addback.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "medium",
+              "family_id": "fin_framework.ebitda",
+              "id": "fin_framework.ebitda.standard_addbacks.integration.systems_migration",
+              "kct_ref": [
+                "cat1.6"
+              ],
+              "level": 4,
+              "name": "Systems Migration & IT Integration",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 6"
+            },
+            {
+              "id": "fin_framework.ebitda.standard_addbacks.integration.operational_consolidation",
+              "name": "Operational Consolidation Costs",
+              "level": 4,
+              "type": "sub_component",
+              "domain_id": "fin_framework",
+              "family_id": "fin_framework.ebitda",
+              "corpus_prevalence": "high",
+              "extraction_difficulty": "medium",
+              "definition": "Integration costs include systems migration and workforce/operational integration."
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Costs arising from acquisition integration activities.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.standard_addbacks.integration",
+          "kct_ref": [
+            "cat1.6"
+          ],
+          "level": 3,
+          "market_data": {
+            "prevalence": "85%"
+          },
+          "name": "Integration Costs",
+          "r18_concept_ids": [
+            "financial_definitions.consolidated_ebitda"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 6"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "One-time termination payment for sponsor management/advisory agreement, typically upon IPO or change of control. Often a multiple of remaining annual fees (e.g., 2-3x). Added back as non-recurring transaction cost. 100% prevalence in sponsor-backed private credit deals.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "medium",
+              "family_id": "fin_framework.ebitda",
+              "id": "fin_framework.ebitda.standard_addbacks.sponsor_fees.termination_payment",
+              "kct_ref": [
+                "cat1.6"
+              ],
+              "level": 4,
+              "name": "Management Agreement Termination",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 6"
+            },
+            {
+              "id": "fin_framework.ebitda.standard_addbacks.sponsor_fees.ongoing_advisory",
+              "name": "Ongoing Advisory/Monitoring Fee",
+              "level": 4,
+              "type": "sub_component",
+              "domain_id": "fin_framework",
+              "family_id": "fin_framework.ebitda",
+              "corpus_prevalence": "high",
+              "extraction_difficulty": "medium",
+              "definition": "Sponsor fee addbacks include the ongoing management/advisory fee and the termination payment.",
+              "definition_source": "KCT Cat 2 Item 1; KCT Cat 3 Item 13"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "EBITDA addback for management fees and reimbursement of reasonable expenses paid to the sponsor or its affiliates under the management agreement in effect on the closing date, to the extent permitted by the credit facility (DLS clause i). Also includes independent director fees and related expenses, subject to a separate cap to be agreed (DLS clause x). PC Term Comparison guidance: management fees should be capped in the affiliate transactions covenant and subject to a Default/EoD blocker (or bankruptcy/payment EoD blocker in more competitive transactions). 100% prevalence in sponsor-backed private credit deals.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.standard_addbacks.sponsor_fees",
+          "kct_ref": [
+            "cat1.6"
+          ],
+          "level": 3,
+          "market_data": {
+            "prevalence": "70%",
+            "range": "$1-3M annual typical"
+          },
+          "name": "Sponsor/Management Fees",
+          "r18_concept_ids": [
+            "financial_definitions.consolidated_ebitda"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred row 72 clauses (i) and (x) (sponsor fees and director fees); PC Term Comparison Affiliate Transactions section (management fee caps and EoD stoppers)",
+          "pc_ref": [
+            "Affiliate Transactions"
+          ]
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Addbacks for non-cash charges arising from purchase price allocation in acquisitions under GAAP: inventory step-up amortization, deferred revenue haircuts, below-market lease amortization, and intangible asset write-offs. These adjustments reduce reported income but do not reflect ongoing cash economics of the business. DLS Preferred includes these within the broader non-cash addback category (clause ii: 'non-cash adjustments resulting from the application of purchase accounting'). Typically uncapped as they are non-cash by nature, but the corresponding income/gain items must be subtracted per DLS clause (B).",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.standard_addbacks.purchase_accounting",
+          "kct_ref": [
+            "cat1.6",
+            "cat1.7",
+            "cat1.8"
+          ],
+          "level": 3,
+          "market_data": {
+            "cap": "Typically uncapped",
+            "prevalence": "85%"
+          },
+          "name": "Purchase Accounting Adjustments",
+          "r18_concept_ids": [
+            "financial_definitions.consolidated_ebitda"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred row 72 clause (ii) ('non-cash adjustments resulting from the application of purchase accounting')"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Legal settlement payments, investigation expenses, damages, penalties, and associated legal fees. Treatment varies: within shared cap (60%), separate sub-cap (25%), or uncapped if non-recurring (15%). Bank position: ensure within shared cap; flag uncapped litigation addbacks as they can mask material operational risk.",
+          "dls_ref": [
+            "DLS:46:Third-party consents / litigation"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.standard_addbacks.litigation_settlement",
+          "kct_ref": [
+            "cat1.6",
+            "cat1.7"
+          ],
+          "level": 3,
+          "market_data": {
+            "prevalence": "50-80%"
+          },
+          "name": "Litigation & Settlement Costs",
+          "r18_concept_ids": [
+            "financial_definitions.consolidated_ebitda"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 46 (Third-party consents / litigation); KCT Cat 1 Item 6; KCT Cat 1 Item 7"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Unrealized gains and losses from foreign currency translation, mark-to-market adjustments on hedging instruments, and currency remeasurement effects. Excluded from EBITDA as non-cash/non-operational. Key distinction: realized hedge gains (cash) should NOT be added back; only unrealized mark-to-market adjustments qualify. 70-80% prevalence in cross-border deals.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.standard_addbacks.fx_hedging",
+          "kct_ref": [
+            "cat1.6",
+            "cat1.8"
+          ],
+          "level": 3,
+          "market_data": {
+            "prevalence": "70-80% in cross-border deals"
+          },
+          "name": "FX & Hedging Gain/Loss Adjustments",
+          "r18_concept_ids": [
+            "financial_definitions.consolidated_ebitda"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 6; KCT Cat 1 Item 8"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Revenue addbacks to EBITDA, including (a) adjustments for loss of revenues such as COVID/pandemic-related revenue adjustments and (b) revenue synergies including in connection with new contracts. KCT Category 1 item 6 flags these as risk items requiring escalation, noting that if addbacks for new contracts are permitted on a look-forward basis, they may result in aggressive revenue synergies. PC Term Comparison states clients are 'very sensitive' to revenue synergies and will 'likely reject' them; if accepted, clients will seek the most conservative language option. Revenue addbacks on a forward-looking basis are categorically more aggressive than backward-looking cost savings because they assume future commercial success rather than documenting past expense reductions.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.standard_addbacks.look_forward_vs_look_back_basis",
+          "kct_ref": [
+            "cat1.6"
+          ],
+          "level": 3,
+          "name": "Look-forward vs look-back basis",
+          "type": "sub_component",
+          "definition_source": "KCT Category 1 item 6 (revenue addbacks to EBITDA, new contracts as revenue synergies); PC Term Comparison EBITDA section lines 132-136 ('Clients very sensitive... will likely reject... most conservative language option')",
+          "pc_ref": [
+            "EBITDA"
+          ]
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "EBITDA addback categories present in the vast majority of leveraged credit agreements, forming the expected baseline of any EBITDA definition. DLS Preferred enumerates 12 standard categories: (i) sponsor management fees; (ii) non-cash charges (purchase accounting, stock compensation, impairment, unrealized hedging gains/losses -- excluding accruals for future cash expenditures and inventory/receivable write-downs); (iii) closing date transaction fees; (iv) amendment/waiver fees; (v) unconsummated transaction fees (subject to cap); (vi) non-recurring/unusual expenses including severance, lease termination, relocation, restructuring (subject to 10-15% of EBITDA cap); (vii) run-rate cost savings (12-month look-forward, factually supportable, subject to shared cap with non-recurring items); (viii) extraordinary charges (amount TBD); (ix) business interruption insurance proceeds; (x) independent director fees; (xi) minority interest expenses; (xii) Quality of Earnings adjustments. Lender negotiation centers on cap levels, whether caps are calculated before or after the addback, look-forward periods, officer certification requirements, and scope limitations.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.ebitda_cost_savings",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01",
+          "Section 1.1"
+        ],
+        "shape_ref": "financial_definitions.ebitda_cost_savings",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.ebitda",
+      "id": "fin_framework.ebitda.standard_addbacks",
+      "kct_ref": [
+        "cat1.6"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "look_forward_period": "[TO_BE_POPULATED]",
+        "revenue_addback_cap": "[TO_BE_POPULATED]"
+      },
+      "market_data": {
+        "prevalence": ">80% for each category"
+      },
+      "name": "Standard Addbacks",
+      "negotiation_spectrum": {
+        "aggressive_position": "No cap and no officer's certificate No cap (or cap calculated \"after\" giving effect to the add-back); no officer's certificate Includes synergies and operating expense reductions No details on what the savings/synergies have to be No officers certificate Actions are taken or \"expected to be taken\" within 12/24/36 months No requirement that benefits be realized in a certain time period No cap (calc",
+        "dls_source_rows": [
+          {
+            "label": "EBITDA Definition & Addbacks",
+            "row": 72
+          }
+        ],
+        "is_highlighted": false,
+        "key_negotiation_points": [
+          "Sponsor management fee addback scope",
+          "Non-cash charge addback breadth",
+          "Transaction/closing cost addback",
+          "Non-recurring expense addback cap (10-15% of EBITDA)",
+          "Cost savings/synergies addback cap",
+          "Cost savings realization period (12/24/36 months)",
+          "Officer certification for cost savings",
+          "Quality of earnings addback scope",
+          "Combined cap for non-recurring + cost savings",
+          "EBITDA deduction items (subtractions)",
+          "EBITDA or Total Assets grower for dollar baskets",
+          "Reclassification of baskets",
+          "Exclude simultaneous fixed-amount incurrences from ratio calc",
+          "Passive holding company covenant"
+        ],
+        "market_position": "Market standard for ebitda definition & addbacks reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "EBITDA Add-Backs (subject to caps to be agreed): (i) all management fees and reimbursement of reasonable expenses paid to Sponsor or an affiliate thereof in accordance with the management agreement, to the extent permitted by the Credit Facility (ii) all non-cash losses or reasonable and documented expenses (or minus non-cash income or gain), including non-cash adjustments resulting from the appli",
+        "source": "R14-B"
+      },
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 53,
+          "term": "Financial Statements – monthly"
+        },
+        {
+          "coverage": "full",
+          "row": 63,
+          "term": "EBITDA Addbacks"
+        }
+      ],
+      "term_analysis_sources": [
+        "TERM_ANALYSIS_EBITDA_OTHER_ADDBACKS.md"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 72 (all 12 addback categories with caps and conditions); PC Term Comparison EBITDA section (segment-specific cap ranges); KCT Category 1 items 6-8",
+      "pc_ref": [
+        "EBITDA"
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Micro (<$50M): 20-25%; Middle ($50-500M): 25-30%; Large ($500M+): 30-35%.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "medium",
+              "family_id": "fin_framework.ebitda",
+              "id": "fin_framework.ebitda.cost_savings.cap.percentage",
+              "kct_ref": [
+                "cat1.7"
+              ],
+              "level": 4,
+              "market_data": {
+                "aggressive": "35%+",
+                "conservative": "15-20%",
+                "market_standard": "30%"
+              },
+              "name": "Cap Percentage",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 7"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Pre-adjustment EBITDA (60%, more restrictive) vs post-adjustment (40%, allows compounding).",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "medium",
+              "family_id": "fin_framework.ebitda",
+              "id": "fin_framework.ebitda.cost_savings.cap.calculation_base",
+              "level": 4,
+              "name": "Calculation Base",
+              "type": "sub_component",
+              "definition_source": "PC Term Comparison, 2. Article 2 (Swingline Loans/Same Day Base Rate)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Cap often does not apply to cost savings from the Transactions (closing-date deals).",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "medium",
+              "family_id": "fin_framework.ebitda",
+              "id": "fin_framework.ebitda.cost_savings.cap.transaction_exception",
+              "kct_ref": [
+                "cat1.7"
+              ],
+              "level": 4,
+              "name": "Transaction Exception",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 7"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Percentage cap on cost savings addback, calculated on pre- or post-adjustment EBITDA.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.cost_savings.cap",
+          "kct_ref": [
+            "cat1.7"
+          ],
+          "level": 3,
+          "name": "Cap Structure",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 7"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Maximum time horizon for projected realization of savings.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.cost_savings.lookforward",
+          "level": 3,
+          "market_data": {
+            "12_months": "30%",
+            "18_months": "25%",
+            "24_months": "40%",
+            "36_months": "5%"
+          },
+          "name": "Lookforward Period",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 4"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "'Expected to be realized' (most flexible), 'reasonably expected' (market), 'demonstrably achievable' (conservative), 'contractually supported' (strictest).",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "medium",
+              "family_id": "fin_framework.ebitda",
+              "id": "fin_framework.ebitda.cost_savings.certification.standard",
+              "level": 4,
+              "name": "Realization Standard",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 3"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Officer certification, supporting docs, board approval, third-party validation.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "medium",
+              "family_id": "fin_framework.ebitda",
+              "id": "fin_framework.ebitda.cost_savings.certification.documentation",
+              "level": 4,
+              "name": "Documentation Level",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 2"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Documentation and verification standards for projected savings.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.cost_savings.certification",
+          "level": 3,
+          "name": "Certification Requirements",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Prevents double-counting savings already realized in the base EBITDA period.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.cost_savings.anti_duplication",
+          "level": 3,
+          "name": "Anti-Duplication",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 7"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Provisions requiring reversal of previously added-back cost savings that were not realized within the lookforward period. Where absent, projected savings that never materialize remain permanently embedded in historical EBITDA -- a significant lender concern as it permanently inflates grower baskets and ratio headroom.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.cost_savings.reversal",
+          "level": 3,
+          "name": "Cost Savings Reversal Mechanics",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3; KCT Cat 1 Item 7; KCT Cat 2 Item 1; KCT Cat 2 Item 4; KCT Cat 3 Item 3; KCT Cat 3 Item 4; KCT Cat 3 Item 6; KCT Cat 3 Item 12; KCT Cat 4 Item 4; KCT Cat 4 Item 8; KCT Cat 4 Item 11; KCT Cat 5 Item 1"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "EBITDA addback for projected 'run-rate' cost savings resulting from actions taken prior to the end of the measurement period in connection with integrating, consolidating, or discontinuing operations, headcount reductions, or facility closures. Calculated on a pro forma basis as though realized on the first day of the period, net of actual benefits already realized. DLS Preferred conditions: (a) cost savings must be reasonably identifiable, factually supportable, and reasonably anticipated to result from actions taken; (b) actions must have been taken and be ongoing; (c) benefits anticipated to be realized within 12 months of the measurement period end; (d) aggregate amount capped at 10-15% of EBITDA, potentially shared with non-recurring expenses. By segment per PC Term Comparison: CMM/LMM typically 20-30% cap with 12-18 month look-forward; UMM/BSL aggressive cap at 30-35% with 18-24 month look-forward.",
+      "dna_pattern_refs": [
+        "DEFINITION:ADDBACK:COST_SAVINGS+SYNERGIES:24MO_LOOKFORWARD:PCT_EBITDA_CAP:20PCT",
+        "DEFINITION:EBITDA:COMPACT:NO_SYNERGY_ADDBACK:NO_COST_SAVINGS:AGENT_APPROVAL_CAP",
+        "DEFINITION:EBITDA:COST_SAVINGS:20PCT_CAP:18MO_LOOKFORWARD",
+        "DEFINITION:EBITDA:COST_SAVINGS:UNCAPPED:PRO_FORMA:NO_REG_SX",
+        "DEFINITION:EBITDA:NO_SYNERGY_ADDBACK:REG_SX_PRO_FORMA",
+        "DEFINITION:EBITDA:STANDARD_ADDBACKS:NO_SYNERGIES:NO_COST_SAVINGS:WITH_PRO_FORMA_ACQUISITION",
+        "DEFINITION:EBITDA_ADDBACK:COST_SAVINGS_SYNERGIES:WITH_PCT_CAP:SHARED_CAP:24M_LOOK_FORWARD:INCLUDES_REVENUE_ENHANCEMENTS",
+        "DEFINITION:EBITDA_ADDBACK:PCT_CAP:SHARED_CAP:WITH_LOOKFORWARD",
+        "DEFINITION:EBITDA_ADDBACK:RUN_RATE_BENEFITS:24_MONTH:WITH_30PCT_CAP:CAP_EXCLUDES_CLOSING_AND_REG_SX:PRO_FORMA_BASIS",
+        "DEFINITION:PCT_EBITDA:WITH_TEMPORAL_CAP:WITH_CERTIFICATION:SHARED_CAP"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "very_hard",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.ebitda_cost_savings",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01",
+          "Section 1.1"
+        ],
+        "shape_ref": "financial_definitions.ebitda_cost_savings"
+      },
+      "family_id": "fin_framework.ebitda",
+      "golden_record_ids": [
+        "financial_definitions.ebitda_cost_savings"
+      ],
+      "golden_record_refs": [
+        {
+          "deal_count": 10,
+          "golden_concept_id": "financial_definitions.ebitda_cost_savings",
+          "has_absence": true,
+          "parameter_count": 3,
+          "total_records": 10
+        }
+      ],
+      "id": "fin_framework.ebitda.cost_savings",
+      "kct_ref": [
+        "cat1.6",
+        "cat1.7"
+      ],
+      "level": 2,
+      "market_data": {
+        "lookforward": "36 months standard",
+        "market_cap": "30% of EBITDA",
+        "prevalence": "85%"
+      },
+      "name": "Cost Savings & Synergies Addback",
+      "negotiation_spectrum": {
+        "aggressive_position": "No cap and no officer's certificate No cap (or cap calculated \"after\" giving effect to the add-back); no officer's certificate Includes synergies and operating expense reductions No details on what the savings/synergies have to be No officers certificate Actions are taken or \"expected to be taken\" within 12/24/36 months No requirement that benefits be realized in a certain time period No cap (calc",
+        "dls_source_rows": [
+          {
+            "label": "EBITDA Definition & Addbacks",
+            "row": 72
+          }
+        ],
+        "is_highlighted": false,
+        "key_negotiation_points": [
+          "Sponsor management fee addback scope",
+          "Non-cash charge addback breadth",
+          "Transaction/closing cost addback",
+          "Non-recurring expense addback cap (10-15% of EBITDA)",
+          "Cost savings/synergies addback cap",
+          "Cost savings realization period (12/24/36 months)",
+          "Officer certification for cost savings",
+          "Quality of earnings addback scope",
+          "Combined cap for non-recurring + cost savings",
+          "EBITDA deduction items (subtractions)",
+          "EBITDA or Total Assets grower for dollar baskets",
+          "Reclassification of baskets",
+          "Exclude simultaneous fixed-amount incurrences from ratio calc",
+          "Passive holding company covenant"
+        ],
+        "market_position": "Market standard for ebitda definition & addbacks reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "EBITDA Add-Backs (subject to caps to be agreed): (i) all management fees and reimbursement of reasonable expenses paid to Sponsor or an affiliate thereof in accordance with the management agreement, to the extent permitted by the Credit Facility (ii) all non-cash losses or reasonable and documented expenses (or minus non-cash income or gain), including non-cash adjustments resulting from the appli",
+        "source": "R14-B"
+      },
+      "playbook_ref": {
+        "concept_id": "financial_definitions.ebitda_cost_savings",
+        "dependency_count": 12,
+        "extraction_difficulty": "very_hard",
+        "phase": 1
+      },
+      "r18_concept_ids": [
+        "financial_definitions.ebitda_cost_savings"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 63,
+          "term": "EBITDA Addbacks"
+        }
+      ],
+      "term_analysis_sources": [
+        "TERM_ANALYSIS_EBITDA_COST_SAVINGS.md"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 72 clause (vii) (complete cost savings specification); PC Term Comparison EBITDA section (segment caps: CMM/LMM 20-30%/12-18mo, UMM/BSL 30-35%/18-24mo); KCT Category 1 item 7 (uncapped addbacks risk flag)",
+      "market_benchmarks": "DLS Preferred: 10-15% of EBITDA cap, 12-month look-forward, shared with non-recurring. PC Term Comparison: CMM/LMM 20-30% cap with 12-18mo look-forward; Aggressive UMM/BSLR 30-35% cap with 18-24mo look-forward.",
+      "pc_ref": [
+        "EBITDA"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Target's QofE adjustments flow through without percentage limitations. 44.3% pure uncapped + 14.8% conditional.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.acquired_ebitda.uncapped",
+          "kct_ref": [
+            "cat1.7"
+          ],
+          "level": 3,
+          "name": "Uncapped Treatment",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 7"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Subject to same shared caps as organic adjustments (13.1%) or explicit separate caps (6.6%).",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.acquired_ebitda.capped",
+          "level": 3,
+          "name": "Capped Treatment",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Uncapped for QofE/Reg S-X adjustments but capped for ongoing -- sophisticated bifurcation structure.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.acquired_ebitda.qoe_carveout",
+          "level": 3,
+          "name": "QofE Carveout",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 7"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Limited to pro forma EBITDA attributable to period before consummation -- no forward-looking.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.acquired_ebitda.stub_period",
+          "level": 3,
+          "name": "Stub Period Limitation",
+          "r18_concept_ids": [
+            "financial_definitions.test_period"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 8; KCT Cat 3 Item 7"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Methodology for annualizing partial-period EBITDA of acquired businesses. When an acquisition closes mid-quarter, the target's earnings are typically annualized to a 12-month run-rate. Key negotiation: whether annualization applies to the full LTM period or only the stub period after closing. Aggressive treatment: annualize best quarter; conservative: use actual LTM with pro rata adjustment.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.acquired_ebitda.annualization",
+          "level": 3,
+          "name": "Annualization of Partial Period",
+          "r18_concept_ids": [
+            "financial_definitions.test_period"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 6; KCT Cat 1 Item 7; KCT Cat 2 Item 4; KCT Cat 3 Item 4"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Measurement methodology for incorporating historical EBITDA from acquired businesses into pro forma calculations. When the borrower completes a permitted acquisition, the target's trailing EBITDA is added to the borrower's EBITDA on a pro forma basis as if the acquisition occurred on the first day of the measurement period. DLS Preferred row 82 (Permitted Acquisitions) condition (vii) requires delivery of 'historical financial statements for the target for the last three fiscal years, pro forma financial information and updated pro forma projections acceptable to the Administrative Agent.' Condition (viii) requires 'a quality of earnings report conducted by a nationally recognized accounting firm' for material acquisitions. PC Term Comparison notes that pro forma calculations should not net cash proceeds of concurrent incurrences and that stacking/phony ratio concerns arise when acquired EBITDA is counted.",
+      "dls_ref": [
+        "DLS:3:Assumed Financing EBITDA",
+        "DLS:42:Minimum EBITDA",
+        "DLS:72:EBITDA"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.ebitda_cost_savings",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01",
+          "Section 1.1"
+        ],
+        "shape_ref": "financial_definitions.ebitda_cost_savings",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.ebitda",
+      "id": "fin_framework.ebitda.acquired_ebitda",
+      "kct_ref": [
+        "cat1.8"
+      ],
+      "level": 2,
+      "market_data": {
+        "capped": "19.7%",
+        "silent": "11.5%",
+        "uncapped": "59.1%"
+      },
+      "name": "Acquired EBITDA Adjustments",
+      "negotiation_spectrum": {
+        "aggressive_position": "No cap and no officer's certificate No cap (or cap calculated \"after\" giving effect to the add-back); no officer's certificate Includes synergies and operating expense reductions No details on what the savings/synergies have to be No officers certificate Actions are taken or \"expected to be taken\" within 12/24/36 months No requirement that benefits be realized in a certain time period No cap (calc",
+        "dls_source_rows": [
+          {
+            "label": "EBITDA Definition & Addbacks",
+            "row": 72
+          }
+        ],
+        "is_highlighted": false,
+        "key_negotiation_points": [
+          "Sponsor management fee addback scope",
+          "Non-cash charge addback breadth",
+          "Transaction/closing cost addback",
+          "Non-recurring expense addback cap (10-15% of EBITDA)",
+          "Cost savings/synergies addback cap",
+          "Cost savings realization period (12/24/36 months)",
+          "Officer certification for cost savings",
+          "Quality of earnings addback scope",
+          "Combined cap for non-recurring + cost savings",
+          "EBITDA deduction items (subtractions)",
+          "EBITDA or Total Assets grower for dollar baskets",
+          "Reclassification of baskets",
+          "Exclude simultaneous fixed-amount incurrences from ratio calc",
+          "Passive holding company covenant"
+        ],
+        "market_position": "Market standard for ebitda definition & addbacks reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "EBITDA Add-Backs (subject to caps to be agreed): (i) all management fees and reimbursement of reasonable expenses paid to Sponsor or an affiliate thereof in accordance with the management agreement, to the extent permitted by the Credit Facility (ii) all non-cash losses or reasonable and documented expenses (or minus non-cash income or gain), including non-cash adjustments resulting from the appli",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "financial_definitions.acquired_ebitda_adjustments"
+      ],
+      "term_analysis_sources": [
+        "TERM_ANALYSIS_FINANCIAL_ACQUIRED_EBITDA_CAPS.md"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 82 conditions (vii)-(viii) (required target financials and QoE for acquisitions); Review Template row 50 (Pro Forma Calculations); PC Term Comparison Negative Covenants: Stacking/Phony Ratio",
+      "pc_ref": [
+        "Negative Covenants: Stacking/Phony Ratio"
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "3 months (conservative) to 12 months (aggressive). 6 months market standard.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "medium",
+              "family_id": "fin_framework.ebitda",
+              "id": "fin_framework.ebitda.pre_opening.time_periods.pre_open",
+              "level": 4,
+              "name": "Pre-Opening Period",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 3"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "6 months, 12 months, 18 months, until profitable.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "medium",
+              "family_id": "fin_framework.ebitda",
+              "id": "fin_framework.ebitda.pre_opening.time_periods.post_open",
+              "level": 4,
+              "name": "Post-Opening Period",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 24 (Post-Close Flex Period)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Defines the pre-opening and post-opening addback windows.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.pre_opening.time_periods",
+          "level": 3,
+          "name": "Time Period Architecture",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 4; KCT Cat 2 Item 2"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Time only, profitability only, earlier-of hybrid (55% -- market standard).",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.pre_opening.profitability_cutoff",
+          "level": 3,
+          "name": "Profitability Cut-Off",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 3; KCT Cat 3 Item 12"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Retail/restaurant, healthcare, fitness, hospitality, education.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.pre_opening.industry_specific",
+          "level": 3,
+          "name": "Industry-Specific Applications",
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "EBITDA addback for costs incurred in opening new locations, facilities, or business lines before and during the initial operating period. Typically covers construction, staffing, training, and pre-revenue operational costs. Not explicitly enumerated in DLS Preferred's 12 standard addback categories, which may indicate it falls within the broader non-recurring expenses category (DLS clause vi) or is a deal-specific addback. Where present, usually subject to the shared cap on non-recurring expenses.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.ebitda_cost_savings",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01",
+          "Section 1.1"
+        ],
+        "shape_ref": "financial_definitions.ebitda_cost_savings",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.ebitda",
+      "id": "fin_framework.ebitda.pre_opening",
+      "level": 2,
+      "market_data": {
+        "prevalence": "40% explicit, 60%+ industry-specific"
+      },
+      "name": "Pre-Opening Losses",
+      "term_analysis_sources": [
+        "TERM_ANALYSIS_FINANCIAL_PRE_OPENING_LOSSES.md"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 72 (12 addback categories -- pre-opening not separately enumerated, likely within clause vi non-recurring expenses)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "5% separate cap (40%), 10% separate (20%), within shared cap (30%). Never uncapped.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.revenue_synergies.cap",
+          "kct_ref": [
+            "cat1.6",
+            "cat1.7"
+          ],
+          "level": 3,
+          "name": "Cap Structure",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 6; KCT Cat 1 Item 7"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "24-36+ months (vs 12-24 for cost synergies). Reflects longer customer acquisition cycles.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.revenue_synergies.realization_period",
+          "kct_ref": [
+            "cat1.6"
+          ],
+          "level": 3,
+          "name": "Realization Period",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 6"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Third-party validation, contractual support required, milestone-based recognition.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.revenue_synergies.verification",
+          "kct_ref": [
+            "cat1.6"
+          ],
+          "level": 3,
+          "name": "Verification Requirements",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 6"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Projected incremental revenues from business combinations added back to EBITDA. PC Term Comparison states clients are 'very sensitive' to revenue synergies and 'will likely reject' them; if accepted, clients seek 'the most conservative language option.' Revenue synergies include adjustments for loss of revenues (such as COVID/pandemic-related revenue adjustments) and revenue from new contracts. KCT Category 1 item 6 flags revenue addbacks as a risk item requiring escalation, noting that if addbacks for new contracts are permitted on a look-forward basis, they may result in aggressive revenue synergies. PC Term Comparison further directs rejection of 'Covid type lost revenue/EBITDA addbacks.' When permitted, revenue synergies are typically subject to tighter caps and shorter look-forward periods than cost savings, and may have their own smaller cap within the larger shared cap (e.g., 15% within a 30% overall cap).",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.ebitda_cost_savings",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01",
+          "Section 1.1"
+        ],
+        "shape_ref": "financial_definitions.ebitda_cost_savings",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.ebitda",
+      "id": "fin_framework.ebitda.revenue_synergies",
+      "kct_ref": [
+        "cat1.6"
+      ],
+      "level": 2,
+      "market_data": {
+        "explicit_inclusion": "<10%",
+        "lender_acceptance": "50% never accept",
+        "trend": "Declining since 2018"
+      },
+      "name": "Revenue Synergies",
+      "term_analysis_sources": [
+        "TERM_ANALYSIS_FINANCIAL_REVENUE_SYNERGIES.md"
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison EBITDA section lines 132-136 ('Clients very sensitive... will likely reject... most conservative language option... Reject Covid type lost revenue/EBITDA addbacks'); KCT Category 1 item 6 (revenue addbacks to EBITDA, new contracts as revenue synergies)",
+      "pc_ref": [
+        "EBITDA"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Adjustments from initial transaction QofE -- 40% uncapped, 90% time-limited.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.qoe.closing_date",
+          "level": 3,
+          "name": "Closing Date QofE",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 13 (Closing Date Refinancing); Review Template Row 15 (Revolver closing date draws); KCT Cat 1 Item 2; KCT Cat 1 Item 7; KCT Cat 1 Item 8; KCT Cat 2 Item 2; KCT Cat 2 Item 4; KCT Cat 3 Item 12; KCT Cat 5 Item 4"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "QofE for subsequent acquisitions -- typically Big 4 required, subject to cap.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.qoe.future_acquisition",
+          "level": 3,
+          "name": "Future Acquisition QofE",
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Adjustments derived from the sponsor's closing-date quality of earnings report, codified as specific dollar-amount or percentage-of-revenue addbacks in the EBITDA definition. DLS Preferred row 72 clause (xii) permits addbacks for 'adjustments and add backs reflected in the quality of earnings report delivered to the Administrative Agent' on a specified date. PC Term Comparison guidance: 'Clients may resist but often accepted. Generally try to limit to Big 4 accounting firm and only in connection with Acquisitions and provide that any items that are covered by capped addback must be capped.' The QoE addback creates a channel for management discretion by converting private sponsor diligence findings into permanent EBITDA components. Risk: aggressive formulations permit future QoEs for future acquisitions from any nationally recognized accounting firm, expanding addback scope beyond the original closing-date adjustment.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.ebitda_cost_savings",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01",
+          "Section 1.1"
+        ],
+        "shape_ref": "financial_definitions.ebitda_cost_savings",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.ebitda",
+      "id": "fin_framework.ebitda.qoe",
+      "level": 2,
+      "market_data": {
+        "closing_uncapped": "40%",
+        "future_capped": "80%"
+      },
+      "name": "Quality of Earnings / Sponsor Model",
+      "negotiation_spectrum": {
+        "aggressive_position": "No cap and no officer's certificate No cap (or cap calculated \"after\" giving effect to the add-back); no officer's certificate Includes synergies and operating expense reductions No details on what the savings/synergies have to be No officers certificate Actions are taken or \"expected to be taken\" within 12/24/36 months No requirement that benefits be realized in a certain time period No cap (calc",
+        "dls_source_rows": [
+          {
+            "label": "EBITDA Definition & Addbacks",
+            "row": 72
+          }
+        ],
+        "is_highlighted": false,
+        "key_negotiation_points": [
+          "Sponsor management fee addback scope",
+          "Non-cash charge addback breadth",
+          "Transaction/closing cost addback",
+          "Non-recurring expense addback cap (10-15% of EBITDA)",
+          "Cost savings/synergies addback cap",
+          "Cost savings realization period (12/24/36 months)",
+          "Officer certification for cost savings",
+          "Quality of earnings addback scope",
+          "Combined cap for non-recurring + cost savings",
+          "EBITDA deduction items (subtractions)",
+          "EBITDA or Total Assets grower for dollar baskets",
+          "Reclassification of baskets",
+          "Exclude simultaneous fixed-amount incurrences from ratio calc",
+          "Passive holding company covenant"
+        ],
+        "market_position": "Market standard for ebitda definition & addbacks reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "EBITDA Add-Backs (subject to caps to be agreed): (i) all management fees and reimbursement of reasonable expenses paid to Sponsor or an affiliate thereof in accordance with the management agreement, to the extent permitted by the Credit Facility (ii) all non-cash losses or reasonable and documented expenses (or minus non-cash income or gain), including non-cash adjustments resulting from the appli",
+        "source": "R14-B"
+      },
+      "term_analysis_sources": [
+        "TERM_ANALYSIS_FINANCIAL_CONSOLIDATED_EBITDA.md"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 72 clause (xii) (QoE addback specification); PC Term Comparison EBITDA section line 137 ('Clients may resist but often accepted... limit to Big 4... only in connection with Acquisitions... capped addback must be capped')",
+      "pc_ref": [
+        "EBITDA"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Single percentage cap covering multiple addback categories. Most common structure.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.cap_architecture.shared_cap",
+          "kct_ref": [
+            "cat1.7"
+          ],
+          "level": 3,
+          "market_data": {
+            "10_15pct": "15%",
+            "20_25pct": "55%",
+            "30_35pct": "25%",
+            "uncapped": "5%"
+          },
+          "name": "Shared Cap",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 7"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Individual caps for specific categories (e.g., pre-opening 10%, cost savings 30%).",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.cap_architecture.separate_subcaps",
+          "kct_ref": [
+            "cat1.7"
+          ],
+          "level": 3,
+          "name": "Separate Sub-Caps",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 7"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Historical progression: 2018, 2020, 2022, 2024 (28%+). Steady upward trend.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.cap_architecture.evolution",
+          "level": 3,
+          "name": "Cap Evolution",
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Framework governing how individual addback categories interact with shared and separate caps to limit aggregate EBITDA inflation. DLS Preferred row 72 specifies that non-recurring expenses (clause vi) are subject to a 10-15% of EBITDA cap, and run-rate cost savings (clause vii) may share that cap ('provided that the aggregate amount of all Non-Recurring Expenses and Cost Savings shall not exceed [__]% of Consolidated EBITDA'). PC Term Comparison guidance: 'Ideally caps will be calculated before and not after giving effect to the addback' and 'Caps are often shared among run rate, extraordinary, litigation, other.' Revenue synergies 'may have their own smaller cap which may also be part of the larger cap (e.g., 15% but eats into the 30% cap).' Key negotiation dimensions: (1) standalone vs. shared caps, (2) before vs. after addback calculation, (3) officer certification requirements, and (4) whether caps are measured on a trailing or trailing-plus-projected basis.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.ebitda_cost_savings",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01",
+          "Section 1.1"
+        ],
+        "shape_ref": "financial_definitions.ebitda_cost_savings",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.ebitda",
+      "id": "fin_framework.ebitda.cap_architecture",
+      "kct_ref": [
+        "cat1.7"
+      ],
+      "level": 2,
+      "name": "Overall Cap Architecture",
+      "negotiation_spectrum": {
+        "aggressive_position": "No cap and no officer's certificate No cap (or cap calculated \"after\" giving effect to the add-back); no officer's certificate Includes synergies and operating expense reductions No details on what the savings/synergies have to be No officers certificate Actions are taken or \"expected to be taken\" within 12/24/36 months No requirement that benefits be realized in a certain time period No cap (calc",
+        "dls_source_rows": [
+          {
+            "label": "EBITDA Definition & Addbacks",
+            "row": 72
+          }
+        ],
+        "is_highlighted": false,
+        "key_negotiation_points": [
+          "Sponsor management fee addback scope",
+          "Non-cash charge addback breadth",
+          "Transaction/closing cost addback",
+          "Non-recurring expense addback cap (10-15% of EBITDA)",
+          "Cost savings/synergies addback cap",
+          "Cost savings realization period (12/24/36 months)",
+          "Officer certification for cost savings",
+          "Quality of earnings addback scope",
+          "Combined cap for non-recurring + cost savings",
+          "EBITDA deduction items (subtractions)",
+          "EBITDA or Total Assets grower for dollar baskets",
+          "Reclassification of baskets",
+          "Exclude simultaneous fixed-amount incurrences from ratio calc",
+          "Passive holding company covenant"
+        ],
+        "market_position": "Market standard for ebitda definition & addbacks reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "EBITDA Add-Backs (subject to caps to be agreed): (i) all management fees and reimbursement of reasonable expenses paid to Sponsor or an affiliate thereof in accordance with the management agreement, to the extent permitted by the Credit Facility (ii) all non-cash losses or reasonable and documented expenses (or minus non-cash income or gain), including non-cash adjustments resulting from the appli",
+        "source": "R14-B"
+      },
+      "term_analysis_sources": [
+        "TERM_ANALYSIS_FINANCIAL_CONSOLIDATED_EBITDA.md",
+        "CROSS_ANALYSIS_EBITDA_ECOSYSTEM_MAPPING.md"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 72 clauses (vi)-(vii) (shared cap formulation for non-recurring and cost savings); PC Term Comparison EBITDA section lines 139-142 ('Ideally caps before not after... Caps are often shared... smaller cap eats into larger cap')",
+      "pc_ref": [
+        "EBITDA"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Gains from dispositions, sale-leasebacks, and other asset sales excluded from EBITDA to prevent one-time windfalls from inflating the recurring earnings metric. Typically deducted to the extent included in CNI. Treatment: 85% deduct all gains, 10% deduct only extraordinary gains, 5% no explicit deduction.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.deductions.gains_asset_sales",
+          "kct_ref": [
+            "cat1.8"
+          ],
+          "level": 3,
+          "name": "Gains from Asset Sales",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 8"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Extraordinary, unusual, or non-recurring income and gains. Symmetric to the extraordinary charge addback -- prevents one-time positive items from inflating baseline EBITDA. 90%+ of deals include this deduction.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.deductions.extraordinary_gains",
+          "level": 3,
+          "name": "Extraordinary/Non-Recurring Gains",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 6; KCT Cat 1 Item 8; KCT Cat 2 Item 1; KCT Cat 2 Item 4; KCT Cat 3 Item 13; KCT Cat 3 Item 14"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Non-cash income items deducted from EBITDA including unrealized gains on investments, mark-to-market appreciation, and other non-cash revenue items. Symmetric with the non-cash charge addback. Note: some aggressive definitions do not symmetrically deduct non-cash gains -- a material lender concern.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.deductions.noncash_income",
+          "level": 3,
+          "name": "Non-Cash Income Deductions",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 6; KCT Cat 1 Item 7; KCT Cat 1 Item 8; KCT Cat 2 Item 1; KCT Cat 3 Item 3; KCT Cat 3 Item 4; KCT Cat 3 Item 6; KCT Cat 3 Item 14; KCT Cat 4 Item 1; KCT Cat 4 Item 2; KCT Cat 4 Item 4; KCT Cat 4 Item 6; KCT Cat 4 Item 7"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Treatment of insurance proceeds and casualty gains in EBITDA. Windfall insurance recoveries (e.g., business interruption, property damage) are typically deducted unless reinvested in the business. Market split: 40% always deduct, 35% deduct only if exceeds a threshold, 25% treat as neutral.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.deductions.insurance_proceeds",
+          "kct_ref": [
+            "cat1.8"
+          ],
+          "level": 3,
+          "name": "Insurance/Casualty Gain Adjustments",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 8"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Non-cash pension income and return-on-plan-assets gains excluded from EBITDA. As pension accounting can generate significant non-cash income from expected returns on plan assets that does not reflect operational performance.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "easy",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.deductions.pension_income",
+          "level": 3,
+          "name": "Non-Cash Pension Income Exclusion",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 5; KCT Cat 1 Item 8; KCT Cat 2 Item 1; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 4; KCT Cat 3 Item 13; KCT Cat 4 Item 8"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Items subtracted from the EBITDA calculation to prevent double-counting of non-cash income already added back and to exclude extraordinary gains. DLS Preferred row 72 clause (B) requires 'subtractions for income and gain items corresponding to those referred to in clauses (ii), (ix) and (xii) above and other items to be agreed.' This means corresponding non-cash income/gains (matching the non-cash addback), business interruption insurance proceeds already included in net income (matching the insurance addback), and QoE income items must all be subtracted. The symmetry requirement ensures EBITDA adjustments are directionally neutral: every addback category for losses has a corresponding deduction for gains.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.ebitda_cost_savings",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01",
+          "Section 1.1"
+        ],
+        "shape_ref": "financial_definitions.ebitda_cost_savings",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.ebitda",
+      "id": "fin_framework.ebitda.deductions",
+      "kct_ref": [
+        "cat1.8"
+      ],
+      "level": 2,
+      "name": "EBITDA Deductions (Minus Items)",
+      "negotiation_spectrum": {
+        "aggressive_position": "No cap and no officer's certificate No cap (or cap calculated \"after\" giving effect to the add-back); no officer's certificate Includes synergies and operating expense reductions No details on what the savings/synergies have to be No officers certificate Actions are taken or \"expected to be taken\" within 12/24/36 months No requirement that benefits be realized in a certain time period No cap (calc",
+        "dls_source_rows": [
+          {
+            "label": "EBITDA Definition & Addbacks",
+            "row": 72
+          }
+        ],
+        "is_highlighted": false,
+        "key_negotiation_points": [
+          "Sponsor management fee addback scope",
+          "Non-cash charge addback breadth",
+          "Transaction/closing cost addback",
+          "Non-recurring expense addback cap (10-15% of EBITDA)",
+          "Cost savings/synergies addback cap",
+          "Cost savings realization period (12/24/36 months)",
+          "Officer certification for cost savings",
+          "Quality of earnings addback scope",
+          "Combined cap for non-recurring + cost savings",
+          "EBITDA deduction items (subtractions)",
+          "EBITDA or Total Assets grower for dollar baskets",
+          "Reclassification of baskets",
+          "Exclude simultaneous fixed-amount incurrences from ratio calc",
+          "Passive holding company covenant"
+        ],
+        "market_position": "Market standard for ebitda definition & addbacks reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "EBITDA Add-Backs (subject to caps to be agreed): (i) all management fees and reimbursement of reasonable expenses paid to Sponsor or an affiliate thereof in accordance with the management agreement, to the extent permitted by the Credit Facility (ii) all non-cash losses or reasonable and documented expenses (or minus non-cash income or gain), including non-cash adjustments resulting from the appli",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "financial_definitions.consolidated_ebitda"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 72 clause (B) ('subtractions for income and gain items corresponding to clauses (ii), (ix) and (xii)')"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "How pro forma EBITDA is computed: start with LTM actual EBITDA, then adjust for acquisitions (add target EBITDA for full period), dispositions (subtract disposed EBITDA), new debt (add/subtract interest expense impact), and cost savings (add projected savings within cap and lookforward). DLS standard: 'pro forma balance sheet and income statement as of and for the 12 month period ended on the last day of the most recently completed fiscal quarter ended at least 30 days prior to the Closing Date.'",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.pro_forma.calculation_methodology",
+          "level": 3,
+          "name": "Pro Forma Calculation Methodology",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 48 (Pro Forma Financial Statements); Review Template Row 50 (Pro Forma Calculations); Review Template Row 153 (MAC); KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 6; KCT Cat 1 Item 7; KCT Cat 1 Item 8; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 3 Item 3; KCT Cat 3 Item 7; KCT Cat 3 Item 12; KCT Cat 3 Item 15; KCT Cat 4 Item 4; KCT Cat 4 Item 8; KCT Cat 4 Item 9"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Rules for incorporating acquired business EBITDA into pro forma calculations. Target EBITDA is added for the full LTM test period as if the acquisition occurred on the first day. Key variables: whether target's own addbacks flow through, whether acquirer's integration savings are included, and how stub periods are handled.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.pro_forma.acquisition_adjustments",
+          "level": 3,
+          "name": "Acquisition Pro Forma Adjustments",
+          "r18_concept_ids": [
+            "financial_definitions.acquired_ebitda_adjustments"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 48 (Pro Forma Financial Statements); Review Template Row 50 (Pro Forma Calculations); KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 6; KCT Cat 1 Item 7; KCT Cat 1 Item 8; KCT Cat 2 Item 1; KCT Cat 2 Item 4; KCT Cat 3 Item 4; KCT Cat 3 Item 7; KCT Cat 3 Item 13; KCT Cat 3 Item 15"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Rules for removing disposed business EBITDA from pro forma calculations. Disposed entity's EBITDA is subtracted for the full LTM period as if the disposition occurred on the first day. Key negotiation: whether associated overhead elimination cost savings may offset the EBITDA reduction. Conservative position: no offsetting savings for dispositions.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.pro_forma.disposition_adjustments",
+          "level": 3,
+          "name": "Disposition Pro Forma Adjustments",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 48 (Pro Forma Financial Statements); Review Template Row 50 (Pro Forma Calculations); KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 6; KCT Cat 1 Item 7; KCT Cat 1 Item 8; KCT Cat 2 Item 1; KCT Cat 2 Item 4; KCT Cat 3 Item 7"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Projected cost savings and synergies included in pro forma EBITDA, subject to the cap percentage and lookforward period. This is the most impactful pro forma adjustment: at 30% cap with 24-month lookforward, a company can project $30M in savings per $100M EBITDA for ratio testing purposes. Cap typically 15-30% of Consolidated EBITDA with 12-24 month realization window.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.pro_forma.cost_savings_synergies",
+          "kct_ref": [
+            "cat1.7"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "lookforward_period": "12-24 months",
+            "typical_cap": "15-30% of EBITDA"
+          },
+          "name": "Pro Forma Cost Savings & Synergies",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 50,
+              "term": "Pro Forma Calculations"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 7; Review Template Row 50 (Pro Forma Calculations)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "The maximum aggregate pro forma addbacks expressed as a percentage of Consolidated EBITDA. This cap controls how much projected adjustments can inflate the testing metric. Market ranges: LMM 20-25%, CMM 25-30%, UMM/BSL 30-35%. The cap calculation base (pre- vs post-adjustment) is critical: post-adjustment allows the cap to compound against itself.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.pro_forma.cap_percentage",
+          "kct_ref": [
+            "cat1.7",
+            "cat1.8"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "cmm": "25-30%",
+            "lmm": "20-25%",
+            "umm_bsl": "30-35%"
+          },
+          "name": "Pro Forma Cap as Percentage of EBITDA",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 50,
+              "term": "Pro Forma Calculations"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 7; KCT Cat 1 Item 8; Review Template Row 50 (Pro Forma Calculations)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Rules for calculating EBITDA on a pro forma basis, adjusting the metric to reflect the impact of specified transactions (acquisitions, dispositions, incurrences) as if they had occurred on the first day of the measurement period. DLS Preferred row 15 (Limited Condition Acquisition) specifies that testing of Ratios/Baskets/Conditions in connection with an LCA is done at the time of signing, and future testing must be conducted on dual bases: '(i) assuming such LCA has been consummated and counting any related debt incurrence, RP and EBITDA of such acquired business and (ii) on a stand alone non-pro forma basis as if such LCA had not been consummated.' Pro forma EBITDA incorporates target EBITDA, eliminates disposed business EBITDA, and layers on permitted cost savings/synergies, all subject to the same addback caps as regular EBITDA. Review Template row 50 notes that pro formas are 'borrower-prepared' and 'internally prepared pro formas suffice for bank facilities.'",
+      "dls_ref": [
+        "DLS:48:Pro Forma Financial Statements"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.ebitda_cost_savings",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01",
+          "Section 1.1"
+        ],
+        "shape_ref": "financial_definitions.ebitda_cost_savings",
+        "secondary_playbook_refs": [
+          "financial_definitions.pro_forma_calcs"
+        ]
+      },
+      "family_id": "fin_framework.ebitda",
+      "id": "fin_framework.ebitda.pro_forma",
+      "kct_ref": [
+        "cat1.7",
+        "cat1.8"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "lookback_period": "30 days prior to test date for financials delivery",
+        "standard_period": "LTM ending most recent fiscal quarter"
+      },
+      "name": "Pro Forma EBITDA Mechanics",
+      "negotiation_spectrum": {
+        "aggressive_position": "No cap and no officer's certificate No cap (or cap calculated \"after\" giving effect to the add-back); no officer's certificate Includes synergies and operating expense reductions No details on what the savings/synergies have to be No officers certificate Actions are taken or \"expected to be taken\" within 12/24/36 months No requirement that benefits be realized in a certain time period No cap (calc",
+        "dls_source_rows": [
+          {
+            "label": "EBITDA Definition & Addbacks",
+            "row": 72
+          },
+          {
+            "label": "Other Covenant Considerations (Growers, Reclassification)",
+            "row": 89
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Sponsor management fee addback scope",
+          "Non-cash charge addback breadth",
+          "Transaction/closing cost addback",
+          "Non-recurring expense addback cap (10-15% of EBITDA)",
+          "Cost savings/synergies addback cap",
+          "Cost savings realization period (12/24/36 months)",
+          "Officer certification for cost savings",
+          "Quality of earnings addback scope",
+          "Combined cap for non-recurring + cost savings",
+          "EBITDA deduction items (subtractions)",
+          "EBITDA or Total Assets grower for dollar baskets",
+          "Reclassification of baskets",
+          "Exclude simultaneous fixed-amount incurrences from ratio calc",
+          "Passive holding company covenant"
+        ],
+        "market_position": "Market standard for ebitda definition & addbacks reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "EBITDA Add-Backs (subject to caps to be agreed): (i) all management fees and reimbursement of reasonable expenses paid to Sponsor or an affiliate thereof in accordance with the management agreement, to the extent permitted by the Credit Facility (ii) all non-cash losses or reasonable and documented expenses (or minus non-cash income or gain), including non-cash adjustments resulting from the appli",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "financial_definitions.pro_forma_calculations",
+        "financial_definitions.consolidated_ebitda"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 5,
+          "term": "Disqualified Institutions"
+        },
+        {
+          "coverage": "partial",
+          "row": 6,
+          "term": "Information"
+        },
+        {
+          "coverage": "partial",
+          "row": 7,
+          "term": "Other advisory roles"
+        },
+        {
+          "coverage": "full",
+          "row": 12,
+          "term": "Minimum equity contribution"
+        },
+        {
+          "coverage": "full",
+          "row": 22,
+          "term": "[DDTL – conditions to draw]"
+        },
+        {
+          "coverage": "full",
+          "row": 50,
+          "term": "Pro Forma Calculations"
+        },
+        {
+          "coverage": "full",
+          "row": 52,
+          "term": "Financial Statements – quarterly"
+        },
+        {
+          "coverage": "full",
+          "row": 53,
+          "term": "Financial Statements – monthly"
+        },
+        {
+          "coverage": "full",
+          "row": 54,
+          "term": "Financial Statements – annual audits"
+        },
+        {
+          "coverage": "full",
+          "row": 55,
+          "term": "Financial Statements – going concern"
+        },
+        {
+          "coverage": "full",
+          "row": 56,
+          "term": "Affirmative Covenants – other"
+        },
+        {
+          "coverage": "full",
+          "row": 58,
+          "term": "Financial Covenant – levels"
+        },
+        {
+          "coverage": "full",
+          "row": 59,
+          "term": "Financial Covenant – testing thresholds"
+        },
+        {
+          "coverage": "full",
+          "row": 61,
+          "term": "Financial Covenant – equity cure"
+        },
+        {
+          "coverage": "full",
+          "row": 62,
+          "term": "Leverage Ratio Calculations"
+        },
+        {
+          "coverage": "full",
+          "row": 63,
+          "term": "EBITDA Addbacks"
+        },
+        {
+          "coverage": "full",
+          "row": 67,
+          "term": "Unrestricted Subsidiaries - generally"
+        },
+        {
+          "coverage": "full",
+          "row": 70,
+          "term": "Negative Covenants – Pluralsight protection"
+        },
+        {
+          "coverage": "full",
+          "row": 93,
+          "term": "Negative Covenants – Investments – Ratio Basket"
+        },
+        {
+          "coverage": "full",
+          "row": 94,
+          "term": "Negative Covenants – Investments – Permitted Acquisitions"
+        },
+        {
+          "coverage": "full",
+          "row": 105,
+          "term": "Negative Covenants – Restricted Payments – Ratio Basket"
+        },
+        {
+          "coverage": "full",
+          "row": 128,
+          "term": "Limited Conditionality Transactions"
+        },
+        {
+          "coverage": "full",
+          "row": 153,
+          "term": "MAC"
+        },
+        {
+          "coverage": "full",
+          "row": 155,
+          "term": "Financial Statements"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 15 (LCT pro forma mechanics including dual testing); Review Template row 50 (Pro Forma Calculations -- borrower-prepared, internally prepared suffice for bank facilities)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether basket size permanently resets to the highest EBITDA ever reported, even if EBITDA subsequently decreases. KCT Cat 2 Item 4: 'the size of the freebie basket is permanently reset to the highest adjusted EBITDA reported even if EBITDA decreases afterwards.' Combined with aggressive addbacks, HWM growers create a ratchet that never decreases -- a one-time EBITDA spike permanently inflates all baskets.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.growers.high_water_mark",
+          "kct_ref": [
+            "cat2.4"
+          ],
+          "level": 3,
+          "name": "High-Water Mark Ratchet",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 4"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "How partial-period EBITDA is annualized for grower basket sizing. In the first fiscal year after closing, the test period may cover fewer than 4 quarters. Annualization methodology: straight-line extrapolation (most common), seasonal adjustment (industry-specific), or closing-date EBITDA as floor. Aggressive: annualize a strong single quarter to a full year.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.growers.annualization",
+          "kct_ref": [
+            "cat2.4"
+          ],
+          "level": 3,
+          "name": "EBITDA Annualization for Growers",
+          "r18_concept_ids": [
+            "financial_definitions.test_period"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 4"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether run-rate cost savings and synergies are included in the EBITDA figure used to size grower baskets. If pro forma addbacks inflate the EBITDA denominator of grower calculations, every basket grows simultaneously. Bank position: grower EBITDA should be actual (not pro forma) EBITDA. Sponsor push: use Consolidated EBITDA (with all addbacks) as the grower base. Market reality: 70%+ use Consolidated EBITDA including addbacks.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.growers.run_rate_adjustments",
+          "level": 3,
+          "name": "Run-Rate Adjustments for Grower Sizing",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3; KCT Cat 1 Item 6; KCT Cat 1 Item 7; KCT Cat 1 Item 8; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 4; KCT Cat 3 Item 3; KCT Cat 3 Item 4; KCT Cat 3 Item 7; KCT Cat 3 Item 15"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Basket sizing mechanism tying dollar baskets to a percentage of LTM EBITDA, causing baskets to grow as EBITDA grows. KCT Category 2 item 4 defines high water marking: 'works to increase grower baskets such that grower baskets are deemed to be increased to the highest amount of the grower component (typically, EBITDA) reached from time to time and such grower basket is not subsequently reduced as a result of any decrease in the grower component that may result from asset sales, underperformance or otherwise.' PC Term Comparison states baskets include EBITDA growers but tighter than syndicated: 'Aggressive UMM/BSLR transactions will typically max out in the 40-50% range (similar to BSL) but currently with greater emphasis on tightening baskets that avoid leakage and present LME risk; CMM/LMM baskets generally in range of 10-25/30% range.' PC Term Comparison also directs rejection of high water mark ratchets: 'Greater of actual closing and hardwired leverage levels: Reject; Greater of pro forma EBITDA and highest previous reported EBITDA: Reject.'",
+      "dls_ref": [
+        "DLS:3:Assumed Financing EBITDA",
+        "DLS:42:Minimum EBITDA",
+        "DLS:72:EBITDA"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.ebitda_cost_savings",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01",
+          "Section 1.1"
+        ],
+        "shape_ref": "financial_definitions.ebitda_cost_savings",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.ebitda",
+      "id": "fin_framework.ebitda.growers",
+      "kct_ref": [
+        "cat2.4"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "impact_value": "10% EBITDA inflation simultaneously increases every grower basket",
+        "prevalence": "Near-universal in UMM/BSL, growing in CMM"
+      },
+      "name": "EBITDA Grower Mechanics",
+      "negotiation_spectrum": {
+        "aggressive_position": "No cap and no officer's certificate No cap (or cap calculated \"after\" giving effect to the add-back); no officer's certificate Includes synergies and operating expense reductions No details on what the savings/synergies have to be No officers certificate Actions are taken or \"expected to be taken\" within 12/24/36 months No requirement that benefits be realized in a certain time period No cap (calc",
+        "dls_source_rows": [
+          {
+            "label": "EBITDA Definition & Addbacks",
+            "row": 72
+          },
+          {
+            "label": "Other Covenant Considerations (Growers, Reclassification)",
+            "row": 89
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Sponsor management fee addback scope",
+          "Non-cash charge addback breadth",
+          "Transaction/closing cost addback",
+          "Non-recurring expense addback cap (10-15% of EBITDA)",
+          "Cost savings/synergies addback cap",
+          "Cost savings realization period (12/24/36 months)",
+          "Officer certification for cost savings",
+          "Quality of earnings addback scope",
+          "Combined cap for non-recurring + cost savings",
+          "EBITDA deduction items (subtractions)",
+          "EBITDA or Total Assets grower for dollar baskets",
+          "Reclassification of baskets",
+          "Exclude simultaneous fixed-amount incurrences from ratio calc",
+          "Passive holding company covenant"
+        ],
+        "market_position": "Market standard for ebitda definition & addbacks reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "EBITDA Add-Backs (subject to caps to be agreed): (i) all management fees and reimbursement of reasonable expenses paid to Sponsor or an affiliate thereof in accordance with the management agreement, to the extent permitted by the Credit Facility (ii) all non-cash losses or reasonable and documented expenses (or minus non-cash income or gain), including non-cash adjustments resulting from the appli",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "financial_definitions.ebitda_growers"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 49,
+          "term": "Documentation Precedent"
+        },
+        {
+          "coverage": "full",
+          "row": 53,
+          "term": "Financial Statements – monthly"
+        },
+        {
+          "coverage": "full",
+          "row": 55,
+          "term": "Financial Statements – going concern"
+        },
+        {
+          "coverage": "full",
+          "row": 58,
+          "term": "Financial Covenant – levels"
+        },
+        {
+          "coverage": "full",
+          "row": 61,
+          "term": "Financial Covenant – equity cure"
+        },
+        {
+          "coverage": "full",
+          "row": 90,
+          "term": "Negative Covenants – Investments – Investments in ‘similar businesses’"
+        },
+        {
+          "coverage": "full",
+          "row": 92,
+          "term": "Negative Covenants – Investments – General Basket"
+        },
+        {
+          "coverage": "full",
+          "row": 98,
+          "term": "Negative Covenants – Dispositions – General Basket"
+        },
+        {
+          "coverage": "full",
+          "row": 155,
+          "term": "Financial Statements"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "KCT Category 2 item 4 (high water marking definition and mechanism); PC Term Comparison Negative Covenants General Note (grower basket ranges by segment: UMM 40-50%, CMM/LMM 10-25/30%); PC Term Comparison High Water Mark (Reject both formulations)",
+      "pc_ref": [
+        "Negative Covenants General Note (grower basket ranges by segment: UMM 40-50%, CMM/LMM 10-25/30%)",
+        "High Water Mark (Reject both formulations)"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether the credit agreement permits Reg S-X pro forma adjustments to exceed contractual EBITDA caps. The 2021 amendment to Article 11 gives management discretion to include synergies and cost savings in pro forma financial statements without the limitations typically negotiated into credit agreements. If the CA references Reg S-X without limiting to pre-amendment scope, this creates a backdoor to uncapped addbacks.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.reg_sx.cap_override",
+          "kct_ref": [
+            "cat1.7"
+          ],
+          "level": 3,
+          "name": "Reg S-X Cap Override Potential",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 7"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "SEC requirement that pro forma adjustments be 'factually supportable' -- based on documented facts rather than projections. Pre-2021: adjustments had to be both factually supportable AND directly attributable. Post-2021: replaced with 'reasonably estimable' standard, significantly expanding the scope of permitted pro forma adjustments. Bank preference: freeze at pre-amendment standard.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.reg_sx.factually_supportable",
+          "level": 3,
+          "name": "Factually Supportable Requirement",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3; KCT Cat 1 Item 7; KCT Cat 2 Item 4; KCT Cat 3 Item 3; KCT Cat 3 Item 7; KCT Cat 3 Item 12; KCT Cat 4 Item 8; KCT Cat 5 Item 1"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Maximum time window for projected savings to be realized under Reg S-X methodology. Pre-2021: no explicit time limit but 'directly attributable' created an implicit constraint. Post-2021: 'reasonably estimable' with typical 12-24 month window. Market standard in credit agreements: 12 months (conservative) to 24 months (aggressive). Some BSL deals permit 36 months.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.ebitda",
+          "id": "fin_framework.ebitda.reg_sx.realization_period",
+          "kct_ref": [
+            "cat1.8"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "aggressive_value": "24-36 months",
+            "conservative_value": "12 months",
+            "market_label": "18 months"
+          },
+          "name": "Realization Period for S-X Adjustments",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 8"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "SEC Regulation S-X framework governing pro forma adjustments in financial statements filed with the SEC. KCT Category 1 item 7 warns: 'Amendments made to Article 11 of Regulation S-X in 2021 give management more discretion to include cost-savings and synergies in pro forma financials for acquisitions and dispositions. As a result, an aggressive private company could take advantage of this change to effectively overwrite any caps on consolidated EBITDA to the extent such calculations of consolidated EBITDA are made after excluding amounts taken in compliance with Regulation S-X.' PC Term Comparison directs: 'S-X: limit to pre amendment provision or tie into one of the capped baskets.' Risk: an uncapped S-X carveout in the EBITDA definition can render all other addback caps meaningless.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.ebitda_cost_savings",
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01",
+          "Section 1.1"
+        ],
+        "shape_ref": "financial_definitions.ebitda_cost_savings"
+      },
+      "family_id": "fin_framework.ebitda",
+      "id": "fin_framework.ebitda.reg_sx",
+      "level": 2,
+      "market_benchmarks": {
+        "bank_position": "Pre-amendment provision or tie to capped basket (PC line 138)",
+        "risk_level": "Full 2021 scope can override ALL EBITDA caps"
+      },
+      "name": "Regulation S-X Provisions",
+      "r18_concept_ids": [
+        "financial_definitions.consolidated_ebitda"
+      ],
+      "type": "concept",
+      "definition_source": "KCT Category 1 item 7 footnote 4 (Reg S-X 2021 amendments giving management more discretion); PC Term Comparison EBITDA section line 138 ('S-X: limit to pre amendment provision or tie into one of the capped baskets')",
+      "pc_ref": [
+        "EBITDA"
+      ]
+    },
+    {
+      "children": [
+        {
+          "id": "fin_framework.ebitda.asset_stripping_scheme_move_sell_dividend.asset_transfer_controls",
+          "name": "Asset Transfer Controls",
+          "definition": "Restrictions on moving EBITDA-generating assets from restricted to unrestricted subsidiaries, including investment basket limitations and designation conditions that limit the first step of the stripping chain.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "fin_framework",
+          "family_id": "fin_framework.ebitda",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "hard",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 6; KCT Cat 1 Item 7; KCT Cat 1 Item 8; KCT Cat 2 Item 1; KCT Cat 2 Item 4; KCT Cat 3 Item 2; KCT Cat 3 Item 3; KCT Cat 4 Item 2; KCT Cat 4 Item 3; KCT Cat 4 Item 6; KCT Cat 4 Item 8"
+        },
+        {
+          "id": "fin_framework.ebitda.asset_stripping_scheme_move_sell_dividend.dividend_source_limitation",
+          "name": "Dividend Source Limitation",
+          "definition": "Whether EBITDA adjustments for unrestricted subsidiary dividends are limited to dividends from earned income or retained earnings, versus allowing dividends from any source including asset sale proceeds.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "fin_framework",
+          "family_id": "fin_framework.ebitda",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "hard",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 6; KCT Cat 1 Item 7; KCT Cat 1 Item 8; KCT Cat 2 Item 4; KCT Cat 3 Item 4; KCT Cat 3 Item 14; KCT Cat 4 Item 2; KCT Cat 4 Item 3; KCT Cat 4 Item 4; KCT Cat 4 Item 5; KCT Cat 4 Item 6; KCT Cat 5 Item 2"
+        },
+        {
+          "id": "fin_framework.ebitda.asset_stripping_scheme_move_sell_dividend.anti_stripping_protections",
+          "name": "Anti-Stripping Protections",
+          "definition": "Contractual safeguards preventing the move-sell-dividend scheme, including designation event triggers, value transfer caps, and clawback mechanisms if assets leave the restricted group and generate distributions.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "fin_framework",
+          "family_id": "fin_framework.ebitda",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "hard",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 3 Item 3"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Risk concern per KCT CNI/EBITDA Adjustments for Unrestricted Sub Dividends: CNI or EBITDA adjustments for cash dividends from unrestricted subs not limited to dividends from earned income, enabling asset-stripping",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "fin_framework",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE I",
+          "Section 1.01 (Defined Terms)"
+        ],
+        "shape_ref": null,
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "readiness_reason": "no_playbook_concept_available",
+        "section_location": "ARTICLE I Definitions (Consolidated EBITDA)"
+      },
+      "family_id": "fin_framework.ebitda",
+      "id": "fin_framework.ebitda.asset_stripping_scheme_move_sell_dividend",
+      "kct_ref": [
+        "cat1.8"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "negotiated": "Scope of anti-asset-stripping protections, cure periods",
+        "prevalence": "60-75%",
+        "standard": "Provisions preventing EBITDA-generating asset transfers to unrestricted subsidiaries"
+      },
+      "name": "Asset-stripping scheme (move→sell→dividend)",
+      "type": "concept",
+      "definition_source": "KCT Cat 1 Item 8"
+    }
+  ],
+  "corpus_prevalence": "high",
+  "definition": "Consolidated earnings before interest, taxes, depreciation, and amortization -- the cornerstone financial measurement in leveraged credit agreements that serves as the denominator in leverage ratios, the basis for grower basket sizing, and the benchmark for covenant compliance. Structurally, EBITDA begins with Consolidated Net Income and layers on negotiated addbacks (non-cash charges, restructuring/severance, cost savings/synergies, transaction fees, sponsor fees, purchase accounting adjustments) and deductions (corresponding income items). R27-E analysis of the EDGAR corpus found 143 distinct structural forms behind the single label 'Consolidated EBITDA,' reflecting variation in addback scope, cap structure, and look-forward periods. Lender negotiation focuses on the quality of EBITDA through caps on addbacks (standalone or shared), limitation periods for run-rate cost savings (12-24 months look-forward), elimination of revenue synergy addbacks, and restriction of 'of the type' Quality of Earnings language that broadens management discretion.",
+  "dls_ref": [
+    "DLS:3:Assumed Financing EBITDA",
+    "DLS:42:Minimum EBITDA",
+    "DLS:72:EBITDA",
+    "DLS:76:Capex"
+  ],
+  "domain_id": "fin_framework",
+  "edgar_analysis_refs": [
+    {
+      "file": "TERM_ANALYSIS_ACCOUNTING_CHANGES.md",
+      "topic": "ACCOUNTING_CHANGES"
+    },
+    {
+      "file": "TERM_ANALYSIS_FISCAL_YEAR.md",
+      "topic": "FISCAL_YEAR"
+    }
+  ],
+  "extraction_difficulty": "medium",
+  "family_id": "fin_framework.ebitda",
+  "golden_record_benchmarks": [
+    {
+      "evidence": [
+        {
+          "deal": "arch",
+          "style": "Compact (~22 lines). No cost savings/synergies addback. Addbacks: non-cash items, write-downs, impairments, loan document costs. Pro forma acquisition/disposition mechanics built into definition."
+        },
+        {
+          "deal": "boyd",
+          "style": "Extremely detailed leveraged buyout style. 14+ addback subclauses including Pre-Opening Expenses, non-cash rent, stock-based comp, derivatives, restructuring, management fees, Gaming/Racing Lease adju"
+        },
+        {
+          "deal": "caesars",
+          "style": "Uses plain 'EBITDA' not 'Consolidated EBITDA'. Highly detailed with 12+ addback subclauses. Includes New Project expenses, Master Lease/Gaming Lease adjustments, management fees (Section 6.07), Receiv"
+        },
+        {
+          "deal": "lendingtree",
+          "style": "Moderately detailed. 12 addback subclauses. Cost savings capped at 25% with Pro Forma Basis cross-reference. Includes net loss from discontinued operations, non-cash comp, expected cost savings/synerg"
+        },
+        {
+          "deal": "national_vision",
+          "style": "Extremely detailed sponsor-style. 20+ subclauses including management/monitoring fees, minority interest, cost savings (24-month, 25% cap), Stock Purchase Agreement expenses, Receivables Facility loss"
+        },
+        {
+          "deal": "quidel",
+          "style": "Moderately detailed. Addbacks: depreciation, interest, taxes, currency gains/losses, run-rate cost savings (capped at 20% -- lowest cap in corpus). Unique: references 'Value Capture' and 'QO Next' pro"
+        },
+        {
+          "deal": "red_rock",
+          "style": "Extremely detailed gaming/hospitality style. Very similar to Boyd. 11+ addback subclauses including Pre-Opening Expenses, restructuring, derivatives mark-to-market, Unrestricted Subsidiary expense rei"
+        },
+        {
+          "deal": "sleep_number",
+          "style": "Simple IG-style. Addbacks: interest, taxes, depreciation, amortization, non-recurring non-cash/cash losses (capped at $30M then $20M by period), non-cash stock-based comp, impairment, debt issuance am"
+        },
+        {
+          "deal": "viavi",
+          "style": "Moderately detailed sponsor-style. Split into two entries in defined_terms.json: main definition (670-701) and 'run rate' continuation (702-727). Run Rate Benefits addback capped at 30% (highest cap i"
+        }
+      ],
+      "metric": "ebitda_definition_complexity",
+      "n_deals": 9,
+      "source": "R16-A golden_record"
+    }
+  ],
+  "id": "fin_framework.ebitda",
+  "kct_ref": [
+    "cat1.8"
+  ],
+  "kg_concept_ids": [
+    "financial_definitions.ebitda_definition",
+    "financial_definitions.ebitda_cost_savings",
+    "financial_definitions.consolidated_net_income"
+  ],
+  "level": 1,
+  "market_benchmarks": {
+    "cost_savings_cap_cmm_lmm": "20-30% of EBITDA with 12-18 month look-forward",
+    "cost_savings_cap_umm_bsl": "Aggressive 30-35% of EBITDA with 18-24 month look-forward",
+    "dls_preferred_cost_savings_cap": "10-15% of EBITDA, 12-month look-forward, shared cap with non-recurring expenses",
+    "dls_preferred_nonrecurring_cap": "10-15% of EBITDA",
+    "structural_forms_in_corpus": "143 distinct structural forms (R27-E)",
+    "cost_savings_cap_cmm_lmm_source": "PC Term Comparison EBITDA section",
+    "cost_savings_cap_umm_bsl_source": "PC Term Comparison EBITDA section",
+    "dls_preferred_cost_savings_cap_source": "DLS Preferred row 72 clause (vii)",
+    "dls_preferred_nonrecurring_cap_source": "DLS Preferred row 72 clause (vi)",
+    "_source": "PC Term Comparison EBITDA section; DLS Preferred row 72 clauses (vi)-(vii)"
+  },
+  "market_data": {
+    "cap_range": "20-35% shared cap market standard",
+    "prevalence": "100% of deals define EBITDA"
+  },
+  "name": "EBITDA Definition",
+  "negotiation_spectrum": {
+    "aggressive_position": "No cap and no officer's certificate No cap (or cap calculated \"after\" giving effect to the add-back); no officer's certificate Includes synergies and operating expense reductions No details on what the savings/synergies have to be No officers certificate Actions are taken or \"expected to be taken\" within 12/24/36 months No requirement that benefits be realized in a certain time period No cap (calc",
+    "dls_source_rows": [
+      {
+        "label": "EBITDA Definition & Addbacks",
+        "row": 72
+      }
+    ],
+    "is_highlighted": false,
+    "key_negotiation_points": [
+      "Sponsor management fee addback scope",
+      "Non-cash charge addback breadth",
+      "Transaction/closing cost addback",
+      "Non-recurring expense addback cap (10-15% of EBITDA)",
+      "Cost savings/synergies addback cap",
+      "Cost savings realization period (12/24/36 months)",
+      "Officer certification for cost savings",
+      "Quality of earnings addback scope",
+      "Combined cap for non-recurring + cost savings",
+      "EBITDA deduction items (subtractions)",
+      "EBITDA or Total Assets grower for dollar baskets",
+      "Reclassification of baskets",
+      "Exclude simultaneous fixed-amount incurrences from ratio calc",
+      "Passive holding company covenant"
+    ],
+    "market_position": "Market standard for ebitda definition & addbacks reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+    "preferred_position": "EBITDA Add-Backs (subject to caps to be agreed): (i) all management fees and reimbursement of reasonable expenses paid to Sponsor or an affiliate thereof in accordance with the management agreement, to the extent permitted by the Credit Facility (ii) all non-cash losses or reasonable and documented expenses (or minus non-cash income or gain), including non-cash adjustments resulting from the appli",
+    "source": "R14-B"
+  },
+  "r18_concept_ids": [
+    "financial_definitions.certain_definitions",
+    "financial_definitions.consolidated_ebitda",
+    "financial_definitions.ebitda_growers"
+  ],
+  "search_strategy_ref": {
+    "heading_pattern_count": 0,
+    "keyword_anchor_count": 13,
+    "r18_family": "financial_definitions",
+    "term_override_count": 10
+  },
+  "term_analysis_sources": [
+    "TERM_ANALYSIS_FINANCIAL_CONSOLIDATED_EBITDA.md",
+    "TERM_ANALYSIS_EBITDA_COST_SAVINGS.md",
+    "TERM_ANALYSIS_EBITDA_OTHER_ADDBACKS.md",
+    "TERM_ANALYSIS_FINANCIAL_ACQUIRED_EBITDA_CAPS.md",
+    "TERM_ANALYSIS_FINANCIAL_PRE_OPENING_LOSSES.md",
+    "TERM_ANALYSIS_FINANCIAL_REVENUE_SYNERGIES.md",
+    "CROSS_ANALYSIS_EBITDA_ECOSYSTEM_MAPPING.md"
+  ],
+  "type": "family",
+  "definition_source": "DLS Preferred row 72 (EBITDA addbacks with 12 enumerated categories); PC Term Comparison EBITDA section (caps by segment: CMM/LMM 20-30%/12-18 months, UMM/BSL aggressive 30-35%/18-24 months); KCT Category 1 items 6-8 (revenue addbacks, uncapped cost savings, unrestricted sub dividends); Review Template row 63 (EBITDA Addbacks)",
+  "pc_ref": [
+    "EBITDA"
+  ]
+}

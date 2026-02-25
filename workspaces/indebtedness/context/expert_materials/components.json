@@ -1,0 +1,216 @@
+{
+  "_meta": {
+    "description": "Structural components of the Indebtedness Covenant — the largest basket ecosystem in the credit agreement, governing what debt the borrower and its subsidiaries can incur",
+    "sources_analyzed": [
+      "DealData.json (62 deals, 16+ indebtedness keys at near-100% coverage)",
+      "Review Template (13 rows: 72-84, covering each basket type)",
+      "Key Credit Terms (Cat 2 Items 1-8: leverage/debt stacking risks)",
+      "DLS Preferred (Row 79: bank preferred basket structure)",
+      "PC Term Comparison (Lines 145-154, 380-405: segment-specific debt standards)",
+      "Expert Extractions (Geneva, Rinchem, Scientific Games: full Section 6.01 mappings)",
+      "Learning Material (Lines 1412-1600: debt baskets, ratio debt, contribution debt)",
+      "Term Taxonomy (19 canonical terms in neg_cov_debt category)"
+    ],
+    "generated": "2026-02-12"
+  },
+  "definition": {
+    "canonical_names": ["Indebtedness Covenant", "Limitation on Indebtedness", "Negative Covenants — Indebtedness", "Debt Covenant"],
+    "description": "The indebtedness covenant is the largest and most complex negative covenant in the credit agreement. It prohibits the borrower and restricted subsidiaries from incurring debt except through enumerated baskets. These baskets are organized in three structural layers: (1) fixed-dollar baskets for general/operational debt, (2) ratio-based baskets for unlimited capacity subject to leverage tests, and (3) structural overlays (non-guarantor caps, maturity limits, MFN protection) that constrain the terms of permitted debt. The interaction between these layers — particularly the ability to stack and reclassify between baskets — determines the borrower's total debt capacity.",
+    "credit_agreement_location": "Section 6.01 (Limitation on Indebtedness)",
+    "covenant_sections_used": ["Section 6.01 (Indebtedness)", "Section 6.02 (Liens — parallel structure)", "Section 2.25 (Incremental Facilities — capacity sharing)"]
+  },
+  "structural_components": {
+    "credit_facility_debt": {
+      "description": "Debt under the credit facilities themselves, including initial term loans, revolving facility, and any incremental/delayed-draw/refinancing facilities permitted thereunder.",
+      "corpus_statistics": {
+        "deals_with_data": 62,
+        "total_deals": 62,
+        "coverage_pct": 100.0,
+        "note": "Universal — first basket in every deal"
+      }
+    },
+    "ratio_debt": {
+      "description": "Unlimited debt capacity subject to pro forma leverage/coverage ratio tests. Incurred 'outside' the credit agreement (under a separate facility). The ratio-based counterpart to the free-and-clear incremental basket.",
+      "template_format": "Unlimited subject to [X]x [first lien net / total net / secured net] leverage ratio",
+      "market_ranges": {
+        "bank_preferred": "No such basket (DLS Row 79)",
+        "typical": "Shared ratio with incremental; FLLR for pari, total net for junior/unsecured",
+        "aggressive": "No-worse prong, FCCR prong — 'typically rejected including in UMM/BSLR transactions' (PC line 383)"
+      },
+      "sub_components": {
+        "non_guarantor_cap": {
+          "description": "Cap on debt at non-loan party entities to limit structural seniority.",
+          "template_format": "Greater of $[X] / [Y]% LTM EBITDA [shared with acquisition debt]",
+          "market_standard": "Applies in all transactions including Aggressive UMM/BSLR (PC line 382)"
+        },
+        "terms_restrictions": {
+          "description": "Maturity, WAL, MFN, intercreditor, and prepayment restrictions on ratio debt.",
+          "market_ranges": {
+            "standard": "Inside-maturity/WAL limits, MFN for pari USD term loans, intercreditor alignment",
+            "aggressive": "No maturity/WAL limits, or basket for inside-maturing debt (50-100% EBITDA)"
+          }
+        }
+      },
+      "corpus_statistics": {
+        "note": "DealData 'Ratio Debt' field is empty across all 62 deals — ratio capacity is embedded in Incremental Equivalent Debt and Acquisition Debt fields"
+      },
+      "risk_considerations": "KCT Cat 2: stacking ratio debt with other baskets creates effective leverage far above incurrence test levels"
+    },
+    "incremental_equivalent_debt": {
+      "description": "Debt incurred in the form of notes or loans outside the credit agreement that mirrors incremental facility terms. The side-car structure for additional debt capacity.",
+      "corpus_statistics": {
+        "deals_with_data": 62,
+        "total_deals": 62,
+        "coverage_pct": 100.0
+      },
+      "market_ranges": {
+        "bank_preferred": "No such basket (DLS Row 12)",
+        "typical": "Senior secured notes/loans, pari or junior basis, same terms as incremental",
+        "aggressive": "No MFN on pari notes; 12-18 month MFN sunset in aggressive deals"
+      },
+      "risk_considerations": "PC line 381: 'MFN will generally apply in all transactions including Aggressive UMM/BSLR.' Non-guarantor cap also applies universally."
+    },
+    "incurred_acquisition_debt": {
+      "description": "Debt incurred 'in connection with' permitted acquisitions. Either ratio-based (unlimited if leverage test satisfied) or fixed-dollar, with dedicated structural protections.",
+      "corpus_statistics": {
+        "deals_with_data": 45,
+        "total_deals": 62,
+        "coverage_pct": 72.6,
+        "note": "17 deals show 'None' — smaller deals may not provide separate acquisition debt capacity"
+      },
+      "market_ranges": {
+        "standard": "Same ratio levels as IED/Ratio Debt, sometimes with 'no worse' prong",
+        "aggressive": "No-worse prong typically rejected (PC line 383)"
+      }
+    },
+    "assumed_acquisition_debt": {
+      "description": "Pre-existing debt of acquisition targets that is assumed (not incurred 'in contemplation of' the acquisition). Typically small fixed-dollar basket or unlimited if ratio-tested.",
+      "corpus_statistics": {
+        "deals_with_data": 60,
+        "total_deals": 62,
+        "coverage_pct": 96.8
+      },
+      "market_ranges": {
+        "standard": "Fixed dollar basket; MFN/non-guarantor/maturity = No/No/No in most deals",
+        "aggressive": "Unlimited if not in contemplation, subject to ratio test"
+      }
+    },
+    "general_debt_basket": {
+      "description": "Uncircumscribed debt capacity not tied to ratios or specific purposes. The 'catch-all' basket. Grows with EBITDA via grower structure.",
+      "template_format": "Greater of $[X] / [Y]% of LTM EBITDA",
+      "corpus_statistics": {
+        "deals_with_data": 62,
+        "total_deals": 62,
+        "coverage_pct": 100.0
+      },
+      "market_ranges": {
+        "LMM": "15-20% of EBITDA",
+        "CMM": "20-30% of EBITDA",
+        "UMM": "20-40% of EBITDA",
+        "aggressive_UMM_BSL": "Up to 40-50% of EBITDA"
+      },
+      "risk_considerations": "PC line 405: 'Focus on non Loan-Party debt and general debt capacity in particular structurally senior debt and debt secured by non-Collateral and ability to bring in more pari secured debt not subject to closing 1L leverage.'"
+    },
+    "contribution_debt": {
+      "description": "Debt equal to a percentage of post-closing equity contributions. Aggressive forms allow 200% of contributions; conservative structures cap at 100% and require unsecured.",
+      "corpus_statistics": {
+        "deals_with_data": 43,
+        "total_deals": 62,
+        "coverage_pct": 69.4,
+        "note": "19 deals show 'None' — more common in larger deals"
+      },
+      "market_ranges": {
+        "conservative": "Capped at 0-50%; must be unsecured",
+        "standard": "100% of contributions; must be unsecured; outside date for incurrence",
+        "aggressive": "100% unsecured, no outside date, potentially 200% in some BSL deals"
+      },
+      "ground_truth": {
+        "geneva": "100% of cash contributions and FMV of in-kind contributions (Section 6.01(a)(xxvii))",
+        "rinchem": "100% of contributions",
+        "scientific_games": "100% of cash contributions and FMV (same as Geneva)"
+      }
+    },
+    "non_guarantor_debt": {
+      "description": "Debt at non-loan party restricted subsidiaries. Structurally senior to the credit facility. Typically capped and sometimes shared with other non-guarantor caps.",
+      "corpus_statistics": {
+        "deals_with_data": 52,
+        "total_deals": 62,
+        "coverage_pct": 83.9
+      },
+      "market_ranges": {
+        "typical": "Dollar / EBITDA% cap, often shared with acquisition debt non-guarantor cap",
+        "standard_sizing": "10-15% of EBITDA standalone; shared caps may be larger"
+      },
+      "risk_considerations": "Debt at non-guarantors is structurally senior. LME Provision Language: 'any intercompany debt incurred under any debt basket that is owed by a loan party to a nonloan party subsidiary be subordinated to the loans.'"
+    },
+    "capital_lease_purchase_money": {
+      "description": "Obligations under capital leases and purchase money financing. Generally permitted with a cap expressed as dollar/EBITDA%.",
+      "corpus_statistics": {
+        "deals_with_data": 62,
+        "total_deals": 62,
+        "coverage_pct": 100.0
+      },
+      "market_ranges": {
+        "LMM_CMM": "15-20% of EBITDA",
+        "UMM_BSL": "20-25% of EBITDA"
+      }
+    },
+    "securitization_facilities": {
+      "description": "Receivables securitization and factoring facilities. Non-recourse to loan parties in standard structures.",
+      "market_ranges": {
+        "standard": "Capped in all transactions (PC line 390)",
+        "aggressive": "Uncapped in some BSL deals"
+      },
+      "risk_considerations": "PC: 'Avoid all-asset securitizations' — scope of receivables must be limited"
+    },
+    "sale_leaseback_debt": {
+      "description": "Obligations arising from sale-leaseback transactions. Should align with disposition and lien covenants.",
+      "market_ranges": {
+        "standard": "Capped",
+        "aggressive_UMM_BSL": "Often uncapped (PC line 387)"
+      }
+    },
+    "earnout_seller_notes": {
+      "description": "Deferred purchase price obligations, seller notes, and earn-outs from acquisitions.",
+      "corpus_statistics": {
+        "deals_with_data": 62,
+        "total_deals": 62,
+        "coverage_pct": 100.0
+      },
+      "market_ranges": {
+        "aggressive_UMM_BSL": "If not 'Indebtedness', no cap (PC line 396)",
+        "standard": "Capped, subordinated, acceptable terms",
+        "CMM_LMM": "May require subordination terms (not cash pay, no covs, later maturity, at Holdco)"
+      },
+      "risk_considerations": "PC: 'earnouts should always be debt for the negative covenant (with a corresponding basket; measured at maximum possible obligation)'"
+    },
+    "intercompany_debt": {
+      "description": "Loans between members of the corporate group. Loan party debt owed to non-loan parties must be subordinated.",
+      "market_ranges": {
+        "standard": "Intercompany loans to non-loan parties capped/shared with investment baskets",
+        "key_protection": "Loan party debt owed to non-loan party should be unsecured and subordinated (PC line 399)"
+      }
+    },
+    "other_debt_baskets": {
+      "description": "Miscellaneous debt capacity including Available Amount basket debt, Available RP Capacity debt, surety bonds, LCs, and specialized baskets.",
+      "corpus_statistics": {
+        "deals_with_data": 59,
+        "total_deals": 62,
+        "coverage_pct": 95.2
+      }
+    },
+    "redesignation_mechanics": {
+      "description": "Ability to redesignate unused capacity from one basket to another. Key mechanism for stacking debt beyond individual basket limits.",
+      "corpus_statistics": {
+        "deals_with_data": 16,
+        "total_deals": 62,
+        "coverage_pct": 25.8
+      },
+      "market_ranges": {
+        "standard": "General debt basket → incremental capacity (Learning Material line 1417: 'unused portion of the general debt basket may be reallocated to incremental capacity')",
+        "aggressive": "RP and Available Amount baskets → incremental/debt capacity"
+      },
+      "risk_considerations": "KCT Cat 2: 'identify baskets that may be stacked or reclassified to allow the incurrence of additional pari or structurally senior debt'"
+    }
+  }
+}

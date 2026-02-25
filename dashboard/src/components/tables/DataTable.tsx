@@ -22,6 +22,7 @@ interface DataTableProps<T> {
   onSortingChange?: OnChangeFn<SortingState>;
   onRowClick?: (row: T) => void;
   selectedRowId?: string;
+  focusedRowId?: string;
   getRowId?: (row: T) => string;
   loading?: boolean;
   emptyMessage?: string;
@@ -38,6 +39,7 @@ export function DataTable<T>({
   onSortingChange,
   onRowClick,
   selectedRowId,
+  focusedRowId,
   getRowId,
   loading,
   emptyMessage = "No data",
@@ -61,7 +63,7 @@ export function DataTable<T>({
       {/* Table */}
       <div className="flex-1 overflow-auto">
         <table className="w-full border-collapse">
-          <thead className="sticky top-0 z-10 bg-surface-tertiary">
+          <thead className="sticky top-0 z-10 bg-surface-2">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -71,16 +73,21 @@ export function DataTable<T>({
                     <th
                       key={header.id}
                       className={cn(
-                        "px-3 py-2 text-left text-xs font-medium text-text-secondary uppercase tracking-wide border-b border-border",
-                        canSort && "cursor-pointer select-none hover:text-text-primary"
+                        "px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border",
+                        canSort && "cursor-pointer select-none hover:text-text-secondary"
                       )}
                       onClick={header.column.getToggleSortingHandler()}
                     >
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1.5">
                         {flexRender(header.column.columnDef.header, header.getContext())}
                         {canSort && (
-                          <span className="text-[10px]">
-                            {sorted === "asc" ? "▲" : sorted === "desc" ? "▼" : "△"}
+                          <span
+                            className={cn(
+                              "text-[10px] transition-colors",
+                              sorted ? "text-accent-blue" : "text-text-muted/40"
+                            )}
+                          >
+                            {sorted === "asc" ? "▲" : sorted === "desc" ? "▼" : "⇅"}
                           </span>
                         )}
                       </div>
@@ -106,15 +113,17 @@ export function DataTable<T>({
             ) : (
               table.getRowModel().rows.map((row) => {
                 const isSelected = selectedRowId !== undefined && row.id === selectedRowId;
+                const isFocused = focusedRowId !== undefined && row.id === focusedRowId;
                 return (
                   <tr
                     key={row.id}
+                    data-row-id={row.id}
                     className={cn(
-                      "border-b border-border/50 border-l-2 transition-colors",
+                      "border-b border-border/30 transition-colors",
                       onRowClick && "cursor-pointer",
-                      isSelected
-                        ? "bg-accent-blue/10 border-l-accent-blue"
-                        : "border-l-transparent hover:bg-surface-tertiary/50"
+                      isFocused && "shadow-inset-blue bg-glow-blue",
+                      isSelected && !isFocused && "border-l-2 border-l-accent-blue bg-glow-blue",
+                      !isSelected && !isFocused && "border-l-2 border-l-transparent hover:bg-surface-2/50"
                     )}
                     onClick={() => onRowClick?.(row.original)}
                     onKeyDown={(e) => {
@@ -139,26 +148,26 @@ export function DataTable<T>({
         </table>
       </div>
 
-      {/* Pagination */}
+      {/* Pagination toolbar with btn-ghost buttons */}
       {onPageChange && totalRows !== undefined && totalRows > pageSize && (
-        <div className="flex items-center justify-between px-3 py-2 border-t border-border bg-surface-secondary">
-          <span className="text-xs text-text-muted">
+        <div className="flex items-center justify-between px-3 py-2 border-t border-border bg-surface-1">
+          <span className="text-xs text-text-muted tabular-nums">
             {totalRows.toLocaleString()} total rows
           </span>
           <div className="flex items-center gap-2">
             <button
-              className="px-2 py-1 text-xs rounded bg-surface-tertiary text-text-secondary hover:text-text-primary disabled:opacity-30 disabled:cursor-not-allowed"
+              className="btn-ghost"
               onClick={() => onPageChange(page - 1)}
               disabled={page <= 0}
               aria-label="Previous page"
             >
               Prev
             </button>
-            <span className="text-xs text-text-secondary tabular-nums">
+            <span className="text-xs text-text-secondary tabular-nums px-2">
               {page + 1} / {totalPages}
             </span>
             <button
-              className="px-2 py-1 text-xs rounded bg-surface-tertiary text-text-secondary hover:text-text-primary disabled:opacity-30 disabled:cursor-not-allowed"
+              className="btn-ghost"
               onClick={() => onPageChange(page + 1)}
               disabled={page >= totalPages - 1}
               aria-label="Next page"

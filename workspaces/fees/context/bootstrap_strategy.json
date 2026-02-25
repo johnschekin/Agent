@@ -1,0 +1,269 @@
+[
+  {
+    "id": "deal_econ.pricing.lc_fees",
+    "name": "Letter of Credit Fees",
+    "family_id": "deal_econ.pricing",
+    "concept_area": "pricing",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Interest",
+        "Interest Rate",
+        "Applicable Rate",
+        "Applicable Margin"
+      ],
+      "keyword_anchors": [
+        "Applicable Rate",
+        "Applicable Margin",
+        "SOFR",
+        "Base Rate",
+        "interest rate",
+        "margin",
+        "floor"
+      ],
+      "concept_specific_keywords": [
+        "Letter of Credit Fees"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.fees.commitment_fee",
+    "name": "Commitment Fee (Revolver)",
+    "family_id": "deal_econ.fees",
+    "concept_area": "fees",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Fees",
+        "Commitment Fee",
+        "Letter of Credit Fees"
+      ],
+      "keyword_anchors": [
+        "commitment fee",
+        "letter of credit fee",
+        "fronting fee",
+        "ticking fee",
+        "agency fee"
+      ],
+      "concept_specific_keywords": [
+        "Commitment Fee (Revolver)"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.fees.ticking_fee",
+    "name": "Ticking Fee (DDTL)",
+    "family_id": "deal_econ.fees",
+    "concept_area": "fees",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Fees",
+        "Commitment Fee",
+        "Letter of Credit Fees"
+      ],
+      "keyword_anchors": [
+        "commitment fee",
+        "letter of credit fee",
+        "fronting fee",
+        "ticking fee",
+        "agency fee"
+      ],
+      "concept_specific_keywords": [
+        "Ticking Fee (DDTL)"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.fees.oid_upfront",
+    "name": "Original Issue Discount / Upfront Fee",
+    "family_id": "deal_econ.fees",
+    "concept_area": "fees",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Fees",
+        "Commitment Fee",
+        "Letter of Credit Fees"
+      ],
+      "keyword_anchors": [
+        "commitment fee",
+        "letter of credit fee",
+        "fronting fee",
+        "ticking fee",
+        "agency fee"
+      ],
+      "concept_specific_keywords": [
+        "Original Issue Discount / Upfront Fee"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.fees.agency_fees",
+    "name": "Agency Fees",
+    "family_id": "deal_econ.fees",
+    "concept_area": "fees",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Fees",
+        "Commitment Fee",
+        "Letter of Credit Fees"
+      ],
+      "keyword_anchors": [
+        "commitment fee",
+        "letter of credit fee",
+        "fronting fee",
+        "ticking fee",
+        "agency fee"
+      ],
+      "concept_specific_keywords": [
+        "Agency Fees"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.fees.lc_fees",
+    "name": "Letter of Credit Fees",
+    "family_id": "deal_econ.fees",
+    "concept_area": "fees",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Fees",
+        "Commitment Fee",
+        "Letter of Credit Fees"
+      ],
+      "keyword_anchors": [
+        "commitment fee",
+        "letter of credit fee",
+        "fronting fee",
+        "ticking fee",
+        "agency fee"
+      ],
+      "concept_specific_keywords": [
+        "Letter of Credit Fees"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.fees.structuring_fee",
+    "name": "Structuring / Arrangement Fee",
+    "family_id": "deal_econ.fees",
+    "concept_area": "fees",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Fees",
+        "Commitment Fee",
+        "Letter of Credit Fees"
+      ],
+      "keyword_anchors": [
+        "commitment fee",
+        "letter of credit fee",
+        "fronting fee",
+        "ticking fee",
+        "agency fee"
+      ],
+      "concept_specific_keywords": [
+        "Structuring / Arrangement Fee"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.fees.alternate_transaction_fee",
+    "name": "Alternate Transaction Fee",
+    "family_id": "deal_econ.fees",
+    "concept_area": "fees",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Fees",
+        "Commitment Fee",
+        "Letter of Credit Fees"
+      ],
+      "keyword_anchors": [
+        "commitment fee",
+        "letter of credit fee",
+        "fronting fee",
+        "ticking fee",
+        "agency fee"
+      ],
+      "concept_specific_keywords": [
+        "Alternate Transaction Fee"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.fees.prepayment_premium",
+    "name": "Prepayment Premium",
+    "family_id": "deal_econ.fees",
+    "concept_area": "fees",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Fees",
+        "Commitment Fee",
+        "Letter of Credit Fees"
+      ],
+      "keyword_anchors": [
+        "commitment fee",
+        "letter of credit fee",
+        "fronting fee",
+        "ticking fee",
+        "agency fee"
+      ],
+      "concept_specific_keywords": [
+        "Prepayment Premium"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.fees.amendment_fees",
+    "name": "Amendment / Consent Fees",
+    "family_id": "deal_econ.fees",
+    "concept_area": "fees",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Fees",
+        "Commitment Fee",
+        "Letter of Credit Fees"
+      ],
+      "keyword_anchors": [
+        "commitment fee",
+        "letter of credit fee",
+        "fronting fee",
+        "ticking fee",
+        "agency fee"
+      ],
+      "concept_specific_keywords": [
+        "Amendment / Consent Fees"
+      ]
+    }
+  },
+  {
+    "id": "deal_econ.fees.exit_fee",
+    "name": "Exit Fee",
+    "family_id": "deal_econ.fees",
+    "concept_area": "fees",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Fees",
+        "Commitment Fee",
+        "Letter of Credit Fees"
+      ],
+      "keyword_anchors": [
+        "commitment fee",
+        "letter of credit fee",
+        "fronting fee",
+        "ticking fee",
+        "agency fee"
+      ],
+      "concept_specific_keywords": [
+        "Exit Fee"
+      ]
+    }
+  }
+]

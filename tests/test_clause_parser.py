@@ -485,3 +485,63 @@ class TestClauseTreeWrapper:
         node = tree.node_by_id("a")
         assert node is not None
         assert node.label.strip() == "(a)"
+
+
+# ===========================================================================
+# Phase 7: Parser artifact prevention
+# ===========================================================================
+
+
+class TestPeriodDelimitedEnumerators:
+    """Verify period-delimited enumerators produce clean clause IDs."""
+
+    def test_period_labels_strip_trailing_dot(self) -> None:
+        """Period-delimited enumerators (a. b. c.) should NOT have trailing dots in IDs."""
+        text = (
+            "a. The Borrower shall comply with all terms and conditions.\n"
+            "b. Any Subsidiary may request extensions to the facility.\n"
+            "c. Total amounts shall not exceed the permitted limits.\n"
+        )
+        nodes = parse_clauses(text)
+        assert len(nodes) >= 3
+        for node in nodes:
+            assert not node.id.endswith("."), f"Clause ID '{node.id}' has trailing dot"
+            assert "._" not in node.id, f"Clause ID '{node.id}' has dot-underscore segment"
+        # Verify the IDs are clean single-char labels
+        ids = [n.id for n in nodes if not n.xref_suspected]
+        assert "a" in ids
+        assert "b" in ids
+        assert "c" in ids
+
+    def test_nested_period_labels_clean(self) -> None:
+        """Nested period-delimited enumerators should produce clean dot-path IDs."""
+        text = (
+            "(a) The Borrower shall comply with all terms:\n"
+            "1. first sub-provision of clause a;\n"
+            "2. second sub-provision of clause a;\n"
+            "(b) Any Subsidiary may request extensions.\n"
+        )
+        nodes = parse_clauses(text)
+        structural = [n for n in nodes if not n.xref_suspected]
+        for node in structural:
+            assert not node.id.endswith("."), f"Clause ID '{node.id}' has trailing dot"
+
+
+class TestDuplicateIdFormat:
+    """Verify duplicate clause IDs use _dup suffix format."""
+
+    def test_duplicate_id_uses_dup_suffix(self) -> None:
+        """Duplicate clause IDs should use _dup prefix, not bare underscore counter."""
+        # Two identical (a) enumerators at root level forces a dup
+        text = (
+            "(a) First provision with enough text to be structural.\n"
+            "(a) Second provision with enough text to be structural.\n"
+        )
+        nodes = parse_clauses(text)
+        structural = [n for n in nodes if not n.xref_suspected]
+        if len(structural) > 1:
+            ids = [n.id for n in structural]
+            dup_ids = [i for i in ids if "_dup" in i]
+            assert len(dup_ids) >= 1, f"Expected _dup suffix in IDs: {ids}"
+            for did in dup_ids:
+                assert "._" not in did, f"Dup ID '{did}' has dot-underscore segment"

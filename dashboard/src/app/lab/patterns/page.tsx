@@ -25,7 +25,7 @@ function MatchRow({
 }) {
   return (
     <tr
-      className="border-t border-border hover:bg-surface-tertiary/50 cursor-pointer transition-colors"
+      className="border-t border-border hover:bg-surface-3/50 cursor-pointer transition-colors"
       onClick={() => onDocClick(item.doc_id)}
     >
       <td className="px-3 py-2">
@@ -69,7 +69,7 @@ function MissRow({
 }) {
   return (
     <tr
-      className="border-t border-border hover:bg-surface-tertiary/50 cursor-pointer transition-colors"
+      className="border-t border-border hover:bg-surface-3/50 cursor-pointer transition-colors"
       onClick={() => onDocClick(item.doc_id)}
     >
       <td className="px-3 py-2">
@@ -302,7 +302,7 @@ export default function PatternsPage() {
                   "px-2.5 py-1 rounded-sm text-xs font-medium transition-colors",
                   activeTab === "matches"
                     ? "bg-accent-green/20 text-accent-green"
-                    : "bg-surface-tertiary text-text-muted hover:text-text-secondary border border-border"
+                    : "bg-surface-3 text-text-muted hover:text-text-secondary border border-border"
                 )}
               >
                 Matches
@@ -314,7 +314,7 @@ export default function PatternsPage() {
                   "px-2.5 py-1 rounded-sm text-xs font-medium transition-colors",
                   activeTab === "misses"
                     ? "bg-accent-red/20 text-accent-red"
-                    : "bg-surface-tertiary text-text-muted hover:text-text-secondary border border-border"
+                    : "bg-surface-3 text-text-muted hover:text-text-secondary border border-border"
                 )}
               >
                 Misses
@@ -328,7 +328,7 @@ export default function PatternsPage() {
               ) : (
                 <div className="overflow-auto max-h-[500px]">
                   <table className="w-full text-sm" aria-label="Pattern matches">
-                    <thead className="sticky top-0 bg-surface-tertiary z-10">
+                    <thead className="sticky top-0 bg-surface-3 z-10">
                       <tr className="text-left text-xs text-text-muted uppercase">
                         <th className="px-3 py-2">Doc ID</th>
                         <th className="px-3 py-2">Borrower</th>
@@ -355,7 +355,7 @@ export default function PatternsPage() {
             ) : (
               <div className="overflow-auto max-h-[500px]">
                 <table className="w-full text-sm" aria-label="Pattern misses">
-                  <thead className="sticky top-0 bg-surface-tertiary z-10">
+                  <thead className="sticky top-0 bg-surface-3 z-10">
                     <tr className="text-left text-xs text-text-muted uppercase">
                       <th className="px-3 py-2">Doc ID</th>
                       <th className="px-3 py-2">Borrower</th>

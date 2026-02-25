@@ -14,8 +14,8 @@ export function ViewContainer({
   children,
 }: ViewContainerProps) {
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex items-center justify-between px-6 py-4 border-b border-border">
+    <div className="flex flex-col h-full bg-canvas">
+      <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-surface-1">
         <div>
           <h2 className="text-xl font-semibold text-text-primary">{title}</h2>
           {subtitle && (

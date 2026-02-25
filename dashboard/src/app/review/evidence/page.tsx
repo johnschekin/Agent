@@ -87,7 +87,7 @@ export default function ReviewEvidencePage() {
               setLimit(100);
               setOffset(0);
             }}
-            className="px-3 py-1.5 text-xs font-medium rounded-sm bg-surface-tertiary text-text-secondary hover:bg-surface-tertiary/70 transition-colors"
+            className="px-3 py-1.5 text-xs font-medium rounded-sm bg-surface-3 text-text-secondary hover:bg-surface-3/70 transition-colors"
           >
             Reset
           </button>
@@ -122,14 +122,14 @@ export default function ReviewEvidencePage() {
               <button
                 onClick={() => setOffset(Math.max(0, offset - limit))}
                 disabled={!query.data.has_prev}
-                className="px-2.5 py-1 text-xs rounded-sm border border-border disabled:opacity-40 disabled:cursor-not-allowed hover:bg-surface-tertiary"
+                className="px-2.5 py-1 text-xs rounded-sm border border-border disabled:opacity-40 disabled:cursor-not-allowed hover:bg-surface-3"
               >
                 Prev
               </button>
               <button
                 onClick={() => setOffset(offset + limit)}
                 disabled={!query.data.has_next}
-                className="px-2.5 py-1 text-xs rounded-sm border border-border disabled:opacity-40 disabled:cursor-not-allowed hover:bg-surface-tertiary"
+                className="px-2.5 py-1 text-xs rounded-sm border border-border disabled:opacity-40 disabled:cursor-not-allowed hover:bg-surface-3"
               >
                 Next
               </button>
@@ -137,7 +137,7 @@ export default function ReviewEvidencePage() {
           </div>
           <div className="overflow-auto border border-border rounded-md max-h-[70vh]">
             <table className="w-full text-xs">
-              <thead className="bg-surface-tertiary text-text-muted uppercase sticky top-0 z-10">
+              <thead className="bg-surface-3 text-text-muted uppercase sticky top-0 z-10">
                 <tr>
                   <th className="px-3 py-2 text-left">Type</th>
                   <th className="px-3 py-2 text-left">Concept</th>
@@ -152,7 +152,7 @@ export default function ReviewEvidencePage() {
               </thead>
               <tbody>
                 {query.data.rows.map((r, i) => (
-                  <tr key={`${r.doc_id}_${r.section_number}_${i}`} className="border-t border-border hover:bg-surface-tertiary/40">
+                  <tr key={`${r.doc_id}_${r.section_number}_${i}`} className="border-t border-border hover:bg-surface-3/40">
                     <td className="px-3 py-2">{r.record_type}</td>
                     <td className="px-3 py-2 font-mono">{r.concept_id}</td>
                     <td className="px-3 py-2 font-mono">{r.doc_id}</td>

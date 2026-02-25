@@ -30,7 +30,7 @@ function ConfidenceBar({
   return (
     <div className="flex items-center gap-2 text-[11px]">
       <span className="w-16 text-text-muted">{label}</span>
-      <div className="flex-1 h-2 bg-surface-tertiary rounded-full overflow-hidden">
+      <div className="flex-1 h-2 bg-surface-3 rounded-full overflow-hidden">
         <div
           className={cn(
             "h-full rounded-full",
@@ -56,7 +56,7 @@ function ExpandedDetail({ item }: { item: ReviewQueueItem }) {
 
   return (
     <tr>
-      <td colSpan={10} className="px-4 py-3 bg-surface-secondary/50">
+      <td colSpan={10} className="px-4 py-3 bg-surface-2/50">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
           {/* Confidence breakdown */}
           <div>
@@ -82,7 +82,7 @@ function ExpandedDetail({ item }: { item: ReviewQueueItem }) {
               {item.outlier_flags.map((f) => (
                 <span
                   key={f}
-                  className="px-1.5 py-0.5 rounded text-[10px] bg-surface-tertiary text-text-secondary"
+                  className="px-1.5 py-0.5 rounded text-[10px] bg-surface-3 text-text-secondary"
                 >
                   {f}
                 </span>
@@ -102,7 +102,7 @@ function ExpandedDetail({ item }: { item: ReviewQueueItem }) {
               {riskEntries.map(([key, val]) => (
                 <div key={key} className="flex items-center gap-2">
                   <span className="w-28 text-text-muted truncate">{key}</span>
-                  <div className="flex-1 h-1.5 bg-surface-tertiary rounded-full overflow-hidden">
+                  <div className="flex-1 h-1.5 bg-surface-3 rounded-full overflow-hidden">
                     <div
                       className="h-full rounded-full bg-accent-red/70"
                       style={{ width: `${Math.min(100, val * 100)}%` }}
@@ -215,7 +215,7 @@ export default function ReviewQueuePage() {
               setOffset(0);
               setExpandedIdx(null);
             }}
-            className="px-3 py-1.5 text-xs font-medium rounded-sm bg-surface-tertiary text-text-secondary hover:bg-surface-tertiary/70 transition-colors"
+            className="px-3 py-1.5 text-xs font-medium rounded-sm bg-surface-3 text-text-secondary hover:bg-surface-3/70 transition-colors"
           >
             Reset
           </button>
@@ -283,14 +283,14 @@ export default function ReviewQueuePage() {
                   <button
                     onClick={() => setOffset(Math.max(0, offset - limit))}
                     disabled={!query.data.has_prev}
-                    className="px-2.5 py-1 text-xs rounded-sm border border-border disabled:opacity-40 disabled:cursor-not-allowed hover:bg-surface-tertiary"
+                    className="px-2.5 py-1 text-xs rounded-sm border border-border disabled:opacity-40 disabled:cursor-not-allowed hover:bg-surface-3"
                   >
                     Prev
                   </button>
                   <button
                     onClick={() => setOffset(offset + limit)}
                     disabled={!query.data.has_next}
-                    className="px-2.5 py-1 text-xs rounded-sm border border-border disabled:opacity-40 disabled:cursor-not-allowed hover:bg-surface-tertiary"
+                    className="px-2.5 py-1 text-xs rounded-sm border border-border disabled:opacity-40 disabled:cursor-not-allowed hover:bg-surface-3"
                   >
                     Next
                   </button>
@@ -300,7 +300,7 @@ export default function ReviewQueuePage() {
               {/* Table */}
               <div className="overflow-auto border border-border rounded-md max-h-[70vh]">
                 <table className="w-full text-xs">
-                  <thead className="bg-surface-tertiary text-text-muted uppercase sticky top-0 z-10">
+                  <thead className="bg-surface-3 text-text-muted uppercase sticky top-0 z-10">
                     <tr>
                       <th className="px-3 py-2 text-left">Priority</th>
                       <th className="px-3 py-2 text-left">Concept</th>
@@ -322,8 +322,8 @@ export default function ReviewQueuePage() {
                           className={cn(
                             "border-t border-border cursor-pointer transition-colors",
                             expandedIdx === i
-                              ? "bg-surface-secondary"
-                              : "hover:bg-surface-tertiary/40"
+                              ? "bg-surface-2"
+                              : "hover:bg-surface-3/40"
                           )}
                           onClick={() =>
                             setExpandedIdx(expandedIdx === i ? null : i)

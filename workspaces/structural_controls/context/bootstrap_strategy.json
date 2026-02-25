@@ -1,0 +1,202 @@
+[
+  {
+    "id": "debt_capacity.incremental.structural_controls.conditions_precedent",
+    "name": "Conditions Precedent to Incurrence",
+    "family_id": "debt_capacity.incremental.structural_controls",
+    "concept_area": "structural_controls",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Conditions Precedent to Incurrence"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.structural_controls.maturity",
+    "name": "Maturity and WALM Restrictions",
+    "family_id": "debt_capacity.incremental.structural_controls",
+    "concept_area": "structural_controls",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Maturity and WALM Restrictions"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.structural_controls.pricing",
+    "name": "Pricing Restrictions",
+    "family_id": "debt_capacity.incremental.structural_controls",
+    "concept_area": "structural_controls",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Pricing Restrictions"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.structural_controls.security",
+    "name": "Security / Credit Support Requirements",
+    "family_id": "debt_capacity.incremental.structural_controls",
+    "concept_area": "structural_controls",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Security / Credit Support Requirements"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.structural_controls.rofr",
+    "name": "Right of First Refusal (ROFR)",
+    "family_id": "debt_capacity.incremental.structural_controls",
+    "concept_area": "structural_controls",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Right of First Refusal (ROFR)"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.structural_controls.pro_rata_sharing",
+    "name": "Pro Rata Sharing / Prepayment Waterfall",
+    "family_id": "debt_capacity.incremental.structural_controls",
+    "concept_area": "structural_controls",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Pro Rata Sharing / Prepayment Waterfall"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.structural_controls.rcf_sublimit",
+    "name": "Revolving Credit Facility Sublimit",
+    "family_id": "debt_capacity.incremental.structural_controls",
+    "concept_area": "structural_controls",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Revolving Credit Facility Sublimit"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.structural_controls.ddtl",
+    "name": "Incremental DDTL Mechanics",
+    "family_id": "debt_capacity.incremental.structural_controls",
+    "concept_area": "structural_controls",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Incremental DDTL Mechanics"
+      ]
+    }
+  }
+]

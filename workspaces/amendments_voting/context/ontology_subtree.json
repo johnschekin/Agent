@@ -1,0 +1,2747 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Percentage of outstanding loans and unfunded commitments needed to constitute Required Lenders. >50% is standard in 62.9% of EDGAR corpus; 66.67% super-majority in 3.2%.",
+          "dls_ref": [
+            73
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.required_lenders.threshold",
+          "level": 3,
+          "market_benchmarks": {
+            "corpus_prevalence_pct": "62.9%",
+            "market_standard_value": ">50%"
+          },
+          "name": "Voting Threshold Percentage",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 73"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether Required Lenders calculation uses outstanding loans only, commitments only, or combined basis of loans plus unfunded commitments. Combined basis is most common.",
+          "dls_ref": [
+            73
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.required_lenders.calculation_basis",
+          "level": 3,
+          "market_benchmarks": {
+            "commitments_included": "61.3%",
+            "loans_only": "40.3%"
+          },
+          "name": "Calculation Methodology",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 73"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Minimum number of unaffiliated lenders required alongside the percentage threshold to prevent single-party or concentrated control of amendment decisions.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.required_lenders.unaffiliated_prong",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "56.5%",
+            "typical_minimum": "2 unaffiliated lenders"
+          },
+          "name": "Unaffiliated Lender Requirement",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Lenders who fail to fund their commitments or are subject to insolvency proceedings are excluded from Required Lender voting calculations.",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.amendments_voting",
+              "id": "governance.amendments_voting.required_lenders.exclusions.defaulting",
+              "kct_ref": [
+                "cat3.3"
+              ],
+              "level": 4,
+              "market_benchmarks": {
+                "prevalence": "17.7%"
+              },
+              "name": "Defaulting Lender Exclusion",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 3"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Sponsor-affiliated lenders are excluded from or capped in Required Lender calculations to prevent insider control of amendment votes.",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.amendments_voting",
+              "id": "governance.amendments_voting.required_lenders.exclusions.affiliated",
+              "kct_ref": [
+                "cat3.7",
+                "cat4.11"
+              ],
+              "level": 4,
+              "market_benchmarks": {
+                "prevalence": "56.5%"
+              },
+              "name": "Affiliated Lender Exclusion",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 134,
+                  "term": "Assignments – Affiliated lenders and buybacks"
+                },
+                {
+                  "coverage": "full",
+                  "row": 136,
+                  "term": "Assignments – voting limit on Debt Fund Affiliates"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 7; KCT Cat 4 Item 11; Review Template Row 134 (Assignments – Affiliated lenders and buybacks); Review Template Row 136 (Assignments – voting limit on Debt Fund Affiliates)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Disqualified lenders that should not hold the debt are excluded from Required Lender voting calculations.",
+              "dls_ref": [
+                73
+              ],
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.amendments_voting",
+              "id": "governance.amendments_voting.required_lenders.exclusions.dq_lender",
+              "level": 4,
+              "market_benchmarks": {
+                "prevalence": "1.6%"
+              },
+              "name": "DQ Lender Exclusion",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 73"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Categories of lenders excluded from Required Lender calculations: defaulting lenders, affiliated lenders, DQ'd institutions. Exclusions reduce the denominator.",
+          "dls_ref": [
+            73
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.required_lenders.exclusions",
+          "level": 3,
+          "name": "Voting Exclusions",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 73"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Voting threshold for key decisions requiring majority lender approval. DLS Preferred row 93 defines: 'Consent of Required Lenders (i.e. lenders holding more than 50% of the aggregate unused commitments and outstanding loans).' This is the baseline threshold for most amendments and waivers. PC Term Comparison: 'If Client is a minority lender may want to ask that Required Lenders also have the \"two or more unaffiliated lenders\" prong.' The Required Lender definition is critical for amendment dynamics and can be manipulated through debt issuance to affiliated entities (Wesco/Incora risk). KCT footnote 11 warns about 'pro forma required lenders' voting on amendments before their commitments exist.",
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "amendments_voting",
+        "extraction_ready": true,
+        "playbook_ref": "amendments_voting.loan_extension",
+        "section_locations": [
+          "ARTICLE 11",
+          "ARTICLE 6",
+          "ARTICLE II",
+          "Section 2.14",
+          "Section 2.19"
+        ],
+        "shape_ref": "amendments_voting.loan_extension"
+      },
+      "family_id": "governance.amendments_voting",
+      "id": "governance.amendments_voting.required_lenders",
+      "kct_ref": [
+        "cat3.5",
+        "cat3.7",
+        "cat4.11"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "dls_preferred_threshold": ">50% of aggregate unused commitments and outstanding loans",
+        "typical_threshold_corpus": ">50% in 62.9% of EDGAR corpus",
+        "super_majority_corpus": "66.67% in 3.2% of EDGAR corpus",
+        "pctc_minority_lender_note": "If Client is a minority lender, may want 'two or more unaffiliated lenders' prong",
+        "dls_preferred_threshold_source": "DLS Preferred row 93",
+        "typical_threshold_corpus_source": "DealData (N=62 PC deals): 39/62 deals",
+        "pctc_minority_lender_note_source": "PC Term Comparison Required Lenders section",
+        "_source": "DLS Preferred row 93; PC Term Comparison Required Lenders; DealData N=62"
+      },
+      "name": "Required Lenders Definition",
+      "negotiation_spectrum": {
+        "aggressive_position": "Majority vote for pro rata/waterfall amendments (not 100%). Required Revolving Lenders for revolver-only provisions.",
+        "dls_source": "DLS row 93",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(iv) modifications to provisions requiring pro rata payments, the \"waterfall\", priority of liens or proceeds of collateral and sharing of setoff provisions",
+          "100% vote for:"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "required_lender_threshold: 50pct vs 66.67pct",
+          "sacred_rights_scope: comprehensive_14_items vs narrow_core",
+          "pro_rata_modification: 100pct vs each_affected vs required_lenders",
+          "waterfall_modification: 100pct vs each_affected vs required_lenders",
+          "collateral_release_vote: 100pct vs each_affected vs required_lenders",
+          "guarantee_release_vote: 100pct vs each_affected vs required_lenders",
+          "voting_threshold_change: 100pct vs supermajority",
+          "sponsor_purchase_consent: 100pct vs required_lenders vs no_consent",
+          "class_voting: yes vs no",
+          "agent_provisions: agent_consent_required vs majority",
+          "technical_amendments: agent_borrower_only vs full_vote",
+          "mandatory_prepay_waiver: each_affected vs required_lenders"
+        ],
+        "market_position": "",
+        "preferred_position": "Required Lenders = >50% of aggregate unused commitments + outstanding loans for standard amendments and waivers",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "amendments_voting.required_lenders_definition"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 4,
+          "term": "Commitment and giveaway"
+        },
+        {
+          "coverage": "full",
+          "row": 35,
+          "term": "Incremental – ROFR"
+        },
+        {
+          "coverage": "full",
+          "row": 132,
+          "term": "Assignments – consents"
+        },
+        {
+          "coverage": "full",
+          "row": 134,
+          "term": "Assignments – Affiliated lenders and buybacks"
+        },
+        {
+          "coverage": "full",
+          "row": 149,
+          "term": "Waiver"
+        },
+        {
+          "coverage": "full",
+          "row": 156,
+          "term": "Other"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 93 (Required Lenders: >50% of commitments + outstanding loans); PC Term Comparison Required Lenders section line 162-164 (minority lender protections, two-or-more prong); KCT Category 3 item 7 and footnote 11 (prospective lender voting risk)",
+      "pc_ref": [
+        "Required Lenders"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Unanimous consent requirement protecting each individual lender's right to the contracted final maturity date, preventing any amendment that would extend the maturity without the affected lender's express approval. Classified as a 'sacred right' because changing the repayment timeline fundamentally alters the credit risk profile that the lender underwrote at commitment.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.sacred_rights.maturity_extension",
+          "kct_ref": [
+            "cat3.5",
+            "cat3.6"
+          ],
+          "level": 3,
+          "name": "Maturity Extension",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 5; KCT Cat 3 Item 6"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Cannot reduce the interest rate or principal amount owing without consent of each affected lender, protecting economic returns. []",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.sacred_rights.rate_reduction",
+          "kct_ref": [
+            "cat3.5",
+            "cat3.6"
+          ],
+          "level": 3,
+          "name": "Rate / Principal Reduction",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 5; KCT Cat 3 Item 6"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Cannot postpone scheduled payment dates for principal, interest, or fees without consent of each affected lender. []",
+          "dls_ref": [
+            "DLS:51:Payment of fees"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.sacred_rights.payment_postponement",
+          "kct_ref": [
+            "cat3.5",
+            "cat3.6",
+            "cat5.3"
+          ],
+          "level": 3,
+          "name": "Payment Date Postponement",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 51 (Payment of fees); KCT Cat 3 Item 5; KCT Cat 3 Item 6; KCT Cat 5 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Cannot increase any lender's commitment without that lender's individual consent, preventing forced dilution of pro rata positions. []",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.sacred_rights.commitment_increase",
+          "kct_ref": [
+            "cat3.5"
+          ],
+          "level": 3,
+          "name": "Commitment Increase",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 2,
+              "term": "Commitment Letter / Transaction Description"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 5; Review Template Row 2 (Commitment Letter / Transaction Description)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Cannot release all or substantially all of the collateral securing the obligations without consent of each lender (not merely affected lender). The nuclear option for credit protection.",
+          "dls_ref": [
+            "DLS:52:Collateral"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "hard",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.sacred_rights.collateral_release",
+          "kct_ref": [
+            "cat3.5",
+            "cat3.6"
+          ],
+          "level": 3,
+          "name": "Release All/Substantially All Collateral",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 52 (Collateral); KCT Cat 3 Item 5; KCT Cat 3 Item 6"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Cannot release all or substantially all subsidiary guarantors without consent of each lender, as guarantees form a key part of the credit support package.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.sacred_rights.guarantee_release",
+          "kct_ref": [
+            "cat3.11"
+          ],
+          "level": 3,
+          "name": "Release All/Substantially All Guarantors",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 11"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Cannot change the percentage or methodology defining Required Lenders without consent of each lender, as this would alter the governance structure itself.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.sacred_rights.required_lenders_def",
+          "kct_ref": [
+            "cat3.5",
+            "cat4.11"
+          ],
+          "level": 3,
+          "name": "Change Required Lenders Definition",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 5; KCT Cat 4 Item 11"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Cannot alter the pro rata sharing or equal treatment provisions without each-lender or each-affected-lender consent. Found as affected-lender in 67.2%, all-lender in 14.8%. [] []",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "extraction_refs": {
+            "concept_area": "amendments_voting",
+            "extraction_ready": true,
+            "playbook_ref": "amendments_voting.pro_rata_sharing",
+            "primary_section_pattern": "X.02-21",
+            "section_locations": [
+              "10.04",
+              "11.3",
+              "13",
+              "13.03",
+              "13.04"
+            ],
+            "shape_ref": "amendments_voting.pro_rata_sharing"
+          },
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.sacred_rights.pro_rata_sharing",
+          "kct_ref": [
+            "cat3.5"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "affected_lender_consent": "67.2%",
+            "all_lender_consent": "14.8%"
+          },
+          "name": "Pro Rata Sharing Modification",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 20,
+              "term": "LCs"
+            },
+            {
+              "coverage": "full",
+              "row": 131,
+              "term": "Voting"
+            },
+            {
+              "coverage": "full",
+              "row": 133,
+              "term": "Assignments – open market purchases"
+            },
+            {
+              "coverage": "full",
+              "row": 135,
+              "term": "Assignments – Borrower buybacks"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 5; Review Template Row 20 (LCs); Review Template Row 131 (Voting); Review Template Row 133 (Assignments – open market purchases); Review Template Row 135 (Assignments – Borrower buybacks)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Cannot alter the post-default payment waterfall priority without appropriate consent. Critical in ensuring pro rata recovery across lender classes. []",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.sacred_rights.waterfall",
+          "kct_ref": [
+            "cat3.5"
+          ],
+          "level": 3,
+          "name": "Payment Waterfall Modification",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 5"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Anti-Serta/anti-priming protection embedded as a sacred right, requiring affected-lender consent (or all-lender consent) for any amendment that subordinates existing debt in right of lien or payment priority to other superpriority debt. Per the LME Provision Language (Protection #5), should ideally extend to amendments that 'have the effect of' subordinating priority. Ratable participation exceptions should require offers on the 'same terms' including fees. PC Term Comparison: include strong Serta protection as a sacred right; clients will likely accept an offer-to-participate exception but must include 'same terms (including fees).' This is a modern post-LME inclusion that directly addresses the vulnerability exploited in the original Serta Simmons transaction.",
+          "dls_ref": [
+            "DLS:80:Liens"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "hard",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.sacred_rights.subordination",
+          "kct_ref": [
+            "cat3.5",
+            "cat4.11"
+          ],
+          "level": 3,
+          "name": "Subordination of Liens/Obligations",
+          "type": "sub_component",
+          "definition_source": "LME Provision Language protection #5 (Serta blocker specification); DLS Preferred row 93 alternative (majority vote for pro rata provisions -- the risk this protection addresses); PC Term Comparison section 9 (Serta: strong protection, same terms including fees)",
+          "pc_ref": [
+            "Section 9"
+          ]
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Requires affected-lender or all-lender consent for amendments that subordinate debt in lien or payment priority, preventing uptier exchanges without individual consent.",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "extraction_refs": {
+                "concept_area": "amendments_voting",
+                "extraction_ready": true,
+                "playbook_ref": "amendments_voting.serta",
+                "primary_section_pattern": "X.03-42",
+                "section_locations": [
+                  "10",
+                  "10.04",
+                  "10.09",
+                  "11.3",
+                  "3(42)"
+                ],
+                "shape_ref": "amendments_voting.serta"
+              },
+              "family_id": "governance.amendments_voting",
+              "id": "governance.amendments_voting.sacred_rights.lme_embedment.serta_blocker",
+              "kct_ref": [
+                "cat3.15"
+              ],
+              "level": 4,
+              "market_benchmarks": {
+                "r17_gap_flagged": true
+              },
+              "name": "Serta Blocker",
+              "negotiation_spectrum": {
+                "r17_gap_flagged": true
+              },
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 15"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Requires affected-lender consent for amendments altering pro rata sharing or waterfall provisions, protecting equal treatment of lenders.",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.amendments_voting",
+              "id": "governance.amendments_voting.sacred_rights.lme_embedment.nydj_blocker",
+              "kct_ref": [
+                "cat3.5"
+              ],
+              "level": 4,
+              "market_benchmarks": {
+                "r17_gap_flagged": true
+              },
+              "name": "NYDJ Blocker",
+              "negotiation_spectrum": {
+                "r17_gap_flagged": true
+              },
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 5"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Prevents transfer of IP or material assets to unrestricted subsidiaries without lender consent, blocking the 'trap-door' asset stripping maneuver.",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.amendments_voting",
+              "id": "governance.amendments_voting.sacred_rights.lme_embedment.jcrew_blocker",
+              "level": 4,
+              "name": "J.Crew Blocker",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 69 (Unknown); KCT Cat 1 Item 8; Learning Material: 4) J. Crew Protection in Credit Agreements; LME Provision Language, Restrictions on Material Intellectual Property or Other Asset Leakage to Unsubs (J.Crew)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Prevents liability management transactions that create new super-priority debt ahead of existing lenders through double-dip structures.",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.amendments_voting",
+              "id": "governance.amendments_voting.sacred_rights.lme_embedment.envision_blocker",
+              "level": 4,
+              "name": "Envision Blocker",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 4"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Prevents cross-collateralization transactions that effectively subordinate existing debt through structural manipulation of guarantor and collateral pools.",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.amendments_voting",
+              "id": "governance.amendments_voting.sacred_rights.lme_embedment.wesco_incora_blocker",
+              "level": 4,
+              "name": "Wesco/Incora Blocker",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 2 Item 3; LME Provision Language, Restrictions on Issuing New Debt to Influence Voting (Wesco/Incora)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Modern market practice of embedding named LME protections directly within the sacred rights provisions of the credit agreement, requiring all-lender or affected-lender consent to remove them. Per the LME Provision Language (Protection #12), this is usually seen in post-LME credit agreements and provides heightened protection because only individual lender consent can strip the blockers. Protections commonly embedded include J.Crew (material IP leakage), Envision (investment basket caps for unsub transfers), Pluralsight (extended J.Crew to all nonguarantor subs), Serta (anti-subordination), NYDJ (pro rata sharing/waterfall), Wesco/Incora (voting manipulation), and Better Health (pro rata extension). PC Term Comparison: clients focused on having these as sacred rights alongside traditional items; reject snooze-you-lose concept that would allow non-responding lenders to be deemed to have consented.",
+          "domain_id": "governance",
+          "extraction_difficulty": "hard",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.sacred_rights.lme_embedment",
+          "kct_ref": [
+            "cat3.5"
+          ],
+          "level": 3,
+          "name": "LME Blockers in Sacred Rights",
+          "type": "sub_component",
+          "definition_source": "LME Provision Language protection #12 (non-Serta/NYDJ blockers in sacred rights, sample clause from AMC July 2024 CA); PC Term Comparison section 9 (reject snooze you lose; clients focused on Incora blockers as sacred rights)",
+          "pc_ref": [
+            "Section 9"
+          ],
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:40.667463+00:00",
+              "term_packs": {
+                "DOC_MISCELLANEOUS": {
+                  "label": "Miscellaneous Documentation (UnSubs, Envision, J.Crew)",
+                  "category": "DOCUMENTATION",
+                  "exactPhrases": [
+                    "Designation of unrestricted subsidiaries subject to no EoD",
+                    "No separate ratio/pro forma compliance test",
+                    "No prohibition on material IP",
+                    "J.Crew protection",
+                    "Envision protection",
+                    "No restriction on UnSub being creditor of restricted group",
+                    "No EBITDA or assets cap on UnSubs",
+                    "may designate any Restricted Subsidiary as an Unrestricted Subsidiary",
+                    "transfers of material intellectual property",
+                    "crown jewels",
+                    "trap door",
+                    "investment basket caps for transfers to unrestricted subsidiaries"
+                  ],
+                  "sectionHeaders": [
+                    "Unrestricted Subsidiaries",
+                    "Designation of Unrestricted Subsidiaries",
+                    "J.Crew Protection",
+                    "Envision Protection",
+                    "Crown Jewel Protection",
+                    "Material Intellectual Property",
+                    "Investments - General",
+                    "Permitted Investments"
+                  ],
+                  "semanticVariants": [
+                    "unrestricted subsidiary designation requirements",
+                    "J.Crew blocker for IP transfers",
+                    "Envision cap on unsub investments",
+                    "trap door protection against asset stripping",
+                    "crown jewel intellectual property restrictions",
+                    "non-guarantor investment limitations"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.6,
+                    "minKeywordScore": 0.5,
+                    "minConfidence": 0.7,
+                    "escalationThreshold": 0.5,
+                    "humanEscalationThreshold": 0.3
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "Designation of unrestricted subsidiaries subject to no EoD",
+                  "No separate ratio/pro forma compliance test",
+                  "No prohibition on material IP",
+                  "J.Crew protection",
+                  "Envision protection",
+                  "No restriction on UnSub being creditor of restricted group",
+                  "No EBITDA or assets cap on UnSubs",
+                  "may designate any Restricted Subsidiary as an Unrestricted Subsidiary",
+                  "transfers of material intellectual property",
+                  "crown jewels",
+                  "trap door",
+                  "investment basket caps for transfers to unrestricted subsidiaries"
+                ],
+                "sectionHeaders": [
+                  "Unrestricted Subsidiaries",
+                  "Designation of Unrestricted Subsidiaries",
+                  "J.Crew Protection",
+                  "Envision Protection",
+                  "Crown Jewel Protection",
+                  "Material Intellectual Property",
+                  "Investments - General",
+                  "Permitted Investments"
+                ],
+                "semanticVariants": [
+                  "unrestricted subsidiary designation requirements",
+                  "J.Crew blocker for IP transfers",
+                  "Envision cap on unsub investments",
+                  "trap door protection against asset stripping",
+                  "crown jewel intellectual property restrictions",
+                  "non-guarantor investment limitations"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "DOC_MISCELLANEOUS",
+              "label": "Miscellaneous Documentation (UnSubs, Envision, J.Crew)",
+              "schema_file": "documentation-enhanced.schema.ts",
+              "field_count": 5,
+              "r1_domain": "governance",
+              "mapping_confidence": 0.2771,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Allowing modifications to sacred rights without unanimous or affected-lender consent destroys the constitutional floor of lender protections.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.sacred_rights.mandatory_prepayment_timing_not_sacre",
+          "kct_ref": [
+            "KCT:Cat3:5"
+          ],
+          "level": 3,
+          "name": "Mandatory prepayment timing (not sacred)",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Fundamental protections requiring consent of each lender or each affected lender (not merely Required Lender majority approval), preventing amendment of the credit agreement's most critical provisions by simple majority vote. DLS Preferred sacred rights requiring each directly affected lender consent: (i) increases or extensions of commitment; (ii) reductions of principal, interest, fees, or other amounts (only Required Lenders for default interest waiver); (iii) extensions/postponements/waivers of scheduled payment dates including final maturity (only Required Lenders for mandatory prepayment waiver); (iv) modifications to pro rata payment, waterfall, priority of liens/proceeds of collateral, and sharing of setoff provisions; (v) modifications further restricting assignment provisions. 100% vote items: (i) release of all/substantially all guarantors or collateral value; (ii) changes to voting thresholds or the amendment section; (iii) amendments permitting sponsor/affiliate term loan/revolving commitment purchases. KCT footnote 9 confirms these as the standard sacred rights framework, noting that modifications to 'Structural Adjustment' terms should also be included. PC Term Comparison adds that pro rata payments and sharing/waterfalls must be all-lender or all-affected-lender, and clients are focused on Serta and Incora blockers being embedded as sacred rights.",
+      "dls_ref": [
+        "DLS:62:Right to Appoint Additional Agents"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "amendments_voting",
+        "extraction_ready": true,
+        "playbook_ref": "amendments_voting.loan_extension",
+        "section_locations": [
+          "ARTICLE 11",
+          "ARTICLE 6",
+          "ARTICLE II",
+          "Section 2.14",
+          "Section 2.19"
+        ],
+        "shape_ref": "amendments_voting.loan_extension",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.697048+00:00",
+          "term_packs": {
+            "VOTING_SACRED_RIGHTS": {
+              "label": "Voting - Sacred Rights",
+              "category": "VOTING_ASSIGNMENTS",
+              "exactPhrases": [
+                "Release of all/substantially all guarantees/collateral is a majority vote",
+                "Include small group voting provisions",
+                "2 or more unaffiliated lenders",
+                "Is waterfall, pro rata payments and sharing an affected lender vote",
+                "holes in the voting structure",
+                "Waiving payment defaults is a Req Lender vote",
+                "creating a perpetual standstill",
+                "consent of all Lenders",
+                "consent of each Lender directly affected",
+                "without the consent of all Lenders",
+                "requires unanimous consent",
+                "shall require the consent",
+                "may not be amended without"
+              ],
+              "sectionHeaders": [
+                "Amendments, Waivers and Consents",
+                "Amendment and Waiver",
+                "Voting",
+                "Sacred Rights",
+                "Required Lenders",
+                "Affected Lenders",
+                "Section [X] - Amendments",
+                "Article [X] - Miscellaneous"
+              ],
+              "semanticVariants": [
+                "unanimous consent requirements for loan amendments",
+                "affected lender consent for fundamental changes",
+                "voting thresholds for credit agreement modifications",
+                "lender approval requirements for material amendments",
+                "sacred rights protections in credit facilities",
+                "super-majority voting requirements"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Release of all/substantially all guarantees/collateral is a majority vote",
+              "Include small group voting provisions",
+              "2 or more unaffiliated lenders",
+              "Is waterfall, pro rata payments and sharing an affected lender vote",
+              "holes in the voting structure",
+              "Waiving payment defaults is a Req Lender vote",
+              "creating a perpetual standstill",
+              "consent of all Lenders",
+              "consent of each Lender directly affected",
+              "without the consent of all Lenders",
+              "requires unanimous consent",
+              "shall require the consent",
+              "may not be amended without"
+            ],
+            "sectionHeaders": [
+              "Amendments, Waivers and Consents",
+              "Amendment and Waiver",
+              "Voting",
+              "Sacred Rights",
+              "Required Lenders",
+              "Affected Lenders",
+              "Section [X] - Amendments",
+              "Article [X] - Miscellaneous"
+            ],
+            "semanticVariants": [
+              "unanimous consent requirements for loan amendments",
+              "affected lender consent for fundamental changes",
+              "voting thresholds for credit agreement modifications",
+              "lender approval requirements for material amendments",
+              "sacred rights protections in credit facilities",
+              "super-majority voting requirements"
+            ]
+          }
+        }
+      },
+      "family_id": "governance.amendments_voting",
+      "id": "governance.amendments_voting.sacred_rights",
+      "kct_ref": [
+        "cat3.5",
+        "cat3.7",
+        "cat4.11"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "kct_cat3_benchmark_enrichment": "Enrich benchmarks with segment-specific data (LMM/CMM/UMM/BSL) for Sacred Rights Erosion."
+      },
+      "name": "Sacred Rights",
+      "negotiation_spectrum": {
+        "aggressive_position": "Majority vote for pro rata/waterfall amendments (not 100%). Required Revolving Lenders for revolver-only provisions.",
+        "dls_source": "DLS row 93",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(iv) modifications to provisions requiring pro rata payments, the \"waterfall\", priority of liens or proceeds of collateral and sharing of setoff provisions",
+          "100% vote for:"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "required_lender_threshold: 50pct vs 66.67pct",
+          "sacred_rights_scope: comprehensive_14_items vs narrow_core",
+          "pro_rata_modification: 100pct vs each_affected vs required_lenders",
+          "waterfall_modification: 100pct vs each_affected vs required_lenders",
+          "collateral_release_vote: 100pct vs each_affected vs required_lenders",
+          "guarantee_release_vote: 100pct vs each_affected vs required_lenders",
+          "voting_threshold_change: 100pct vs supermajority",
+          "sponsor_purchase_consent: 100pct vs required_lenders vs no_consent",
+          "class_voting: yes vs no",
+          "agent_provisions: agent_consent_required vs majority",
+          "technical_amendments: agent_borrower_only vs full_vote",
+          "mandatory_prepay_waiver: each_affected vs required_lenders"
+        ],
+        "market_position": "",
+        "preferred_position": "Each affected lender consent for: rate/fee reductions, maturity extensions, principal reductions, commitment increases",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "amendments_voting.sacred_rights"
+      ],
+      "review_ref": [
+        {
+          "coverage": "partial",
+          "row": 7,
+          "term": "Other advisory roles"
+        },
+        {
+          "coverage": "full",
+          "row": 10,
+          "term": "Termination of commitments"
+        },
+        {
+          "coverage": "full",
+          "row": 18,
+          "term": "Revolver currencies"
+        },
+        {
+          "coverage": "full",
+          "row": 21,
+          "term": "[DDTL – availability period]"
+        },
+        {
+          "coverage": "full",
+          "row": 49,
+          "term": "Documentation Precedent"
+        },
+        {
+          "coverage": "full",
+          "row": 126,
+          "term": "Negative Covenants – Transactions with Affiliates – Sponsor Management Fees"
+        },
+        {
+          "coverage": "full",
+          "row": 127,
+          "term": "Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing"
+        },
+        {
+          "coverage": "full",
+          "row": 131,
+          "term": "Voting"
+        },
+        {
+          "coverage": "full",
+          "row": 140,
+          "term": "RCF Commitment Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 155,
+          "term": "Financial Statements"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 93 (complete sacred rights enumeration); KCT Category 3 item 5 and footnote 9 (sacred rights list); PC Term Comparison section 9 (Sacred Rights: pro rata, Serta, Incora as sacred rights)",
+      "pc_ref": [
+        "Section 9"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "VOTING_SACRED_RIGHTS",
+          "label": "Voting - Sacred Rights",
+          "schema_file": "voting-amendment-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "governance",
+          "mapping_confidence": 0.8148,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Consent threshold required to amend pro rata sharing provisions: affected-lender, all-lender, noteholder, section-specific.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.pro_rata_sharing.amendment_consent",
+          "kct_ref": [
+            "cat3.6",
+            "cat3.7"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "affected_lender_consent": "67.2%",
+            "all_lender_consent": "14.8%"
+          },
+          "name": "Amendment Consent Standard",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 6; KCT Cat 3 Item 7"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Payment priority hierarchy after Event of Default: secured obligations first, then fees/expenses, then principal/interest, then remaining. Defines recovery order.",
+          "domain_id": "governance",
+          "extraction_difficulty": "hard",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.pro_rata_sharing.post_default_waterfall",
+          "kct_ref": [
+            "cat3.5"
+          ],
+          "level": 3,
+          "name": "Post-Default Waterfall",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 5"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Permitted deviations from strict pro rata sharing, including purchase mechanics, accordion facilities, and permitted refinancings where new money may receive different treatment.",
+          "domain_id": "governance",
+          "extraction_difficulty": "hard",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.pro_rata_sharing.carveouts",
+          "level": 3,
+          "name": "Pro Rata Carveouts",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; LME Provision Language, Pro Rata Sharing, Waterfall Provisions Included in Sacred Rights (NYDJ)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Payment allocation mechanics among lenders ensuring equal treatment within each class. DLS Preferred row 93 requires affected-lender consent for 'modifications to provisions requiring pro rata payments, the \"waterfall\", priority of liens or proceeds of collateral and sharing of setoff provisions' (highlighted). LME Provision Language Protection #6 (NYDJ): 'A NYDJ blocker should prohibit amendments to: (a) the pro rata sharing provision; and (b) both the order of payments and the pro rata sharing of payments in the post-event of default waterfall provision, in each case without affected lender consent.' Common weaknesses: not protecting both provisions, not protecting waterfall order, and carveouts for refinancing/amend-and-extend/incremental equivalent debt. PC Term Comparison: 'Pro rata payments and sharing/waterfalls must be all lender/all affected lender. Avoid \"except as otherwise permitted\" or \"Subject to mandatory prepayments\" type language.'",
+      "domain_id": "governance",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "amendments_voting",
+        "extraction_ready": true,
+        "playbook_ref": "amendments_voting.loan_extension",
+        "section_locations": [
+          "ARTICLE 11",
+          "ARTICLE 6",
+          "ARTICLE II",
+          "Section 2.14",
+          "Section 2.19"
+        ],
+        "shape_ref": "amendments_voting.loan_extension",
+        "secondary_playbook_refs": [
+          "amendments_voting.pro_rata_sharing"
+        ],
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.691962+00:00",
+          "term_packs": {
+            "VOTING_NYDJ_PROTECTION": {
+              "label": "Voting - NYDJ Protection",
+              "category": "VOTING_ASSIGNMENTS",
+              "exactPhrases": [
+                "Is waterfall, pro rata payments and sharing an affected lender vote",
+                "holes in the voting structure",
+                "pro rata sharing",
+                "pro rata payment",
+                "payment waterfall",
+                "application of proceeds",
+                "sharing of payments",
+                "ratable payments",
+                "consent of each Lender directly affected"
+              ],
+              "sectionHeaders": [
+                "Amendments, Waivers and Consents",
+                "Pro Rata Treatment",
+                "Sharing of Payments",
+                "Application of Payments",
+                "Payment Waterfall",
+                "Section [X] - Payments"
+              ],
+              "semanticVariants": [
+                "NYDJ protection for pro rata sharing",
+                "affected lender consent for waterfall changes",
+                "payment priority amendment protections",
+                "pro rata distribution protections",
+                "sharing provision protections"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Is waterfall, pro rata payments and sharing an affected lender vote",
+              "holes in the voting structure",
+              "pro rata sharing",
+              "pro rata payment",
+              "payment waterfall",
+              "application of proceeds",
+              "sharing of payments",
+              "ratable payments",
+              "consent of each Lender directly affected"
+            ],
+            "sectionHeaders": [
+              "Amendments, Waivers and Consents",
+              "Pro Rata Treatment",
+              "Sharing of Payments",
+              "Application of Payments",
+              "Payment Waterfall",
+              "Section [X] - Payments"
+            ],
+            "semanticVariants": [
+              "NYDJ protection for pro rata sharing",
+              "affected lender consent for waterfall changes",
+              "payment priority amendment protections",
+              "pro rata distribution protections",
+              "sharing provision protections"
+            ]
+          }
+        }
+      },
+      "family_id": "governance.amendments_voting",
+      "id": "governance.amendments_voting.pro_rata_sharing",
+      "kct_ref": [
+        "cat3.5"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "98.4%"
+      },
+      "name": "Pro Rata Sharing / Waterfall",
+      "negotiation_spectrum": {
+        "aggressive_position": "Majority vote for pro rata/waterfall amendments (not 100%). Required Revolving Lenders for revolver-only provisions.",
+        "dls_source": "DLS row 93",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(iv) modifications to provisions requiring pro rata payments, the \"waterfall\", priority of liens or proceeds of collateral and sharing of setoff provisions",
+          "100% vote for:"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "required_lender_threshold: 50pct vs 66.67pct",
+          "sacred_rights_scope: comprehensive_14_items vs narrow_core",
+          "pro_rata_modification: 100pct vs each_affected vs required_lenders",
+          "waterfall_modification: 100pct vs each_affected vs required_lenders",
+          "collateral_release_vote: 100pct vs each_affected vs required_lenders",
+          "guarantee_release_vote: 100pct vs each_affected vs required_lenders",
+          "voting_threshold_change: 100pct vs supermajority",
+          "sponsor_purchase_consent: 100pct vs required_lenders vs no_consent",
+          "class_voting: yes vs no",
+          "agent_provisions: agent_consent_required vs majority",
+          "technical_amendments: agent_borrower_only vs full_vote",
+          "mandatory_prepay_waiver: each_affected vs required_lenders"
+        ],
+        "market_position": "",
+        "preferred_position": "Modifications to pro rata payment, waterfall, lien priority, and collateral proceeds sharing require each affected lender consent",
+        "source": "R14-C"
+      },
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 4,
+          "term": "Commitment and giveaway"
+        },
+        {
+          "coverage": "full",
+          "row": 20,
+          "term": "LCs"
+        },
+        {
+          "coverage": "full",
+          "row": 49,
+          "term": "Documentation Precedent"
+        },
+        {
+          "coverage": "full",
+          "row": 131,
+          "term": "Voting"
+        },
+        {
+          "coverage": "full",
+          "row": 133,
+          "term": "Assignments – open market purchases"
+        },
+        {
+          "coverage": "full",
+          "row": 135,
+          "term": "Assignments – Borrower buybacks"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 93 (highlighted: affected-lender consent for pro rata/waterfall modifications); LME Provision Language Protection #6 (NYDJ: complete specification with 3 common weaknesses); PC Term Comparison Amendments section lines 495-496 (all lender/affected lender for pro rata; avoid carveout language)",
+      "pc_ref": [
+        "Amendments"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "VOTING_NYDJ_PROTECTION",
+          "label": "Voting - NYDJ Protection",
+          "schema_file": "voting-amendment-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "governance",
+          "mapping_confidence": 0.5129,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Number of business days before non-response is treated as consent. 10 BD, 5 BD, facility-specific, conditional.",
+          "dls_ref": [
+            "DLS:50:Marketing period"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.deemed_consent.response_period",
+          "kct_ref": [
+            "cat3.6"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "notice_10_bd": "69.1%",
+            "notice_5_bd": "20.0%"
+          },
+          "name": "Response Period",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 50 (Marketing period); KCT Cat 3 Item 6"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether non-responding lenders are dragged (deemed to consent, counted in numerator and denominator) or lose (excluded from denominator, reducing threshold). Drag is more borrower-favorable.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.deemed_consent.snooze_type",
+          "kct_ref": [
+            "cat3.6"
+          ],
+          "level": 3,
+          "name": "Snooze Type",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 6"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Which amendment matters are subject to deemed consent. Sacred rights are typically excluded. Some deals limit to ministerial or technical amendments only.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.deemed_consent.scope",
+          "kct_ref": [
+            "cat3.6"
+          ],
+          "level": 3,
+          "name": "Scope Limitation",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 6"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether deemed consent operates differently during an Event of Default. During EoD, borrower consent may not be needed at all. [].",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.deemed_consent.eod_exception",
+          "kct_ref": [
+            "cat3.6",
+            "cat3.13"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "explicit_flag": "5.5%"
+          },
+          "name": "EoD Exception",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 6; KCT Cat 3 Item 13"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "distinction between snooze-and-drag (non-responding lenders are deemed to have consented and are dragged into the amendment) and snooze-and-lose (non-responding lenders' commitments are excluded from the denominator of the consent threshold calculation rather than counted as consents)",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.deemed_consent.snooze_and_drag_vs_snooze_and_lose_d",
+          "kct_ref": [
+            "KCT:Cat3:6"
+          ],
+          "level": 3,
+          "name": "Snooze-and-drag vs snooze-and-lose distinction",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "rationale for deemed consent provisions as an accommodation for CLOs that may be unable to actively vote within the specified response period, recognizing that managed fund vehicles face operational constraints on affirmative consent to amendments",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.deemed_consent.clo_accommodation_rationale",
+          "kct_ref": [
+            "KCT:Cat3:6"
+          ],
+          "level": 3,
+          "name": "CLO accommodation rationale",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "interaction of deemed consent with amend-and-extend transactions, where snooze-and-drag allows maturity extensions to proceed by deeming non-responding lenders as consenting, with extending lenders forming a new class on terms no less favorable than the original",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.deemed_consent.amend_and_extend_interaction",
+          "kct_ref": [
+            "KCT:Cat3:6"
+          ],
+          "level": 3,
+          "name": "Amend-and-extend interaction",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 17 (Unknown); KCT Cat 1 Item 2; PC Term Comparison: 2. Article 2 - Amend and Extend/Refi; LME Provision Language, Protections Against Using a Credit Agreement's Amend-and-Extend Provisions to Carry Out a Non-Pro-Rata LME Exchange (Better Health)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Mechanism by which non-responding lenders are automatically deemed to have consented to an amendment after a specified period. KCT Category 3 item 6 flags: 'Snooze & drag/deemed consent for non-responding lenders to structural adjustments/affected lender matters in facilities where LENDER1 is a lender.' KCT footnote 10 distinguishes: 'Snooze & Drag -- provides that lenders who do not actively respond to a request to consent to an amendment within the specified time period shall be deemed to have consented. Primarily seen in amend/extend transactions to accommodate CLOs who may be unable to actively vote. Contrast with Snooze & Lose -- provides that lenders who do not actively respond will not have their commitments counted in the denominator.' PC Term Comparison: 'Reject snooze you lose concept.'",
+      "domain_id": "governance",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "amendments_voting",
+        "extraction_ready": true,
+        "playbook_ref": "amendments_voting.loan_extension",
+        "section_locations": [
+          "ARTICLE 11",
+          "ARTICLE 6",
+          "ARTICLE II",
+          "Section 2.14",
+          "Section 2.19"
+        ],
+        "shape_ref": "amendments_voting.loan_extension",
+        "aligned_difficulty": "hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "governance.amendments_voting",
+      "id": "governance.amendments_voting.deemed_consent",
+      "kct_ref": [
+        "cat3.6",
+        "cat3.13"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "notice_10_bd": "69.1%",
+        "notice_5_bd": "20.0%",
+        "prevalence": "88.7%"
+      },
+      "name": "Deemed Consent",
+      "negotiation_spectrum": {
+        "aggressive_position": "Majority vote for pro rata/waterfall amendments (not 100%). Required Revolving Lenders for revolver-only provisions.",
+        "dls_source": "DLS row 93",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(iv) modifications to provisions requiring pro rata payments, the \"waterfall\", priority of liens or proceeds of collateral and sharing of setoff provisions",
+          "100% vote for:"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "required_lender_threshold: 50pct vs 66.67pct",
+          "sacred_rights_scope: comprehensive_14_items vs narrow_core",
+          "pro_rata_modification: 100pct vs each_affected vs required_lenders",
+          "waterfall_modification: 100pct vs each_affected vs required_lenders",
+          "collateral_release_vote: 100pct vs each_affected vs required_lenders",
+          "guarantee_release_vote: 100pct vs each_affected vs required_lenders",
+          "voting_threshold_change: 100pct vs supermajority",
+          "sponsor_purchase_consent: 100pct vs required_lenders vs no_consent",
+          "class_voting: yes vs no",
+          "agent_provisions: agent_consent_required vs majority",
+          "technical_amendments: agent_borrower_only vs full_vote",
+          "mandatory_prepay_waiver: each_affected vs required_lenders"
+        ],
+        "market_position": "",
+        "preferred_position": "10 business day deemed consent period for Borrower; no deemed consent mechanism for lender-side approvals",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "amendments_voting.deemed_consent"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 132,
+          "term": "Assignments – consents"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "KCT Category 3 item 6 and footnote 10 (Snooze & Drag vs. Snooze & Lose distinction); PC Term Comparison Amendments section line 499 ('Reject snooze you lose concept')",
+      "pc_ref": [
+        "Amendments"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Procedural requirements for replacing a non-consenting lender: identification of replacement lender, notice period, assignment documentation, and agent cooperation requirements. []",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.yank_a_bank.replacement_mechanics",
+          "kct_ref": [
+            "cat3.6",
+            "cat3.7"
+          ],
+          "level": 3,
+          "name": "Replacement Mechanics",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 6; KCT Cat 3 Item 7"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether the non-consenting lender must be bought out at par (full principal plus accrued interest) or whether below-par buyouts are permitted.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.yank_a_bank.prepayment_at_par",
+          "kct_ref": [
+            "cat3.6",
+            "cat3.7",
+            "cat5.3"
+          ],
+          "level": 3,
+          "name": "Prepayment at Par",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 6; KCT Cat 3 Item 7; KCT Cat 5 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether a replacement lender can vote on the amendment before the assignment is consummated, creating a circular governance issue where the replacement lender approves its own existence.",
+          "dls_ref": [
+            "DLS:60:Lender Selection"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "hard",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.yank_a_bank.prospective_lender_voting",
+          "kct_ref": [
+            "cat3.6",
+            "cat3.7"
+          ],
+          "level": 3,
+          "name": "Prospective Lender Voting",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 60 (Lender Selection); KCT Cat 3 Item 6; KCT Cat 3 Item 7"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Allowing non-lenders to vote on amendments creates circular governance where the replacement lender approves the very amendment that creates it.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.yank_a_bank.pro_forma_required_lenders_calculation",
+          "kct_ref": [
+            "KCT:Cat3:7"
+          ],
+          "level": 3,
+          "name": "Pro forma Required Lenders calculation",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 48 (Unknown); Review Template Row 50 (Unknown); KCT Cat 1 Item 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Mechanism allowing the borrower to replace non-consenting lenders with willing lenders at par, breaking holdout positions. Interacts with sacred rights and deemed consent.",
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "amendments_voting",
+        "extraction_ready": true,
+        "playbook_ref": "amendments_voting.loan_extension",
+        "section_locations": [
+          "ARTICLE 11",
+          "ARTICLE 6",
+          "ARTICLE II",
+          "Section 2.14",
+          "Section 2.19"
+        ],
+        "shape_ref": "amendments_voting.loan_extension"
+      },
+      "family_id": "governance.amendments_voting",
+      "id": "governance.amendments_voting.yank_a_bank",
+      "kct_ref": [
+        "cat3.6",
+        "cat3.7"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "kct_cat3_benchmark_enrichment": "Enrich benchmarks with segment-specific data (LMM/CMM/UMM/BSL) for Prospective Lender Voting."
+      },
+      "name": "Yank-a-Bank",
+      "negotiation_spectrum": {
+        "aggressive_position": "Majority vote for pro rata/waterfall amendments (not 100%). Required Revolving Lenders for revolver-only provisions.",
+        "dls_source": "DLS row 93",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(iv) modifications to provisions requiring pro rata payments, the \"waterfall\", priority of liens or proceeds of collateral and sharing of setoff provisions",
+          "100% vote for:"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "required_lender_threshold: 50pct vs 66.67pct",
+          "sacred_rights_scope: comprehensive_14_items vs narrow_core",
+          "pro_rata_modification: 100pct vs each_affected vs required_lenders",
+          "waterfall_modification: 100pct vs each_affected vs required_lenders",
+          "collateral_release_vote: 100pct vs each_affected vs required_lenders",
+          "guarantee_release_vote: 100pct vs each_affected vs required_lenders",
+          "voting_threshold_change: 100pct vs supermajority",
+          "sponsor_purchase_consent: 100pct vs required_lenders vs no_consent",
+          "class_voting: yes vs no",
+          "agent_provisions: agent_consent_required vs majority",
+          "technical_amendments: agent_borrower_only vs full_vote",
+          "mandatory_prepay_waiver: each_affected vs required_lenders"
+        ],
+        "market_position": "",
+        "preferred_position": "Borrower right to replace non-consenting lenders with willing assignees; replacement at par, no premium",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "amendments_voting.yank_a_bank"
+      ],
+      "review_ref": [
+        {
+          "coverage": "partial",
+          "row": 7,
+          "term": "Other advisory roles"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "KCT Cat 3 Item 6; KCT Cat 3 Item 7; Review Template Row 7 (Other advisory roles)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether subordination amendments require all-lender consent (Risepoint model, most restrictive) or affected-lender consent (Jetstream/Bluebird model, market standard).",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.serta_blockers.consent_standard",
+          "level": 3,
+          "market_benchmarks": {
+            "affected_lender_consent": "Jetstream/Bluebird",
+            "all_lender_consent": "Risepoint"
+          },
+          "name": "Consent Standard",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether the blocker covers amendments that have the 'effect of' subordinating debt, not just those that directly subordinate. The 'effect of' formulation captures indirect subordination (Wesco/Incora precedent).",
+          "domain_id": "governance",
+          "extraction_difficulty": "hard",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.serta_blockers.effect_of_language",
+          "level": 3,
+          "name": "Effect-Of Language",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 4; LME Provision Language, \"Effect of\" Language Included in Sacred Rights"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Exception permitting subordination if all lenders are offered the opportunity to participate ratably in the new priming debt, preserving proportional treatment.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.serta_blockers.ratable_participation_carveout",
+          "level": 3,
+          "name": "Ratable Participation Carveout",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Provisions preventing amendments that subordinate existing debt in lien or payment priority without individual affected-lender consent. LME Provision Language Protection #5 (Serta): 'A provision in the sacred rights that requires heightened lender consent (ideally affected lender consent) for amendments that subordinate the debt in right of lien or payment priority.' Common weaknesses: (a) does not cover both lien and payment priority; (b) ratable offer exception without 'same terms' requirement; (c) carve-out for debt 'as otherwise permitted' not limited to closing date terms; (d) carves out specific types of permitted priming Indebtedness; (e) DIP carve-out without ratable participation (American Tire loophole). PC Term Comparison: 'include strong Serta protection. Clients will likely live with offer to participate but must include on same terms (including fees).'",
+      "dls_ref": [
+        "DLS:17:Amend and Extend"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "amendments_voting",
+        "extraction_ready": true,
+        "playbook_ref": "amendments_voting.loan_extension",
+        "section_locations": [
+          "ARTICLE 11",
+          "ARTICLE 6",
+          "ARTICLE II",
+          "Section 2.14",
+          "Section 2.19"
+        ],
+        "shape_ref": "amendments_voting.loan_extension",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.702113+00:00",
+          "term_packs": {
+            "VOTING_SERTA_BLOCKER": {
+              "label": "Voting - Serta Blocker",
+              "category": "VOTING_ASSIGNMENTS",
+              "exactPhrases": [
+                "[Includes] / [Does not include] Serta protection",
+                "Serta blocker applies across both lien and payment subordination",
+                "subordinate the Liens securing the Obligations",
+                "subordinate the right to payment",
+                "consent of each Lender directly and adversely affected",
+                "no amendment shall subordinate",
+                "without the consent of each Lender",
+                "non-pro rata exchange",
+                "uptier exchange"
+              ],
+              "sectionHeaders": [
+                "Amendments, Waivers and Consents",
+                "Amendment and Waiver",
+                "Subordination",
+                "Lien Priority",
+                "Section [X] - Amendments"
+              ],
+              "semanticVariants": [
+                "Serta blocker protection against uptier exchanges",
+                "affected lender consent for lien subordination",
+                "payment subordination protections",
+                "non-pro rata exchange prevention",
+                "priming transaction protections",
+                "subordination consent requirements"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "[Includes] / [Does not include] Serta protection",
+              "Serta blocker applies across both lien and payment subordination",
+              "subordinate the Liens securing the Obligations",
+              "subordinate the right to payment",
+              "consent of each Lender directly and adversely affected",
+              "no amendment shall subordinate",
+              "without the consent of each Lender",
+              "non-pro rata exchange",
+              "uptier exchange"
+            ],
+            "sectionHeaders": [
+              "Amendments, Waivers and Consents",
+              "Amendment and Waiver",
+              "Subordination",
+              "Lien Priority",
+              "Section [X] - Amendments"
+            ],
+            "semanticVariants": [
+              "Serta blocker protection against uptier exchanges",
+              "affected lender consent for lien subordination",
+              "payment subordination protections",
+              "non-pro rata exchange prevention",
+              "priming transaction protections",
+              "subordination consent requirements"
+            ]
+          }
+        }
+      },
+      "family_id": "governance.amendments_voting",
+      "id": "governance.amendments_voting.serta_blockers",
+      "kct_ref": [
+        "cat3.15"
+      ],
+      "level": 2,
+      "name": "Anti-Serta / Anti-Priming Provisions",
+      "negotiation_spectrum": {
+        "aggressive_position": "Majority vote for pro rata/waterfall amendments (not 100%). Required Revolving Lenders for revolver-only provisions.",
+        "dls_source": "DLS row 93",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(iv) modifications to provisions requiring pro rata payments, the \"waterfall\", priority of liens or proceeds of collateral and sharing of setoff provisions",
+          "100% vote for:"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "required_lender_threshold: 50pct vs 66.67pct",
+          "sacred_rights_scope: comprehensive_14_items vs narrow_core",
+          "pro_rata_modification: 100pct vs each_affected vs required_lenders",
+          "waterfall_modification: 100pct vs each_affected vs required_lenders",
+          "collateral_release_vote: 100pct vs each_affected vs required_lenders",
+          "guarantee_release_vote: 100pct vs each_affected vs required_lenders",
+          "voting_threshold_change: 100pct vs supermajority",
+          "sponsor_purchase_consent: 100pct vs required_lenders vs no_consent",
+          "class_voting: yes vs no",
+          "agent_provisions: agent_consent_required vs majority",
+          "technical_amendments: agent_borrower_only vs full_vote",
+          "mandatory_prepay_waiver: each_affected vs required_lenders"
+        ],
+        "market_position": "",
+        "preferred_position": "Required Lenders (>50% unused + outstanding). Sacred rights: each affected lender for rate/principal/maturity/payment/commitment changes. 100% for collateral/guarantee release, voting threshold changes, sponsor purchase. Class voting. Agent/LC Issuer consent for provisions affecting them.",
+        "source": "R14-C"
+      },
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 127,
+          "term": "Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "LME Provision Language Protection #5 (Serta: definition, drafting considerations, 5 common weaknesses, RackSpace sample clause); PC Term Comparison Amendments section line 498 (strong Serta, same terms including fees)",
+      "pc_ref": [
+        "Amendments"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "VOTING_SERTA_BLOCKER",
+          "label": "Voting - Serta Blocker",
+          "schema_file": "voting-amendment-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "governance",
+          "mapping_confidence": 0.5288,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "How a net short position is defined: typically when a lender's CDS/derivative notional exceeds its loan exposure, creating an economic interest in the borrower's default. []",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.net_short.definition",
+          "kct_ref": [
+            "cat3.3",
+            "cat3.4"
+          ],
+          "level": 3,
+          "name": "Net Short Position Definition",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 3; KCT Cat 3 Item 4"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Which financial instruments count toward net short calculation: CDS, total return swaps, equity puts, other credit derivatives. Scope determines effectiveness of the protection. [] []",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.net_short.covered_instruments",
+          "kct_ref": [
+            "cat3.3",
+            "cat3.4"
+          ],
+          "level": 3,
+          "name": "Covered Instruments",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 3; KCT Cat 3 Item 4"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Net-short lender loses all voting rights, counted neither in numerator nor denominator of Required Lender calculation.",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.amendments_voting",
+              "id": "governance.amendments_voting.net_short.voting_treatment.full_disenfranchisement",
+              "kct_ref": [
+                "cat3.3"
+              ],
+              "level": 4,
+              "name": "Full Disenfranchisement",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 3"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Net-short lender's vote is automatically counted as voting with the majority, neutralizing any contrarian influence.",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.amendments_voting",
+              "id": "governance.amendments_voting.net_short.voting_treatment.deemed_with_majority",
+              "kct_ref": [
+                "cat3.3",
+                "cat3.7"
+              ],
+              "level": 4,
+              "name": "Deemed Voting with Majority",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 3; KCT Cat 3 Item 7"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Consequences for net-short lenders: full disenfranchisement (cannot vote at all), deemed voting with majority (vote counted as pro-majority), or exclusion from denominator. []",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.net_short.voting_treatment",
+          "kct_ref": [
+            "cat3.3",
+            "cat3.7"
+          ],
+          "level": 3,
+          "name": "Voting Treatment",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 136,
+              "term": "Assignments – voting limit on Debt Fund Affiliates"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 3; KCT Cat 3 Item 7; Review Template Row 136 (Assignments – voting limit on Debt Fund Affiliates)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether net-short status is self-certified by the lender or verified by the administrative agent. Self-certification is standard; agent verification is rare.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.net_short.certification",
+          "kct_ref": [
+            "cat3.3"
+          ],
+          "level": 3,
+          "name": "Certification Mechanism",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 3"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Regulated banks are exempted from net-short restrictions because their hedging activities are supervised and typically for risk management rather than speculative purposes.",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.amendments_voting",
+              "id": "governance.amendments_voting.net_short.carveouts.regulated_bank",
+              "kct_ref": [
+                "cat3.3"
+              ],
+              "level": 4,
+              "name": "Regulated Bank Carveout",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 3"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Market makers are exempted because they maintain positions on both sides of the credit for liquidity provision, not adverse economic positioning.",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.amendments_voting",
+              "id": "governance.amendments_voting.net_short.carveouts.market_maker",
+              "kct_ref": [
+                "cat3.3"
+              ],
+              "level": 4,
+              "name": "Market Maker Carveout",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 3"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Revolving lenders who maintain ongoing funding obligations are exempted as their economic interest is aligned with borrower health through draw exposure.",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.amendments_voting",
+              "id": "governance.amendments_voting.net_short.carveouts.revolving_lender",
+              "kct_ref": [
+                "cat3.3"
+              ],
+              "level": 4,
+              "name": "Revolving Lender Carveout",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 3"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Standard exceptions for regulated banks, revolving lenders, and market makers who may hold offsetting positions for hedging rather than speculative purposes. []",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.net_short.carveouts",
+          "kct_ref": [
+            "cat3.3",
+            "cat3.4"
+          ],
+          "level": 3,
+          "name": "Net Short Carveouts",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 3; KCT Cat 3 Item 4"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Overbroad NSL provisions can disenfranchise legitimate lenders (including bank affiliates with AWM or trading positions) from voting.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.net_short.market_making_activity_carve_out",
+          "kct_ref": [
+            "KCT:Cat3:3"
+          ],
+          "level": 3,
+          "name": "Market-making activity carve-out",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 2"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Restrictions on voting rights of lenders with net short positions. KCT Category 3 item 3 flags: 'Inclusion of \"Net Short\" Lender disenfranchisement provisions that could impact Lenders' (i) voting rights, and/or (ii) ability to transfer the loan to NSL, including treating NSL as defaulting lenders, without customary carve-outs for (x) Regulated Banks and Revolving Lenders and the affiliates of Regulated Banks and Revolving Lenders and (y) market making activities.' PC Term Comparison: 'Net Short: Should not be an issue for Clients unless an affiliate of a regulated bank.' KCT footnote 8 explains that net short provisions would affect affiliates including Asset Wealth Management groups. The concern is that lenders with net short positions have misaligned incentives -- they profit from borrower distress and may vote to accelerate or reject amendments that would benefit the borrower.",
+      "domain_id": "governance",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "amendments_voting",
+        "extraction_ready": true,
+        "playbook_ref": "amendments_voting.loan_extension",
+        "section_locations": [
+          "ARTICLE 11",
+          "ARTICLE 6",
+          "ARTICLE II",
+          "Section 2.14",
+          "Section 2.19"
+        ],
+        "shape_ref": "amendments_voting.loan_extension",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.686584+00:00",
+          "term_packs": {
+            "VOTING_NET_SHORT": {
+              "label": "Voting - Net Short Lender Provisions",
+              "category": "VOTING_ASSIGNMENTS",
+              "exactPhrases": [
+                "[Includes 'net short' provisions]",
+                "Net Short Lender",
+                "net short position",
+                "shall be excluded from voting",
+                "shall not be entitled to vote",
+                "disqualified from voting",
+                "adverse economic interest",
+                "deemed to have voted"
+              ],
+              "sectionHeaders": [
+                "Amendments, Waivers and Consents",
+                "Net Short Lenders",
+                "Voting",
+                "Required Lenders",
+                "Disqualified Lenders"
+              ],
+              "semanticVariants": [
+                "net short lender voting disenfranchisement",
+                "short position voting restrictions",
+                "adverse economic interest voting",
+                "lender activism prevention",
+                "voting rights for short positions",
+                "economic interest alignment requirements"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "[Includes 'net short' provisions]",
+              "Net Short Lender",
+              "net short position",
+              "shall be excluded from voting",
+              "shall not be entitled to vote",
+              "disqualified from voting",
+              "adverse economic interest",
+              "deemed to have voted"
+            ],
+            "sectionHeaders": [
+              "Amendments, Waivers and Consents",
+              "Net Short Lenders",
+              "Voting",
+              "Required Lenders",
+              "Disqualified Lenders"
+            ],
+            "semanticVariants": [
+              "net short lender voting disenfranchisement",
+              "short position voting restrictions",
+              "adverse economic interest voting",
+              "lender activism prevention",
+              "voting rights for short positions",
+              "economic interest alignment requirements"
+            ]
+          }
+        }
+      },
+      "family_id": "governance.amendments_voting",
+      "id": "governance.amendments_voting.net_short",
+      "kct_ref": [
+        "cat3.3",
+        "cat3.4"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "adoption_rate": "12.8%",
+        "kct_cat3_benchmark_enrichment": "Enrich benchmarks with segment-specific data (LMM/CMM/UMM/BSL) for Net Short Lender Disenfranchisement."
+      },
+      "name": "Net Short Lender Restrictions",
+      "negotiation_spectrum": {
+        "aggressive_position": "Majority vote for pro rata/waterfall amendments (not 100%). Required Revolving Lenders for revolver-only provisions.",
+        "dls_source": "DLS row 93",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(iv) modifications to provisions requiring pro rata payments, the \"waterfall\", priority of liens or proceeds of collateral and sharing of setoff provisions",
+          "100% vote for:"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "required_lender_threshold: 50pct vs 66.67pct",
+          "sacred_rights_scope: comprehensive_14_items vs narrow_core",
+          "pro_rata_modification: 100pct vs each_affected vs required_lenders",
+          "waterfall_modification: 100pct vs each_affected vs required_lenders",
+          "collateral_release_vote: 100pct vs each_affected vs required_lenders",
+          "guarantee_release_vote: 100pct vs each_affected vs required_lenders",
+          "voting_threshold_change: 100pct vs supermajority",
+          "sponsor_purchase_consent: 100pct vs required_lenders vs no_consent",
+          "class_voting: yes vs no",
+          "agent_provisions: agent_consent_required vs majority",
+          "technical_amendments: agent_borrower_only vs full_vote",
+          "mandatory_prepay_waiver: each_affected vs required_lenders"
+        ],
+        "market_position": "",
+        "preferred_position": "Required Lenders (>50% unused + outstanding). Sacred rights: each affected lender for rate/principal/maturity/payment/commitment changes. 100% for collateral/guarantee release, voting threshold changes, sponsor purchase. Class voting. Agent/LC Issuer consent for provisions affecting them.",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "amendments_voting.net_short_provisions"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 8,
+          "term": "Expense Reimbursement"
+        },
+        {
+          "coverage": "full",
+          "row": 49,
+          "term": "Documentation Precedent"
+        },
+        {
+          "coverage": "full",
+          "row": 129,
+          "term": "Events of Default"
+        },
+        {
+          "coverage": "full",
+          "row": 132,
+          "term": "Assignments – consents"
+        },
+        {
+          "coverage": "full",
+          "row": 134,
+          "term": "Assignments – Affiliated lenders and buybacks"
+        },
+        {
+          "coverage": "full",
+          "row": 136,
+          "term": "Assignments – voting limit on Debt Fund Affiliates"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "KCT Category 3 item 3 and footnote 8 (net short disenfranchisement with carveout requirements); PC Term Comparison Events of Default section line 483 ('Should not be an issue for Clients unless affiliate of regulated bank')",
+      "pc_ref": [
+        "Events of Default"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "VOTING_NET_SHORT",
+          "label": "Voting - Net Short Lender Provisions",
+          "schema_file": "voting-amendment-enhanced.schema.ts",
+          "field_count": 2,
+          "r1_domain": "governance",
+          "mapping_confidence": 0.6321,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether purchased loans must be permanently cancelled upon acquisition, eliminating the voting rights associated with that debt, or may be held and potentially voted.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.omp_voting.cancellation_requirement",
+          "kct_ref": [
+            "cat3.7"
+          ],
+          "level": 3,
+          "name": "Cancellation Requirement",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 7"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether uncancelled loans held by borrower or affiliates retain voting rights. If yes, creates voting manipulation risk where borrower controls both sides of the amendment process.",
+          "domain_id": "governance",
+          "extraction_difficulty": "hard",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.omp_voting.voting_while_held",
+          "level": 3,
+          "name": "Voting While Held",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 131 (Unknown); KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether open market purchases must be offered to all lenders on a pro rata basis, or whether non-pro-rata (selective) purchases are permitted.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.omp_voting.pro_rata_requirement",
+          "kct_ref": [
+            "cat3.5"
+          ],
+          "level": 3,
+          "name": "Pro Rata Offer Requirement",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 133,
+              "term": "Assignments – open market purchases"
+            },
+            {
+              "coverage": "full",
+              "row": 135,
+              "term": "Assignments – Borrower buybacks"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 5; Review Template Row 133 (Assignments – open market purchases); Review Template Row 135 (Assignments – Borrower buybacks)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Treatment of debt purchased by the borrower or affiliates in the open market for amendment, waiver, consent, and modification purposes. DLS Preferred row 96 (Buyback Provisions) specifies conditions: '(1) no event of default has occurred and is continuing, (2) any such loans are permanently cancelled immediately upon acquisition thereof, and (3) the proceeds of the Revolving Facility are not used to make any such purchases.' DLS Preferred row 95 (Debt Fund Affiliates) details voting restrictions: 'neither the Sponsor nor any Non-Debt Fund Affiliate shall be permitted to vote on matters submitted to lenders' with limited exceptions for commitments, payment dates, amounts, and disproportionate effects. Debt Fund Affiliates 'cannot, in the aggregate, account for more than 49.9% of the amounts included in the determination of whether such consent or waiver has been obtained.' PC Term Comparison: 'No vote/cap vote at 49.9% for debt fund affiliates.'",
+      "dls_ref": [
+        "DLS:93:Voting"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "amendments_voting",
+        "extraction_ready": true,
+        "playbook_ref": "amendments_voting.loan_extension",
+        "section_locations": [
+          "ARTICLE 11",
+          "ARTICLE 6",
+          "ARTICLE II",
+          "Section 2.14",
+          "Section 2.19"
+        ],
+        "shape_ref": "amendments_voting.loan_extension"
+      },
+      "family_id": "governance.amendments_voting",
+      "id": "governance.amendments_voting.omp_voting",
+      "level": 2,
+      "name": "Open Market Purchase Voting",
+      "negotiation_spectrum": {
+        "aggressive_position": "Majority vote for pro rata/waterfall amendments (not 100%). Required Revolving Lenders for revolver-only provisions.",
+        "dls_source": "DLS row 93",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(iv) modifications to provisions requiring pro rata payments, the \"waterfall\", priority of liens or proceeds of collateral and sharing of setoff provisions",
+          "100% vote for:"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "required_lender_threshold: 50pct vs 66.67pct",
+          "sacred_rights_scope: comprehensive_14_items vs narrow_core",
+          "pro_rata_modification: 100pct vs each_affected vs required_lenders",
+          "waterfall_modification: 100pct vs each_affected vs required_lenders",
+          "collateral_release_vote: 100pct vs each_affected vs required_lenders",
+          "guarantee_release_vote: 100pct vs each_affected vs required_lenders",
+          "voting_threshold_change: 100pct vs supermajority",
+          "sponsor_purchase_consent: 100pct vs required_lenders vs no_consent",
+          "class_voting: yes vs no",
+          "agent_provisions: agent_consent_required vs majority",
+          "technical_amendments: agent_borrower_only vs full_vote",
+          "mandatory_prepay_waiver: each_affected vs required_lenders"
+        ],
+        "market_position": "",
+        "preferred_position": "Required Lenders (>50% unused + outstanding). Sacred rights: each affected lender for rate/principal/maturity/payment/commitment changes. 100% for collateral/guarantee release, voting threshold changes, sponsor purchase. Class voting. Agent/LC Issuer consent for provisions affecting them.",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "amendments_voting.open_market_purchase_voting"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 96 (buyback conditions: no EoD, immediate cancellation, no revolver draw); DLS Preferred row 95 (affiliate voting restrictions: no vote, 49.9% cap); PC Term Comparison Assignments section line 511 ('No vote/cap vote at 49.9%')",
+      "pc_ref": [
+        "Assignments"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Specific percentage required for supermajority actions: 66.67% (two-thirds) or 75% (three-quarters) most common. Set above the Required Lenders threshold for heightened protection.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.supermajority.threshold",
+          "level": 3,
+          "name": "Threshold Percentage",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Which amendments or actions trigger supermajority voting rather than simple majority. Typically includes matters more significant than standard amendments but not rising to sacred-right level.",
+          "dls_ref": [
+            73
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.supermajority.scope",
+          "level": 3,
+          "name": "Scope of Supermajority Matters",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 73"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Amendments requiring higher-than-majority thresholds (66.67%, 75%) but less than unanimous consent. An intermediate governance tier between Required Lender and all-lender votes.",
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "amendments_voting",
+        "extraction_ready": true,
+        "playbook_ref": "amendments_voting.loan_extension",
+        "section_locations": [
+          "ARTICLE 11",
+          "ARTICLE 6",
+          "ARTICLE II",
+          "Section 2.14",
+          "Section 2.19"
+        ],
+        "shape_ref": "amendments_voting.loan_extension"
+      },
+      "family_id": "governance.amendments_voting",
+      "id": "governance.amendments_voting.supermajority",
+      "kct_ref": [
+        "cat3.7",
+        "cat4.11"
+      ],
+      "level": 2,
+      "name": "Supermajority Provisions",
+      "negotiation_spectrum": {
+        "aggressive_position": "Majority vote for pro rata/waterfall amendments (not 100%). Required Revolving Lenders for revolver-only provisions.",
+        "dls_source": "DLS row 93",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(iv) modifications to provisions requiring pro rata payments, the \"waterfall\", priority of liens or proceeds of collateral and sharing of setoff provisions",
+          "100% vote for:"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "required_lender_threshold: 50pct vs 66.67pct",
+          "sacred_rights_scope: comprehensive_14_items vs narrow_core",
+          "pro_rata_modification: 100pct vs each_affected vs required_lenders",
+          "waterfall_modification: 100pct vs each_affected vs required_lenders",
+          "collateral_release_vote: 100pct vs each_affected vs required_lenders",
+          "guarantee_release_vote: 100pct vs each_affected vs required_lenders",
+          "voting_threshold_change: 100pct vs supermajority",
+          "sponsor_purchase_consent: 100pct vs required_lenders vs no_consent",
+          "class_voting: yes vs no",
+          "agent_provisions: agent_consent_required vs majority",
+          "technical_amendments: agent_borrower_only vs full_vote",
+          "mandatory_prepay_waiver: each_affected vs required_lenders"
+        ],
+        "market_position": "",
+        "preferred_position": "100% vote required for: release of all/substantially all guarantors or collateral, voting threshold changes, amendment section changes",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "amendments_voting.supermajority_provisions"
+      ],
+      "type": "concept",
+      "definition_source": "KCT Cat 3 Item 7; KCT Cat 4 Item 11"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Formal modification of credit agreement terms through a written instrument executed by the requisite parties (borrower, required lenders, and administrative agent). Distinguished from waivers (which excuse past non-compliance without changing the agreement) and consents (which authorize specific actions). The voting threshold for amendments depends on whether the provision being modified is a sacred right, operational term, or economic term.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.amendment_types.amendment",
+          "kct_ref": [
+            "cat3.7"
+          ],
+          "level": 3,
+          "name": "Amendment",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 7"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "One-time forbearance from enforcing a specific provision or default, without changing the underlying agreement terms. Typically limited in duration or to a specific event.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.amendment_types.waiver",
+          "kct_ref": [
+            "cat3.7"
+          ],
+          "level": 3,
+          "name": "Waiver",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 7"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Amendments for purely administrative, technical, or ministerial purposes (e.g., correcting errors, conforming references) that can be made by agent and borrower without lender consent.",
+          "domain_id": "governance",
+          "extraction_difficulty": "easy",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.amendment_types.technical_amendment",
+          "kct_ref": [
+            "cat3.6",
+            "cat3.7"
+          ],
+          "level": 3,
+          "name": "Technical / Administrative Amendment",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 6; KCT Cat 3 Item 7"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Distinction between different forms of credit agreement modification: amendments (permanent changes), waivers (one-time forbearance), supplements (additions), and consents (specific approvals). Each has different procedural and substantive implications.",
+      "domain_id": "governance",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "amendments_voting",
+        "extraction_ready": true,
+        "playbook_ref": "amendments_voting.loan_extension",
+        "section_locations": [
+          "ARTICLE 11",
+          "ARTICLE 6",
+          "ARTICLE II",
+          "Section 2.14",
+          "Section 2.19"
+        ],
+        "shape_ref": "amendments_voting.loan_extension",
+        "aligned_difficulty": "hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "governance.amendments_voting",
+      "id": "governance.amendments_voting.amendment_types",
+      "kct_ref": [
+        "cat3.6",
+        "cat3.7"
+      ],
+      "level": 2,
+      "name": "Amendment Types",
+      "negotiation_spectrum": {
+        "aggressive_position": "Majority vote for pro rata/waterfall amendments (not 100%). Required Revolving Lenders for revolver-only provisions.",
+        "dls_source": "DLS row 93",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(iv) modifications to provisions requiring pro rata payments, the \"waterfall\", priority of liens or proceeds of collateral and sharing of setoff provisions",
+          "100% vote for:"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "required_lender_threshold: 50pct vs 66.67pct",
+          "sacred_rights_scope: comprehensive_14_items vs narrow_core",
+          "pro_rata_modification: 100pct vs each_affected vs required_lenders",
+          "waterfall_modification: 100pct vs each_affected vs required_lenders",
+          "collateral_release_vote: 100pct vs each_affected vs required_lenders",
+          "guarantee_release_vote: 100pct vs each_affected vs required_lenders",
+          "voting_threshold_change: 100pct vs supermajority",
+          "sponsor_purchase_consent: 100pct vs required_lenders vs no_consent",
+          "class_voting: yes vs no",
+          "agent_provisions: agent_consent_required vs majority",
+          "technical_amendments: agent_borrower_only vs full_vote",
+          "mandatory_prepay_waiver: each_affected vs required_lenders"
+        ],
+        "market_position": "",
+        "preferred_position": "Required Lenders (>50% unused + outstanding). Sacred rights: each affected lender for rate/principal/maturity/payment/commitment changes. 100% for collateral/guarantee release, voting threshold changes, sponsor purchase. Class voting. Agent/LC Issuer consent for provisions affecting them.",
+        "source": "R14-C"
+      },
+      "type": "concept",
+      "definition_source": "KCT Cat 3 Item 6; KCT Cat 3 Item 7"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Which tranches receive separate class voting rights: revolver lenders, DDTL lenders, incremental facility lenders, and any other separately identified class.",
+          "dls_ref": [
+            73
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.separate_class_voting.tranche_scope",
+          "level": 3,
+          "name": "Tranche Scope",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 73"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Which amendments trigger separate class voting: changes to pricing, maturity, amortization, or other terms that disproportionately affect one tranche.",
+          "dls_ref": [
+            93
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.separate_class_voting.affected_matters",
+          "level": 3,
+          "name": "Affected Matters",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 93"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Requirement for separate approval from specific facility tranches (DDTL, revolver) for amendments affecting their terms. Prevents larger tranches from imposing changes on smaller ones. 100% prevalence.",
+      "dls_ref": [
+        "DLS:93:Voting"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "amendments_voting",
+        "extraction_ready": true,
+        "playbook_ref": "amendments_voting.loan_extension",
+        "section_locations": [
+          "ARTICLE 11",
+          "ARTICLE 6",
+          "ARTICLE II",
+          "Section 2.14",
+          "Section 2.19"
+        ],
+        "shape_ref": "amendments_voting.loan_extension"
+      },
+      "family_id": "governance.amendments_voting",
+      "id": "governance.amendments_voting.separate_class_voting",
+      "level": 2,
+      "name": "Separate Class Voting",
+      "negotiation_spectrum": {
+        "aggressive_position": "Majority vote for pro rata/waterfall amendments (not 100%). Required Revolving Lenders for revolver-only provisions.",
+        "dls_source": "DLS row 93",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(iv) modifications to provisions requiring pro rata payments, the \"waterfall\", priority of liens or proceeds of collateral and sharing of setoff provisions",
+          "100% vote for:"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "required_lender_threshold: 50pct vs 66.67pct",
+          "sacred_rights_scope: comprehensive_14_items vs narrow_core",
+          "pro_rata_modification: 100pct vs each_affected vs required_lenders",
+          "waterfall_modification: 100pct vs each_affected vs required_lenders",
+          "collateral_release_vote: 100pct vs each_affected vs required_lenders",
+          "guarantee_release_vote: 100pct vs each_affected vs required_lenders",
+          "voting_threshold_change: 100pct vs supermajority",
+          "sponsor_purchase_consent: 100pct vs required_lenders vs no_consent",
+          "class_voting: yes vs no",
+          "agent_provisions: agent_consent_required vs majority",
+          "technical_amendments: agent_borrower_only vs full_vote",
+          "mandatory_prepay_waiver: each_affected vs required_lenders"
+        ],
+        "market_position": "",
+        "preferred_position": "Required Lenders (>50% unused + outstanding). Sacred rights: each affected lender for rate/principal/maturity/payment/commitment changes. 100% for collateral/guarantee release, voting threshold changes, sponsor purchase. Class voting. Agent/LC Issuer consent for provisions affecting them.",
+        "source": "R14-C"
+      },
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 93 (Voting)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Duration after which uncured default becomes unenforceable if no acceleration or other remedy has been sought. Typically 2 years from discovery or notice.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.statute_limitations.time_period",
+          "level": 3,
+          "name": "Limitation Period",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether the limitation period runs from the date the agent delivers notice of default or from the date the default first occurred, regardless of notice. []",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.statute_limitations.notice_tie",
+          "kct_ref": [
+            "cat3.2"
+          ],
+          "level": 3,
+          "name": "Notice Delivery Trigger",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 2"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Time-barring stale defaults without requiring notice delivery allows borrowers to hide defaults until the limitation expires.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.statute_limitations.knowledge_carve_out_for_respons",
+          "kct_ref": [
+            "KCT:Cat3:2"
+          ],
+          "level": 3,
+          "name": "Knowledge carve-out for Responsible Officers",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 4"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Time limit after which uncured defaults may no longer be actionable if lenders fail to exercise remedies. KCT Category 3 item 2 flags: '\"Statute of Limitations\" of 2 years that either (i) is not tied solely to the delivery of a notice of default or (ii) has no carve-out for failure to provide notice of default despite the Borrower or Responsible Officer of Borrower having knowledge of the default in question.' PC Term Comparison: 'Statute of Limitations: Typically rejected.' The risk is that a time-lapse cure allows defaults to expire without lender action, particularly when the borrower failed to provide the notice of default that would have started the enforcement clock.",
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "amendments_voting",
+        "extraction_ready": true,
+        "playbook_ref": "amendments_voting.loan_extension",
+        "section_locations": [
+          "ARTICLE 11",
+          "ARTICLE 6",
+          "ARTICLE II",
+          "Section 2.14",
+          "Section 2.19"
+        ],
+        "shape_ref": "amendments_voting.loan_extension"
+      },
+      "family_id": "governance.amendments_voting",
+      "id": "governance.amendments_voting.statute_limitations",
+      "kct_ref": [
+        "cat3.2"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "kct_cat3_benchmark_addition": "Add market benchmarks for prevalence and aggressiveness of Statute of Limitations on Defaults (2-Year) provisions across PC/BSL segments."
+      },
+      "name": "Default Statute of Limitations",
+      "negotiation_spectrum": {
+        "aggressive_position": "Majority vote for pro rata/waterfall amendments (not 100%). Required Revolving Lenders for revolver-only provisions.",
+        "dls_source": "DLS row 93",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(iv) modifications to provisions requiring pro rata payments, the \"waterfall\", priority of liens or proceeds of collateral and sharing of setoff provisions",
+          "100% vote for:"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "required_lender_threshold: 50pct vs 66.67pct",
+          "sacred_rights_scope: comprehensive_14_items vs narrow_core",
+          "pro_rata_modification: 100pct vs each_affected vs required_lenders",
+          "waterfall_modification: 100pct vs each_affected vs required_lenders",
+          "collateral_release_vote: 100pct vs each_affected vs required_lenders",
+          "guarantee_release_vote: 100pct vs each_affected vs required_lenders",
+          "voting_threshold_change: 100pct vs supermajority",
+          "sponsor_purchase_consent: 100pct vs required_lenders vs no_consent",
+          "class_voting: yes vs no",
+          "agent_provisions: agent_consent_required vs majority",
+          "technical_amendments: agent_borrower_only vs full_vote",
+          "mandatory_prepay_waiver: each_affected vs required_lenders"
+        ],
+        "market_position": "",
+        "preferred_position": "Required Lenders (>50% unused + outstanding). Sacred rights: each affected lender for rate/principal/maturity/payment/commitment changes. 100% for collateral/guarantee release, voting threshold changes, sponsor purchase. Class voting. Agent/LC Issuer consent for provisions affecting them.",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "amendments_voting.statute_of_limitations"
+      ],
+      "type": "concept",
+      "definition_source": "KCT Category 3 item 2 (statute of limitations: 2-year formulation risk flags); PC Term Comparison Events of Default section line 482 ('Typically rejected')",
+      "pc_ref": [
+        "Events of Default"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Assessment of cumulative effect of multiple provisions that individually appear reasonable but collectively erode lender protections. Includes interaction of deemed consent, yank-a-bank, sacred rights carveouts, and amendment threshold manipulation.",
+          "domain_id": "governance",
+          "extraction_difficulty": "hard",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.dilution_of_rights.cumulative_dilution",
+          "kct_ref": [
+            "cat3.6"
+          ],
+          "level": 3,
+          "name": "Cumulative Dilution Assessment",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 6"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Mechanisms that weaken sacred rights (unanimous consent provisions) over time: (1) carveouts allowing Required Lenders to approve changes normally requiring unanimity, (2) 'open market purchase' repayment provisions bypassing pro rata sharing, (3) 'amend and extend' mechanics that modify maturity with less than all-lender consent, and (4) yank-a-bank provisions removing non-consenting lenders. Erosion vectors create tension between individual lender protections and majority flexibility.",
+          "domain_id": "governance",
+          "extraction_difficulty": "hard",
+          "family_id": "governance.amendments_voting",
+          "id": "governance.amendments_voting.dilution_of_rights.sacred_rights_erosion",
+          "kct_ref": [
+            "cat3.5",
+            "cat3.7"
+          ],
+          "level": 3,
+          "name": "Sacred Rights Erosion Vectors",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 5; KCT Cat 3 Item 7"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Comprehensive audit framework for identifying provisions that dilute lender rights beyond individual sacred rights. Covers cumulative effects of borrower-favorable amendments, deemed consent, yank-a-bank, and consent threshold manipulation. Source: Key Credit Terms Category 3 (Dilution of Lender Rights), Appendix I.",
+      "dls_ref": [
+        "DLS:17:Amend and Extend"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "amendments_voting",
+        "extraction_ready": true,
+        "playbook_ref": "amendments_voting.serta",
+        "section_locations": [
+          "ARTICLE X",
+          "Section 10.01",
+          "Section 10.02"
+        ]
+      },
+      "family_id": "governance.amendments_voting",
+      "id": "governance.amendments_voting.dilution_of_rights",
+      "kct_ref": [
+        "cat3.6",
+        "cat3.12"
+      ],
+      "level": 2,
+      "name": "Dilution of Lender Rights Audit",
+      "negotiation_spectrum": {
+        "aggressive_position": "Majority vote for pro rata/waterfall amendments (not 100%). Required Revolving Lenders for revolver-only provisions.",
+        "dls_source": "DLS row 93",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(iv) modifications to provisions requiring pro rata payments, the \"waterfall\", priority of liens or proceeds of collateral and sharing of setoff provisions",
+          "100% vote for:"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "required_lender_threshold: 50pct vs 66.67pct",
+          "sacred_rights_scope: comprehensive_14_items vs narrow_core",
+          "pro_rata_modification: 100pct vs each_affected vs required_lenders",
+          "waterfall_modification: 100pct vs each_affected vs required_lenders",
+          "collateral_release_vote: 100pct vs each_affected vs required_lenders",
+          "guarantee_release_vote: 100pct vs each_affected vs required_lenders",
+          "voting_threshold_change: 100pct vs supermajority",
+          "sponsor_purchase_consent: 100pct vs required_lenders vs no_consent",
+          "class_voting: yes vs no",
+          "agent_provisions: agent_consent_required vs majority",
+          "technical_amendments: agent_borrower_only vs full_vote",
+          "mandatory_prepay_waiver: each_affected vs required_lenders"
+        ],
+        "market_position": "",
+        "preferred_position": "Required Lenders (>50% unused + outstanding). Sacred rights: each affected lender for rate/principal/maturity/payment/commitment changes. 100% for collateral/guarantee release, voting threshold changes, sponsor purchase. Class voting. Agent/LC Issuer consent for provisions affecting them.",
+        "source": "R14-C"
+      },
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 17 (Amend and Extend); KCT Cat 3 Item 6; KCT Cat 3 Item 12"
+    }
+  ],
+  "dealdata_benchmarks": {
+    "Client / Lead Investor": {
+      "pc_pct_range": "15.0%-33.0%"
+    },
+    "Consolidated EBITDA Always Address (including whether capped and cap): Extrao...": {
+      "pc_dollar_median": "$1,000,000",
+      "pc_dollar_range": "$0-$35,000,000",
+      "pc_pct_range": "0.0%-50.0%"
+    },
+    "Identify notice requirements in connection with exercise of remedies (e.g. vo...": {
+      "pc_dollar_median": "$2,500,000",
+      "pc_dollar_range": "$1,000,000-$5,000,000"
+    },
+    "Limitation of Sponsor acquisitions of Senior Debt?": {
+      "pc_pct_range": "10.0%-50.0%"
+    },
+    "Other": {
+      "pc_dollar_median": "$2,500,000",
+      "pc_dollar_range": "$0-$25,000,000",
+      "pc_pct_range": "1.0%-100.0%"
+    },
+    "Other Asset Sale Baskets / Noteworthy Terms": {
+      "pc_dollar_median": "$3,000,000",
+      "pc_dollar_range": "$200,000-$19,350,000",
+      "pc_pct_range": "4.4%-75.0%",
+      "pc_ratio_median": "6.50x",
+      "pc_ratio_range": "4.50x-6.50x"
+    },
+    "Other Debt Baskets / Noteworthy Terms": {
+      "pc_dollar_median": "$3,975,000",
+      "pc_dollar_range": "$100,000-$484,000,000",
+      "pc_pct_range": "2.5%-115.0%",
+      "pc_ratio_median": "5.25x",
+      "pc_ratio_range": "2.70x-6.20x"
+    },
+    "Required Lenders": {
+      "pc_dollar_median": "$31,922,629",
+      "pc_dollar_range": "$19,951,643-$56,000,000",
+      "pc_pct_range": "3.0%-75.0%"
+    },
+    "Restrictions on Amendments to Assignment Provisions": {
+      "pc_pct_range": "100.0%-100.0%"
+    },
+    "What is the timing for delivery of stock certificates and other possessory co...": {
+      "pc_dollar_median": "$1,000,000",
+      "pc_dollar_range": "$250,000-$5,000,000"
+    }
+  },
+  "definition": "Governance framework establishing how the credit agreement can be modified after closing, serving as the constitutional backbone of the credit relationship and the primary attack/defense vector for liability management exercises. DLS Preferred specifies a Required Lenders threshold (>50% of aggregate unused commitments and outstanding loans) for standard amendments, with escalating consent requirements: each directly affected lender for commitment increases, rate/principal reductions, payment date postponements, pro rata sharing/waterfall/priority modifications, and assignment restrictions; 100% lender consent for release of all/substantially all guarantors or collateral, changes to voting thresholds or the amendment section, and amendments permitting sponsor/affiliate term loan purchases. Class voting permits Required Revolving Lenders to amend revolver-only provisions. Agent and borrower can jointly correct obvious errors or technical omissions with notice to lenders.",
+  "dls_ref": [
+    "DLS:17:Amend and Extend",
+    "DLS:49:Forecasts",
+    "DLS:53:Amendments to Acquisition Agreement",
+    "DLS:56:Solvency",
+    "DLS:62:Right to Appoint Additional Agents",
+    "DLS:63:Syndication Assistance",
+    "DLS:88:Other Negative Covenants",
+    "DLS:93:Voting",
+    "DLS:94:Assignments"
+  ],
+  "domain_id": "governance",
+  "family_id": "governance.amendments_voting",
+  "id": "governance.amendments_voting",
+  "kct_ref": [
+    "cat3.6",
+    "cat3.7"
+  ],
+  "level": 1,
+  "name": "Amendments & Voting",
+  "type": "family",
+  "corpus_prevalence": "high",
+  "extraction_difficulty": "hard",
+  "definition_source": "DLS Preferred row 93 (complete voting specification with Required Lenders, affected-lender sacred rights, 100% vote items, class voting, and administrative amendments); PC Term Comparison section 9 (Amendments: sacred rights, Serta, Incora blockers); KCT Category 3 items 5-7 (sacred rights changes, snooze & drag, prospective lender voting)",
+  "pc_ref": [
+    "Section 9"
+  ]
+}

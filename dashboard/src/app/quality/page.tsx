@@ -44,7 +44,7 @@ function AnomalyRow({
 }) {
   return (
     <tr
-      className="border-t border-border hover:bg-surface-tertiary/50 cursor-pointer transition-colors"
+      className="border-t border-border hover:bg-surface-3/50 cursor-pointer transition-colors"
       onClick={() => onDocClick(anomaly.doc_id)}
     >
       <td className="px-3 py-2">
@@ -63,7 +63,7 @@ function AnomalyRow({
         {anomaly.borrower || "\u2014"}
       </td>
       <td className="px-3 py-2">
-        <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-medium bg-surface-tertiary text-text-secondary border border-border">
+        <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-medium bg-surface-3 text-text-secondary border border-border">
           {ANOMALY_LABELS[anomaly.anomaly_type] ?? anomaly.anomaly_type}
         </span>
       </td>
@@ -242,7 +242,7 @@ export default function QualityPage() {
                     "px-2.5 py-1 rounded-sm text-xs font-medium transition-colors",
                     anomalyFilter === tab.key
                       ? "bg-accent-blue/20 text-accent-blue"
-                      : "bg-surface-tertiary text-text-muted hover:text-text-secondary border border-border"
+                      : "bg-surface-3 text-text-muted hover:text-text-secondary border border-border"
                   )}
                 >
                   {tab.label}
@@ -293,7 +293,7 @@ export default function QualityPage() {
                     className="w-full text-sm"
                     aria-label="Anomalous documents"
                   >
-                    <thead className="sticky top-0 bg-surface-tertiary z-10">
+                    <thead className="sticky top-0 bg-surface-3 z-10">
                       <tr className="text-left text-xs text-text-muted uppercase">
                         <th className="px-3 py-2">Doc ID</th>
                         <th className="px-3 py-2">Borrower</th>
@@ -329,7 +329,7 @@ export default function QualityPage() {
                           setAnomalyPage((p) => Math.max(0, p - 1))
                         }
                         disabled={anomalyPage === 0}
-                        className="px-2 py-1 text-xs rounded-sm bg-surface-tertiary text-text-secondary hover:text-text-primary disabled:opacity-30 disabled:cursor-not-allowed border border-border"
+                        className="px-2 py-1 text-xs rounded-sm bg-surface-3 text-text-secondary hover:text-text-primary disabled:opacity-30 disabled:cursor-not-allowed border border-border"
                       >
                         Previous
                       </button>
@@ -343,7 +343,7 @@ export default function QualityPage() {
                           )
                         }
                         disabled={anomalyPage >= totalAnomalyPages - 1}
-                        className="px-2 py-1 text-xs rounded-sm bg-surface-tertiary text-text-secondary hover:text-text-primary disabled:opacity-30 disabled:cursor-not-allowed border border-border"
+                        className="px-2 py-1 text-xs rounded-sm bg-surface-3 text-text-secondary hover:text-text-primary disabled:opacity-30 disabled:cursor-not-allowed border border-border"
                       >
                         Next
                       </button>

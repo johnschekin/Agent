@@ -1,0 +1,352 @@
+[
+  {
+    "id": "credit_protection.events_of_default.payment",
+    "name": "Payment Default",
+    "family_id": "credit_protection.events_of_default",
+    "concept_area": "events_of_default",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Events of Default",
+        "Default",
+        "Defaults and Remedies"
+      ],
+      "keyword_anchors": [
+        "Event of Default",
+        "Default",
+        "acceleration",
+        "cross-default",
+        "judgment",
+        "bankruptcy"
+      ],
+      "concept_specific_keywords": [
+        "Payment Default"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.events_of_default.covenant",
+    "name": "Covenant Default",
+    "family_id": "credit_protection.events_of_default",
+    "concept_area": "events_of_default",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Events of Default",
+        "Default",
+        "Defaults and Remedies"
+      ],
+      "keyword_anchors": [
+        "Event of Default",
+        "Default",
+        "acceleration",
+        "cross-default",
+        "judgment",
+        "bankruptcy"
+      ],
+      "concept_specific_keywords": [
+        "Covenant Default"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.events_of_default.cross_default",
+    "name": "Cross-Default / Cross-Acceleration",
+    "family_id": "credit_protection.events_of_default",
+    "concept_area": "events_of_default",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Events of Default",
+        "Default",
+        "Defaults and Remedies"
+      ],
+      "keyword_anchors": [
+        "Event of Default",
+        "Default",
+        "acceleration",
+        "cross-default",
+        "judgment",
+        "bankruptcy"
+      ],
+      "concept_specific_keywords": [
+        "Cross-Default / Cross-Acceleration"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.events_of_default.bankruptcy",
+    "name": "Bankruptcy / Insolvency",
+    "family_id": "credit_protection.events_of_default",
+    "concept_area": "events_of_default",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Events of Default",
+        "Default",
+        "Defaults and Remedies"
+      ],
+      "keyword_anchors": [
+        "Event of Default",
+        "Default",
+        "acceleration",
+        "cross-default",
+        "judgment",
+        "bankruptcy"
+      ],
+      "concept_specific_keywords": [
+        "Bankruptcy / Insolvency"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.events_of_default.judgment",
+    "name": "Judgment Default",
+    "family_id": "credit_protection.events_of_default",
+    "concept_area": "events_of_default",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Events of Default",
+        "Default",
+        "Defaults and Remedies"
+      ],
+      "keyword_anchors": [
+        "Event of Default",
+        "Default",
+        "acceleration",
+        "cross-default",
+        "judgment",
+        "bankruptcy"
+      ],
+      "concept_specific_keywords": [
+        "Judgment Default"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.events_of_default.representation_breach",
+    "name": "Representation Breach Default",
+    "family_id": "credit_protection.events_of_default",
+    "concept_area": "events_of_default",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Events of Default",
+        "Default",
+        "Defaults and Remedies"
+      ],
+      "keyword_anchors": [
+        "Event of Default",
+        "Default",
+        "acceleration",
+        "cross-default",
+        "judgment",
+        "bankruptcy"
+      ],
+      "concept_specific_keywords": [
+        "Representation Breach Default"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.events_of_default.erisa",
+    "name": "ERISA Events Default",
+    "family_id": "credit_protection.events_of_default",
+    "concept_area": "events_of_default",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Events of Default",
+        "Default",
+        "Defaults and Remedies"
+      ],
+      "keyword_anchors": [
+        "Event of Default",
+        "Default",
+        "acceleration",
+        "cross-default",
+        "judgment",
+        "bankruptcy"
+      ],
+      "concept_specific_keywords": [
+        "ERISA Events Default"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.events_of_default.invalidity",
+    "name": "Invalidity of Documents Default",
+    "family_id": "credit_protection.events_of_default",
+    "concept_area": "events_of_default",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Events of Default",
+        "Default",
+        "Defaults and Remedies"
+      ],
+      "keyword_anchors": [
+        "Event of Default",
+        "Default",
+        "acceleration",
+        "cross-default",
+        "judgment",
+        "bankruptcy"
+      ],
+      "concept_specific_keywords": [
+        "Invalidity of Documents Default"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.events_of_default.sanctions",
+    "name": "Sanctions / Anti-Corruption Default",
+    "family_id": "credit_protection.events_of_default",
+    "concept_area": "events_of_default",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Events of Default",
+        "Default",
+        "Defaults and Remedies"
+      ],
+      "keyword_anchors": [
+        "Event of Default",
+        "Default",
+        "acceleration",
+        "cross-default",
+        "judgment",
+        "bankruptcy"
+      ],
+      "concept_specific_keywords": [
+        "Sanctions / Anti-Corruption Default"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.events_of_default.default_blockers",
+    "name": "Default Blockers",
+    "family_id": "credit_protection.events_of_default",
+    "concept_area": "events_of_default",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Events of Default",
+        "Default",
+        "Defaults and Remedies"
+      ],
+      "keyword_anchors": [
+        "Event of Default",
+        "Default",
+        "acceleration",
+        "cross-default",
+        "judgment",
+        "bankruptcy"
+      ],
+      "concept_specific_keywords": [
+        "Default Blockers"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.events_of_default.cured_default",
+    "name": "Cured Default Provisions",
+    "family_id": "credit_protection.events_of_default",
+    "concept_area": "events_of_default",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Events of Default",
+        "Default",
+        "Defaults and Remedies"
+      ],
+      "keyword_anchors": [
+        "Event of Default",
+        "Default",
+        "acceleration",
+        "cross-default",
+        "judgment",
+        "bankruptcy"
+      ],
+      "concept_specific_keywords": [
+        "Cured Default Provisions"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.events_of_default.change_of_control",
+    "name": "Change of Control as EoD",
+    "family_id": "credit_protection.events_of_default",
+    "concept_area": "events_of_default",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Events of Default",
+        "Default",
+        "Defaults and Remedies"
+      ],
+      "keyword_anchors": [
+        "Event of Default",
+        "Default",
+        "acceleration",
+        "cross-default",
+        "judgment",
+        "bankruptcy"
+      ],
+      "concept_specific_keywords": [
+        "Change of Control as EoD"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.events_of_default.indemnification_proceeds",
+    "name": "Failure to contribute acquisition indemnification/R&W insurance proceeds",
+    "family_id": "credit_protection.events_of_default",
+    "concept_area": "events_of_default",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Events of Default",
+        "Default",
+        "Defaults and Remedies"
+      ],
+      "keyword_anchors": [
+        "Event of Default",
+        "Default",
+        "acceleration",
+        "cross-default",
+        "judgment",
+        "bankruptcy"
+      ],
+      "concept_specific_keywords": [
+        "Failure to contribute acquisition indemnification/R&W insurance proceeds"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.events_of_default.illegality",
+    "name": "Illegality Event",
+    "family_id": "credit_protection.events_of_default",
+    "concept_area": "events_of_default",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Events of Default",
+        "Default",
+        "Defaults and Remedies"
+      ],
+      "keyword_anchors": [
+        "Event of Default",
+        "Default",
+        "acceleration",
+        "cross-default",
+        "judgment",
+        "bankruptcy"
+      ],
+      "concept_specific_keywords": [
+        "Illegality Event"
+      ]
+    }
+  }
+]

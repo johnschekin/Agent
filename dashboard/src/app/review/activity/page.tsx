@@ -54,7 +54,7 @@ export default function ReviewAgentActivityPage() {
           ) : (
             <div className="overflow-auto border border-border rounded-md">
               <table className="w-full text-xs">
-                <thead className="bg-surface-tertiary text-text-muted uppercase">
+                <thead className="bg-surface-3 text-text-muted uppercase">
                   <tr>
                     <th className="px-3 py-2 text-left">Family</th>
                     <th className="px-3 py-2 text-left">Status</th>
@@ -68,7 +68,7 @@ export default function ReviewAgentActivityPage() {
                 </thead>
                 <tbody>
                   {query.data.agents.map((a) => (
-                    <tr key={a.family} className="border-t border-border hover:bg-surface-tertiary/40">
+                    <tr key={a.family} className="border-t border-border hover:bg-surface-3/40">
                       <td className="px-3 py-2">{a.family}</td>
                       <td className="px-3 py-2">
                         <span
@@ -78,7 +78,7 @@ export default function ReviewAgentActivityPage() {
                               ? "bg-accent-red/20 text-accent-red"
                               : a.status === "running"
                                 ? "bg-accent-blue/20 text-accent-blue"
-                                : "bg-surface-tertiary text-text-secondary"
+                                : "bg-surface-3 text-text-secondary"
                           )}
                         >
                           {a.status}

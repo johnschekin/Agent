@@ -1,0 +1,855 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Complete facility autonomy for amendments affecting that tranche's economic terms. Each tranche (TL, revolver, DDTL) votes as its own class on any amendment affecting its terms. DLS Preferred (Row 93): class voting is a standard feature. Full class voting provides the strongest tranche-level protection.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.governance",
+          "id": "deal_econ.governance.separate_class_vote.full",
+          "level": 3,
+          "name": "Full Class Voting Rights",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 93 (class voting as standard feature)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Separate class voting limited to core economic terms: maturity, pricing, commitment amount. Non-economic amendments decided by Required Lenders across all classes. DLS Preferred (Row 93): 'consent of each lender directly [and adversely] affected' for rate reductions, maturity extensions, and commitment increases.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.governance",
+          "id": "deal_econ.governance.separate_class_vote.typical_matters",
+          "level": 3,
+          "name": "Typical Class Matters Only",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 93 (affected lender consent for economic terms: rates, maturity, commitments)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Asymmetric protection where revolver lenders have class vote rights but DDTL and incremental lenders do not. DLS Preferred (Row 93): 'Required Revolving Lenders shall be permitted to amend certain provisions that relate only to the Revolving Facility.' Protects working capital facility from dilution by term lender majority.",
+          "dls_ref": [
+            "DLS:6:Revolver",
+            "DLS:19:Revolver"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.governance",
+          "id": "deal_econ.governance.separate_class_vote.revolver_only",
+          "level": 3,
+          "name": "Revolver-Only Protection",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 93 ('Required Revolving Lenders' revolver-specific amendment rights)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Whether facility-specific amendments require class consent from the affected tranche. DLS Preferred (Row 93): includes 'Class voting' and 'Required Revolving Lenders shall be permitted to amend certain provisions that relate only to the Revolving Facility.' Determines whether DDTL, revolver, and incremental facility lenders can block changes to their specific economic terms.",
+      "dls_ref": [
+        "DLS:26:Structure Flex",
+        "DLS:27:Other Flex",
+        "DLS:28:Successful Syndication"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE X",
+          "Section 10.01"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE IX-X (Administrative Agent / Miscellaneous)"
+      },
+      "family_id": "deal_econ.governance",
+      "id": "deal_econ.governance.separate_class_vote",
+      "level": 2,
+      "market_data": {
+        "full_class_voting": "34.1%",
+        "no_class_voting": "13.6%",
+        "typical_matters_only": "22.7%"
+      },
+      "name": "Separate Class Voting",
+      "r18_concept_ids": [
+        "facility_structure.separate_class_voting"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 93 ('Class voting'; revolver-specific amendment rights)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Different minimum assignment amounts per facility type. DLS Preferred (Row 94): specifies $500,000 minimum for both revolver and term loans but allows separate consent frameworks — revolver assignments require borrower consent (not to be unreasonably withheld), while TL assignments to existing lenders/affiliates do not.",
+          "dls_ref": [
+            "DLS:31:Revolving Facility underwriting fee"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.governance",
+          "id": "deal_econ.governance.minimum_amounts.facility_specific",
+          "level": 3,
+          "name": "Facility-Specific Minimums",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 94 (separate revolver/TL assignment consent requirements)"
+        },
+        {
+          "id": "deal_econ.governance.minimum_amounts.uniform",
+          "name": "Uniform Minimum",
+          "level": 3,
+          "type": "sub_component",
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.governance",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "easy",
+          "definition": "Single minimum dollar threshold (e.g., $500,000) that applies to all loan assignments regardless of facility type. DLS Preferred (Row 94): 'Minimum assignment: $500,000' stated uniformly for both revolver and term loans. Below this threshold, an assignment cannot be executed without agent and borrower consent.",
+          "definition_source": "DLS Preferred, Row 94 ('Minimum assignment: $500,000' uniform across facilities)"
+        },
+        {
+          "id": "deal_econ.governance.minimum_amounts.affiliate_exception",
+          "name": "Affiliated Lender Exception",
+          "level": 3,
+          "type": "sub_component",
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.governance",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "easy",
+          "definition": "Carveout waiving or modifying the minimum assignment amount for transfers to affiliates of existing lenders, approved funds, or debt fund affiliates. DLS Preferred (Row 94): TL assignments to 'another lender or an affiliate of a lender or an approved fund' do not require borrower consent. DLS Row 95: Debt Fund Affiliates subject to additional caps and voting restrictions.",
+          "definition_source": "DLS Preferred, Row 94 (affiliate/approved fund assignment carveout)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Minimum dollar amounts for loan assignments that affect the granularity of the lender base. DLS Preferred (Row 94): 'Minimum assignment: $500,000' for both revolver and term loans. Standard assignment minimums directly affect secondary market liquidity and pricing for each facility tranche.",
+      "dls_ref": [
+        "DLS:28:Successful Syndication",
+        "DLS:39:Minimum equity",
+        "DLS:42:Minimum EBITDA",
+        "DLS:43:Minimum ratings"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.02",
+          "Section 2.03"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE IX-X (Administrative Agent / Miscellaneous)"
+      },
+      "family_id": "deal_econ.governance",
+      "id": "deal_econ.governance.minimum_amounts",
+      "level": 2,
+      "market_data": {
+        "prevalence": "53.3%",
+        "standard": "$1M"
+      },
+      "name": "Minimum Assignment Amounts",
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 94 ('Minimum assignment: $500,000')"
+    },
+    {
+      "corpus_prevalence": "high",
+      "definition": "Restriction on changing fiscal year end date without lender consent. DLS Preferred (Row 88): 'Change in accounting policies or fiscal year' listed as a negative covenant. The fiscal year defines the testing periods for all economic calculations (EBITDA measurement, financial covenant testing, ECF sweep periods).",
+      "dls_ref": [
+        "DLS:24:Post-Close Flex Period"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE V",
+          "Section 5.04"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE IX-X (Administrative Agent / Miscellaneous)"
+      },
+      "family_id": "deal_econ.governance",
+      "id": "deal_econ.governance.fiscal_year",
+      "level": 2,
+      "market_data": {
+        "restriction_rate": "93.3%",
+        "simple_restriction": "88.3%"
+      },
+      "name": "Fiscal Year Restrictions",
+      "type": "concept",
+      "children": [
+        {
+          "id": "deal_econ.governance.fiscal_year.change_consent",
+          "name": "Change of Fiscal Year Consent",
+          "definition": "Requirement that the borrower obtain lender or agent consent before changing its fiscal year-end. DLS Preferred (Row 88): lists fiscal year change as a restricted action. Prevents manipulation of covenant testing periods and financial reporting cycles.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.governance",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "easy",
+          "definition_source": "DLS Preferred, Row 88 (fiscal year change restriction)"
+        },
+        {
+          "id": "deal_econ.governance.fiscal_year.reporting_alignment",
+          "name": "Reporting Period Alignment",
+          "definition": "Provisions ensuring financial deliverables (annual audits, quarterly statements, compliance certificates) align with the borrower's fiscal year. DLS Preferred (Row 78): 'annual financial statements... within 90 days of the end of each fiscal year' and 'quarterly financial statements... within 45 days of the end of each fiscal quarter.'",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.governance",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "easy",
+          "definition_source": "DLS Preferred, Row 78 (annual: 90 days, quarterly: 45 days — fiscal year aligned delivery)"
+        },
+        {
+          "id": "deal_econ.governance.fiscal_year.covenant_testing_impact",
+          "name": "Covenant Testing Period Impact",
+          "definition": "How fiscal year definition affects trailing four-quarter covenant testing periods. DLS Preferred (Row 73): covenant 'Tested quarterly on the last day of each fiscal quarter.' DLS Row 13: leverage ratios measured 'for the most recently ended four-fiscal quarter period.' Fiscal year change disrupts the trailing four-quarter measurement continuity.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "deal_econ",
+          "family_id": "deal_econ.governance",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "DLS Preferred, Row 73 (quarterly testing)"
+        }
+      ],
+      "definition_source": "DLS Preferred, Row 88 ('Change in accounting policies or fiscal year' — negative covenant)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Basis point yield differential that triggers the pricing pop-up. 50 bps is overwhelmingly standard. Higher trigger (e.g., 75 bps) is borrower-favorable. Lower trigger (e.g., 25 bps) is lender-favorable.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "playbook_ref": "incremental.mfn_trigger",
+            "primary_section_pattern": "X.12-21",
+            "section_locations": [
+              "2.12",
+              "2.12(c)(i)",
+              "2.16(c)(vii)",
+              "2.17(b)(x)",
+              "2.21"
+            ],
+            "shape_ref": "incremental.mfn_trigger"
+          },
+          "family_id": "deal_econ.governance",
+          "id": "deal_econ.governance.mfn_protection.trigger_bps",
+          "level": 3,
+          "name": "MFN Trigger (Basis Points)",
+          "r18_concept_ids": [
+            "incremental.mfn_protection"
+          ],
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Period after which MFN protection expires. PC market: no sunset (MFN for life of the loan -- very lender-friendly). BSL market: 6-18 months typical. Bank preferred: MFN for life. Aggressive: 12-18 months. DealData shows zero sunset in all 62 PC deals.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.governance",
+          "id": "deal_econ.governance.mfn_protection.sunset_period",
+          "level": 3,
+          "name": "MFN Sunset Period",
+          "r18_concept_ids": [
+            "incremental.mfn_protection"
+          ],
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether MFN compares all-in yield (includes OID, upfront fees, floor benefit) or interest margin only. Bank preferred: all-in yield (captures full cost). Borrower-favorable: margin only (allows higher OID without triggering MFN).",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.governance",
+          "id": "deal_econ.governance.mfn_protection.yield_vs_margin",
+          "level": 3,
+          "name": "Yield vs. Margin Comparison",
+          "r18_concept_ids": [
+            "incremental.mfn_protection"
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 127 (Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing); Review Template Row 138 (Pricing)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Dollar or EBITDA-percentage amount of incremental debt exempt from MFN. Aggressive UMM/BSL: up to 50% of EBITDA. PC market: typically smaller or absent. Allows borrower to incur meaningful incremental at higher yields without triggering pop-up.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.governance",
+              "id": "deal_econ.governance.mfn_protection.carveouts.capped_amount",
+              "level": 4,
+              "name": "Capped Amount Carveout",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 24 (Incremental Amount – freebie); Review Template Row 25 (Incremental Amount – prepayments); Review Template Row 26 (Incremental Amount – ratio); Review Template Row 73 (Negative Covenants – Indebtedness – Ratio Debt – amount); Review Template Row 77 (Negative Covenants – Indebtedness – Incurred Acquisition Debt – amount)"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "MFN exemption for incremental debt maturing 12-24 months outside the original term loan maturity date. Rationale: longer-dated debt should command higher yield without penalizing existing holders. Standard: 12 months in BSL, 24 months in some PC.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.governance",
+              "id": "deal_econ.governance.mfn_protection.carveouts.maturity_cushion",
+              "level": 4,
+              "name": "Maturity Cushion Carveout",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 14 (Term Sheet); Review Template Row 33 (Incremental – inside maturity basket); Review Template Row 37 (Refinancing Facilities – Inside Maturity); Review Template Row 127 (Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing); Review Template Row 160 (Ticking Fee (Term/Revolver))"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "MFN exemption for incremental debt incurred to fund permitted acquisitions. Rationale: time-sensitive M&A transactions need pricing flexibility. Borrower-favorable. Bank preferred: no M&A carveout from MFN.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.governance",
+              "id": "deal_econ.governance.mfn_protection.carveouts.ma_debt",
+              "level": 4,
+              "name": "M&A Debt Carveout",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 36 (Incremental Equivalent Debt); Review Template Row 77 (Negative Covenants – Indebtedness – Incurred Acquisition Debt – amount); Review Template Row 78 (Negative Covenants – Indebtedness – Incurred Acquisition Debt – non-guarantor cap); Review Template Row 79 (Negative Covenants – Indebtedness – Assumed Acquisition Debt); Review Template Row 136 (Assignments – voting limit on Debt Fund Affiliates)"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Excluded incremental debt types not subject to MFN protection: capped dollar amount (up to 50% of EBITDA in aggressive deals), debt with different maturity (24+ months outside TL maturity), foreign currency debt, fixed rate debt, M&A debt, and syndicated-only facilities. More carveouts = more borrower flexibility.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "playbook_ref": "incremental.mfn_carveouts",
+            "primary_section_pattern": "X.{12,16,17}",
+            "section_locations": [
+              "2.12(c)(i)",
+              "2.16(c)(vii)",
+              "2.17(b)(x)"
+            ],
+            "shape_ref": "incremental.mfn_carveouts"
+          },
+          "family_id": "deal_econ.governance",
+          "id": "deal_econ.governance.mfn_protection.carveouts",
+          "level": 3,
+          "name": "MFN Carveouts",
+          "r18_concept_ids": [
+            "incremental.mfn_protection"
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 34 (Incremental – MFN)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Which debt types are subject to MFN comparison. Conservative: all pari passu debt including IED, ratio debt, and bilateral loans. Aggressive: pari term loans only (excludes revolvers, notes, private placements). Bank preferred: broadest scope.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.governance",
+          "id": "deal_econ.governance.mfn_protection.scope",
+          "level": 3,
+          "name": "MFN Scope (Debt Types Covered)",
+          "r18_concept_ids": [
+            "incremental.mfn_protection"
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 73 (Negative Covenants – Indebtedness – Ratio Debt – amount); Review Template Row 74 (Negative Covenants – Indebtedness – Ratio Debt – non-guarantor cap); Review Template Row 75 (Negative Covenants – Indebtedness – Ratio Debt – terms); Review Template Row 112 (Negative Covenants – Restricted Debt Payments – Scope); Review Template Row 115 (Negative Covenants – Restricted Debt Payments – Ratio Basket)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "A mechanism ensuring existing lenders are not economically disadvantaged when incremental debt is priced at higher yields. If incremental debt yield exceeds existing debt yield by more than the trigger threshold (typically 50-75 bps), the existing debt yield is automatically increased. A core deal economics feature that directly affects the cost of capital for existing facility tranches.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.14",
+          "Section 2.17"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE IX-X (Administrative Agent / Miscellaneous)"
+      },
+      "family_id": "deal_econ.governance",
+      "id": "deal_econ.governance.mfn_protection",
+      "level": 2,
+      "market_data": {
+        "dealdata_coverage": "62/62 (100%)",
+        "sunset_bsl": "6-18 months",
+        "sunset_pc": "None (very lender-friendly)",
+        "trigger": "50 bps standard across all segments"
+      },
+      "name": "Most Favored Nation Protection",
+      "r18_concept_ids": [
+        "facility_structure.mfn_protection",
+        "incremental.mfn_protection"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 9 (Accordion); Review Template Row 34 (Incremental – MFN)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Mechanism allowing a defaulting lender's existing exposure to be transferred to a replacement lender without cash settlement. The replacement lender assumes the defaulting lender's position at the existing terms. Reduces friction in replacing non-performing lenders by eliminating cash transfer requirements.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.governance",
+          "id": "deal_econ.governance.defaulting_lender.cashless_roll",
+          "level": 3,
+          "name": "Cashless Roll",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 94 (assignment mechanics framework); PC Term Comparison",
+          "pc_ref": [
+            "PC Term Comparison"
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Reallocation of a defaulting lender's unfunded commitments to non-defaulting lenders on a pro rata basis. Non-defaulting lenders absorb the shortfall up to their proportionate share. DLS Preferred (Row 6): revolving borrowing mechanics assume pro rata funding — reallocation preserves this principle when a lender defaults.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.governance",
+          "id": "deal_econ.governance.defaulting_lender.reallocation",
+          "level": 3,
+          "market_benchmarks": {
+            "pctc_umm_bsl": "transactions, reject reallocations to build debt capacity"
+          },
+          "name": "Commitment Reallocation",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (pro rata funding mechanics); DLS Preferred, Row 93 (voting provisions)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Exclusion of defaulting lender from Required Lender calculations and voting. DLS Preferred (Row 93): Required Lenders defined as holders of 'more than 50% of the aggregate unused commitments and outstanding loans.' Defaulting lender exclusion prevents a non-performing lender from exercising governance rights. Standard in modern credit agreements.",
+          "dls_ref": [
+            "DLS:93:Voting"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.governance",
+          "id": "deal_econ.governance.defaulting_lender.voting_exclusion",
+          "kct_ref": [
+            "cat3.3"
+          ],
+          "level": 3,
+          "name": "Voting Exclusion",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 93 (Required Lender calculation — defaulting lender exclusion implied); PC Term Comparison, Amendments",
+          "pc_ref": [
+            "Amendments"
+          ]
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Contractual framework governing consequences when a syndicate member fails to fund its commitment share. PC Term Comparison, Amendments: 'Clients currently focused on Incora Blockers/Pro Forma Required Lenders votes/Commitments voting' — defaulting lender provisions interact with voting mechanics. Includes reallocation, voting exclusion, cashless roll, and replacement mechanics.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.20",
+          "Section 2.22"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE IX-X (Administrative Agent / Miscellaneous)"
+      },
+      "family_id": "deal_econ.governance",
+      "id": "deal_econ.governance.defaulting_lender",
+      "kct_ref": [
+        "cat3.3"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "cure": "Funding of defaulted amount plus interest",
+        "prevalence": "95%+",
+        "standard": "Excluded from voting, no commitment fee, borrower may replace"
+      },
+      "name": "Defaulting Lender Provisions",
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 21,
+          "term": "[DDTL – availability period]"
+        },
+        {
+          "coverage": "full",
+          "row": 23,
+          "term": "[DDTL – use of proceeds]"
+        },
+        {
+          "coverage": "full",
+          "row": 35,
+          "term": "Incremental – ROFR"
+        },
+        {
+          "coverage": "full",
+          "row": 149,
+          "term": "Waiver"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison, Amendments (voting/commitment interaction); DLS Preferred, Row 93 (voting framework)",
+      "pc_ref": [
+        "Amendments (voting/commitment interaction)"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Procedural steps for replacing a non-consenting lender: borrower identifies replacement lender, sends replacement notice, existing lender must assign within specified period (typically 5-10 business days). DLS Preferred (Row 94): '10 business day deemed consent for Borrower' — the same deemed-consent framework applies to replacement notices.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.governance",
+          "id": "deal_econ.governance.replacement_lender.replacement_mechanics",
+          "level": 3,
+          "name": "Replacement Mechanics",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 94 ('10 business day deemed consent'; assignment procedural framework)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Requirement that replacement purchase be at par (100% of outstanding principal plus accrued interest, fees, and breakage costs). DLS Preferred (Row 69): call protection 'applicable to... mandatory assignments' — yank-a-bank during the hard call period may trigger the call premium. Protects the replaced lender from economic loss on the transfer.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.governance",
+          "id": "deal_econ.governance.replacement_lender.prepayment_at_par",
+          "level": 3,
+          "name": "Prepayment at Par",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 69 (call protection applies to mandatory assignments)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether a replacement lender can vote on the pending amendment before the assignment is completed. Bank preferred: no prospective voting. Aggressive: prospective lender can vote upon commitment to purchase, enabling cherry-picking of consenting replacements to reach voting thresholds.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.governance",
+          "id": "deal_econ.governance.replacement_lender.prospective_voting",
+          "kct_ref": [
+            "cat3.7"
+          ],
+          "level": 3,
+          "market_data": {
+            "kct_reference": "Category 3 Item 7"
+          },
+          "name": "Prospective Lender Voting",
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Amendments (voting mechanics); DLS Preferred, Row 93 (voting framework)",
+          "pc_ref": [
+            "Amendments (voting mechanics)"
+          ]
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Mechanism to replace non-consenting or defaulting lenders with willing replacement lenders (yank-a-bank). DLS Preferred (Row 94): assignment mechanics provide the procedural framework. PC Term Comparison, Amendments: 'Reject snooze you lose concept' — suggesting aggressive sponsors push for automatic replacement of non-consenting lenders.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "ARTICLE X",
+          "Section 2.19",
+          "Section 10.04"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE IX-X (Administrative Agent / Miscellaneous)"
+      },
+      "family_id": "deal_econ.governance",
+      "id": "deal_econ.governance.replacement_lender",
+      "kct_ref": [
+        "cat3.7"
+      ],
+      "level": 2,
+      "market_data": {
+        "kct_risk": "Cat 3.7: Prospective lenders voting before becoming lender"
+      },
+      "name": "Replacement Lender (Yank-a-Bank)",
+      "r18_concept_ids": [
+        "amendments_voting.yank_a_bank"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 23,
+          "term": "[DDTL – use of proceeds]"
+        },
+        {
+          "coverage": "full",
+          "row": 35,
+          "term": "Incremental – ROFR"
+        },
+        {
+          "coverage": "full",
+          "row": 149,
+          "term": "Waiver"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 94 (assignment mechanics); PC Term Comparison, Amendments ('Reject snooze you lose concept')",
+      "pc_ref": [
+        "Amendments ('Reject snooze you lose concept')"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Initial appointment of the Administrative Agent, typically the lead arranger or a designated financial institution. DLS Preferred (Row 93): provides the framework for agent authority. Appointment is made by the lenders at closing. Agent serves at the pleasure of the Required Lenders.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.governance",
+          "id": "deal_econ.governance.agency_provisions.appointment",
+          "level": 3,
+          "name": "Agent Appointment",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 93 (agent authority framework); PC Term Comparison, Admin Agency Provisions",
+          "pc_ref": [
+            "Admin Agency Provisions"
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Right of Administrative Agent to resign upon notice (typically 30 days). If no successor is appointed within the notice period, the resigning agent may appoint a successor. PC Term Comparison: 'Ask Clients if they have internal admin/ops team' — agent resignation creates operational continuity concerns.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.governance",
+          "id": "deal_econ.governance.agency_provisions.resignation",
+          "level": 3,
+          "name": "Agent Resignation",
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Admin Agency Provisions (operational continuity)",
+          "pc_ref": [
+            "Admin Agency Provisions (operational continuity)"
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Mechanics for appointing a successor Administrative Agent following resignation or removal. Requires Required Lender approval (and often borrower consent if no EoD). DLS Preferred (Row 93): Required Lenders framework governs successor appointment. Successor must be a commercial bank with minimum assets threshold.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.governance",
+          "id": "deal_econ.governance.agency_provisions.successor_agent",
+          "level": 3,
+          "name": "Successor Agent",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 93 (Required Lender governance); PC Term Comparison, Admin Agency Provisions",
+          "pc_ref": [
+            "Admin Agency Provisions"
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Agent's authority to enter into intercreditor agreements for permitted debt without Required Lender vote. DLS Preferred (Row 93): administrative agent approval required for certain amendments. PC Term Comparison does not address blanket ICA authority as a hot-button item, but it represents a significant delegation of governance power from lenders to agent.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.governance",
+          "id": "deal_econ.governance.agency_provisions.ica_authority",
+          "kct_ref": [
+            "cat4.11"
+          ],
+          "level": 3,
+          "market_data": {
+            "kct_risk": "Cat 4.11: Agent enters ICA without Required Lender vote"
+          },
+          "name": "Intercreditor Agreement Authority",
+          "r18_concept_ids": [
+            "collateral.intercreditor_arrangements"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 93 (agent authority provisions); PC Term Comparison (ICA authority not flagged)",
+          "pc_ref": [
+            "(ICA authority not flagged)"
+          ]
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Contractual framework governing the administrative agent's role, authority, and liability limitations. PC Term Comparison, Admin Agency Provisions: 'Ask Clients if they have internal admin/ops team or third party agent/sub-agent reviewing the CA.' DLS Preferred (Row 93): 'Any amendments that affect the Administrative Agent... shall require the approval of such entity.'",
+      "dls_ref": [
+        "DLS:96:Buyback Provisions"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE IX",
+          "Section 9.01",
+          "Section 9.02",
+          "Section 9.03"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE IX-X (Administrative Agent / Miscellaneous)"
+      },
+      "family_id": "deal_econ.governance",
+      "id": "deal_econ.governance.agency_provisions",
+      "level": 2,
+      "market_benchmarks": {
+        "negotiated": "Indemnification scope, reliance on experts",
+        "prevalence": "99%+",
+        "standard": "Resignation on 30 days notice, successor appointment by Required Lenders"
+      },
+      "name": "Agency Provisions",
+      "r18_concept_ids": [
+        "pricing.agency_fee"
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison, Admin Agency Provisions; DLS Preferred, Row 93 (agent amendment consent)",
+      "pc_ref": [
+        "Admin Agency Provisions"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Standard voting threshold: lenders holding more than 50% of total commitments and outstanding loans. DLS Preferred (Row 93): 'Consent of Required Lenders (i.e. lenders holding more than 50% of the aggregate unused commitments and outstanding loans).' Used for covenant waivers, consent requests, and non-sacred amendments.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.governance",
+          "id": "deal_econ.governance.required_lender_thresholds.majority",
+          "level": 3,
+          "name": "Majority Lender (Required Lenders)",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 149,
+              "term": "Waiver"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 93 ('Required Lenders: lenders holding more than 50%')"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Higher-than-majority threshold (typically 66.67% or 75%) for significant but non-sacred amendments. DLS Preferred (Row 93 alternative): 'Majority vote for amending pro rata payment provisions and the waterfall' — the preferred position is affected-lender consent, with supermajority as a compromise. May apply to release of material collateral, waterfall changes, or anti-LME protections.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.governance",
+          "id": "deal_econ.governance.required_lender_thresholds.supermajority",
+          "level": 3,
+          "name": "Supermajority Threshold",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 93 (preferred: affected lender consent; alternative: majority for waterfall amendments)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "100% lender consent required for sacred rights. DLS Preferred (Row 93): '100% vote for: (i) releases of all or substantially all of the Guarantors or all or substantially all of the value of the Collateral, (ii) changes in voting thresholds or the amendment section of the Credit Facility, (iii) amendments to permit the sponsor or any of its affiliates to purchase term loans/revolving commitments.'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.governance",
+          "id": "deal_econ.governance.required_lender_thresholds.unanimous",
+          "kct_ref": [
+            "cat3.5"
+          ],
+          "level": 3,
+          "name": "Unanimous Consent",
+          "r18_concept_ids": [
+            "amendments_voting.sacred_rights"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 93 (100% vote: guarantee/collateral release, voting threshold changes, sponsor purchase authorization)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Voting thresholds for different categories of facility amendments and waivers. DLS Preferred (Row 93): three tiers — Required Lenders (>50% for standard amendments), each affected lender (for economic changes to individual terms), and 100% vote (for sacred rights including guarantee/collateral release and voting threshold changes). PC Term Comparison: 'Clients currently focused on Incora Blockers/Pro Forma Required Lenders votes.'",
+      "dls_ref": [
+        "DLS:24:Post-Close Flex Period",
+        "DLS:26:Structure Flex",
+        "DLS:27:Other Flex",
+        "DLS:60:Lender Selection"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE X",
+          "Section 10.01"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE IX-X (Administrative Agent / Miscellaneous)"
+      },
+      "family_id": "deal_econ.governance",
+      "id": "deal_econ.governance.required_lender_thresholds",
+      "level": 2,
+      "market_data": {
+        "range": "50%-66.67%",
+        "standard_threshold": ">50% of commitments + outstanding"
+      },
+      "name": "Required Lender Thresholds",
+      "r18_concept_ids": [
+        "amendments_voting.required_lenders_definition",
+        "amendments_voting.supermajority_provisions"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 93 (three-tier voting framework); PC Term Comparison, Amendments (Incora Blockers, voting focus)",
+      "pc_ref": [
+        "Amendments (Incora Blockers, voting focus)"
+      ]
+    }
+  ],
+  "corpus_prevalence": "medium",
+  "definition": "Provisions governing cross-facility economic dynamics within the deal structure — voting mechanics, assignment requirements, agent appointment, and lender replacement rights that affect the economic relationships among facility participants. DLS Preferred (Rows 93-96) covers: Required Lender vote thresholds (>50%), sacred rights requiring unanimous or class consent, assignment minimums ($500,000), disqualified institution prohibitions, and administrative agent appointment mechanics.",
+  "dls_ref": [
+    "DLS:24:Post-Close Flex Period",
+    "DLS:25:Pricing Flex",
+    "DLS:26:Structure Flex",
+    "DLS:27:Other Flex",
+    "DLS:28:Successful Syndication",
+    "DLS:36:Reimbursement of expenses"
+  ],
+  "domain_id": "deal_econ",
+  "extraction_difficulty": "medium",
+  "family_id": "deal_econ.governance",
+  "id": "deal_econ.governance",
+  "level": 1,
+  "name": "Cross-Facility Governance",
+  "type": "family",
+  "definition_source": "DLS Preferred, Rows 93-96 (Voting, Assignments, Debt Fund Affiliates, Buyback Provisions); PC Term Comparison, Amendments section",
+  "pc_ref": [
+    "Amendments"
+  ]
+}

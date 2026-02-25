@@ -1,0 +1,19 @@
+{
+  "family": "dispositions",
+  "iteration_count": 0,
+  "last_strategy_version": 1,
+  "last_update": "2026-02-23T05:57:43.368882+00:00",
+  "status": "completed",
+  "last_session": "agent-swarm",
+  "last_pane": "3",
+  "last_start_at": "2026-02-23T05:13:29.603638+00:00",
+  "current_concept_id": "cash_flow.dispositions",
+  "last_concept_id": "cash_flow.dispositions",
+  "last_evidence_file": "workspaces/dispositions/evidence/cash_flow.dispositions_20260223T054749.jsonl",
+  "last_evidence_run_id": "pattern_tester_20260223T054716Z_49823731",
+  "last_evidence_records": 300,
+  "last_evidence_at": "2026-02-23T05:47:49.699926+00:00",
+  "status_updated_at": "2026-02-23T05:57:43.368882+00:00",
+  "status_updated_by": "wave_promote_status.py",
+  "status_note": "wave1-bootstrap-evidence-complete"
+}

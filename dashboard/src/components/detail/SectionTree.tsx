@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import type { SectionRecord } from "@/lib/types";
+import type { SectionRecord, ArticleRecord } from "@/lib/types";
 import { formatNumber } from "@/lib/formatters";
 import { cn } from "@/lib/cn";
 
 interface SectionTreeProps {
   sections: SectionRecord[];
+  articles?: ArticleRecord[];
 }
 
 interface ArticleGroup {
@@ -26,9 +27,13 @@ function groupByArticle(sections: SectionRecord[]): ArticleGroup[] {
     .map(([articleNum, sects]) => ({ articleNum, sections: sects }));
 }
 
-export function SectionTree({ sections }: SectionTreeProps) {
+export function SectionTree({ sections, articles }: SectionTreeProps) {
   const [expandedArticles, setExpandedArticles] = useState<Set<number>>(new Set());
   const groups = groupByArticle(sections);
+  const articleMap = new Map<number, ArticleRecord>();
+  if (articles) {
+    for (const a of articles) articleMap.set(a.article_num, a);
+  }
 
   if (sections.length === 0) {
     return (
@@ -51,20 +56,28 @@ export function SectionTree({ sections }: SectionTreeProps) {
     <div className="space-y-1">
       {groups.map((group) => {
         const expanded = expandedArticles.has(group.articleNum);
+        const article = articleMap.get(group.articleNum);
         return (
           <div key={group.articleNum}>
             {/* Article header */}
             <button
-              className="flex items-center gap-2 w-full px-2 py-1.5 rounded hover:bg-surface-tertiary text-left"
+              className="flex items-center gap-2 w-full px-2 py-1.5 rounded hover:bg-surface-3 text-left"
               onClick={() => toggleArticle(group.articleNum)}
             >
               <span className="text-[10px] text-text-muted w-4">
                 {expanded ? "▾" : "▸"}
               </span>
-              <span className="text-xs font-medium text-text-primary">
-                Article {group.articleNum}
+              <span className="text-xs font-medium text-text-primary truncate">
+                {article
+                  ? `${article.label}${article.title ? ` — ${article.title}` : ""}`
+                  : `Article ${group.articleNum}`}
               </span>
-              <span className="text-[11px] text-text-muted ml-auto">
+              {article?.concept && (
+                <span className="text-[10px] text-text-muted bg-surface-3 rounded px-1 py-0.5 flex-shrink-0">
+                  {article.concept}
+                </span>
+              )}
+              <span className="text-[11px] text-text-muted ml-auto flex-shrink-0">
                 {group.sections.length} sections
               </span>
             </button>
@@ -77,7 +90,7 @@ export function SectionTree({ sections }: SectionTreeProps) {
                     key={s.section_number}
                     className={cn(
                       "flex items-center gap-2 px-2 py-1 rounded text-xs",
-                      "hover:bg-surface-tertiary/50 cursor-default"
+                      "hover:bg-surface-3/50 cursor-default"
                     )}
                   >
                     <span className="text-accent-blue tabular-nums w-10 flex-shrink-0">

@@ -1,0 +1,27 @@
+[
+  {
+    "id": "debt_capacity.incremental.structural_controls.ddtl",
+    "name": "Incremental DDTL Mechanics",
+    "family_id": "debt_capacity.incremental.structural_controls",
+    "concept_area": "structural_controls",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Incremental DDTL Mechanics"
+      ]
+    }
+  }
+]

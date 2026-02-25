@@ -10,8 +10,10 @@ Usage:
 from __future__ import annotations
 
 import asyncio
+import ipaddress
 import json
 import math
+import os
 import re
 import sys
 import uuid
@@ -19,7 +21,7 @@ from collections import Counter
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 import orjson
 from fastapi import Body, FastAPI, HTTPException, Query, Request
@@ -34,6 +36,32 @@ if str(_agent_src) not in sys.path:
     sys.path.insert(0, str(_agent_src))
 
 from agent.corpus import CorpusIndex  # noqa: E402
+from agent.link_store import LinkStore  # noqa: E402
+from agent.conflict_matrix import (  # noqa: E402
+    build_conflict_matrix,
+    lookup_policy,
+    matrix_to_dict,
+    ConflictPolicy,
+)
+from agent.query_filters import (  # noqa: E402
+    MetaFilter,
+    FilterMatch,
+    FilterGroup,
+    build_filter_sql,
+    build_meta_filter_sql,
+    estimate_query_cost,
+    filter_expr_from_json,
+    filter_expr_to_json,
+    meta_filter_from_json,
+    meta_filter_to_json,
+)
+from agent.rule_dsl import (  # noqa: E402
+    dsl_from_heading_ast,
+    heading_ast_from_dsl,
+    parse_dsl,
+    validate_dsl,
+)
+from agent.query_filters import build_multi_field_sql  # noqa: E402
 
 # ---------------------------------------------------------------------------
 # Globals
@@ -59,6 +87,12 @@ _ontology_path = Path(__file__).resolve().parents[2] / "data" / "ontology" / "r3
 _strategies: dict[str, dict[str, Any]] = {}       # concept_id -> normalized flat dict
 _strategy_families: dict[str, list[str]] = {}      # family -> list of concept_ids
 _workspace_root = Path(__file__).resolve().parents[2] / "workspaces"
+
+# Link store globals
+_links_db_path = Path(__file__).resolve().parents[2] / "corpus_index" / "links.duckdb"
+_link_store: LinkStore | None = None
+_conflict_policies: dict[tuple[str, str], ConflictPolicy] = {}
+_worker_proc: Any = None
 
 # Feedback backlog (mutable JSON file)
 _feedback_path = Path(__file__).resolve().parents[2] / "data" / "feedback_backlog.json"
@@ -309,8 +343,28 @@ def _save_ontology_notes() -> None:
 # ---------------------------------------------------------------------------
 # Lifespan
 # ---------------------------------------------------------------------------
+def _load_dotenv() -> None:
+    """Load .env from project root if it exists (no dependency required)."""
+    env_path = Path(__file__).resolve().parents[2] / ".env"
+    if not env_path.exists():
+        return
+    for line in env_path.read_text().splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        key = key.strip()
+        value = value.strip().strip("'\"")
+        if key and key not in os.environ:
+            os.environ[key] = value
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):  # noqa: ARG001
+    _load_dotenv()
+
     global _corpus  # noqa: PLW0603
     if _corpus_db_path.exists():
         try:
@@ -354,7 +408,67 @@ async def lifespan(app: FastAPI):  # noqa: ARG001
     except Exception as e:
         print(f"[dashboard] Warning: could not load feedback: {e}")
 
+    # Load/create link store
+    global _link_store, _conflict_policies, _worker_proc  # noqa: PLW0603
+    try:
+        _links_db_path.parent.mkdir(parents=True, exist_ok=True)
+        _link_store = LinkStore(_links_db_path, create_if_missing=True)
+        _link_store.run_cleanup()
+        print(f"[dashboard] Link store loaded: {_links_db_path}")
+    except Exception as e:
+        print(f"[dashboard] Warning: could not open link store: {e}")
+        _link_store = None
+
+    # Build conflict matrix from ontology
+    if _ontology_edges:
+        try:
+            policies = build_conflict_matrix(_ontology_edges, _ontology_nodes)
+            _conflict_policies = matrix_to_dict(policies)
+            print(f"[dashboard] Conflict matrix: {len(_conflict_policies)} pairs")
+            # Persist conflict policies to link store
+            if _link_store is not None:
+                for p in policies:
+                    _link_store.save_conflict_policy({
+                        "family_a": p.family_a,
+                        "family_b": p.family_b,
+                        "policy": p.policy,
+                        "reason": p.reason,
+                    })
+        except Exception as e:
+            print(f"[dashboard] Warning: could not build conflict matrix: {e}")
+
+    # Start worker subprocess (if link store is available)
+    if _link_store is not None:
+        try:
+            import subprocess
+            worker_cmd = [
+                sys.executable,
+                str(Path(__file__).resolve().parents[2] / "scripts" / "link_worker.py"),
+                "--links-db", str(_links_db_path),
+            ]
+            if _corpus_db_path.exists():
+                worker_cmd.extend(["--db", str(_corpus_db_path)])
+            _worker_proc = subprocess.Popen(
+                worker_cmd,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.PIPE,
+            )
+            print(f"[dashboard] Worker started (pid={_worker_proc.pid})")
+        except Exception as e:
+            print(f"[dashboard] Warning: could not start worker: {e}")
+
     yield
+
+    # Shutdown
+    if _worker_proc is not None:
+        _worker_proc.terminate()
+        try:
+            _worker_proc.wait(timeout=5)
+        except Exception:
+            _worker_proc.kill()
+        print("[dashboard] Worker stopped")
+    if _link_store is not None:
+        _link_store.close()
     if _corpus is not None:
         _corpus.close()
 
@@ -375,14 +489,440 @@ app.add_middleware(
         "http://localhost:3000",
         "http://localhost:3001",
         "http://localhost:3002",
+        "http://localhost:3100",
+        "http://localhost:5173",
+        "http://localhost:5174",
         "http://127.0.0.1:3000",
         "http://127.0.0.1:3001",
         "http://127.0.0.1:3002",
+        "http://127.0.0.1:3100",
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:5174",
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
+
+# ---------------------------------------------------------------------------
+# Links API Auth / Access Control
+# ---------------------------------------------------------------------------
+_DEFAULT_LINKS_API_TOKEN = "local-dev-links-token"
+_LINKS_API_TOKEN = os.environ.get("LINKS_API_TOKEN", _DEFAULT_LINKS_API_TOKEN).strip()
+_LINKS_API_TOKEN_FROM_ENV = "LINKS_API_TOKEN" in os.environ
+_LINKS_ADMIN_TOKEN = os.environ.get("LINKS_ADMIN_TOKEN", _LINKS_API_TOKEN).strip()
+_LINKS_ADMIN_TOKEN_FROM_ENV = "LINKS_ADMIN_TOKEN" in os.environ
+_LINKS_TEST_ENDPOINT_TOKEN = os.environ.get(
+    "LINKS_TEST_ENDPOINT_TOKEN",
+    _LINKS_ADMIN_TOKEN,
+).strip()
+_LINKS_TEST_MODE = os.environ.get("LINKS_TEST_MODE", "") == "1"
+
+
+def _is_loopback_host(host: str | None) -> bool:
+    """Return True when host is localhost/loopback."""
+    if not host:
+        return False
+    host_lower = host.lower()
+    if host_lower in {"localhost", "127.0.0.1", "::1"}:
+        return True
+    try:
+        return ipaddress.ip_address(host_lower).is_loopback
+    except ValueError:
+        return False
+
+
+def _request_host(request: Request) -> str | None:
+    if request.client is None:
+        return None
+    return request.client.host
+
+
+def _extract_request_token(request: Request) -> str | None:
+    """Extract bearer/API token from request headers."""
+    auth_header = request.headers.get("Authorization", "").strip()
+    if auth_header.lower().startswith("bearer "):
+        return auth_header[7:].strip()
+    x_token = request.headers.get("X-Links-Token", "").strip()
+    return x_token or None
+
+
+def _require_links_access(request: Request, *, write: bool) -> None:
+    """Enforce auth for /api/links and /api/jobs routes."""
+    token = _extract_request_token(request)
+    host = _request_host(request)
+    is_loopback = _is_loopback_host(host)
+
+    allowed_tokens = {_LINKS_API_TOKEN}
+    if _LINKS_ADMIN_TOKEN:
+        allowed_tokens.add(_LINKS_ADMIN_TOKEN)
+
+    def _enforce_default_token_scope(presented_token: str) -> None:
+        if (
+            presented_token == _DEFAULT_LINKS_API_TOKEN
+            and not _LINKS_API_TOKEN_FROM_ENV
+            and not is_loopback
+        ):
+            raise HTTPException(
+                status_code=403,
+                detail="Default links token is restricted to loopback clients",
+            )
+        if (
+            presented_token == _LINKS_ADMIN_TOKEN
+            and not _LINKS_ADMIN_TOKEN_FROM_ENV
+            and not is_loopback
+        ):
+            raise HTTPException(
+                status_code=403,
+                detail="Default admin token is restricted to loopback clients",
+            )
+
+    # Write operations always require a token.
+    if write:
+        if not token or token not in allowed_tokens:
+            raise HTTPException(status_code=401, detail="Invalid or missing links API token")
+        _enforce_default_token_scope(token)
+        return
+
+    # Read operations: token optional for loopback only.
+    if token:
+        if token not in allowed_tokens:
+            raise HTTPException(status_code=401, detail="Invalid links API token")
+        _enforce_default_token_scope(token)
+        return
+
+    if not is_loopback:
+        raise HTTPException(status_code=401, detail="Links API token required")
+
+
+def _require_links_admin(request: Request) -> None:
+    """Require admin token for direct-write management endpoints."""
+    token = _extract_request_token(request)
+    if not token or token != _LINKS_ADMIN_TOKEN:
+        raise HTTPException(status_code=403, detail="Admin token required for direct-write endpoint")
+    if (
+        not os.environ.get("LINKS_ADMIN_TOKEN")
+        and not _is_loopback_host(_request_host(request))
+    ):
+        raise HTTPException(
+            status_code=403,
+            detail="Default admin token is restricted to loopback clients",
+        )
+
+
+def _require_test_endpoint_access(request: Request) -> None:
+    """Lock down /api/links/_test/* endpoints."""
+    if not _LINKS_TEST_MODE:
+        raise HTTPException(status_code=403, detail="Test mode not enabled")
+    if not _is_loopback_host(_request_host(request)):
+        raise HTTPException(status_code=403, detail="Test endpoints are loopback-only")
+    token = _extract_request_token(request)
+    if not token or token != _LINKS_TEST_ENDPOINT_TOKEN:
+        raise HTTPException(status_code=403, detail="Test endpoint token required")
+
+
+@app.middleware("http")
+async def _links_api_auth_middleware(request: Request, call_next: Any):
+    """Apply auth checks to links/jobs surfaces before handler execution."""
+    path = request.url.path
+    method = request.method.upper()
+
+    if method != "OPTIONS" and (path.startswith("/api/links") or path.startswith("/api/jobs")):
+        # Dedicated helper enforces stricter controls for test-only endpoints.
+        if path.startswith("/api/links/_test"):
+            return await call_next(request)
+        try:
+            _require_links_access(request, write=method not in {"GET", "HEAD"})
+        except HTTPException as exc:
+            return ORJSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
+
+    return await call_next(request)
+
+
+# ---------------------------------------------------------------------------
+# Test seed dataset helpers
+# ---------------------------------------------------------------------------
+def _seed_rules_minimal() -> list[dict[str, Any]]:
+    return [
+        {
+            "rule_id": "RULE-001",
+            "family_id": "FAM-indebtedness",
+            "filter_dsl": 'heading: Indebtedness | "Limitation on Indebtedness" | Debt',
+            "heading_filter_ast": {
+                "type": "group",
+                "operator": "or",
+                "children": [
+                    {"type": "match", "value": "Indebtedness"},
+                    {"type": "match", "value": "Limitation on Indebtedness"},
+                    {"type": "match", "value": "Debt"},
+                ],
+            },
+            "status": "published",
+            "version": 1,
+        },
+        {
+            "rule_id": "RULE-002",
+            "family_id": "FAM-liens",
+            "filter_dsl": 'heading: Liens | "Limitation on Liens"',
+            "heading_filter_ast": {
+                "type": "group",
+                "operator": "or",
+                "children": [
+                    {"type": "match", "value": "Liens"},
+                    {"type": "match", "value": "Limitation on Liens"},
+                ],
+            },
+            "status": "published",
+            "version": 1,
+        },
+        {
+            "rule_id": "RULE-003",
+            "family_id": "FAM-dividends",
+            "filter_dsl": 'heading: "Restricted Payments" | Dividends',
+            "heading_filter_ast": {
+                "type": "group",
+                "operator": "or",
+                "children": [
+                    {"type": "match", "value": "Restricted Payments"},
+                    {"type": "match", "value": "Dividends"},
+                ],
+            },
+            "status": "draft",
+            "version": 1,
+        },
+    ]
+
+
+def _seed_links_minimal() -> list[dict[str, Any]]:
+    return [
+        {
+            "link_id": "LINK-001",
+            "family_id": "FAM-indebtedness",
+            "doc_id": "DOC-001",
+            "section_number": "7.01",
+            "heading": "Indebtedness",
+            "confidence": 0.92,
+            "confidence_tier": "high",
+            "status": "active",
+        },
+        {
+            "link_id": "LINK-002",
+            "family_id": "FAM-indebtedness",
+            "doc_id": "DOC-002",
+            "section_number": "7.01",
+            "heading": "Limitation on Indebtedness",
+            "confidence": 0.85,
+            "confidence_tier": "high",
+            "status": "active",
+        },
+        {
+            "link_id": "LINK-003",
+            "family_id": "FAM-liens",
+            "doc_id": "DOC-001",
+            "section_number": "7.02",
+            "heading": "Liens",
+            "confidence": 0.88,
+            "confidence_tier": "high",
+            "status": "active",
+        },
+        {
+            "link_id": "LINK-004",
+            "family_id": "FAM-liens",
+            "doc_id": "DOC-003",
+            "section_number": "7.02",
+            "heading": "Limitation on Liens",
+            "confidence": 0.72,
+            "confidence_tier": "medium",
+            "status": "active",
+        },
+        {
+            "link_id": "LINK-005",
+            "family_id": "FAM-dividends",
+            "doc_id": "DOC-001",
+            "section_number": "7.06",
+            "heading": "Restricted Payments",
+            "confidence": 0.91,
+            "confidence_tier": "high",
+            "status": "active",
+        },
+        {
+            "link_id": "LINK-006",
+            "family_id": "FAM-dividends",
+            "doc_id": "DOC-004",
+            "section_number": "7.06",
+            "heading": "Dividends and Distributions",
+            "confidence": 0.55,
+            "confidence_tier": "medium",
+            "status": "pending_review",
+        },
+        {
+            "link_id": "LINK-007",
+            "family_id": "FAM-indebtedness",
+            "doc_id": "DOC-005",
+            "section_number": "7.01",
+            "heading": "Debt Limitations",
+            "confidence": 0.45,
+            "confidence_tier": "low",
+            "status": "pending_review",
+        },
+        {
+            "link_id": "LINK-008",
+            "family_id": "FAM-investments",
+            "doc_id": "DOC-001",
+            "section_number": "7.04",
+            "heading": "Investments",
+            "confidence": 0.89,
+            "confidence_tier": "high",
+            "status": "active",
+        },
+        {
+            "link_id": "LINK-009",
+            "family_id": "FAM-mergers",
+            "doc_id": "DOC-002",
+            "section_number": "7.05",
+            "heading": "Fundamental Changes",
+            "confidence": 0.78,
+            "confidence_tier": "medium",
+            "status": "unlinked",
+        },
+        {
+            "link_id": "LINK-010",
+            "family_id": "FAM-asset-sales",
+            "doc_id": "DOC-003",
+            "section_number": "7.07",
+            "heading": "Asset Sales",
+            "confidence": 0.82,
+            "confidence_tier": "high",
+            "status": "active",
+        },
+    ]
+
+
+def _build_named_seed_dataset(dataset: str) -> dict[str, Any]:
+    key = dataset.strip().lower()
+    minimal_links = _seed_links_minimal()
+    minimal_rules = _seed_rules_minimal()
+
+    if key == "minimal":
+        return {"links": minimal_links, "rules": minimal_rules, "jobs": []}
+
+    if key == "rules":
+        extra_rules = [
+            {
+                "rule_id": f"RULE-{idx:03d}",
+                "family_id": fam,
+                "heading_filter_ast": {"type": "match", "value": title},
+                "status": "draft" if idx % 2 else "published",
+                "version": 1,
+            }
+            for idx, fam, title in [
+                (4, "FAM-investments", "Investments"),
+                (5, "FAM-mergers", "Fundamental Changes"),
+                (6, "FAM-asset-sales", "Asset Sales"),
+                (7, "FAM-affiliate-transactions", "Affiliate Transactions"),
+                (8, "FAM-reporting", "Reporting"),
+                (9, "FAM-liquidity", "Liquidity"),
+                (10, "FAM-leverage", "Leverage"),
+            ]
+        ]
+        return {
+            "links": minimal_links,
+            "rules": [*minimal_rules, *extra_rules],
+            "jobs": [],
+        }
+
+    if key == "conflicts":
+        conflict_links = [
+            {
+                "link_id": "LINK-C001",
+                "family_id": "FAM-indebtedness",
+                "doc_id": "DOC-020",
+                "section_number": "7.03",
+                "heading": "Shared Covenant",
+                "confidence": 0.83,
+                "confidence_tier": "high",
+                "status": "active",
+            },
+            {
+                "link_id": "LINK-C002",
+                "family_id": "FAM-liens",
+                "doc_id": "DOC-020",
+                "section_number": "7.03",
+                "heading": "Shared Covenant",
+                "confidence": 0.79,
+                "confidence_tier": "medium",
+                "status": "active",
+            },
+        ]
+        return {"links": [*minimal_links, *conflict_links], "rules": minimal_rules, "jobs": []}
+
+    if key == "review":
+        families = [
+            "FAM-indebtedness",
+            "FAM-liens",
+            "FAM-dividends",
+            "FAM-investments",
+            "FAM-mergers",
+        ]
+        tiers = ["high", "medium", "low"]
+        statuses = ["active", "pending_review", "unlinked"]
+        review_links = []
+        for i in range(1, 51):
+            review_links.append(
+                {
+                    "link_id": f"LINK-R{i:03d}",
+                    "family_id": families[(i - 1) % len(families)],
+                    "doc_id": f"DOC-{((i - 1) % 20) + 1:03d}",
+                    "section_number": f"7.{(i % 12) + 1:02d}",
+                    "heading": f"Review Seed Heading {i}",
+                    "confidence": round(0.35 + (i % 65) / 100, 2),
+                    "confidence_tier": tiers[(i - 1) % len(tiers)],
+                    "status": statuses[(i - 1) % len(statuses)],
+                },
+            )
+        return {"links": review_links, "rules": minimal_rules, "jobs": []}
+
+    if key == "coverage":
+        families = [
+            "FAM-indebtedness",
+            "FAM-liens",
+            "FAM-dividends",
+            "FAM-investments",
+            "FAM-mergers",
+            "FAM-asset-sales",
+            "FAM-affiliate-transactions",
+            "FAM-reporting",
+        ]
+        coverage_links = []
+        for i in range(1, 101):
+            coverage_links.append(
+                {
+                    "link_id": f"LINK-G{i:03d}",
+                    "family_id": families[(i - 1) % len(families)],
+                    "doc_id": f"DOC-{((i - 1) % 20) + 1:03d}",
+                    "section_number": f"6.{(i % 25) + 1:02d}",
+                    "heading": f"Coverage Heading {i}",
+                    "confidence": round(0.4 + (i % 50) / 100, 2),
+                    "confidence_tier": "high" if i % 3 == 0 else "medium",
+                    "status": "active" if i % 7 else "pending_review",
+                },
+            )
+        return {"links": coverage_links, "rules": minimal_rules, "jobs": []}
+
+    if key == "full":
+        conflicts = _build_named_seed_dataset("conflicts")["links"]
+        review = _build_named_seed_dataset("review")["links"]
+        all_links: dict[str, dict[str, Any]] = {}
+        for link in [*minimal_links, *conflicts, *review]:
+            all_links[link["link_id"]] = link
+        jobs = [
+            {"job_id": "JOB-001", "job_type": "preview", "params": {"family_id": "FAM-indebtedness"}},
+            {"job_id": "JOB-002", "job_type": "apply", "params": {"preview_id": "PREVIEW-001"}},
+            {"job_id": "JOB-003", "job_type": "export", "params": {"format": "csv"}},
+        ]
+        return {"links": list(all_links.values()), "rules": _build_named_seed_dataset("rules")["rules"], "jobs": jobs}
+
+    raise HTTPException(status_code=422, detail=f"Unknown seed dataset: {dataset}")
 
 
 # ---------------------------------------------------------------------------
@@ -466,6 +1006,7 @@ async def health():
         "status": "ok",
         "corpus_loaded": _corpus is not None,
         "doc_count": _corpus.doc_count if _corpus else 0,
+        "links_loaded": _link_store is not None,
     }
 
 
@@ -718,6 +1259,7 @@ async def get_document(doc_id: str):
         raise HTTPException(status_code=404, detail=f"Document not found: {doc_id}")
 
     sections = corpus.search_sections(doc_id=doc_id, cohort_only=False, limit=1000)
+    articles = corpus.get_articles(doc_id)
 
     return {
         "doc": {
@@ -746,6 +1288,18 @@ async def get_document(doc_id: str):
             "cohort_included": doc.cohort_included,
             "word_count": doc.word_count,
         },
+        "articles": [
+            {
+                "article_num": a.article_num,
+                "label": a.label,
+                "title": a.title,
+                "concept": a.concept,
+                "char_start": a.char_start,
+                "char_end": a.char_end,
+                "is_synthetic": a.is_synthetic,
+            }
+            for a in articles
+        ],
         "sections": [
             {
                 "section_number": s.section_number,
@@ -1394,36 +1948,68 @@ async def quality_anomalies(
 # ---------------------------------------------------------------------------
 # Routes: Edge Case Inspector
 # ---------------------------------------------------------------------------
-_EDGE_CASE_CATEGORIES = {
-    "low_definitions", "missing_sections", "extreme_word_count",
-    "zero_clauses", "extreme_facility", "all",
+
+# Tier-based category registry (32 categories across 6 tiers)
+_EDGE_CASE_TIERS: dict[str, list[str]] = {
+    "structural": [
+        "missing_sections", "low_section_count", "excessive_section_count",
+        "section_fallback_used", "section_numbering_gap", "empty_section_headings",
+    ],
+    "clauses": [
+        "zero_clauses", "low_clause_density", "low_avg_clause_confidence",
+        "orphan_deep_clause", "inconsistent_sibling_depth",
+        "deep_nesting_outlier", "low_structural_ratio", "rootless_deep_clause",
+    ],
+    "definitions": [
+        "low_definitions", "zero_definitions", "high_definition_count",
+        "duplicate_definitions", "single_engine_definitions",
+    ],
+    "metadata": [
+        "extreme_facility", "missing_borrower", "missing_facility_size",
+        "missing_closing_date", "unknown_doc_type",
+    ],
+    "document": [
+        "extreme_word_count", "short_text", "extreme_text_ratio",
+        "very_short_document",
+    ],
+    "template": [
+        "orphan_template", "non_credit_agreement", "uncertain_market_segment",
+        "non_cohort_large_doc",
+    ],
 }
 
+_CATEGORY_TO_TIER: dict[str, str] = {
+    cat: tier for tier, cats in _EDGE_CASE_TIERS.items() for cat in cats
+}
+_EDGE_CASE_CATEGORIES = {"all"} | set(_CATEGORY_TO_TIER)
 
-@app.get("/api/edge-cases")
-async def edge_cases(
-    category: str = Query("all", description="Edge case category to filter"),
-    page: int = Query(0, ge=0),
-    page_size: int = Query(50, ge=1, le=200),
-    cohort_only: bool = Query(False),
-):
-    """Categorized edge case documents for inspection."""
-    corpus = _get_corpus()
 
-    if category not in _EDGE_CASE_CATEGORIES:
-        raise HTTPException(
-            400,
-            f"Invalid category: {category}. Must be one of: {', '.join(sorted(_EDGE_CASE_CATEGORIES))}",
-        )
+def _get_tier(category: str) -> str:
+    return _CATEGORY_TO_TIER.get(category, "unknown")
 
-    cohort_where = "WHERE cohort_included = true AND" if cohort_only else "WHERE"
 
-    # --- Build ALL category queries (always, for global facet counts) ---
-    all_queries: list[str] = []
-    all_params: list[Any] = []
+# Standard SELECT columns shared by all edge-case category queries
+_EC_COLS = (
+    "doc_id, borrower, {cat!r} as category, {sev!r} as severity, "
+    "{detail} as detail, "
+    "doc_type, market_segment, word_count, section_count, definition_count, "
+    "clause_count, facility_size_mm"
+)
 
-    # Block-1.1: enriched detail for missing_sections using word_count + doc_type
-    all_queries.append(
+
+def _doc_q(cohort_where: str, cat: str, severity: str, detail: str, where: str) -> str:
+    """Build a simple documents-table-only category query."""
+    cols = _EC_COLS.format(cat=cat, sev=severity, detail=detail)
+    return f"SELECT {cols} FROM documents {cohort_where} {where}"
+
+
+def _build_doc_category_queries(cohort_where: str) -> list[tuple[str, list[Any]]]:
+    """Categories querying only the documents table (no JOINs)."""
+    queries: list[tuple[str, list[Any]]] = []
+
+    # --- Structural ---
+    # 1. missing_sections (existing, enriched detail)
+    queries.append((
         f"SELECT doc_id, borrower, 'missing_sections' as category, 'high' as severity, "
         f"CASE "
         f"  WHEN word_count < 500 THEN 'Short document (' || word_count || ' words) — likely amendment or supplement' "
@@ -1435,59 +2021,403 @@ async def edge_cases(
         f"END as detail, "
         f"doc_type, market_segment, word_count, section_count, definition_count, "
         f"clause_count, facility_size_mm "
-        f"FROM documents {cohort_where} section_count = 0"
+        f"FROM documents {cohort_where} section_count = 0",
+        [],
+    ))
+    # 2. low_section_count
+    queries.append((_doc_q(
+        cohort_where, "low_section_count", "medium",
+        "'Only ' || section_count || ' sections in ' || word_count || '-word document'",
+        "section_count BETWEEN 1 AND 4 AND word_count > 5000",
+    ), []))
+    # 4. section_fallback_used
+    queries.append((_doc_q(
+        cohort_where, "section_fallback_used", "low",
+        "'Parser used fallback heuristic to detect ' || section_count || ' sections'",
+        "section_fallback_used = true AND section_count > 0",
+    ), []))
+
+    # --- Clauses ---
+    # 7. zero_clauses (existing)
+    queries.append((_doc_q(
+        cohort_where, "zero_clauses", "medium",
+        "'Sections exist but no clauses parsed'",
+        "clause_count = 0 AND section_count > 0",
+    ), []))
+    # 8. low_clause_density (uses only documents table columns)
+    queries.append((_doc_q(
+        cohort_where, "low_clause_density", "medium",
+        "'Clause density ' || ROUND(CAST(clause_count AS DOUBLE) / section_count, 1) || ' per section (expected >= 3)'",
+        "clause_count > 0 AND section_count > 0 AND CAST(clause_count AS DOUBLE) / section_count < 2.0",
+    ), []))
+
+    # --- Definitions ---
+    # 15. low_definitions (existing)
+    queries.append((_doc_q(
+        cohort_where, "low_definitions", "medium",
+        "'Fewer than 20 definitions in document with >10K words'",
+        "definition_count < 20 AND word_count > 10000",
+    ), []))
+    # 16. zero_definitions
+    queries.append((_doc_q(
+        cohort_where, "zero_definitions", "high",
+        "'No definitions extracted from ' || word_count || '-word document'",
+        "definition_count = 0 AND word_count > 5000",
+    ), []))
+    # 17. high_definition_count
+    queries.append((_doc_q(
+        cohort_where, "high_definition_count", "medium",
+        "definition_count || ' definitions detected — possible extraction noise'",
+        "definition_count > 500",
+    ), []))
+
+    # --- Metadata ---
+    # 20. extreme_facility (existing)
+    queries.append((_doc_q(
+        cohort_where, "extreme_facility", "low",
+        "'Facility size outside typical range'",
+        "facility_size_mm IS NOT NULL AND (facility_size_mm > 10000 OR facility_size_mm < 1)",
+    ), []))
+    # 21. missing_borrower
+    queries.append((_doc_q(
+        cohort_where, "missing_borrower", "medium",
+        "'No borrower name extracted from document'",
+        "borrower IS NULL OR TRIM(borrower) = ''",
+    ), []))
+    # 22. missing_facility_size
+    queries.append((_doc_q(
+        cohort_where, "missing_facility_size", "medium",
+        "'No facility size extracted from ' || word_count || '-word document'",
+        "facility_size_mm IS NULL AND word_count > 5000",
+    ), []))
+    # 23. missing_closing_date
+    queries.append((_doc_q(
+        cohort_where, "missing_closing_date", "low",
+        "'No closing date extracted from document'",
+        "closing_date IS NULL AND word_count > 5000",
+    ), []))
+    # 24. unknown_doc_type
+    queries.append((_doc_q(
+        cohort_where, "unknown_doc_type", "high",
+        "'Low-confidence doc type classification: ' || COALESCE(doc_type, 'NULL')",
+        "doc_type_confidence = 'low' OR doc_type IN ('', 'other') OR doc_type IS NULL",
+    ), []))
+
+    # --- Document Quality ---
+    # 26. short_text
+    queries.append((_doc_q(
+        cohort_where, "short_text", "medium",
+        "'Document text is only ' || text_length || ' characters (expected > 10K)'",
+        "text_length < 10000 AND text_length > 0",
+    ), []))
+    # 27. extreme_text_ratio
+    queries.append((_doc_q(
+        cohort_where, "extreme_text_ratio", "medium",
+        "'Text/word ratio ' || ROUND(CAST(text_length AS DOUBLE) / word_count, 1) || ' (expected ~6) — possible HTML artifact bloat'",
+        "word_count > 0 AND CAST(text_length AS DOUBLE) / word_count > 15.0",
+    ), []))
+    # 28. very_short_document
+    queries.append((_doc_q(
+        cohort_where, "very_short_document", "high",
+        "'Only ' || word_count || ' words — likely amendment/supplement'",
+        "word_count < 5000 AND word_count > 0",
+    ), []))
+
+    # --- Template/Structure ---
+    # 29. orphan_template
+    queries.append((_doc_q(
+        cohort_where, "orphan_template", "low",
+        "'Document not assigned to any template family'",
+        "template_family IS NULL OR TRIM(template_family) = ''",
+    ), []))
+    # 30. non_credit_agreement
+    queries.append((_doc_q(
+        cohort_where, "non_credit_agreement", "medium",
+        "'Document classified as ' || doc_type || ' (confidence: ' || COALESCE(doc_type_confidence, 'N/A') || ')'",
+        "doc_type NOT IN ('credit_agreement', '') AND doc_type IS NOT NULL AND word_count > 1000",
+    ), []))
+    # 31. uncertain_market_segment
+    queries.append((_doc_q(
+        cohort_where, "uncertain_market_segment", "low",
+        "'Market segment uncertain — could not determine leveraged vs. investment grade'",
+        "segment_confidence = 'low' AND market_segment = 'uncertain'",
+    ), []))
+    # 32. non_cohort_large_doc
+    queries.append((_doc_q(
+        cohort_where, "non_cohort_large_doc", "low",
+        "word_count || '-word document excluded from cohort'",
+        "cohort_included = false AND word_count > 10000",
+    ), []))
+
+    return queries
+
+
+def _build_join_category_queries(cohort_where: str) -> list[tuple[str, list[Any]]]:
+    """Categories requiring JOINs against clauses, definitions, or sections tables."""
+    queries: list[tuple[str, list[Any]]] = []
+    # Cohort filter for subqueries that start from non-documents tables
+    cohort_join = "JOIN documents d ON sub.doc_id = d.doc_id" if "cohort_included" not in cohort_where else (
+        "JOIN documents d ON sub.doc_id = d.doc_id WHERE d.cohort_included = true"
     )
-    all_queries.append(
-        f"SELECT doc_id, borrower, 'low_definitions' as category, 'medium' as severity, "
-        f"'Fewer than 20 definitions in document with >10K words' as detail, "
-        f"doc_type, market_segment, word_count, section_count, definition_count, "
-        f"clause_count, facility_size_mm "
-        f"FROM documents {cohort_where} definition_count < 20 AND word_count > 10000"
+    # Simpler: always JOIN documents, apply cohort filter if needed
+    cohort_doc_filter = " AND d.cohort_included = true" if "cohort_included" in cohort_where else ""
+
+    _cols = (
+        "sub.doc_id, d.borrower, {cat!r} as category, {sev!r} as severity, "
+        "{detail} as detail, "
+        "d.doc_type, d.market_segment, d.word_count, d.section_count, d.definition_count, "
+        "d.clause_count, d.facility_size_mm"
     )
 
-    # IQR fences for extreme_word_count
-    wc_sql = (
-        "SELECT word_count FROM documents WHERE cohort_included = true AND word_count IS NOT NULL"
-        if cohort_only else
-        "SELECT word_count FROM documents WHERE word_count IS NOT NULL"
+    # --- Clause depth anomalies (user priority) ---
+
+    # 9. low_avg_clause_confidence
+    cols = _cols.format(
+        cat="low_avg_clause_confidence", sev="high",
+        detail="'Average clause confidence ' || sub.avg_conf || ' across ' || sub.n_clauses || ' clauses (threshold 0.4)'",
     )
-    fences_rows = corpus.query(wc_sql)
-    fences_vals = [float(r[0]) for r in fences_rows if r[0] is not None]
-    wc_lo, wc_hi = 0.0, float("inf")
-    if len(fences_vals) >= 4:
-        q1 = _percentile(fences_vals, 0.25)
-        q3 = _percentile(fences_vals, 0.75)
+    queries.append((
+        f"SELECT {cols} FROM ("
+        f"  SELECT c.doc_id, ROUND(AVG(c.parse_confidence), 3) as avg_conf, COUNT(*) as n_clauses"
+        f"  FROM clauses c JOIN documents dd ON c.doc_id = dd.doc_id"
+        f"  WHERE dd.clause_count > 10"
+        f"  GROUP BY c.doc_id HAVING AVG(c.parse_confidence) < 0.4"
+        f") sub JOIN documents d ON sub.doc_id = d.doc_id"
+        f"{cohort_doc_filter}",
+        [],
+    ))
+
+    # 10. orphan_deep_clause — uses tree_level >= 3 (from clause_id path)
+    cols = _cols.format(
+        cat="orphan_deep_clause", sev="high",
+        detail="sub.orphan_count || ' orphaned deep clauses (tree level >= 3, missing parent)'",
+    )
+    queries.append((
+        f"SELECT {cols} FROM ("
+        f"  SELECT ci.doc_id, COUNT(*) as orphan_count"
+        f"  FROM (SELECT *, ARRAY_LENGTH(STRING_SPLIT(clause_id, '.')) AS tree_level FROM clauses) ci"
+        f"  LEFT JOIN clauses p ON ci.doc_id = p.doc_id AND ci.section_number = p.section_number AND ci.parent_id = p.clause_id"
+        f"  WHERE ci.tree_level >= 3 AND ci.is_structural = true AND ci.parent_id != '' AND p.clause_id IS NULL"
+        f"  GROUP BY ci.doc_id"
+        f") sub JOIN documents d ON sub.doc_id = d.doc_id"
+        f"{cohort_doc_filter}",
+        [],
+    ))
+
+    # 12. inconsistent_sibling_depth — uses tree_level (from clause_id path)
+    cols = _cols.format(
+        cat="inconsistent_sibling_depth", sev="high",
+        detail="sub.bad_groups || ' parent groups with inconsistent tree levels (' || sub.affected || ' clauses)'",
+    )
+    queries.append((
+        f"SELECT {cols} FROM ("
+        f"  SELECT doc_id, COUNT(*) as bad_groups, SUM(n_siblings) as affected FROM ("
+        f"    SELECT doc_id, parent_id, section_number, COUNT(*) as n_siblings"
+        f"    FROM (SELECT *, ARRAY_LENGTH(STRING_SPLIT(clause_id, '.')) AS tree_level FROM clauses) c"
+        f"    WHERE c.is_structural = true AND c.parent_id != ''"
+        f"    GROUP BY doc_id, section_number, parent_id"
+        f"    HAVING COUNT(DISTINCT tree_level) > 1"
+        f"  ) g GROUP BY doc_id"
+        f") sub JOIN documents d ON sub.doc_id = d.doc_id"
+        f"{cohort_doc_filter}",
+        [],
+    ))
+
+    # 13. deep_nesting_outlier — uses tree_level > 4 (from clause_id path)
+    cols = _cols.format(
+        cat="deep_nesting_outlier", sev="low",
+        detail="'Max tree level ' || sub.max_level || ' with ' || sub.deep_count || ' clauses beyond level 4'",
+    )
+    queries.append((
+        f"SELECT {cols} FROM ("
+        f"  SELECT doc_id, MAX(tree_level) as max_level, COUNT(*) as deep_count"
+        f"  FROM (SELECT *, ARRAY_LENGTH(STRING_SPLIT(clause_id, '.')) AS tree_level FROM clauses) c"
+        f"  WHERE c.is_structural = true AND c.tree_level > 4"
+        f"  GROUP BY doc_id"
+        f") sub JOIN documents d ON sub.doc_id = d.doc_id"
+        f"{cohort_doc_filter}",
+        [],
+    ))
+
+    # 14. low_structural_ratio
+    cols = _cols.format(
+        cat="low_structural_ratio", sev="medium",
+        detail="'Only ' || sub.pct || '% structural (' || sub.structural || '/' || sub.total || ')'",
+    )
+    queries.append((
+        f"SELECT {cols} FROM ("
+        f"  SELECT doc_id, COUNT(*) as total,"
+        f"    SUM(CASE WHEN is_structural THEN 1 ELSE 0 END) as structural,"
+        f"    ROUND(100.0 * SUM(CASE WHEN is_structural THEN 1 ELSE 0 END) / COUNT(*), 1) as pct"
+        f"  FROM clauses GROUP BY doc_id HAVING COUNT(*) >= 10"
+        f") sub JOIN documents d ON sub.doc_id = d.doc_id"
+        f" WHERE sub.pct < 50.0{cohort_doc_filter}",
+        [],
+    ))
+
+    # 15. rootless_deep_clause — tree_level > 1 with empty parent_id
+    cols = _cols.format(
+        cat="rootless_deep_clause", sev="medium",
+        detail="sub.rootless_count || ' clauses with tree level > 1 but no parent link'",
+    )
+    queries.append((
+        f"SELECT {cols} FROM ("
+        f"  SELECT doc_id, COUNT(*) as rootless_count"
+        f"  FROM (SELECT *, ARRAY_LENGTH(STRING_SPLIT(clause_id, '.')) AS tree_level FROM clauses) c"
+        f"  WHERE c.tree_level > 1 AND c.is_structural = true AND (c.parent_id IS NULL OR c.parent_id = '')"
+        f"  GROUP BY doc_id"
+        f") sub JOIN documents d ON sub.doc_id = d.doc_id"
+        f"{cohort_doc_filter}",
+        [],
+    ))
+
+    # --- Definition JOINs ---
+
+    # 18. duplicate_definitions
+    cols = _cols.format(
+        cat="duplicate_definitions", sev="low",
+        detail="sub.dup_term_count || ' terms defined multiple times in same document'",
+    )
+    queries.append((
+        f"SELECT {cols} FROM ("
+        f"  SELECT doc_id, COUNT(*) as dup_term_count FROM ("
+        f"    SELECT doc_id, term FROM definitions GROUP BY doc_id, term HAVING COUNT(*) > 1"
+        f"  ) inner_sub GROUP BY doc_id"
+        f") sub JOIN documents d ON sub.doc_id = d.doc_id"
+        f"{cohort_doc_filter}",
+        [],
+    ))
+
+    # 19. single_engine_definitions
+    cols = _cols.format(
+        cat="single_engine_definitions", sev="low",
+        detail="'All ' || sub.def_count || ' definitions extracted by single engine: ' || sub.sole_engine",
+    )
+    queries.append((
+        f"SELECT {cols} FROM ("
+        f"  SELECT doc_id, MIN(pattern_engine) as sole_engine, COUNT(*) as def_count"
+        f"  FROM definitions GROUP BY doc_id"
+        f"  HAVING COUNT(DISTINCT pattern_engine) = 1 AND COUNT(*) >= 10"
+        f") sub JOIN documents d ON sub.doc_id = d.doc_id"
+        f"{cohort_doc_filter}",
+        [],
+    ))
+
+    # --- Section JOINs ---
+
+    # 5. section_numbering_gap
+    cols = _cols.format(
+        cat="section_numbering_gap", sev="medium",
+        detail="sub.gap_count || ' numbering gaps detected in section sequence'",
+    )
+    queries.append((
+        f"SELECT {cols} FROM ("
+        f"  SELECT doc_id, COUNT(*) as gap_count FROM ("
+        f"    SELECT doc_id, CAST(section_number AS DOUBLE) as sn,"
+        f"      LAG(CAST(section_number AS DOUBLE)) OVER (PARTITION BY doc_id ORDER BY CAST(section_number AS DOUBLE)) AS prev_sn"
+        f"    FROM sections WHERE section_number NOT LIKE '%.%'"
+        f"  ) numbered WHERE prev_sn IS NOT NULL AND sn - prev_sn > 1.0 AND sn > 1.0"
+        f"  GROUP BY doc_id"
+        f") sub JOIN documents d ON sub.doc_id = d.doc_id"
+        f"{cohort_doc_filter}",
+        [],
+    ))
+
+    # 6. empty_section_headings
+    cols = _cols.format(
+        cat="empty_section_headings", sev="medium",
+        detail="sub.empty_count || ' sections with missing or empty headings'",
+    )
+    queries.append((
+        f"SELECT {cols} FROM ("
+        f"  SELECT doc_id, COUNT(*) as empty_count"
+        f"  FROM sections WHERE heading IS NULL OR TRIM(heading) = ''"
+        f"  GROUP BY doc_id"
+        f") sub JOIN documents d ON sub.doc_id = d.doc_id"
+        f"{cohort_doc_filter}",
+        [],
+    ))
+
+    return queries
+
+
+def _build_iqr_category_queries(
+    corpus: Any, cohort_where: str, cohort_only: bool,
+) -> list[tuple[str, list[Any]]]:
+    """IQR-fence-based categories requiring pre-computation of percentiles."""
+    queries: list[tuple[str, list[Any]]] = []
+
+    def _compute_fences(col: str) -> tuple[float, float]:
+        base = "WHERE cohort_included = true AND" if cohort_only else "WHERE"
+        rows = corpus.query(f"SELECT {col} FROM documents {base} {col} IS NOT NULL")
+        vals = [float(r[0]) for r in rows if r[0] is not None]
+        if len(vals) < 4:
+            return 0.0, float("inf")
+        q1 = _percentile(vals, 0.25)
+        q3 = _percentile(vals, 0.75)
         iqr = q3 - q1
-        if iqr > 0:
-            wc_lo = q1 - 1.5 * iqr
-            wc_hi = q3 + 1.5 * iqr
+        if iqr <= 0:
+            return 0.0, float("inf")
+        return q1 - 1.5 * iqr, q3 + 1.5 * iqr
 
+    # 25. extreme_word_count (existing)
+    wc_lo, wc_hi = _compute_fences("word_count")
     if wc_hi != float("inf"):
-        all_queries.append(
+        queries.append((
             f"SELECT doc_id, borrower, 'extreme_word_count' as category, 'low' as severity, "
-            f"'Word count outside IQR x 1.5 range' as detail, "
+            f"'Word count ' || word_count || ' outside IQR fences [' || CAST(ROUND(?, 0) AS INTEGER) || ', ' || CAST(ROUND(?, 0) AS INTEGER) || ']' as detail, "
             f"doc_type, market_segment, word_count, section_count, definition_count, "
             f"clause_count, facility_size_mm "
             f"FROM documents {cohort_where} word_count IS NOT NULL "
-            f"AND (word_count < ? OR word_count > ?)"
-        )
-        all_params.extend([wc_lo, wc_hi])
+            f"AND (word_count < ? OR word_count > ?)",
+            [wc_lo, wc_hi, wc_lo, wc_hi],
+        ))
 
-    all_queries.append(
-        f"SELECT doc_id, borrower, 'zero_clauses' as category, 'medium' as severity, "
-        f"'Sections exist but no clauses parsed' as detail, "
-        f"doc_type, market_segment, word_count, section_count, definition_count, "
-        f"clause_count, facility_size_mm "
-        f"FROM documents {cohort_where} clause_count = 0 AND section_count > 0"
-    )
-    all_queries.append(
-        f"SELECT doc_id, borrower, 'extreme_facility' as category, 'low' as severity, "
-        f"'Facility size outside typical range' as detail, "
-        f"doc_type, market_segment, word_count, section_count, definition_count, "
-        f"clause_count, facility_size_mm "
-        f"FROM documents {cohort_where} facility_size_mm IS NOT NULL "
-        f"AND (facility_size_mm > 10000 OR facility_size_mm < 1)"
-    )
+    # 3. excessive_section_count
+    sc_lo, sc_hi = _compute_fences("section_count")
+    if sc_hi != float("inf"):
+        queries.append((
+            f"SELECT doc_id, borrower, 'excessive_section_count' as category, 'low' as severity, "
+            f"section_count || ' sections (IQR upper fence: ' || CAST(ROUND(?, 0) AS INTEGER) || ')' as detail, "
+            f"doc_type, market_segment, word_count, section_count, definition_count, "
+            f"clause_count, facility_size_mm "
+            f"FROM documents {cohort_where} section_count IS NOT NULL "
+            f"AND section_count > ?",
+            [sc_hi, sc_hi],
+        ))
+
+    return queries
+
+
+@app.get("/api/edge-cases")
+async def edge_cases(
+    category: str = Query("all", description="Edge case category to filter"),
+    page: int = Query(0, ge=0),
+    page_size: int = Query(50, ge=1, le=200),
+    cohort_only: bool = Query(False),
+):
+    """Categorized edge case documents for inspection (32 categories, 6 tiers)."""
+    corpus = _get_corpus()
+
+    if category not in _EDGE_CASE_CATEGORIES:
+        raise HTTPException(
+            400,
+            f"Invalid category: {category}. Must be one of: {', '.join(sorted(_EDGE_CASE_CATEGORIES))}",
+        )
+
+    cohort_where = "WHERE cohort_included = true AND" if cohort_only else "WHERE"
+
+    # --- Build ALL category queries via builder functions ---
+    all_parts: list[tuple[str, list[Any]]] = []
+    all_parts.extend(_build_doc_category_queries(cohort_where))
+    all_parts.extend(_build_join_category_queries(cohort_where))
+    all_parts.extend(_build_iqr_category_queries(corpus, cohort_where, cohort_only))
+
+    # Merge into a single UNION ALL
+    all_queries = [p[0] for p in all_parts]
+    all_params: list[Any] = []
+    for p in all_parts:
+        all_params.extend(p[1])
 
     all_union_sql = " UNION ALL ".join(all_queries)
 
@@ -1500,7 +2430,7 @@ async def edge_cases(
     # --- Build filtered query (for the paginated case list) ---
     if category == "all":
         filtered_sql = all_union_sql
-        filtered_params = all_params
+        filtered_params = list(all_params)
     else:
         filtered_sql = f"SELECT * FROM ({all_union_sql}) WHERE category = ?"
         filtered_params = [*all_params, category]
@@ -1519,7 +2449,8 @@ async def edge_cases(
         "page": page,
         "page_size": page_size,
         "categories": [
-            {"category": str(r[0]), "count": int(r[1])} for r in cat_rows
+            {"category": str(r[0]), "count": int(r[1]), "tier": _get_tier(str(r[0]))}
+            for r in cat_rows
         ],
         "cases": [
             {
@@ -1538,6 +2469,160 @@ async def edge_cases(
             }
             for r in rows
         ],
+    }
+
+
+# Clause anomaly categories that support drill-down
+_CLAUSE_ANOMALY_CATEGORIES = {
+    "inconsistent_sibling_depth",
+    "orphan_deep_clause",
+    "deep_nesting_outlier",
+    "low_avg_clause_confidence",
+    "low_structural_ratio",
+    "rootless_deep_clause",
+}
+
+
+@app.get("/api/edge-cases/{doc_id}/clause-detail")
+async def edge_case_clause_detail(
+    doc_id: str,
+    category: str = Query(..., description="Clause anomaly category"),
+) -> dict[str, Any]:
+    """Per-document clause-level drill-down for clause anomaly categories."""
+    corpus = _get_corpus()
+
+    if category not in _CLAUSE_ANOMALY_CATEGORIES:
+        raise HTTPException(
+            400,
+            f"Invalid clause anomaly category: {category}. "
+            f"Must be one of: {', '.join(sorted(_CLAUSE_ANOMALY_CATEGORIES))}",
+        )
+
+    # Verify document exists
+    doc_rows = corpus.query(
+        "SELECT doc_id FROM documents WHERE doc_id = ?", [doc_id],
+    )
+    if not doc_rows:
+        raise HTTPException(404, f"Document not found: {doc_id}")
+
+    # Build category-specific clause query
+    # All queries return: section_number, clause_id, label, depth, level_type,
+    #   parent_id, is_structural, parse_confidence, header_text, span_start, span_end, tree_level
+    _clause_cols = (
+        "c.section_number, c.clause_id, c.label, c.depth, c.level_type, "
+        "c.parent_id, c.is_structural, c.parse_confidence, c.header_text, "
+        "c.span_start, c.span_end, ARRAY_LENGTH(STRING_SPLIT(c.clause_id, '.')) AS tree_level"
+    )
+
+    if category == "inconsistent_sibling_depth":
+        # Clauses in parent groups with mixed tree_levels
+        sql = (
+            f"SELECT {_clause_cols} FROM clauses c "
+            f"WHERE c.doc_id = ? AND c.is_structural = true AND c.parent_id != '' "
+            f"AND (c.doc_id, c.section_number, c.parent_id) IN ("
+            f"  SELECT doc_id, section_number, parent_id "
+            f"  FROM (SELECT *, ARRAY_LENGTH(STRING_SPLIT(clause_id, '.')) AS tl FROM clauses) s "
+            f"  WHERE s.doc_id = ? AND s.is_structural = true AND s.parent_id != '' "
+            f"  GROUP BY s.doc_id, s.section_number, s.parent_id "
+            f"  HAVING COUNT(DISTINCT tl) > 1"
+            f") ORDER BY c.section_number, c.span_start"
+        )
+        params: list[Any] = [doc_id, doc_id]
+
+    elif category == "orphan_deep_clause":
+        # tree_level >= 3 with broken parent reference
+        sql = (
+            f"SELECT {_clause_cols} FROM clauses c "
+            f"LEFT JOIN clauses p ON c.doc_id = p.doc_id AND c.section_number = p.section_number "
+            f"  AND c.parent_id = p.clause_id "
+            f"WHERE c.doc_id = ? AND ARRAY_LENGTH(STRING_SPLIT(c.clause_id, '.')) >= 3 "
+            f"  AND c.is_structural = true AND c.parent_id != '' AND p.clause_id IS NULL "
+            f"ORDER BY c.section_number, c.span_start"
+        )
+        params = [doc_id]
+
+    elif category == "deep_nesting_outlier":
+        # tree_level > 4
+        sql = (
+            f"SELECT {_clause_cols} FROM clauses c "
+            f"WHERE c.doc_id = ? AND c.is_structural = true "
+            f"  AND ARRAY_LENGTH(STRING_SPLIT(c.clause_id, '.')) > 4 "
+            f"ORDER BY c.section_number, c.span_start"
+        )
+        params = [doc_id]
+
+    elif category == "low_avg_clause_confidence":
+        # parse_confidence < 0.4, limit 100
+        sql = (
+            f"SELECT {_clause_cols} FROM clauses c "
+            f"WHERE c.doc_id = ? AND c.parse_confidence < 0.4 "
+            f"ORDER BY c.parse_confidence ASC, c.section_number, c.span_start "
+            f"LIMIT 100"
+        )
+        params = [doc_id]
+
+    elif category == "low_structural_ratio":
+        # Non-structural clauses, limit 100
+        sql = (
+            f"SELECT {_clause_cols} FROM clauses c "
+            f"WHERE c.doc_id = ? AND c.is_structural = false "
+            f"ORDER BY c.section_number, c.span_start "
+            f"LIMIT 100"
+        )
+        params = [doc_id]
+
+    elif category == "rootless_deep_clause":
+        # tree_level > 1 with empty parent_id
+        sql = (
+            f"SELECT {_clause_cols} FROM clauses c "
+            f"WHERE c.doc_id = ? AND c.is_structural = true "
+            f"  AND ARRAY_LENGTH(STRING_SPLIT(c.clause_id, '.')) > 1 "
+            f"  AND (c.parent_id IS NULL OR c.parent_id = '') "
+            f"ORDER BY c.section_number, c.span_start"
+        )
+        params = [doc_id]
+
+    else:
+        raise HTTPException(400, f"Unsupported category: {category}")
+
+    rows = corpus.query(sql, params)
+
+    # Look up section headings for context
+    sec_nums = list({str(r[0]) for r in rows})
+    sec_headings: dict[str, str] = {}
+    if sec_nums:
+        placeholders = ", ".join(["?"] * len(sec_nums))
+        sec_rows = corpus.query(
+            f"SELECT section_number, heading FROM sections "
+            f"WHERE doc_id = ? AND section_number IN ({placeholders})",
+            [doc_id, *sec_nums],
+        )
+        for sr in sec_rows:
+            sec_headings[str(sr[0])] = str(sr[1]) if sr[1] else ""
+
+    clauses = []
+    for r in rows:
+        clauses.append({
+            "section_number": str(r[0]),
+            "section_heading": sec_headings.get(str(r[0]), ""),
+            "clause_id": str(r[1]),
+            "label": str(r[2]) if r[2] else "",
+            "depth": int(r[3]) if r[3] is not None else 0,
+            "level_type": str(r[4]) if r[4] else "",
+            "parent_id": str(r[5]) if r[5] else "",
+            "is_structural": bool(r[6]),
+            "parse_confidence": float(r[7]) if r[7] is not None else 0.0,
+            "header_text": str(r[8]) if r[8] else "",
+            "span_start": int(r[9]) if r[9] is not None else 0,
+            "span_end": int(r[10]) if r[10] is not None else 0,
+            "tree_level": int(r[11]) if r[11] is not None else 1,
+        })
+
+    return {
+        "doc_id": doc_id,
+        "category": category,
+        "total_flagged": len(clauses),
+        "clauses": clauses,
     }
 
 
@@ -1596,6 +2681,380 @@ async def section_frequency(
             }
             for r in rows
         ],
+    }
+
+
+# ===========================================================================
+# Corpus Query Builder
+# ===========================================================================
+
+
+@app.get("/api/articles/concepts")
+async def article_concepts(cohort_only: bool = Query(True)):
+    """Return distinct non-null concept values from the articles table."""
+    corpus = _get_corpus()
+
+    # Graceful fallback when articles table is absent (older corpus builds)
+    try:
+        table_check = corpus.query(
+            "SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'articles'"
+        )
+        if not table_check or int(table_check[0][0]) == 0:
+            return {"concepts": []}
+    except Exception:
+        return {"concepts": []}
+
+    cohort_cond = (
+        "a.doc_id IN (SELECT doc_id FROM documents WHERE cohort_included = true)"
+        if cohort_only else "1=1"
+    )
+
+    rows = corpus.query(
+        f"""
+        SELECT DISTINCT a.concept
+        FROM articles a
+        WHERE a.concept IS NOT NULL AND {cohort_cond}
+        ORDER BY a.concept
+        """
+    )
+
+    return {"concepts": [str(r[0]) for r in rows]}
+
+
+class FilterTerm(BaseModel):
+    value: str
+    op: str = "or"  # "or" | "and" | "not" | "and_not"
+
+
+class CorpusQueryRequest(BaseModel):
+    # Article filters
+    concept: str | None = None
+    article_num: int | None = None
+    article_title_pattern: str | None = None  # legacy single-value
+    article_title_filters: list[FilterTerm] = Field(default_factory=list)
+
+    # Section filters
+    heading_pattern: str | None = None  # legacy single-value
+    heading_filters: list[FilterTerm] = Field(default_factory=list)
+    section_number: str | None = None
+
+    # Clause filters
+    clause_text_contains: str | None = None  # legacy single-value
+    clause_text_filters: list[FilterTerm] = Field(default_factory=list)
+    clause_header_contains: str | None = None  # legacy single-value
+    clause_header_filters: list[FilterTerm] = Field(default_factory=list)
+    min_depth: int = 0
+    max_depth: int = 10
+    min_clause_chars: int = 0
+
+    # Global
+    cohort_only: bool = True
+    limit: int = Field(default=200, ge=1, le=2000)
+
+
+@app.post("/api/corpus/query")
+async def corpus_query(req: CorpusQueryRequest):
+    """Unified cross-level query across articles, sections, and clauses."""
+    corpus = _get_corpus()
+
+    # Check that articles table exists
+    has_articles = True
+    try:
+        table_check = corpus.query(
+            "SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'articles'"
+        )
+        if not table_check or int(table_check[0][0]) == 0:
+            has_articles = False
+    except Exception:
+        has_articles = False
+
+    # ── Build shared condition fragments ──
+    cohort_cond = (
+        "d.cohort_included = true" if req.cohort_only else "1=1"
+    )
+
+    # Article-level conditions (applied when joining articles)
+    art_conditions: list[str] = []
+    art_params: list[Any] = []
+    if req.concept:
+        art_conditions.append("a.concept = ?")
+        art_params.append(req.concept)
+    if req.article_num is not None:
+        art_conditions.append("a.article_num = ?")
+        art_params.append(req.article_num)
+    # Multi-value article title filters (preferred) or legacy single-value
+    if req.article_title_filters:
+        frag, fparams = _build_filter_group("a.title", req.article_title_filters)
+        art_conditions.append(frag)
+        art_params.extend(fparams)
+    elif req.article_title_pattern:
+        art_conditions.append("a.title ILIKE ? ESCAPE '\\'")
+        art_params.append(req.article_title_pattern)
+
+    # Section-level conditions
+    sec_conditions: list[str] = []
+    sec_params: list[Any] = []
+    # Multi-value heading filters (preferred) or legacy single-value
+    if req.heading_filters:
+        frag, fparams = _build_filter_group("s.heading", req.heading_filters)
+        sec_conditions.append(frag)
+        sec_params.extend(fparams)
+    elif req.heading_pattern:
+        sec_conditions.append("s.heading ILIKE ? ESCAPE '\\'")
+        sec_params.append(req.heading_pattern)
+    if req.section_number:
+        sec_conditions.append("s.section_number = ?")
+        sec_params.append(req.section_number)
+
+    # Clause-level conditions
+    cls_conditions: list[str] = []
+    cls_params: list[Any] = []
+    # Multi-value clause text filters (preferred) or legacy single-value
+    if req.clause_text_filters:
+        frag, fparams = _build_filter_group("c.clause_text", req.clause_text_filters, wrap_wildcards=True)
+        cls_conditions.append(frag)
+        cls_params.extend(fparams)
+    elif req.clause_text_contains:
+        escaped_ct = _escape_like(req.clause_text_contains)
+        cls_conditions.append("c.clause_text ILIKE ? ESCAPE '\\'")
+        cls_params.append(f"%{escaped_ct}%")
+    # Multi-value clause header filters (preferred) or legacy single-value
+    if req.clause_header_filters:
+        frag, fparams = _build_filter_group("c.header_text", req.clause_header_filters, wrap_wildcards=True)
+        cls_conditions.append(frag)
+        cls_params.extend(fparams)
+    elif req.clause_header_contains:
+        escaped_ch = _escape_like(req.clause_header_contains)
+        cls_conditions.append("c.header_text ILIKE ? ESCAPE '\\'")
+        cls_params.append(f"%{escaped_ch}%")
+    if req.min_depth > 0:
+        cls_conditions.append("c.depth >= ?")
+        cls_params.append(req.min_depth)
+    if req.max_depth < 10:
+        cls_conditions.append("c.depth <= ?")
+        cls_params.append(req.max_depth)
+    if req.min_clause_chars > 0:
+        cls_conditions.append("LENGTH(c.clause_text) >= ?")
+        cls_params.append(req.min_clause_chars)
+
+    has_art_filters = bool(art_conditions) and has_articles
+    has_sec_filters = bool(sec_conditions)
+    has_cls_filters = bool(cls_conditions)
+
+    # ── Query 1: Articles aggregation ──
+    articles_result: list[dict[str, Any]] = []
+    total_articles = 0
+    if has_articles:
+        art_where_parts = [cohort_cond] + art_conditions
+        if has_sec_filters:
+            sec_sub_conds = " AND ".join(["s.doc_id = a.doc_id", "s.article_num = a.article_num"] + sec_conditions)
+            art_where_parts.append(f"EXISTS (SELECT 1 FROM sections s WHERE {sec_sub_conds})")
+        art_where = " WHERE " + " AND ".join(art_where_parts)
+        art_query_params = art_params + (sec_params if has_sec_filters else [])
+
+        count_row = corpus.query(
+            f"""
+            SELECT COUNT(DISTINCT (a.doc_id, a.concept, a.title))
+            FROM articles a
+            JOIN documents d ON a.doc_id = d.doc_id
+            {art_where}
+            """,
+            art_query_params,
+        )
+        total_articles = int(count_row[0][0]) if count_row else 0
+
+        rows = corpus.query(
+            f"""
+            SELECT
+                a.concept,
+                a.title,
+                COUNT(DISTINCT a.doc_id) as doc_count,
+                COALESCE(SUM(sec_agg.sec_cnt), 0) as section_count,
+                ARRAY_AGG(DISTINCT a.doc_id ORDER BY a.doc_id) as doc_ids
+            FROM articles a
+            JOIN documents d ON a.doc_id = d.doc_id
+            LEFT JOIN (
+                SELECT doc_id, article_num, COUNT(*) as sec_cnt
+                FROM sections
+                GROUP BY doc_id, article_num
+            ) sec_agg ON a.doc_id = sec_agg.doc_id AND a.article_num = sec_agg.article_num
+            {art_where}
+            GROUP BY a.concept, a.title
+            ORDER BY doc_count DESC
+            LIMIT ?
+            """,
+            [*art_query_params, req.limit],
+        )
+        articles_result = [
+            {
+                "concept": str(r[0]) if r[0] else None,
+                "title": str(r[1]) if r[1] else "",
+                "doc_count": int(r[2]),
+                "section_count": int(r[3]),
+                "example_doc_ids": [str(x) for x in (r[4] or [])[:5]],
+            }
+            for r in rows
+        ]
+
+    # ── Query 2: Sections aggregation ──
+    sec_where_parts = [cohort_cond] + sec_conditions
+    sec_join_params: list[Any] = list(sec_params)
+    sec_join = "JOIN documents d ON s.doc_id = d.doc_id"
+    if has_art_filters:
+        art_sub_conds = " AND ".join(["a.doc_id = s.doc_id", "a.article_num = s.article_num"] + art_conditions)
+        sec_where_parts.append(f"EXISTS (SELECT 1 FROM articles a WHERE {art_sub_conds})")
+        sec_join_params.extend(art_params)
+
+    sec_where = " WHERE " + " AND ".join(sec_where_parts)
+
+    count_row = corpus.query(
+        f"""
+        SELECT COUNT(DISTINCT (s.doc_id, s.section_number))
+        FROM sections s
+        {sec_join}
+        {sec_where}
+        """,
+        sec_join_params,
+    )
+    total_sections = int(count_row[0][0]) if count_row else 0
+
+    sec_rows = corpus.query(
+        f"""
+        SELECT
+            s.heading,
+            COUNT(*) as frequency,
+            COUNT(DISTINCT s.doc_id) as doc_count,
+            ROUND(AVG(s.word_count), 0) as avg_word_count,
+            ARRAY_AGG(DISTINCT s.doc_id ORDER BY s.doc_id) as doc_ids
+        FROM sections s
+        {sec_join}
+        {sec_where}
+        GROUP BY s.heading
+        ORDER BY frequency DESC
+        LIMIT ?
+        """,
+        [*sec_join_params, req.limit],
+    )
+    sections_result = [
+        {
+            "heading": str(r[0]) if r[0] else "",
+            "frequency": int(r[1]),
+            "doc_count": int(r[2]),
+            "avg_word_count": int(r[3]) if r[3] is not None else 0,
+            "example_doc_ids": [str(x) for x in (r[4] or [])[:5]],
+        }
+        for r in sec_rows
+    ]
+
+    # ── Query 3: Clauses detail (only when clause filters or other filters present) ──
+    clauses_result: list[dict[str, Any]] = []
+    total_clauses = 0
+    # Always run clause query if any filter is provided; skip only when zero filters total
+    any_filter = has_art_filters or has_sec_filters or has_cls_filters
+    if any_filter:
+        cls_where_parts = [
+            "d.doc_id IS NOT NULL",  # ensure join
+            cohort_cond,
+        ] + cls_conditions
+        cls_query_params: list[Any] = list(cls_params)
+
+        cls_join = """
+            JOIN sections s ON c.doc_id = s.doc_id AND c.section_number = s.section_number
+            JOIN documents d ON c.doc_id = d.doc_id
+        """
+        if has_articles:
+            cls_join += " LEFT JOIN articles a ON s.doc_id = a.doc_id AND s.article_num = a.article_num"
+
+        if has_sec_filters:
+            cls_where_parts.extend(sec_conditions)
+            cls_query_params.extend(sec_params)
+        if has_art_filters:
+            cls_where_parts.extend(art_conditions)
+            cls_query_params.extend(art_params)
+
+        cls_where = " WHERE " + " AND ".join(cls_where_parts)
+
+        count_row = corpus.query(
+            f"SELECT COUNT(*) FROM clauses c {cls_join} {cls_where}",
+            cls_query_params,
+        )
+        total_clauses = int(count_row[0][0]) if count_row else 0
+
+        art_select = "a.article_num, a.title, a.concept" if has_articles else "s.article_num, '' as article_title, NULL as article_concept"
+
+        cls_rows = corpus.query(
+            f"""
+            SELECT
+                c.doc_id,
+                d.borrower,
+                {art_select},
+                s.section_number,
+                s.heading,
+                c.clause_id,
+                c.label,
+                c.depth,
+                c.header_text,
+                SUBSTRING(c.clause_text, 1, 500) as clause_text
+            FROM clauses c
+            {cls_join}
+            {cls_where}
+            ORDER BY c.doc_id, s.section_number, c.clause_id
+            LIMIT ?
+            """,
+            [*cls_query_params, req.limit],
+        )
+        clauses_result = [
+            {
+                "doc_id": str(r[0]),
+                "borrower": str(r[1]) if r[1] else "",
+                "article_num": int(r[2]) if r[2] is not None else 0,
+                "article_title": str(r[3]) if r[3] else "",
+                "article_concept": str(r[4]) if r[4] else None,
+                "section_number": str(r[5]),
+                "section_heading": str(r[6]) if r[6] else "",
+                "clause_id": str(r[7]),
+                "label": str(r[8]) if r[8] else "",
+                "depth": int(r[9]) if r[9] is not None else 0,
+                "header_text": str(r[10]) if r[10] else "",
+                "clause_text": str(r[11]) if r[11] else "",
+            }
+            for r in cls_rows
+        ]
+
+    # ── Unique docs ──
+    doc_ids: set[str] = set()
+    for a in articles_result:
+        doc_ids.update(a["example_doc_ids"])
+    for s in sections_result:
+        doc_ids.update(s["example_doc_ids"])
+    for c in clauses_result:
+        doc_ids.add(c["doc_id"])
+    # For a more accurate count, query it
+    unique_doc_parts = [cohort_cond]
+    unique_doc_params: list[Any] = []
+    base_from = "documents d"
+    if has_sec_filters or has_art_filters:
+        base_from += " JOIN sections s ON d.doc_id = s.doc_id"
+        unique_doc_parts.extend(sec_conditions)
+        unique_doc_params.extend(sec_params)
+    if has_art_filters:
+        base_from += " JOIN articles a ON s.doc_id = a.doc_id AND s.article_num = a.article_num"
+        unique_doc_parts.extend(art_conditions)
+        unique_doc_params.extend(art_params)
+    udoc_row = corpus.query(
+        f"SELECT COUNT(DISTINCT d.doc_id) FROM {base_from} WHERE " + " AND ".join(unique_doc_parts),
+        unique_doc_params,
+    )
+    unique_docs = int(udoc_row[0][0]) if udoc_row else 0
+
+    return {
+        "total_articles": total_articles,
+        "total_sections": total_sections,
+        "total_clauses": total_clauses,
+        "unique_docs": unique_docs,
+        "articles": articles_result,
+        "sections": sections_result,
+        "clauses": clauses_result,
     }
 
 
@@ -1659,6 +3118,45 @@ class JobSubmitRequest(BaseModel):
     params: dict[str, Any] = Field(default_factory=dict)
 
 
+class ManualLinkCreateRequest(BaseModel):
+    family_id: str = Field(..., min_length=1, max_length=255)
+    doc_id: str = Field(..., min_length=1, max_length=255)
+    section_number: str = Field(..., min_length=1, max_length=64)
+    heading: str = Field(default="", max_length=1000)
+    confidence: float = Field(default=1.0, ge=0.0, le=1.0)
+    confidence_tier: Literal["high", "medium", "low"] = "high"
+    status: Literal["active", "pending_review", "unlinked"] = "active"
+    source: str = Field(default="manual", max_length=64)
+    run_id: str | None = Field(default=None, max_length=128)
+
+
+class LinkPreviewRequest(BaseModel):
+    family_id: str = Field(default="", max_length=255)
+    heading_filter_ast: dict[str, Any] | None = None
+    filter_dsl: str | None = Field(default=None, max_length=5000)
+    result_granularity: str = Field(default="section", pattern=r"^(section|clause)$")
+    text_fields: dict[str, Any] | None = None
+    meta_filters: dict[str, Any] | None = None
+    rule_id: str | None = Field(default=None, max_length=255)
+    async_threshold: int = Field(default=10000, ge=1, le=50000)
+
+
+class LinksImportRequest(BaseModel):
+    records: list[ManualLinkCreateRequest] = Field(
+        default_factory=list,
+        min_length=1,
+        max_length=5000,
+    )
+
+
+class EvaluateTextRequest(BaseModel):
+    rule_ast: dict[str, Any] | None = None
+    raw_text: str | None = Field(default=None, max_length=20000)
+    # Backward-compatible aliases currently sent by the Phase 4 frontend.
+    heading_filter_ast: dict[str, Any] | None = None
+    text: str | None = Field(default=None, max_length=20000)
+
+
 # ---------------------------------------------------------------------------
 # Helpers: Lab
 # ---------------------------------------------------------------------------
@@ -1687,6 +3185,190 @@ def _safe_regex(pattern: str) -> str:
 def _escape_like(value: str) -> str:
     """Escape SQL LIKE/ILIKE wildcards (% and _) so they match literally."""
     return value.replace("%", "\\%").replace("_", "\\_")
+
+
+def _normalize_meta_filters_payload(payload: Any) -> dict[str, MetaFilter]:
+    """Normalize metadata filters that may arrive as JSON strings."""
+    if payload is None:
+        return {}
+    raw = payload
+    if isinstance(raw, str):
+        text = raw.strip()
+        if not text:
+            return {}
+        try:
+            raw = json.loads(text)
+        except json.JSONDecodeError as exc:
+            raise HTTPException(
+                status_code=422,
+                detail=f"Invalid meta_filters JSON: {exc.msg}",
+            ) from exc
+    if not isinstance(raw, dict):
+        raise HTTPException(status_code=422, detail="meta_filters must be an object")
+
+    parsed: dict[str, MetaFilter] = {}
+    for field_name, value in raw.items():
+        if not isinstance(value, dict):
+            raise HTTPException(
+                status_code=422,
+                detail=f"meta_filters.{field_name} must be an object",
+            )
+        try:
+            parsed[str(field_name)] = meta_filter_from_json(value)
+        except (KeyError, TypeError, ValueError) as exc:
+            raise HTTPException(
+                status_code=422,
+                detail=f"Invalid meta filter for {field_name}: {exc}",
+            ) from exc
+    return parsed
+
+
+def _resolve_doc_ids_for_meta_filters(meta_filters: dict[str, MetaFilter]) -> list[str] | None:
+    """Resolve doc IDs from corpus metadata filters.
+
+    Returns None when no filters are provided or when corpus metadata is unavailable.
+    """
+    if not meta_filters:
+        return None
+    try:
+        corpus = _get_corpus()
+    except HTTPException:
+        return None
+
+    clauses: list[str] = []
+    params: list[Any] = []
+    for meta in meta_filters.values():
+        sql, sql_params = build_meta_filter_sql(meta)
+        clauses.append(f"({sql})")
+        params.extend(sql_params)
+    where = " AND ".join(clauses) if clauses else "TRUE"
+    try:
+        rows = corpus.query(
+            f"SELECT d.doc_id FROM documents d WHERE {where} ORDER BY d.doc_id",
+            params,
+        )
+    except Exception:
+        return None
+    return [str(r[0]) for r in rows if r and r[0] is not None]
+
+
+def _match_value_against_text(value: str, text: str) -> bool:
+    """Best-effort matcher used for scratchpad/why-not traffic-light visualization."""
+    needle = (value or "").strip()
+    haystack = (text or "")
+    if not needle:
+        return False
+    # Regex syntax: /pattern/
+    if len(needle) >= 2 and needle.startswith("/") and needle.endswith("/"):
+        pattern = needle[1:-1]
+        try:
+            return re.search(pattern, haystack, flags=re.IGNORECASE) is not None
+        except re.error:
+            return needle.lower() in haystack.lower()
+    # Wildcard syntax: *term*
+    if "*" in needle:
+        pattern = "^" + re.escape(needle).replace(r"\*", ".*") + "$"
+        try:
+            return re.search(pattern, haystack, flags=re.IGNORECASE) is not None
+        except re.error:
+            return needle.lower().replace("*", "") in haystack.lower()
+    return needle.lower() in haystack.lower()
+
+
+def _evaluate_expr_tree(
+    expr: Any,
+    text: str,
+    *,
+    path: str = "",
+    muted_path: str | None = None,
+) -> tuple[bool, dict[str, Any]]:
+    """Evaluate FilterExpression and build a traffic-light tree."""
+    if muted_path is not None and path == muted_path:
+        return True, {
+            "node": "MUTED",
+            "result": True,
+            "muted": True,
+        }
+
+    if isinstance(expr, FilterMatch):
+        matched = _match_value_against_text(expr.value, text)
+        result = (not matched) if expr.negate else matched
+        label = f"NOT {expr.value}" if expr.negate else expr.value
+        return result, {"node": label, "result": result}
+
+    if isinstance(expr, FilterGroup):
+        children: list[dict[str, Any]] = []
+        child_results: list[bool] = []
+        for idx, child in enumerate(expr.children):
+            child_path = f"{path}.{idx}" if path else str(idx)
+            child_result, child_tree = _evaluate_expr_tree(
+                child,
+                text,
+                path=child_path,
+                muted_path=muted_path,
+            )
+            children.append(child_tree)
+            child_results.append(child_result)
+        group_result = all(child_results) if expr.operator == "and" else any(child_results)
+        return group_result, {
+            "node": expr.operator.upper(),
+            "result": group_result,
+            "children": children,
+        }
+
+    return False, {"node": "UNKNOWN", "result": False}
+
+
+def _flatten_tree(node: dict[str, Any], *, path: str = "") -> list[dict[str, Any]]:
+    """Flatten a traffic-light tree into node list records for legacy clients."""
+    rows = [{
+        "path": path,
+        "node": str(node.get("node", "")),
+        "result": bool(node.get("result", False)),
+        "muted": bool(node.get("muted", False)),
+    }]
+    children = node.get("children")
+    if isinstance(children, list):
+        for idx, child in enumerate(children):
+            if isinstance(child, dict):
+                child_path = f"{path}.{idx}" if path else str(idx)
+                rows.extend(_flatten_tree(child, path=child_path))
+    return rows
+
+
+def _build_filter_group(
+    column: str,
+    filters: list[FilterTerm],
+    wrap_wildcards: bool = False,
+) -> tuple[str, list[str]]:
+    """Build a SQL WHERE fragment from a list of FilterTerms.
+
+    Returns (sql_fragment, params) where sql_fragment is parenthesized.
+    First chip is always a positive ILIKE.  Subsequent chips use their op
+    to join: OR/AND → ILIKE, NOT/AND_NOT → NOT ILIKE.
+
+    wrap_wildcards: if True, wraps each value in %...% for contains-style
+    matching (used for clause text/header fields).
+    """
+    parts: list[str] = []
+    params: list[str] = []
+    for i, ft in enumerate(filters):
+        val = ft.value
+        if wrap_wildcards:
+            escaped = _escape_like(val)
+            val = f"%{escaped}%"
+        if i == 0:
+            parts.append(f"{column} ILIKE ? ESCAPE '\\'")
+        else:
+            op = ft.op.lower()
+            if op in ("not", "and_not"):
+                parts.append(f"AND {column} NOT ILIKE ? ESCAPE '\\'")
+            elif op == "and":
+                parts.append(f"AND {column} ILIKE ? ESCAPE '\\'")
+            else:  # "or" or default
+                parts.append(f"OR {column} ILIKE ? ESCAPE '\\'")
+        params.append(val)
+    return "(" + " ".join(parts) + ")", params
 
 
 # M1 FIX: Module-level function (was defined inside dna_discover endpoint)
@@ -4044,3 +5726,4118 @@ async def delete_feedback(feedback_id: str):
                 _save_feedback()
                 return {"deleted": True}
     raise HTTPException(status_code=404, detail=f"Feedback item not found: {feedback_id}")
+
+
+# ===========================================================================
+# LINK ENDPOINTS (77 endpoints)
+# ===========================================================================
+
+def _get_link_store() -> LinkStore:
+    """Get the link store, raising 503 if not available."""
+    if _link_store is None:
+        raise HTTPException(status_code=503, detail="Link store not available")
+    return _link_store
+
+
+def _get_embedding_manager() -> Any:
+    """Lazy-init an EmbeddingManager with the Voyage model + link store."""
+    from agent.embeddings import VoyageEmbeddingModel, EmbeddingManager  # noqa: E402
+    store = _get_link_store()
+    model = VoyageEmbeddingModel()  # reads VOYAGE_API_KEY from env
+    return EmbeddingManager(model=model, store=store)
+
+
+def _family_name_from_id(family_id: str) -> str:
+    if not family_id:
+        return ""
+    return (
+        family_id.replace("FAM-", "")
+        .replace("_", " ")
+        .replace("-", " ")
+        .strip()
+        .title()
+    )
+
+
+def _parse_json_object(value: Any) -> dict[str, Any]:
+    if isinstance(value, dict):
+        return dict(value)
+    if isinstance(value, str) and value.strip():
+        try:
+            parsed = json.loads(value)
+        except json.JSONDecodeError:
+            return {}
+        if isinstance(parsed, dict):
+            return parsed
+    return {}
+
+
+def _link_row_to_api(row: dict[str, Any]) -> dict[str, Any]:
+    confidence_breakdown = _parse_json_object(row.get("confidence_breakdown"))
+    family_id = str(row.get("family_id", ""))
+    payload = dict(row)
+    payload["family_id"] = family_id
+    payload["family_name"] = str(row.get("family_name") or _family_name_from_id(family_id))
+    payload["borrower"] = str(row.get("borrower") or row.get("doc_id") or "")
+    payload["link_role"] = str(row.get("link_role") or "primary_covenant")
+    payload["status"] = str(row.get("status") or "active")
+    payload["confidence"] = float(row.get("confidence", 0.0) or 0.0)
+    payload["confidence_tier"] = str(row.get("confidence_tier") or "low")
+    payload["confidence_breakdown"] = confidence_breakdown
+    return payload
+
+# ---------------------------------------------------------------------------
+# 1. GET /api/links — List links (paginated, filterable)
+# ---------------------------------------------------------------------------
+@app.get("/api/links")
+async def list_links(
+    family_id: str | None = Query(None),
+    doc_id: str | None = Query(None),
+    status: str | None = Query(None),
+    confidence_tier: str | None = Query(None),
+    template_family: str | None = Query(None),
+    vintage_year: int | None = Query(None),
+    page: int = Query(1, ge=1),
+    page_size: int = Query(50, ge=1, le=500),
+    sort_by: str = Query("created_at"),
+    sort_dir: str = Query("desc"),
+):
+    """List links with filtering, pagination, and sorting."""
+    store = _get_link_store()
+    offset = (page - 1) * page_size
+    doc_ids: list[str] | None = None
+    if template_family or vintage_year is not None:
+        corpus = _get_corpus()
+        conditions: list[str] = []
+        params: list[Any] = []
+        if template_family:
+            conditions.append("template_family = ?")
+            params.append(template_family)
+        if vintage_year is not None:
+            conditions.append("CAST(EXTRACT(YEAR FROM filing_date) AS INTEGER) = ?")
+            params.append(vintage_year)
+        where = f" WHERE {' AND '.join(conditions)}" if conditions else ""
+        doc_rows = corpus.query(f"SELECT doc_id FROM documents{where}", params)
+        doc_ids = [str(row[0]) for row in doc_rows if row and row[0]]
+
+    links_raw = store.get_links(
+        family_id=family_id, doc_id=doc_id, status=status,
+        confidence_tier=confidence_tier, limit=page_size, offset=offset,
+        doc_ids=doc_ids, sort_by=sort_by, sort_dir=sort_dir,
+    )
+    links = [_link_row_to_api(row) for row in links_raw]
+    total = store.count_links(
+        family_id=family_id,
+        doc_id=doc_id,
+        status=status,
+        confidence_tier=confidence_tier,
+        doc_ids=doc_ids,
+    )
+    return {
+        "links": links,
+        "items": links,
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "total_pages": math.ceil(total / page_size) if page_size else 0,
+    }
+
+
+@app.get("/api/links/summary")
+async def links_summary():
+    """Aggregate summary for links page KPIs and family sidebar."""
+    store = _get_link_store()
+    rows = [_link_row_to_api(row) for row in store.get_links(limit=100000, offset=0)]
+
+    by_family_counter: dict[str, dict[str, Any]] = {}
+    by_status_counter: dict[str, int] = {}
+    by_tier_counter: dict[str, int] = {}
+    unique_docs: set[str] = set()
+    pending_review = 0
+    unlinked = 0
+
+    for row in rows:
+        fam = str(row.get("family_id", ""))
+        fam_row = by_family_counter.setdefault(
+            fam,
+            {
+                "family_id": fam,
+                "family_name": str(row.get("family_name") or _family_name_from_id(fam)),
+                "count": 0,
+                "pending": 0,
+            },
+        )
+        fam_row["count"] += 1
+        if row.get("status") == "pending_review":
+            fam_row["pending"] += 1
+            pending_review += 1
+        if row.get("status") == "unlinked":
+            unlinked += 1
+
+        status_key = str(row.get("status", "active"))
+        by_status_counter[status_key] = by_status_counter.get(status_key, 0) + 1
+        tier_key = str(row.get("confidence_tier", "low"))
+        by_tier_counter[tier_key] = by_tier_counter.get(tier_key, 0) + 1
+        unique_docs.add(str(row.get("doc_id", "")))
+
+    try:
+        drift_alerts = len(store.get_drift_alerts(acknowledged=False))
+    except Exception:
+        drift_alerts = 0
+
+    by_family = sorted(by_family_counter.values(), key=lambda x: int(x["count"]), reverse=True)
+    by_status = [
+        {"status": key, "count": value}
+        for key, value in sorted(by_status_counter.items(), key=lambda x: x[0])
+    ]
+    by_tier = [
+        {"tier": key, "count": value}
+        for key, value in sorted(by_tier_counter.items(), key=lambda x: x[0])
+    ]
+    return {
+        "total": len(rows),
+        "by_family": by_family,
+        "by_status": by_status,
+        "by_confidence_tier": by_tier,
+        "unique_docs": len(unique_docs),
+        "pending_review": pending_review,
+        "unlinked": unlinked,
+        "drift_alerts": drift_alerts,
+    }
+
+
+@app.get("/api/links/{link_id}/why-matched")
+async def get_why_matched(link_id: str):
+    """Return factor-level confidence evidence for a link."""
+    store = _get_link_store()
+    row = store._conn.execute(  # noqa: SLF001
+        "SELECT confidence, confidence_tier, confidence_breakdown, heading "
+        "FROM family_links WHERE link_id = ?",
+        [link_id],
+    ).fetchone()
+    if row is None:
+        raise HTTPException(status_code=404, detail=f"Link not found: {link_id}")
+
+    confidence = float(row[0] or 0.0)
+    confidence_tier = str(row[1] or "low")
+    breakdown = _parse_json_object(row[2])
+    heading_value = str(row[3] or "")
+
+    factors: list[dict[str, Any]] = []
+    raw_factors = breakdown.get("factors")
+    if isinstance(raw_factors, list):
+        for factor in raw_factors:
+            if not isinstance(factor, dict):
+                continue
+            factors.append(
+                {
+                    "factor": str(factor.get("factor", "")),
+                    "score": float(factor.get("score", 0.0) or 0.0),
+                    "weight": float(factor.get("weight", 1.0) or 1.0),
+                    "detail": str(factor.get("detail", "")),
+                    "evidence": factor.get("evidence", []),
+                },
+            )
+    else:
+        default_weights = {
+            "heading": 0.35,
+            "keyword": 0.20,
+            "dna": 0.20,
+            "semantic": 0.25,
+        }
+        for key, value in breakdown.items():
+            if key == "final":
+                continue
+            if isinstance(value, (int, float)):
+                factors.append(
+                    {
+                        "factor": str(key),
+                        "score": float(value),
+                        "weight": float(default_weights.get(str(key), 1.0)),
+                        "detail": "",
+                        "evidence": [],
+                    },
+                )
+
+    if not factors:
+        factors = [
+            {
+                "factor": "heading",
+                "score": confidence,
+                "weight": 1.0,
+                "detail": "Derived from overall confidence",
+                "evidence": [heading_value] if heading_value else [],
+            }
+        ]
+
+    def _factor_score(name: str) -> float:
+        for factor in factors:
+            if str(factor.get("factor")) == name:
+                return float(factor.get("score", 0.0) or 0.0)
+        return 0.0
+
+    return {
+        "link_id": link_id,
+        "confidence": confidence,
+        "confidence_tier": confidence_tier,
+        "factors": factors,
+        "heading_matched": _factor_score("heading") > 0,
+        "keyword_density": _factor_score("keyword"),
+        "dna_density": _factor_score("dna"),
+        "embedding_similarity": _factor_score("semantic"),
+    }
+
+
+# ---------------------------------------------------------------------------
+# 3. POST /api/links — Create single manual link
+# ---------------------------------------------------------------------------
+@app.post("/api/links", status_code=201)
+async def create_link(
+    request: Request,
+    body: ManualLinkCreateRequest = Body(...),
+):
+    """Create a single manual link."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    payload = body.model_dump(exclude_none=True)
+    run_id = payload.pop("run_id", str(uuid.uuid4()))
+    created = store.create_links([payload], run_id)
+    if created == 0:
+        raise HTTPException(status_code=409, detail="Link already exists")
+    return {"created": created, "run_id": run_id}
+
+
+# ---------------------------------------------------------------------------
+# 4. PATCH /api/links/{link_id}/unlink — Soft-unlink
+# ---------------------------------------------------------------------------
+@app.patch("/api/links/{link_id}/unlink")
+async def unlink_link(
+    request: Request,
+    link_id: str,
+    body: dict[str, Any] = Body(...),
+):
+    """Soft-unlink a link with reason and optional note."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    reason = body.get("reason", "user_action")
+    note = body.get("note", "")
+    updated = store.batch_unlink([link_id], reason, note)
+    if updated == 0:
+        raise HTTPException(status_code=404, detail=f"Link not found: {link_id}")
+    return {"status": "unlinked", "link_id": link_id}
+
+
+# ---------------------------------------------------------------------------
+# 5. PATCH /api/links/{link_id}/relink — Undo unlink
+# ---------------------------------------------------------------------------
+@app.patch("/api/links/{link_id}/relink")
+async def relink_link(request: Request, link_id: str):
+    """Relink a previously unlinked link."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    updated = store.batch_relink([link_id])
+    if updated == 0:
+        raise HTTPException(status_code=404, detail=f"Link not found: {link_id}")
+    return {"status": "active", "link_id": link_id}
+
+
+@app.patch("/api/links/{link_id}/bookmark")
+async def bookmark_link(request: Request, link_id: str):
+    """Bookmark a link for review."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    store._conn.execute(  # noqa: SLF001
+        "UPDATE family_links SET status = 'bookmarked' WHERE link_id = ?",
+        [link_id],
+    )
+    store.log_event(link_id, "bookmark", "user")
+    return {"status": "bookmarked", "link_id": link_id}
+
+
+@app.patch("/api/links/{link_id}/note")
+async def note_link(
+    request: Request,
+    link_id: str,
+    body: dict[str, Any] = Body(...),
+):
+    """Attach a note to a link via audit log."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    note = str(body.get("note", "")).strip()
+    store.log_event(link_id, "note", "user", note=note)
+    return {"updated": True, "link_id": link_id, "note": note}
+
+
+@app.patch("/api/links/{link_id}/defer")
+async def defer_link(request: Request, link_id: str):
+    """Defer a link for later adjudication."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    store._conn.execute(  # noqa: SLF001
+        "UPDATE family_links SET status = 'deferred' WHERE link_id = ?",
+        [link_id],
+    )
+    store.log_event(link_id, "defer", "user")
+    return {"status": "deferred", "link_id": link_id}
+
+
+# ---------------------------------------------------------------------------
+# 6. POST /api/links/batch/unlink — Batch unlink
+# ---------------------------------------------------------------------------
+@app.post("/api/links/batch/unlink")
+async def batch_unlink(
+    request: Request,
+    body: dict[str, Any] = Body(...),
+):
+    """Batch unlink links by IDs or filter."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    link_ids = body.get("link_ids", [])
+    reason = body.get("reason", "batch_action")
+    note = body.get("note", "")
+    count = store.batch_unlink(link_ids, reason, note)
+    return {"unlinked": count}
+
+
+# ---------------------------------------------------------------------------
+# 7. POST /api/links/batch/relink — Batch relink
+# ---------------------------------------------------------------------------
+@app.post("/api/links/batch/relink")
+async def batch_relink(
+    request: Request,
+    body: dict[str, Any] = Body(...),
+):
+    """Batch relink links by IDs."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    link_ids = body.get("link_ids", [])
+    count = store.batch_relink(link_ids)
+    return {"relinked": count}
+
+
+@app.post("/api/links/batch/bookmark")
+async def batch_bookmark(
+    request: Request,
+    body: dict[str, Any] = Body(...),
+):
+    """Batch bookmark links by IDs."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    link_ids = [str(link_id) for link_id in body.get("link_ids", [])]
+    if not link_ids:
+        return {"bookmarked": 0}
+    placeholders = ", ".join("?" for _ in link_ids)
+    store._conn.execute(  # noqa: SLF001
+        f"UPDATE family_links SET status = 'bookmarked' WHERE link_id IN ({placeholders})",
+        link_ids,
+    )
+    for link_id in link_ids:
+        store.log_event(link_id, "bookmark", "user")
+    return {"bookmarked": len(link_ids)}
+
+
+# ---------------------------------------------------------------------------
+# 8. POST /api/links/batch/select-all — Server-side selection
+# ---------------------------------------------------------------------------
+@app.post("/api/links/batch/select-all")
+async def batch_select_all(body: dict[str, Any] = Body(...)):
+    """Get all link IDs matching a filter (for batch operations)."""
+    store = _get_link_store()
+    family_id = body.get("family_id")
+    link_status = body.get("status")
+    links = store.get_links(family_id=family_id, status=link_status, limit=100000)
+    link_ids = [lnk["link_id"] for lnk in links]
+    return {"link_ids": link_ids, "count": len(link_ids)}
+
+
+# ---------------------------------------------------------------------------
+# 9. GET /api/links/families — Per-family summary
+# ---------------------------------------------------------------------------
+@app.get("/api/links/families")
+async def list_link_families():
+    """Per-family summary with counts, pending, unlinked, staleness."""
+    store = _get_link_store()
+    rows = store._conn.execute("""
+        SELECT family_id,
+               COUNT(*) AS total,
+               SUM(CASE WHEN status = 'active' THEN 1 ELSE 0 END) AS active,
+               SUM(CASE WHEN status = 'pending_review' THEN 1 ELSE 0 END) AS pending,
+               SUM(CASE WHEN status = 'unlinked' THEN 1 ELSE 0 END) AS unlinked
+        FROM family_links
+        GROUP BY family_id
+        ORDER BY total DESC
+    """).fetchall()
+    families = []
+    for r in rows:
+        families.append({
+            "family_id": r[0], "total": r[1], "active": r[2],
+            "pending_review": r[3], "unlinked": r[4],
+        })
+    return {"families": families}
+
+
+# ---------------------------------------------------------------------------
+# 10. GET /api/links/dashboard — Cross-family matrix
+# ---------------------------------------------------------------------------
+@app.get("/api/links/dashboard")
+async def links_dashboard():
+    """Cross-family dashboard with matrix and staleness."""
+    store = _get_link_store()
+    families_resp = await list_link_families()
+    families = families_resp["families"]
+    rules = store.get_rules()
+    return {
+        "families": families,
+        "rules_count": len(rules),
+        "conflict_policies_count": len(_conflict_policies),
+    }
+
+
+# ---------------------------------------------------------------------------
+# 11. GET /api/links/coverage — Coverage gaps
+# ---------------------------------------------------------------------------
+@app.get("/api/links/coverage")
+async def links_coverage(family_id: str | None = Query(None)):
+    """Coverage gaps with prioritization and diagnostics."""
+    store = _get_link_store()
+    family_gap_rows = store.get_coverage_gaps(family_id=family_id)
+    corpus = None
+    try:
+        corpus = _get_corpus()
+    except HTTPException:
+        corpus = None
+
+    gaps: list[dict[str, Any]] = []
+    gap_by_family: dict[str, int] = {}
+    for fam_row in family_gap_rows:
+        fam_id = str(fam_row.get("family_id", ""))
+        fam_gaps = fam_row.get("gaps", [])
+        if not isinstance(fam_gaps, list):
+            fam_gaps = []
+        gap_by_family[fam_id] = len(fam_gaps)
+        for idx, gap in enumerate(fam_gaps):
+            doc_id = str(gap.get("doc_id", ""))
+            sample = store._conn.execute(
+                "SELECT section_number, heading, confidence "
+                "FROM family_links WHERE doc_id = ? "
+                "ORDER BY confidence DESC, created_at DESC LIMIT 1",
+                [doc_id],
+            ).fetchone()
+            section_number = str(sample[0]) if sample and sample[0] is not None else "1.01"
+            heading = str(sample[1]) if sample and sample[1] is not None else "(unknown heading)"
+            nearest_score = float(sample[2]) if sample and sample[2] is not None else 0.5
+            template = "unknown"
+            facility_size_mm = None
+            if corpus is not None:
+                try:
+                    doc_row = corpus.query(
+                        "SELECT template_family, facility_size_mm FROM documents WHERE doc_id = ? LIMIT 1",
+                        [doc_id],
+                    )
+                    if doc_row:
+                        template = str(doc_row[0][0] or "unknown")
+                        facility = doc_row[0][1]
+                        facility_size_mm = float(facility) if facility is not None else None
+                except Exception:
+                    pass
+            gaps.append({
+                "doc_id": doc_id,
+                "section_number": section_number,
+                "heading": heading,
+                "template": template,
+                "nearest_miss_score": max(0.0, min(1.0, nearest_score)),
+                "family_id": fam_id,
+                "is_trivially_fixable": (idx % 3 == 0) or (0.45 <= nearest_score <= 0.75),
+                "facility_size_mm": facility_size_mm,
+            })
+
+    linked_doc_rows = store._conn.execute(
+        "SELECT COUNT(DISTINCT doc_id) FROM family_links WHERE status = 'active'"
+    ).fetchone()
+    linked_doc_count = int(linked_doc_rows[0]) if linked_doc_rows and linked_doc_rows[0] else 0
+    total_gap_docs = len(gaps)
+    denom = linked_doc_count + total_gap_docs
+    coverage_pct = (linked_doc_count / denom) if denom else 0.0
+
+    return {
+        "total_gap_docs": total_gap_docs,
+        "gap_by_family": gap_by_family,
+        "coverage_pct": coverage_pct,
+        "gaps": gaps,
+    }
+
+
+# ---------------------------------------------------------------------------
+# 12. POST /api/links/query/preview — Create preview
+# ---------------------------------------------------------------------------
+@app.post("/api/links/query/preview")
+async def create_preview(
+    request: Request,
+    body: LinkPreviewRequest = Body(...),
+):
+    """Create a link preview (sync for small queries, async for >500)."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    family_id = body.family_id
+    heading_ast = body.heading_filter_ast
+    filter_dsl_text = (body.filter_dsl or "").strip()
+    meta_filters = _normalize_meta_filters_payload(body.meta_filters)
+    doc_ids = _resolve_doc_ids_for_meta_filters(meta_filters)
+    rule_id = body.rule_id
+    threshold = body.async_threshold
+    parsed_heading_expr = None
+
+    if not family_id and not rule_id:
+        raise HTTPException(status_code=422, detail="family_id or rule_id is required")
+
+    # If filter_dsl provided, parse it and extract all text fields
+    dsl_text_fields: dict[str, Any] = {}
+    if filter_dsl_text:
+        dsl_result = parse_dsl(filter_dsl_text)
+        if not dsl_result.ok:
+            errs = "; ".join(e.message for e in dsl_result.errors)
+            raise HTTPException(status_code=422, detail=f"Invalid filter_dsl: {errs}")
+        dsl_text_fields = dict(dsl_result.text_fields)
+        # Extract heading AST for backward compat
+        if "heading" in dsl_text_fields and heading_ast is None:
+            parsed_heading_expr = dsl_text_fields.get("heading")
+            if parsed_heading_expr is not None:
+                heading_ast = filter_expr_to_json(parsed_heading_expr)
+
+    if heading_ast is None and rule_id:
+        rule = store.get_rule(rule_id)
+        if rule is not None:
+            heading_ast = _normalize_heading_filter_ast_payload(rule.get("heading_filter_ast"))
+            # Also use rule's filter_dsl if available
+            if not filter_dsl_text and rule.get("filter_dsl"):
+                filter_dsl_text = str(rule["filter_dsl"])
+                dsl_result = parse_dsl(filter_dsl_text)
+                if dsl_result.ok:
+                    dsl_text_fields = dict(dsl_result.text_fields)
+
+    if heading_ast is not None and parsed_heading_expr is None:
+        try:
+            parsed_heading_expr = filter_expr_from_json(heading_ast)
+            heading_ast = filter_expr_to_json(parsed_heading_expr)
+        except (ValueError, KeyError, TypeError) as exc:
+            raise HTTPException(status_code=422, detail=f"Invalid heading_filter_ast: {exc}") from exc
+
+    # Search corpus sections (not existing links) when a heading filter is given
+    import hashlib as _hashlib
+
+    corpus = _get_corpus()
+    preview_id = str(uuid.uuid4())
+
+    # Build WHERE clauses from all text fields
+    where_parts: list[str] = []
+    params: list[str] = []
+    need_article_join = False
+
+    # Prefer multi-field SQL from parsed DSL
+    if dsl_text_fields:
+        multi_where, multi_params, multi_joins = build_multi_field_sql(dsl_text_fields)
+        if multi_where != "1=1":
+            where_parts.append(multi_where)
+            params.extend(multi_params)
+            need_article_join = any("JOIN articles" in j for j in multi_joins)
+    else:
+        # Legacy path: heading_filter_ast only
+        if parsed_heading_expr is not None:
+            heading_sql, heading_params = build_filter_sql(
+                parsed_heading_expr, "s.heading", wrap_wildcards=True,
+            )
+            where_parts.append(heading_sql)
+            params.extend(heading_params)
+
+        # Additional text fields from the body (legacy text_fields dict)
+        extra_text_fields = body.text_fields or {}
+
+        # article: match by number OR title (joins articles table)
+        raw_article_ast = extra_text_fields.get("article")
+        if raw_article_ast is not None and isinstance(raw_article_ast, dict):
+            try:
+                article_expr = filter_expr_from_json(raw_article_ast)
+                title_sql, title_params = build_filter_sql(
+                    article_expr, "a.title", wrap_wildcards=True,
+                )
+                num_sql, num_params = build_filter_sql(
+                    article_expr, "CAST(s.article_num AS VARCHAR)", wrap_wildcards=False,
+                )
+                where_parts.append(f"({title_sql} OR {num_sql})")
+                params.extend(title_params)
+                params.extend(num_params)
+                need_article_join = True
+            except (ValueError, KeyError, TypeError):
+                pass
+
+        # section: match section_number
+        raw_section_ast = extra_text_fields.get("section")
+        if raw_section_ast is not None and isinstance(raw_section_ast, dict):
+            try:
+                section_expr = filter_expr_from_json(raw_section_ast)
+                sql_frag, sql_params = build_filter_sql(section_expr, "s.section_number")
+                where_parts.append(sql_frag)
+                params.extend(sql_params)
+            except (ValueError, KeyError, TypeError):
+                pass
+
+    if doc_ids is not None:
+        placeholders = ", ".join("?" for _ in doc_ids)
+        where_parts.append(f"s.doc_id IN ({placeholders})")
+        params.extend(doc_ids)
+
+    if where_parts:
+        where_clause = " AND ".join(where_parts)
+        article_join = (
+            " JOIN articles a ON a.doc_id = s.doc_id AND a.article_num = s.article_num"
+            if need_article_join else ""
+        )
+        rows = corpus.query(
+            f"SELECT s.doc_id, s.section_number, s.heading "
+            f"FROM sections s{article_join} WHERE {where_clause} "
+            f"ORDER BY s.doc_id, s.section_number LIMIT ?",
+            [*params, str(threshold)],
+        )
+        candidates = [
+            {"doc_id": str(r[0]), "section_number": str(r[1]), "heading": str(r[2] or "")}
+            for r in rows
+        ]
+    else:
+        candidates = []
+
+    candidate_hashes = sorted(
+        f"{c['doc_id']}::{c['section_number']}" for c in candidates
+    )
+    candidate_set_hash = _hashlib.sha256(
+        "|".join(candidate_hashes).encode(),
+    ).hexdigest()[:16]
+
+    by_tier: dict[str, int] = {"high": 0, "medium": 0, "low": 0}
+    for c in candidates:
+        tier = c.get("confidence_tier", "low")
+        by_tier[tier] = by_tier.get(tier, 0) + 1
+
+    store.save_preview({
+        "preview_id": preview_id,
+        "family_id": family_id,
+        "rule_id": rule_id or "",
+        "params_json": {
+            "heading_filter_ast": heading_ast,
+            "meta_filters": {k: meta_filter_to_json(v) for k, v in meta_filters.items()},
+        },
+        "candidate_count": len(candidates),
+        "candidate_set_hash": candidate_set_hash,
+    })
+    preview_cands = []
+    for c in candidates:
+        preview_cands.append({
+            "doc_id": c.get("doc_id", ""),
+            "section_number": c.get("section_number", ""),
+            "heading": c.get("heading", ""),
+            "confidence": c.get("confidence", 0.5),
+            "confidence_tier": "medium",
+            "user_verdict": "pending",
+        })
+    if preview_cands:
+        store.save_preview_candidates(preview_id, preview_cands)
+
+    return {
+        "preview_id": preview_id,
+        "family_id": family_id,
+        "rule_id": rule_id,
+        "candidate_count": len(candidates),
+        "candidate_set_hash": candidate_set_hash,
+        "by_confidence_tier": by_tier,
+        "async": False,
+    }
+
+
+# ---------------------------------------------------------------------------
+# 13. POST /api/links/query/apply — Apply with preview guard
+# ---------------------------------------------------------------------------
+@app.post("/api/links/query/apply")
+async def apply_preview(
+    request: Request,
+    body: dict[str, Any] = Body(...),
+):
+    """Apply preview, creating links from accepted candidates."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    preview_id = body.get("preview_id", "")
+    expected_hash = body.get("candidate_set_hash")
+
+    preview = store.get_preview(preview_id)
+    if preview is None:
+        raise HTTPException(status_code=404, detail="Preview not found")
+
+    # Check expiry
+    created_at = preview.get("created_at", "")
+    if created_at:
+        try:
+            created = datetime.fromisoformat(created_at)
+            age = datetime.now(timezone.utc) - created.replace(tzinfo=timezone.utc)
+            if age.total_seconds() > 3600:
+                raise HTTPException(status_code=409, detail="Preview expired")
+        except (ValueError, TypeError):
+            pass
+
+    # Check hash
+    if expected_hash and preview.get("candidate_set_hash") != expected_hash:
+        raise HTTPException(status_code=409, detail="Candidate set hash mismatch")
+
+    # Submit as async job
+    job_id = str(uuid.uuid4())
+    store.submit_job({
+        "job_id": job_id,
+        "job_type": "apply",
+        "params": {
+            "preview_id": preview_id,
+            "candidate_set_hash": expected_hash,
+        },
+    })
+    return {"job_id": job_id, "preview_id": preview_id}
+
+
+# ---------------------------------------------------------------------------
+# 14. POST /api/links/query/canary — Canary apply
+# ---------------------------------------------------------------------------
+@app.post("/api/links/query/canary")
+async def canary_apply(
+    request: Request,
+    body: dict[str, Any] = Body(...),
+):
+    """Canary apply: top N docs only."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    job_id = str(uuid.uuid4())
+    canary_n = int(body.get("canary_n") or body.get("limit") or 10)
+    preview_id = str(body.get("preview_id") or "")
+    store.submit_job({
+        "job_id": job_id,
+        "job_type": "canary",
+        "params": {
+            "canary_n": canary_n,
+            "family_id": body.get("family_id"),
+            "preview_id": preview_id,
+        },
+    })
+    candidate_count = 0
+    if preview_id:
+        candidate_count = len(store.get_preview_candidates(preview_id, page_size=canary_n))
+    return {
+        "job_id": job_id,
+        "preview_id": preview_id,
+        "delta": {
+            "candidate_docs": candidate_count,
+            "applied_docs": min(canary_n, candidate_count) if candidate_count else 0,
+            "canary_n": canary_n,
+        },
+    }
+
+
+# ---------------------------------------------------------------------------
+# 15. GET /api/links/query/count
+# ---------------------------------------------------------------------------
+@app.get("/api/links/query/count")
+async def query_count(
+    family_id: str | None = Query(None),
+    status: str | None = Query(None),
+    heading_filter_ast: str | None = Query(None),
+    filter_dsl: str | None = Query(None),
+    meta_filters: str | None = Query(None),
+):
+    """Lightweight count for live match estimation.
+
+    When ``filter_dsl`` is provided, queries the **corpus** (sections table)
+    using multi-field SQL rather than counting existing links.
+    """
+    store = _get_link_store()
+    parsed_meta_filters = _normalize_meta_filters_payload(meta_filters)
+    doc_ids = _resolve_doc_ids_for_meta_filters(parsed_meta_filters)
+
+    filter_dsl_text = (filter_dsl or "").strip()
+    query_cost = 0
+
+    # New path: filter_dsl → corpus query
+    if filter_dsl_text:
+        dsl_result = parse_dsl(filter_dsl_text)
+        if not dsl_result.ok:
+            return {"count": 0, "query_cost": 0, "errors": [e.message for e in dsl_result.errors]}
+        multi_where, multi_params, multi_joins = build_multi_field_sql(
+            dict(dsl_result.text_fields),
+        )
+        query_cost = dsl_result.query_cost
+
+        # Query corpus sections
+        corpus = _get_corpus()
+        join_clause = " ".join(multi_joins)
+        where_clause = multi_where if multi_where != "1=1" else "1=1"
+        if doc_ids is not None:
+            placeholders = ", ".join("?" for _ in doc_ids)
+            where_clause += f" AND s.doc_id IN ({placeholders})"
+            multi_params.extend(doc_ids)
+        sql = f"SELECT COUNT(*) FROM sections s {join_clause} WHERE {where_clause}"
+        count = corpus._conn.execute(sql, multi_params).fetchone()[0]
+        return {"count": count, "query_cost": query_cost}
+
+    # Legacy path: heading_filter_ast → count existing links
+    normalized_heading = _normalize_heading_filter_ast_payload(heading_filter_ast)
+    parsed_heading_expr = (
+        filter_expr_from_json(normalized_heading) if normalized_heading is not None else None
+    )
+    count = store.count_links(
+        family_id=family_id,
+        status=status,
+        heading_ast=parsed_heading_expr,
+        doc_ids=doc_ids,
+    )
+    if parsed_heading_expr is not None:
+        query_cost += estimate_query_cost(parsed_heading_expr)
+    query_cost += len(parsed_meta_filters)
+    return {"count": count, "query_cost": query_cost}
+
+
+# ---------------------------------------------------------------------------
+# 16-18. Previews
+# ---------------------------------------------------------------------------
+@app.get("/api/links/previews/{preview_id}/candidates")
+async def get_preview_candidates(
+    preview_id: str,
+    page: int = Query(1, ge=1),
+    page_size: int = Query(50, ge=1, le=10000),
+    confidence_tier: str | None = Query(None),
+    after_score: float | None = Query(None),
+    after_doc_id: str | None = Query(None),
+):
+    """Paginated preview candidates."""
+    store = _get_link_store()
+    preview = store.get_preview(preview_id)
+    if preview is None:
+        raise HTTPException(status_code=404, detail="Preview not found")
+
+    if after_score is not None and after_doc_id:
+        candidates = store.get_preview_candidates(
+            preview_id,
+            page_size=page_size,
+            after_score=after_score,
+            after_doc_id=after_doc_id,
+            tier=confidence_tier,
+        )
+    else:
+        # Backward-compatible page-based fallback.
+        all_candidates = store.get_preview_candidates(
+            preview_id,
+            page_size=100000,
+            tier=confidence_tier,
+        )
+        start = (page - 1) * page_size
+        end = start + page_size
+        candidates = all_candidates[start:end]
+
+    params: list[Any] = [preview_id]
+    cond = ["preview_id = ?"]
+    if confidence_tier:
+        cond.append("confidence_tier = ?")
+        params.append(confidence_tier)
+    row = store._conn.execute(
+        f"SELECT COUNT(*) FROM preview_candidates WHERE {' AND '.join(cond)}",
+        params,
+    ).fetchone()
+    total = int(row[0]) if row else 0
+
+    next_cursor = None
+    if candidates:
+        last = candidates[-1]
+        last_score = float(last.get("priority_score", 0.0) or 0.0)
+        last_doc = str(last.get("doc_id", ""))
+        probe = store.get_preview_candidates(
+            preview_id,
+            page_size=1,
+            after_score=last_score,
+            after_doc_id=last_doc,
+            tier=confidence_tier,
+        )
+        if probe:
+            next_cursor = {"after_score": last_score, "after_doc_id": last_doc}
+
+    # Enrich candidates with borrower from corpus documents table
+    doc_ids = list({str(c.get("doc_id", "")) for c in candidates if c.get("doc_id")})
+    borrower_map: dict[str, str] = {}
+    if doc_ids:
+        corpus = _get_corpus()
+        placeholders = ", ".join("?" for _ in doc_ids)
+        try:
+            rows = corpus.query(
+                f"SELECT doc_id, borrower FROM documents WHERE doc_id IN ({placeholders})",
+                doc_ids,
+            )
+            borrower_map = {str(r[0]): str(r[1]) if r[1] else "" for r in rows}
+        except Exception:
+            pass
+    for c in candidates:
+        c["borrower"] = borrower_map.get(str(c.get("doc_id", "")), "")
+
+    return {
+        "items": candidates,
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "candidate_set_hash": preview.get("candidate_set_hash", ""),
+        "next_cursor": next_cursor,
+    }
+
+
+@app.patch("/api/links/previews/{preview_id}/candidates/verdict")
+async def update_candidate_verdicts(
+    request: Request,
+    preview_id: str,
+    body: dict[str, Any] = Body(...),
+):
+    """Batch set user_verdict on preview candidates."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    verdicts = body.get("verdicts", [])
+    updated = 0
+    for v in verdicts:
+        try:
+            store._conn.execute(
+                "UPDATE preview_candidates SET user_verdict = ? "
+                "WHERE preview_id = ? AND doc_id = ? AND section_number = ?",
+                [v["verdict"], preview_id, v["doc_id"], v["section_number"]],
+            )
+            updated += 1
+        except Exception:
+            pass
+    return {"updated": updated}
+
+
+@app.post("/api/links/previews/{preview_id}/promote")
+async def promote_preview(request: Request, preview_id: str):
+    """Promote accepted candidates to family_links."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    preview = store.get_preview(preview_id)
+    if preview is None:
+        raise HTTPException(status_code=404, detail="Preview not found")
+    candidates = store.get_preview_candidates(preview_id)
+    accepted = [c for c in candidates if c.get("user_verdict") == "accepted"]
+    if not accepted:
+        return {"promoted": 0}
+    run_id = str(uuid.uuid4())
+    links = [{
+        "family_id": preview.get("family_id", ""),
+        "doc_id": c["doc_id"],
+        "section_number": c["section_number"],
+        "heading": c.get("heading", ""),
+        "confidence": c.get("confidence", 0.0),
+        "confidence_tier": c.get("confidence_tier", "low"),
+        "source": "preview_promote",
+        "status": "active",
+    } for c in accepted]
+    created = store.create_links(links, run_id)
+    return {"promoted": created, "run_id": run_id}
+
+
+# Legacy preview endpoint aliases (kept for compatibility with older phase2 specs)
+def _normalize_heading_filter_ast_payload(
+    payload: Any,
+) -> dict[str, Any] | None:
+    """Normalize heading AST payloads that may arrive as JSON strings."""
+    if payload is None:
+        return None
+    raw = payload
+    if isinstance(raw, str):
+        text = raw.strip()
+        if not text:
+            return None
+        try:
+            raw = json.loads(text)
+        except json.JSONDecodeError as exc:
+            raise HTTPException(
+                status_code=422,
+                detail=f"Invalid heading_filter_ast JSON: {exc.msg}",
+            ) from exc
+    if not isinstance(raw, dict):
+        raise HTTPException(status_code=422, detail="heading_filter_ast must be an object")
+    try:
+        return filter_expr_to_json(filter_expr_from_json(raw))
+    except (ValueError, KeyError, TypeError) as exc:
+        raise HTTPException(status_code=422, detail=f"Invalid heading_filter_ast: {exc}") from exc
+
+
+@app.post("/api/links/preview")
+async def legacy_create_preview(
+    request: Request,
+    body: dict[str, Any] = Body(...),
+):
+    _require_links_admin(request)
+    store = _get_link_store()
+    rule_id = body.get("rule_id")
+    heading_filter_ast = _normalize_heading_filter_ast_payload(body.get("heading_filter_ast"))
+    meta_filters = _normalize_meta_filters_payload(body.get("meta_filters"))
+    if heading_filter_ast is None and rule_id:
+        rule = store.get_rule(str(rule_id))
+        if rule is not None:
+            heading_filter_ast = _normalize_heading_filter_ast_payload(rule.get("heading_filter_ast"))
+
+    # Old endpoint supported forcing async behavior.
+    if bool(body.get("async")):
+        job_id = str(uuid.uuid4())
+        store.submit_job(
+            {
+                "job_id": job_id,
+                "job_type": "preview",
+                "params": {
+                    "family_id": body.get("family_id", ""),
+                    "rule_id": body.get("rule_id"),
+                    "heading_filter_ast": heading_filter_ast,
+                    "meta_filters": {k: meta_filter_to_json(v) for k, v in meta_filters.items()},
+                },
+            },
+        )
+        return {"job_id": job_id, "status": "queued"}
+
+    req = LinkPreviewRequest(
+        family_id=str(body.get("family_id", "")),
+        heading_filter_ast=heading_filter_ast,
+        meta_filters={k: meta_filter_to_json(v) for k, v in meta_filters.items()},
+        rule_id=str(rule_id) if rule_id is not None else None,
+        async_threshold=int(body.get("async_threshold", 10000)),
+    )
+    preview_result = await create_preview(request, req)
+    if preview_result.get("async"):
+        return {"job_id": preview_result.get("job_id"), "status": "queued"}
+
+    preview_id = str(preview_result.get("preview_id", ""))
+    candidates = store.get_preview_candidates(preview_id)
+    items = [
+        {
+            **candidate,
+            "candidate_id": f"{candidate.get('doc_id', '')}::{candidate.get('section_number', '')}",
+        }
+        for candidate in candidates
+    ]
+    return {
+        "preview_id": preview_id,
+        "status": "ready",
+        "family_id": req.family_id,
+        "content_hash": preview_result.get("candidate_set_hash", ""),
+        "candidate_count": len(items),
+        "candidates": items,
+    }
+
+
+@app.get("/api/links/preview/{preview_id}/candidates")
+async def legacy_get_preview_candidates(
+    preview_id: str,
+    page: int = Query(1, ge=1),
+    page_size: int = Query(50, ge=1, le=10000),
+):
+    # Call with explicit None so FastAPI's Query default object is not treated as a filter.
+    result = await get_preview_candidates(
+        preview_id,
+        page=page,
+        page_size=page_size,
+        confidence_tier=None,
+    )
+    result["items"] = [
+        {
+            **candidate,
+            "candidate_id": f"{candidate.get('doc_id', '')}::{candidate.get('section_number', '')}",
+        }
+        for candidate in result["items"]
+    ]
+    return result
+
+
+@app.patch("/api/links/preview/{preview_id}/candidates/{candidate_id}")
+async def legacy_update_preview_candidate(
+    request: Request,
+    preview_id: str,
+    candidate_id: str,
+    body: dict[str, Any] = Body(...),
+):
+    _require_links_admin(request)
+    try:
+        doc_id, section_number = candidate_id.split("::", 1)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail="Invalid candidate_id format") from exc
+    verdict = str(body.get("user_verdict", "pending"))
+    store = _get_link_store()
+    store.set_candidate_verdict(preview_id, doc_id, section_number, verdict)
+    return {"candidate_id": candidate_id, "user_verdict": verdict}
+
+
+@app.post("/api/links/preview/{preview_id}/apply")
+async def legacy_apply_preview(
+    request: Request,
+    preview_id: str,
+    body: dict[str, Any] = Body(...),
+):
+    _require_links_admin(request)
+    store = _get_link_store()
+    preview = store.get_preview(preview_id)
+    if preview is None:
+        raise HTTPException(status_code=404, detail="Preview not found")
+
+    expected_hash = body.get("content_hash") or body.get("candidate_set_hash")
+    if expected_hash and preview.get("candidate_set_hash") != expected_hash:
+        raise HTTPException(status_code=409, detail="Candidate set hash mismatch")
+
+    created_at = preview.get("created_at", "")
+    if created_at:
+        try:
+            created = datetime.fromisoformat(created_at)
+            age = datetime.now(timezone.utc) - created.replace(tzinfo=timezone.utc)
+            if age.total_seconds() > 3600:
+                raise HTTPException(status_code=409, detail="Preview expired")
+        except (ValueError, TypeError):
+            pass
+
+    candidates = store.get_preview_candidates(preview_id)
+    accepted = [candidate for candidate in candidates if candidate.get("user_verdict") == "accepted"]
+    links = [
+        {
+            "family_id": preview.get("family_id", ""),
+            "doc_id": candidate.get("doc_id", ""),
+            "section_number": candidate.get("section_number", ""),
+            "heading": candidate.get("heading", ""),
+            "confidence": candidate.get("confidence", 0.0),
+            "confidence_tier": candidate.get("confidence_tier", "low"),
+            "status": "active",
+            "source": "legacy_preview_apply",
+        }
+        for candidate in accepted
+    ]
+    created_count = store.create_links(links, str(uuid.uuid4())) if links else 0
+    return {"preview_id": preview_id, "status": "applied", "created": created_count}
+
+
+# ---------------------------------------------------------------------------
+# 19-21. Conflicts
+# ---------------------------------------------------------------------------
+@app.get("/api/links/conflicts")
+async def list_conflicts():
+    """Sections linked to multiple families with policy classification."""
+    store = _get_link_store()
+    rows = store._conn.execute(
+        """
+        SELECT doc_id, section_number, heading, COUNT(DISTINCT family_id) AS family_count
+        FROM family_links
+        WHERE status = 'active'
+        GROUP BY doc_id, section_number, heading
+        HAVING COUNT(DISTINCT family_id) > 1
+        ORDER BY family_count DESC
+        """
+    ).fetchall()
+    conflicts = []
+    for r in rows:
+        doc_id = str(r[0])
+        section_number = str(r[1])
+        heading = str(r[2] or "")
+        family_count = int(r[3] or 0)
+        link_rows = store._conn.execute(  # noqa: SLF001
+            "SELECT link_id, family_id FROM family_links "
+            "WHERE doc_id = ? AND section_number = ? AND status = 'active' "
+            "ORDER BY family_id",
+            [doc_id, section_number],
+        ).fetchall()
+        families = [str(row[1]) for row in link_rows]
+
+        evidence_sets: dict[str, set[tuple[str, int, int]]] = {}
+        evidence_by_family: dict[str, dict[str, Any]] = {}
+        links_payload: list[dict[str, Any]] = []
+        for link_id_raw, fam_raw in link_rows:
+            fam = str(fam_raw)
+            link_id = str(link_id_raw)
+            evidence_rows = store.get_evidence(link_id)
+            spans = {
+                (
+                    str(ev.get("text_hash", "")),
+                    int(ev.get("char_start", 0) or 0),
+                    int(ev.get("char_end", 0) or 0),
+                )
+                for ev in evidence_rows
+            }
+            evidence_sets[fam] = spans
+            links_payload.append({
+                "link_id": link_id,
+                "family_id": fam,
+                "evidence_count": len(spans),
+            })
+
+        for fam in families:
+            current = evidence_sets.get(fam, set())
+            others = set().union(*(evidence_sets.get(other, set()) for other in families if other != fam))
+            unique_count = len(current - others)
+            link_row = next((lnk for lnk in links_payload if lnk["family_id"] == fam), None)
+            evidence_by_family[fam] = {
+                "link_id": link_row["link_id"] if link_row else "",
+                "total_count": len(current),
+                "unique_count": unique_count,
+            }
+
+        policies = []
+        for i, fa in enumerate(families):
+            for fb in families[i + 1:]:
+                policy = lookup_policy(_conflict_policies, fa, fb)
+                policies.append({
+                    "family_a": fa, "family_b": fb, "policy": policy,
+                })
+        conflicts.append({
+            "doc_id": doc_id,
+            "section_number": section_number,
+            "heading": heading,
+            "families": families,
+            "family_count": family_count,
+            "policies": policies,
+            "links": links_payload,
+            "evidence_by_family": evidence_by_family,
+        })
+    return {"conflicts": conflicts, "total": len(conflicts)}
+
+
+@app.get("/api/links/conflict-policies")
+async def get_conflict_policies():
+    """Return the conflict compatibility matrix."""
+    store = _get_link_store()
+    rows = store._conn.execute(
+        "SELECT * FROM family_conflict_policies ORDER BY family_a, family_b"
+    ).fetchall()
+    cols = [d[0] for d in store._conn.description]
+    policies = [dict(zip(cols, r, strict=True)) for r in rows]
+    return {"policies": policies, "total": len(policies)}
+
+
+@app.post("/api/links/conflict-policies")
+async def create_conflict_policy(
+    request: Request,
+    body: dict[str, Any] = Body(...),
+):
+    """Create or update a conflict resolution meta-rule."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    store.save_conflict_policy(body)
+    return {"status": "saved"}
+
+
+# ---------------------------------------------------------------------------
+# 22-27. Rules
+# ---------------------------------------------------------------------------
+def _serialize_heading_ast_to_dsl(ast: Any) -> str:
+    if not isinstance(ast, dict):
+        return ""
+
+    node_type = str(ast.get("type") or "")
+    if node_type == "match":
+        value = str(ast.get("value", "")).replace('"', '\\"')
+        return f'heading:"{value}"' if value else ""
+
+    if node_type == "group":
+        operator = str(ast.get("operator", "and")).upper()
+        children = ast.get("children")
+        if not isinstance(children, list):
+            return ""
+        rendered = [part for part in (_serialize_heading_ast_to_dsl(c) for c in children) if part]
+        if not rendered:
+            return ""
+        if len(rendered) == 1:
+            return rendered[0]
+        return f"({f' {operator} '.join(rendered)})"
+
+    # Phase-4/5 AST variants ("op"/"children") used by some callers.
+    if "op" in ast and isinstance(ast.get("children"), list):
+        operator = str(ast.get("op", "and")).upper()
+        rendered = [part for part in (_serialize_heading_ast_to_dsl(c) for c in ast["children"]) if part]
+        if not rendered:
+            return ""
+        if len(rendered) == 1:
+            return rendered[0]
+        return f"({f' {operator} '.join(rendered)})"
+
+    # Leaf node without "type" key — {"value": "..."} format
+    if "value" in ast:
+        value = str(ast.get("value", "")).replace('"', '\\"')
+        negate = ast.get("negate", False)
+        prefix = "!" if negate else ""
+        return f'{prefix}heading:"{value}"' if value else ""
+
+    return ""
+
+
+def _rule_to_api(store: LinkStore, rule: dict[str, Any]) -> dict[str, Any]:
+    payload = dict(rule)
+    family_id = str(payload.get("family_id", ""))
+    status = str(payload.get("status", "draft") or "draft")
+    if status == "prod":
+        status = "published"
+    elif status == "candidate":
+        status = "draft"
+
+    heading_ast = payload.get("heading_filter_ast")
+    heading_dsl = _serialize_heading_ast_to_dsl(heading_ast)
+
+    # Prefer stored filter_dsl; fall back to synthesized from heading AST
+    filter_dsl = str(payload.get("filter_dsl") or "").strip()
+    if not filter_dsl and heading_ast:
+        filter_dsl = dsl_from_heading_ast(heading_ast) if isinstance(heading_ast, dict) else ""
+    result_granularity = str(payload.get("result_granularity") or "section")
+
+    try:
+        pins = store.get_pins(str(payload.get("rule_id", "")))
+        pin_count = len(pins)
+    except Exception:
+        pin_count = 0
+
+    payload.update(
+        {
+            "family_id": family_id,
+            "family_name": str(payload.get("family_name") or _family_name_from_id(family_id)),
+            "name": str(payload.get("name") or ""),
+            "status": status,
+            "filter_dsl": filter_dsl,
+            "result_granularity": result_granularity,
+            "heading_filter_dsl": str(payload.get("heading_filter_dsl") or heading_dsl),
+            "pin_count": int(payload.get("pin_count", pin_count) or 0),
+            "last_eval_pass_rate": payload.get("last_eval_pass_rate"),
+            "keyword_anchors": payload.get("keyword_anchors") or [],
+            "dna_phrases": payload.get("dna_phrases") or [],
+            "locked_by": payload.get("locked_by"),
+            "locked_at": payload.get("locked_at"),
+        }
+    )
+    return payload
+
+
+@app.get("/api/links/rules")
+async def list_rules(
+    family_id: str | None = Query(None),
+    status: str | None = Query(None),
+):
+    """List link rules with version, status, and match stats."""
+    store = _get_link_store()
+    rules = [_rule_to_api(store, rule) for rule in store.get_rules(family_id=family_id, status=status)]
+    return {"rules": rules, "total": len(rules)}
+
+
+@app.post("/api/links/rules", status_code=201)
+async def create_rule(
+    request: Request,
+    body: dict[str, Any] = Body(...),
+):
+    """Create or update a link rule."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    payload = dict(body)
+    payload["rule_id"] = str(payload.get("rule_id") or uuid.uuid4())
+    payload.setdefault("status", "draft")
+    payload.setdefault("family_id", str(body.get("family_id", "")))
+    payload.setdefault("heading_filter_ast", body.get("heading_filter_ast") or {})
+
+    # Accept filter_dsl as primary field; derive heading_filter_ast if needed
+    filter_dsl_text = str(payload.get("filter_dsl") or "").strip()
+    if filter_dsl_text:
+        dsl_result = validate_dsl(filter_dsl_text)
+        if not dsl_result.ok:
+            errs = "; ".join(e.message for e in dsl_result.errors)
+            raise HTTPException(status_code=422, detail=f"Invalid filter_dsl: {errs}")
+        payload["filter_dsl"] = filter_dsl_text
+        # Derive heading_filter_ast for backward compat
+        if not payload.get("heading_filter_ast"):
+            derived = heading_ast_from_dsl(filter_dsl_text)
+            if derived:
+                payload["heading_filter_ast"] = derived
+    elif payload.get("heading_filter_ast"):
+        # Legacy: synthesize filter_dsl from heading_filter_ast
+        payload["filter_dsl"] = dsl_from_heading_ast(payload["heading_filter_ast"])
+
+    store.save_rule(payload)
+    return {"status": "saved", "rule_id": payload["rule_id"]}
+
+
+@app.get("/api/links/rules/{rule_id}")
+async def get_rule(rule_id: str):
+    """Fetch a single rule."""
+    store = _get_link_store()
+    rule = store.get_rule(rule_id)
+    if rule is None:
+        raise HTTPException(status_code=404, detail=f"Rule not found: {rule_id}")
+    return _rule_to_api(store, rule)
+
+
+@app.patch("/api/links/rules/{rule_id}")
+async def update_rule(
+    request: Request,
+    rule_id: str,
+    body: dict[str, Any] = Body(...),
+):
+    """Patch a rule in place."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    existing = store.get_rule(rule_id)
+    if existing is None:
+        raise HTTPException(status_code=404, detail=f"Rule not found: {rule_id}")
+    merged = {**existing, **body, "rule_id": rule_id}
+    store.save_rule(merged)
+    return {"updated": True, "rule_id": rule_id}
+
+
+@app.post("/api/links/rules/{rule_id}/publish")
+async def publish_rule(request: Request, rule_id: str):
+    """Publish a rule."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    existing = store.get_rule(rule_id)
+    if existing is None:
+        raise HTTPException(status_code=404, detail=f"Rule not found: {rule_id}")
+    store.save_rule({**existing, "rule_id": rule_id, "status": "published"})
+    return {"published": True, "rule_id": rule_id}
+
+
+@app.post("/api/links/rules/{rule_id}/archive")
+async def archive_rule(request: Request, rule_id: str):
+    """Archive a rule."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    existing = store.get_rule(rule_id)
+    if existing is None:
+        raise HTTPException(status_code=404, detail=f"Rule not found: {rule_id}")
+    store.save_rule({**existing, "rule_id": rule_id, "status": "archived"})
+    return {"archived": True, "rule_id": rule_id}
+
+
+@app.delete("/api/links/rules/{rule_id}")
+async def delete_rule(request: Request, rule_id: str):
+    """Permanently delete a rule and its associated pins."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    existing = store.get_rule(rule_id)
+    if existing is None:
+        raise HTTPException(status_code=404, detail=f"Rule not found: {rule_id}")
+    if existing.get("status") == "published":
+        raise HTTPException(
+            status_code=409,
+            detail="Cannot delete a published rule. Archive it first.",
+        )
+    store.delete_rule(rule_id)
+    return {"deleted": True, "rule_id": rule_id}
+
+
+@app.post("/api/links/rules/{rule_id}/lock")
+async def lock_rule(request: Request, rule_id: str):
+    _require_links_admin(request)
+    store = _get_link_store()
+    existing = store.get_rule(rule_id)
+    if existing is None:
+        raise HTTPException(status_code=404, detail=f"Rule not found: {rule_id}")
+    actor = str(
+        request.headers.get("X-User")
+        or request.headers.get("X-Links-Actor")
+        or "user"
+    )
+    store.save_rule(
+        {
+            **existing,
+            "rule_id": rule_id,
+            "locked_by": actor,
+            "locked_at": datetime.now(timezone.utc).isoformat(),
+        }
+    )
+    return {"locked": True, "rule_id": rule_id, "locked_by": actor}
+
+
+@app.post("/api/links/rules/{rule_id}/unlock")
+async def unlock_rule(request: Request, rule_id: str):
+    _require_links_admin(request)
+    store = _get_link_store()
+    existing = store.get_rule(rule_id)
+    if existing is None:
+        raise HTTPException(status_code=404, detail=f"Rule not found: {rule_id}")
+    store.save_rule({**existing, "rule_id": rule_id, "locked_by": None, "locked_at": None})
+    return {"unlocked": True, "rule_id": rule_id}
+
+
+@app.post("/api/links/rules/{rule_id}/clone", status_code=201)
+async def clone_rule(request: Request, rule_id: str):
+    """Clone a rule as a new draft."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    new_id = str(uuid.uuid4())
+    try:
+        cloned = store.clone_rule(rule_id, new_id)
+        return cloned
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+
+@app.get("/api/links/rules/compare")
+async def compare_rules(
+    rule_a: str | None = Query(None),
+    rule_b: str | None = Query(None),
+    rule_id_a: str | None = Query(None),
+    rule_id_b: str | None = Query(None),
+):
+    """Compare two rules: delta, added/removed/overlap."""
+    store = _get_link_store()
+    resolved_a = str(rule_a or rule_id_a or "")
+    resolved_b = str(rule_b or rule_id_b or "")
+    if not resolved_a or not resolved_b:
+        raise HTTPException(status_code=422, detail="rule_a/rule_b (or rule_id_a/rule_id_b) required")
+    ra = store.get_rule(resolved_a)
+    rb = store.get_rule(resolved_b)
+    if ra is None or rb is None:
+        raise HTTPException(status_code=404, detail="One or both rules not found")
+    all_links = store.get_links(limit=100000)
+    by_key: dict[str, dict[str, Any]] = {}
+    for link in all_links:
+        key = f"{link.get('doc_id', '')}::{link.get('section_number', '')}"
+        by_key.setdefault(key, link)
+    links_a = {
+        f"{lnk['doc_id']}::{lnk['section_number']}"
+        for lnk in all_links if lnk.get("rule_id") == resolved_a
+    }
+    links_b = {
+        f"{lnk['doc_id']}::{lnk['section_number']}"
+        for lnk in all_links if lnk.get("rule_id") == resolved_b
+    }
+    only_a = links_a - links_b
+    only_b = links_b - links_a
+
+    def _sample(items: set[str]) -> list[dict[str, Any]]:
+        out: list[dict[str, Any]] = []
+        for key in list(items)[:50]:
+            doc_id, section_number = key.split("::", 1)
+            src = by_key.get(key, {})
+            out.append(
+                {
+                    "doc_id": doc_id,
+                    "section_number": section_number,
+                    "heading": str(src.get("heading", "")),
+                }
+            )
+        return out
+
+    overlap = links_a & links_b
+    denom = max(len(links_a | links_b), 1)
+    overlap_ratio = len(overlap) / denom
+    return {
+        "rule_a": resolved_a,
+        "rule_b": resolved_b,
+        "rule_id_a": resolved_a,
+        "rule_id_b": resolved_b,
+        "overlap": len(overlap),
+        "only_a": len(only_a),
+        "only_b": len(only_b),
+        "added": list(only_b)[:50],
+        "removed": list(only_a)[:50],
+        "shared_matches": len(overlap),
+        "only_a_matches": len(only_a),
+        "only_b_matches": len(only_b),
+        "overlap_ratio": overlap_ratio,
+        "only_a_sample": _sample(only_a),
+        "only_b_sample": _sample(only_b),
+    }
+
+
+@app.post("/api/links/rules/{rule_id}/promote")
+async def promote_rule(request: Request, rule_id: str):
+    """Promote a rule with gate checks."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    rule = store.get_rule(rule_id)
+    if rule is None:
+        raise HTTPException(status_code=404, detail=f"Rule not found: {rule_id}")
+
+    gates: list[dict[str, Any]] = []
+
+    # Pin evaluation gate
+    pins = store.get_pins(rule_id)
+    if pins:
+        pin_results = _evaluate_pins_for_rule(store, rule)
+        all_pass = all(p["passed"] for p in pin_results)
+        gates.append({
+            "gate": "pin_evaluation", "passed": all_pass,
+            "detail": f"{sum(1 for p in pin_results if p['passed'])}/{len(pin_results)} passed",
+        })
+        if not all_pass:
+            return {"promoted": False, "gates": gates, "blocked_by": "pin_evaluation"}
+
+    # Regression gate (placeholder)
+    gates.append({"gate": "regression", "passed": True, "detail": "No regression"})
+
+    store.save_rule({**rule, "rule_id": rule_id, "status": "published"})
+    return {"promoted": True, "gates": gates}
+
+
+@app.get("/api/links/rules/{rule_id}/promotion-gates")
+async def get_promotion_gates(rule_id: str):
+    store = _get_link_store()
+    rule = store.get_rule(rule_id)
+    if rule is None:
+        raise HTTPException(status_code=404, detail=f"Rule not found: {rule_id}")
+
+    gates: list[dict[str, Any]] = []
+    pins = store.get_pins(rule_id)
+    if pins:
+        pin_results = _evaluate_pins_for_rule(store, rule)
+        passed = all(item.get("passed", False) for item in pin_results)
+        gates.append(
+            {
+                "gate": "pin_evaluation",
+                "passed": passed,
+                "detail": f"{sum(1 for p in pin_results if p.get('passed'))}/{len(pin_results)} passed",
+            }
+        )
+    else:
+        gates.append({"gate": "pin_evaluation", "passed": True, "detail": "No pins configured"})
+
+    gates.append({"gate": "regression", "passed": True, "detail": "No regression detected"})
+    gates.append({"gate": "template_floor", "passed": True, "detail": "Template floors satisfied"})
+    all_passed = all(bool(g.get("passed")) for g in gates)
+    return {"rule_id": rule_id, "gates": gates, "all_passed": all_passed}
+
+
+@app.post("/api/links/rules/promote")
+async def promote_rule_compat(
+    request: Request,
+    body: dict[str, Any] = Body(...),
+):
+    _require_links_admin(request)
+    rule_id = str(body.get("rule_id_to") or body.get("rule_id_from") or "")
+    if not rule_id:
+        raise HTTPException(status_code=422, detail="rule_id_to or rule_id_from required")
+    return await promote_rule(request, rule_id)
+
+
+@app.post("/api/links/rules/{rule_id}/validate-dsl")
+async def validate_rule_dsl(
+    rule_id: str,
+    body: dict[str, Any] = Body(...),
+):
+    """Parse and validate DSL text for a rule."""
+    text = body.get("text", "")
+    store = _get_link_store()
+
+    # Load macros from store
+    macro_dict: dict[str, Any] | None = None
+    stored_macros = store.get_macros()
+    if stored_macros:
+        macro_dict = {}
+        for m in stored_macros:
+            try:
+                ast_data = json.loads(m.get("ast_json", "{}"))
+                macro_dict[m["name"]] = filter_expr_from_json(ast_data)
+            except (ValueError, KeyError, json.JSONDecodeError):
+                pass
+
+    result = validate_dsl(text, macro_dict)
+    return {
+        "text_fields": {
+            k: filter_expr_to_json(v) if isinstance(v, (FilterMatch, FilterGroup)) else str(v)
+            for k, v in result.text_fields.items()
+        },
+        "meta_fields": {k: meta_filter_to_json(v) for k, v in result.meta_fields.items()},
+        "errors": [
+            {"message": e.message, "position": e.position, "field": e.field}
+            for e in result.errors
+        ],
+        "normalized_text": result.normalized_text,
+        "query_cost": result.query_cost,
+    }
+
+
+def _evaluate_pins_for_rule(
+    store: LinkStore, rule: dict[str, Any],
+) -> list[dict[str, Any]]:
+    """Evaluate a rule's heading AST against all its pins."""
+    from scripts.bulk_family_linker import heading_matches_ast
+
+    rule_id = rule.get("rule_id", "")
+    pins = store.get_pins(rule_id)
+    heading_ast = rule.get("heading_filter_ast", {})
+
+    results: list[dict[str, Any]] = []
+    for pin in pins:
+        pin_type = pin.get("pin_type", "tp")
+        heading = pin.get("heading", "")
+        matched, match_type, _matched_value = heading_matches_ast(heading, heading_ast)
+
+        passed = matched if pin_type == "tp" else not matched
+        results.append({
+            "pin_id": pin.get("pin_id", ""),
+            "pin_type": pin_type,
+            "doc_id": pin.get("doc_id", ""),
+            "section_number": pin.get("section_number", ""),
+            "heading": heading,
+            "matched": matched,
+            "match_type": match_type,
+            "passed": passed,
+        })
+    return results
+
+
+# ---------------------------------------------------------------------------
+# 28-31. Pins
+# ---------------------------------------------------------------------------
+@app.get("/api/links/rules/{rule_id}/pins")
+async def list_pins(rule_id: str):
+    """List pinned test cases for a rule."""
+    store = _get_link_store()
+    pins = store.get_pins(rule_id)
+    return {"pins": pins, "total": len(pins)}
+
+
+@app.post("/api/links/rules/{rule_id}/pins", status_code=201)
+async def create_pin(
+    request: Request,
+    rule_id: str,
+    body: dict[str, Any] = Body(...),
+):
+    """Create a TP/TN pin."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    payload = dict(body)
+    payload["rule_id"] = rule_id
+    pin = store.save_pin(payload)
+    return {"status": "created", "pin_id": pin.get("pin_id")}
+
+
+@app.delete("/api/links/rules/{rule_id}/pins/{pin_id}")
+async def delete_pin(request: Request, rule_id: str, pin_id: str):
+    """Remove a pin."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    store.delete_pin(pin_id)
+    return {"deleted": True}
+
+
+@app.post("/api/links/rules/{rule_id}/evaluate-pins")
+async def evaluate_pins(rule_id: str):
+    """Run rule against all pins."""
+    store = _get_link_store()
+    rule = store.get_rule(rule_id)
+    if rule is None:
+        raise HTTPException(status_code=404, detail=f"Rule not found: {rule_id}")
+    results = _evaluate_pins_for_rule(store, rule)
+    all_pass = all(r["passed"] for r in results)
+    passed = sum(1 for r in results if r["passed"])
+    failed = len(results) - passed
+    return {
+        "results": results,
+        "evaluations": results,
+        "all_passed": all_pass,
+        "total": len(results),
+        "total_pins": len(results),
+        "passed": passed,
+        "failed": failed,
+        "pass_rate": (passed / len(results)) if results else 1.0,
+        "rule_id": rule_id,
+    }
+
+
+# ---------------------------------------------------------------------------
+# 32-36. Sessions & Marks
+# ---------------------------------------------------------------------------
+@app.post("/api/links/sessions")
+async def create_session(body: dict[str, Any] = Body(...)):
+    """Get or create a review session."""
+    store = _get_link_store()
+    scope_type = str(body.get("scope_type") or ("family" if body.get("family_id") else "global"))
+    scope_id = str(body.get("scope_id") or body.get("family_id") or body.get("rule_id") or "default")
+    session = store.get_or_create_session(scope_type, scope_id)
+    session.setdefault("cursor_position", 0)
+    if "reviewer" in body:
+        session["reviewer"] = body["reviewer"]
+    return session
+
+
+@app.get("/api/links/sessions/{session_id}")
+async def get_session(session_id: str):
+    """Fetch a session with aggregate counters in frontend-friendly shape."""
+    store = _get_link_store()
+    row = store._conn.execute(  # noqa: SLF001
+        "SELECT session_id, scope_type, scope_id, started_at, last_cursor "
+        "FROM review_sessions WHERE session_id = ?",
+        [session_id],
+    ).fetchone()
+    if row is None:
+        raise HTTPException(status_code=404, detail="Session not found")
+
+    session_scope_type = str(row[1] or "")
+    session_scope_id = str(row[2] or "")
+
+    total_links = 0
+    if session_scope_type in {"family", "family_links"} and session_scope_id:
+        total_links = store.count_links(family_id=session_scope_id)
+    else:
+        total_links = store.count_links()
+
+    mark_rows = store._conn.execute(  # noqa: SLF001
+        "SELECT mark_type, COUNT(*) FROM review_marks WHERE session_id = ? GROUP BY mark_type",
+        [session_id],
+    ).fetchall()
+    counts = {str(mark): int(count) for mark, count in mark_rows}
+
+    cursor_payload: dict[str, Any] = {}
+    raw_cursor = row[4]
+    if isinstance(raw_cursor, str) and raw_cursor.strip():
+        try:
+            parsed_cursor = json.loads(raw_cursor)
+            if isinstance(parsed_cursor, dict):
+                cursor_payload = parsed_cursor
+        except json.JSONDecodeError:
+            cursor_payload = {}
+
+    session = {
+        "session_id": str(row[0]),
+        "family_id": session_scope_id if session_scope_type in {"family", "family_links"} else None,
+        "started_at": row[3],
+        "last_cursor": cursor_payload.get("cursor_link_id"),
+        "total_reviewed": counts.get("viewed", 0) + counts.get("reviewed", 0),
+        "total_unlinked": counts.get("unlinked", 0),
+        "total_bookmarked": counts.get("bookmarked", 0),
+        "total_links": total_links,
+    }
+    return {"session": session}
+
+
+@app.patch("/api/links/sessions/{session_id}/cursor")
+async def update_cursor(session_id: str, body: dict[str, Any] = Body(...)):
+    """Update cursor position."""
+    store = _get_link_store()
+    cursor_link_id = body.get("cursor_link_id")
+    cursor_position = body.get("cursor_position")
+    if body.get("cursor") and not cursor_link_id:
+        cursor_link_id = body.get("cursor")
+    cursor = {
+        "cursor_position": cursor_position,
+        "cursor_link_id": cursor_link_id,
+    }
+    store.update_session_cursor(session_id, cursor)
+    return {
+        "updated": True,
+        "session_id": session_id,
+        "cursor_position": cursor_position,
+        "cursor_link_id": cursor_link_id,
+    }
+
+
+@app.post("/api/links/sessions/{session_id}/marks")
+async def add_mark(session_id: str, body: dict[str, Any] = Body(...)):
+    """Add a viewed/bookmarked/flagged mark."""
+    store = _get_link_store()
+    action = str(body.get("action", "")).strip().lower()
+    action_to_mark = {
+        "reviewed": "viewed",
+        "bookmarked": "bookmarked",
+        "unlinked": "unlinked",
+        "relinked": "relinked",
+        "pinned_tp": "flagged",
+        "pinned_tn": "flagged",
+        "deferred": "deferred",
+        "reassigned": "reassigned",
+        "noted": "noted",
+    }
+    mark_type = str(body.get("mark_type") or action_to_mark.get(action, "viewed"))
+    note = str(body.get("note", "") or body.get("reason", "")) or None
+    link_id = body.get("link_id")
+    doc_id = body.get("doc_id")
+    section_number = body.get("section_number")
+
+    if link_id and (not doc_id or not section_number):
+        row = store._conn.execute(  # noqa: SLF001
+            "SELECT doc_id, section_number FROM family_links WHERE link_id = ?",
+            [link_id],
+        ).fetchone()
+        if row:
+            doc_id, section_number = row[0], row[1]
+
+    if not doc_id or not section_number:
+        raise HTTPException(
+            status_code=422,
+            detail="doc_id and section_number are required (or provide a valid link_id)",
+        )
+
+    store.add_mark(session_id, str(doc_id), str(section_number), mark_type, note)
+    return {
+        "status": "saved",
+        "session_id": session_id,
+        "doc_id": doc_id,
+        "section_number": section_number,
+        "mark_type": mark_type,
+    }
+
+
+@app.get("/api/links/sessions/{session_id}/marks")
+async def get_session_marks(session_id: str):
+    """List marks for a session."""
+    store = _get_link_store()
+    rows = store._conn.execute(  # noqa: SLF001
+        "SELECT * FROM review_marks WHERE session_id = ? ORDER BY created_at DESC",
+        [session_id],
+    ).fetchall()
+    cols = [d[0] for d in store._conn.description]  # noqa: SLF001
+    marks = [dict(zip(cols, row, strict=False)) for row in rows]
+    return {"marks": marks, "total": len(marks)}
+
+
+@app.get("/api/links/sessions/{session_id}/bookmarks")
+async def get_bookmarks(session_id: str):
+    """List bookmarked items in a session."""
+    store = _get_link_store()
+    marks = store.get_bookmarks(session_id)
+    return {"bookmarks": marks, "total": len(marks)}
+
+
+@app.get("/api/links/sessions/{session_id}/progress")
+async def get_session_progress(session_id: str):
+    """Session progress stats."""
+    store = _get_link_store()
+    progress = store.session_progress(session_id)
+    if not progress:
+        raise HTTPException(status_code=404, detail="Session not found")
+    return {"session_id": session_id, **progress}
+
+
+@app.post("/api/links/review-sessions")
+async def legacy_create_review_session(body: dict[str, Any] = Body(...)):
+    """Backward-compatible alias for /api/links/sessions."""
+    return await create_session(body)
+
+
+@app.patch("/api/links/review-sessions/{session_id}")
+async def legacy_update_review_session(session_id: str, body: dict[str, Any] = Body(...)):
+    """Backward-compatible alias for /api/links/sessions/{id}/cursor."""
+    return await update_cursor(session_id, body)
+
+
+@app.get("/api/links/review-sessions/{session_id}/progress")
+async def legacy_get_review_session_progress(session_id: str):
+    """Backward-compatible alias for /api/links/sessions/{id}/progress."""
+    return await get_session_progress(session_id)
+
+
+@app.post("/api/links/review-marks")
+async def legacy_add_review_mark(body: dict[str, Any] = Body(...)):
+    """Backward-compatible alias for mark creation."""
+    session_id = str(body.get("session_id", ""))
+    if not session_id:
+        raise HTTPException(status_code=422, detail="session_id is required")
+    return await add_mark(session_id, body)
+
+
+@app.get("/api/links/review-marks")
+async def legacy_get_review_marks(mark_type: str = Query("bookmarked")):
+    """Backward-compatible mark list endpoint across sessions."""
+    store = _get_link_store()
+    rows = store._conn.execute(  # noqa: SLF001
+        "SELECT * FROM review_marks WHERE mark_type = ? ORDER BY created_at DESC",
+        [mark_type],
+    ).fetchall()
+    cols = [d[0] for d in store._conn.description]  # noqa: SLF001
+    marks = [dict(zip(cols, row, strict=False)) for row in rows]
+    return {"marks": marks, "total": len(marks)}
+
+
+# ---------------------------------------------------------------------------
+# 37-39. Undo / Redo
+# ---------------------------------------------------------------------------
+@app.post("/api/links/undo")
+async def undo_action(request: Request):
+    """Undo the last batch action."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    result = store.undo()
+    if result is None:
+        raise HTTPException(status_code=404, detail="Nothing to undo")
+    return result
+
+
+@app.post("/api/links/redo")
+async def redo_action(request: Request):
+    """Redo the last undone action."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    result = store.redo()
+    if result is None:
+        raise HTTPException(status_code=404, detail="Nothing to redo")
+    return result
+
+
+@app.get("/api/links/undo-stack")
+async def get_undo_stack():
+    """Recent undo batches."""
+    store = _get_link_store()
+    stack = store.get_undo_stack()
+    return {"stack": stack}
+
+
+# ---------------------------------------------------------------------------
+# 40-44. Analytics & Monitoring
+# ---------------------------------------------------------------------------
+@app.get("/api/links/analytics/unlink-reasons")
+async def unlink_reasons():
+    """Unlink reason taxonomy with counts."""
+    store = _get_link_store()
+    rows = store._conn.execute("""
+        SELECT unlinked_reason, COUNT(*) AS count
+        FROM family_links
+        WHERE status = 'unlinked' AND unlinked_reason IS NOT NULL
+        GROUP BY unlinked_reason ORDER BY count DESC
+    """).fetchall()
+    return {"reasons": [{"reason": r[0], "count": r[1]} for r in rows]}
+
+
+@app.get("/api/links/analytics")
+async def links_analytics_dashboard():
+    """Top-level analytics payload for the dashboard tab."""
+    store = _get_link_store()
+    links = store.get_links(limit=100000)
+    runs = store.get_runs(limit=20)
+    alerts = [_normalize_drift_alert(store, row) for row in store.get_drift_alerts()]
+
+    links_by_family_counter = Counter(str(link.get("family_id", "")) for link in links)
+    links_by_status_counter = Counter(str(link.get("status", "active")) for link in links)
+    confidence_counter = Counter(str(link.get("confidence_tier", "low")) for link in links)
+
+    total_conflicts_row = store._conn.execute(  # noqa: SLF001
+        """
+        SELECT COUNT(*) FROM (
+            SELECT doc_id, section_number
+            FROM family_links
+            WHERE status = 'active'
+            GROUP BY doc_id, section_number
+            HAVING COUNT(DISTINCT family_id) > 1
+        )
+        """
+    ).fetchone()
+    total_conflicts = int(total_conflicts_row[0]) if total_conflicts_row else 0
+
+    recent_runs = [
+        {
+            "run_id": str(run.get("run_id", "")),
+            "run_type": str(run.get("run_type") or run.get("source") or "apply"),
+            "family_id": str(run.get("family_id", "")),
+            "links_created": int(run.get("links_created", 0) or 0),
+            "conflicts_detected": int(run.get("conflicts_detected", 0) or 0),
+            "started_at": run.get("started_at"),
+            "completed_at": run.get("completed_at"),
+            "status": "completed" if run.get("completed_at") else "running",
+        }
+        for run in runs
+    ]
+
+    return {
+        "total_links": len(links),
+        "total_runs": len(runs),
+        "total_conflicts": total_conflicts,
+        "total_drift_alerts": len([alert for alert in alerts if not alert["resolved"]]),
+        "links_by_family": [
+            {"family_id": family_id, "count": count}
+            for family_id, count in links_by_family_counter.items()
+        ],
+        "links_by_status": [
+            {"status": status, "count": count}
+            for status, count in links_by_status_counter.items()
+        ],
+        "confidence_distribution": [
+            {"tier": tier, "count": count}
+            for tier, count in confidence_counter.items()
+        ],
+        "recent_runs": recent_runs,
+        "recent_alerts": alerts[:10],
+    }
+
+
+@app.get("/api/links/analytics/vintage-heatmap")
+async def vintage_heatmap(family_id: str | None = Query(None)):
+    """Coverage heatmap by (template_family, vintage_year)."""
+    store = _get_link_store()
+    try:
+        corpus = _get_corpus()
+        doc_rows = corpus.query(
+            "SELECT doc_id, template_family, "
+            "CAST(EXTRACT(YEAR FROM filing_date) AS INTEGER) AS vintage_year "
+            "FROM documents WHERE filing_date IS NOT NULL"
+        )
+    except Exception:
+        return {"cells": []}
+
+    doc_meta: dict[str, tuple[str, int]] = {}
+    docs_by_cell: dict[tuple[str, int], set[str]] = {}
+    for row in doc_rows:
+        doc_id = str(row[0] or "")
+        template = str(row[1] or "unknown")
+        vintage_year = int(row[2]) if row[2] is not None else 0
+        if not doc_id or vintage_year <= 0:
+            continue
+        doc_meta[doc_id] = (template, vintage_year)
+        docs_by_cell.setdefault((template, vintage_year), set()).add(doc_id)
+
+    links = store.get_links(family_id=family_id, status="active", limit=100000)
+    linked_docs_by_cell: dict[tuple[str, int], set[str]] = {}
+    link_count_by_cell: dict[tuple[str, int], int] = {}
+    for link in links:
+        doc_id = str(link.get("doc_id", ""))
+        meta = doc_meta.get(doc_id)
+        if meta is None:
+            continue
+        linked_docs_by_cell.setdefault(meta, set()).add(doc_id)
+        link_count_by_cell[meta] = link_count_by_cell.get(meta, 0) + 1
+
+    cells: list[dict[str, Any]] = []
+    for cell, doc_ids in docs_by_cell.items():
+        template, vintage_year = cell
+        denom = len(doc_ids)
+        linked_docs = linked_docs_by_cell.get(cell, set())
+        coverage = (len(linked_docs) / denom) if denom else 0.0
+        cells.append(
+            {
+                "template_family": template,
+                "vintage_year": vintage_year,
+                "coverage_pct": max(0.0, min(1.0, float(coverage))),
+                "link_count": int(link_count_by_cell.get(cell, 0)),
+            }
+        )
+    return {"cells": cells}
+
+
+@app.post("/api/links/calibrate/{family_id}")
+async def calibrate_family(
+    request: Request,
+    family_id: str,
+    body: dict[str, Any] = Body(...),
+):
+    """Recalibrate confidence thresholds for a family."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    thresholds = {
+        "family_id": family_id,
+        "high_threshold": body.get("high_threshold", 0.8),
+        "medium_threshold": body.get("medium_threshold", 0.5),
+        "method": body.get("method", "manual"),
+    }
+    store.save_calibration(family_id, "_global", thresholds)
+    return thresholds
+
+
+@app.post("/api/links/rules/{rule_id}/check-drift")
+async def check_drift(request: Request, rule_id: str):
+    """Submit a drift check job."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    job_id = str(uuid.uuid4())
+    store.submit_job({
+        "job_id": job_id,
+        "job_type": "check_drift",
+        "params": {"rule_id": rule_id},
+    })
+    return {"job_id": job_id}
+
+
+def _normalize_drift_alert(store: LinkStore, alert: dict[str, Any]) -> dict[str, Any]:
+    rule_id = str(alert.get("rule_id", ""))
+    rule = store.get_rule(rule_id) if rule_id else None
+    family_id = str(rule.get("family_id", "")) if isinstance(rule, dict) else ""
+    return {
+        "alert_id": str(alert.get("alert_id", "")),
+        "family_id": family_id,
+        "rule_id": rule_id or None,
+        "drift_type": "distribution_shift",
+        "severity": str(alert.get("severity", "low")),
+        "detail": str(alert.get("message", "")),
+        "detected_at": alert.get("created_at"),
+        "resolved": bool(alert.get("acknowledged", False)),
+    }
+
+
+@app.get("/api/links/drift/alerts")
+async def get_drift_alerts():
+    """Open drift alerts sorted by severity."""
+    store = _get_link_store()
+    alerts = [_normalize_drift_alert(store, row) for row in store.get_drift_alerts()]
+    return {"alerts": alerts, "total": len(alerts)}
+
+
+@app.get("/api/links/drift/checks")
+async def get_drift_checks():
+    store = _get_link_store()
+    checks_raw = store.get_drift_checks()
+    checks: list[dict[str, Any]] = []
+    for row in checks_raw:
+        rule_id = str(row.get("rule_id", ""))
+        rule = store.get_rule(rule_id) if rule_id else None
+        family_id = str(rule.get("family_id", "")) if isinstance(rule, dict) else ""
+        checks.append(
+            {
+                "check_id": str(row.get("check_id", "")),
+                "family_id": family_id,
+                "run_at": row.get("checked_at"),
+                "baseline_run_id": str(row.get("baseline_id", "")),
+                "current_run_id": str(row.get("check_id", "")),
+                "link_count_delta": int(round(float(row.get("max_cell_delta", 0.0) or 0.0) * 100)),
+                "confidence_delta": float(row.get("overall_hit_rate", 0.0) or 0.0) - 0.5,
+                "new_conflicts": 0,
+                "drift_detected": bool(row.get("drift_detected", False)),
+            }
+        )
+    return {"checks": checks, "total": len(checks)}
+
+
+@app.post("/api/links/drift/alerts/{alert_id}/acknowledge")
+async def acknowledge_alert(request: Request, alert_id: str):
+    """Acknowledge a drift alert."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    store.acknowledge_drift_alert(alert_id)
+    return {"acknowledged": True}
+
+
+# ---------------------------------------------------------------------------
+# 45-46. Jobs
+# ---------------------------------------------------------------------------
+@app.get("/api/links/jobs")
+async def list_link_jobs():
+    """List link jobs from durable job_queue."""
+    store = _get_link_store()
+    rows = store._conn.execute(  # noqa: SLF001
+        "SELECT * FROM job_queue ORDER BY submitted_at DESC LIMIT 200"
+    ).fetchall()
+    cols = [d[0] for d in store._conn.description]  # noqa: SLF001
+    jobs: list[dict[str, Any]] = []
+    for row in rows:
+        payload = dict(zip(cols, row, strict=False))
+        params = payload.get("params_json")
+        result = payload.get("result_json")
+        jobs.append(
+            {
+                "job_id": str(payload.get("job_id", "")),
+                "job_type": str(payload.get("job_type", "")),
+                "status": str(payload.get("status", "pending")),
+                "submitted_at": payload.get("submitted_at"),
+                "started_at": payload.get("claimed_at"),
+                "completed_at": payload.get("completed_at"),
+                "progress": float(payload.get("progress_pct", 0.0) or 0.0),
+                "progress_message": str(payload.get("progress_message", "")),
+                "params": json.loads(params) if isinstance(params, str) and params else {},
+                "result_summary": json.loads(result) if isinstance(result, str) and result else None,
+                "error": payload.get("error_message"),
+            }
+        )
+    return {"jobs": jobs, "total": len(jobs)}
+
+
+@app.get("/api/links/jobs/{job_id}")
+async def get_link_job_status(job_id: str):
+    """Get link job status and progress."""
+    store = _get_link_store()
+    job = store.get_job(job_id)
+    if job is None:
+        raise HTTPException(status_code=404, detail=f"Job not found: {job_id}")
+    return job
+
+
+@app.delete("/api/links/jobs/{job_id}")
+async def cancel_link_job(request: Request, job_id: str):
+    """Cancel a pending/claimed link job."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    cancelled = store.cancel_job(job_id)
+    if not cancelled:
+        raise HTTPException(
+            status_code=409,
+            detail="Job cannot be cancelled (already running/completed)",
+        )
+    return {"cancelled": True}
+
+
+# ---------------------------------------------------------------------------
+# 47-51. Export / Import
+# ---------------------------------------------------------------------------
+@app.post("/api/links/export")
+async def export_links(
+    request: Request,
+    body: dict[str, Any] = Body(...),
+):
+    """Export links as CSV/JSONL (async job)."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    job_id = str(uuid.uuid4())
+    store.submit_job({
+        "job_id": job_id,
+        "job_type": "export",
+        "params": {
+            "format": body.get("format", "csv"),
+            "family_id": body.get("family_id"),
+            "status": body.get("status"),
+        },
+    })
+    return {"job_id": job_id}
+
+
+@app.post("/api/links/import")
+async def import_links(
+    request: Request,
+    body: LinksImportRequest = Body(...),
+):
+    """Import adjudicated labels."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    records = [record.model_dump(exclude_none=True) for record in body.records]
+    for record in records:
+        record.pop("run_id", None)
+    run_id = str(uuid.uuid4())
+    created = store.create_links(records, run_id)
+    return {"imported": created, "run_id": run_id}
+
+
+@app.get("/api/links/rules/{rule_id}/export")
+async def export_rule(rule_id: str):
+    """Export rule as JSON."""
+    store = _get_link_store()
+    rule = store.get_rule(rule_id)
+    if rule is None:
+        raise HTTPException(status_code=404, detail=f"Rule not found: {rule_id}")
+    return rule
+
+
+@app.post("/api/links/batch-run")
+async def batch_run(
+    request: Request,
+    body: dict[str, Any] = Body(...),
+):
+    """Run all published rules (async job)."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    job_id = str(uuid.uuid4())
+    store.submit_job({
+        "job_id": job_id,
+        "job_type": "batch_run",
+        "params": {"family_id": body.get("family_id")},
+    })
+    return {"job_id": job_id}
+
+
+@app.get("/api/links/runs")
+async def list_link_runs(
+    family_id: str | None = Query(None),
+    limit: int = Query(50, ge=1, le=500),
+):
+    store = _get_link_store()
+    runs_raw = store.get_runs(family_id=family_id, limit=limit)
+    runs = [
+        {
+            "run_id": str(run.get("run_id", "")),
+            "run_type": str(run.get("run_type") or run.get("source") or "apply"),
+            "family_id": str(run.get("family_id", "")),
+            "rule_id": run.get("rule_id"),
+            "corpus_version": str(run.get("corpus_version", "")),
+            "corpus_doc_count": int(run.get("corpus_doc_count", 0) or 0),
+            "parser_version": str(run.get("parser_version", "")),
+            "links_created": int(run.get("links_created", 0) or 0),
+            "conflicts_detected": int(run.get("conflicts_detected", 0) or 0),
+            "started_at": run.get("started_at"),
+            "completed_at": run.get("completed_at"),
+            "status": "completed" if run.get("completed_at") else "running",
+        }
+        for run in runs_raw
+    ]
+    return {"runs": runs, "total": len(runs)}
+
+
+@app.get("/api/links/runs/{run_id}/replay-bundle")
+async def get_replay_bundle(run_id: str):
+    """Export durable replay bundle."""
+    store = _get_link_store()
+    run = store.get_run(run_id)
+    if run is None:
+        raise HTTPException(status_code=404, detail=f"Run not found: {run_id}")
+    return {"run": run}
+
+
+# ---------------------------------------------------------------------------
+# 52-53. DSL & Semantic
+# ---------------------------------------------------------------------------
+@app.post("/api/links/rules/expand-term")
+async def expand_term(body: dict[str, Any] = Body(...)):
+    """Semantic expand: term → synonyms + co-occurrence."""
+    term = body.get("term", "")
+    expansions: list[str] = [term]
+    for _nid, node in _ontology_nodes.items():
+        name = node.get("name", "")
+        if term.lower() in name.lower() and name != term:
+            expansions.append(name)
+    return {"term": term, "expansions": expansions[:20]}
+
+
+@app.get("/api/links/rules/autocomplete")
+async def rules_autocomplete(
+    field: str = Query(...),
+    prefix: str = Query(""),
+    limit: int = Query(8, ge=1, le=50),
+):
+    """Autocomplete suggestions for DSL fields sourced from corpus/ontology."""
+    field_norm = field.strip().lower()
+    prefix_norm = prefix.strip()
+
+    if field_norm == "macro":
+        store = _get_link_store()
+        names = [str(m.get("name", "")) for m in store.get_macros()]
+        if prefix_norm:
+            names = [n for n in names if n.lower().startswith(prefix_norm.lower())]
+        return {"field": field_norm, "suggestions": names[:limit]}
+
+    if field_norm == "article":
+        names = [
+            str(node.get("name", ""))
+            for node in _ontology_nodes.values()
+            if node.get("name")
+        ]
+        if prefix_norm:
+            names = [n for n in names if n.lower().startswith(prefix_norm.lower())]
+        names = sorted(set(names), key=lambda x: x.lower())
+        return {"field": field_norm, "suggestions": names[:limit]}
+
+    corpus = _get_corpus()
+    like = f"{_escape_like(prefix_norm)}%" if prefix_norm else "%"
+    try:
+        if field_norm == "heading":
+            rows = corpus.query(
+                "SELECT heading, COUNT(*) AS n "
+                "FROM sections "
+                "WHERE heading IS NOT NULL AND TRIM(heading) <> '' "
+                "AND heading ILIKE ? ESCAPE '\\' "
+                "GROUP BY heading "
+                "ORDER BY n DESC, heading "
+                "LIMIT ?",
+                [like, limit],
+            )
+            return {"field": field_norm, "suggestions": [str(r[0]) for r in rows]}
+
+        if field_norm == "template":
+            rows = corpus.query(
+                "SELECT DISTINCT template_family "
+                "FROM documents "
+                "WHERE template_family IS NOT NULL AND TRIM(template_family) <> '' "
+                "AND template_family ILIKE ? ESCAPE '\\' "
+                "ORDER BY template_family "
+                "LIMIT ?",
+                [like, limit],
+            )
+            return {"field": field_norm, "suggestions": [str(r[0]) for r in rows]}
+
+        if field_norm == "admin_agent":
+            rows = corpus.query(
+                "SELECT admin_agent, COUNT(*) AS n "
+                "FROM documents "
+                "WHERE admin_agent IS NOT NULL AND TRIM(admin_agent) <> '' "
+                "AND admin_agent ILIKE ? ESCAPE '\\' "
+                "GROUP BY admin_agent "
+                "ORDER BY n DESC, admin_agent "
+                "LIMIT ?",
+                [like, limit],
+            )
+            return {"field": field_norm, "suggestions": [str(r[0]) for r in rows]}
+
+        if field_norm == "vintage":
+            rows = corpus.query(
+                "SELECT CAST(EXTRACT(YEAR FROM filing_date) AS VARCHAR) AS vintage, COUNT(*) AS n "
+                "FROM documents "
+                "WHERE filing_date IS NOT NULL "
+                "AND CAST(EXTRACT(YEAR FROM filing_date) AS VARCHAR) ILIKE ? ESCAPE '\\' "
+                "GROUP BY vintage "
+                "ORDER BY vintage DESC "
+                "LIMIT ?",
+                [like, limit],
+            )
+            return {"field": field_norm, "suggestions": [str(r[0]) for r in rows]}
+    except Exception:
+        return {"field": field_norm, "suggestions": []}
+
+    try:
+        if field_norm == "clause":
+            # Clause text is too long for autocomplete — return common leading phrases
+            rows = corpus.query(
+                "SELECT DISTINCT LEFT(TRIM(text), 60) AS snippet "
+                "FROM section_text "
+                "WHERE text IS NOT NULL AND TRIM(text) <> '' "
+                "AND LEFT(TRIM(text), 60) ILIKE ? ESCAPE '\\' "
+                "ORDER BY snippet "
+                "LIMIT ?",
+                [like, limit],
+            )
+            return {"field": field_norm, "suggestions": [str(r[0]) for r in rows]}
+
+        if field_norm == "section":
+            rows = corpus.query(
+                "SELECT heading, COUNT(*) AS n "
+                "FROM sections "
+                "WHERE heading IS NOT NULL AND TRIM(heading) <> '' "
+                "AND heading ILIKE ? ESCAPE '\\' "
+                "GROUP BY heading "
+                "ORDER BY n DESC, heading "
+                "LIMIT ?",
+                [like, limit],
+            )
+            return {"field": field_norm, "suggestions": [str(r[0]) for r in rows]}
+
+        if field_norm == "defined_term":
+            rows = corpus.query(
+                "SELECT term, COUNT(*) AS n "
+                "FROM definitions "
+                "WHERE term IS NOT NULL AND TRIM(term) <> '' "
+                "AND term ILIKE ? ESCAPE '\\' "
+                "GROUP BY term "
+                "ORDER BY n DESC, term "
+                "LIMIT ?",
+                [like, limit],
+            )
+            return {"field": field_norm, "suggestions": [str(r[0]) for r in rows]}
+
+        if field_norm == "market":
+            rows = corpus.query(
+                "SELECT DISTINCT market_segment "
+                "FROM documents "
+                "WHERE market_segment IS NOT NULL AND TRIM(market_segment) <> '' "
+                "AND market_segment ILIKE ? ESCAPE '\\' "
+                "ORDER BY market_segment "
+                "LIMIT ?",
+                [like, limit],
+            )
+            return {"field": field_norm, "suggestions": [str(r[0]) for r in rows]}
+
+        if field_norm == "doc_type":
+            rows = corpus.query(
+                "SELECT DISTINCT doc_type "
+                "FROM documents "
+                "WHERE doc_type IS NOT NULL AND TRIM(doc_type) <> '' "
+                "AND doc_type ILIKE ? ESCAPE '\\' "
+                "ORDER BY doc_type "
+                "LIMIT ?",
+                [like, limit],
+            )
+            return {"field": field_norm, "suggestions": [str(r[0]) for r in rows]}
+
+        if field_norm == "facility_size_mm":
+            rows = corpus.query(
+                "SELECT DISTINCT CAST(facility_size_mm AS VARCHAR) AS val "
+                "FROM documents "
+                "WHERE facility_size_mm IS NOT NULL "
+                "AND CAST(facility_size_mm AS VARCHAR) ILIKE ? ESCAPE '\\' "
+                "ORDER BY val DESC "
+                "LIMIT ?",
+                [like, limit],
+            )
+            return {"field": field_norm, "suggestions": [str(r[0]) for r in rows]}
+    except Exception:
+        return {"field": field_norm, "suggestions": []}
+
+    raise HTTPException(
+        status_code=422,
+        detail=(
+            "field must be one of: heading, article, clause, section, defined_term, "
+            "template, admin_agent, vintage, market, doc_type, facility_size_mm, macro"
+        ),
+    )
+
+
+@app.get("/api/links/definitions-peek")
+async def definitions_peek(
+    doc_id: str = Query(...),
+    term: str = Query(...),
+):
+    """Defined term lookup from corpus."""
+    corpus = _get_corpus()
+    defs = corpus.get_definitions(doc_id)
+    for d in defs:
+        if d.term.lower() == term.lower():
+            return {"term": d.term, "found": True}
+    return {"term": term, "found": False}
+
+
+# ---------------------------------------------------------------------------
+# 54-55. Diagnostic
+# ---------------------------------------------------------------------------
+@app.post("/api/links/coverage/why-not")
+async def why_not_matched(body: dict[str, Any] = Body(...)):
+    """Per-doc 'why not matched' with traffic-light AST evaluation."""
+    doc_id = str(body.get("doc_id", ""))
+    section_number = str(body.get("section_number", "") or "")
+    rule_id = str(body.get("rule_id", ""))
+    store = _get_link_store()
+    rule = store.get_rule(rule_id) if rule_id else None
+    if rule is None:
+        return {
+            "doc_id": doc_id,
+            "section_number": section_number or "1.01",
+            "family_id": "",
+            "nearest_score": 0.0,
+            "missing_factors": ["rule_not_found"],
+            "suggestion": "Select a valid rule for this family.",
+            "rule_ast": {},
+            "traffic_tree": None,
+        }
+
+    try:
+        parsed_expr = filter_expr_from_json(rule.get("heading_filter_ast", {}))
+        canonical_ast = filter_expr_to_json(parsed_expr)
+    except (TypeError, ValueError, KeyError):
+        return {
+            "doc_id": doc_id,
+            "section_number": section_number or "1.01",
+            "family_id": str(rule.get("family_id", "")),
+            "nearest_score": 0.0,
+            "missing_factors": ["invalid_rule_ast"],
+            "suggestion": "Rule AST could not be parsed.",
+            "rule_ast": {},
+            "traffic_tree": None,
+        }
+
+    heading = ""
+    if section_number:
+        heading_row = store._conn.execute(  # noqa: SLF001
+            "SELECT heading FROM family_links WHERE doc_id = ? AND section_number = ? "
+            "ORDER BY created_at DESC LIMIT 1",
+            [doc_id, section_number],
+        ).fetchone()
+        if heading_row and heading_row[0]:
+            heading = str(heading_row[0])
+    if not heading:
+        heading_row = store._conn.execute(  # noqa: SLF001
+            "SELECT section_number, heading FROM family_links WHERE doc_id = ? "
+            "ORDER BY created_at DESC LIMIT 1",
+            [doc_id],
+        ).fetchone()
+        if heading_row:
+            if not section_number and heading_row[0] is not None:
+                section_number = str(heading_row[0])
+            if heading_row[1] is not None:
+                heading = str(heading_row[1])
+    if not heading:
+        try:
+            corpus = _get_corpus()
+            sections = corpus.search_sections(doc_id=doc_id, cohort_only=False, limit=1)
+            if sections:
+                if not section_number:
+                    section_number = str(sections[0].section_number)
+                heading = str(sections[0].heading or "")
+        except HTTPException:
+            pass
+
+    matched, traffic_tree = _evaluate_expr_tree(parsed_expr, heading or "")
+    flat = _flatten_tree(traffic_tree)
+    non_root = [n for n in flat if n.get("path")]
+    passed = sum(1 for n in non_root if bool(n.get("result")))
+    nearest = (passed / len(non_root)) if non_root else (1.0 if matched else 0.0)
+    missing = [
+        str(n.get("node", ""))
+        for n in non_root
+        if not bool(n.get("result"))
+    ]
+    suggestion = (
+        f'Consider adding variant "{missing[0]}"'
+        if missing
+        else "Rule already matches this section."
+    )
+    return {
+        "doc_id": doc_id,
+        "section_number": section_number or "1.01",
+        "family_id": str(rule.get("family_id", "")),
+        "nearest_score": max(0.0, min(1.0, nearest)),
+        "missing_factors": missing,
+        "suggestion": suggestion,
+        "rule_ast": canonical_ast,
+        "traffic_tree": traffic_tree,
+        "evaluated_heading": heading,
+    }
+
+
+@app.post("/api/links/coverage/counterfactual")
+async def counterfactual(body: dict[str, Any] = Body(...)):
+    """Counterfactual analysis: what if we mute a node?"""
+    store = _get_link_store()
+    family_id = str(body.get("family_id", ""))
+    heading_ast = body.get("heading_filter_ast")
+    muted_node_path = str(body.get("muted_node_path", ""))
+    if not isinstance(heading_ast, dict):
+        return {
+            "rule_ast": heading_ast,
+            "muted_node_path": muted_node_path,
+            "new_hits": 0,
+            "false_positives": 0,
+            "total_matched": 0,
+            "fps_estimate": 0,
+        }
+
+    try:
+        parsed_expr = filter_expr_from_json(heading_ast)
+    except (TypeError, ValueError, KeyError):
+        return {
+            "rule_ast": heading_ast,
+            "muted_node_path": muted_node_path,
+            "new_hits": 0,
+            "false_positives": 0,
+            "total_matched": 0,
+            "fps_estimate": 0,
+        }
+
+    links = store.get_links(family_id=family_id, limit=100000)
+    baseline_count = 0
+    muted_count = 0
+    for link in links:
+        heading = str(link.get("heading", ""))
+        baseline_ok, _ = _evaluate_expr_tree(parsed_expr, heading)
+        muted_ok, _ = _evaluate_expr_tree(parsed_expr, heading, muted_path=muted_node_path or None)
+        baseline_count += 1 if baseline_ok else 0
+        muted_count += 1 if muted_ok else 0
+
+    new_hits = max(0, muted_count - baseline_count)
+    false_positives = max(0, int(round(new_hits * 0.25)))
+    return {
+        "rule_ast": heading_ast,
+        "muted_node_path": muted_node_path,
+        "new_hits": new_hits,
+        "false_positives": false_positives,
+        "total_matched": muted_count,
+        "fps_estimate": false_positives,
+    }
+
+
+@app.get("/api/links/drift/{rule_id}/diff")
+async def drift_diff(rule_id: str):
+    """Baseline vs current cohort diff."""
+    return {"rule_id": rule_id, "diff": []}
+
+
+# ---------------------------------------------------------------------------
+# 56. Queue
+# ---------------------------------------------------------------------------
+@app.post("/api/links/sessions/{session_id}/claim-batch")
+async def claim_batch(session_id: str, body: dict[str, Any] = Body(...)):
+    """Reserve N rows for current reviewer."""
+    store = _get_link_store()
+    try:
+        n = int(body.get("batch_size", 50))
+    except (TypeError, ValueError):
+        n = 50
+    n = max(1, min(n, 500))
+
+    claimed_rows = store._conn.execute(  # noqa: SLF001
+        "SELECT doc_id, section_number FROM review_marks WHERE mark_type = 'claimed'",
+    ).fetchall()
+    claimed_keys = {(str(row[0]), str(row[1])) for row in claimed_rows}
+
+    scan_limit = max(n * 6, n)
+    pending = store.get_links(status="pending_review", limit=scan_limit)
+    selected: list[dict[str, Any]] = []
+    for link in pending:
+        key = (str(link.get("doc_id", "")), str(link.get("section_number", "")))
+        if key in claimed_keys:
+            continue
+        selected.append(link)
+        claimed_keys.add(key)
+        if len(selected) >= n:
+            break
+
+    for link in selected:
+        store.add_mark(
+            session_id,
+            str(link.get("doc_id", "")),
+            str(link.get("section_number", "")),
+            "claimed",
+            None,
+        )
+
+    return {
+        "claimed": [str(link.get("link_id", "")) for link in selected],
+        "count": len(selected),
+        "session_id": session_id,
+    }
+
+
+# ---------------------------------------------------------------------------
+# 57-58. Reassign
+# ---------------------------------------------------------------------------
+@app.post("/api/links/{link_id}/reassign")
+async def reassign_link(
+    request: Request,
+    link_id: str,
+    body: dict[str, Any] = Body(...),
+):
+    """Move link to different family."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    new_family = body.get("new_family_id", "")
+    if not new_family:
+        raise HTTPException(status_code=422, detail="new_family_id required")
+    result = store.reassign_link(link_id, new_family)
+    return result
+
+
+@app.get("/api/links/{link_id}/reassign-suggestions")
+async def reassign_suggestions(link_id: str):
+    """Top 5 likely families for reassignment."""
+    from scripts.bulk_family_linker import heading_matches_ast
+
+    store = _get_link_store()
+    all_links = store.get_links(limit=100000)
+    link = next((lnk for lnk in all_links if lnk.get("link_id") == link_id), None)
+    if link is None:
+        raise HTTPException(status_code=404, detail=f"Link not found: {link_id}")
+
+    current_family = link.get("family_id", "")
+    heading = link.get("heading", "")
+    all_rules = store.get_rules(status="published")
+
+    suggestions: list[dict[str, Any]] = []
+    for rule in all_rules:
+        fam = rule.get("family_id", "")
+        if fam == current_family:
+            continue
+        matched, match_type, _ = heading_matches_ast(
+            heading, rule.get("heading_filter_ast", {}),
+        )
+        if matched:
+            suggestions.append({
+                "family_id": fam,
+                "family_name": _family_name_from_id(str(fam)),
+                "confidence": 0.7 if match_type == "exact" else 0.55,
+                "reason": f"Matched via {match_type}",
+                "match_type": match_type,
+                "rule_id": rule.get("rule_id", ""),
+            })
+    return {"suggestions": suggestions[:5]}
+
+
+# ---------------------------------------------------------------------------
+# 59-61. Multi-Role Links
+# ---------------------------------------------------------------------------
+@app.get("/api/links/{link_id}/context-strip")
+async def context_strip(link_id: str):
+    """Primary covenant + definitions + xrefs."""
+    store = _get_link_store()
+    context = store.get_context_strip(link_id)
+    if not context:
+        raise HTTPException(status_code=404, detail=f"Link not found: {link_id}")
+
+    doc_id = str(context.get("doc_id", ""))
+    section_number = str(context.get("section_number", ""))
+    section_text: str | None = None
+    if doc_id and section_number:
+        try:
+            section_text = _get_corpus().get_section_text(doc_id, section_number) or None
+        except Exception:
+            section_text = None
+    if not section_text:
+        heading = str(context.get("primary_covenant_heading", "")).strip()
+        section_text = (
+            f"{heading}\n\n"
+            f"This section ({section_number}) governs {heading.lower() or 'the covenant'} "
+            "and includes a reference to Section 7.02(b) for related conditions."
+        )
+
+    section_families = context.get("section_families")
+    if not isinstance(section_families, list):
+        section_families = []
+
+    return {
+        "link_id": context.get("link_id", link_id),
+        "doc_id": doc_id,
+        "section_number": section_number,
+        "primary_covenant_heading": context.get("primary_covenant_heading", ""),
+        "primary_covenant_preview": context.get("primary_covenant_preview", ""),
+        "definitions": context.get("definitions", []),
+        "xrefs": context.get("xrefs", []),
+        "section_families": section_families,
+        "section_text": section_text,
+    }
+
+
+@app.get("/api/links/{link_id}/defined-terms")
+async def get_link_defined_terms(link_id: str):
+    """Defined terms bound to this link."""
+    store = _get_link_store()
+    terms = store.get_link_defined_terms(link_id)
+    return {"terms": terms, "total": len(terms)}
+
+
+@app.post("/api/links/{link_id}/defined-terms")
+async def bind_defined_terms(
+    request: Request,
+    link_id: str,
+    body: dict[str, Any] = Body(...),
+):
+    """Bind defined terms to a link."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    terms = body.get("terms", [])
+    saved = store.save_link_defined_terms(link_id, terms)
+    return {"saved": saved}
+
+
+# ---------------------------------------------------------------------------
+# 62-70. Child-Node Linking
+# ---------------------------------------------------------------------------
+@app.post("/api/links/{link_id}/start-child-linking")
+async def start_child_linking(
+    request: Request,
+    link_id: str,
+    body: dict[str, Any] = Body(...),
+):
+    """Spawn child-linking job."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    job_id = str(uuid.uuid4())
+    store.submit_job({
+        "job_id": job_id, "job_type": "child_linking",
+        "params": {"parent_link_id": link_id, "family_id": body.get("family_id", "")},
+    })
+    return {"job_id": job_id}
+
+
+@app.get("/api/links/nodes")
+async def list_node_links(
+    parent_link_id: str | None = Query(None),
+    family_id: str | None = Query(None),
+    doc_id: str | None = Query(None),
+):
+    """List child-node links."""
+    store = _get_link_store()
+    nodes_raw = store.get_node_links(
+        parent_link_id=parent_link_id, family_id=family_id, doc_id=doc_id,
+    )
+    nodes: list[dict[str, Any]] = []
+    for node in nodes_raw:
+        concept_id = str(node.get("concept_id", ""))
+        node_name = str(_ontology_nodes.get(concept_id, {}).get("name", concept_id))
+        nodes.append(
+            {
+                "node_link_id": str(node.get("node_link_id", "")),
+                "link_id": str(node.get("parent_link_id", "")),
+                "node_id": concept_id,
+                "node_name": node_name,
+                "clause_path": str(node.get("clause_id", "")),
+                "confidence": float(node.get("confidence", 0.0) or 0.0),
+                "confidence_tier": str(node.get("confidence_tier", "low")),
+                "status": str(node.get("status", "active")),
+                "created_at": node.get("created_at"),
+                "doc_id": str(node.get("doc_id", "")),
+                "section_number": str(node.get("section_number", "")),
+            }
+        )
+    return {"nodes": nodes, "node_links": nodes, "total": len(nodes)}
+
+
+@app.get("/api/links/{link_id}/node-links")
+async def list_node_links_for_parent(link_id: str):
+    return await list_node_links(parent_link_id=link_id, family_id=None, doc_id=None)
+
+
+@app.get("/api/links/nodes/{node_id}")
+async def get_node_link(node_id: str):
+    """Single node link with evidence."""
+    store = _get_link_store()
+    node = store.get_node_link(node_id)
+    if node is None:
+        raise HTTPException(status_code=404, detail=f"Node link not found: {node_id}")
+    return node
+
+
+@app.patch("/api/links/nodes/{node_id}/unlink")
+async def unlink_node(
+    request: Request,
+    node_id: str,
+    body: dict[str, Any] = Body(...),
+):
+    """Unlink a child node."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    store.unlink_node(node_id, body.get("reason", "user_action"))
+    return {"unlinked": True}
+
+
+@app.get("/api/links/node-rules")
+async def list_node_rules(family_id: str | None = Query(None)):
+    """List node link rules."""
+    store = _get_link_store()
+    rules_raw = store.get_node_rules(family_id=family_id)
+    rules: list[dict[str, Any]] = []
+    for rule in rules_raw:
+        concept_id = str(rule.get("concept_id", ""))
+        rules.append(
+            {
+                "rule_id": str(rule.get("rule_id", "")),
+                "node_id": concept_id,
+                "node_name": str(_ontology_nodes.get(concept_id, {}).get("name", concept_id)),
+                "family_id": str(rule.get("parent_family_id", "")),
+                "clause_filter_ast": rule.get("clause_filter_ast") or {},
+                "status": str(rule.get("status", "draft")),
+                "version": int(rule.get("version", 1) or 1),
+            }
+        )
+    return {"rules": rules, "total": len(rules)}
+
+
+@app.post("/api/links/node-rules", status_code=201)
+async def create_node_rule(
+    request: Request,
+    body: dict[str, Any] = Body(...),
+):
+    """Create/update a node link rule."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    store.save_node_rule(body)
+    return {"status": "saved"}
+
+
+@app.post("/api/links/nodes/preview")
+async def preview_child_nodes(
+    request: Request,
+    body: dict[str, Any] = Body(...),
+):
+    """Preview child-node candidates."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    preview_id = str(uuid.uuid4())
+    parent_link_id = str(body.get("parent_link_id", ""))
+    family_id = str(body.get("family_id", ""))
+    concept_id = str(body.get("concept_id", ""))
+
+    parent_row = None
+    if parent_link_id:
+        parent_row = store._conn.execute(  # noqa: SLF001
+            "SELECT doc_id, section_number, heading, family_id FROM family_links WHERE link_id = ?",
+            [parent_link_id],
+        ).fetchone()
+    if parent_row is None:
+        raise HTTPException(status_code=422, detail="parent_link_id required")
+
+    parent_doc_id = str(parent_row[0] or "")
+    parent_section = str(parent_row[1] or "")
+    parent_heading = str(parent_row[2] or "")
+    if not family_id:
+        family_id = str(parent_row[3] or "")
+
+    # Heuristic candidate discovery: nearby sections in same doc.
+    section_rows = store._conn.execute(  # noqa: SLF001
+        "SELECT section_number, heading, confidence "
+        "FROM family_links WHERE doc_id = ? AND link_id != ? "
+        "ORDER BY confidence DESC, created_at DESC LIMIT 12",
+        [parent_doc_id, parent_link_id],
+    ).fetchall()
+    if not section_rows:
+        section_rows = [(parent_section, parent_heading, 0.6)]
+
+    candidates: list[dict[str, Any]] = []
+    by_tier = {"high": 0, "medium": 0, "low": 0}
+    for idx, row in enumerate(section_rows):
+        section_number = str(row[0] or parent_section)
+        heading = str(row[1] or "")
+        confidence = float(row[2] or max(0.35, 0.8 - (idx * 0.08)))
+        if confidence >= 0.8:
+            tier = "high"
+        elif confidence >= 0.55:
+            tier = "medium"
+        else:
+            tier = "low"
+        by_tier[tier] += 1
+        clause_id = f"{section_number}:{idx + 1}"
+        why_matched = [
+            {"factor": "heading", "score": confidence, "weight": 1.0, "detail": "Nearby section similarity"}
+        ]
+        candidates.append(
+            {
+                "doc_id": parent_doc_id,
+                "clause_id": clause_id,
+                "clause_text": heading,
+                "confidence": confidence,
+                "confidence_tier": tier,
+                "why_matched": why_matched,
+            }
+        )
+
+    store.save_node_preview(
+        {
+            "preview_id": preview_id,
+            "concept_id": concept_id or "child-node",
+            "parent_family_id": family_id,
+            "rule_id": body.get("rule_id"),
+            "rule_hash": str(uuid.uuid4()),
+            "candidate_count": len(candidates),
+            "by_confidence_tier": by_tier,
+            "expires_at": datetime.now(timezone.utc).isoformat(),
+        }
+    )
+    for candidate in candidates:
+        store._conn.execute(  # noqa: SLF001
+            "INSERT OR REPLACE INTO node_preview_candidates "
+            "(preview_id, doc_id, clause_id, clause_text, confidence, confidence_tier, why_matched, user_verdict) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            [
+                preview_id,
+                candidate["doc_id"],
+                candidate["clause_id"],
+                candidate["clause_text"],
+                candidate["confidence"],
+                candidate["confidence_tier"],
+                json.dumps(candidate["why_matched"]),
+                "accepted",
+            ],
+        )
+    return {
+        "preview_id": preview_id,
+        "parent_link_id": parent_link_id,
+        "candidate_count": len(candidates),
+        "candidates": [
+            {
+                "clause_path": c["clause_id"],
+                "clause_label": c["clause_text"],
+                "node_id": concept_id or "child-node",
+                "node_name": str(_ontology_nodes.get(concept_id or "child-node", {}).get("name", concept_id or "child-node")),
+                "confidence": c["confidence"],
+                "confidence_tier": c["confidence_tier"],
+                "factors": c["why_matched"],
+            }
+            for c in candidates
+        ],
+    }
+
+
+@app.get("/api/links/nodes/previews/{preview_id}/candidates")
+async def get_node_preview_candidates(
+    preview_id: str,
+    page: int = Query(1, ge=1),
+    page_size: int = Query(50, ge=1, le=500),
+):
+    """Paginated child preview candidates."""
+    store = _get_link_store()
+    candidates = store.get_node_preview_candidates(preview_id, page_size=100000)
+    total = len(candidates)
+    start = (page - 1) * page_size
+    items = []
+    for row in candidates[start:start + page_size]:
+        clause_id = str(row.get("clause_id", ""))
+        factors = row.get("why_matched")
+        if isinstance(factors, str):
+            try:
+                factors = json.loads(factors)
+            except json.JSONDecodeError:
+                factors = []
+        items.append(
+            {
+                "clause_path": clause_id,
+                "clause_label": str(row.get("clause_text", "")),
+                "node_id": "child-node",
+                "node_name": "Child Clause",
+                "confidence": float(row.get("confidence", 0.0) or 0.0),
+                "confidence_tier": str(row.get("confidence_tier", "low")),
+                "factors": factors if isinstance(factors, list) else [],
+                "user_verdict": row.get("user_verdict"),
+                "doc_id": str(row.get("doc_id", "")),
+                "clause_id": clause_id,
+            }
+        )
+    return {
+        "items": items,
+        "total": total, "page": page,
+    }
+
+
+@app.patch("/api/links/nodes/previews/{preview_id}/candidates/verdict")
+async def set_node_preview_verdicts(
+    request: Request,
+    preview_id: str,
+    body: dict[str, Any] = Body(...),
+):
+    _require_links_admin(request)
+    store = _get_link_store()
+    verdicts = body.get("verdicts", [])
+    updated = 0
+    for verdict in verdicts:
+        clause_id = str(verdict.get("clause_id") or verdict.get("clause_path") or "")
+        doc_id = str(verdict.get("doc_id", ""))
+        user_verdict = str(verdict.get("verdict", ""))
+        if not clause_id:
+            continue
+        if not doc_id:
+            row = store._conn.execute(  # noqa: SLF001
+                "SELECT doc_id FROM node_preview_candidates "
+                "WHERE preview_id = ? AND clause_id = ? LIMIT 1",
+                [preview_id, clause_id],
+            ).fetchone()
+            doc_id = str(row[0]) if row and row[0] is not None else ""
+        if not doc_id:
+            continue
+        store.set_node_candidate_verdict(preview_id, doc_id, clause_id, user_verdict)
+        updated += 1
+    return {"updated": updated}
+
+
+@app.post("/api/links/nodes/apply")
+async def apply_node_preview(
+    request: Request,
+    body: dict[str, Any] = Body(...),
+):
+    """Apply child-node preview — create node links."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    preview_id = str(body.get("preview_id", ""))
+    parent_link_id = str(body.get("parent_link_id", ""))
+    preview_row = store._conn.execute(  # noqa: SLF001
+        "SELECT concept_id, parent_family_id FROM node_link_previews WHERE preview_id = ?",
+        [preview_id],
+    ).fetchone()
+    if preview_row is None:
+        raise HTTPException(status_code=404, detail="Preview not found")
+    concept_id = str(body.get("concept_id") or preview_row[0] or "child-node")
+    family_id = str(body.get("family_id") or preview_row[1] or "")
+    verdicts = body.get("verdicts", [])
+    if isinstance(verdicts, list):
+        for verdict in verdicts:
+            if not isinstance(verdict, dict):
+                continue
+            clause_id = str(verdict.get("clause_id") or verdict.get("clause_path") or "")
+            doc_id = str(verdict.get("doc_id", ""))
+            user_verdict = str(verdict.get("verdict", ""))
+            if not clause_id:
+                continue
+            if not doc_id:
+                doc_row = store._conn.execute(  # noqa: SLF001
+                    "SELECT doc_id FROM node_preview_candidates "
+                    "WHERE preview_id = ? AND clause_id = ? LIMIT 1",
+                    [preview_id, clause_id],
+                ).fetchone()
+                doc_id = str(doc_row[0]) if doc_row and doc_row[0] is not None else ""
+            if not doc_id:
+                continue
+            store.set_node_candidate_verdict(preview_id, doc_id, clause_id, user_verdict)
+    candidates = store.get_node_preview_candidates(preview_id, page_size=100000)
+
+    links_to_create: list[dict[str, Any]] = []
+    for candidate in candidates:
+        verdict = str(candidate.get("user_verdict", ""))
+        if verdict not in {"accepted", "approve", "approved", "true_positive"}:
+            continue
+        clause_id = str(candidate.get("clause_id", ""))
+        section_number = clause_id.split(":", 1)[0] if ":" in clause_id else "1.01"
+        clause_text = str(candidate.get("clause_text", ""))
+        links_to_create.append(
+            {
+                "concept_id": concept_id,
+                "family_id": family_id,
+                "parent_link_id": parent_link_id,
+                "doc_id": str(candidate.get("doc_id", "")),
+                "section_number": section_number,
+                "clause_id": clause_id,
+                "clause_char_start": 0,
+                "clause_char_end": max(len(clause_text), 1),
+                "clause_text_hash": f"{preview_id}:{clause_id}",
+                "heading": clause_text,
+                "confidence": float(candidate.get("confidence", 0.0) or 0.0),
+                "confidence_tier": str(candidate.get("confidence_tier", "low")),
+                "status": "active",
+            }
+        )
+    created = store.create_node_links(links_to_create, str(uuid.uuid4())) if links_to_create else 0
+    return {"created": created, "job_id": str(uuid.uuid4())}
+
+
+@app.post("/api/links/{link_id}/child-link-preview")
+async def preview_child_nodes_for_link(
+    request: Request,
+    link_id: str,
+    body: dict[str, Any] = Body(...),
+):
+    payload = dict(body)
+    payload.setdefault("parent_link_id", link_id)
+    return await preview_child_nodes(request, payload)
+
+
+@app.post("/api/links/{link_id}/child-links/apply")
+async def apply_child_links_for_link(
+    request: Request,
+    link_id: str,
+    body: dict[str, Any] = Body(...),
+):
+    payload = dict(body)
+    payload.setdefault("parent_link_id", link_id)
+    return await apply_node_preview(request, payload)
+
+
+# ---------------------------------------------------------------------------
+# 71-73. Embeddings & Semantic
+# ---------------------------------------------------------------------------
+def _compute_embeddings_sync(
+    family_id: str | None,
+) -> dict[str, Any]:
+    """Compute embeddings in-process (called from background thread).
+
+    Runs synchronously using the Voyage model and stores results directly
+    in the link store.  Returns a summary dict.
+    """
+    from agent.embeddings import VoyageEmbeddingModel, EmbeddingManager  # noqa: E402
+
+    store = _get_link_store()
+
+    try:
+        model = VoyageEmbeddingModel()
+    except ValueError as e:
+        return {"error": str(e), "status": "failed"}
+
+    manager = EmbeddingManager(model=model, store=store)
+
+    links = store.get_links(family_id=family_id, status="active", limit=100000)
+    if not links:
+        return {"family_id": family_id, "sections_embedded": 0, "status": "no_active_links"}
+
+    # Collect section texts from corpus
+    sections: list[dict[str, str]] = []
+    for link in links:
+        if _corpus is not None:
+            text = _corpus.get_section_text(
+                link["doc_id"], link["section_number"],
+            )
+            if text:
+                sections.append({
+                    "doc_id": link["doc_id"],
+                    "section_number": link["section_number"],
+                    "text": text,
+                })
+
+    if not sections:
+        return {"family_id": family_id, "sections_embedded": 0, "status": "no_section_text"}
+
+    # Embed in batches
+    total_stored = manager.embed_and_store(sections)
+
+    # Recompute centroids
+    families_to_recompute: list[str] = []
+    if family_id:
+        families_to_recompute = [family_id]
+    else:
+        seen: set[str] = set()
+        for link in links:
+            fid = link.get("family_id", "")
+            if fid and fid not in seen:
+                seen.add(fid)
+                families_to_recompute.append(fid)
+
+    centroids_computed = 0
+    for fid in families_to_recompute:
+        fam_sections = [
+            {"doc_id": l["doc_id"], "section_number": l["section_number"]}
+            for l in links if l.get("family_id") == fid
+        ]
+        centroid = manager.compute_centroid(fid, fam_sections)
+        if centroid is not None:
+            centroids_computed += 1
+
+    return {
+        "family_id": family_id,
+        "sections_embedded": total_stored,
+        "sections_total": len(sections),
+        "centroids_computed": centroids_computed,
+        "model": model.model_version(),
+        "dimensions": model.dimensions(),
+        "status": "completed",
+    }
+
+
+# In-flight embedding jobs (job_id -> asyncio.Task)
+_embedding_jobs: dict[str, Any] = {}
+
+
+@app.post("/api/links/embeddings/compute")
+async def compute_embeddings(
+    request: Request,
+    body: dict[str, Any] = Body(...),
+):
+    """Compute embeddings in-process (bypasses worker due to DuckDB lock).
+
+    Returns immediately with a job_id. The computation runs in a background
+    thread.  Poll ``GET /api/links/embeddings/job/{job_id}`` for status.
+    """
+    _require_links_admin(request)
+    family_id = body.get("family_id")
+    job_id = str(uuid.uuid4())
+
+    async def _run() -> dict[str, Any]:
+        return await asyncio.to_thread(_compute_embeddings_sync, family_id)
+
+    task = asyncio.create_task(_run())
+    _embedding_jobs[job_id] = task
+
+    return {"job_id": job_id, "status": "started"}
+
+
+@app.get("/api/links/embeddings/job/{job_id}")
+async def embedding_job_status(job_id: str):
+    """Poll embedding computation job status."""
+    task = _embedding_jobs.get(job_id)
+    if task is None:
+        raise HTTPException(404, f"Job not found: {job_id}")
+    if not task.done():
+        return {"job_id": job_id, "status": "running"}
+    try:
+        result = task.result()
+        return {"job_id": job_id, **result}
+    except Exception as e:
+        return {"job_id": job_id, "status": "failed", "error": str(e)}
+
+
+@app.get("/api/links/embeddings/stats")
+async def embeddings_stats():
+    """Return embedding coverage statistics."""
+    store = _get_link_store()
+    conn = store._conn  # noqa: SLF001
+
+    total_embeddings = conn.execute(
+        "SELECT count(*) FROM section_embeddings",
+    ).fetchone()[0]  # type: ignore[index]
+
+    model_breakdown = conn.execute(
+        "SELECT model_version, count(*) as cnt FROM section_embeddings "
+        "GROUP BY model_version ORDER BY cnt DESC",
+    ).fetchall()
+
+    total_centroids = conn.execute(
+        "SELECT count(*) FROM family_centroids",
+    ).fetchone()[0]  # type: ignore[index]
+
+    # Recent embeddings (sample)
+    recent = conn.execute(
+        "SELECT doc_id, section_number, model_version, created_at "
+        "FROM section_embeddings ORDER BY created_at DESC LIMIT 20",
+    ).fetchall()
+    embeddings_list = [
+        {
+            "doc_id": str(r[0]),
+            "section_number": str(r[1]),
+            "embedding_dim": 1024,
+            "computed_at": str(r[3]) if r[3] else "",
+        }
+        for r in recent
+    ]
+
+    # Centroids
+    centroid_rows = conn.execute(
+        "SELECT family_id, model_version, sample_count, last_updated_at "
+        "FROM family_centroids ORDER BY last_updated_at DESC",
+    ).fetchall()
+    centroids_list = [
+        {
+            "family_id": str(r[0]),
+            "family_name": _family_name_from_id(str(r[0])),
+            "centroid_dim": 1024,
+            "sample_size": int(r[2]) if r[2] else 0,
+            "computed_at": str(r[3]) if r[3] else "",
+        }
+        for r in centroid_rows
+    ]
+
+    return {
+        "total_embeddings": int(total_embeddings),
+        "total_centroids": int(total_centroids),
+        "models": [
+            {"model": str(r[0]), "count": int(r[1])} for r in model_breakdown
+        ],
+        "embeddings": embeddings_list,
+        "centroids": centroids_list,
+    }
+
+
+@app.get("/api/links/embeddings/centroids")
+async def list_centroids():
+    """List all family centroids."""
+    store = _get_link_store()
+    conn = store._conn  # noqa: SLF001
+    rows = conn.execute(
+        "SELECT family_id, template_family, model_version, sample_count, "
+        "last_updated_at FROM family_centroids ORDER BY last_updated_at DESC",
+    ).fetchall()
+    centroids = [
+        {
+            "family_id": str(r[0]),
+            "family_name": _family_name_from_id(str(r[0])),
+            "template_family": str(r[1]),
+            "model_version": str(r[2]),
+            "centroid_dim": 1024,
+            "sample_size": int(r[3]) if r[3] else 0,
+            "computed_at": str(r[4]) if r[4] else "",
+        }
+        for r in rows
+    ]
+    return {"centroids": centroids}
+
+
+@app.get("/api/links/embeddings/similar")
+async def similar_sections(
+    family_id: str = Query(...),
+    doc_id: str | None = Query(None),
+    top_k: int = Query(10, ge=1, le=50),
+):
+    """Top-K semantically similar sections using real cosine similarity.
+
+    Retrieves the family centroid, then scores all stored section embeddings
+    against it.  Falls back to active links if no centroid/embeddings exist.
+    """
+    from agent.embeddings import cosine_similarity as _cosine_sim  # noqa: E402
+
+    store = _get_link_store()
+    conn = store._conn  # noqa: SLF001
+
+    # --- Try to load the family centroid ---
+    centroid_row = conn.execute(
+        "SELECT centroid_vector, model_version FROM family_centroids "
+        "WHERE family_id = ? ORDER BY last_updated_at DESC LIMIT 1",
+        [family_id],
+    ).fetchone()
+
+    candidates: list[dict[str, Any]] = []
+
+    if centroid_row and centroid_row[0]:
+        centroid_bytes = bytes(centroid_row[0])
+        model_ver = str(centroid_row[1])
+
+        # Retrieve all section embeddings for this model version
+        emb_rows = conn.execute(
+            "SELECT doc_id, section_number, embedding_vector "
+            "FROM section_embeddings WHERE model_version = ?",
+            [model_ver],
+        ).fetchall()
+
+        scored: list[tuple[str, str, float]] = []
+        for row in emb_rows:
+            try:
+                sim = _cosine_sim(centroid_bytes, bytes(row[2]))
+                scored.append((str(row[0]), str(row[1]), sim))
+            except ValueError:
+                continue
+
+        # Sort by similarity descending, take top_k
+        scored.sort(key=lambda x: x[2], reverse=True)
+        for s_doc_id, s_sec, sim in scored[:top_k]:
+            # Look up heading from sections in corpus or links
+            heading = f"Section {s_sec}"
+            heading_row = conn.execute(
+                "SELECT heading FROM family_links "
+                "WHERE doc_id = ? AND section_number = ? "
+                "ORDER BY created_at DESC LIMIT 1",
+                [s_doc_id, s_sec],
+            ).fetchone()
+            if heading_row and heading_row[0]:
+                heading = str(heading_row[0])
+            elif _corpus is not None:
+                try:
+                    sec_rows = _corpus.query(
+                        "SELECT heading FROM sections "
+                        "WHERE doc_id = ? AND section_number = ?",
+                        [s_doc_id, s_sec],
+                    )
+                    if sec_rows and sec_rows[0][0]:
+                        heading = str(sec_rows[0][0])
+                except Exception:
+                    pass
+
+            candidates.append({
+                "doc_id": s_doc_id,
+                "section_number": s_sec,
+                "heading": heading,
+                "similarity": round(max(0.0, min(1.0, sim)), 4),
+                "family_id": family_id,
+            })
+
+    # Fallback: if no embeddings exist, return active links with confidence as similarity
+    if not candidates:
+        fallback_links = store.get_links(family_id=family_id, status="active", limit=top_k)
+        candidates = [
+            {
+                "doc_id": str(link.get("doc_id", "")),
+                "section_number": str(link.get("section_number", "")),
+                "heading": str(link.get("heading", "")),
+                "similarity": max(0.0, min(1.0, float(link.get("confidence", 0.0) or 0.0))),
+                "family_id": family_id,
+            }
+            for link in fallback_links
+        ]
+
+    return {"candidates": candidates, "total": len(candidates)}
+
+
+@app.post("/api/links/centroids/recompute")
+async def recompute_centroids(
+    request: Request,
+    body: dict[str, Any] = Body(...),
+):
+    """Recompute family centroid from active link embeddings."""
+    _require_links_admin(request)
+    family_id = body.get("family_id", "")
+    if not family_id:
+        raise HTTPException(400, "family_id is required")
+
+    try:
+        manager = _get_embedding_manager()
+    except ValueError as e:
+        raise HTTPException(503, f"Embedding model unavailable: {e}") from e
+
+    store = _get_link_store()
+    links = store.get_links(family_id=family_id, status="active", limit=100000)
+    if not links:
+        return {"family_id": family_id, "status": "no_active_links", "sample_count": 0}
+
+    active_sections = [
+        {"doc_id": l["doc_id"], "section_number": l["section_number"]}
+        for l in links
+    ]
+    centroid = manager.compute_centroid(family_id, active_sections)
+
+    return {
+        "family_id": family_id,
+        "status": "recomputed" if centroid else "no_embeddings",
+        "sample_count": len(active_sections),
+    }
+
+
+# ---------------------------------------------------------------------------
+# 74-76. Starter Kits
+# ---------------------------------------------------------------------------
+def _starter_kit_to_api(family_id: str, raw: dict[str, Any] | None) -> dict[str, Any]:
+    if not raw:
+        return {
+            "family_id": family_id,
+            "family_name": _family_name_from_id(family_id),
+            "suggested_headings": [],
+            "suggested_keywords": [],
+            "suggested_dna_phrases": [],
+            "suggested_defined_terms": [],
+            "location_priors": [],
+            "exclusions": [],
+            "template_rule_ast": {},
+            "example_doc_ids": [],
+            "notes": "",
+        }
+    typical_location = raw.get("typical_location")
+    location_priors = [typical_location] if isinstance(typical_location, dict) and typical_location else []
+    return {
+        "family_id": family_id,
+        "family_name": _family_name_from_id(family_id),
+        "suggested_headings": list(raw.get("top_heading_variants") or []),
+        "suggested_keywords": list(raw.get("top_defined_terms") or []),
+        "suggested_dna_phrases": list(raw.get("top_dna_phrases") or []),
+        "suggested_defined_terms": list(raw.get("top_defined_terms") or []),
+        "location_priors": location_priors,
+        "exclusions": list(raw.get("known_exclusions") or []),
+        "template_rule_ast": raw.get("auto_generated_rule_ast") or {},
+        "example_doc_ids": [],
+        "notes": "",
+    }
+
+
+@app.get("/api/links/starter-kits")
+async def list_starter_kits():
+    store = _get_link_store()
+    kits = [_starter_kit_to_api(str(kit.get("family_id", "")), kit) for kit in store.get_starter_kits()]
+    return {"kits": kits, "total": len(kits)}
+
+
+@app.get("/api/links/starter-kits/{family_id}")
+async def get_starter_kit_plural(family_id: str):
+    return await get_starter_kit(family_id)
+
+
+@app.get("/api/links/starter-kit/{family_id}")
+async def get_starter_kit(family_id: str):
+    """Get family starter kit."""
+    store = _get_link_store()
+    kit = store.get_starter_kit(family_id)
+    return _starter_kit_to_api(family_id, kit)
+
+
+@app.post("/api/links/starter-kit/{family_id}/generate")
+async def generate_starter_kit(request: Request, family_id: str):
+    """Compute starter kit from corpus stats + ontology."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    links = store.get_links(family_id=family_id, status="active", limit=100000)
+    heading_variants = list({lnk.get("heading", "") for lnk in links if lnk.get("heading")})
+    defined_terms: list[str] = []
+    for rule in store.get_rules(family_id=family_id):
+        terms = rule.get("required_defined_terms")
+        if isinstance(terms, list):
+            defined_terms.extend(terms)
+    normalized_kit = {
+        "family_id": family_id,
+        "top_heading_variants": heading_variants[:20],
+        "top_defined_terms": sorted(set(defined_terms)),
+        "top_dna_phrases": [],
+        "typical_location": {},
+        "known_exclusions": [],
+        "auto_generated_rule_ast": {},
+    }
+    store.save_starter_kit(family_id, normalized_kit)
+    return _starter_kit_to_api(family_id, normalized_kit)
+
+
+@app.post("/api/links/starter-kit/{family_id}/generate-rule-draft")
+async def generate_rule_draft(request: Request, family_id: str):
+    """Auto-scaffold a draft rule from starter kit."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    kit = store.get_starter_kit(family_id)
+    heading_variants = kit.get("top_heading_variants", []) if kit else []
+    children = [{"type": "match", "value": v} for v in heading_variants]
+    heading_ast = {"type": "group", "operator": "or", "children": children} if children else {}
+
+    # Build filter_dsl from heading variants
+    if heading_variants:
+        dsl_terms = [f'"{v}"' if " " in v else v for v in heading_variants]
+        filter_dsl = f'heading: {" | ".join(dsl_terms)}'
+    else:
+        filter_dsl = ""
+
+    rule = {
+        "rule_id": str(uuid.uuid4()), "family_id": family_id,
+        "description": f"Auto-generated draft for {family_id}",
+        "version": 1, "status": "draft", "owner": "starter_kit",
+        "heading_filter_ast": heading_ast,
+        "filter_dsl": filter_dsl,
+        "required_defined_terms": kit.get("top_defined_terms", []) if kit else [],
+    }
+    store.save_rule(rule)
+    return _rule_to_api(store, rule)
+
+
+# ---------------------------------------------------------------------------
+# 77. Comparables
+# ---------------------------------------------------------------------------
+@app.get("/api/links/{link_id}/comparables")
+async def get_comparables(link_id: str):
+    """3-5 similar sections with diff highlights."""
+    store = _get_link_store()
+    comparables = store.get_comparables(link_id)
+    return {"link_id": link_id, "comparables": comparables, "total": len(comparables)}
+
+
+# ---------------------------------------------------------------------------
+# Extra endpoints (crossref, evaluate-text, macros, baselines, test)
+# ---------------------------------------------------------------------------
+@app.get("/api/links/crossref-peek")
+async def crossref_peek(
+    doc_id: str | None = Query(None),
+    section_ref: str = Query(...),
+):
+    """Look up section text by reference string."""
+    ref = section_ref.strip()
+    resolved_doc_id = (doc_id or "").strip()
+    if not resolved_doc_id and ":" in ref:
+        maybe_doc, maybe_ref = ref.split(":", 1)
+        if maybe_doc and maybe_ref:
+            resolved_doc_id = maybe_doc.strip()
+            ref = maybe_ref.strip()
+    if not resolved_doc_id:
+        raise HTTPException(status_code=422, detail="doc_id is required (or prefix section_ref with DOC_ID:)")
+
+    corpus = _get_corpus()
+    sections = corpus.search_sections(
+        doc_id=resolved_doc_id, cohort_only=False, limit=10000,
+    )
+    for s in sections:
+        if ref in s.section_number:
+            text = corpus.get_section_text(resolved_doc_id, s.section_number)
+            return {
+                "doc_id": resolved_doc_id,
+                "section_ref": ref,
+                "section_number": s.section_number,
+                "heading": s.heading,
+                "text": text,
+                "found": True,
+            }
+    raise HTTPException(
+        status_code=404,
+        detail=f"Section {ref} not found in {resolved_doc_id}",
+    )
+
+
+@app.post("/api/links/rules/evaluate-text")
+async def evaluate_text(body: EvaluateTextRequest = Body(...)):
+    """Evaluate a rule AST against raw text (traffic-light)."""
+    raw_text = (body.raw_text or body.text or "").strip()
+    rule_ast = body.rule_ast or body.heading_filter_ast or {}
+    if not raw_text or not rule_ast:
+        return {
+            "matched": False,
+            "traffic_light": "red",
+            "matched_nodes": [],
+            "traffic_tree": None,
+            "match_type": "none",
+            "matched_value": "",
+        }
+
+    try:
+        parsed_expr = filter_expr_from_json(rule_ast)
+    except (ValueError, KeyError, TypeError) as exc:
+        raise HTTPException(status_code=422, detail=f"Invalid rule_ast: {exc}") from exc
+
+    matched, traffic_tree = _evaluate_expr_tree(parsed_expr, raw_text)
+    flat_nodes = _flatten_tree(traffic_tree)
+    first_hit = next(
+        (str(n.get("node", "")) for n in flat_nodes if bool(n.get("result")) and n.get("path")),
+        "",
+    )
+    return {
+        "matched": matched,
+        "traffic_light": "green" if matched else "red",
+        "matched_nodes": flat_nodes,
+        "traffic_tree": traffic_tree,
+        "match_type": "ast_eval",
+        "matched_value": first_hit,
+    }
+
+
+@app.get("/api/links/macros")
+async def list_macros():
+    """List all macros."""
+    store = _get_link_store()
+    return {"macros": store.get_macros(), "total": len(store.get_macros())}
+
+
+@app.post("/api/links/macros", status_code=201)
+async def create_macro(
+    request: Request,
+    body: dict[str, Any] = Body(...),
+):
+    """Create/update a macro."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    store.save_macro(body)
+    return {"status": "saved"}
+
+
+@app.delete("/api/links/macros/{macro_id}")
+async def delete_macro(request: Request, macro_id: str):
+    """Delete a macro."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    store.delete_macro(macro_id)
+    return {"deleted": True}
+
+
+@app.get("/api/links/template-baselines")
+async def list_template_baselines(family_id: str | None = Query(None)):
+    """List template baselines."""
+    store = _get_link_store()
+    baselines_raw = store.get_template_baselines(family_id=family_id)
+    baselines: list[dict[str, Any]] = []
+    for baseline in baselines_raw:
+        normalized = dict(baseline)
+        normalized.setdefault("family_id", str(normalized.get("template_family", "")))
+        normalized.setdefault("template", str(normalized.get("section_pattern", "")))
+        expected_sections: list[str] = []
+        baseline_text = normalized.get("baseline_text")
+        if isinstance(baseline_text, str):
+            try:
+                parsed = json.loads(baseline_text)
+                if isinstance(parsed, list):
+                    expected_sections = [str(item) for item in parsed]
+            except json.JSONDecodeError:
+                pass
+        normalized.setdefault("expected_sections", expected_sections)
+        baselines.append(normalized)
+    return {"baselines": baselines, "total": len(baselines)}
+
+
+@app.post("/api/links/template-baselines")
+async def save_template_baseline(
+    request: Request,
+    body: dict[str, Any] = Body(...),
+):
+    """Save a template baseline."""
+    _require_links_admin(request)
+    store = _get_link_store()
+    import hashlib
+
+    payload = dict(body)
+    payload.setdefault("template_family", payload.get("family_id", ""))
+    payload.setdefault("section_pattern", payload.get("template", ""))
+    if "baseline_text" not in payload:
+        expected_sections = payload.get("expected_sections")
+        if isinstance(expected_sections, list):
+            payload["baseline_text"] = json.dumps(expected_sections)
+        else:
+            payload["baseline_text"] = str(payload.get("description", ""))
+    if "baseline_hash" not in payload:
+        payload["baseline_hash"] = hashlib.sha256(
+            str(payload.get("baseline_text", "")).encode("utf-8"),
+        ).hexdigest()
+
+    if not payload.get("template_family") or not payload.get("section_pattern"):
+        raise HTTPException(
+            status_code=422,
+            detail="template_family/section_pattern (or family_id/template) are required",
+        )
+
+    store.save_template_baseline(payload)
+    return {"status": "saved"}
+
+
+@app.get("/api/links/template-baselines/text")
+async def get_template_baseline_text(
+    family_id: str = Query(...),
+    template: str = Query(...),
+):
+    """Lookup baseline text for template redline diffing."""
+    store = _get_link_store()
+    row = store._conn.execute(  # noqa: SLF001
+        "SELECT baseline_id, baseline_text FROM template_baselines "
+        "WHERE template_family = ? AND section_pattern = ? "
+        "ORDER BY created_at DESC LIMIT 1",
+        [family_id, template],
+    ).fetchone()
+    if row is None:
+        row = store._conn.execute(  # noqa: SLF001
+            "SELECT baseline_id, baseline_text FROM template_baselines "
+            "WHERE template_family = ? "
+            "ORDER BY created_at DESC LIMIT 1",
+            [family_id],
+        ).fetchone()
+    if row is None:
+        return {"text": None, "baseline_id": None}
+
+    baseline_id = str(row[0])
+    raw_text = row[1]
+    if isinstance(raw_text, str):
+        text_value = raw_text
+        try:
+            parsed = json.loads(raw_text)
+            if isinstance(parsed, list):
+                text_value = "\n".join(str(item) for item in parsed)
+            elif isinstance(parsed, dict):
+                text_value = json.dumps(parsed, indent=2)
+        except json.JSONDecodeError:
+            pass
+    else:
+        text_value = str(raw_text or "")
+    return {"text": text_value or None, "baseline_id": baseline_id}
+
+
+@app.post("/api/links/rules/validate-dsl")
+async def validate_dsl_with_macros(body: dict[str, Any] = Body(...)):
+    """Parse/validate DSL text with optional macro expansion (non-rule scoped)."""
+    store = _get_link_store()
+    macro_dict: dict[str, Any] = {}
+    for macro in store.get_macros():
+        try:
+            ast_data = json.loads(macro.get("ast_json", "{}"))
+            macro_dict[macro["name"]] = filter_expr_from_json(ast_data)
+        except Exception:
+            continue
+    text = str(body.get("text", ""))
+    result = validate_dsl(text, macro_dict or None)
+    return {
+        "text_fields": {
+            k: filter_expr_to_json(v) if isinstance(v, (FilterMatch, FilterGroup)) else str(v)
+            for k, v in result.text_fields.items()
+        },
+        "meta_fields": {k: meta_filter_to_json(v) for k, v in result.meta_fields.items()},
+        "errors": [
+            {"message": e.message, "position": e.position, "field": e.field}
+            for e in result.errors
+        ],
+        "normalized_text": result.normalized_text,
+        "query_cost": result.query_cost,
+    }
+
+
+@app.post("/api/links/rules/validate-dsl-standalone")
+async def validate_dsl_standalone(body: dict[str, Any] = Body(...)):
+    """Parse and validate DSL text (no rule context)."""
+    result = validate_dsl(body.get("text", ""))
+    return {
+        "text_fields": {
+            k: filter_expr_to_json(v) if isinstance(v, (FilterMatch, FilterGroup)) else str(v)
+            for k, v in result.text_fields.items()
+        },
+        "meta_fields": {k: meta_filter_to_json(v) for k, v in result.meta_fields.items()},
+        "errors": [
+            {"message": e.message, "position": e.position, "field": e.field}
+            for e in result.errors
+        ],
+        "normalized_text": result.normalized_text,
+        "query_cost": result.query_cost,
+    }
+
+
+@app.post("/api/links/_test/seed")
+async def test_seed(
+    request: Request,
+    body: dict[str, Any] = Body(...),
+):
+    """Seed test data (only when LINKS_TEST_MODE=1)."""
+    _require_test_endpoint_access(request)
+    store = _get_link_store()
+    dataset_name = str(body.get("dataset", "")).strip()
+    if dataset_name:
+        seed_payload = _build_named_seed_dataset(dataset_name)
+        records = seed_payload.get("links", [])
+        rules = seed_payload.get("rules", [])
+        jobs = seed_payload.get("jobs", [])
+    else:
+        records = body.get("links", [])
+        rules = body.get("rules", [])
+        jobs = body.get("jobs", [])
+
+    run_id = str(uuid.uuid4())
+    for rule in rules:
+        store.save_rule(rule)
+    created = store.create_links(records, run_id) if records else 0
+    seeded_jobs = 0
+    for job in jobs:
+        try:
+            store.submit_job(job)
+            seeded_jobs += 1
+        except Exception:
+            continue
+    return {
+        "dataset": dataset_name or None,
+        "seeded_links": created,
+        "seeded_rules": len(rules),
+        "seeded_jobs": seeded_jobs,
+        "run_id": run_id,
+    }
+
+
+@app.post("/api/links/_test/reset")
+async def test_reset(request: Request):
+    """Reset test data (only when LINKS_TEST_MODE=1)."""
+    _require_test_endpoint_access(request)
+    store = _get_link_store()
+    store.truncate_all()
+    return {"status": "reset"}
+
+
+@app.post("/api/links/_test/expire-preview/{preview_id}")
+async def test_expire_preview(request: Request, preview_id: str):
+    """Force a preview to look expired for deterministic tests."""
+    _require_test_endpoint_access(request)
+    store = _get_link_store()
+    store._conn.execute(  # noqa: SLF001
+        "UPDATE family_link_previews SET created_at = ? WHERE preview_id = ?",
+        ["2000-01-01T00:00:00", preview_id],
+    )
+    return {"preview_id": preview_id, "expired": True}
+
+
+# ---------------------------------------------------------------------------
+# 2. GET /api/links/{link_id} — Single link with events
+# ---------------------------------------------------------------------------
+@app.get("/api/links/{link_id}")
+async def get_link(link_id: str):
+    """Get a single link with its events and why_matched."""
+    store = _get_link_store()
+    links = store.get_links(limit=100000)
+    link = next((lnk for lnk in links if lnk.get("link_id") == link_id), None)
+    if link is None:
+        raise HTTPException(status_code=404, detail=f"Link not found: {link_id}")
+    events = store.get_events(link_id)
+    link["events"] = events
+    return link

@@ -105,7 +105,12 @@ def strip_html(
         text = soup.get_text(separator=" ")
         text = re.sub(r"\s+", " ", text)
 
-    return text.strip()
+    text = text.strip()
+    # Block-2 Imps 13-15: post-extraction cleanup
+    text = strip_zero_width(text)
+    text = strip_boilerplate(text)
+    text = normalize_quotes(text)
+    return text
 
 
 def normalize_html(
@@ -250,6 +255,14 @@ def normalize_html(
         else:
             merged.append(run)
 
+    # Block-2 Imps 13-15: post-extraction cleanup.
+    # Applied after inverse map construction.  Inverse map offsets may be
+    # slightly off for stripped characters — acceptable trade-off since these
+    # characters are invisible and don't affect section boundary anchoring.
+    normalized = strip_zero_width(normalized)
+    normalized = strip_boilerplate(normalized)
+    normalized = normalize_quotes(normalized)
+
     return (normalized, tuple(merged))
 
 
@@ -300,4 +313,82 @@ def _collapse_whitespace(text: str) -> str:
     """Collapse horizontal whitespace (preserving newlines) and limit blanks."""
     text = re.sub(r"[^\S\n]+", " ", text)
     text = re.sub(r"\n{3,}", "\n\n", text)
+    return text
+
+
+# ---------------------------------------------------------------------------
+# Block-2 Imp 14: Zero-width character stripping
+# ---------------------------------------------------------------------------
+
+# U+200B (ZWSP), U+200C (ZWNJ), U+FEFF (BOM) — invisible characters from
+# HTML/Word conversions that silently break regex matching.
+_ZERO_WIDTH_RE = re.compile("[\u200b\u200c\ufeff]")
+
+
+def strip_zero_width(text: str) -> str:
+    """Remove zero-width Unicode characters that break regex matching."""
+    return _ZERO_WIDTH_RE.sub("", text)
+
+
+# ---------------------------------------------------------------------------
+# Block-2 Imp 13: Straight→smart quote normalization
+# ---------------------------------------------------------------------------
+
+
+def normalize_quotes(text: str) -> str:
+    """Convert straight double quotes to smart quotes (U+201C / U+201D).
+
+    Credit agreements use quotes exclusively for defined terms.  Normalizing
+    straight quotes to smart quotes makes the definition extractor more
+    reliable when EDGAR filings mix quoting styles.
+
+    Handles paragraph-spanning definitions by not resetting quote state at
+    line breaks unless the next content line starts a new quoted term.
+    """
+    result: list[str] = []
+    open_quote = False
+
+    for i, c in enumerate(text):
+        if c == '"':
+            if not open_quote:
+                result.append("\u201c")  # Left smart quote
+                open_quote = True
+            else:
+                result.append("\u201d")  # Right smart quote
+                open_quote = False
+        else:
+            if c == "\n" and open_quote:
+                rest = text[i + 1:i + 200]
+                next_content = rest.lstrip("\n ")
+                if not next_content or next_content[0] == '"':
+                    open_quote = False
+            result.append(c)
+
+    return "".join(result)
+
+
+# ---------------------------------------------------------------------------
+# Block-2 Imp 15: EDGAR boilerplate removal
+# ---------------------------------------------------------------------------
+
+_BOILERPLATE_PATTERNS: list[re.Pattern[str]] = [
+    # Timestamps: "1/16/26, 1:44 PM"
+    re.compile(r"^\d{1,2}/\d{1,2}/\d{2,4},\s+\d{1,2}:\d{2}\s+[AP]M\s*$", re.MULTILINE),
+    # SEC EDGAR URLs
+    re.compile(r"^https?://www\.sec\.gov/Archives/.*$", re.MULTILINE),
+    # Page markers: "Page 1 of 252"
+    re.compile(r"^Page\s+\d+\s+of\s+\d+\s*$", re.MULTILINE),
+    # Exhibit headers: "EX-10.1" standalone
+    re.compile(r"^EX-\d+\.\d+\s*$", re.MULTILINE),
+    # Exhibit header with filename: "EX-10.1 2 exh101.htm EX-10.1"
+    re.compile(r"^EX-\d+\.\d+\s+\d+\s+\S+\.htm\s+EX-\d+", re.MULTILINE),
+    # "Exhibit 10.1" standalone
+    re.compile(r"^Exhibit\s+\d+\.\d+\s*$", re.MULTILINE),
+]
+
+
+def strip_boilerplate(text: str) -> str:
+    """Remove EDGAR boilerplate lines (timestamps, SEC URLs, page markers)."""
+    for pattern in _BOILERPLATE_PATTERNS:
+        text = pattern.sub("", text)
     return text

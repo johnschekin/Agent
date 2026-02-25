@@ -1,0 +1,690 @@
+{
+  "_meta": {
+    "description": "Enriched edge properties for all Indebtedness Covenant relationships — per-basket activation contexts, stacking mechanics, structural constraints, and negotiation sensitivity",
+    "concept_area": "indebtedness",
+    "source_edges": 45,
+    "consolidated_enriched_edges": 20,
+    "basket_types_tracked": 13,
+    "generated": "2026-02-12",
+    "methodology": "Consolidated 45 indebtedness-touching edges from shared relationship graph (sourced from 16 independent analyses) into 19 logically distinct enriched edges. Each edge is decomposed by basket type and structural layer, using 62-deal DealData (100% coverage on 8 keys), 3 expert extractions, and institutional authority documents. All quantitative references expressed as % of LTM EBITDA for cross-deal comparability."
+  },
+
+  "basket_registry": {
+    "_description": "The 13 structural components of the Indebtedness Covenant, organized by the three structural layers that determine total debt capacity.",
+    "layer_1_fixed_baskets": {
+      "_description": "Fixed-dollar or EBITDA-percentage baskets — sized at closing, grow only via grower formulation.",
+      "credit_facility_debt": {
+        "description": "Debt under the credit agreement itself (initial TL, revolver, incremental, DDTL, refinancing)",
+        "prevalence": "62/62 (100%) — universal first basket",
+        "capacity_type": "facility_sized"
+      },
+      "general_debt_basket": {
+        "description": "Uncircumscribed catch-all basket. Greater of fixed dollar / % EBITDA (grower).",
+        "prevalence": "62/62 (100%)",
+        "median_sizing": "25% of LTM EBITDA (corpus median)",
+        "range": "5-120% EBITDA",
+        "segment_ranges": {
+          "LMM": "15-20% EBITDA",
+          "CMM": "20-30% EBITDA",
+          "UMM": "20-40% EBITDA",
+          "BSL": "40-50%+ EBITDA"
+        }
+      },
+      "capital_lease_purchase_money": {
+        "description": "Obligations under capital leases and purchase money financing",
+        "prevalence": "61/62 (98%)",
+        "median_sizing": "23% of LTM EBITDA",
+        "range": "8-69% EBITDA",
+        "segment_ranges": {"LMM_CMM": "15-20% EBITDA", "UMM_BSL": "20-25% EBITDA"}
+      },
+      "non_guarantor_debt": {
+        "description": "Debt at non-loan party restricted subsidiaries — structurally senior to credit facility",
+        "prevalence": "41/62 (66%) with explicit data",
+        "typical_sizing": "10-15% EBITDA (standalone or shared with acquisition debt)",
+        "risk": "Structurally senior — non-guarantor creditors get paid before credit facility in enforcement"
+      },
+      "earnout_seller_notes": {
+        "description": "Deferred purchase price, seller notes, earn-outs from acquisitions",
+        "prevalence": "62/62 (100%)",
+        "treatment_split": "If classified as 'Indebtedness': capped. If NOT 'Indebtedness': no cap (UMM/BSL aggressive)"
+      }
+    },
+    "layer_2_ratio_baskets": {
+      "_description": "Unlimited capacity subject to pro forma leverage tests — the infinite capacity layer.",
+      "ratio_debt": {
+        "description": "Unlimited debt outside the credit agreement subject to leverage test",
+        "prevalence": "0/62 in DealData (empty field — embedded in IED and acquisition debt fields)",
+        "bank_preferred": "No such basket (DLS Row 79)",
+        "typical": "Shared ratio with incremental; FLLR for pari, total net for junior/unsecured"
+      },
+      "incremental_equivalent_debt": {
+        "description": "Side-car debt issuance outside credit agreement that mirrors incremental terms",
+        "prevalence": "36/62 (58%) with explicit IED data",
+        "capacity_type": "ratio_unlimited"
+      },
+      "incurred_acquisition_debt": {
+        "description": "Debt incurred 'in connection with' permitted acquisitions — ratio-based or fixed",
+        "prevalence": "30/62 (48%) have non-'None' data",
+        "capacity_type": "ratio_unlimited_or_fixed"
+      },
+      "assumed_acquisition_debt": {
+        "description": "Pre-existing target debt assumed (not incurred in contemplation of acquisition)",
+        "prevalence": "59/62 (95%)",
+        "typical_sizing": "Small fixed basket (10-15% EBITDA) or unlimited if ratio-tested"
+      }
+    },
+    "layer_3_conversion_baskets": {
+      "_description": "Baskets that convert non-debt capacity (equity, AA, RP) into debt capacity.",
+      "contribution_debt": {
+        "description": "Debt equal to a percentage of post-closing equity contributions",
+        "prevalence": "31/62 (50%) have basket; 31/62 show 'None'",
+        "standard": "100% of contributions, must be unsecured",
+        "aggressive": "200% of contributions (rare BSL)"
+      },
+      "aa_basket_debt": {
+        "description": "Debt incurred using Available Amount builder capacity",
+        "prevalence": "Embedded in 'Other Debt Baskets' field (59/62 populated)",
+        "mechanism": "Converts retained ECF capacity → debt incurrence capacity"
+      },
+      "rp_capacity_debt": {
+        "description": "Debt incurred using unused Restricted Payment capacity",
+        "prevalence": "Embedded in 'Other Debt Baskets' field",
+        "mechanism": "Converts unused leakage capacity → leverage capacity"
+      },
+      "redesignation_mechanics": {
+        "description": "Ability to redesignate capacity from one basket to another",
+        "prevalence": "5/62 (8%) with explicit redesignation data",
+        "standard": "General debt → incremental reallocation",
+        "aggressive": "RP, Investment, AA capacity all reallocable to incremental"
+      }
+    }
+  },
+
+  "capacity_source_edges": {
+    "_description": "Edges where non-debt capacity converts INTO debt capacity — the conversion layer that makes the indebtedness covenant interact with the leakage system.",
+
+    "aa_builder_to_debt": {
+      "edge_id": "AA→DEBT",
+      "type": "feeds_into",
+      "from": "Available Amount Builder",
+      "to": "Indebtedness (AA Basket Debt)",
+      "graph_sources": ["available_amount", "indebtedness"],
+      "description": "Available Amount builder capacity can be used to incur debt, converting leakage capacity into leverage capacity. This completes the AA→Indebtedness feedback loop: retained ECF builds AA → AA capacity incurs debt → debt proceeds generate cash → cash builds more ECF.",
+      "quantitative_parameters": {
+        "aa_builder_growth_rate": "~10-15% EBITDA/year retained ECF at 50% sweep → equivalent debt incurrence capacity",
+        "cumulative_year5": "~65-130% of single-year EBITDA in cumulative AA capacity potentially convertible to debt",
+        "structural_requirement": "Typically must be unsecured (Review Template Row 84) — but 'can automatically be secured' in aggressive deals"
+      },
+      "failure_modes": [
+        "Circular capacity: AA builds debt → debt proceeds generate cash → cash builds ECF → ECF builds more AA → more debt capacity",
+        "If AA basket debt can be secured: pari passu dilution of first lien recovery without incremental test or MFN",
+        "Leverage spiral: AA-funded debt incurrence raises actual leverage while EBITDA addbacks mask the increase"
+      ],
+      "negotiation_sensitivity": "CRITICAL where present — converts a capped leakage mechanism into uncapped leverage capacity."
+    },
+
+    "rp_capacity_to_debt": {
+      "edge_id": "RP→DEBT(reclass)",
+      "type": "reclassifiable_to",
+      "from": "Available RP Capacity",
+      "to": "Indebtedness (RP Capacity Debt)",
+      "graph_sources": ["indebtedness", "restricted_payments"],
+      "description": "Unused Restricted Payment capacity can be redesignated to incur debt. This makes the RP and indebtedness covenants partially fungible — capacity not used for dividends can be used for borrowing.",
+      "quantitative_parameters": {
+        "typical_unused_rp": "If sponsor takes minimal RPs: 15-50% of EBITDA/year in unused general + AA capacity → available for debt conversion",
+        "accumulation": "RP capacity accumulates year over year (especially builder components) — can create substantial conversion pool"
+      },
+      "mechanism": "Learning Material: 'Available RP Capacity Amount... minus the sum of the amount utilized to (A) make Restricted Payments and (B) incur Indebtedness pursuant to Section 10.1(w).' The same capacity pool funds EITHER dividends or debt — not both.",
+      "failure_modes": [
+        "Sponsor defers RPs in early years to build debt conversion capacity, then uses debt proceeds later",
+        "Invisible capacity: bank tracks RP usage but not the unused capacity being quietly converted to debt",
+        "Combined with AA basket debt: total conversion capacity = AA + RP + Investment unused = massive potential debt"
+      ],
+      "negotiation_sensitivity": "HIGH — Banks should track conversion capacity as part of total debt capacity analysis."
+    },
+
+    "equity_to_contribution_debt": {
+      "edge_id": "EQ→CONTDEBT",
+      "type": "feeds_into",
+      "from": "Equity Contributions (Post-Closing)",
+      "to": "Contribution Debt",
+      "graph_sources": ["indebtedness"],
+      "description": "Post-closing equity injections create 1:1 (or 2:1 in aggressive deals) debt capacity. This leverages the equity contribution — turning a dollar of equity into a dollar of additional debt.",
+      "quantitative_parameters": {
+        "prevalence": "31/62 (50%) have contribution debt basket",
+        "multiplier": "100% standard (1:1 equity → debt). Aggressive BSL: potentially 200% (1:2)",
+        "security": "Must be unsecured in standard deals (PC line 402)",
+        "time_limit": "Typically no outside date for incurrence (UMM/BSL)"
+      },
+      "ground_truth": {
+        "geneva": "100% of cash contributions and FMV of in-kind contributions (Section 6.01(a)(xxvii))",
+        "rinchem": "100% of contributions",
+        "scientific_games": "100% of cash and FMV contributions"
+      },
+      "failure_modes": [
+        "Equity → contribution debt → debt proceeds → RP distribution → re-contribute equity → more contribution debt (circularity)",
+        "FMV of in-kind contributions: subjective valuation creates inflated debt capacity",
+        "200% multiplier: each dollar of equity creates two dollars of leverage — amplifies risk"
+      ],
+      "negotiation_sensitivity": "MODERATE — 100% is standard. Push back on 200%, FMV of non-cash, and secured contribution debt."
+    },
+
+    "general_debt_to_incremental": {
+      "edge_id": "GDB→INC(realloc)",
+      "type": "shares_capacity_with",
+      "from": "Unused General Debt Basket",
+      "to": "Incremental Capacity (Free-and-Clear)",
+      "graph_sources": ["indebtedness", "incremental"],
+      "description": "Unused general debt basket capacity can be reallocated to increase incremental borrowing capacity. This expands the free-and-clear basket beyond its nominal sizing.",
+      "quantitative_parameters": {
+        "prevalence": "7/62 deals (11%) allow this reallocation — aggressive feature",
+        "general_basket_median": "25% EBITDA — if fully unused, adds 25% EBITDA to incremental F&C basket",
+        "combined_impact": "Incremental F&C (100% EBITDA standard) + general debt reallocation (25% EBITDA) = 125% EBITDA in total unconditioned incremental capacity"
+      },
+      "failure_modes": [
+        "Borrower intentionally avoids using general basket to maximize incremental reallocation",
+        "Combined with AA reallocation: general + AA + RP unused all flowing to incremental",
+        "Bank negotiates tight incremental F&C but general debt reallocation undoes the constraint"
+      ],
+      "negotiation_sensitivity": "HIGH — General debt reallocation to incremental is an aggressive feature. Resist in LMM/CMM."
+    }
+  },
+
+  "structural_constraint_edges": {
+    "_description": "Conditions and structural limitations that gate debt incurrence.",
+
+    "leverage_gates_ratio_debt": {
+      "edge_id": "LEV→RATIO_DEBT",
+      "type": "conditional_on",
+      "from": "Ratio Debt / IED / Acquisition Debt (ratio prong)",
+      "to": "Consolidated EBITDA (incurrence test)",
+      "graph_sources": ["indebtedness", "incremental", "financial_definitions"],
+      "description": "All ratio-based debt capacity is UNLIMITED subject to pro forma leverage test. Since EBITDA is the denominator, EBITDA inflation directly increases ratio debt capacity — this is the EBITDA multiplier effect applied to debt creation.",
+      "leverage_metric_variants": {
+        "first_lien_net": {
+          "usage": "Pari passu secured debt (dominant in private credit)",
+          "typical_triggers": "4.0-5.5x FLLR (set at closing leverage)",
+          "advantage_for_borrower": "Excludes junior/unsecured debt + cash netting → easier to satisfy"
+        },
+        "total_net": {
+          "usage": "Junior/unsecured debt (DLS alternative for all)",
+          "typical_triggers": "4.5-6.0x TNLR",
+          "advantage_for_lender": "Captures all debt → harder to pass test"
+        },
+        "secured_net": {
+          "usage": "Junior secured debt",
+          "typical_triggers": "Between FLLR and TNLR"
+        },
+        "no_worse_prong": {
+          "description": "Incurrence permitted if leverage no worse than immediately before giving effect",
+          "bank_position": "Typically rejected including in UMM/BSLR (PC line 383)",
+          "risk": "Allows infinite debt at any leverage — no absolute ceiling"
+        },
+        "fccr_prong": {
+          "description": "Fixed charge coverage ratio alternative to leverage test",
+          "bank_position": "Typically rejected (PC line 383)"
+        }
+      },
+      "ebitda_multiplier_effect": {
+        "mechanism": "10% EBITDA addback → leverage improves by ~0.5x on a 5x levered deal → unlocks ratio debt capacity that can be incurred pari passu",
+        "cascading": "EBITDA inflation improves the leverage test AND increases EBITDA-denominated fixed baskets simultaneously — double benefit from single manipulation",
+        "corpus_exposure": "42% of deals have uncapped EBITDA addbacks (financial_definitions analysis) — unlimited EBITDA inflation potential"
+      },
+      "failure_modes": [
+        "EBITDA addback manipulation passes incurrence test without real deleveraging",
+        "Pro forma EBITDA for acquisitions satisfies test before target earnings materialize",
+        "FLLR metric: 1-2x more favorable than total leverage → trivializes the gate",
+        "No-worse prong: debt incurrence at existing leverage always permitted, creating infinite capacity at any level",
+        "Multiple ratio debt incurrences in same period: each pro forma test ignores subsequently incurred debt"
+      ],
+      "negotiation_sensitivity": "CRITICAL — The ratio test is the ONLY constraint on unlimited debt capacity. Metric type and test level determine whether the constraint has teeth."
+    },
+
+    "mfn_constrains_new_debt": {
+      "edge_id": "MFN→DEBT",
+      "type": "constrains",
+      "from": "MFN Pricing Protection",
+      "to": "Incremental Equivalent Debt / Ratio Debt",
+      "graph_sources": ["indebtedness", "incremental", "pricing", "facility_structure"],
+      "description": "Most Favored Nation protection ensures new pari debt cannot price significantly above existing facilities. Without MFN, borrower could issue cheaper-than-existing debt, economically diluting existing lenders.",
+      "quantitative_parameters": {
+        "trigger_cushion": "50 bps universal (47/62 deals, 96% at 50 bps per incremental analysis)",
+        "bank_preferred": "50 bps MFN for life of existing facilities (DLS Row 11)",
+        "aggressive_sunset": "MFN sunset at 12-18 months post-closing in UMM/BSL deals",
+        "no_sunset": "No sunset is the PC standard even for Aggressive UMM/BSLR"
+      },
+      "scope_by_debt_type": {
+        "pari_term_loans": "MFN applies universally (PC line 381)",
+        "pari_notes_ied": "MFN should apply — DLS says 'No MFN on pari notes' as bank alternative, but PC says MFN applies",
+        "junior_unsecured": "MFN generally does NOT apply (different market, different risk profile)",
+        "revolving": "MFN generally does NOT apply to revolver pricing"
+      },
+      "failure_modes": [
+        "MFN sunset: after 12-18 months, new pari debt can price at any level",
+        "MFN carveouts: refinancing debt, revolving facilities, secured notes may be excluded",
+        "All-in yield definition: excluding certain fees from yield calculation narrows MFN's bite",
+        "Delayed draw: DDTL commitments may be carved out of MFN scope"
+      ],
+      "negotiation_sensitivity": "HIGH — MFN scope, sunset, and yield definition are among the top-5 incremental/IED negotiation items."
+    },
+
+    "maturity_wal_constrains_debt": {
+      "edge_id": "MAT→DEBT",
+      "type": "constrains",
+      "from": "Maturity / Weighted Average Life Restrictions",
+      "to": "Ratio Debt / IED / Acquisition Debt",
+      "graph_sources": ["indebtedness", "incremental"],
+      "description": "Inside-maturity restrictions prevent new debt from maturing before existing facilities, which would create de facto structural seniority through earlier repayment. WAL restrictions prevent high-amortization circumvention.",
+      "quantitative_parameters": {
+        "bank_preferred": "No inside maturity except customary bridges and escrow arrangements (PC line 248)",
+        "aggressive_umm_bsl": "Inside maturity basket of 50-100% EBITDA (PC line 249)",
+        "standard_maturity_floor": "91 days after existing TL latest maturity (common formulation)"
+      },
+      "failure_modes": [
+        "Inside maturity basket: 50-100% EBITDA of debt can mature before existing — creates massive structural seniority",
+        "Bridge financing exception exploited: 'customary bridge' extended indefinitely",
+        "WAL manipulation: low amortization masks high balloon payment that effectively matures debt early",
+        "Maturity restriction applied only to final maturity, not amortization schedule"
+      ],
+      "negotiation_sensitivity": "HIGH — Inside maturity is a structural seniority mechanism. The basket size (50-100% EBITDA) determines how much debt can be structurally senior."
+    },
+
+    "no_eod_gate_on_incurrence": {
+      "edge_id": "EOD→DEBT(gate)",
+      "type": "conditional_on",
+      "from": "Debt Incurrence",
+      "to": "No Event of Default",
+      "graph_sources": ["indebtedness", "incremental", "events_of_default"],
+      "description": "Debt incurrence is generally conditioned on no existing Event of Default. However, the scope of EoD that blocks incurrence varies by market segment and debt type.",
+      "variant_matrix": {
+        "full_no_eod": {
+          "description": "Any default or EoD blocks all debt incurrence",
+          "prevalence": "Standard in LMM/CMM (DLS preferred)",
+          "protectiveness": "Highest — prevents debt buildup during distress"
+        },
+        "payment_bankruptcy_only": {
+          "description": "Only payment default or bankruptcy EoD blocks incurrence",
+          "prevalence": "Common in UMM/BSL for acquisition-related debt",
+          "evidence": "Viavi BSL: 'if i/c/w an Acquisition Transaction then no payment/bankruptcy EoD'",
+          "protectiveness": "Moderate — allows debt incurrence during financial covenant default"
+        },
+        "lct_override": {
+          "description": "Limited Condition Transaction provisions freeze conditions at signing, not closing",
+          "prevalence": "62/62 deals have LCT provisions (53 unique variations per reps_conditions analysis)",
+          "risk": "Conditions tested at signing of acquisition agreement → EoD could arise between signing and closing without blocking debt incurrence"
+        }
+      },
+      "failure_modes": [
+        "LCT freezes conditions: EoD arises between signing and closing but incurrence proceeds anyway",
+        "Payment/bankruptcy only: borrower incurs debt during financial covenant default (most common default type)",
+        "Cross-default not triggered because material debt threshold exceeds basket sizes"
+      ],
+      "negotiation_sensitivity": "MODERATE — EoD gate is standard but LCT override and scope limitations are heavily negotiated."
+    }
+  },
+
+  "mirror_covenant_edges": {
+    "_description": "Edges where the indebtedness covenant mechanically interacts with parallel covenants — liens, investments, financial covenant.",
+
+    "indebtedness_mirrors_liens": {
+      "edge_id": "DEBT↔LIENS",
+      "type": "interacts_with",
+      "from": "Indebtedness Covenant Baskets",
+      "to": "Liens Covenant Baskets",
+      "graph_sources": ["indebtedness", "liens"],
+      "description": "The liens covenant is a DERIVATIVE covenant — its basket structure mechanically mirrors the indebtedness covenant. Every debt basket needs a corresponding lien permission to be secured. This creates the potential for both gaps (debt permitted but unsecurable) and over-inclusiveness (liens permitted without corresponding debt).",
+      "structural_parallel": {
+        "general_debt_basket": "General liens basket mirrors general debt basket sizing",
+        "ratio_debt": "Ratio liens mirror ratio debt (tied to same leverage test)",
+        "incremental_ied": "ICA-governed pari liens for incremental/IED",
+        "capital_lease": "Purchase money/capital lease liens carve-out",
+        "non_guarantor": "Non-collateral liens at non-guarantor entities"
+      },
+      "critical_divergence_points": {
+        "ica_authority": "KCT Cat 4: Agent can subordinate existing liens without lender vote — a sacred rights issue",
+        "non_collateral_liens": "KCT Cat 4: Uncapped liens on non-collateral assets strip recovery value",
+        "lien_perfection": "KCT Cat 4: Broad carveouts for lien loss/priority loss undermine entire security framework"
+      },
+      "bank_position": "PC line 407: 'Avoid having both a general liens basket and a crossing lien to general debt basket.' Prefer single unified debt+lien permission.",
+      "failure_modes": [
+        "Lien basket broader than debt basket: liens granted for obligations that aren't permitted indebtedness",
+        "Debt basket broader than lien basket: debt permitted but only as unsecured (may be intended feature)",
+        "Cross-reference errors: debt basket references wrong lien clause or vice versa",
+        "ICA allows pari liens without lender consent: new pari creditors dilute existing first lien recovery"
+      ],
+      "negotiation_sensitivity": "HIGH — Liens/debt coordination is fundamental. Misalignment creates either leakage or unintended structural seniority."
+    },
+
+    "debt_exclusions_from_fincov": {
+      "edge_id": "DEBT→FINCOV(exclusion)",
+      "type": "interacts_with",
+      "from": "Indebtedness Baskets (Fixed Baskets)",
+      "to": "Financial Covenant Leverage Calculation",
+      "graph_sources": ["indebtedness", "financial_covenant"],
+      "description": "Certain debt baskets may be excluded from the financial covenant leverage calculation, meaning the maintenance test underreports actual leverage. The borrower's true leverage can significantly exceed the covenant-tested leverage.",
+      "excluded_baskets": {
+        "kct_flagged": "KCT Cat 1 Item 5: freebie, non-guarantor debt basket, general debt basket, acquisition debt basket — all potentially excluded",
+        "typical_exclusions": ["Capital leases (23% EBITDA median)", "Purchase money financing", "Intercompany debt", "Surety bonds and letters of credit"],
+        "aggressive_exclusions": ["General debt basket (25% EBITDA median)", "Non-guarantor debt (10-15% EBITDA)", "Acquisition debt (ratio-tested separately)"]
+      },
+      "quantitative_impact": {
+        "conservative": "If only cap lease/PM excluded: ~23% EBITDA of debt invisible to covenant test",
+        "typical": "If general basket also excluded: ~48% EBITDA invisible (23% cap lease + 25% general)",
+        "aggressive": "If non-guarantor and acquisition also excluded: ~73%+ EBITDA invisible — maintenance test misses nearly 1x EBITDA of debt"
+      },
+      "failure_modes": [
+        "Total leverage = 6x but covenant-tested leverage = 4x (2x of 'invisible' debt)",
+        "Borrower incurs maximum excluded debt → covenant cushion looks healthy → actual leverage is distressed",
+        "Cross-default threshold set based on covenant leverage, not actual leverage"
+      ],
+      "negotiation_sensitivity": "HIGH — KCT Cat 1 Item 5. Debt exclusion scope directly determines the financial covenant's real-world effectiveness."
+    },
+
+    "intercompany_debt_investments": {
+      "edge_id": "IC_DEBT↔INV",
+      "type": "interacts_with",
+      "from": "Intercompany Debt",
+      "to": "Investment Covenant (Non-Loan Party Investments)",
+      "graph_sources": ["indebtedness", "investments"],
+      "description": "Intercompany loans to non-loan parties consume BOTH the intercompany debt basket AND the investment basket (via shared cap). This prevents double-dipping but creates sizing complexity.",
+      "mechanism": "PC line 398: 'Intercompany loans to non-Loan Parties capped/shared baskets with investments in non Loan Parties.' A loan from the borrower to a non-guarantor sub is simultaneously: (1) permitted debt under the intercompany basket, and (2) a permitted investment in a non-loan party.",
+      "lme_protection": {
+        "subordination": "LME Provision Language: 'any intercompany debt incurred under any debt basket that is owed by a loan party to a nonloan party subsidiary be subordinated to the loans'",
+        "double_dip_blocker": "Review Template Row 71: All intercompany debt by loan parties to nonloan parties must be subordinated — prevents structural seniority via intercompany route"
+      },
+      "failure_modes": [
+        "Intercompany debt NOT subordinated: non-loan party subsidiary becomes structurally senior creditor",
+        "Shared cap consumed by intercompany but investment basket has separate capacity — borrower uses both",
+        "Intercompany note required but not actually pledged — LME risk if non-loan party refuses to cooperate"
+      ],
+      "negotiation_sensitivity": "MODERATE — Standard provision but subordination and pledging requirements are the critical protections."
+    },
+
+    "earnout_classification": {
+      "edge_id": "EARNOUT↔DEBT/INV",
+      "type": "interacts_with",
+      "from": "Earnout / Seller Notes",
+      "to": "Indebtedness / Acquisition / Investment Covenant",
+      "graph_sources": ["indebtedness", "restricted_debt_payments"],
+      "description": "Whether earnouts are classified as 'Indebtedness' determines whether they consume debt basket capacity. If excluded from indebtedness, they may consume investment or RP capacity instead — or nothing at all.",
+      "classification_impact": {
+        "if_indebtedness": {
+          "consequence": "Must fit within a debt basket. Capped, measured at maximum possible obligation.",
+          "bank_preferred": "PC: 'earnouts should always be debt for the negative covenant (with a corresponding basket; measured at maximum possible obligation)'"
+        },
+        "if_not_indebtedness": {
+          "consequence": "No cap needed. May be treated as investment or ignored entirely.",
+          "prevalence": "UMM/BSL aggressive position (PC line 396)"
+        }
+      },
+      "subordination": {
+        "cmm_lmm": "May require subordination terms: not cash pay, no covenants, later maturity, at Holdco",
+        "umm_bsl": "If not 'Indebtedness', no subordination required"
+      },
+      "failure_modes": [
+        "Earnouts excluded from Indebtedness: unlimited seller debt with no basket consumption",
+        "Earnout payments treated as RDPs: consume RP/RDP capacity that could otherwise fund dividends",
+        "Maximum obligation measurement: if earnout capped at 100% EBITDA, that capacity is reserved even if payment likely to be 20% EBITDA"
+      ],
+      "negotiation_sensitivity": "MODERATE — Classification as Indebtedness is the key gate. Once classified, standard basket mechanics apply."
+    },
+
+    "lct_gates_incurrence": {
+      "edge_id": "LCT↔INCURRENCE",
+      "type": "interacts_with",
+      "from": "Limited Condition Transaction Provisions",
+      "to": "Indebtedness / Investment Incurrence Tests",
+      "graph_sources": ["reps_conditions", "indebtedness", "investments"],
+      "description": "LCT provisions freeze incurrence test conditions at the signing date of an acquisition agreement, not the closing date. This means conditions may be satisfied at signing but violated by closing — and the debt is still incurred.",
+      "quantitative_parameters": {
+        "prevalence": "62/62 deals have LCT provisions (100%)",
+        "unique_variations": "53 unique LCT formulations across 62 deals (reps_conditions analysis)",
+        "typical_gap": "30-90 days between signing and closing of an acquisition"
+      },
+      "mechanism": "Sungard conditionality framework: borrower elects LCT → all incurrence tests (leverage, no EoD, reps) tested at signing → if conditions deteriorate between signing and closing, incurrence still proceeds. This is by design — enables borrowers to commit to acquisitions without closing-day risk.",
+      "failure_modes": [
+        "Leverage deteriorates between signing and closing: debt incurred at higher-than-tested leverage",
+        "EoD arises post-signing: debt incurred despite active Event of Default",
+        "Multiple LCT elections in same period: each tested separately without considering others"
+      ],
+      "negotiation_sensitivity": "MODERATE — LCT is market standard but the scope (which tests are frozen) and the overlap with other conditions are heavily negotiated."
+    }
+  },
+
+  "reclassification_edges": {
+    "_description": "Edges where capacity can be redesignated from one basket or covenant to another.",
+
+    "free_and_clear_to_ratio": {
+      "edge_id": "F&C→RATIO(reclass)",
+      "type": "reclassifiable_to",
+      "from": "Free-and-Clear / Prepayment Prong Debt",
+      "to": "Ratio Prong Debt",
+      "graph_sources": ["incremental"],
+      "description": "Debt incurred under fixed-dollar baskets (free-and-clear, prepayment prong) can be redesignated to the ratio prong, freeing up the fixed basket for reuse.",
+      "mechanism": "Review Template Row 30: 'Able to redesignate starter and prepayment prongs to the ratio prong.' One-way: fixed → ratio. This restores the fixed basket's full capacity while the debt is reclassified as ratio debt.",
+      "quantitative_impact": {
+        "free_and_clear_restored": "Up to 100% EBITDA of F&C basket capacity restored after redesignation",
+        "total_debt_impact": "First incurrence uses F&C (no leverage test). Redesignate to ratio → F&C restored → incur again using F&C. Total debt = 2x the nominal F&C basket if ratio test continuously satisfied."
+      },
+      "failure_modes": [
+        "Infinite reload: F&C incurrence → redesignate to ratio → restore F&C → incur again → redesignate again",
+        "Ratio test satisfied by EBITDA addbacks → redesignation occurs at inflated leverage",
+        "Bank tracks F&C usage but not redesignation — capacity appears exhausted but has been restored"
+      ],
+      "negotiation_sensitivity": "HIGH — Redesignation is the mechanism that makes nominal basket caps meaningless. Bank should limit redesignation frequency or require separate ratio test."
+    },
+
+    "cross_covenant_reallocation": {
+      "edge_id": "RP/INV/AA→DEBT(realloc)",
+      "type": "reclassifiable_to",
+      "from": "Unused RP / Investment / AA Capacity",
+      "to": "Incremental / Indebtedness Capacity",
+      "graph_sources": ["indebtedness", "incremental", "restricted_payments", "investments", "available_amount"],
+      "description": "In aggressive deals, unused capacity from leakage covenants (RP, investments) and the Available Amount can be reallocated to incremental or general debt capacity. This is the broadest form of cross-covenant fungibility.",
+      "reallocation_pathways": {
+        "general_debt_to_incremental": {
+          "prevalence": "7/62 deals (11%)",
+          "capacity": "Up to 25% EBITDA (general basket median) added to incremental F&C"
+        },
+        "aa_to_incremental": {
+          "prevalence": "Learning Material + Review Template — aggressive feature",
+          "capacity": "AA builder capacity (potentially 65-130% of single-year EBITDA cumulative) → incremental"
+        },
+        "rp_to_debt": {
+          "prevalence": "Learning Material: 'Available RP Capacity Amount... to incur Indebtedness'",
+          "capacity": "Unused RP capacity → debt incurrence"
+        },
+        "investment_to_incremental": {
+          "prevalence": "Aggressive UMM/BSL only",
+          "capacity": "Unused investment capacity → incremental"
+        }
+      },
+      "combined_conversion_risk": "If all pathways active: total convertible capacity = unused general (25% EBITDA) + unused AA (65%+ EBITDA cumulative) + unused RP (varies) + unused investments (varies). Can easily exceed 100% of EBITDA in additional debt capacity beyond nominal baskets.",
+      "failure_modes": [
+        "Invisible capacity buildup: bank tracks each covenant individually but not the combined reallocation pool",
+        "Sponsor strategically defers leakage to accumulate conversion capacity → single large debt incurrence",
+        "No MFN or maturity restrictions on reallocated capacity debt (falls outside incremental constraints)"
+      ],
+      "negotiation_sensitivity": "CRITICAL — Cross-covenant reallocation is the most structurally dangerous feature in the indebtedness covenant. Bank should resist or cap total reallocation."
+    }
+  },
+
+  "stacking_risk_edges": {
+    "_description": "The combinatorial maximum problem — how individual baskets stack to create total debt capacity far exceeding any single basket's intent.",
+
+    "basket_stacking_architecture": {
+      "edge_id": "STACKING",
+      "type": "interacts_with",
+      "from": "Individual Indebtedness Baskets (all)",
+      "to": "Total Debt Capacity (combinatorial maximum)",
+      "graph_sources": ["indebtedness", "incremental", "available_amount", "investments"],
+      "description": "KCT Category 2 explicitly identifies the basket stacking problem: individual basket sizes are building blocks; total capacity is determined by the combinatorial maximum — not the sum. Baskets that can be simultaneously used create multiplicative debt capacity.",
+      "stacking_vectors": {
+        "vector_1_core_stacking": {
+          "description": "General debt + incremental F&C + ratio debt (if all maximized simultaneously)",
+          "components": [
+            "General debt: 25% EBITDA (median)",
+            "Incremental F&C: 100% EBITDA (standard)",
+            "Ratio debt: UNLIMITED (subject to leverage test)",
+            "Subtotal: 125% EBITDA fixed + unlimited ratio"
+          ],
+          "kct_items": "Cat 2 Items 1-3: identify stacking of pari and structurally senior debt"
+        },
+        "vector_2_acquisition_triple_count": {
+          "description": "Contribution debt + acquisition debt + assumed debt (triple-count for same acquisition)",
+          "components": [
+            "Contribution debt: 100% of equity contribution",
+            "Incurred acquisition debt: ratio-tested (unlimited if test passes)",
+            "Assumed acquisition debt: 10-15% EBITDA fixed",
+            "Risk: all three incurred for same acquisition → triple-counted capacity"
+          ],
+          "kct_items": "Cat 2 Item 4: contribution debt stacking with acquisition baskets"
+        },
+        "vector_3_conversion_stacking": {
+          "description": "AA basket debt + RP capacity debt + investment-to-incremental reallocation",
+          "components": [
+            "AA basket debt: up to cumulative AA builder (65-130% EBITDA over 5 years)",
+            "RP capacity debt: unused RP capacity",
+            "Investment reallocation: unused investment capacity → incremental",
+            "Risk: leakage capacity converts to leverage capacity on top of direct debt baskets"
+          ],
+          "kct_items": "Cat 2 Item 5: reclassification/redesignation between baskets"
+        },
+        "vector_4_non_guarantor_concentration": {
+          "description": "Multiple baskets funding non-guarantor entities (structurally senior debt)",
+          "components": [
+            "Non-guarantor debt: 10-15% EBITDA",
+            "General basket at non-guarantors: uncapped in some deals",
+            "Intercompany loans to non-loan parties: shared with investment cap",
+            "Acquisition debt non-guarantor cap: shared or separate",
+            "Risk: total structurally senior debt far exceeds any single non-guarantor cap"
+          ],
+          "kct_items": "Cat 2 Item 6: structurally senior debt concentration"
+        }
+      },
+      "combinatorial_maximum_estimate": {
+        "conservative_lmm": "Credit facility + 15-20% EBITDA general + 100% EBITDA F&C + ratio = ~120% EBITDA fixed + unlimited ratio + facility",
+        "typical_cmm": "Facility + 25% EBITDA general + 100% EBITDA F&C + contribution debt + ratio = ~125% EBITDA fixed + unlimited ratio + facility + contribution",
+        "aggressive_umm_bsl": "Facility + 40% general + 100% F&C + ratio + conversion capacity (AA+RP) + contribution + inside maturity (50-100%) = ~240%+ EBITDA fixed + unlimited ratio + all conversion + facility"
+      },
+      "failure_modes": [
+        "Bank negotiates individual baskets but doesn't track combinatorial maximum",
+        "Stacking occurs over time: year 1 uses F&C, year 2 adds ratio, year 3 adds conversion capacity — invisible escalation",
+        "Non-guarantor concentration: structurally senior debt across multiple baskets exceeds recovery expectations",
+        "Redesignation restores fixed baskets: actual debt far exceeds nominal basket caps"
+      ],
+      "negotiation_sensitivity": "CRITICAL — KCT Category 2 is entirely dedicated to stacking risk. This is the primary structural risk in the indebtedness covenant."
+    },
+
+    "ebitda_amplifier_on_debt": {
+      "edge_id": "EBITDA→DEBT(all)",
+      "type": "feeds_into",
+      "from": "EBITDA Definition (with addbacks)",
+      "to": "All Grower Baskets + All Ratio Tests",
+      "graph_sources": ["financial_definitions", "indebtedness"],
+      "description": "EBITDA inflation simultaneously increases every grower basket (EBITDA-denominated) AND improves every leverage ratio (EBITDA as denominator). This is not one relationship — it is a systemic amplifier that cascades through the entire debt basket ecosystem.",
+      "affected_baskets": {
+        "grower_baskets": [
+          "General debt: 25% EBITDA → grows with EBITDA",
+          "Capital lease: 23% EBITDA → grows with EBITDA",
+          "Non-guarantor cap: 10-15% EBITDA → grows with EBITDA",
+          "Inside maturity basket: 50-100% EBITDA → grows with EBITDA"
+        ],
+        "ratio_tests": [
+          "Incremental ratio prong → leverage improves → more ratio capacity",
+          "IED ratio test → leverage improves → more IED capacity",
+          "Acquisition debt ratio → leverage improves → more acquisition debt",
+          "ECF stepdowns → leverage improves → less sweep → more retained ECF → more AA → more conversion capacity"
+        ]
+      },
+      "quantitative_cascade": {
+        "10pct_ebitda_addback": {
+          "general_basket": "+2.5% EBITDA capacity (at 25% grower)",
+          "cap_lease": "+2.3% EBITDA capacity (at 23% grower)",
+          "non_guarantor": "+1-1.5% EBITDA capacity (at 10-15% grower)",
+          "leverage_improvement": "~0.5x on a 5x levered deal",
+          "ratio_debt_unlock": "Potentially unlimited additional debt if leverage improvement passes incurrence test"
+        },
+        "cumulative": "A single 10% EBITDA addback creates ~6% EBITDA in additional fixed basket capacity + potentially unlimited ratio debt + faster ECF stepdowns + more AA conversion capacity. The multiplicative effect is the true risk."
+      },
+      "failure_modes": [
+        "Uncapped addbacks (42% of corpus): unlimited EBITDA inflation → unlimited basket growth + unlimited ratio debt",
+        "Acquired EBITDA: bolt-on acquisition EBITDA added to denominator → capacity increases before earnings materialize",
+        "Cost savings addbacks: projected savings credited before realized → phantom capacity"
+      ],
+      "negotiation_sensitivity": "CRITICAL — EBITDA is the master variable. Every addback discussion is simultaneously an indebtedness capacity discussion."
+    },
+
+    "debt_sweep_backstop": {
+      "edge_id": "DEBTSWEEP→DEBT",
+      "type": "feeds_into",
+      "from": "Debt Sweep (100% Mandatory Prepayment)",
+      "to": "Indebtedness Covenant (enforcement backstop)",
+      "graph_sources": ["indebtedness", "ecf_sweep"],
+      "description": "The debt sweep is the backstop mechanism — if debt is incurred outside permitted baskets, 100% of proceeds must prepay the term loan, making unpermitted debt economically pointless.",
+      "quantitative_parameters": {
+        "prevalence": "59/62 deals (95.2%)",
+        "flow_rate": "100% of net cash proceeds from non-permitted debt issuance",
+        "exclusions": "Refinancing Facilities, Permitted Debt"
+      },
+      "failure_modes": [
+        "Classification as 'Refinancing Facility' to avoid sweep — definitional gaming",
+        "No debt sweep at all (3/62 deals — Learning Material: flag if absent)",
+        "Refinancing debt used to upsize rather than replace — proceeds exceed existing debt"
+      ],
+      "negotiation_sensitivity": "LOW — Universally standard, but classification of 'Permitted Debt' and 'Refinancing Facilities' matters."
+    },
+
+    "cross_default_interaction": {
+      "edge_id": "XDEFAULT↔DEBT",
+      "type": "interacts_with",
+      "from": "Cross-Default Trigger",
+      "to": "Indebtedness Covenant (Material Debt Threshold)",
+      "graph_sources": ["events_of_default", "indebtedness"],
+      "description": "Cross-default provisions trigger an EoD in the credit agreement when the borrower defaults on other material debt. The material debt threshold must exceed individual basket sizes to avoid technical defaults from basket debt.",
+      "quantitative_parameters": {
+        "threshold_range": "Corpus range per EoD analysis: varies by deal size, typically 5-10% EBITDA",
+        "alignment_risk": "If general debt basket (25% EBITDA) exceeds cross-default threshold (5% EBITDA): a default on general basket debt triggers cross-default → EoD in credit agreement"
+      },
+      "failure_modes": [
+        "Threshold too low: technical defaults on permitted basket debt trigger cross-default cascade",
+        "Threshold too high: borrower defaults on substantial debt without triggering cross-default",
+        "Material debt definition excludes certain basket debt types → cross-default blind to those defaults"
+      ],
+      "negotiation_sensitivity": "MODERATE — Threshold alignment with basket sizes is a coordination exercise."
+    },
+
+    "sale_leaseback_interaction": {
+      "edge_id": "SLB↔CAPLEASE",
+      "type": "interacts_with",
+      "from": "Sale-Leaseback Transactions",
+      "to": "Capital Lease Obligations / Disposition Covenant",
+      "graph_sources": ["indebtedness", "dispositions"],
+      "description": "Sale-leaseback transactions sit at the intersection of three covenants: dispositions (asset sale), indebtedness (capital lease obligation created), and liens (purchase money/capital lease lien). Without coordination, sale-leaseback can be used to extract asset value while creating only capital lease obligations.",
+      "mechanism": "Step 1: Sell asset (disposition basket consumption). Step 2: Lease back creates capital lease obligation (indebtedness basket consumption). Step 3: Lien on leased asset (liens basket consumption). Net effect: borrower receives cash but asset remains in use — economically equivalent to a secured loan against the asset.",
+      "market_treatment": {
+        "lmm_cmm": "Capped (standard)",
+        "umm_bsl": "Often uncapped (PC line 387)",
+        "bank_preferred": "Capped and aligned across all three covenants"
+      },
+      "failure_modes": [
+        "Uncapped sale-leaseback in UMM/BSL: unlimited cash extraction via asset monetization",
+        "Capital lease obligation excluded from financial covenant leverage test: invisible leverage",
+        "Disposition proceeds from sale-leaseback may not trigger asset sale sweep if structured as 'financing' rather than 'disposition'"
+      ],
+      "negotiation_sensitivity": "MODERATE — Standard provision in LMM/CMM but requires vigilance on cap and cross-covenant alignment in UMM/BSL."
+    }
+  },
+
+  "systemic_amplifier_note": {
+    "infinite_capacity_system": {
+      "description": "The Indebtedness Covenant is designed as a LAYERED CAPACITY SYSTEM, not a hard cap. Layer 1 (fixed baskets) provides 130-190% of EBITDA in base capacity. Layer 2 (ratio baskets) adds UNLIMITED capacity subject to leverage test. Layer 3 (conversion baskets) adds cross-covenant capacity from AA, RP, and Investment sources. The combinatorial maximum of all three layers — especially when amplified by EBITDA addbacks — creates a theoretical capacity that vastly exceeds any single basket's nominal size. This is by design: the layered system gives borrowers flexibility while relying on the incurrence test as the ultimate constraint. The system fails when EBITDA manipulation makes the incurrence test trivially passable.",
+      "key_diagnostic_questions": [
+        "What is the combinatorial maximum of ALL baskets (including conversion and reallocation)?",
+        "What percentage of debt is excluded from the financial covenant leverage calculation?",
+        "How much of the total capacity is structurally senior (non-guarantor + non-collateral)?",
+        "At what EBITDA addback level does the incurrence test become trivially passable?"
+      ]
+    }
+  }
+}

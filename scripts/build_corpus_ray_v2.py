@@ -128,6 +128,18 @@ CREATE TABLE IF NOT EXISTS documents (
     section_fallback_used BOOLEAN DEFAULT false
 );
 
+CREATE TABLE IF NOT EXISTS articles (
+    doc_id VARCHAR NOT NULL,
+    article_num INTEGER NOT NULL,
+    label VARCHAR,
+    title VARCHAR,
+    concept VARCHAR,
+    char_start INTEGER,
+    char_end INTEGER,
+    is_synthetic BOOLEAN DEFAULT false,
+    PRIMARY KEY (doc_id, article_num)
+);
+
 CREATE TABLE IF NOT EXISTS sections (
     doc_id VARCHAR NOT NULL,
     section_number VARCHAR NOT NULL,
@@ -247,6 +259,16 @@ _TABLE_COLUMNS: dict[str, tuple[str, ...]] = {
         "section_parser_mode",
         "section_fallback_used",
     ),
+    "articles": (
+        "doc_id",
+        "article_num",
+        "label",
+        "title",
+        "concept",
+        "char_start",
+        "char_end",
+        "is_synthetic",
+    ),
     "sections": (
         "doc_id",
         "section_number",
@@ -329,6 +351,7 @@ _TABLE_COLUMNS: dict[str, tuple[str, ...]] = {
 
 _TABLE_MERGE_CONFIG: tuple[tuple[str, bool, tuple[str, ...]], ...] = (
     ("documents", True, ("doc_id",)),
+    ("articles", True, ("doc_id", "article_num")),
     ("sections", True, ("doc_id", "section_number")),
     ("clauses", True, ("doc_id", "section_number", "clause_id")),
     (
@@ -363,6 +386,121 @@ def _meta_key_for_doc_key(
         accession = acc_match.group(1)
         return str(Path(meta_key).with_name(f"{accession}.meta.json"))
     return str(Path(meta_key).with_suffix(".meta.json"))
+
+
+# ---------------------------------------------------------------------------
+# Local filesystem listing + processing (Block-2: local-corpus mode)
+# ---------------------------------------------------------------------------
+
+
+def _list_local_document_keys(
+    corpus_dir: Path,
+    doc_prefix: str = "documents",
+    meta_prefix: str = "metadata",
+) -> list[tuple[str, str | None]]:
+    """List local HTML documents and pair with metadata sidecars."""
+    doc_dir = corpus_dir / doc_prefix
+    meta_dir = corpus_dir / meta_prefix
+    html_extensions = {".htm", ".html"}
+
+    doc_paths: list[Path] = []
+    for ext in html_extensions:
+        doc_paths.extend(doc_dir.rglob(f"*{ext}"))
+    doc_paths.sort()
+
+    log.info("Found %d local document files in %s", len(doc_paths), doc_dir)
+
+    pairs: list[tuple[str, str | None]] = []
+    for dp in doc_paths:
+        # Use relative path from corpus_dir as the "key"
+        doc_key = str(dp.relative_to(corpus_dir))
+
+        # Find metadata sidecar
+        rel_from_doc_dir = dp.relative_to(doc_dir)
+        meta_path = meta_dir / rel_from_doc_dir.parent
+        stem = dp.stem
+        acc_match = ACCESSION_RE.search(stem)
+        if acc_match:
+            accession = acc_match.group(1)
+            meta_file = meta_path / f"{accession}.meta.json"
+        else:
+            meta_file = meta_path / f"{stem}.meta.json"
+
+        meta_key: str | None = None
+        if meta_file.exists():
+            meta_key = str(meta_file.relative_to(corpus_dir))
+
+        pairs.append((doc_key, meta_key))
+
+    return pairs
+
+
+@ray.remote(num_cpus=1, max_retries=2)
+def process_local_document(
+    corpus_dir: str,
+    doc_key: str,
+    meta_key: str | None,
+) -> dict[str, Any] | None:
+    """Process a local HTML document through the agent NLP pipeline.
+
+    Same as process_document() but reads from filesystem instead of S3.
+    Eliminates network latency (~200ms per doc) for a ~3x speedup.
+    """
+    try:
+        doc_path = Path(corpus_dir) / doc_key
+
+        # Step 1: Read HTML from disk
+        try:
+            html = doc_path.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            try:
+                html = doc_path.read_text(encoding="cp1252")
+            except UnicodeDecodeError:
+                with open(doc_path, errors="replace") as f:
+                    html = f.read()
+
+        if not html or len(html) < 50:
+            return None
+
+        # Step 2: Load sidecar metadata from disk
+        sidecar: SidecarMetadata | None = None
+        if meta_key:
+            meta_path = Path(corpus_dir) / meta_key
+            if meta_path.exists():
+                try:
+                    meta_bytes = meta_path.read_bytes()
+                    meta_obj = _load_json(meta_bytes)
+                    if isinstance(meta_obj, dict):
+                        sidecar = SidecarMetadata(
+                            company_name=str(meta_obj.get("company_name", "")),
+                            cik=str(meta_obj.get("cik", "")),
+                            accession=str(meta_obj.get("accession", "")),
+                        )
+                except Exception:
+                    pass
+
+        # Step 3: Delegate to shared NLP pipeline
+        result = process_document_text(
+            html=html,
+            path_or_key=doc_key,
+            filename=doc_path.name,
+            sidecar=sidecar,
+            cohort_only_nlp=True,
+        )
+        if result is None:
+            return None
+
+        d = result.to_dict()
+        d["doc_key"] = doc_key
+        return d
+
+    except Exception as exc:
+        print(
+            f"  ERROR processing {doc_key}: {exc}",
+            file=sys.stderr,
+        )
+        traceback.print_exc(file=sys.stderr)
+        return None
 
 
 # ---------------------------------------------------------------------------
@@ -562,6 +700,7 @@ def _write_parquet_batch(
     import pyarrow.parquet as pq
 
     all_docs: list[dict[str, Any]] = []
+    all_articles: list[dict[str, Any]] = []
     all_sections: list[dict[str, Any]] = []
     all_clauses: list[dict[str, Any]] = []
     all_definitions: list[dict[str, Any]] = []
@@ -571,6 +710,7 @@ def _write_parquet_batch(
 
     for result in batch:
         all_docs.append(result["doc"])
+        all_articles.extend(result.get("articles", []))
         all_sections.extend(result["sections"])
         all_clauses.extend(result["clauses"])
         all_definitions.extend(result["definitions"])
@@ -585,6 +725,13 @@ def _write_parquet_batch(
         pq.write_table(
             table,
             shard_dir / f"documents_{prefix}.parquet",
+            compression="zstd",
+        )
+    if all_articles:
+        table = pa.Table.from_pylist(all_articles)
+        pq.write_table(
+            table,
+            shard_dir / f"articles_{prefix}.parquet",
             compression="zstd",
         )
     if all_sections:
@@ -632,6 +779,7 @@ def _write_parquet_batch(
 
     return {
         "docs": len(all_docs),
+        "articles": len(all_articles),
         "sections": len(all_sections),
         "clauses": len(all_clauses),
         "definitions": len(all_definitions),
@@ -835,8 +983,8 @@ def main() -> None:
     )
     parser.add_argument(
         "--bucket",
-        required=True,
-        help="S3 bucket name containing documents/ prefix",
+        default="",
+        help="S3 bucket name (required unless --local-corpus is used)",
     )
     parser.add_argument(
         "--output",
@@ -918,10 +1066,20 @@ def main() -> None:
         ),
     )
     parser.add_argument(
+        "--local-corpus",
+        type=Path,
+        default=None,
+        help=(
+            "Read from local corpus directory instead of S3. "
+            "Expects {dir}/documents/ and {dir}/metadata/ sub-dirs. "
+            "Eliminates S3 network latency for ~3x speedup."
+        ),
+    )
+    parser.add_argument(
         "--doc-prefix",
         default="documents-trimmed",
         help=(
-            "S3 key prefix for HTML documents "
+            "S3 key prefix for HTML documents, or sub-dir name for --local-corpus "
             "(default: documents-trimmed)"
         ),
     )
@@ -929,7 +1087,7 @@ def main() -> None:
         "--meta-prefix",
         default="metadata-trimmed",
         help=(
-            "S3 key prefix for metadata sidecars "
+            "S3 key prefix for metadata sidecars, or sub-dir name for --local-corpus "
             "(default: metadata-trimmed)"
         ),
     )
@@ -948,7 +1106,9 @@ def main() -> None:
     logging.getLogger("s3transfer").setLevel(logging.WARNING)
 
     output_path: Path = args.output.resolve()
-    bucket: str = args.bucket.strip().removeprefix("s3://").rstrip("/")
+    use_local_corpus: bool = args.local_corpus is not None
+    local_corpus_dir: Path | None = args.local_corpus.resolve() if args.local_corpus else None
+    bucket: str = args.bucket.strip().removeprefix("s3://").rstrip("/") if args.bucket else ""
 
     # Shard directory
     shard_dir: Path = args.shards_dir or (output_path.parent / "shards")
@@ -999,13 +1159,33 @@ def main() -> None:
 
     try:
         # -------------------------------------------------------------------
-        # Step 2: List S3 document keys
+        # Step 2: List document keys (local filesystem or S3)
         # -------------------------------------------------------------------
-        all_pairs = _list_document_keys(
-            bucket, args.region, args.profile,
-            doc_prefix=args.doc_prefix,
-            meta_prefix=args.meta_prefix,
-        )
+        if use_local_corpus:
+            assert local_corpus_dir is not None
+            # Local corpus mode: use filesystem prefix names
+            # Default doc-prefix for local is "documents" (not "documents-trimmed")
+            local_doc_prefix = args.doc_prefix
+            local_meta_prefix = args.meta_prefix
+            # Auto-detect: if user didn't override and local dir has "documents/"
+            if local_doc_prefix == "documents-trimmed" and (local_corpus_dir / "documents").is_dir():
+                local_doc_prefix = "documents"
+            if local_meta_prefix == "metadata-trimmed" and (local_corpus_dir / "metadata").is_dir():
+                local_meta_prefix = "metadata"
+            all_pairs = _list_local_document_keys(
+                local_corpus_dir,
+                doc_prefix=local_doc_prefix,
+                meta_prefix=local_meta_prefix,
+            )
+        else:
+            if not bucket:
+                log.error("--bucket is required when --local-corpus is not used")
+                sys.exit(1)
+            all_pairs = _list_document_keys(
+                bucket, args.region, args.profile,
+                doc_prefix=args.doc_prefix,
+                meta_prefix=args.meta_prefix,
+            )
         t_list_done = time.time()
 
         if args.limit and args.limit > 0:
@@ -1072,7 +1252,7 @@ def main() -> None:
                     run_id=run_id,
                     db_path=output_path,
                     input_source={
-                        "mode": "ray_local" if args.local else "ray_cluster",
+                        "mode": "ray_local_corpus" if use_local_corpus else ("ray_local" if args.local else "ray_cluster"),
                         "pipeline": "parquet_sharded_v2",
                         "bucket": bucket,
                         "region": args.region,
@@ -1147,9 +1327,14 @@ def main() -> None:
                 # Fill up to wave_size active tasks
                 while len(active_futures) < wave_size and submitted < total:
                     doc_key, meta_key = next(pair_iter)
-                    ref = process_document.remote(  # type: ignore[attr-defined]
-                        bucket, doc_key, meta_key, args.region,
-                    )
+                    if use_local_corpus:
+                        ref = process_local_document.remote(  # type: ignore[attr-defined]
+                            str(local_corpus_dir), doc_key, meta_key,
+                        )
+                    else:
+                        ref = process_document.remote(  # type: ignore[attr-defined]
+                            bucket, doc_key, meta_key, args.region,
+                        )
                     active_futures.append(ref)
                     future_to_key[ref] = doc_key
                     submitted += 1
@@ -1289,7 +1474,7 @@ def main() -> None:
             run_id=run_id,
             db_path=output_path,
             input_source={
-                "mode": "ray_local" if args.local else "ray_cluster",
+                "mode": "ray_local_corpus" if use_local_corpus else ("ray_local" if args.local else "ray_cluster"),
                 "pipeline": "parquet_sharded_v2",
                 "bucket": bucket,
                 "region": args.region,

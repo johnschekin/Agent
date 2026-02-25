@@ -1,0 +1,3036 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Administrative agent consent is typically required for all assignments, exercised in the agent's reasonable discretion. Ensures orderly record-keeping and prevents problematic transferees.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.assignment_mechanics.admin_agent_consent",
+          "kct_ref": [
+            "cat3.13",
+            "cat5.3"
+          ],
+          "level": 3,
+          "name": "Admin Agent Consent",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 13; KCT Cat 5 Item 3"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Borrower cannot unreasonably withhold consent to assignments. Standard formulation that balances borrower influence over lender composition with market liquidity needs.",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.assignments",
+              "id": "governance.assignments.assignment_mechanics.borrower_consent.nturw",
+              "kct_ref": [
+                "cat3.13"
+              ],
+              "level": 4,
+              "name": "Not Unreasonably Withheld Standard",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 13"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Borrower consent requirement falls away upon payment/bankruptcy Event of Default, ensuring distressed debt can trade freely when borrower is in default.",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.assignments",
+              "id": "governance.assignments.assignment_mechanics.borrower_consent.eod_fallaway",
+              "kct_ref": [
+                "cat3.13"
+              ],
+              "level": 4,
+              "market_benchmarks": {
+                "all_eod": "aggressive",
+                "payment_eod_only": "standard"
+              },
+              "name": "EoD Consent Fallaway",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 132,
+                  "term": "Assignments – consents"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 13; Review Template Row 132 (Assignments – consents)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "A mechanism for assignments, exercised on a 'not to be unreasonably withheld or delayed' basis. Falls away during Event of Default to ensure liquidity. []",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.assignment_mechanics.borrower_consent",
+          "kct_ref": [
+            "cat3.13"
+          ],
+          "level": 3,
+          "name": "Borrower Consent",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 13"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Requirement that the issuing bank approve any assignment of a lender's commitment that includes a participation in the letter of credit sub-facility. The issuing bank's consent right protects it from bearing reimbursement risk with an assignee it has not evaluated, since the issuing bank looks to the participating lenders for reimbursement of drawn LC amounts.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.assignment_mechanics.issuing_bank_consent",
+          "kct_ref": [
+            "cat3.13"
+          ],
+          "level": 3,
+          "name": "Issuing Bank Consent",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 13"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Minimum dollar amount for each individual assignment to prevent fragmentation of the lender group. Standard is $500,000 to $1,000,000 depending on facility size. Agent may waive.",
+          "dls_ref": [
+            "DLS:43:Minimum ratings"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.assignment_mechanics.minimum_amount",
+          "level": 3,
+          "market_benchmarks": {
+            "dls_standard": "$500,000",
+            "observed_range": "$500K-$1M"
+          },
+          "name": "Minimum Assignment Amount",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 43 (Minimum ratings)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Processing fee (typically $3,500) payable to the administrative agent for each assignment to cover administrative costs of recording the transfer and updating the register.",
+          "dls_ref": [
+            "DLS:32:Ticking fee",
+            "DLS:35:Administration fee"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.assignment_mechanics.assignment_fee",
+          "kct_ref": [
+            "cat3.13"
+          ],
+          "level": 3,
+          "name": "Assignment Fee",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 32 (Ticking fee); DLS Preferred Row 35 (Administration fee); KCT Cat 3 Item 13"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "If borrower or agent does not respond within specified business days (typically 10 BD), consent is deemed given. Prevents indefinite holdups in secondary market trading.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.assignment_mechanics.deemed_consent",
+          "kct_ref": [
+            "cat3.6",
+            "cat3.13"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "standard_period": "10 business days"
+          },
+          "name": "Deemed Consent for Assignments",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 132,
+              "term": "Assignments – consents"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 6; KCT Cat 3 Item 13; Review Template Row 132 (Assignments – consents)",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:40.447877+00:00",
+              "term_packs": {
+                "CONSENT_REQUIREMENTS": {
+                  "label": "Consent Requirements",
+                  "category": "ASSIGNMENT_TRANSFER",
+                  "exactPhrases": [
+                    "with the consent of",
+                    "consent of the Borrower",
+                    "consent of the Administrative Agent",
+                    "deemed to have consented",
+                    "not to be unreasonably withheld",
+                    "consent not required",
+                    "shall not be required",
+                    "consent shall fallaway",
+                    "during the continuance of an Event of Default"
+                  ],
+                  "sectionHeaders": [
+                    "Consent to Assignment",
+                    "Section 10.06",
+                    "Assignments - Consents",
+                    "Required Consents"
+                  ],
+                  "semanticVariants": [
+                    "assignment consent requirements",
+                    "transfer approval",
+                    "consent conditions",
+                    "approval for assignment",
+                    "deemed consent mechanics"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.58,
+                    "minKeywordScore": 0.48,
+                    "minConfidence": 0.65,
+                    "escalationThreshold": 0.48,
+                    "humanEscalationThreshold": 0.28
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "with the consent of",
+                  "consent of the Borrower",
+                  "consent of the Administrative Agent",
+                  "deemed to have consented",
+                  "not to be unreasonably withheld",
+                  "consent not required",
+                  "shall not be required",
+                  "consent shall fallaway",
+                  "during the continuance of an Event of Default"
+                ],
+                "sectionHeaders": [
+                  "Consent to Assignment",
+                  "Section 10.06",
+                  "Assignments - Consents",
+                  "Required Consents"
+                ],
+                "semanticVariants": [
+                  "assignment consent requirements",
+                  "transfer approval",
+                  "consent conditions",
+                  "approval for assignment",
+                  "deemed consent mechanics"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "CONSENT_REQUIREMENTS",
+              "label": "Consent Requirements",
+              "schema_file": "assignment-transfer-enhanced.schema.ts",
+              "field_count": 4,
+              "r1_domain": "governance",
+              "mapping_confidence": 0.5909,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Framework governing the procedural requirements for transferring loan commitments in the secondary market. DLS Preferred row 94 provides the complete specification: Revolver assignments require consent of Administrative Agent and Borrower (not to be unreasonably withheld or delayed), except for assignments to existing revolving lenders/affiliates and during EoD. Term Loan assignments require Agent consent (waived for lender-to-lender/affiliate/approved fund) and Borrower consent (waived for lender-to-lender/affiliate/approved fund and during EoD). 10 business day deemed consent for Borrower. Minimum assignment $500,000. $3,500 agency fee per assignment. New lenders must complete tax forms. Assignment and assumption agreement required.",
+      "dls_ref": [
+        "DLS:94:Assignments"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "assignments",
+        "extraction_ready": true,
+        "playbook_ref": "assignments.consents",
+        "section_locations": [
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE XI",
+          "ARTICLE XIII",
+          "Section 10.05",
+          "Section 11.8"
+        ],
+        "shape_ref": "assignments.consents",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.220348+00:00",
+          "term_packs": {
+            "ASSIGNMENT_PROVISIONS": {
+              "label": "Assignment Provisions",
+              "category": "ASSIGNMENT_TRANSFER",
+              "exactPhrases": [
+                "Assignments and Assumptions",
+                "may assign to one or more Eligible Assignees",
+                "assignment shall not be effective",
+                "Register of Assignments",
+                "minimum assignment amount",
+                "pro rata assignment",
+                "partial assignment",
+                "assignment fee",
+                "$3,500 assignment fee",
+                "executed Assignment and Assumption"
+              ],
+              "sectionHeaders": [
+                "Assignments",
+                "Assignment and Assumption",
+                "ARTICLE IX - THE ADMINISTRATIVE AGENT",
+                "Section 10.06",
+                "Section 10.04",
+                "Assignments and Participations",
+                "Register"
+              ],
+              "semanticVariants": [
+                "loan assignment mechanics",
+                "transfer of loan interest",
+                "assignment documentation requirements",
+                "lender assignment procedures",
+                "commitment assignment process"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            },
+            "ASSIGN_CONSENT": {
+              "label": "Assignments - Consent Requirements",
+              "category": "VOTING_ASSIGNMENTS",
+              "exactPhrases": [
+                "[Describe deemed consent, sponsor/borrower consent]",
+                "[Identify unusual limits – can loans be pledged for leveraged facilities?]",
+                "DQ List",
+                "whether it can be updated",
+                "if it is available to other lenders",
+                "when the updates apply",
+                "if it applies after a payment/bankruptcy EoD",
+                "consent of the Borrower",
+                "consent of the Sponsor",
+                "deemed to have consented",
+                "not unreasonably withheld",
+                "Disqualified Institutions",
+                "DQ List shall be made available",
+                "consent shall not be required",
+                "assignment shall not require"
+              ],
+              "sectionHeaders": [
+                "Assignments and Participations",
+                "Section [X] - Assignments",
+                "Article [X] - The Administrative Agent",
+                "Assignments",
+                "Consents",
+                "Disqualified Institutions",
+                "Eligible Assignee"
+              ],
+              "semanticVariants": [
+                "borrower consent requirements for loan assignments",
+                "deemed consent mechanics for transfer",
+                "disqualified institution list management",
+                "DQ list update provisions",
+                "assignment consent fallaway upon default",
+                "sponsor consent for loan transfers",
+                "transfer restrictions for credit facilities"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            },
+            "ELIGIBLE_ASSIGNEE": {
+              "label": "Eligible Assignee",
+              "category": "ASSIGNMENT_TRANSFER",
+              "exactPhrases": [
+                "Eligible Assignee",
+                "means any Person that is",
+                "commercial bank",
+                "financial institution",
+                "insurance company",
+                "fund that invests in loans",
+                "other than a natural person",
+                "other than the Borrower",
+                "Disqualified Institution"
+              ],
+              "sectionHeaders": [
+                "Eligible Assignee",
+                "DEFINITIONS",
+                "Section 1.01",
+                "Assignments"
+              ],
+              "semanticVariants": [
+                "permitted assignee",
+                "qualified transferee",
+                "approved assignee",
+                "eligible transferee",
+                "institutional investor"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            },
+            "NOVATION": {
+              "label": "Novation",
+              "category": "ASSIGNMENT_TRANSFER",
+              "exactPhrases": [
+                "novation",
+                "novated",
+                "substitution of a new lender",
+                "release of the assigning Lender",
+                "assumed all obligations",
+                "discharged from its obligations",
+                "successor lender"
+              ],
+              "sectionHeaders": [
+                "Novation",
+                "Effect of Assignment",
+                "Assignment and Assumption",
+                "Release"
+              ],
+              "semanticVariants": [
+                "lender substitution",
+                "obligation transfer",
+                "replacement lender",
+                "debt novation",
+                "contractual substitution"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Assignments and Assumptions",
+              "may assign to one or more Eligible Assignees",
+              "assignment shall not be effective",
+              "Register of Assignments",
+              "minimum assignment amount",
+              "pro rata assignment",
+              "partial assignment",
+              "assignment fee",
+              "$3,500 assignment fee",
+              "executed Assignment and Assumption",
+              "[Describe deemed consent, sponsor/borrower consent]",
+              "[Identify unusual limits – can loans be pledged for leveraged facilities?]",
+              "DQ List",
+              "whether it can be updated",
+              "if it is available to other lenders",
+              "when the updates apply",
+              "if it applies after a payment/bankruptcy EoD",
+              "consent of the Borrower",
+              "consent of the Sponsor",
+              "deemed to have consented",
+              "not unreasonably withheld",
+              "Disqualified Institutions",
+              "DQ List shall be made available",
+              "consent shall not be required",
+              "assignment shall not require",
+              "Eligible Assignee",
+              "means any Person that is",
+              "commercial bank",
+              "financial institution",
+              "insurance company",
+              "fund that invests in loans",
+              "other than a natural person",
+              "other than the Borrower",
+              "Disqualified Institution",
+              "novation",
+              "novated",
+              "substitution of a new lender",
+              "release of the assigning Lender",
+              "assumed all obligations",
+              "discharged from its obligations",
+              "successor lender"
+            ],
+            "sectionHeaders": [
+              "Assignments",
+              "Assignment and Assumption",
+              "ARTICLE IX - THE ADMINISTRATIVE AGENT",
+              "Section 10.06",
+              "Section 10.04",
+              "Assignments and Participations",
+              "Register",
+              "Section [X] - Assignments",
+              "Article [X] - The Administrative Agent",
+              "Consents",
+              "Disqualified Institutions",
+              "Eligible Assignee",
+              "DEFINITIONS",
+              "Section 1.01",
+              "Novation",
+              "Effect of Assignment",
+              "Release"
+            ],
+            "semanticVariants": [
+              "loan assignment mechanics",
+              "transfer of loan interest",
+              "assignment documentation requirements",
+              "lender assignment procedures",
+              "commitment assignment process",
+              "borrower consent requirements for loan assignments",
+              "deemed consent mechanics for transfer",
+              "disqualified institution list management",
+              "DQ list update provisions",
+              "assignment consent fallaway upon default",
+              "sponsor consent for loan transfers",
+              "transfer restrictions for credit facilities",
+              "permitted assignee",
+              "qualified transferee",
+              "approved assignee",
+              "eligible transferee",
+              "institutional investor",
+              "lender substitution",
+              "obligation transfer",
+              "replacement lender",
+              "debt novation",
+              "contractual substitution"
+            ]
+          }
+        }
+      },
+      "family_id": "governance.assignments",
+      "id": "governance.assignments.assignment_mechanics",
+      "kct_ref": [
+        "cat3.13"
+      ],
+      "level": 2,
+      "name": "Assignment Mechanics",
+      "negotiation_spectrum": {
+        "aggressive_position": "Borrower consent waived only for payment/bankruptcy EoD (not all EoD); no deemed consent; LC Issuer consent for LC sub-facility",
+        "dls_source": "DLS row 94",
+        "dls_stance": "moderate_lender",
+        "hot_button_items": [
+          "No assignments to Disqualified Institutions or natural persons.",
+          "No assignments to Disqualified Institutions or natural persons.",
+          "Disqualified Institutions: Assignments and participations to Disqualified Institutions are prohibited. List may be posted to lenders and shared with potential assignees and participants on a confident"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "agent_consent: all_assignments vs lender_to_lender_exempt",
+          "borrower_consent_revolver: required vs not_required",
+          "borrower_consent_tl: required_except_lender_affiliate vs no_consent",
+          "borrower_consent_eod_waiver: any_eod vs payment_bankruptcy_only",
+          "deemed_consent_period: 10BD vs 5BD vs no_deemed_consent",
+          "minimum_assignment_amount: 500k vs 1M vs 5M",
+          "dq_list: maintained vs not_maintained",
+          "dq_enforcement: agent_no_duty vs agent_must_verify",
+          "natural_person_prohibition: yes vs no",
+          "assignment_fee: 3500 vs 0 vs borrower_pays",
+          "participation_dq: prohibited vs permitted"
+        ],
+        "market_position": "",
+        "preferred_position": "Agent consent for all; Borrower consent (NTU withheld/delayed) except to existing lenders/affiliates or during EoD; 10BD deemed consent; $500K minimum; no DQ institutions/natural persons; $3,500 assignment fee",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "assignments.assignment_consents"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 94 (complete assignment mechanics: consent requirements, deemed consent, minimums, agency fees, tax forms)",
+      "neutron_field_refs": [
+        {
+          "term_type": "ASSIGNMENT_PROVISIONS",
+          "label": "Assignment Provisions",
+          "schema_file": "assignment-transfer-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "governance",
+          "mapping_confidence": 0.6004,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        },
+        {
+          "term_type": "ASSIGN_CONSENT",
+          "label": "Assignments - Consent Requirements",
+          "schema_file": "voting-assignments-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "governance",
+          "mapping_confidence": 0.4648,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        },
+        {
+          "term_type": "ELIGIBLE_ASSIGNEE",
+          "label": "Eligible Assignee",
+          "schema_file": "assignment-transfer-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "governance",
+          "mapping_confidence": 0.242,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        },
+        {
+          "term_type": "NOVATION",
+          "label": "Novation",
+          "schema_file": "assignment-transfer-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "governance",
+          "mapping_confidence": 0.2687,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Named competitors and industry competitors identified on the DQ list. 78% of DQ lists focus primarily on competitor exclusion to protect confidential business information.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.dq_list.competitor_exclusion",
+          "kct_ref": [
+            "cat3.13"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "78%"
+          },
+          "name": "Competitor Restrictions",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 13"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Expansive definition of 'affiliate' for disqualified lender identification purposes, capturing not only direct portfolio companies and investment vehicles of the sponsor's competitors but also their managed funds, advisory clients, and entities sharing common control. A broader definition reduces the pool of eligible assignees but provides stronger protection against competitors gaining access to confidential credit agreement information.",
+              "dls_ref": [
+                60
+              ],
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.assignments",
+              "id": "governance.assignments.dq_list.affiliate_identification.broad",
+              "level": 4,
+              "name": "Known or Reasonably Identifiable",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 60"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Narrower standard where affiliates are DQ'd only if identifiable 'on the basis of name,' missing entities with different naming conventions but common ownership.",
+              "dls_ref": [
+                60
+              ],
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.assignments",
+              "id": "governance.assignments.dq_list.affiliate_identification.narrow",
+              "level": 4,
+              "name": "On Basis of Name Only",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 60"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "How affiliates of DQ'd entities are identified: 'known or reasonably identifiable' (Geneva broader standard) vs. 'reasonably identifiable on basis of name' (narrower). Scope determines how effectively the DQ net catches related entities. []",
+          "dls_ref": [
+            60
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "hard",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.dq_list.affiliate_identification",
+          "level": 3,
+          "name": "Affiliate Identification Standard",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 60"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "DQ list updates before closing require arranger consent. Some deals lock the DQ list at signing with no further additions permitted.",
+              "dls_ref": [
+                60
+              ],
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.assignments",
+              "id": "governance.assignments.dq_list.update_mechanics.pre_closing",
+              "level": 4,
+              "name": "Pre-Closing Updates",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 60"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "DQ list updates after closing, typically requiring agent consent. Controversial because commitment parties at signing may not know the full DQ universe.",
+              "dls_ref": [
+                60
+              ],
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.assignments",
+              "id": "governance.assignments.dq_list.update_mechanics.post_closing",
+              "level": 4,
+              "name": "Post-Closing Updates",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 60"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "DQ list additions do not apply retroactively to existing holders. An entity that purchased before being DQ'd retains its position.",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.assignments",
+              "id": "governance.assignments.dq_list.update_mechanics.no_retroactive",
+              "level": 4,
+              "name": "No Retroactive Application",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Whether and how the DQ list can be updated after closing. Pre-closing updates require arranger consent; post-closing typically require agent consent.",
+          "dls_ref": [
+            60
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.dq_list.update_mechanics",
+          "level": 3,
+          "market_benchmarks": {
+            "post_closing_updates": "39%"
+          },
+          "name": "Post-Closing Update Mechanics",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 60"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Carveout for financial institutions with debt fund activities that might otherwise be caught by competitive exclusion prongs. Prevents over-breadth from excluding legitimate institutional investors.",
+          "dls_ref": [
+            "DLS:95:Debt Fund Affiliates/Non-Debt Fund Affiliates"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.dq_list.debt_fund_carveout",
+          "level": 3,
+          "market_benchmarks": {
+            "r17_gap_flagged": true
+          },
+          "name": "Debt Fund Carveout",
+          "negotiation_spectrum": {
+            "r17_gap_flagged": true
+          },
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 5,
+              "term": "Disqualified Institutions"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 95 (Debt Fund Affiliates/Non-Debt Fund Affiliates); Review Template Row 5 (Disqualified Institutions)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether the DQ list can be shared with prospective assignees on a confidential basis. Administrative agent typically has no duty to proactively monitor or enforce DQ list compliance.",
+          "dls_ref": [
+            60
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.dq_list.sharing_confidentiality",
+          "level": 3,
+          "name": "List Sharing / Confidentiality",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 60"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether DQ restrictions persist during Event of Default. DQ lists that persist through EoD can block emergency liquidity by narrowing the universe of potential buyers of distressed debt. []",
+          "dls_ref": [
+            94
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "hard",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.dq_list.eod_persistence",
+          "level": 3,
+          "name": "EoD Persistence",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 94"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Categories of excluded assignees that cannot acquire loan positions. DLS Preferred row 94 specifies: 'Assignments and participations to Disqualified Institutions are prohibited. List may be posted to lenders and shared with potential assignees and participants on a confidential basis. Administrative Agent shall have no duty to ascertain, monitor or enforce compliance with respect to assignments or participations to Disqualified Institutions.' PC Term Comparison: 'DQ List: Reject updating the list other than for competitors. Typically expect prohibition on assignments to DQs to fall-away on a payment or bankruptcy event of default.' Learning Material on DQ Lenders: includes known/reasonably identifiable affiliates and competitors identified from time to time, with bona fide debt fund exception for affiliate competitors.",
+      "domain_id": "governance",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "assignments",
+        "extraction_ready": true,
+        "playbook_ref": "assignments.consents",
+        "section_locations": [
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE XI",
+          "ARTICLE XIII",
+          "Section 10.05",
+          "Section 11.8"
+        ],
+        "shape_ref": "assignments.consents",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.377450+00:00",
+          "term_packs": {
+            "CL_DISQUALIFIED_INST": {
+              "label": "Disqualified Institutions",
+              "category": "COMMITMENT_LETTER",
+              "exactPhrases": [
+                "Disqualified Institutions",
+                "DQ list",
+                "updated after signing",
+                "competitors not required to be identified in writing",
+                "debt fund carveout",
+                "competitive prongs",
+                "assignments or participations",
+                "barred institutions",
+                "ineligible lenders"
+              ],
+              "sectionHeaders": [
+                "DISQUALIFIED INSTITUTIONS",
+                "DISQUALIFIED LENDERS",
+                "ASSIGNMENT RESTRICTIONS",
+                "ELIGIBLE ASSIGNEES",
+                "ASSIGNMENT AND PARTICIPATION"
+              ],
+              "semanticVariants": [
+                "restricted assignees",
+                "ineligible lenders",
+                "prohibited transferees",
+                "competitor restrictions",
+                "assignment limitations",
+                "blocked list"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Disqualified Institutions",
+              "DQ list",
+              "updated after signing",
+              "competitors not required to be identified in writing",
+              "debt fund carveout",
+              "competitive prongs",
+              "assignments or participations",
+              "barred institutions",
+              "ineligible lenders"
+            ],
+            "sectionHeaders": [
+              "DISQUALIFIED INSTITUTIONS",
+              "DISQUALIFIED LENDERS",
+              "ASSIGNMENT RESTRICTIONS",
+              "ELIGIBLE ASSIGNEES",
+              "ASSIGNMENT AND PARTICIPATION"
+            ],
+            "semanticVariants": [
+              "restricted assignees",
+              "ineligible lenders",
+              "prohibited transferees",
+              "competitor restrictions",
+              "assignment limitations",
+              "blocked list"
+            ]
+          }
+        }
+      },
+      "family_id": "governance.assignments",
+      "id": "governance.assignments.dq_list",
+      "kct_ref": [
+        "cat3.13"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "95.2%",
+        "unique_patterns": "56/62"
+      },
+      "name": "Disqualified Lenders List",
+      "negotiation_spectrum": {
+        "aggressive_position": "Borrower consent waived only for payment/bankruptcy EoD (not all EoD); no deemed consent; LC Issuer consent for LC sub-facility",
+        "dls_source": "DLS row 94",
+        "dls_stance": "moderate_lender",
+        "hot_button_items": [
+          "No assignments to Disqualified Institutions or natural persons.",
+          "No assignments to Disqualified Institutions or natural persons.",
+          "Disqualified Institutions: Assignments and participations to Disqualified Institutions are prohibited. List may be posted to lenders and shared with potential assignees and participants on a confident"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "agent_consent: all_assignments vs lender_to_lender_exempt",
+          "borrower_consent_revolver: required vs not_required",
+          "borrower_consent_tl: required_except_lender_affiliate vs no_consent",
+          "borrower_consent_eod_waiver: any_eod vs payment_bankruptcy_only",
+          "deemed_consent_period: 10BD vs 5BD vs no_deemed_consent",
+          "minimum_assignment_amount: 500k vs 1M vs 5M",
+          "dq_list: maintained vs not_maintained",
+          "dq_enforcement: agent_no_duty vs agent_must_verify",
+          "natural_person_prohibition: yes vs no",
+          "assignment_fee: 3500 vs 0 vs borrower_pays",
+          "participation_dq: prohibited vs permitted"
+        ],
+        "market_position": "",
+        "preferred_position": "Agent consent for all; Borrower consent (NTU withheld/delayed) except to existing lenders/affiliates or during EoD; 10BD deemed consent; $500K minimum; no DQ institutions/natural persons; $3,500 assignment fee",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "assignments.dq_list_mechanics"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 4,
+          "term": "Commitment and giveaway"
+        },
+        {
+          "coverage": "full",
+          "row": 5,
+          "term": "Disqualified Institutions"
+        },
+        {
+          "coverage": "full",
+          "row": 49,
+          "term": "Documentation Precedent"
+        },
+        {
+          "coverage": "full",
+          "row": 131,
+          "term": "Voting"
+        },
+        {
+          "coverage": "full",
+          "row": 132,
+          "term": "Assignments – consents"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 94 (DQ institutions: prohibited assignments/participations, no agent monitoring duty); PC Term Comparison Assignments section lines 503-505 (update restrictions, EoD fall-away)",
+      "pc_ref": [
+        "Assignments"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "CL_DISQUALIFIED_INST",
+          "label": "Disqualified Institutions",
+          "schema_file": "commitment-letter-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 1.0,
+          "mapping_mode": "manual_override",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Maximum percentage of facility debt that sponsor-affiliated entities may hold in aggregate. 25% standard, range from 0% (prohibited) to 30% (Geneva, above market).",
+          "dls_ref": [
+            95
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.affiliated_lender.holdings_cap",
+          "level": 3,
+          "market_benchmarks": {
+            "expert_geneva": "30%",
+            "market_standard_value": "25%",
+            "prohibited_value": "14.3%"
+          },
+          "name": "Aggregate Holdings Cap",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 95"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Cap on affiliated lender votes in Required Lender determinations to prevent sponsor from controlling amendment outcomes. 49.9% standard ensures no majority control.",
+          "dls_ref": [
+            95
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.affiliated_lender.voting_limit",
+          "level": 3,
+          "market_benchmarks": {
+            "market_standard_value": "49.9%"
+          },
+          "name": "Voting Limitations",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 136,
+              "term": "Assignments – voting limit on Debt Fund Affiliates"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 95; Review Template Row 136 (Assignments – voting limit on Debt Fund Affiliates)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Debt fund affiliates subject to identical restrictions as the sponsor entity itself, including aggregate holdings cap and purchase method restrictions.",
+              "dls_ref": [
+                60
+              ],
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.assignments",
+              "id": "governance.assignments.affiliated_lender.debt_fund.same_as_sponsor",
+              "level": 4,
+              "name": "Same as Sponsor Terms",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 60"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Debt fund affiliates receive separate, typically more permissive treatment: purchase term loans only, capped at 49.9% in Required Lender determinations.",
+              "dls_ref": [
+                60
+              ],
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.assignments",
+              "id": "governance.assignments.affiliated_lender.debt_fund.separate_framework",
+              "level": 4,
+              "name": "Separate Framework",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 60"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Separate framework for sponsor debt fund affiliates that operate at arm's length. Two options: same terms as sponsor, or separate framework with uncapped holdings but 49.9% voting limit.",
+          "dls_ref": [
+            60
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.affiliated_lender.debt_fund",
+          "level": 3,
+          "name": "Debt Fund Affiliate Accommodation",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 136,
+              "term": "Assignments – voting limit on Debt Fund Affiliates"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 60; Review Template Row 136 (Assignments – voting limit on Debt Fund Affiliates)",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:40.245088+00:00",
+              "term_packs": {
+                "ASSIGN_DEBT_FUND_CAP": {
+                  "label": "Assignments - Debt Fund Voting Cap",
+                  "category": "VOTING_ASSIGNMENTS",
+                  "exactPhrases": [
+                    "[49.9]%",
+                    "Debt Fund Affiliates",
+                    "shall not exceed",
+                    "for purposes of determining Required Lenders",
+                    "shall not constitute a majority",
+                    "49.9%",
+                    "shall be excluded",
+                    "voting cap",
+                    "aggregate holdings"
+                  ],
+                  "sectionHeaders": [
+                    "Assignments and Participations",
+                    "Debt Fund Affiliates",
+                    "Required Lenders",
+                    "Voting",
+                    "Section [X] - Assignments"
+                  ],
+                  "semanticVariants": [
+                    "debt fund affiliate voting cap",
+                    "sponsor affiliated voting restrictions",
+                    "Required Lender calculation caps",
+                    "affiliated debt fund voting limits",
+                    "49.9 percent voting cap",
+                    "majority control prevention"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.58,
+                    "minKeywordScore": 0.48,
+                    "minConfidence": 0.65,
+                    "escalationThreshold": 0.48,
+                    "humanEscalationThreshold": 0.28
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "[49.9]%",
+                  "Debt Fund Affiliates",
+                  "shall not exceed",
+                  "for purposes of determining Required Lenders",
+                  "shall not constitute a majority",
+                  "49.9%",
+                  "shall be excluded",
+                  "voting cap",
+                  "aggregate holdings"
+                ],
+                "sectionHeaders": [
+                  "Assignments and Participations",
+                  "Debt Fund Affiliates",
+                  "Required Lenders",
+                  "Voting",
+                  "Section [X] - Assignments"
+                ],
+                "semanticVariants": [
+                  "debt fund affiliate voting cap",
+                  "sponsor affiliated voting restrictions",
+                  "Required Lender calculation caps",
+                  "affiliated debt fund voting limits",
+                  "49.9 percent voting cap",
+                  "majority control prevention"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "ASSIGN_DEBT_FUND_CAP",
+              "label": "Assignments - Debt Fund Voting Cap",
+              "schema_file": "voting-assignments-enhanced.schema.ts",
+              "field_count": 3,
+              "r1_domain": "governance",
+              "mapping_confidence": 0.4799,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Affiliated purchases must be offered to all lenders on a pro rata basis, ensuring equal opportunity to sell and preventing selective acquisition from accommodating lenders.",
+              "dls_ref": [
+                95
+              ],
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.assignments",
+              "id": "governance.assignments.affiliated_lender.purchase_methods.pro_rata_offer",
+              "level": 4,
+              "name": "Pro Rata Offer",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 133,
+                  "term": "Assignments – open market purchases"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 95; Review Template Row 133 (Assignments – open market purchases)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Mechanism permitting the borrower's sponsor or affiliates to acquire loans through open market purchases on the secondary trading market, subject to limitations on voting rights, access to confidential information, and potential mandatory prepayment obligations. Open market purchases avoid the concentration and process controls of Dutch auction or direct solicitation methods.",
+              "dls_ref": [
+                95
+              ],
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "extraction_refs": {
+                "concept_area": "assignments",
+                "extraction_ready": true,
+                "playbook_ref": "assignments.open_market",
+                "primary_section_pattern": "X.05",
+                "section_locations": [
+                  "10.05",
+                  "11.11",
+                  "9.05"
+                ],
+                "shape_ref": "assignments.open_market"
+              },
+              "family_id": "governance.assignments",
+              "golden_record_benchmarks": [
+                {
+                  "count": 3,
+                  "max": 5000000,
+                  "median": 1000000,
+                  "min": 3500,
+                  "parameter": "dollar_amount:dollars",
+                  "reason": "Cross-deal parameter range available but no ontology benchmark",
+                  "source": "R16-D golden_record",
+                  "source_file": "cross_deal_comparison.json"
+                }
+              ],
+              "id": "governance.assignments.affiliated_lender.purchase_methods.open_market",
+              "level": 4,
+              "name": "Open Market Purchase",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 95"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "How affiliated entities may acquire facility debt: pro rata offer to all lenders, open market (non-pro-rata) purchases, or combination. Pro rata required in conservative deals.",
+          "dls_ref": [
+            95
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.affiliated_lender.purchase_methods",
+          "level": 3,
+          "name": "Purchase Method Restrictions",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 95"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Affiliated lenders excluded from lender-only calls, meetings, and confidential lender-side information to maintain information barriers and prevent conflicts of interest.",
+          "dls_ref": [
+            95
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.affiliated_lender.information_exclusion",
+          "level": 3,
+          "name": "Information Exclusion",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 95"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "On sponsor/affiliate debt purchases. DLS Preferred position is 'Not permitted.'.",
+          "dls_ref": [
+            95
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.affiliated_lender.prohibition",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "14.3%"
+          },
+          "name": "Complete Prohibition",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 95"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Restrictions on sponsor/affiliate entities acquiring facility debt. DLS Preferred row 95 (Debt Fund Affiliates/Non-Debt Fund Affiliates) provides two options: (Option 1) treat debt fund affiliates same as sponsor/non-debt fund affiliates; (Option 2) allow debt fund affiliate purchases with 49.9% voting cap. For sponsor/non-debt fund affiliates: purchases through pro rata offers or open market, capped at 20-25% of term facility, no attendance at lender-only calls, no lender-only information, no voting except for sacred rights, Agent votes on their behalf in bankruptcy, cannot exceed 49% of aggregate lender count. Loans can be contributed to Holdings for cancellation, treated as equity contribution building the builder basket. PC Term Comparison: 'Cap at 25/30%. No revolver draw. No vote/cap vote at 49.9% for debt fund affiliates. Try to cap number of Affiliated Lenders to avoid block on class vote.'",
+      "dls_ref": [
+        "DLS:49:Forecasts",
+        "DLS:60:Lender Selection",
+        "DLS:96:Buyback Provisions"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "assignments",
+        "extraction_ready": true,
+        "playbook_ref": "assignments.consents",
+        "section_locations": [
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE XI",
+          "ARTICLE XIII",
+          "Section 10.05",
+          "Section 11.8"
+        ],
+        "shape_ref": "assignments.consents",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.226455+00:00",
+          "term_packs": {
+            "ASSIGN_AFFILIATED_LENDER": {
+              "label": "Assignments - Affiliated Lenders",
+              "category": "VOTING_ASSIGNMENTS",
+              "exactPhrases": [
+                "[X]% cap",
+                "No cap on number of affiliated lenders",
+                "No express voting limits in bankruptcy",
+                "Not limited to term loans (i.e. can buy back revolver)",
+                "Affiliated Lender",
+                "Debt Fund Affiliate",
+                "deemed to vote",
+                "shall not exceed",
+                "for purposes of determining Required Lenders",
+                "shall be excluded from voting",
+                "49.9%",
+                "bankruptcy voting"
+              ],
+              "sectionHeaders": [
+                "Assignments and Participations",
+                "Affiliated Lenders",
+                "Debt Fund Affiliates",
+                "Voting",
+                "Required Lenders",
+                "Section [X] - Assignments"
+              ],
+              "semanticVariants": [
+                "sponsor affiliated lender holding caps",
+                "debt fund affiliate voting restrictions",
+                "affiliated lender voting limits",
+                "sponsor control of lender group prevention",
+                "bankruptcy voting for affiliates",
+                "deemed voting for affiliated lenders"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "[X]% cap",
+              "No cap on number of affiliated lenders",
+              "No express voting limits in bankruptcy",
+              "Not limited to term loans (i.e. can buy back revolver)",
+              "Affiliated Lender",
+              "Debt Fund Affiliate",
+              "deemed to vote",
+              "shall not exceed",
+              "for purposes of determining Required Lenders",
+              "shall be excluded from voting",
+              "49.9%",
+              "bankruptcy voting"
+            ],
+            "sectionHeaders": [
+              "Assignments and Participations",
+              "Affiliated Lenders",
+              "Debt Fund Affiliates",
+              "Voting",
+              "Required Lenders",
+              "Section [X] - Assignments"
+            ],
+            "semanticVariants": [
+              "sponsor affiliated lender holding caps",
+              "debt fund affiliate voting restrictions",
+              "affiliated lender voting limits",
+              "sponsor control of lender group prevention",
+              "bankruptcy voting for affiliates",
+              "deemed voting for affiliated lenders"
+            ]
+          }
+        }
+      },
+      "family_id": "governance.assignments",
+      "id": "governance.assignments.affiliated_lender",
+      "level": 2,
+      "market_benchmarks": "DLS Preferred: 20-25% of term facility, no vote, 49% of lender count. PC Term Comparison: cap at 25-30%, no revolver draw, 49.9% vote cap for DFAs.",
+      "name": "Affiliated Lender Restrictions",
+      "negotiation_spectrum": {
+        "aggressive_position": "TL only (not revolver); pro rata offer or open market; capped at 20-25% of TL; no lender-only access; no voting rights (except sacred rights affecting them); Agent votes in bankruptcy; contribution for cancellation permitted (builds RP basket); 49% cap on number of affiliate lenders. Debt Fund Affiliates: same rules or 49.9% voting cap.",
+        "dls_source": "DLS row 95",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "term_name: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "sponsor_purchases: not_permitted vs permitted_with_restrictions",
+          "purchase_method: pro_rata_only vs pro_rata_and_open_market",
+          "aggregate_cap: not_applicable vs 20pct vs 25pct",
+          "voting_rights: none vs sacred_rights_only vs full",
+          "bankruptcy_voting: agent_controls vs own_vote",
+          "information_access: no_lender_only vs full_access",
+          "contribution_for_cancellation: not_permitted vs permitted_builds_rp",
+          "number_cap: not_applicable vs 49pct_of_lenders",
+          "debt_fund_treatment: same_as_sponsor vs separate_regime vs 49_9pct_voting",
+          "mnpi_representation: required vs big_boy_only"
+        ],
+        "market_position": "",
+        "preferred_position": "Not permitted — no sponsor/affiliate purchases",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "assignments.affiliated_lender_restrictions"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 134,
+          "term": "Assignments – Affiliated lenders and buybacks"
+        },
+        {
+          "coverage": "full",
+          "row": 136,
+          "term": "Assignments – voting limit on Debt Fund Affiliates"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 95 (complete affiliated lender framework: two options, sponsor restrictions, DFA voting caps, cancellation mechanics); PC Term Comparison Assignments section lines 509-512 (cap, no revolver, 49.9% cap, avoid class vote block)",
+      "pc_ref": [
+        "Assignments"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "ASSIGN_AFFILIATED_LENDER",
+          "label": "Assignments - Affiliated Lenders",
+          "schema_file": "voting-assignments-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "governance",
+          "mapping_confidence": 0.6658,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Borrower buybacks completely prohibited. Eliminates voting manipulation and circular leverage risks entirely.",
+          "dls_ref": [
+            95
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.borrower_buybacks.prohibition",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "29.8%"
+          },
+          "name": "Not Permitted",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 95"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Structured competitive price discovery mechanism where all lenders may participate. More orderly than open market purchases.",
+          "dls_ref": [
+            95
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.borrower_buybacks.dutch_auction",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "17.5%"
+          },
+          "name": "Dutch Auction",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 95"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Buyback must be offered to all lenders on a pro rata basis, ensuring equal exit opportunity.",
+          "dls_ref": [
+            95
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.borrower_buybacks.pro_rata_offer",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "26.3%"
+          },
+          "name": "Pro Rata Offer",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 133,
+              "term": "Assignments – open market purchases"
+            },
+            {
+              "coverage": "full",
+              "row": 135,
+              "term": "Assignments – Borrower buybacks"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 95; Review Template Row 133 (Assignments – open market purchases); Review Template Row 135 (Assignments – Borrower buybacks)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Non-pro-rata purchases at borrower discretion in the secondary market. Maximum borrower flexibility.",
+          "dls_ref": [
+            "DLS:40:Market MAC",
+            "DLS:54:Clear market",
+            "DLS:61:Clear Market"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.borrower_buybacks.open_market",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "19.3%"
+          },
+          "name": "Open Market Purchase",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 133,
+              "term": "Assignments – open market purchases"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 40 (Market MAC); DLS Preferred Row 54 (Clear market); DLS Preferred Row 61 (Clear Market); Review Template Row 133 (Assignments – open market purchases)",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:40.251571+00:00",
+              "term_packs": {
+                "ASSIGN_OPEN_MARKET": {
+                  "label": "Assignments - Open Market Purchases",
+                  "category": "VOTING_ASSIGNMENTS",
+                  "exactPhrases": [
+                    "[Permitted on a [non-]pro rata basis]",
+                    "open market purchase",
+                    "purchase Loans in the open market",
+                    "pro rata offer",
+                    "Dutch Auction",
+                    "purchased Loans shall be cancelled",
+                    "not funded with revolving loans",
+                    "cash consideration",
+                    "same offer to all Lenders"
+                  ],
+                  "sectionHeaders": [
+                    "Assignments and Participations",
+                    "Open Market Purchases",
+                    "Loan Buybacks",
+                    "Dutch Auction",
+                    "Section [X] - Assignments"
+                  ],
+                  "semanticVariants": [
+                    "borrower loan purchases in secondary market",
+                    "open market debt buyback provisions",
+                    "pro rata purchase requirements",
+                    "Dutch auction mechanics for loan buybacks",
+                    "affiliate loan purchases",
+                    "non-pro rata exchange protections"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.58,
+                    "minKeywordScore": 0.48,
+                    "minConfidence": 0.65,
+                    "escalationThreshold": 0.48,
+                    "humanEscalationThreshold": 0.28
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "[Permitted on a [non-]pro rata basis]",
+                  "open market purchase",
+                  "purchase Loans in the open market",
+                  "pro rata offer",
+                  "Dutch Auction",
+                  "purchased Loans shall be cancelled",
+                  "not funded with revolving loans",
+                  "cash consideration",
+                  "same offer to all Lenders"
+                ],
+                "sectionHeaders": [
+                  "Assignments and Participations",
+                  "Open Market Purchases",
+                  "Loan Buybacks",
+                  "Dutch Auction",
+                  "Section [X] - Assignments"
+                ],
+                "semanticVariants": [
+                  "borrower loan purchases in secondary market",
+                  "open market debt buyback provisions",
+                  "pro rata purchase requirements",
+                  "Dutch auction mechanics for loan buybacks",
+                  "affiliate loan purchases",
+                  "non-pro rata exchange protections"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "ASSIGN_OPEN_MARKET",
+              "label": "Assignments - Open Market Purchases",
+              "schema_file": "voting-assignments-enhanced.schema.ts",
+              "field_count": 3,
+              "r1_domain": "governance",
+              "mapping_confidence": 0.6539,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether purchased loans must be permanently cancelled upon acquisition. If not cancelled, borrower holds voting power on debt it has bought, creating manipulation risk.",
+          "dls_ref": [
+            95
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.borrower_buybacks.cancellation",
+          "level": 3,
+          "name": "Cancellation Requirement",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 95"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether buybacks are prohibited during an Event of Default. Prevents borrower from acquiring debt at distressed prices when it is in breach of the agreement.",
+          "dls_ref": [
+            94
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.borrower_buybacks.default_stopper",
+          "level": 3,
+          "name": "Default Stopper",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 94"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether revolver draws can be used to fund term loan buybacks. Permitting revolver-funded buybacks creates circular leverage where the borrower uses one facility to retire another.",
+          "dls_ref": [
+            "DLS:19:Revolver"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.borrower_buybacks.revolver_funding_restriction",
+          "level": 3,
+          "name": "Revolver Funding Restriction",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 19 (Revolver)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Whether and how the borrower or Holdings can repurchase outstanding debt at a discount. DLS Preferred row 96 specifies: 'Term Loans may be purchased by and assigned to Holdings or any of its subsidiaries through [(a) open market purchases on a non-pro rata basis and/or] (b) Dutch auctions open to all applicable lenders on a pro rata basis; provided that (1) no event of default has occurred and is continuing, (2) any such loans are permanently cancelled immediately upon acquisition thereof, and (3) the proceeds of the Revolving Facility are not used to make any such purchases.' PC Term Comparison: 'Make Clients aware if non pro rata open market purchases/privately negotiated purchases are permitted or if any other provisions relating to buybacks/assignments to sponsor affiliates are not the tighter versions. Require Borrower/subs to cancel debt acquired. D/EofD stopper. Cap at 25/30%. No revolver draw.'",
+      "dls_ref": [
+        95
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "assignments",
+        "extraction_ready": true,
+        "playbook_ref": "assignments.borrower_buybacks",
+        "section_locations": [
+          "ARTICLE IX",
+          "Section 9.03"
+        ],
+        "shape_ref": "assignments.borrower_buybacks",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.232216+00:00",
+          "term_packs": {
+            "ASSIGN_BORROWER_BUYBACK": {
+              "label": "Assignments - Borrower Buybacks",
+              "category": "VOTING_ASSIGNMENTS",
+              "exactPhrases": [
+                "Not required to be cancelled",
+                "No prohibition on use of revolver",
+                "Not subject to no EoD",
+                "Assignments to unrestricted subsidiaries not required to be cancelled",
+                "Borrower Buyback",
+                "loan repurchase",
+                "purchased Loans shall be cancelled",
+                "shall be deemed cancelled",
+                "no Default shall exist",
+                "Dutch Auction",
+                "pro rata basis",
+                "cash consideration"
+              ],
+              "sectionHeaders": [
+                "Assignments and Participations",
+                "Borrower Buyback",
+                "Loan Repurchases",
+                "Open Market Purchases",
+                "Section [X] - Assignments"
+              ],
+              "semanticVariants": [
+                "borrower loan repurchase provisions",
+                "subsidiary buyback restrictions",
+                "loan repurchase cancellation requirements",
+                "default blockers for buybacks",
+                "borrower debt repurchases",
+                "buyback funding restrictions"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Not required to be cancelled",
+              "No prohibition on use of revolver",
+              "Not subject to no EoD",
+              "Assignments to unrestricted subsidiaries not required to be cancelled",
+              "Borrower Buyback",
+              "loan repurchase",
+              "purchased Loans shall be cancelled",
+              "shall be deemed cancelled",
+              "no Default shall exist",
+              "Dutch Auction",
+              "pro rata basis",
+              "cash consideration"
+            ],
+            "sectionHeaders": [
+              "Assignments and Participations",
+              "Borrower Buyback",
+              "Loan Repurchases",
+              "Open Market Purchases",
+              "Section [X] - Assignments"
+            ],
+            "semanticVariants": [
+              "borrower loan repurchase provisions",
+              "subsidiary buyback restrictions",
+              "loan repurchase cancellation requirements",
+              "default blockers for buybacks",
+              "borrower debt repurchases",
+              "buyback funding restrictions"
+            ]
+          }
+        }
+      },
+      "family_id": "governance.assignments",
+      "id": "governance.assignments.borrower_buybacks",
+      "level": 2,
+      "market_benchmarks": {
+        "not_permitted_flag": "29.8%",
+        "prevalence": "91.9%"
+      },
+      "name": "Borrower Buybacks",
+      "negotiation_spectrum": {
+        "aggressive_position": "TL only; Dutch auction (pro rata) and/or open market (non-pro-rata); no EoD; immediate cancellation; no revolver proceeds",
+        "dls_source": "DLS row 96",
+        "dls_stance": "moderate_borrower",
+        "hot_button_items": [
+          "term_name: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "availability: permitted vs not_permitted",
+          "purchase_method: dutch_auction_only vs dutch_auction_and_open_market",
+          "eod_condition: no_eod_required vs no_condition",
+          "cancellation: immediate vs held",
+          "revolver_funding: prohibited vs permitted",
+          "pro_rata_offer: required vs not_required"
+        ],
+        "market_position": "",
+        "preferred_position": "Permitted (borrower/sub buybacks)",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "assignments.borrower_buybacks"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 135,
+          "term": "Assignments – Borrower buybacks"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 96 (buyback mechanics: Dutch auction/open market, EoD stopper, immediate cancellation, no revolver draw); PC Term Comparison Assignments section lines 506-510 (tighter version requirements)",
+      "pc_ref": [
+        "Assignments"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "ASSIGN_BORROWER_BUYBACK",
+          "label": "Assignments - Borrower Buybacks",
+          "schema_file": "voting-assignments-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "governance",
+          "mapping_confidence": 0.5833,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether borrower and/or agent consent is required for participations. Typically less restrictive than full assignments since the lender of record does not change. []",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.participations.consent_requirements",
+          "kct_ref": [
+            "cat3.13"
+          ],
+          "level": 3,
+          "name": "Consent Requirements",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 13"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether participants receive voting rights on sacred rights (maturity extension, rate reduction, etc.) or only on their underlying economic interest. Voting pass-through limited to sacred items is market standard.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.participations.voting_rights",
+          "kct_ref": [
+            "cat3.3",
+            "cat3.13"
+          ],
+          "level": 3,
+          "name": "Voting Rights Pass-Through",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 3; KCT Cat 3 Item 13"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether the DQ list restrictions apply to participations in addition to assignments. If not applied, DQ'd entities can acquire economic exposure through participation even if they cannot become lenders of record.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.participations.dq_application",
+          "kct_ref": [
+            "cat3.13"
+          ],
+          "level": 3,
+          "name": "DQ List Applicability",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 13"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Rights and restrictions for sub-participations where a lender sells an economic interest in its loans without transferring the legal position. Participant has economic exposure but the selling lender remains the lender of record. []",
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "assignments",
+        "extraction_ready": true,
+        "playbook_ref": "assignments.consents",
+        "section_locations": [
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE XI",
+          "ARTICLE XIII",
+          "Section 10.05",
+          "Section 11.8"
+        ],
+        "shape_ref": "assignments.consents",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.146393+00:00",
+          "term_packs": {
+            "PARTICIPATIONS": {
+              "label": "Participations",
+              "category": "ASSIGNMENT_TRANSFER",
+              "exactPhrases": [
+                "may sell participations",
+                "Participant",
+                "participation interest",
+                "right to vote",
+                "direct claims",
+                "setoff rights",
+                "no privity",
+                "selling Lender remains",
+                "Participant Register"
+              ],
+              "sectionHeaders": [
+                "Participations",
+                "Section 10.06(b)",
+                "Section 10.06(c)",
+                "Assignments and Participations"
+              ],
+              "semanticVariants": [
+                "participation sale",
+                "sub-interest in loans",
+                "participant rights",
+                "beneficial participation",
+                "undisclosed participation"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            },
+            "SUB_PARTICIPATIONS": {
+              "label": "Sub-Participations",
+              "category": "ASSIGNMENT_TRANSFER",
+              "exactPhrases": [
+                "sub-participation",
+                "sub-participant",
+                "further participation",
+                "secondary participation",
+                "participation of a participation",
+                "downstream participation"
+              ],
+              "sectionHeaders": [
+                "Sub-Participations",
+                "Participations",
+                "Further Participations"
+              ],
+              "semanticVariants": [
+                "nested participation",
+                "tiered participation structure",
+                "participant selling further interest",
+                "downstream participant"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "may sell participations",
+              "Participant",
+              "participation interest",
+              "right to vote",
+              "direct claims",
+              "setoff rights",
+              "no privity",
+              "selling Lender remains",
+              "Participant Register",
+              "sub-participation",
+              "sub-participant",
+              "further participation",
+              "secondary participation",
+              "participation of a participation",
+              "downstream participation"
+            ],
+            "sectionHeaders": [
+              "Participations",
+              "Section 10.06(b)",
+              "Section 10.06(c)",
+              "Assignments and Participations",
+              "Sub-Participations",
+              "Further Participations"
+            ],
+            "semanticVariants": [
+              "participation sale",
+              "sub-interest in loans",
+              "participant rights",
+              "beneficial participation",
+              "undisclosed participation",
+              "nested participation",
+              "tiered participation structure",
+              "participant selling further interest",
+              "downstream participant"
+            ]
+          }
+        }
+      },
+      "family_id": "governance.assignments",
+      "id": "governance.assignments.participations",
+      "kct_ref": [
+        "cat3.13"
+      ],
+      "level": 2,
+      "name": "Participation Mechanics",
+      "negotiation_spectrum": {
+        "aggressive_position": "Borrower consent waived only for payment/bankruptcy EoD (not all EoD); no deemed consent; LC Issuer consent for LC sub-facility",
+        "dls_source": "DLS row 94",
+        "dls_stance": "moderate_lender",
+        "hot_button_items": [
+          "No assignments to Disqualified Institutions or natural persons.",
+          "No assignments to Disqualified Institutions or natural persons.",
+          "Disqualified Institutions: Assignments and participations to Disqualified Institutions are prohibited. List may be posted to lenders and shared with potential assignees and participants on a confident"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "agent_consent: all_assignments vs lender_to_lender_exempt",
+          "borrower_consent_revolver: required vs not_required",
+          "borrower_consent_tl: required_except_lender_affiliate vs no_consent",
+          "borrower_consent_eod_waiver: any_eod vs payment_bankruptcy_only",
+          "deemed_consent_period: 10BD vs 5BD vs no_deemed_consent",
+          "minimum_assignment_amount: 500k vs 1M vs 5M",
+          "dq_list: maintained vs not_maintained",
+          "dq_enforcement: agent_no_duty vs agent_must_verify",
+          "natural_person_prohibition: yes vs no",
+          "assignment_fee: 3500 vs 0 vs borrower_pays",
+          "participation_dq: prohibited vs permitted"
+        ],
+        "market_position": "",
+        "preferred_position": "Agent consent for all; Borrower consent (NTU withheld/delayed) except to existing lenders/affiliates or during EoD; 10BD deemed consent; $500K minimum; no DQ institutions/natural persons; $3,500 assignment fee",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "assignments.participations"
+      ],
+      "type": "concept",
+      "definition_source": "KCT Cat 3 Item 13",
+      "neutron_field_refs": [
+        {
+          "term_type": "PARTICIPATIONS",
+          "label": "Participations",
+          "schema_file": "assignment-transfer-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "governance",
+          "mapping_confidence": 0.5886,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        },
+        {
+          "term_type": "SUB_PARTICIPATIONS",
+          "label": "Sub-Participations",
+          "schema_file": "assignment-transfer-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "governance",
+          "mapping_confidence": 0.4646,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Limitation on the maximum percentage of outstanding loans that the sponsor and its affiliates may hold at any time, preventing the sponsor from accumulating a blocking or controlling position in the lender syndicate. Typical caps range from 10-25% of aggregate commitments, ensuring the sponsor cannot single-handedly control amendment or waiver votes.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.sponsor_debt.percentage_caps",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "18.8%",
+            "typical_range": "10-25%"
+          },
+          "name": "Percentage Caps",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "50% voting limit for sponsor-held debt prevents dual control where sponsor controls both equity and a majority of the debt vote simultaneously.",
+          "dls_ref": [
+            "DLS:93:Voting"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.sponsor_debt.voting_restrictions",
+          "level": 3,
+          "name": "Voting Restrictions",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 93 (Voting)",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:41.679345+00:00",
+              "term_packs": {
+                "VOTING_INCORA_PROTECTION": {
+                  "label": "Voting - Incora/Wesco Protection",
+                  "category": "VOTING_ASSIGNMENTS",
+                  "exactPhrases": [
+                    "[Incora protection [included] / [not included]]",
+                    "incremental debt shall not vote",
+                    "extensions shall not vote",
+                    "vote manipulation",
+                    "vote dilution",
+                    "newly issued debt shall be excluded",
+                    "newly incurred Loans shall not be counted"
+                  ],
+                  "sectionHeaders": [
+                    "Amendments, Waivers and Consents",
+                    "Incremental Facilities",
+                    "Extensions",
+                    "Voting",
+                    "Required Lenders"
+                  ],
+                  "semanticVariants": [
+                    "Incora protection against vote manipulation",
+                    "Wesco protection against incremental debt voting",
+                    "vote dilution prevention",
+                    "incremental issuance voting restrictions",
+                    "extension voting limitations",
+                    "sacred rights protection against vote manipulation"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.58,
+                    "minKeywordScore": 0.48,
+                    "minConfidence": 0.65,
+                    "escalationThreshold": 0.48,
+                    "humanEscalationThreshold": 0.28
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "[Incora protection [included] / [not included]]",
+                  "incremental debt shall not vote",
+                  "extensions shall not vote",
+                  "vote manipulation",
+                  "vote dilution",
+                  "newly issued debt shall be excluded",
+                  "newly incurred Loans shall not be counted"
+                ],
+                "sectionHeaders": [
+                  "Amendments, Waivers and Consents",
+                  "Incremental Facilities",
+                  "Extensions",
+                  "Voting",
+                  "Required Lenders"
+                ],
+                "semanticVariants": [
+                  "Incora protection against vote manipulation",
+                  "Wesco protection against incremental debt voting",
+                  "vote dilution prevention",
+                  "incremental issuance voting restrictions",
+                  "extension voting limitations",
+                  "sacred rights protection against vote manipulation"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "VOTING_INCORA_PROTECTION",
+              "label": "Voting - Incora/Wesco Protection",
+              "schema_file": "voting-amendment-enhanced.schema.ts",
+              "field_count": 3,
+              "r1_domain": "governance",
+              "mapping_confidence": 0.3471,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Restrictions on the private equity sponsor acquiring senior facility debt. Distinct from affiliated lender restrictions which cover broader affiliate group.",
+      "dls_ref": [
+        "DLS:55:Absence of other debt",
+        "DLS:95:Debt Fund Affiliates/Non-Debt Fund Affiliates"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "assignments",
+        "extraction_ready": true,
+        "playbook_ref": "assignments.consents",
+        "section_locations": [
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE XI",
+          "ARTICLE XIII",
+          "Section 10.05",
+          "Section 11.8"
+        ],
+        "shape_ref": "assignments.consents"
+      },
+      "family_id": "governance.assignments",
+      "id": "governance.assignments.sponsor_debt",
+      "level": 2,
+      "market_benchmarks": {
+        "has_limitation": "40.6%",
+        "unrestricted_value": "53.1%"
+      },
+      "name": "Sponsor Debt Limitation",
+      "negotiation_spectrum": {
+        "aggressive_position": "Borrower consent waived only for payment/bankruptcy EoD (not all EoD); no deemed consent; LC Issuer consent for LC sub-facility",
+        "dls_source": "DLS row 94",
+        "dls_stance": "moderate_lender",
+        "hot_button_items": [
+          "No assignments to Disqualified Institutions or natural persons.",
+          "No assignments to Disqualified Institutions or natural persons.",
+          "Disqualified Institutions: Assignments and participations to Disqualified Institutions are prohibited. List may be posted to lenders and shared with potential assignees and participants on a confident"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "agent_consent: all_assignments vs lender_to_lender_exempt",
+          "borrower_consent_revolver: required vs not_required",
+          "borrower_consent_tl: required_except_lender_affiliate vs no_consent",
+          "borrower_consent_eod_waiver: any_eod vs payment_bankruptcy_only",
+          "deemed_consent_period: 10BD vs 5BD vs no_deemed_consent",
+          "minimum_assignment_amount: 500k vs 1M vs 5M",
+          "dq_list: maintained vs not_maintained",
+          "dq_enforcement: agent_no_duty vs agent_must_verify",
+          "natural_person_prohibition: yes vs no",
+          "assignment_fee: 3500 vs 0 vs borrower_pays",
+          "participation_dq: prohibited vs permitted"
+        ],
+        "market_position": "",
+        "preferred_position": "Agent consent for all; Borrower consent (NTU withheld/delayed) except to existing lenders/affiliates or during EoD; 10BD deemed consent; $500K minimum; no DQ institutions/natural persons; $3,500 assignment fee",
+        "source": "R14-C"
+      },
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 9,
+          "term": "Countersign date"
+        },
+        {
+          "coverage": "full",
+          "row": 126,
+          "term": "Negative Covenants – Transactions with Affiliates – Sponsor Management Fees"
+        },
+        {
+          "coverage": "full",
+          "row": 134,
+          "term": "Assignments – Affiliated lenders and buybacks"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 55 (Absence of other debt); DLS Preferred Row 95 (Debt Fund Affiliates/Non-Debt Fund Affiliates); Review Template Row 9 (Countersign date); Review Template Row 126 (Negative Covenants – Transactions with Affiliates – Sponsor Management Fees); Review Template Row 134 (Assignments – Affiliated lenders and buybacks)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Standard Required Lender vote suffices to amend assignment provisions. Less protective.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.assignment_restrictions.no_restrictions",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "29.8%"
+          },
+          "name": "No Restrictions",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Targeted heightened consent for particular assignment provisions. May require affected-lender or all-lender consent for key subsections.",
+          "dls_ref": [
+            94
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.assignment_restrictions.limited",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "40.4%"
+          },
+          "name": "Limited / Specific Restrictions",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 94"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Special purpose vehicle funding structure protection requiring specific consent for changes affecting SPC lender assignment rights.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.assignment_restrictions.spc_only",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "17.0%"
+          },
+          "name": "SPC-Only Restriction",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Whether changes to the assignment provisions themselves require heightened consent beyond Required Lender threshold.",
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "assignments",
+        "extraction_ready": true,
+        "playbook_ref": "assignments.consents",
+        "section_locations": [
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE XI",
+          "ARTICLE XIII",
+          "Section 10.05",
+          "Section 11.8"
+        ],
+        "shape_ref": "assignments.consents"
+      },
+      "family_id": "governance.assignments",
+      "id": "governance.assignments.assignment_restrictions",
+      "kct_ref": [
+        "cat3.13"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "75.8%"
+      },
+      "name": "Assignment Amendment Restrictions",
+      "negotiation_spectrum": {
+        "aggressive_position": "Borrower consent waived only for payment/bankruptcy EoD (not all EoD); no deemed consent; LC Issuer consent for LC sub-facility",
+        "dls_source": "DLS row 94",
+        "dls_stance": "moderate_lender",
+        "hot_button_items": [
+          "No assignments to Disqualified Institutions or natural persons.",
+          "No assignments to Disqualified Institutions or natural persons.",
+          "Disqualified Institutions: Assignments and participations to Disqualified Institutions are prohibited. List may be posted to lenders and shared with potential assignees and participants on a confident"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "agent_consent: all_assignments vs lender_to_lender_exempt",
+          "borrower_consent_revolver: required vs not_required",
+          "borrower_consent_tl: required_except_lender_affiliate vs no_consent",
+          "borrower_consent_eod_waiver: any_eod vs payment_bankruptcy_only",
+          "deemed_consent_period: 10BD vs 5BD vs no_deemed_consent",
+          "minimum_assignment_amount: 500k vs 1M vs 5M",
+          "dq_list: maintained vs not_maintained",
+          "dq_enforcement: agent_no_duty vs agent_must_verify",
+          "natural_person_prohibition: yes vs no",
+          "assignment_fee: 3500 vs 0 vs borrower_pays",
+          "participation_dq: prohibited vs permitted"
+        ],
+        "market_position": "",
+        "preferred_position": "Agent consent for all; Borrower consent (NTU withheld/delayed) except to existing lenders/affiliates or during EoD; 10BD deemed consent; $500K minimum; no DQ institutions/natural persons; $3,500 assignment fee",
+        "source": "R14-C"
+      },
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 49,
+          "term": "Documentation Precedent"
+        },
+        {
+          "coverage": "full",
+          "row": 131,
+          "term": "Voting"
+        },
+        {
+          "coverage": "full",
+          "row": 134,
+          "term": "Assignments – Affiliated lenders and buybacks"
+        },
+        {
+          "coverage": "full",
+          "row": 135,
+          "term": "Assignments – Borrower buybacks"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "KCT Cat 3 Item 13; Review Template Row 49 (Documentation Precedent); Review Template Row 131 (Voting); Review Template Row 134 (Assignments – Affiliated lenders and buybacks); Review Template Row 135 (Assignments – Borrower buybacks)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Negative covenant restricting the borrower from amending its organizational documents (certificate of incorporation, bylaws, operating agreement) in a manner materially adverse to lender interests. Protects against governance changes that could alter the borrower's authority to perform its credit agreement obligations, modify equity class rights, or change its jurisdiction of organization.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.modification_covenants.org_docs",
+          "level": 3,
+          "name": "Organizational Documents",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; PC Term Comparison: 10. Other Items - Security Documents"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Restriction on amending subordinated debt indentures or agreements in ways that increase borrower obligations, shorten maturities, or add covenants.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.modification_covenants.sub_debt",
+          "level": 3,
+          "name": "Subordinated Debt Documents",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; PC Term Comparison: 10. Other Items - Security Documents"
+        },
+        {
+          "corpus_prevalence": "high",
+          "dealdata_benchmarks": {
+            "Management Agreement Note default stoppers, amount and if subject to a manage...": {
+              "pc_dollar_median": "$1,500,000",
+              "pc_dollar_range": "$41,667-$631,599,690,000",
+              "pc_pct_range": "0.5%-5.0%",
+              "pc_ratio_median": "3.00x",
+              "pc_ratio_range": "3.00x-5.05x"
+            }
+          },
+          "definition": "Negative covenant restricting amendments to the management agreement or monitoring agreement between the borrower and its sponsor that would be materially adverse to lender interests. Prevents changes that could increase management fee amounts, accelerate fee payment schedules, or broaden the scope of indemnification obligations to the sponsor group.",
+          "dls_ref": [
+            "DLS:53:Amendments to Acquisition Agreement"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.modification_covenants.mgmt_agreement",
+          "level": 3,
+          "name": "Management Agreement",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 53 (Amendments to Acquisition Agreement)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Restrictions on amending organizational documents, subordinated debt documents, and management agreements without lender consent. 61.3% overall prevalence.",
+      "dls_ref": [
+        "DLS:78:Affirmative covenants",
+        "DLS:88:Other Negative Covenants"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "assignments",
+        "extraction_ready": true,
+        "playbook_ref": "assignments.consents",
+        "section_locations": [
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE XI",
+          "ARTICLE XIII",
+          "Section 10.05",
+          "Section 11.8"
+        ],
+        "shape_ref": "assignments.consents"
+      },
+      "family_id": "governance.assignments",
+      "id": "governance.assignments.modification_covenants",
+      "level": 2,
+      "market_benchmarks": {
+        "mgmt_agreement_value": "67.7%",
+        "org_docs_value": "74.2%",
+        "sub_debt_value": "66.1%"
+      },
+      "name": "Modification Covenants",
+      "negotiation_spectrum": {
+        "aggressive_position": "Borrower consent waived only for payment/bankruptcy EoD (not all EoD); no deemed consent; LC Issuer consent for LC sub-facility",
+        "dls_source": "DLS row 94",
+        "dls_stance": "moderate_lender",
+        "hot_button_items": [
+          "No assignments to Disqualified Institutions or natural persons.",
+          "No assignments to Disqualified Institutions or natural persons.",
+          "Disqualified Institutions: Assignments and participations to Disqualified Institutions are prohibited. List may be posted to lenders and shared with potential assignees and participants on a confident"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "agent_consent: all_assignments vs lender_to_lender_exempt",
+          "borrower_consent_revolver: required vs not_required",
+          "borrower_consent_tl: required_except_lender_affiliate vs no_consent",
+          "borrower_consent_eod_waiver: any_eod vs payment_bankruptcy_only",
+          "deemed_consent_period: 10BD vs 5BD vs no_deemed_consent",
+          "minimum_assignment_amount: 500k vs 1M vs 5M",
+          "dq_list: maintained vs not_maintained",
+          "dq_enforcement: agent_no_duty vs agent_must_verify",
+          "natural_person_prohibition: yes vs no",
+          "assignment_fee: 3500 vs 0 vs borrower_pays",
+          "participation_dq: prohibited vs permitted"
+        ],
+        "market_position": "",
+        "preferred_position": "Agent consent for all; Borrower consent (NTU withheld/delayed) except to existing lenders/affiliates or during EoD; 10BD deemed consent; $500K minimum; no DQ institutions/natural persons; $3,500 assignment fee",
+        "source": "R14-C"
+      },
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 124,
+          "term": "Negative Covenants – Transactions with Affiliates –"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 78 (Affirmative covenants); DLS Preferred Row 88 (Other Negative Covenants); Review Template Row 124 (Negative Covenants – Transactions with Affiliates –)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether assignments to known net-short entities are restricted or whether the DQ list extends to entities with adverse economic positioning through credit derivatives.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.net_short.transfer_restrictions",
+          "kct_ref": [
+            "cat3.3",
+            "cat3.4",
+            "cat3.13"
+          ],
+          "level": 3,
+          "name": "Transfer to Net Short Entities",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 3; KCT Cat 3 Item 4; KCT Cat 3 Item 13",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:41.536038+00:00",
+              "term_packs": {
+                "TRANSFER_RESTRICTIONS": {
+                  "label": "Transfer Restrictions",
+                  "category": "ASSIGNMENT_TRANSFER",
+                  "exactPhrases": [
+                    "shall not assign",
+                    "assignment shall be void",
+                    "Disqualified Institutions",
+                    "Disqualified Lenders",
+                    "prohibited from assigning",
+                    "lock-up period",
+                    "no assignment",
+                    "void and of no effect",
+                    "natural persons",
+                    "DQ List"
+                  ],
+                  "sectionHeaders": [
+                    "Restrictions on Assignments",
+                    "Limitations on Assignments",
+                    "Prohibited Assignments",
+                    "Disqualified Institutions",
+                    "Section 10.06"
+                  ],
+                  "semanticVariants": [
+                    "assignment limitations",
+                    "transfer prohibitions",
+                    "restricted transferees",
+                    "ineligible assignees",
+                    "prohibited lenders"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.58,
+                    "minKeywordScore": 0.48,
+                    "minConfidence": 0.65,
+                    "escalationThreshold": 0.48,
+                    "humanEscalationThreshold": 0.28
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "shall not assign",
+                  "assignment shall be void",
+                  "Disqualified Institutions",
+                  "Disqualified Lenders",
+                  "prohibited from assigning",
+                  "lock-up period",
+                  "no assignment",
+                  "void and of no effect",
+                  "natural persons",
+                  "DQ List"
+                ],
+                "sectionHeaders": [
+                  "Restrictions on Assignments",
+                  "Limitations on Assignments",
+                  "Prohibited Assignments",
+                  "Disqualified Institutions",
+                  "Section 10.06"
+                ],
+                "semanticVariants": [
+                  "assignment limitations",
+                  "transfer prohibitions",
+                  "restricted transferees",
+                  "ineligible assignees",
+                  "prohibited lenders"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "TRANSFER_RESTRICTIONS",
+              "label": "Transfer Restrictions",
+              "schema_file": "assignment-transfer-enhanced.schema.ts",
+              "field_count": 4,
+              "r1_domain": "governance",
+              "mapping_confidence": 0.3905,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether affiliates acting in concert with net-short lenders are also subject to disenfranchisement, preventing circumvention through related party coordination.",
+          "dls_ref": [
+            "DLS:87:Transactions with Affiliates"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.net_short.coordinating_affiliates",
+          "kct_ref": [
+            "cat3.4"
+          ],
+          "level": 3,
+          "name": "Coordinating Affiliates",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 87 (Transactions with Affiliates); KCT Cat 3 Item 4"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Restrictions on net-short lenders from an assignment perspective: whether loans can be assigned to entities with known net-short positions and how such lenders are treated in the lender group. []",
+      "dls_ref": [
+        "DLS:60:Lender Selection",
+        "DLS:96:Buyback Provisions"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "assignments",
+        "extraction_ready": true,
+        "playbook_ref": "assignments.net_short",
+        "primary_section_pattern": "X.03-14",
+        "section_locations": [
+          "10.14",
+          "12",
+          "12.03",
+          "13.05(g)",
+          "7.03",
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE XI",
+          "ARTICLE XIII",
+          "Section 10.05",
+          "Section 11.8"
+        ],
+        "shape_ref": "assignments.net_short"
+      },
+      "family_id": "governance.assignments",
+      "golden_record_benchmarks": [
+        {
+          "count": 5,
+          "median": 30,
+          "parameter": "time_period:days",
+          "range": "30 - 181",
+          "reason": "Parameter distribution data available but no ontology benchmark",
+          "source": "R16-D golden_record",
+          "source_file": "parameter_distributions.json"
+        }
+      ],
+      "id": "governance.assignments.net_short",
+      "kct_ref": [
+        "cat3.3",
+        "cat3.4"
+      ],
+      "level": 2,
+      "name": "Net Short Lender Disenfranchisement",
+      "negotiation_spectrum": {
+        "aggressive_position": "Borrower consent waived only for payment/bankruptcy EoD (not all EoD); no deemed consent; LC Issuer consent for LC sub-facility",
+        "dls_source": "DLS row 94",
+        "dls_stance": "moderate_lender",
+        "hot_button_items": [
+          "No assignments to Disqualified Institutions or natural persons.",
+          "No assignments to Disqualified Institutions or natural persons.",
+          "Disqualified Institutions: Assignments and participations to Disqualified Institutions are prohibited. List may be posted to lenders and shared with potential assignees and participants on a confident"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "agent_consent: all_assignments vs lender_to_lender_exempt",
+          "borrower_consent_revolver: required vs not_required",
+          "borrower_consent_tl: required_except_lender_affiliate vs no_consent",
+          "borrower_consent_eod_waiver: any_eod vs payment_bankruptcy_only",
+          "deemed_consent_period: 10BD vs 5BD vs no_deemed_consent",
+          "minimum_assignment_amount: 500k vs 1M vs 5M",
+          "dq_list: maintained vs not_maintained",
+          "dq_enforcement: agent_no_duty vs agent_must_verify",
+          "natural_person_prohibition: yes vs no",
+          "assignment_fee: 3500 vs 0 vs borrower_pays",
+          "participation_dq: prohibited vs permitted"
+        ],
+        "market_position": "",
+        "preferred_position": "Agent consent for all; Borrower consent (NTU withheld/delayed) except to existing lenders/affiliates or during EoD; 10BD deemed consent; $500K minimum; no DQ institutions/natural persons; $3,500 assignment fee",
+        "source": "R14-C"
+      },
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 131,
+          "term": "Voting"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 60 (Lender Selection); DLS Preferred Row 96 (Buyback Provisions); KCT Cat 3 Item 3; KCT Cat 3 Item 4; Review Template Row 131 (Voting)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Who has the right to appoint additional agents: Administrative Agent unilaterally (market), Administrative Agent with borrower consent, or Administrative Agent with Required Lender consent.",
+          "dls_ref": [
+            60
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "easy",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.additional_agents.appointment_authority",
+          "level": 3,
+          "name": "Appointment Authority",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 60"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Types of additional agents that can be appointed: collateral agent, co-administrative agent, documentation agent, syndication agent, local counsel agent (for multi-jurisdiction deals), sub-agent.",
+          "domain_id": "governance",
+          "extraction_difficulty": "easy",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.additional_agents.agent_types",
+          "level": 3,
+          "name": "Agent Types",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 1"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Scope of decision-making power granted to supplemental agents that is independent of the primary administrative agent's authority. In most credit agreements, additional agents have no independent authority, but in certain multi-jurisdictional facilities, local agents may be granted limited powers to act in their jurisdiction for perfection, enforcement, or regulatory compliance purposes.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.assignments",
+          "id": "governance.assignments.additional_agents.independent_authority",
+          "level": 3,
+          "name": "Independent Authority",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Provision permitting the appointment of supplemental agents (co-agents, syndication agents, documentation agents, or local agents) beyond the primary administrative agent and collateral agent. These additional agent roles typically carry no independent decision-making authority and serve primarily as titles recognizing the lender's role in the syndication or its local market presence.",
+      "dls_ref": [
+        "DLS:62:Right to Appoint Additional Agents",
+        "DLS:94:Assignments"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "assignments",
+        "extraction_ready": true,
+        "playbook_ref": "assignments.consents",
+        "section_locations": [
+          "ARTICLE IX",
+          "ARTICLE X",
+          "Section 9.01",
+          "Section 10.04"
+        ],
+        "aligned_difficulty": "hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "governance.assignments",
+      "id": "governance.assignments.additional_agents",
+      "kct_ref": [
+        "cat3.13"
+      ],
+      "level": 2,
+      "name": "Right to Appoint Additional Agents",
+      "negotiation_spectrum": {
+        "aggressive_position": "Borrower consent waived only for payment/bankruptcy EoD (not all EoD); no deemed consent; LC Issuer consent for LC sub-facility",
+        "dls_source": "DLS row 94",
+        "dls_stance": "moderate_lender",
+        "hot_button_items": [
+          "No assignments to Disqualified Institutions or natural persons.",
+          "No assignments to Disqualified Institutions or natural persons.",
+          "Disqualified Institutions: Assignments and participations to Disqualified Institutions are prohibited. List may be posted to lenders and shared with potential assignees and participants on a confident"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "agent_consent: all_assignments vs lender_to_lender_exempt",
+          "borrower_consent_revolver: required vs not_required",
+          "borrower_consent_tl: required_except_lender_affiliate vs no_consent",
+          "borrower_consent_eod_waiver: any_eod vs payment_bankruptcy_only",
+          "deemed_consent_period: 10BD vs 5BD vs no_deemed_consent",
+          "minimum_assignment_amount: 500k vs 1M vs 5M",
+          "dq_list: maintained vs not_maintained",
+          "dq_enforcement: agent_no_duty vs agent_must_verify",
+          "natural_person_prohibition: yes vs no",
+          "assignment_fee: 3500 vs 0 vs borrower_pays",
+          "participation_dq: prohibited vs permitted"
+        ],
+        "market_position": "",
+        "preferred_position": "Agent consent for all; Borrower consent (NTU withheld/delayed) except to existing lenders/affiliates or during EoD; 10BD deemed consent; $500K minimum; no DQ institutions/natural persons; $3,500 assignment fee",
+        "source": "R14-C"
+      },
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 62 (Right to Appoint Additional Agents); DLS Preferred Row 94 (Assignments); KCT Cat 3 Item 13"
+    },
+    {
+      "id": "governance.assignments.disqualified_institutions",
+      "name": "Disqualified Institutions",
+      "domain_id": "governance",
+      "family_id": "governance.assignments",
+      "level": 2,
+      "type": "concept",
+      "corpus_prevalence": "high",
+      "extraction_difficulty": "medium",
+      "definition": "List of entities prohibited from acquiring loans or commitments through assignment or participation. DLS Preferred row 94 provides the framework: 'Disqualified Institutions: Assignments and participations to Disqualified Institutions are prohibited. List may be posted to lenders and shared with potential assignees and participants on a confidential basis. Administrative Agent shall have no duty to ascertain, monitor or enforce compliance.' KCT Category 3 item 13 flags: '(i) Consent rights to assignments or to voting participations do not fall away upon payment or bankruptcy Events of Default, (ii) non-voting participations require consent/notice, (iii) no \"not to be unreasonably withheld\" language, or (iv) DQ list requires the Administrative Agent or lenders to identify institutions without listing entity names.'",
+      "children": [
+        {
+          "id": "governance.assignments.disqualified_institutions.initial_list",
+          "name": "Initial List / Closing Date Identification",
+          "domain_id": "governance",
+          "family_id": "governance.assignments",
+          "level": 3,
+          "type": "sub_component",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "easy",
+          "definition": "The list of disqualified institutions identified at closing, typically attached as a schedule or delivered to the administrative agent. May include named entities, categories (e.g., competitors), or references to publicly available lists.",
+          "definition_source": "Review Template Row 13 (Unknown); KCT Cat 1 Item 1"
+        },
+        {
+          "id": "governance.assignments.disqualified_institutions.post_closing_updates",
+          "name": "Post-Closing Update Rights",
+          "domain_id": "governance",
+          "family_id": "governance.assignments",
+          "level": 3,
+          "type": "sub_component",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition": "Whether and how the borrower may update the Disqualified Institutions list after closing. Borrower-friendly terms allow unlimited additions; lender-friendly terms freeze the list at closing or cap additions. Updates typically cannot retroactively affect existing lenders.",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "id": "governance.assignments.disqualified_institutions.affiliate_capture",
+          "name": "Affiliate Capture",
+          "domain_id": "governance",
+          "family_id": "governance.assignments",
+          "level": 3,
+          "type": "sub_component",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition": "Whether affiliates and related funds of disqualified institutions are automatically captured by the prohibition, and definition of what constitutes an 'affiliate' for this purpose. Broad capture prevents circumvention through fund vehicles.",
+          "definition_source": "KCT Cat 1 Item 6"
+        }
+      ],
+      "extraction_refs": {
+        "aligned_difficulty": "hard",
+        "concept_area": "assignments",
+        "difficulty_note": "DQ list provisions typically in assignment section with cross-references to defined terms in Art I",
+        "difficulty_source": "ontology",
+        "extraction_ready": true,
+        "playbook_ref": "assignments.disqualified_institutions",
+        "section_locations": [
+          "ARTICLE IX",
+          "ARTICLE XI",
+          "ARTICLE XIII",
+          "Section 10.05",
+          "Section 10.06",
+          "Section 11.8"
+        ],
+        "shape_ref": "assignments.disqualified_institutions"
+      },
+      "definition_source": "DLS Preferred row 94 (DQ framework: prohibition, posting, no agent duty); KCT Category 3 item 13 (four assignment/DQ formulation risk flags)"
+    }
+  ],
+  "dealdata_benchmarks": {
+    "Affiliated Lender": {
+      "pc_pct_range": "10.0%-50.0%"
+    },
+    "DQ List": {
+      "pc_dollar_median": "$25,000",
+      "pc_dollar_range": "$25,000-$25,000"
+    },
+    "Minimum Amounts": {
+      "pc_dollar_median": "$1,000,000",
+      "pc_dollar_range": "$100,000-$5,000,000"
+    }
+  },
+  "definition": "Provisions governing how lenders may transfer their loan positions through assignments (full transfer of lender status) or participations (economic transfer only, without direct borrower-lender relationship). DLS Preferred specifies differentiated requirements by facility: Revolver assignments require consent of Administrative Agent plus Borrower (not to be unreasonably withheld or delayed), except for assignments to existing revolving lenders/affiliates or during an EoD, with 10 BD deemed consent for Borrower and $500K minimum assignment. Term Loan assignments require Administrative Agent consent only for non-lender/non-affiliate/non-approved-fund assignees, plus Borrower consent (same exceptions), with 10 BD deemed consent and $500K minimum. Universal prohibitions: no assignments to Disqualified Institutions or natural persons; $3,500 agency fee per assignment (waivable by Agent); new lenders must complete tax forms and Assignment and Assumption Agreement. DQ list may be posted to lenders and shared with potential assignees/participants on a confidential basis; Administrative Agent has no duty to monitor DQ compliance. KCT Category 3 item 13 flags: (i) consent rights not falling away upon payment/bankruptcy EoD; (ii) non-voting participations requiring consent/notice to borrower or sponsor; (iii) absence of 'not to be unreasonably withheld or delayed' language; (iv) DQ list requiring institution identification without listing entity names.",
+  "dls_ref": [
+    "DLS:45:Due diligence",
+    "DLS:56:Solvency",
+    "DLS:60:Lender Selection",
+    "DLS:63:Syndication Assistance",
+    "DLS:94:Assignments",
+    "DLS:95:Debt Fund Affiliates/Non-Debt Fund Affiliates",
+    "DLS:96:Buyback Provisions"
+  ],
+  "domain_id": "governance",
+  "family_id": "governance.assignments",
+  "id": "governance.assignments",
+  "kct_ref": [
+    "cat3.13"
+  ],
+  "level": 1,
+  "name": "Assignments & Transfers",
+  "type": "family",
+  "corpus_prevalence": "high",
+  "extraction_difficulty": "medium",
+  "definition_source": "DLS Preferred row 94 (complete assignment specification for revolver and term loans, DQ institution provisions); KCT Category 3 item 13 (assignment/participation risk flags); PC Term Comparison section 9 (reject snooze you lose)",
+  "market_benchmarks": {
+    "dls_minimum_assignment": "$500,000",
+    "dls_agency_fee": "$3,500 per assignment (waivable by Agent)",
+    "dls_deemed_consent_period": "10 business days",
+    "dls_borrower_consent_fallaway": "During EoD or assignment to existing lender/affiliate/approved fund",
+    "dls_dq_institutions": "Assignments and participations prohibited; Agent no duty to monitor",
+    "dls_minimum_assignment_source": "DLS Preferred row 94",
+    "dls_agency_fee_source": "DLS Preferred row 94",
+    "dls_deemed_consent_period_source": "DLS Preferred row 94",
+    "_source": "DLS Preferred row 94"
+  },
+  "pc_ref": [
+    "Section 9"
+  ]
+}

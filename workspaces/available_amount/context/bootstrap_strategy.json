@@ -1,0 +1,527 @@
+[
+  {
+    "id": "debt_capacity.indebtedness.available_amount",
+    "name": "Available Amount Debt",
+    "family_id": "debt_capacity.indebtedness",
+    "concept_area": "indebtedness",
+    "playbook_ref": null,
+    "search_strategy": {
+      "concept_specific_keywords": [],
+      "concept_specific_notes": [],
+      "defined_term_dependencies": [
+        "Indebtedness",
+        "Debt",
+        "Consolidated EBITDA",
+        "Capital Lease Obligations",
+        "Finance Lease",
+        "Capitalized Lease",
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "Leverage Ratio",
+        "Consolidated Total Leverage Ratio",
+        "Unrestricted Subsidiary",
+        "Available Amount",
+        "Hedge Agreement",
+        "Cash Management Agreement"
+      ],
+      "fallback_escalation": "Search for 'shall not incur' or 'Permitted Indebtedness' or 'incurrence of Indebtedness'. If none found, search for 'other Indebtedness' or 'aggregate principal amount' near negative covenant headings.",
+      "heading_patterns": [
+        "Indebtedness",
+        "Limitation on Indebtedness",
+        "Borrowing",
+        "Debt"
+      ],
+      "keyword_anchors": [
+        "incur",
+        "incurrence",
+        "Permitted Indebtedness",
+        "Permitted Refinancing",
+        "Incremental Equivalent Debt",
+        "Disqualified Stock"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "assume",
+        "Leverage Ratio",
+        "intercompany",
+        "Guarantee"
+      ],
+      "source_file": "neg_cov_debt.json",
+      "xref_follow": [
+        "Section 1.01 for Indebtedness/Debt definition",
+        "Cross-references to ratio test / Leverage Ratio definition",
+        "Cross-references to Permitted Acquisition / Limited Condition Acquisition",
+        "Section 2.14/2.20 for Incremental Facility mechanics (incremental_facility basket lives there, not in neg cov section)"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.available_amount.aa_definition",
+    "name": "Available Amount Definition",
+    "family_id": "cash_flow.available_amount",
+    "concept_area": "available_amount",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "Growth Amount"
+      ],
+      "keyword_anchors": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "retained Excess Cash Flow",
+        "Growth Amount"
+      ],
+      "concept_specific_keywords": [
+        "Available Amount Definition",
+        "Available Amount",
+        "Cumulative Credit",
+        "Available Basket",
+        "Cumulative Growth Amount"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.available_amount.aa_starter_amount",
+    "name": "Starter Amount",
+    "family_id": "cash_flow.available_amount",
+    "concept_area": "available_amount",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "Growth Amount"
+      ],
+      "keyword_anchors": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "retained Excess Cash Flow",
+        "Growth Amount"
+      ],
+      "concept_specific_keywords": [
+        "Starter Amount",
+        "the greater of"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.available_amount.aa_retained_ecf",
+    "name": "Retained ECF Builder Component",
+    "family_id": "cash_flow.available_amount",
+    "concept_area": "available_amount",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "Growth Amount"
+      ],
+      "keyword_anchors": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "retained Excess Cash Flow",
+        "Growth Amount"
+      ],
+      "concept_specific_keywords": [
+        "Retained ECF Builder Component",
+        "Excess Cash Flow"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.available_amount.aa_cni_builder",
+    "name": "CNI Builder Component",
+    "family_id": "cash_flow.available_amount",
+    "concept_area": "available_amount",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "Growth Amount"
+      ],
+      "keyword_anchors": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "retained Excess Cash Flow",
+        "Growth Amount"
+      ],
+      "concept_specific_keywords": [
+        "CNI Builder Component",
+        "Consolidated Net Income"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.available_amount.aa_equity_proceeds",
+    "name": "Equity Proceeds Builder",
+    "family_id": "cash_flow.available_amount",
+    "concept_area": "available_amount",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "Growth Amount"
+      ],
+      "keyword_anchors": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "retained Excess Cash Flow",
+        "Growth Amount"
+      ],
+      "concept_specific_keywords": [
+        "Equity Proceeds Builder",
+        "Available Amount"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.available_amount.aa_debt_conversion",
+    "name": "Debt-to-Equity Conversion Proceeds",
+    "family_id": "cash_flow.available_amount",
+    "concept_area": "available_amount",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "Growth Amount"
+      ],
+      "keyword_anchors": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "retained Excess Cash Flow",
+        "Growth Amount"
+      ],
+      "concept_specific_keywords": [
+        "Debt-to-Equity Conversion Proceeds",
+        "Available Amount"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.available_amount.aa_investment_returns",
+    "name": "Investment Returns Component",
+    "family_id": "cash_flow.available_amount",
+    "concept_area": "available_amount",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "Growth Amount"
+      ],
+      "keyword_anchors": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "retained Excess Cash Flow",
+        "Growth Amount"
+      ],
+      "concept_specific_keywords": [
+        "Investment Returns Component",
+        "Available Amount",
+        "recycling mechanism"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.available_amount.aa_asset_sale_proceeds",
+    "name": "Asset Sale Proceeds Builder",
+    "family_id": "cash_flow.available_amount",
+    "concept_area": "available_amount",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "Growth Amount"
+      ],
+      "keyword_anchors": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "retained Excess Cash Flow",
+        "Growth Amount"
+      ],
+      "concept_specific_keywords": [
+        "Asset Sale Proceeds Builder",
+        "Available Amount"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.available_amount.aa_declined_distributions",
+    "name": "Declined Mandatory Prepayment Proceeds",
+    "family_id": "cash_flow.available_amount",
+    "concept_area": "available_amount",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "Growth Amount"
+      ],
+      "keyword_anchors": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "retained Excess Cash Flow",
+        "Growth Amount"
+      ],
+      "concept_specific_keywords": [
+        "Declined Mandatory Prepayment Proceeds"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.available_amount.aa_unsub_redesignation",
+    "name": "Unrestricted Subsidiary Redesignation Component",
+    "family_id": "cash_flow.available_amount",
+    "concept_area": "available_amount",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "Growth Amount"
+      ],
+      "keyword_anchors": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "retained Excess Cash Flow",
+        "Growth Amount"
+      ],
+      "concept_specific_keywords": [
+        "Unrestricted Subsidiary Redesignation Component",
+        "Available Amount"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.available_amount.aa_ratio_test",
+    "name": "Leverage Ratio Governor",
+    "family_id": "cash_flow.available_amount",
+    "concept_area": "available_amount",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "Growth Amount"
+      ],
+      "keyword_anchors": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "retained Excess Cash Flow",
+        "Growth Amount"
+      ],
+      "concept_specific_keywords": [
+        "Leverage Ratio Governor",
+        "Total Net Leverage Ratio",
+        "Pro Forma Total Leverage"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.available_amount.aa_usage_tracking",
+    "name": "Cumulative Usage Tracking",
+    "family_id": "cash_flow.available_amount",
+    "concept_area": "available_amount",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "Growth Amount"
+      ],
+      "keyword_anchors": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "retained Excess Cash Flow",
+        "Growth Amount"
+      ],
+      "concept_specific_keywords": [
+        "Cumulative Usage Tracking",
+        "Available Amount"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.available_amount.aa_anti_double_dip",
+    "name": "Anti-Double-Dip Provisions",
+    "family_id": "cash_flow.available_amount",
+    "concept_area": "available_amount",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "Growth Amount"
+      ],
+      "keyword_anchors": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "retained Excess Cash Flow",
+        "Growth Amount"
+      ],
+      "concept_specific_keywords": [
+        "Anti-Double-Dip Provisions",
+        "Available Amount"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.available_amount.aa_eod_blocker",
+    "name": "Event of Default Blocker",
+    "family_id": "cash_flow.available_amount",
+    "concept_area": "available_amount",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "Growth Amount"
+      ],
+      "keyword_anchors": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "retained Excess Cash Flow",
+        "Growth Amount"
+      ],
+      "concept_specific_keywords": [
+        "Event of Default Blocker"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.available_amount.aa_growth_mechanics",
+    "name": "Growth Mechanics",
+    "family_id": "cash_flow.available_amount",
+    "concept_area": "available_amount",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "Growth Amount"
+      ],
+      "keyword_anchors": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "retained Excess Cash Flow",
+        "Growth Amount"
+      ],
+      "concept_specific_keywords": [
+        "Growth Mechanics",
+        "Available Amount"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.available_amount.aa_cross_covenant_allocation",
+    "name": "Cross-Covenant Allocation",
+    "family_id": "cash_flow.available_amount",
+    "concept_area": "available_amount",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "Growth Amount"
+      ],
+      "keyword_anchors": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "retained Excess Cash Flow",
+        "Growth Amount"
+      ],
+      "concept_specific_keywords": [
+        "Cross-Covenant Allocation"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.available_amount.maintenance_covenant_as_mitigant",
+    "name": "maintenance covenant as mitigant",
+    "family_id": "cash_flow.available_amount",
+    "concept_area": "available_amount",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "Growth Amount"
+      ],
+      "keyword_anchors": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "retained Excess Cash Flow",
+        "Growth Amount"
+      ],
+      "concept_specific_keywords": [
+        "maintenance covenant as mitigant"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.inv.available_amount",
+    "name": "Available Amount Basket (Investments)",
+    "family_id": "cash_flow.inv",
+    "concept_area": "inv",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Investments",
+        "Loans and Investments",
+        "Limitation on Investments",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Investment",
+        "Permitted Investment",
+        "Permitted Acquisition",
+        "loan",
+        "advance"
+      ],
+      "concept_specific_keywords": [
+        "Available Amount Basket (Investments)",
+        "Available Amount"
+      ]
+    }
+  }
+]

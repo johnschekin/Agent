@@ -17,7 +17,7 @@ export function CohortFunnel({ data }: CohortFunnelProps) {
         <div className="w-36 text-right text-xs text-text-secondary">
           All Documents
         </div>
-        <div className="flex-1 relative h-7 bg-surface-primary rounded overflow-hidden">
+        <div className="flex-1 relative h-7 bg-surface-1 rounded overflow-hidden">
           <div
             className="absolute inset-y-0 left-0 bg-accent-blue/30 rounded"
             style={{ width: "100%" }}
@@ -40,11 +40,11 @@ export function CohortFunnel({ data }: CohortFunnelProps) {
             <div className="w-36 text-right text-xs text-text-secondary truncate">
               {item.label.replace(/_/g, " ")}
             </div>
-            <div className="flex-1 relative h-6 bg-surface-primary rounded overflow-hidden">
+            <div className="flex-1 relative h-6 bg-surface-1 rounded overflow-hidden">
               <div
                 className={cn(
                   "absolute inset-y-0 left-0 rounded transition-all",
-                  isCA ? "bg-accent-green/40" : "bg-surface-tertiary"
+                  isCA ? "bg-accent-green/40" : "bg-surface-3"
                 )}
                 style={{ width: `${Math.max(pct, 1)}%` }}
               />
@@ -73,11 +73,11 @@ export function CohortFunnel({ data }: CohortFunnelProps) {
                 <div className="w-36 text-right text-xs text-text-secondary">
                   {item.label.replace(/_/g, " ")}
                 </div>
-                <div className="flex-1 relative h-6 bg-surface-primary rounded overflow-hidden">
+                <div className="flex-1 relative h-6 bg-surface-1 rounded overflow-hidden">
                   <div
                     className={cn(
                       "absolute inset-y-0 left-0 rounded transition-all",
-                      isLeveraged ? "bg-accent-green/60" : "bg-surface-tertiary"
+                      isLeveraged ? "bg-accent-green/60" : "bg-surface-3"
                     )}
                     style={{ width: `${Math.max(pct, 1)}%` }}
                   />

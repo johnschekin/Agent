@@ -1,0 +1,1488 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Number of days after fiscal year-end by which audited financials must be delivered. Standard: 120 days (42/62 deals); first-year extension to 150 days common (38/62 deals).",
+              "dls_ref": [
+                47
+              ],
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.reporting",
+              "id": "governance.reporting.financial_statements.annual.deadline",
+              "level": 4,
+              "market_benchmarks": {
+                "bank_preferred": "90 days",
+                "first_year": "150 days",
+                "market_standard_value": "120 days"
+              },
+              "name": "Delivery Deadline",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 47"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Exceptions permitting audit opinions to reference going concern without triggering covenant breach. Most common: impending maturity, financial covenant breach, emphasis of matter.",
+              "dls_ref": [
+                47
+              ],
+              "domain_id": "governance",
+              "extraction_difficulty": "hard",
+              "extraction_refs": {
+                "concept_area": "reporting",
+                "extraction_ready": true,
+                "playbook_ref": "reporting.going_concern",
+                "primary_section_pattern": "X.01",
+                "section_locations": [
+                  "10.05",
+                  "4.02",
+                  "4.1",
+                  "5.18",
+                  "9.01"
+                ],
+                "shape_ref": "reporting.going_concern"
+              },
+              "family_id": "governance.reporting",
+              "id": "governance.reporting.financial_statements.annual.going_concern",
+              "level": 4,
+              "market_benchmarks": {
+                "emphasis_of_matter": "19%",
+                "financial_covenant_breach": "77%",
+                "impending_maturity": "90%"
+              },
+              "name": "Going Concern Carveouts",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 55,
+                  "term": "Financial Statements – going concern"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 47; Review Template Row 55 (Financial Statements – going concern)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Whether prior-year comparative financial statements are required alongside current year.",
+              "dls_ref": [
+                47
+              ],
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.reporting",
+              "id": "governance.reporting.financial_statements.annual.comparatives",
+              "level": 4,
+              "name": "Comparative Statements",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 47"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Requirement that audit be performed by nationally recognized independent accounting firm with no qualification on scope limitations.",
+              "dls_ref": [
+                47
+              ],
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.reporting",
+              "id": "governance.reporting.financial_statements.annual.accounting_firm",
+              "level": 4,
+              "name": "Accounting Firm Standard",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 47"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Audited annual financial statements prepared in accordance with GAAP, accompanied by an independent accounting firm opinion. The going concern qualification language is the most heavily negotiated sub-component.",
+          "dls_ref": [
+            47
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reporting",
+          "id": "governance.reporting.financial_statements.annual",
+          "level": 3,
+          "market_benchmarks": {
+            "pctc_conservative": "45 days (60 for first 3 quarters)",
+            "pctc_umm_bsl": "R: 60 days (75 for first 3 quarters)"
+          },
+          "name": "Annual Audited Financials",
+          "r18_concept_ids": [
+            "reporting.annual_audit"
+          ],
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 54,
+              "term": "Financial Statements – annual audits"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 47; Review Template Row 54 (Financial Statements – annual audits)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Days after quarter-end by which quarterly financials must be delivered. Standard: 45 days; conservative: 60 days (18/62).",
+              "dls_ref": [
+                47
+              ],
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.reporting",
+              "id": "governance.reporting.financial_statements.quarterly.deadline",
+              "level": 4,
+              "market_benchmarks": {
+                "conservative_value": "60 days",
+                "first_period_extension": "+15 days",
+                "market_standard_value": "45 days"
+              },
+              "name": "Delivery Deadline",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 47"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Whether quarterly statements must include comparatives to both budget and prior year or prior year only.",
+              "dls_ref": [
+                47
+              ],
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.reporting",
+              "id": "governance.reporting.financial_statements.quarterly.comparatives",
+              "level": 4,
+              "market_benchmarks": {
+                "r17_gap_flagged": true
+              },
+              "name": "Budget & Year Comparatives",
+              "negotiation_spectrum": {
+                "r17_gap_flagged": true
+              },
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 47"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Unaudited quarterly financial statements with compliance certificates and comparatives. Primary ongoing surveillance vehicle. Standard deadline: 45 days (38/62); first-period extension +15 days common.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reporting",
+          "id": "governance.reporting.financial_statements.quarterly",
+          "kct_ref": [
+            "cat1.4"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "r17_gap_flagged": true
+          },
+          "name": "Quarterly Unaudited Financials",
+          "negotiation_spectrum": {
+            "r17_gap_flagged": true
+          },
+          "r18_concept_ids": [
+            "reporting.quarterly_financials"
+          ],
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 52,
+              "term": "Financial Statements – quarterly"
+            },
+            {
+              "coverage": "full",
+              "row": 54,
+              "term": "Financial Statements – annual audits"
+            },
+            {
+              "coverage": "full",
+              "row": 155,
+              "term": "Financial Statements"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 4; Review Template Row 52 (Financial Statements – quarterly); Review Template Row 54 (Financial Statements – annual audits); Review Template Row 155 (Financial Statements)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Monthly financial statements providing granular operational visibility. Key differentiator between conservative (LMM/CMM, 52% require) and aggressive (UMM/BSL, 29% eliminate) reporting packages.",
+          "dls_ref": [
+            47
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reporting",
+          "id": "governance.reporting.financial_statements.monthly",
+          "level": 3,
+          "market_benchmarks": {
+            "full_monthly": "52%",
+            "not_required": "29%",
+            "partial_monthly": "19%"
+          },
+          "name": "Monthly Reporting",
+          "r18_concept_ids": [
+            "reporting.monthly_financials"
+          ],
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 53,
+              "term": "Financial Statements – monthly"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 47; Review Template Row 53 (Financial Statements – monthly)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether Form 10-K/10-Q SEC filings satisfy delivery requirements for public filers, avoiding duplicate reporting obligations.",
+          "dls_ref": [
+            47
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reporting",
+          "id": "governance.reporting.financial_statements.sec_filing_substitution",
+          "level": 3,
+          "name": "SEC Filing Substitution",
+          "r18_concept_ids": [
+            "reporting.edgar_filing_delivery"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 47"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Annual audited, quarterly unaudited, and monthly reporting requirements. DLS Preferred row 78 specifies: (i) annual financial statements (GAAP) within 90 days of fiscal year end with unqualified audit opinion (except going concern from upcoming maturity); (ii) quarterly financial statements (GAAP) within 45 days of quarter end; (iii) monthly financial statements (GAAP) within 30 days of month end; (iv) monthly forecasts for next 12 months within 30 days. Alternatives: 120 days for first annual; 60 days for first 3 quarters; no monthlies; no forecasts. PC Term Comparison by segment: annuals 120 days (150 first year); quarterlies Aggressive UMM/BSLR 60 days (75 first 3), otherwise 45 days (60 first 3); monthlies Aggressive UMM/BSLR none, otherwise 30 days (45 first 3); budgets Aggressive UMM/BSLR pre-IPO only, otherwise 60/90 days post FY-end.",
+      "dls_ref": [
+        "DLS:47:Financial statements",
+        "DLS:48:Pro Forma Financial Statements",
+        "DLS:49:Forecasts"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "reporting",
+        "extraction_ready": true,
+        "playbook_ref": "reporting.financial_stmts_general",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 4",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE IX",
+          "ARTICLE V"
+        ],
+        "shape_ref": "reporting.financial_stmts_general"
+      },
+      "family_id": "governance.reporting",
+      "id": "governance.reporting.financial_statements",
+      "level": 2,
+      "name": "Financial Statements",
+      "negotiation_spectrum": {
+        "aggressive_position": "120d for first audit; going-concern for maturity/covenant ok; 60d for first 3 quarters; no monthlies; no forecasts or 90-120d; no lender calls or choose between MD&A/calls; reporting limited to Borrower + restricted subs",
+        "dls_source": "DLS row 78",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(xvii) covenant to guarantee obligations and give security",
+          "(xix) further assurances as to security",
+          "(xxii) interest rate protection",
+          "alternative_terms: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "annual_financial_deadline: 90d vs 120d_first_year",
+          "audit_opinion_qualification: clean_only vs going_concern_maturity_ok vs going_concern_covenant_ok",
+          "quarterly_financial_deadline: 45d vs 60d_first_3Q",
+          "monthly_financials: required vs not_required",
+          "monthly_forecasts: required vs not_required vs 90d_forecasts",
+          "lender_calls: quarterly vs annual vs not_required",
+          "mda: with_financials vs not_required",
+          "compliance_certificate: quarterly vs annual",
+          "guarantee_security_covenant: affirmative_covenant vs best_efforts",
+          "further_assurances: required vs not_required",
+          "interest_rate_protection: required vs not_required",
+          "entity_scope: holdings_and_all_subs vs borrower_and_restricted_subs",
+          "inspection_frequency: unlimited_with_cost_cap vs annual_plus_eod"
+        ],
+        "market_position": "",
+        "preferred_position": "24 enumerated covenants: annual (90d, audited, clean opinion), quarterly (45d), monthly (30d), monthly forecasts, quarterly lender calls, MD&A, compliance certs, notices, tax/existence/property/insurance/ERISA/environmental, inspection rights, guarantee/security covenant, further assurances, IP, interest rate protection, FCPA/OFAC/Patriot Act",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "reporting.annual_audit",
+        "reporting.quarterly_financials",
+        "reporting.monthly_financials"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 52,
+          "term": "Financial Statements – quarterly"
+        },
+        {
+          "coverage": "full",
+          "row": 53,
+          "term": "Financial Statements – monthly"
+        },
+        {
+          "coverage": "full",
+          "row": 54,
+          "term": "Financial Statements – annual audits"
+        },
+        {
+          "coverage": "full",
+          "row": 155,
+          "term": "Financial Statements"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 78 clauses (i)-(iv) (annual 90d, quarterly 45d, monthly 30d, forecasts 30d; alternatives); PC Term Comparison Affirmative Covenants section lines 314-328 (delivery periods by segment)",
+      "market_benchmarks": "DLS Preferred: annual 90d/quarterly 45d/monthly 30d/forecasts 30d. PC Term Comparison: annuals 120d (150d first year); quarterlies Aggressive UMM 60d (75d first 3), otherwise 45d (60d first 3); monthlies Aggressive UMM none, otherwise 30d (45d first 3).",
+      "pc_ref": [
+        "Affirmative Covenants"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Required content: leverage ratio calculation, interest coverage ratio, EBITDA detail with add-backs, basket usage tracking, default/EoD certification, pro forma compliance demonstrations.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reporting",
+          "id": "governance.reporting.compliance_certificate.content",
+          "kct_ref": [
+            "cat1.4"
+          ],
+          "level": 3,
+          "name": "Certificate Content",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 4"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Must be delivered concurrently with quarterly and annual financial statements. Typically signed by a Responsible Officer (CFO or equivalent).",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reporting",
+          "id": "governance.reporting.compliance_certificate.timing",
+          "kct_ref": [
+            "cat1.4"
+          ],
+          "level": 3,
+          "name": "Delivery Timing",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 4"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Identity and title of officer certifying compliance. Typically CFO or chief accounting officer. Certification standard: actual knowledge vs. due inquiry.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reporting",
+          "id": "governance.reporting.compliance_certificate.certifying_officer",
+          "kct_ref": [
+            "cat1.4"
+          ],
+          "level": 3,
+          "name": "Certifying Officer",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 4"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Officer's certificate confirming covenant compliance and attaching detailed financial calculations. DLS Preferred row 78 clause (vii) requires delivery of 'quarterly compliance certificates and other information.' Review Template row 52 specifies quarterly delivery with extended windows for initial post-closing periods. The compliance certificate is the primary document through which lenders verify financial covenant satisfaction, containing detailed ratio computations, basket utilization summaries, and officer certification of no defaults. It feeds directly into the springing covenant activation determination under covenant-lite structures.",
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "reporting",
+        "extraction_ready": true,
+        "playbook_ref": "reporting.financial_stmts_general",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 4",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE IX",
+          "ARTICLE V"
+        ],
+        "shape_ref": "reporting.financial_stmts_general"
+      },
+      "family_id": "governance.reporting",
+      "id": "governance.reporting.compliance_certificate",
+      "kct_ref": [
+        "cat1.4"
+      ],
+      "level": 2,
+      "name": "Compliance Certificate",
+      "negotiation_spectrum": {
+        "aggressive_position": "120d for first audit; going-concern for maturity/covenant ok; 60d for first 3 quarters; no monthlies; no forecasts or 90-120d; no lender calls or choose between MD&A/calls; reporting limited to Borrower + restricted subs",
+        "dls_source": "DLS row 78",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(xvii) covenant to guarantee obligations and give security",
+          "(xix) further assurances as to security",
+          "(xxii) interest rate protection",
+          "alternative_terms: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "annual_financial_deadline: 90d vs 120d_first_year",
+          "audit_opinion_qualification: clean_only vs going_concern_maturity_ok vs going_concern_covenant_ok",
+          "quarterly_financial_deadline: 45d vs 60d_first_3Q",
+          "monthly_financials: required vs not_required",
+          "monthly_forecasts: required vs not_required vs 90d_forecasts",
+          "lender_calls: quarterly vs annual vs not_required",
+          "mda: with_financials vs not_required",
+          "compliance_certificate: quarterly vs annual",
+          "guarantee_security_covenant: affirmative_covenant vs best_efforts",
+          "further_assurances: required vs not_required",
+          "interest_rate_protection: required vs not_required",
+          "entity_scope: holdings_and_all_subs vs borrower_and_restricted_subs",
+          "inspection_frequency: unlimited_with_cost_cap vs annual_plus_eod"
+        ],
+        "market_position": "",
+        "preferred_position": "24 enumerated covenants: annual (90d, audited, clean opinion), quarterly (45d), monthly (30d), monthly forecasts, quarterly lender calls, MD&A, compliance certs, notices, tax/existence/property/insurance/ERISA/environmental, inspection rights, guarantee/security covenant, further assurances, IP, interest rate protection, FCPA/OFAC/Patriot Act",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "financial_covenant.compliance_certificate",
+        "reporting.compliance_certificate"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 52,
+          "term": "Financial Statements – quarterly"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 78 clause (vii) (quarterly compliance certificates); Review Template row 52 (quarterly delivery with extended initial windows)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Days after fiscal year-end by which annual budget must be delivered. Ranges from 60 days to 90 days to 120+ days.",
+          "dls_ref": [
+            78
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reporting",
+          "id": "governance.reporting.budget.deadline",
+          "level": 3,
+          "market_benchmarks": {
+            "notice_60_day": "26%",
+            "notice_90_day": "29%",
+            "period_120_plus": "19%"
+          },
+          "name": "Budget Delivery Deadline",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 78"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether budget must be approved by borrower's board of directors before delivery. Board-approved budgets provide higher confidence in projection quality.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reporting",
+          "id": "governance.reporting.budget.board_approval",
+          "level": 3,
+          "name": "Board Approval Requirement",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 4"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Annual budget and financial projections providing forward-looking visibility into borrower's expected performance. DLS Preferred row 78 clause (iv) includes 'monthly forecasts for the next 12 months delivered within 30 days after the end of each month' in the preferred package. Alternative: 'No forecasts/within 90/120 days.' PC Term Comparison: 'Aggressive UMM/BSLR: Typically pre-IPO only, same deadline as audit; Otherwise: All times, 60/90 days post FY-end.' Budget delivery enables lenders to assess forward-looking credit risk and compare actual performance against management expectations.",
+      "dls_ref": [
+        78
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "reporting",
+        "extraction_ready": true,
+        "playbook_ref": "reporting.financial_stmts_general",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 4",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE IX",
+          "ARTICLE V"
+        ],
+        "shape_ref": "reporting.financial_stmts_general"
+      },
+      "family_id": "governance.reporting",
+      "id": "governance.reporting.budget",
+      "level": 2,
+      "name": "Budget & Projections",
+      "negotiation_spectrum": {
+        "aggressive_position": "120d for first audit; going-concern for maturity/covenant ok; 60d for first 3 quarters; no monthlies; no forecasts or 90-120d; no lender calls or choose between MD&A/calls; reporting limited to Borrower + restricted subs",
+        "dls_source": "DLS row 78",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(xvii) covenant to guarantee obligations and give security",
+          "(xix) further assurances as to security",
+          "(xxii) interest rate protection",
+          "alternative_terms: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "annual_financial_deadline: 90d vs 120d_first_year",
+          "audit_opinion_qualification: clean_only vs going_concern_maturity_ok vs going_concern_covenant_ok",
+          "quarterly_financial_deadline: 45d vs 60d_first_3Q",
+          "monthly_financials: required vs not_required",
+          "monthly_forecasts: required vs not_required vs 90d_forecasts",
+          "lender_calls: quarterly vs annual vs not_required",
+          "mda: with_financials vs not_required",
+          "compliance_certificate: quarterly vs annual",
+          "guarantee_security_covenant: affirmative_covenant vs best_efforts",
+          "further_assurances: required vs not_required",
+          "interest_rate_protection: required vs not_required",
+          "entity_scope: holdings_and_all_subs vs borrower_and_restricted_subs",
+          "inspection_frequency: unlimited_with_cost_cap vs annual_plus_eod"
+        ],
+        "market_position": "",
+        "preferred_position": "24 enumerated covenants: annual (90d, audited, clean opinion), quarterly (45d), monthly (30d), monthly forecasts, quarterly lender calls, MD&A, compliance certs, notices, tax/existence/property/insurance/ERISA/environmental, inspection rights, guarantee/security covenant, further assurances, IP, interest rate protection, FCPA/OFAC/Patriot Act",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "reporting.budget_forecasts"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 78 clause (iv) (monthly forecasts, 30-day delivery); PC Term Comparison Affirmative Covenants section lines 326-328 (budgets by segment)",
+      "pc_ref": [
+        "Affirmative Covenants"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Mandatory call schedule: quarterly (45%), upon agent/required lender request (29%), annual (16%). Conditional calls weaker than mandatory scheduled calls.",
+          "dls_ref": [
+            78
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reporting",
+          "id": "governance.reporting.lender_calls.frequency",
+          "level": 3,
+          "name": "Call Frequency",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 78"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether call frequency escalates during events of default.",
+          "dls_ref": [
+            78
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reporting",
+          "id": "governance.reporting.lender_calls.eod_escalation",
+          "level": 3,
+          "name": "EoD Escalation",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 78"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Periodic calls between management and lender group providing qualitative context beyond financial statements. DLS Preferred row 78 clause (v) includes 'quarterly lender calls' in the preferred affirmative covenant package. Alternative: 'No lender calls (option between MD&A or lender calls).' PC Term Comparison: 'Aggressive UMM/BSLR: None; Otherwise: Annual, often quarterlies as well.' Review Template row 56: 'Add quarterly lender calls and MD&A as flex.' Lender calls provide real-time management commentary that supplements the quantitative data in financial statements and compliance certificates.",
+      "dls_ref": [
+        "DLS:47:Financial statements",
+        "DLS:48:Pro Forma Financial Statements",
+        "DLS:60:Lender Selection"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "reporting",
+        "extraction_ready": true,
+        "playbook_ref": "reporting.lender_calls",
+        "primary_section_pattern": "X.01",
+        "section_locations": [
+          "2.14",
+          "2.5",
+          "4.02",
+          "9.02",
+          "9.15",
+          "ARTICLE 10",
+          "ARTICLE 4",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE IX",
+          "ARTICLE V"
+        ],
+        "shape_ref": "reporting.lender_calls"
+      },
+      "family_id": "governance.reporting",
+      "id": "governance.reporting.lender_calls",
+      "level": 2,
+      "market_benchmarks": {
+        "not_required": "6%",
+        "quarterly_mandatory": "45%",
+        "quarterly_upon_request": "29%"
+      },
+      "name": "Lender Presentations / Calls",
+      "negotiation_spectrum": {
+        "aggressive_position": "120d for first audit; going-concern for maturity/covenant ok; 60d for first 3 quarters; no monthlies; no forecasts or 90-120d; no lender calls or choose between MD&A/calls; reporting limited to Borrower + restricted subs",
+        "dls_source": "DLS row 78",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(xvii) covenant to guarantee obligations and give security",
+          "(xix) further assurances as to security",
+          "(xxii) interest rate protection",
+          "alternative_terms: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "annual_financial_deadline: 90d vs 120d_first_year",
+          "audit_opinion_qualification: clean_only vs going_concern_maturity_ok vs going_concern_covenant_ok",
+          "quarterly_financial_deadline: 45d vs 60d_first_3Q",
+          "monthly_financials: required vs not_required",
+          "monthly_forecasts: required vs not_required vs 90d_forecasts",
+          "lender_calls: quarterly vs annual vs not_required",
+          "mda: with_financials vs not_required",
+          "compliance_certificate: quarterly vs annual",
+          "guarantee_security_covenant: affirmative_covenant vs best_efforts",
+          "further_assurances: required vs not_required",
+          "interest_rate_protection: required vs not_required",
+          "entity_scope: holdings_and_all_subs vs borrower_and_restricted_subs",
+          "inspection_frequency: unlimited_with_cost_cap vs annual_plus_eod"
+        ],
+        "market_position": "",
+        "preferred_position": "24 enumerated covenants: annual (90d, audited, clean opinion), quarterly (45d), monthly (30d), monthly forecasts, quarterly lender calls, MD&A, compliance certs, notices, tax/existence/property/insurance/ERISA/environmental, inspection rights, guarantee/security covenant, further assurances, IP, interest rate protection, FCPA/OFAC/Patriot Act",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "reporting.lender_calls"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 56,
+          "term": "Affirmative Covenants – other"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 78 clause (v) (quarterly lender calls preferred); PC Term Comparison Affirmative Covenants section lines 330-332 (lender calls by segment); Review Template row 56 (lender calls as flex)",
+      "pc_ref": [
+        "Affirmative Covenants"
+      ]
+    },
+    {
+      "children": [
+        {
+          "id": "governance.reporting.mda.delivery_frequency",
+          "name": "Delivery Frequency & Timing",
+          "definition": "How often MD&A must be delivered — quarterly with financial statements, monthly, or not required — and the deadline relative to period-end (typically same as financial statement deadline).",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reporting",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "easy",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "id": "governance.reporting.mda.content_scope",
+          "name": "Required Content Scope",
+          "definition": "What the MD&A must cover — variance analysis to budget and prior year, material changes in operations, liquidity discussion, significant events — and whether it must follow SEC MD&A format or may be simplified.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reporting",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 2 Item 4"
+        },
+        {
+          "id": "governance.reporting.mda.preparer_requirements",
+          "name": "Preparer & Certification",
+          "definition": "Who must prepare the MD&A — CFO, management, or borrower's accountants — and whether an officer certification of the discussion's accuracy and completeness is required alongside the narrative.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reporting",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "easy",
+          "definition_source": "KCT Cat 1 Item 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Narrative explanation of financial performance, trends, and outlook. DLS Preferred row 78 clause (vi) includes 'quarterly/annual MD&A delivered with financial statements' in the preferred affirmative covenant package. Alternative: 'No MD&A (option between MD&A or lender calls).' PC Term Comparison: 'Aggressive UMM/BSLR: This is mixed but often none; Otherwise: with quarterlies and annuals.' MD&A provides management's qualitative discussion of financial results, bridging the gap between raw financial data and business context. It is often treated as interchangeable with lender calls -- deals typically include one or the other.",
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "reporting",
+        "extraction_ready": true,
+        "playbook_ref": "reporting.mda",
+        "primary_section_pattern": "X.01",
+        "section_locations": [
+          "2.10",
+          "4.01",
+          "4.02",
+          "5.4",
+          "9.01",
+          "ARTICLE 10",
+          "ARTICLE 4",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE IX",
+          "ARTICLE V"
+        ],
+        "shape_ref": "reporting.mda"
+      },
+      "family_id": "governance.reporting",
+      "id": "governance.reporting.mda",
+      "level": 2,
+      "market_benchmarks": {
+        "monthly_value": "3%",
+        "not_required": "13%",
+        "quarterly_value": "81%"
+      },
+      "name": "Management Discussion & Analysis",
+      "negotiation_spectrum": {
+        "aggressive_position": "120d for first audit; going-concern for maturity/covenant ok; 60d for first 3 quarters; no monthlies; no forecasts or 90-120d; no lender calls or choose between MD&A/calls; reporting limited to Borrower + restricted subs",
+        "dls_source": "DLS row 78",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(xvii) covenant to guarantee obligations and give security",
+          "(xix) further assurances as to security",
+          "(xxii) interest rate protection",
+          "alternative_terms: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "annual_financial_deadline: 90d vs 120d_first_year",
+          "audit_opinion_qualification: clean_only vs going_concern_maturity_ok vs going_concern_covenant_ok",
+          "quarterly_financial_deadline: 45d vs 60d_first_3Q",
+          "monthly_financials: required vs not_required",
+          "monthly_forecasts: required vs not_required vs 90d_forecasts",
+          "lender_calls: quarterly vs annual vs not_required",
+          "mda: with_financials vs not_required",
+          "compliance_certificate: quarterly vs annual",
+          "guarantee_security_covenant: affirmative_covenant vs best_efforts",
+          "further_assurances: required vs not_required",
+          "interest_rate_protection: required vs not_required",
+          "entity_scope: holdings_and_all_subs vs borrower_and_restricted_subs",
+          "inspection_frequency: unlimited_with_cost_cap vs annual_plus_eod"
+        ],
+        "market_position": "",
+        "preferred_position": "24 enumerated covenants: annual (90d, audited, clean opinion), quarterly (45d), monthly (30d), monthly forecasts, quarterly lender calls, MD&A, compliance certs, notices, tax/existence/property/insurance/ERISA/environmental, inspection rights, guarantee/security covenant, further assurances, IP, interest rate protection, FCPA/OFAC/Patriot Act",
+        "source": "R14-C"
+      },
+      "type": "concept",
+      "definition_source": "DLS Preferred row 78 clause (vi) (MD&A with quarterlies and annuals); PC Term Comparison Affirmative Covenants section lines 323-325 (MD&A by segment)",
+      "pc_ref": [
+        "Affirmative Covenants"
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "the point at which a Responsible Officer of the Borrower becomes aware of a default, triggering the notice obligation; the knowledge carve-out ensures that failure to notify despite actual awareness cannot be cured under broad cured default provisions",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.reporting",
+              "id": "governance.reporting.notices.default_notice.responsible_officer_awareness_trigge",
+              "kct_ref": [
+                "KCT:Cat3:9"
+              ],
+              "level": 4,
+              "name": "Responsible Officer awareness trigger",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "required content of a default notice under affirmative covenants, including the nature of the default or event of default and the remedial action being taken or proposed, alongside notices of material litigation, ERISA events, and material adverse changes",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.reporting",
+              "id": "governance.reporting.notices.default_notice.content_requirements_nature_remedial",
+              "kct_ref": [
+                "KCT:Cat3:9"
+              ],
+              "level": 4,
+              "name": "Content requirements (nature, remedial action)",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 1"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "risk that a statute of limitations (typically 2 years) allows defaults to expire unaddressed absent notice delivery; lender protection requires the limitations period be tied to notice of default with a carve-out for borrower or Responsible Officer knowledge of the underlying default",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.reporting",
+              "id": "governance.reporting.notices.default_notice.interaction_with_statute_of_limitati",
+              "kct_ref": [
+                "KCT:Cat3:9"
+              ],
+              "level": 4,
+              "name": "Interaction with statute of limitations",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 2"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Obligation to provide notice upon awareness of any Default or Event of Default, specifying its nature and remedial action being taken. KCT Cat 3 Item 9 flags absence as risk.",
+          "domain_id": "governance",
+          "extraction_difficulty": "easy",
+          "family_id": "governance.reporting",
+          "id": "governance.reporting.notices.default_notice",
+          "kct_ref": [
+            "cat3.2",
+            "cat3.9",
+            "cat5.3"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "kct_cat3_benchmark_addition": "Add market benchmarks for prevalence and aggressiveness of Absence of Default Notice Covenant provisions across PC/BSL segments."
+          },
+          "name": "Default / EoD Notice",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 56,
+              "term": "Affirmative Covenants – other"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 2; KCT Cat 3 Item 9; KCT Cat 5 Item 3; Review Template Row 56 (Affirmative Covenants – other)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Notice of material litigation, arbitration, or governmental proceedings that could reasonably be expected to result in a Material Adverse Effect.",
+          "dls_ref": [
+            "DLS:46:Third-party consents / litigation"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reporting",
+          "id": "governance.reporting.notices.litigation_notice",
+          "kct_ref": [
+            "cat3.9"
+          ],
+          "level": 3,
+          "name": "Litigation Notice",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 46 (Third-party consents / litigation); KCT Cat 3 Item 9",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:41.350825+00:00",
+              "term_packs": {
+                "REP_LITIGATION_DISCLOSURE": {
+                  "label": "Litigation Disclosure",
+                  "category": "REPRESENTATIONS_WARRANTIES",
+                  "exactPhrases": [
+                    "litigation, investigation or proceeding",
+                    "pending or threatened",
+                    "before any court",
+                    "arbitrator or governmental body",
+                    "no litigation",
+                    "except as disclosed",
+                    "Schedule [X] sets forth",
+                    "reasonably expected to result",
+                    "Material Adverse Effect",
+                    "actions, suits or proceedings"
+                  ],
+                  "sectionHeaders": [
+                    "Representations and Warranties",
+                    "Litigation",
+                    "Legal Proceedings",
+                    "No Litigation",
+                    "Section 5.06",
+                    "Section 4.06",
+                    "Article V"
+                  ],
+                  "semanticVariants": [
+                    "litigation disclosure representation",
+                    "pending legal proceedings disclosure",
+                    "material litigation threshold",
+                    "litigation MAE qualifier",
+                    "disclosed litigation matters",
+                    "threatened claims representation"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.6,
+                    "minKeywordScore": 0.5,
+                    "minConfidence": 0.7,
+                    "escalationThreshold": 0.5,
+                    "humanEscalationThreshold": 0.3
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "litigation, investigation or proceeding",
+                  "pending or threatened",
+                  "before any court",
+                  "arbitrator or governmental body",
+                  "no litigation",
+                  "except as disclosed",
+                  "Schedule [X] sets forth",
+                  "reasonably expected to result",
+                  "Material Adverse Effect",
+                  "actions, suits or proceedings"
+                ],
+                "sectionHeaders": [
+                  "Representations and Warranties",
+                  "Litigation",
+                  "Legal Proceedings",
+                  "No Litigation",
+                  "Section 5.06",
+                  "Section 4.06",
+                  "Article V"
+                ],
+                "semanticVariants": [
+                  "litigation disclosure representation",
+                  "pending legal proceedings disclosure",
+                  "material litigation threshold",
+                  "litigation MAE qualifier",
+                  "disclosed litigation matters",
+                  "threatened claims representation"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "REP_LITIGATION_DISCLOSURE",
+              "label": "Litigation Disclosure",
+              "schema_file": "representations-warranties-enhanced.schema.ts",
+              "field_count": 4,
+              "r1_domain": "governance",
+              "mapping_confidence": 0.4179,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Notice of ERISA events: plan terminations, withdrawal liability, reportable events, prohibited transactions, or failure to meet minimum funding standards.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.reporting",
+          "id": "governance.reporting.notices.erisa_notice",
+          "kct_ref": [
+            "cat3.9"
+          ],
+          "level": 3,
+          "name": "ERISA Event Notice",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 9"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Obligations to promptly notify agent and lenders of material events. DLS Preferred row 78 clause (viii) includes 'notices of certain events' in the affirmative covenant package. KCT Category 3 item 9 flags: 'Lack of affirmative covenant to provide notices for Default.' PC Term Comparison: 'Affirmative covenant to provide notice should be on Default not Event of Default.' This distinction is important -- requiring notice only of Events of Default (fully matured) rather than Defaults (incipient, pre-cure) delays lender awareness and shortens the enforcement window. Standard notices also cover litigation, ERISA events, environmental matters, and material adverse changes.",
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "reporting",
+        "extraction_ready": true,
+        "playbook_ref": "reporting.financial_stmts_general",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 4",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE IX",
+          "ARTICLE V"
+        ],
+        "shape_ref": "reporting.financial_stmts_general"
+      },
+      "family_id": "governance.reporting",
+      "id": "governance.reporting.notices",
+      "kct_ref": [
+        "cat3.9"
+      ],
+      "level": 2,
+      "name": "Event Notices",
+      "negotiation_spectrum": {
+        "aggressive_position": "120d for first audit; going-concern for maturity/covenant ok; 60d for first 3 quarters; no monthlies; no forecasts or 90-120d; no lender calls or choose between MD&A/calls; reporting limited to Borrower + restricted subs",
+        "dls_source": "DLS row 78",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(xvii) covenant to guarantee obligations and give security",
+          "(xix) further assurances as to security",
+          "(xxii) interest rate protection",
+          "alternative_terms: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "annual_financial_deadline: 90d vs 120d_first_year",
+          "audit_opinion_qualification: clean_only vs going_concern_maturity_ok vs going_concern_covenant_ok",
+          "quarterly_financial_deadline: 45d vs 60d_first_3Q",
+          "monthly_financials: required vs not_required",
+          "monthly_forecasts: required vs not_required vs 90d_forecasts",
+          "lender_calls: quarterly vs annual vs not_required",
+          "mda: with_financials vs not_required",
+          "compliance_certificate: quarterly vs annual",
+          "guarantee_security_covenant: affirmative_covenant vs best_efforts",
+          "further_assurances: required vs not_required",
+          "interest_rate_protection: required vs not_required",
+          "entity_scope: holdings_and_all_subs vs borrower_and_restricted_subs",
+          "inspection_frequency: unlimited_with_cost_cap vs annual_plus_eod"
+        ],
+        "market_position": "",
+        "preferred_position": "24 enumerated covenants: annual (90d, audited, clean opinion), quarterly (45d), monthly (30d), monthly forecasts, quarterly lender calls, MD&A, compliance certs, notices, tax/existence/property/insurance/ERISA/environmental, inspection rights, guarantee/security covenant, further assurances, IP, interest rate protection, FCPA/OFAC/Patriot Act",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "reporting.notice_requirements"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 56,
+          "term": "Affirmative Covenants – other"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 78 clause (viii) (notices of certain events); KCT Category 3 item 9 (lack of Default notice as risk); PC Term Comparison Events of Default section line 481 ('notice on Default not Event of Default')",
+      "pc_ref": [
+        "Events of Default"
+      ]
+    },
+    {
+      "children": [
+        {
+          "id": "governance.reporting.public_private_info.classification_criteria",
+          "name": "Information Classification Criteria",
+          "definition": "Rules for classifying borrower information as public-side (available to lenders with public securities trading desks) versus private-side (MNPI restricted), typically turning on whether the information has been publicly filed.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reporting",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "Review Template Row 6 (Unknown); KCT Cat 1 Item 3"
+        },
+        {
+          "id": "governance.reporting.public_private_info.platform_delivery",
+          "name": "Platform Delivery Mechanics",
+          "definition": "Requirements for posting information to the syndication platform (Intralinks, SyndTrak) with separate public and private folders, including borrower obligation to designate each document's classification.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reporting",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "easy",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "id": "governance.reporting.public_private_info.deemed_public_provision",
+          "name": "Deemed Public Provision",
+          "definition": "Clause providing that information delivered to the public-side folder is deemed non-MNPI, shifting liability to the borrower for correct classification and protecting lenders who trade based on public-side information.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reporting",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 2"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Framework for handling material non-public information (MNPI) and public lender information. Governs ClearPar posting, authorization letters, and information agent distribution protocols.",
+      "domain_id": "governance",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "reporting",
+        "extraction_ready": true,
+        "playbook_ref": "reporting.financial_stmts_general",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 4",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE IX",
+          "ARTICLE V"
+        ],
+        "shape_ref": "reporting.financial_stmts_general"
+      },
+      "family_id": "governance.reporting",
+      "id": "governance.reporting.public_private_info",
+      "level": 2,
+      "name": "Public vs. Private Side Information",
+      "negotiation_spectrum": {
+        "aggressive_position": "120d for first audit; going-concern for maturity/covenant ok; 60d for first 3 quarters; no monthlies; no forecasts or 90-120d; no lender calls or choose between MD&A/calls; reporting limited to Borrower + restricted subs",
+        "dls_source": "DLS row 78",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(xvii) covenant to guarantee obligations and give security",
+          "(xix) further assurances as to security",
+          "(xxii) interest rate protection",
+          "alternative_terms: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "annual_financial_deadline: 90d vs 120d_first_year",
+          "audit_opinion_qualification: clean_only vs going_concern_maturity_ok vs going_concern_covenant_ok",
+          "quarterly_financial_deadline: 45d vs 60d_first_3Q",
+          "monthly_financials: required vs not_required",
+          "monthly_forecasts: required vs not_required vs 90d_forecasts",
+          "lender_calls: quarterly vs annual vs not_required",
+          "mda: with_financials vs not_required",
+          "compliance_certificate: quarterly vs annual",
+          "guarantee_security_covenant: affirmative_covenant vs best_efforts",
+          "further_assurances: required vs not_required",
+          "interest_rate_protection: required vs not_required",
+          "entity_scope: holdings_and_all_subs vs borrower_and_restricted_subs",
+          "inspection_frequency: unlimited_with_cost_cap vs annual_plus_eod"
+        ],
+        "market_position": "",
+        "preferred_position": "24 enumerated covenants: annual (90d, audited, clean opinion), quarterly (45d), monthly (30d), monthly forecasts, quarterly lender calls, MD&A, compliance certs, notices, tax/existence/property/insurance/ERISA/environmental, inspection rights, guarantee/security covenant, further assurances, IP, interest rate protection, FCPA/OFAC/Patriot Act",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "reporting.public_private_information"
+      ],
+      "type": "concept",
+      "definition_source": "Review Template Row 6 (Unknown); KCT Cat 3 Item 6"
+    },
+    {
+      "children": [
+        {
+          "id": "governance.reporting.tax_reporting.withholding_documentation",
+          "name": "Withholding Tax Documentation",
+          "definition": "Lender obligations to deliver IRS Forms W-8 or W-9 establishing tax status and treaty benefits, enabling the borrower to determine applicable withholding rates on interest payments to each lender.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reporting",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 3 Item 3"
+        },
+        {
+          "id": "governance.reporting.tax_reporting.tax_return_delivery",
+          "name": "Tax Return Delivery",
+          "definition": "Borrower obligation to deliver copies of filed federal and state tax returns, or confirmation of filing extensions, providing lenders visibility into the borrower's tax position and potential liabilities.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reporting",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "easy",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "id": "governance.reporting.tax_reporting.fatca_compliance",
+          "name": "FATCA Compliance",
+          "definition": "Foreign Account Tax Compliance Act reporting obligations — lender FATCA status certifications, borrower withholding obligations for non-compliant lenders, and intergovernmental agreement reporting requirements.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reporting",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "hard",
+          "definition_source": "KCT Cat 1 Item 3"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Tax-related information delivery obligations: W-8BEN/W-8BEN-E/W-9 forms for withholding, FATCA compliance documentation, and CRS (Common Reporting Standard) information for foreign lenders.",
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "reporting",
+        "extraction_ready": true,
+        "playbook_ref": "reporting.financial_stmts_general",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 4",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE IX",
+          "ARTICLE V"
+        ],
+        "shape_ref": "reporting.financial_stmts_general"
+      },
+      "family_id": "governance.reporting",
+      "id": "governance.reporting.tax_reporting",
+      "level": 2,
+      "name": "Tax Reporting",
+      "negotiation_spectrum": {
+        "aggressive_position": "120d for first audit; going-concern for maturity/covenant ok; 60d for first 3 quarters; no monthlies; no forecasts or 90-120d; no lender calls or choose between MD&A/calls; reporting limited to Borrower + restricted subs",
+        "dls_source": "DLS row 78",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(xvii) covenant to guarantee obligations and give security",
+          "(xix) further assurances as to security",
+          "(xxii) interest rate protection",
+          "alternative_terms: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "annual_financial_deadline: 90d vs 120d_first_year",
+          "audit_opinion_qualification: clean_only vs going_concern_maturity_ok vs going_concern_covenant_ok",
+          "quarterly_financial_deadline: 45d vs 60d_first_3Q",
+          "monthly_financials: required vs not_required",
+          "monthly_forecasts: required vs not_required vs 90d_forecasts",
+          "lender_calls: quarterly vs annual vs not_required",
+          "mda: with_financials vs not_required",
+          "compliance_certificate: quarterly vs annual",
+          "guarantee_security_covenant: affirmative_covenant vs best_efforts",
+          "further_assurances: required vs not_required",
+          "interest_rate_protection: required vs not_required",
+          "entity_scope: holdings_and_all_subs vs borrower_and_restricted_subs",
+          "inspection_frequency: unlimited_with_cost_cap vs annual_plus_eod"
+        ],
+        "market_position": "",
+        "preferred_position": "24 enumerated covenants: annual (90d, audited, clean opinion), quarterly (45d), monthly (30d), monthly forecasts, quarterly lender calls, MD&A, compliance certs, notices, tax/existence/property/insurance/ERISA/environmental, inspection rights, guarantee/security covenant, further assurances, IP, interest rate protection, FCPA/OFAC/Patriot Act",
+        "source": "R14-C"
+      },
+      "type": "concept",
+      "definition_source": "KCT Cat 1 Item 3"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "How often forecasts must be delivered: annually (most common), semi-annually, or upon occurrence of material events.",
+          "dls_ref": [
+            49
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "easy",
+          "family_id": "governance.reporting",
+          "id": "governance.reporting.forecasts.delivery_frequency",
+          "level": 3,
+          "name": "Delivery Frequency",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 49"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Time horizon for projections: remaining term of the credit facility, 5-year forward, or through maturity. Longer horizons provide better visibility but may be less reliable.",
+          "dls_ref": [
+            49
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "easy",
+          "family_id": "governance.reporting",
+          "id": "governance.reporting.forecasts.projection_horizon",
+          "level": 3,
+          "name": "Projection Horizon",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 49"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Requirement to deliver financial forecasts and projections, distinct from the annual budget. Includes multi-year projections, management cases, and updated forecasts upon material events. DLS preferred: annual delivery of multi-year projections with key assumptions disclosed. More granular than budget delivery — covers format, frequency, horizon, and variance reporting requirements.",
+      "dls_ref": [
+        "DLS:49:Forecasts"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "reporting",
+        "extraction_ready": true,
+        "playbook_ref": "reporting.financial_stmts_general",
+        "section_locations": [
+          "ARTICLE V",
+          "ARTICLE VI",
+          "Section 5.01",
+          "Section 5.04"
+        ],
+        "aligned_difficulty": "hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "governance.reporting",
+      "id": "governance.reporting.forecasts",
+      "level": 2,
+      "name": "Forecasts / Projections",
+      "negotiation_spectrum": {
+        "aggressive_position": "120d for first audit; going-concern for maturity/covenant ok; 60d for first 3 quarters; no monthlies; no forecasts or 90-120d; no lender calls or choose between MD&A/calls; reporting limited to Borrower + restricted subs",
+        "dls_source": "DLS row 78",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(xvii) covenant to guarantee obligations and give security",
+          "(xix) further assurances as to security",
+          "(xxii) interest rate protection",
+          "alternative_terms: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "annual_financial_deadline: 90d vs 120d_first_year",
+          "audit_opinion_qualification: clean_only vs going_concern_maturity_ok vs going_concern_covenant_ok",
+          "quarterly_financial_deadline: 45d vs 60d_first_3Q",
+          "monthly_financials: required vs not_required",
+          "monthly_forecasts: required vs not_required vs 90d_forecasts",
+          "lender_calls: quarterly vs annual vs not_required",
+          "mda: with_financials vs not_required",
+          "compliance_certificate: quarterly vs annual",
+          "guarantee_security_covenant: affirmative_covenant vs best_efforts",
+          "further_assurances: required vs not_required",
+          "interest_rate_protection: required vs not_required",
+          "entity_scope: holdings_and_all_subs vs borrower_and_restricted_subs",
+          "inspection_frequency: unlimited_with_cost_cap vs annual_plus_eod"
+        ],
+        "market_position": "",
+        "preferred_position": "24 enumerated covenants: annual (90d, audited, clean opinion), quarterly (45d), monthly (30d), monthly forecasts, quarterly lender calls, MD&A, compliance certs, notices, tax/existence/property/insurance/ERISA/environmental, inspection rights, guarantee/security covenant, further assurances, IP, interest rate protection, FCPA/OFAC/Patriot Act",
+        "source": "R14-C"
+      },
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 49 (Forecasts)"
+    },
+    {
+      "children": [
+        {
+          "id": "governance.reporting.interest_rate_protection.coverage_requirement",
+          "name": "Coverage Requirement",
+          "definition": "Minimum percentage of floating rate exposure that must be hedged — typically 50-75% of funded term loan debt — establishing the floor for the borrower's interest rate risk mitigation obligation.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reporting",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 3; PC Term Comparison: 1. Key Definitions - Interest Coverage Ratio (if relevant)"
+        },
+        {
+          "id": "governance.reporting.interest_rate_protection.implementation_deadline",
+          "name": "Implementation Deadline",
+          "definition": "Time period within which the borrower must enter into interest rate hedging arrangements after closing — typically 60-90 days — with minimum hedge tenor requirements (usually 2-3 years).",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reporting",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "easy",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "id": "governance.reporting.interest_rate_protection.compliance_reporting",
+          "name": "Hedging Compliance Reporting",
+          "definition": "Periodic reporting obligations demonstrating compliance with the hedging covenant — hedge position summaries, counterparty details, and mark-to-market valuations — typically delivered with quarterly financials.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.reporting",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 3 Item 4"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Covenant requiring the borrower to maintain interest rate hedging coverage for a specified percentage of its floating-rate debt exposure. DLS Preferred row 78 clause (xxii) includes 'interest rate protection' as a highlighted affirmative covenant, indicating it is a significant negotiation point. The hedging requirement ensures the borrower mitigates interest rate risk on floating-rate facilities, protecting cash flow available for debt service. This interacts with the speculative hedging prohibition (which bars non-protective derivatives) -- together they create a framework permitting only risk-mitigating hedging.",
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "reporting",
+        "extraction_ready": false,
+        "section_locations": [
+          "ARTICLE V",
+          "ARTICLE VI",
+          "Section 5.09"
+        ],
+        "playbook_ref": null,
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "readiness_reason": "no_playbook_concept_available",
+        "section_location": "ARTICLE V (Affirmative Covenants - Reporting)"
+      },
+      "family_id": "governance.reporting",
+      "id": "governance.reporting.interest_rate_protection",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "medium -- more common in floating rate facilities",
+        "source": "R19-C_corpus_analysis",
+        "typical_requirement": "hedge 50-75% of floating rate exposure within 90 days"
+      },
+      "name": "Interest rate protection/hedging covenant",
+      "type": "concept",
+      "definition_source": "DLS Preferred row 78 clause (xxii) (highlighted: interest rate protection affirmative covenant)"
+    }
+  ],
+  "corpus_prevalence": "high",
+  "dealdata_benchmarks": {
+    "Audit (are comparatives required?/note going concern exceptions)": {
+      "pc_pct_range": "25.0%-25.0%"
+    },
+    "Lender Calls": {
+      "pc_pct_range": "105.0%-105.0%"
+    },
+    "Monthly (are comparatives required?)": {
+      "pc_pct_range": "25.0%-25.0%"
+    },
+    "Quarterly (are comparatives required?)": {
+      "pc_pct_range": "25.0%-25.0%"
+    }
+  },
+  "definition": "Affirmative covenant obligations requiring the borrower to deliver periodic financial information to lenders, providing ongoing transparency into the borrower's financial condition. DLS Preferred specifies comprehensive reporting requirements: (i) annual audited financial statements within 90 days of fiscal year-end (GAAP, nationally recognized auditor, no scope qualification, going concern only for upcoming maturities); (ii) quarterly unaudited financial statements within 45 days of quarter-end; (iii) monthly financial statements within 30 days of month-end; (iv) monthly forecasts for next 12 months within 30 days; (v) quarterly lender calls; (vi) quarterly/annual MD&A delivered with financial statements; (vii) quarterly compliance certificates. Alternative (borrower-favorable) formulations: 120-day annual deadline (150 first year), 60-day quarterly (75 first 3 quarters), no monthlies, no forecasts or 90/120-day forecast deadline, no lender calls, no MD&A. PC Term Comparison by segment: Aggressive UMM/BSLR gets 120/60 days, no monthlies, no MD&A (mixed), no lender calls, budgets pre-IPO only; CMM/LMM gets 120/45 days, 30-day monthlies (45 first 3 months), annual/quarterly lender calls, MD&A with financials, budgets within 60/90 days post FY-end.",
+  "dls_ref": [
+    "DLS:47:Financial statements",
+    "DLS:48:Pro Forma Financial Statements",
+    "DLS:49:Forecasts",
+    "DLS:63:Syndication Assistance",
+    "DLS:78:Affirmative covenants"
+  ],
+  "domain_id": "governance",
+  "extraction_difficulty": "medium",
+  "family_id": "governance.reporting",
+  "id": "governance.reporting",
+  "kct_ref": [
+    "cat1.4"
+  ],
+  "level": 1,
+  "name": "Reporting & Information",
+  "r18_concept_ids": [
+    "reporting.public_private_information",
+    "neg_cov_other.fiscal_year"
+  ],
+  "review_ref": [
+    {
+      "coverage": "full",
+      "row": 53,
+      "term": "Financial Statements – monthly"
+    }
+  ],
+  "type": "family",
+  "definition_source": "DLS Preferred row 78 (complete affirmative covenant specification with 24 items including all reporting requirements and alternative formulations); PC Term Comparison section 4 (Affirmative Covenants: reporting deadlines by segment)",
+  "market_benchmarks": {
+    "dls_annual_deadline": "90 days post FY-end",
+    "dls_quarterly_deadline": "45 days post FQ-end",
+    "dls_monthly_deadline": "30 days post month-end",
+    "alt_annual_deadline": "120 days (150 first year)",
+    "alt_quarterly_deadline": "60 days (75 first 3 quarters)",
+    "pctc_umm_quarterly": "60 days (75 first 3 quarters), no monthlies, no MD&A (mixed), no lender calls",
+    "pctc_cmm_lmm_quarterly": "45 days (60 first 3 quarters), 30-day monthlies, annual/quarterly lender calls, MD&A with financials",
+    "dls_annual_deadline_source": "DLS Preferred row 78 clause (i)",
+    "dls_quarterly_deadline_source": "DLS Preferred row 78 clause (ii)",
+    "pctc_umm_quarterly_source": "PC Term Comparison section 4",
+    "pctc_cmm_lmm_quarterly_source": "PC Term Comparison section 4",
+    "_source": "DLS Preferred row 78; PC Term Comparison section 4"
+  },
+  "pc_ref": [
+    "Section 4"
+  ]
+}

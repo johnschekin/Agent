@@ -22,7 +22,7 @@ function KwicLine({
   onDocClick: (docId: string) => void;
 }) {
   return (
-    <div className="flex items-start gap-3 py-2 px-3 border-b border-border hover:bg-surface-tertiary/50 transition-colors">
+    <div className="flex items-start gap-3 py-2 px-3 border-b border-border hover:bg-surface-3/50 transition-colors">
       {/* Doc info column */}
       <div className="flex-shrink-0 w-[200px]">
         <button
@@ -39,7 +39,7 @@ function KwicLine({
 
       {/* Section badge */}
       <div className="flex-shrink-0 w-[80px]">
-        <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-medium bg-surface-tertiary text-text-secondary border border-border">
+        <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-medium bg-surface-3 text-text-secondary border border-border">
           {match.section_number}
         </span>
         <div className="text-[10px] text-text-muted truncate mt-0.5" title={match.heading}>
@@ -86,7 +86,7 @@ function GroupedResults({
     <div className="max-h-[70vh] overflow-auto space-y-4">
       {groups.map(([docId, docMatches]) => (
         <div key={docId} className="border border-border rounded-sm overflow-hidden">
-          <div className="flex items-center gap-3 px-3 py-2 bg-surface-tertiary">
+          <div className="flex items-center gap-3 px-3 py-2 bg-surface-3">
             {/* L3: Add title attribute for full doc_id on grouped header */}
             <button
               className="text-accent-blue hover:underline text-xs font-mono"
@@ -216,7 +216,7 @@ export default function SearchPage() {
           <span className="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium bg-accent-blue/20 text-accent-blue">
             {formatNumber(search.data.total_matches)} match{search.data.total_matches !== 1 ? "es" : ""}
           </span>
-          <span className="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium bg-surface-tertiary text-text-secondary border border-border">
+          <span className="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium bg-surface-3 text-text-secondary border border-border">
             {formatNumber(search.data.unique_documents)} document{search.data.unique_documents !== 1 ? "s" : ""}
           </span>
           {/* M7: Use server-provided truncated flag instead of client-side heuristic */}

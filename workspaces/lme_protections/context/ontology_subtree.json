@@ -1,0 +1,2400 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Which transfer mechanisms are blocked: RPs only, investments only, or all means including 'or otherwise' language.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.j_crew.ip_transfer_block.transfer_scope",
+              "level": 4,
+              "name": "Transfer Scope",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 2"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Sub-component addressing whether the J.Crew IP transfer blocker covers restricted payment transactions that move material intellectual property or assets to unrestricted subsidiaries through dividend or distribution mechanisms.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.j_crew.ip_transfer_block.applies_to_rps",
+              "level": 4,
+              "name": "Applies to RPs",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Sub-component addressing whether the J.Crew IP transfer blocker covers investment transactions that move material intellectual property or assets to unrestricted subsidiaries through permitted investment baskets.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.j_crew.ip_transfer_block.applies_to_investments",
+              "level": 4,
+              "name": "Applies to Investments",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the IP transfer block includes catch-all 'or otherwise' language covering transfer mechanisms beyond RPs and investments.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.j_crew.ip_transfer_block.applies_to_other",
+              "level": 4,
+              "name": "Applies to Other Means",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 84 (Unknown); KCT Cat 1 Item 2"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Prohibits transfer of Material IP to unrestricted subsidiaries through any means including RPs, investments, or otherwise.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.j_crew.ip_transfer_block",
+          "level": 3,
+          "name": "IP Transfer Block",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the credit agreement contains an explicit prohibition on designating IP-holding subsidiaries as unrestricted.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.j_crew.designation_restriction.block_present",
+              "level": 4,
+              "name": "Designation Block Present",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the designation block extends to equity interests in IP-holding entities, not just asset transfers.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.j_crew.designation_restriction.applies_to_equity",
+              "level": 4,
+              "name": "Applies to Equity Interests",
+              "type": "sub_component",
+              "definition_source": "Learning Material: Equity Interests in Unrestricted and Immaterial Subsidiaries"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Prohibits designation of IP-owning subsidiaries as unrestricted, preventing the indirect transfer of material IP outside the restricted group.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.j_crew.designation_restriction",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "27.8%"
+          },
+          "name": "Designation Restriction",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the definition covers only registered IP, all material IP, or extends to material assets broadly including revenue-generating assets.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.j_crew.material_ip_definition.breadth",
+              "level": 4,
+              "name": "Definition Breadth",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 2"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the Material IP definition in the J.Crew blocker extends to exclusive licenses (not just owned IP), closing the loophole where a borrower could exclusively license rather than transfer IP to achieve the same economic effect.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.j_crew.material_ip_definition.includes_exclusive_licenses",
+              "level": 4,
+              "name": "Includes Exclusive Licenses",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "The standard for determining materiality: 'material to the business,' quantitative threshold, or both.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.j_crew.material_ip_definition.materiality_standard",
+              "level": 4,
+              "name": "Materiality Standard",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "The defined scope of 'Material Intellectual Property' or 'Material Assets' that triggers the J.Crew blocker. Breadth of this definition determines blocker effectiveness.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.j_crew.material_ip_definition",
+          "level": 3,
+          "name": "Material IP Definition",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 3"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the J.Crew protection covers both transfer prongs: (1) direct transfer of material IP to unrestricted subsidiaries and (2) designation of IP-holding subsidiaries as unrestricted. Both prongs required for comprehensive protection.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.j_crew.transfer_prong_coverage.both_prongs",
+              "level": 4,
+              "name": "Both Prongs Covered",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 1"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the blocker applies to transfers to nonguarantor restricted subsidiaries (not just unrestricted subs).",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.j_crew.transfer_prong_coverage.nonguarantor_subs",
+              "level": 4,
+              "name": "Extends to Nonguarantor Restricted Subs",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 8; LME Provision Language, J.Crew Protection Extends to All Nonguarantor Subsidiaries (Pluralsight)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Whether the blocker covers both transfer and designation prongs, and whether it extends to nonguarantor restricted subs (Pluralsight enhancement).",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.j_crew.transfer_prong_coverage",
+          "level": 3,
+          "name": "Dual-Prong Coverage",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Carve-out permitting non-exclusive licensing of IP on arm's-length terms in the ordinary course. Standard market exception that preserves operational flexibility.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.j_crew.non_exclusive_license_exception",
+          "level": 3,
+          "name": "Non-Exclusive License Exception",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Restricts leakage of material IP and crown-jewel assets to unrestricted subsidiaries. LME Provision Language Protection #1: A J.Crew blocker should prohibit (a) any transfer of material intellectual property or other material assets through any means (restricted payments, investments or otherwise) to unrestricted subsidiaries; and (b) the designation of subsidiaries that own material intellectual property or other material assets as unrestricted subsidiaries. Common weaknesses: (a) weakness in definition of 'Material Intellectual Property' or 'Material Assets'; (b) missing either the designation or transfer prong; (c) blocker only applies to certain types of transfers (e.g., 'Permitted Investments' only, not restricted payments); (d) blocker only applies to transfers by loan parties but not by nonguarantor restricted subsidiaries. PC Term Comparison: 'J Crew protections standard. Correct any Trap Door provisions. Also get \"non-exclusive\" for licenses; try to block material IP transfers to non-guarantors if possible.'",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "lme_protections",
+        "extraction_ready": true,
+        "playbook_ref": "other.change_of_control_def",
+        "section_locations": [
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "Section 7.05",
+          "Section 7.06"
+        ],
+        "specimen_patterns": [
+          "no Loan Party shall.*transfer.*Intellectual Property",
+          "Material Intellectual Property.*Restricted Subsidiary"
+        ],
+        "secondary_playbook_refs": [
+          "neg_cov_other.j_crew"
+        ]
+      },
+      "family_id": "credit_protection.lme_protections",
+      "id": "credit_protection.lme_protections.j_crew",
+      "level": 2,
+      "market_benchmarks": {
+        "adoption_rate": "87.1%",
+        "designation_limitations": "27.8%",
+        "ip_transfer_blocks": "77.8%"
+      },
+      "name": "J.Crew Blocker",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader permitted modifications; no operating lease restriction; no sub equity issuance restriction",
+        "dls_source": "DLS row 88",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "junior_debt_modifications: materially_adverse_standard vs no_restriction",
+          "org_doc_amendments: materially_adverse_standard vs no_restriction",
+          "negative_pledge: broad_prohibition vs limited",
+          "accounting_changes: prohibited vs notice_only",
+          "passive_holdco: strict vs limited_activities_permitted",
+          "contingent_obligations: prohibited vs capped",
+          "speculative_hedging: prohibited vs permitted",
+          "line_of_business: restricted vs unrestricted",
+          "sub_equity_issuance: restricted vs unrestricted",
+          "operating_leases: capped vs uncapped"
+        ],
+        "market_position": "",
+        "preferred_position": "Anti-J.Crew: restrict IP transfers to unrestricted subsidiaries; prohibit designation of material IP-holding entities as unrestricted",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "lme_protections.anti_jcrew"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 67,
+          "term": "Unrestricted Subsidiaries - generally"
+        },
+        {
+          "coverage": "full",
+          "row": 69,
+          "term": "Negative Covenants – J Crew protection"
+        },
+        {
+          "coverage": "full",
+          "row": 91,
+          "term": "Negative Covenants – Investments – Investments in Unsubs/JVs"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "LME Provision Language Protection #1 (J.Crew: complete definition, drafting considerations, 4 common weaknesses, sample clause from private CA); PC Term Comparison Investments section (J.Crew standard, correct trap door, non-exclusive licenses)",
+      "pc_ref": [
+        "Investments"
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the credit agreement contains an explicit restriction preventing automatic guarantee release upon loss of wholly-owned status.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.chewy.auto_release_restriction.present",
+              "level": 4,
+              "name": "Restriction Present",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 6"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the Chewy automatic guarantee release restriction applies to all guarantor subsidiaries, not just material or wholly-owned ones, preventing selective release of guarantees from high-value entities.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.chewy.auto_release_restriction.all_guarantors",
+              "kct_ref": [
+                "cat3.11"
+              ],
+              "level": 4,
+              "name": "Applies to All Guarantors",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 40,
+                  "term": "Collateral/Guarantor release – Chewy"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 11; Review Template Row 40 (Collateral/Guarantor release – Chewy)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Blocks guarantee release solely from ownership change below wholly-owned threshold. Guarantor remains obligated unless additional conditions met.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.chewy.auto_release_restriction",
+          "kct_ref": [
+            "cat3.11"
+          ],
+          "level": 3,
+          "name": "Auto-Release Restriction",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 11"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the Chewy bona fide business purpose test relies solely on subjective management judgment without objective criteria, creating risk that the test provides insufficient protection against pretextual transactions.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.chewy.bona_fide_purpose_test.subjective_only",
+              "level": 4,
+              "name": "Subjective Only",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Objective criteria within the bona fide purpose test for liability management exercises, requiring demonstrable business justification for the transaction beyond mere creditor-adverse restructuring. These conditions (minimum cash flow thresholds, arm's-length terms, independent valuation) prevent pretextual transfers designed primarily to move assets beyond the reach of existing creditors.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.chewy.bona_fide_purpose_test.objective_conditions",
+              "level": 4,
+              "name": "Objective Conditions",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 2"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Requires that the minority equity transfer have a genuine business purpose, not merely a mechanism to achieve guarantee release.",
+          "dls_ref": [
+            "DLS:44:Business MAC"
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.chewy.bona_fide_purpose_test",
+          "level": 3,
+          "name": "Bona Fide Business Purpose Test",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 44 (Business MAC)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Requires the equity transferee to be a non-affiliated third party, preventing sponsor-orchestrated minority transfers.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.chewy.non_affiliated_requirement",
+          "level": 3,
+          "name": "Non-Affiliated Transferee Requirement",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether guarantee release can still be obtained through the investment covenant, bypassing the Chewy blocker. Cross-covenant coordination gap.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.chewy.investment_covenant_coordination",
+          "level": 3,
+          "market_benchmarks": {
+            "coordination_rate": "28.6%"
+          },
+          "name": "Investment Covenant Coordination",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 15"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Coordination with J.Crew: guarantee cannot be released if the entity holds material IP or assets, regardless of ownership change.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.chewy.material_asset_link",
+          "level": 3,
+          "name": "Material Asset Link",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; LME Provision Language, Restrictions on Material Intellectual Property or Other Asset Leakage to Unsubs (J.Crew)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Protection restricting the automatic release of a subsidiary guarantor that ceases to be a wholly-owned subsidiary following a partial transfer of the subsidiary's equity (LME Protection #2). Per the LME Provision Language, a Chewy blocker should prohibit automatic releases using a balanced mix of objective conditions (e.g., based on the transferee's identity) and subjective conditions (e.g., the purpose of the transaction). Exceptions should at least require the partial equity transfer to be: (a) to a non-affiliated third party; and (b) for a bona fide business purpose other than to obtain release of the guarantee. Common weaknesses: (a) provision predicated only on subjective factors; (b) release can still be obtained if treated as an investment in a nonguarantor restricted subsidiary permitted by the investment covenant. PC Term Comparison: typically include tighter formulation requiring investment capacity for FMV of released guarantor, sale of equity to a non-affiliate and/or bona fide business purpose, avoiding automatic release (require Agent action), and EoD stopper if foreign sub voluntarily guaranteed and seeks release.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "lme_protections",
+        "extraction_ready": true,
+        "playbook_ref": "other.change_of_control_def",
+        "section_locations": [
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "Section 7.05",
+          "Section 7.06"
+        ],
+        "specimen_patterns": [
+          "Unrestricted Subsidiary.*Material Assets",
+          "designat.*Unrestricted Subsidiary.*Material"
+        ]
+      },
+      "family_id": "credit_protection.lme_protections",
+      "id": "credit_protection.lme_protections.chewy",
+      "level": 2,
+      "market_benchmarks": {
+        "adoption_rate": "90.3%",
+        "complex_multi_condition": "35.7%",
+        "cross_covenant_coordination": "28.6%"
+      },
+      "name": "Chewy Blocker",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader permitted modifications; no operating lease restriction; no sub equity issuance restriction",
+        "dls_source": "DLS row 88",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "junior_debt_modifications: materially_adverse_standard vs no_restriction",
+          "org_doc_amendments: materially_adverse_standard vs no_restriction",
+          "negative_pledge: broad_prohibition vs limited",
+          "accounting_changes: prohibited vs notice_only",
+          "passive_holdco: strict vs limited_activities_permitted",
+          "contingent_obligations: prohibited vs capped",
+          "speculative_hedging: prohibited vs permitted",
+          "line_of_business: restricted vs unrestricted",
+          "sub_equity_issuance: restricted vs unrestricted",
+          "operating_leases: capped vs uncapped"
+        ],
+        "market_position": "",
+        "preferred_position": "Anti-Chewy: restrict dividend-recapture of collateral value to non-guarantor subsidiaries; cap RP capacity available for leakage",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "lme_protections.anti_chewy"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 40,
+          "term": "Collateral/Guarantor release – Chewy"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "LME Provision Language protection #2 (complete Chewy specification with sample clause from MillerKnoll April 2025 CA); PC Term Comparison neg covs Chewy section (5 tightening requirements)",
+      "pc_ref": [
+        "neg covs Chewy"
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the Pluralsight non-guarantor value leakage protection extends to restricted subsidiaries that are not loan parties, preventing asset transfers to restricted but non-guarantor entities.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.pluralsight.nonguarantor_extension.covers_restricted",
+              "level": 4,
+              "name": "Covers Nonguarantor Restricted",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 5"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the Pluralsight non-guarantor value leakage protection extends to unrestricted subsidiaries, the primary vehicle for J.Crew-style drop-down transactions that move assets beyond lender reach.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.pluralsight.nonguarantor_extension.covers_unrestricted",
+              "level": 4,
+              "name": "Covers Unrestricted",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the Pluralsight non-guarantor value leakage protection covers all non-loan-party entities comprehensively, including both restricted non-guarantors and unrestricted subsidiaries without gaps.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.pluralsight.nonguarantor_extension.covers_all_nonloan",
+              "level": 4,
+              "market_benchmarks": {
+                "r17_gap_flagged": true
+              },
+              "name": "Covers All Non-Loan Parties",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 89 (Unknown); KCT Cat 1 Item 2; Learning Material: Non-Term Loan B Prepayment Premiums"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Whether the blocker extends protection to nonguarantor restricted subsidiaries in addition to unrestricted subsidiaries.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.pluralsight.nonguarantor_extension",
+          "level": 3,
+          "name": "Nonguarantor Extension Scope",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 8"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Definition of 'Material Property' which is broader than Material IP, potentially covering all material assets of the restricted group.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.pluralsight.material_property_definition",
+          "level": 3,
+          "name": "Material Property Definition",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; LME Provision Language, Restrictions on Material Intellectual Property or Other Asset Leakage to Unsubs (J.Crew)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Carveout from asset transfer restrictions permitting IP licensing arrangements, which was exploited in the Pluralsight liability management transaction to move valuable intellectual property assets to unrestricted subsidiaries through licensing structures. Post-Pluralsight credit agreements now address this vector by restricting exclusive licenses or requiring fair-market-value consideration.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.pluralsight.licensing_exception",
+          "level": 3,
+          "name": "Licensing Exception",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Covenant preventing unrestricted subsidiaries from acquiring or holding ownership interests in the borrower's core intellectual property assets, directly addressing the Pluralsight restructuring tactic. This prohibition closes the IP migration pathway by ensuring that operating IP remains within the restricted group and available as indirect collateral support.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.pluralsight.ownership_prohibition",
+          "level": 3,
+          "name": "Ownership Prohibition",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Enhanced version of J.Crew protection that extends the restriction on leakage of material assets (usually material intellectual property) to any nonguarantor subsidiary, including nonguarantor restricted subsidiaries -- not just unrestricted subsidiaries (LME Protection #3). Per the LME Provision Language, a Pluralsight blocker should prohibit: (a) any transfer of material intellectual property or other material assets through any means (restricted payments, investments or otherwise) by loan parties to non-loan parties (including unrestricted subs and nonguarantor restricted subs); and (b) non-loan parties from owning or exclusively licensing such material assets. Common weaknesses are similar to J.Crew blockers. Sample clause from AMC July 2024 CA uses 'Material Property' definition covering assets material to the business, operations, assets, or financial condition of the relevant group, taken as a whole.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "lme_protections",
+        "extraction_ready": false,
+        "section_locations": [
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "Section 7.02",
+          "Section 7.05"
+        ],
+        "specimen_patterns": [
+          "up-tier.*exchange.*offer",
+          "non-pro rata.*exchange"
+        ],
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "boolean",
+        "playbook_ref": null,
+        "section_location": "ARTICLE VI-VII (Negative Covenants) / Anti-LME provisions"
+      },
+      "family_id": "credit_protection.lme_protections",
+      "id": "credit_protection.lme_protections.pluralsight",
+      "level": 2,
+      "name": "Pluralsight Blocker",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader permitted modifications; no operating lease restriction; no sub equity issuance restriction",
+        "dls_source": "DLS row 88",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "junior_debt_modifications: materially_adverse_standard vs no_restriction",
+          "org_doc_amendments: materially_adverse_standard vs no_restriction",
+          "negative_pledge: broad_prohibition vs limited",
+          "accounting_changes: prohibited vs notice_only",
+          "passive_holdco: strict vs limited_activities_permitted",
+          "contingent_obligations: prohibited vs capped",
+          "speculative_hedging: prohibited vs permitted",
+          "line_of_business: restricted vs unrestricted",
+          "sub_equity_issuance: restricted vs unrestricted",
+          "operating_leases: capped vs uncapped"
+        ],
+        "market_position": "",
+        "preferred_position": "Anti-PluralSight: prohibit exchange offers that create senior tranches from existing pari passu debt without all-lender consent",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "lme_protections.anti_pluralsight"
+      ],
+      "type": "concept",
+      "definition_source": "LME Provision Language protection #3 (complete Pluralsight specification with sample clause from AMC July 2024 CA)"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether only specified investment baskets can fund unsub transfers (vs. any available basket capacity).",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.envision.basket_limitation.specific_baskets",
+              "level": 4,
+              "name": "Specific Baskets Only",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 1"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Fixed dollar aggregate cap on total value that can be transferred to non-loan parties under the Envision basket limitation framework, constraining the cumulative magnitude of leakage transactions.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.envision.basket_limitation.aggregate_cap_dollar",
+              "level": 4,
+              "name": "Aggregate Dollar Cap",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "EBITDA-based percentage cap on total unsub investment capacity, typically as greater-of with dollar amount.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.envision.basket_limitation.aggregate_cap_pct",
+              "level": 4,
+              "name": "Aggregate EBITDA Percentage Cap",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Restricts which investment baskets can be used to fund unsub transfers, limiting access to specific or aggregate-capped baskets.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.envision.basket_limitation",
+          "level": 3,
+          "name": "Basket Limitation",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the Envision transfer means protection covers investment transactions as a channel for moving assets to non-loan parties, parallel to the investment covenant's permitted basket structure.",
+              "dls_ref": [
+                "DLS:81:Investments"
+              ],
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.envision.transfer_means_coverage.investments",
+              "level": 4,
+              "name": "Applies to Investments",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 81 (Investments)"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the Envision transfer means protection covers restricted payment transactions as a channel for distributing value to non-loan parties through dividend or distribution mechanisms.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.envision.transfer_means_coverage.rps",
+              "level": 4,
+              "name": "Applies to RPs",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 1"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the Envision cap applies to transfers through other mechanisms (dispositions, intercompany loans).",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.envision.transfer_means_coverage.other",
+              "level": 4,
+              "name": "Applies to Other Transfers",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 84 (Unknown); KCT Cat 3 Item 4"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Whether the cap applies to all transfer mechanisms (investments, RPs, dispositions) or only to certain baskets.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.envision.transfer_means_coverage",
+          "level": 3,
+          "name": "Transfer Means Coverage",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Protection expressly capping the amount of investment capacity that can be used to transfer assets to unrestricted subsidiaries (LME Protection #4). Per the LME Provision Language, an Envision blocker limits unrestricted subsidiary transfers to specific investment baskets or imposes an aggregate cap on all unrestricted subsidiary investments, and should apply to transfers through any means (restricted payments, investments or otherwise). Weakness: blocker does not apply to all types of transfers (e.g., applies to 'Permitted Investments' and not restricted payments). PC Term Comparison: Envision protection is not universal but some clients push to limit investments in unrestricted subs to certain baskets; not a must-have in UMM/BSLR transactions but more commonly included in CMM/LMM.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "other_neg_covs",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_other.chewy",
+        "section_locations": [
+          "ARTICLE 9",
+          "ARTICLE I",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE VIII"
+        ],
+        "shape_ref": "neg_cov_other.chewy"
+      },
+      "family_id": "credit_protection.lme_protections",
+      "id": "credit_protection.lme_protections.envision",
+      "level": 2,
+      "market_benchmarks": {
+        "iridium_unsub_jv_cap": "$155M/35% EBITDA"
+      },
+      "name": "Envision Blocker",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader permitted modifications; no operating lease restriction; no sub equity issuance restriction",
+        "dls_source": "DLS row 88",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "junior_debt_modifications: materially_adverse_standard vs no_restriction",
+          "org_doc_amendments: materially_adverse_standard vs no_restriction",
+          "negative_pledge: broad_prohibition vs limited",
+          "accounting_changes: prohibited vs notice_only",
+          "passive_holdco: strict vs limited_activities_permitted",
+          "contingent_obligations: prohibited vs capped",
+          "speculative_hedging: prohibited vs permitted",
+          "line_of_business: restricted vs unrestricted",
+          "sub_equity_issuance: restricted vs unrestricted",
+          "operating_leases: capped vs uncapped"
+        ],
+        "market_position": "",
+        "preferred_position": "Anti-Envision: restrict priming transactions via new-money super-priority debt; require 100% lender consent for lien subordination",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "lme_protections.anti_envision"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 68,
+          "term": "Negative Covenants – Unrestricted Subsidiaries – Envision"
+        },
+        {
+          "coverage": "full",
+          "row": 91,
+          "term": "Negative Covenants – Investments – Investments in Unsubs/JVs"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "LME Provision Language protection #4 (Envision specification with sample clause from Blend Labs June 2021 CA); PC Term Comparison neg covs (Envision not universal but pushed by some clients); Review Template row 68 (Envision formulation)",
+      "pc_ref": [
+        "neg covs (Envision not universal but pushed by some clients)"
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the credit agreement contains an explicit prohibition on lien subordination without affected lender consent. Lien subordination creates new senior-priority security interests ahead of existing lenders, altering the collateral recovery waterfall in enforcement scenarios. Distinguished from payment subordination because it governs asset liquidation proceeds rather than ongoing cash flow distributions.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.serta.lien_subordination_block.present",
+              "kct_ref": [
+                "cat3.15"
+              ],
+              "level": 4,
+              "name": "Block Present",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 15"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Voting threshold required to amend lien priority provisions under the Serta lien subordination blocker, typically all-lender or affected-lender consent to prevent non-pro-rata lien priming transactions.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.serta.lien_subordination_block.consent_threshold",
+              "kct_ref": [
+                "cat3.15",
+                "cat4.11"
+              ],
+              "level": 4,
+              "name": "Consent Threshold",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 15; KCT Cat 4 Item 11"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the block extends to amendments that have the indirect effect of subordinating lien priority.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.serta.lien_subordination_block.covers_indirect",
+              "kct_ref": [
+                "cat3.15",
+                "cat4.4",
+                "cat4.11"
+              ],
+              "level": 4,
+              "name": "Covers Indirect Subordination",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 15; KCT Cat 4 Item 4; KCT Cat 4 Item 11"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Blocks amendments that would subordinate existing lien priority to new or priming debt without affected lender consent. []",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.serta.lien_subordination_block",
+          "kct_ref": [
+            "cat3.15",
+            "cat4.4",
+            "cat4.11"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "67.2%"
+          },
+          "name": "Lien Subordination Block",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 15; KCT Cat 4 Item 4; KCT Cat 4 Item 11"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the credit agreement contains an explicit prohibition on payment subordination without affected lender consent. Payment subordination reorders debt service priority so new creditors receive cash flow before existing lenders during the performing life of the loan. Distinguished from lien subordination because it diverts ongoing operating cash flows rather than altering collateral recovery priorities upon enforcement.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.serta.payment_subordination_block.present",
+              "level": 4,
+              "name": "Block Present",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 2"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Voting threshold required to amend payment waterfall provisions under the Serta payment subordination blocker, preventing amendments that would subordinate existing lenders' right of payment without adequate consent.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.serta.payment_subordination_block.consent_threshold",
+              "kct_ref": [
+                "cat4.11"
+              ],
+              "level": 4,
+              "name": "Consent Threshold",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 4 Item 11"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Blocks amendments subordinating payment priority (right of payment) without affected lender consent. []",
+          "dls_ref": [
+            "DLS:51:Payment of fees"
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.serta.payment_subordination_block",
+          "kct_ref": [
+            "cat3.15",
+            "cat4.11"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "58.6%"
+          },
+          "name": "Payment Subordination Block",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 51 (Payment of fees); KCT Cat 3 Item 15; KCT Cat 4 Item 11"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the credit agreement includes explicit Serta-style anti-priming language addressing the effect of uptier exchange transactions on existing lender rights and priorities.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.serta.effect_of_language.present",
+              "level": 4,
+              "name": "Language Present",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 2 Item 1"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the 'effect of' language applies to all sacred rights or only specific subordination protections.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.serta.effect_of_language.scope",
+              "kct_ref": [
+                "cat3.15"
+              ],
+              "level": 4,
+              "name": "Scope of Application",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 15"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Whether the sacred rights provision includes 'effect of' or 'effect thereof' language extending protections to amendments that indirectly achieve subordination. Key precedent in Wesco/Incora ruling. []",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.serta.effect_of_language",
+          "kct_ref": [
+            "cat3.15"
+          ],
+          "level": 3,
+          "name": "'Effect of' Language",
+          "r18_concept_ids": [
+            "lme_protections.effect_of_language"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 15"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the credit agreement includes a ratable participation exception within the Serta blocker framework, requiring that any debt exchange or refinancing transaction be offered pro rata to all lenders.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.serta.ratable_participation_exception.present",
+              "level": 4,
+              "name": "Exception Present",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the ratable offer must be on the same terms as the priming debt (absence creates American Tire loophole).",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.serta.ratable_participation_exception.same_terms",
+              "kct_ref": [
+                "cat3.15"
+              ],
+              "level": 4,
+              "name": "Same Terms Required",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 15"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Exception permitting priming debt if all lenders are offered ratable participation on the same terms. Risk: 'same terms' may not be required. []",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.serta.ratable_participation_exception",
+          "kct_ref": [
+            "cat3.15"
+          ],
+          "level": 3,
+          "name": "Ratable Participation Exception",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 15"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Carveout in the Serta blocker for permitted debt baskets, defining which incremental or refinancing debt transactions are exempted from the anti-priming protections and under what conditions.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.serta.carveouts.permitted_debt",
+              "kct_ref": [
+                "cat4.11"
+              ],
+              "level": 4,
+              "name": "Permitted Debt Carveout",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 4 Item 11"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Carveout in the Serta blocker for debtor-in-possession financing, permitting priming liens in bankruptcy proceedings where DIP financing is necessary for the debtor's continued operations.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.serta.carveouts.dip_financing",
+              "level": 4,
+              "name": "DIP Financing Carveout",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 13; Learning Material: DIP FINANCING"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Exceptions that may undermine Serta protection: permitted debt carveout, DIP financing carveout, closing-date-terms limitation. []",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.serta.carveouts",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "43.1%"
+          },
+          "name": "Permitted Carveouts",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Serta structures weaponize borrower buyback carve-outs to create super-priority tranches, leaving non-participating lenders structurally subordinated without consent.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.serta.super_priority_creation_prevention",
+          "kct_ref": [
+            "KCT:Cat3:15"
+          ],
+          "level": 3,
+          "name": "Super-priority creation prevention",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 1"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Protection requiring heightened lender consent (ideally affected-lender consent) for amendments that subordinate the debt in right of lien or payment priority (LME Protection #5). Per the LME Provision Language, a Serta blocker should prohibit subordination of lien and payment priority to other superpriority debt without affected-lender consent, ideally extending to amendments that 'have the effect of' subordinating priority. Frequently contains exceptions where participation in the priming debt is offered ratably to all lenders on the same terms. Common weaknesses: (a) blocker does not cover both lien and payment priority; (b) ratable offer exception lacks 'same terms' requirement; (c) carve-out for debt 'as otherwise permitted' not limited to terms as of the closing date; (d) carves out specific types of permitted priming Indebtedness; (e) DIP carve-out without ratable participation on same terms (American Tire loophole). KCT Category 3 item 15 describes the Serta structure as using borrower buyback provisions to effectuate a debt-for-debt exchange creating 'super priority' lenders without affected lender consent. PC Term Comparison: include strong Serta protection; clients will likely accept offer to participate but must include on same terms (including fees).",
+      "dls_ref": [
+        "DLS:45:Due diligence"
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "lme_protections",
+        "extraction_ready": true,
+        "playbook_ref": "amendments_voting.serta",
+        "section_locations": [
+          "ARTICLE X",
+          "Section 10.01",
+          "Section 10.02"
+        ],
+        "specimen_patterns": [
+          "pro rata.*treatment.*sharing",
+          "subordinat.*existing.*Loans",
+          "super-priority"
+        ]
+      },
+      "family_id": "credit_protection.lme_protections",
+      "id": "credit_protection.lme_protections.serta",
+      "kct_ref": [
+        "cat3.15",
+        "cat4.11"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "adoption_rate": "93.5%",
+        "affected_lender_consent": "53.4%",
+        "lien_priority_protection": "67.2%",
+        "payment_priority_protection": "58.6%"
+      },
+      "name": "Serta Blocker",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader permitted modifications; no operating lease restriction; no sub equity issuance restriction",
+        "dls_source": "DLS row 88",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "junior_debt_modifications: materially_adverse_standard vs no_restriction",
+          "org_doc_amendments: materially_adverse_standard vs no_restriction",
+          "negative_pledge: broad_prohibition vs limited",
+          "accounting_changes: prohibited vs notice_only",
+          "passive_holdco: strict vs limited_activities_permitted",
+          "contingent_obligations: prohibited vs capped",
+          "speculative_hedging: prohibited vs permitted",
+          "line_of_business: restricted vs unrestricted",
+          "sub_equity_issuance: restricted vs unrestricted",
+          "operating_leases: capped vs uncapped"
+        ],
+        "market_position": "",
+        "preferred_position": "Anti-Serta: prohibit uptier transactions via non-pro-rata open market purchases; require sacred-right protection against subordination",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "lme_protections.anti_serta"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 39,
+          "term": "Collateral and Guarantors"
+        },
+        {
+          "coverage": "full",
+          "row": 51,
+          "term": "Reps and Warranties"
+        },
+        {
+          "coverage": "full",
+          "row": 129,
+          "term": "Events of Default"
+        },
+        {
+          "coverage": "full",
+          "row": 130,
+          "term": "Change of Control"
+        },
+        {
+          "coverage": "full",
+          "row": 131,
+          "term": "Voting"
+        },
+        {
+          "coverage": "full",
+          "row": 150,
+          "term": "Representations"
+        },
+        {
+          "coverage": "full",
+          "row": 154,
+          "term": "Closing Deliverables"
+        },
+        {
+          "coverage": "full",
+          "row": 156,
+          "term": "Other"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "LME Provision Language protection #5 (complete Serta specification with sample clause from RackSpace March 2024 CA); KCT Category 3 item 15 (Serta structure description); PC Term Comparison section 9 (Serta: strong protection required, same terms including fees)",
+      "pc_ref": [
+        "Section 9"
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the credit agreement includes NYDJ-style pro rata sharing protections requiring that any amendment, refinancing, or exchange transaction be offered ratably to all lenders of the affected class.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.nydj.pro_rata_sharing_protection.present",
+              "level": 4,
+              "name": "Protection Present",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3; PC Term Comparison: 2. Article 2 - Call Protection:"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Voting threshold required to waive the NYDJ pro rata sharing protection, typically all-lender or affected-class consent to prevent selective refinancing that advantages a subset of lenders.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.nydj.pro_rata_sharing_protection.consent_threshold",
+              "level": 4,
+              "name": "Consent Threshold",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Blocks amendments to the pro rata sharing clause that governs equitable distribution of payments and recoveries among lenders.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.nydj.pro_rata_sharing_protection",
+          "level": 3,
+          "market_benchmarks": {
+            "r17_gap_flagged": true
+          },
+          "name": "Pro Rata Sharing Protection",
+          "negotiation_spectrum": {
+            "r17_gap_flagged": true
+          },
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 133,
+              "term": "Assignments – open market purchases"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 133 (Assignments – open market purchases)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the credit agreement includes NYDJ-style payment waterfall protections that prevent amendments altering the distribution priority of payments among secured creditors without adequate consent.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.nydj.waterfall_protection.present",
+              "level": 4,
+              "name": "Protection Present",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3; PC Term Comparison: 2. Article 2 - Call Protection:"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Voting threshold required to amend payment waterfall provisions under the NYDJ waterfall protection, designed to prevent selective payment priority manipulation benefiting a lender subset.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.nydj.waterfall_protection.consent_threshold",
+              "level": 4,
+              "name": "Consent Threshold",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Blocks amendments to the EoD payment waterfall (order of priorities) that governs distribution of proceeds after acceleration or enforcement.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.nydj.waterfall_protection",
+          "level": 3,
+          "name": "Payment Waterfall Protection",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; PC Term Comparison: 2. Article 2 - Call Protection:"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Carve-outs that may weaken NYDJ protection by permitting refinancing, amend-and-extend, or incremental transactions that alter pro rata treatment.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.nydj.refinancing_carveouts",
+          "level": 3,
+          "name": "Refinancing Carveouts",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 152 (Unknown); KCT Cat 3 Item 2"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Protection requiring heightened lender consent (ideally affected-lender consent) for amendments that modify the pro rata sharing or waterfall provisions (LME Protection #6). Per the LME Provision Language, an NYDJ blocker should prohibit amendments to: (a) the pro rata sharing provision; and (b) both the order of payments and the pro rata sharing of payments in the post-event-of-default waterfall provision, in each case without affected-lender consent. Common weaknesses: (a) not protecting both pro rata sharing and waterfall provisions; (b) not protecting amendments to the waterfall's order of priorities; (c) carve-outs for refinancing amendments, amend-and-extend provisions, and incremental equivalent debt that can be abused when broadly drafted. PC Term Comparison: pro rata payments and sharing/waterfalls must be all-lender or all-affected-lender sacred rights; avoid 'except as otherwise permitted' or 'Subject to mandatory prepayments' type language.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "other_neg_covs",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_other.chewy",
+        "section_locations": [
+          "ARTICLE 9",
+          "ARTICLE I",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE VIII"
+        ],
+        "shape_ref": "neg_cov_other.chewy"
+      },
+      "family_id": "credit_protection.lme_protections",
+      "id": "credit_protection.lme_protections.nydj",
+      "level": 2,
+      "name": "NYDJ Blocker",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader permitted modifications; no operating lease restriction; no sub equity issuance restriction",
+        "dls_source": "DLS row 88",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "junior_debt_modifications: materially_adverse_standard vs no_restriction",
+          "org_doc_amendments: materially_adverse_standard vs no_restriction",
+          "negative_pledge: broad_prohibition vs limited",
+          "accounting_changes: prohibited vs notice_only",
+          "passive_holdco: strict vs limited_activities_permitted",
+          "contingent_obligations: prohibited vs capped",
+          "speculative_hedging: prohibited vs permitted",
+          "line_of_business: restricted vs unrestricted",
+          "sub_equity_issuance: restricted vs unrestricted",
+          "operating_leases: capped vs uncapped"
+        ],
+        "market_position": "",
+        "preferred_position": "Restrictions on: modifications to junior/subordinated debt docs, org doc amendments, burdensome/negative-pledge agreements, accounting/fiscal year changes, passive holdco, contingent obligations, speculative hedging, line of business changes, sub equity issuance, operating leases, Patriot Act/FCPA/OFAC",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "lme_protections.anti_nydj"
+      ],
+      "type": "concept",
+      "definition_source": "LME Provision Language protection #6 (complete NYDJ specification with sample clause from MillerKnoll April 2025 CA); PC Term Comparison section 9 (Sacred Rights: pro rata payments and sharing/waterfalls)",
+      "pc_ref": [
+        "Section 9"
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether subordination requirement applies to intercompany debt incurred under all covenant baskets (strong) or only the intercompany basket (weak).",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.at_home.subordination_scope.all_baskets",
+              "level": 4,
+              "name": "Applies Across All Baskets",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 1"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the At Home subordination protection scope extends to guarantees in addition to direct obligations, preventing circumvention through guarantee release or subordination as an alternative to direct debt subordination.",
+              "dls_ref": [
+                "DLS:66:Guarantees"
+              ],
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.at_home.subordination_scope.includes_guarantees",
+              "level": 4,
+              "name": "Includes Guarantees",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 66 (Guarantees)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Which intercompany debt instruments must be subordinated: all baskets vs. only intercompany basket, and whether guarantees of nonloan party debt are covered.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.at_home.subordination_scope",
+          "kct_ref": [
+            "cat4.11"
+          ],
+          "level": 3,
+          "name": "Subordination Scope",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 11"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether intercompany debt to nonloan parties must also be unsecured, preventing collateral claims by non-guarantor subsidiaries.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.at_home.unsecured_requirement",
+          "level": 3,
+          "name": "Unsecured Requirement",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 5"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Extension of liability management protections to cover unrestricted subsidiaries, preventing the borrower from using subsidiary designations to move assets outside the credit agreement's protective perimeter. Inspired by the At Home restructuring, these provisions restrict transactions between restricted and unrestricted subsidiaries that could diminish the collateral or credit support available to the lender group.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.at_home.nonloan_party_coverage.unsubs",
+              "level": 4,
+              "name": "Covers Unrestricted Subs",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 2"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the At Home non-loan-party leakage protection covers non-guarantor restricted subsidiaries, which can receive asset transfers that remain within the restricted group but outside the guarantee and collateral perimeter.",
+              "dls_ref": [
+                "DLS:84:Restricted Payments"
+              ],
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.at_home.nonloan_party_coverage.nonguarantor_restricted",
+              "level": 4,
+              "name": "Covers Nonguarantor Restricted",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 84 (Restricted Payments)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Breadth of nonloan party entities covered by the subordination requirement: unrestricted subs only, nonguarantor restricted subs, or all nonloan party affiliates.",
+          "dls_ref": [
+            "DLS:46:Third-party consents / litigation"
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.at_home.nonloan_party_coverage",
+          "level": 3,
+          "name": "Nonloan Party Coverage",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 46 (Third-party consents / litigation)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Protection requiring that any intercompany debt incurred under any debt basket that is owed by a loan party to a non-loan-party subsidiary be subordinated to the loans (LME Protection #7). Per the LME Provision Language, this provision is often found at the end of the debt covenant and should require subordination of all intercompany debt incurred by a loan party and owed to a non-loan party (including unrestricted subsidiaries, nonguarantor restricted subsidiaries, or nonrestricted affiliates) under any basket. Must not be confused with a restriction that applies only to the intercompany basket (which would leave other baskets unprotected). PC Term Comparison: require that intercompany debt owed by Loan Parties to non-Loan Parties is subordinated to the PC client debt. This prevents double-dip and pari-plus LME structures where a nonguarantor's intercompany loan to a loan party establishes a pari secured claim.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "other_neg_covs",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_other.chewy",
+        "section_locations": [
+          "ARTICLE 9",
+          "ARTICLE I",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE VIII"
+        ],
+        "shape_ref": "neg_cov_other.chewy"
+      },
+      "family_id": "credit_protection.lme_protections",
+      "id": "credit_protection.lme_protections.at_home",
+      "level": 2,
+      "name": "At Home Blocker",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader permitted modifications; no operating lease restriction; no sub equity issuance restriction",
+        "dls_source": "DLS row 88",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "junior_debt_modifications: materially_adverse_standard vs no_restriction",
+          "org_doc_amendments: materially_adverse_standard vs no_restriction",
+          "negative_pledge: broad_prohibition vs limited",
+          "accounting_changes: prohibited vs notice_only",
+          "passive_holdco: strict vs limited_activities_permitted",
+          "contingent_obligations: prohibited vs capped",
+          "speculative_hedging: prohibited vs permitted",
+          "line_of_business: restricted vs unrestricted",
+          "sub_equity_issuance: restricted vs unrestricted",
+          "operating_leases: capped vs uncapped"
+        ],
+        "market_position": "",
+        "preferred_position": "Restrictions on: modifications to junior/subordinated debt docs, org doc amendments, burdensome/negative-pledge agreements, accounting/fiscal year changes, passive holdco, contingent obligations, speculative hedging, line of business changes, sub equity issuance, operating leases, Patriot Act/FCPA/OFAC",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "lme_protections.anti_at_home"
+      ],
+      "type": "concept",
+      "definition_source": "LME Provision Language protection #7 (At Home specification with sample clause from AMC July 2024 CA); PC Term Comparison neg covs Double Dip section ('Require that intercompany debt owed by Loan Parties to non-Loan Parties is subordinated to the PC Client debt')",
+      "pc_ref": [
+        "neg covs Double Dip"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether the voting manipulation blocker is itself included as a sacred right (cannot be removed by majority vote).",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.wesco_incora.sacred_right_status",
+          "level": 3,
+          "name": "Sacred Right Status",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 6"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Prohibits incurrence of debt for the primary purpose of influencing amendment or consent votes. Addresses the underlying manipulation, not just the voting consequence.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.wesco_incora.incurrence_prohibition",
+          "level": 3,
+          "name": "Incurrence Prohibition",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 13"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Time window around amendment request during which newly issued debt is excluded from voting (e.g., 30/60/90 days).",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.wesco_incora.disenfranchisement.exclusion_period",
+              "level": 4,
+              "name": "Exclusion Period",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the disenfranchisement extends to debt held by sponsor affiliates or only borrower-group entities.",
+              "dls_ref": [
+                "DLS:87:Transactions with Affiliates"
+              ],
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.wesco_incora.disenfranchisement.affiliate_coverage",
+              "level": 4,
+              "name": "Applies to Affiliates",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 87 (Transactions with Affiliates)"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Debt issued concurrently with seeking an amendment or consent is excluded from vote calculations, neutralizing the manipulation.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.wesco_incora.disenfranchisement",
+          "level": 3,
+          "name": "Disenfranchisement Mechanism",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 3"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Specific restrictions on whether incremental facility debt can vote on amendments to the existing facility terms.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.wesco_incora.incremental_voting_restrictions",
+          "level": 3,
+          "name": "Incremental Voting Restrictions",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 131 (Unknown); KCT Cat 3 Item 4; LME Provision Language, Restrictions on Issuing New Debt to Influence Voting (Wesco/Incora)"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Protection restricting the company from manipulating voting thresholds, including by issuing additional voting debt (LME Protection #10). Per the LME Provision Language, a Wesco/Incora blocker should restrict the company from incurring or authorizing additional debt for the primary purpose of influencing voting thresholds. Alternatively, the agreement may disenfranchise any debt issued concurrently with the seeking of any amendment, consent, or waiver. The blocker must be included in the sacred rights to prevent majority creditors from removing it. Potential issues: (a) not including the blocker as a sacred right; (b) only including the blocker as a sacred right (prohibiting amendments that authorize vote-rigging debt) but not prohibiting the actual incurrence of such debt without an amendment (as in Robertshaw). PC Term Comparison: clients currently focused on Incora blockers, pro forma Required Lenders votes, and commitments voting.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "lme_protections",
+        "extraction_ready": false,
+        "section_locations": [
+          "ARTICLE VII",
+          "ARTICLE X",
+          "Section 7.02",
+          "Section 10.01"
+        ],
+        "specimen_patterns": [
+          "additional.*debt.*senior.*existing",
+          "pari passu.*priming"
+        ],
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "boolean",
+        "playbook_ref": null,
+        "section_location": "ARTICLE VI-VII (Negative Covenants) / Anti-LME provisions"
+      },
+      "family_id": "credit_protection.lme_protections",
+      "id": "credit_protection.lme_protections.wesco_incora",
+      "level": 2,
+      "name": "Wesco/Incora Blocker",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader permitted modifications; no operating lease restriction; no sub equity issuance restriction",
+        "dls_source": "DLS row 88",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "junior_debt_modifications: materially_adverse_standard vs no_restriction",
+          "org_doc_amendments: materially_adverse_standard vs no_restriction",
+          "negative_pledge: broad_prohibition vs limited",
+          "accounting_changes: prohibited vs notice_only",
+          "passive_holdco: strict vs limited_activities_permitted",
+          "contingent_obligations: prohibited vs capped",
+          "speculative_hedging: prohibited vs permitted",
+          "line_of_business: restricted vs unrestricted",
+          "sub_equity_issuance: restricted vs unrestricted",
+          "operating_leases: capped vs uncapped"
+        ],
+        "market_position": "",
+        "preferred_position": "Restrictions on: modifications to junior/subordinated debt docs, org doc amendments, burdensome/negative-pledge agreements, accounting/fiscal year changes, passive holdco, contingent obligations, speculative hedging, line of business changes, sub equity issuance, operating leases, Patriot Act/FCPA/OFAC",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "lme_protections.anti_wesco_incora"
+      ],
+      "type": "concept",
+      "definition_source": "LME Provision Language protection #10 (Wesco/Incora specification with sample clause from RackSpace March 2024 CA); PC Term Comparison section 9 (Amendments: clients focused on Incora blockers)",
+      "pc_ref": [
+        "Section 9"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Block at time of subsidiary designation as unrestricted: unsub must not hold debt recourse to restricted group at time of designation.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.unsub_debt_holding.designation_restriction",
+          "level": 3,
+          "name": "Designation-Time Restriction",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the ongoing restriction covers liens held by the unsub on restricted group assets, not just debt instruments.",
+              "dls_ref": [
+                "DLS:80:Liens"
+              ],
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.unsub_debt_holding.ongoing_restriction.includes_liens",
+              "level": 4,
+              "name": "Includes Liens",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 80 (Liens)"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the unrestricted subsidiary debt holding restriction extends to equity interests in addition to debt instruments, preventing circumvention through equity-linked instruments or convertible securities at unrestricted subsidiaries.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.unsub_debt_holding.ongoing_restriction.includes_equity",
+              "level": 4,
+              "name": "Includes Equity Interests",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 8; Learning Material: Equity Interests in Unrestricted and Immaterial Subsidiaries"
+            }
+          ],
+          "corpus_prevalence": "low",
+          "definition": "Continuing restriction preventing unsubs from acquiring debt or liens recourse to the restricted group after initial designation.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.unsub_debt_holding.ongoing_restriction",
+          "level": 3,
+          "name": "Ongoing Restriction",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Prohibits unrestricted subsidiaries from holding debt or liens recourse to the restricted group. LME Provision Language Protection #8: 'A provision that prohibits unrestricted subsidiaries from holding at any time debt or liens that are recourse to the restricted group. This provision often is found in the unrestricted subsidiary definition and/or the unrestricted subsidiary designation provisions.' The blocker should apply both at the time of designation and at any point thereafter. Inherent weakness: it only mitigates double-dip risk at an unsub and not at a nonloan party. DLS Preferred row 92 (Unrestricted Subsidiaries) alternative includes the condition: 'No subsidiary can be designated as an unrestricted subsidiary if: (i) such unrestricted subsidiary has debt that is recourse to a Loan Party.'",
+      "dls_ref": [
+        "DLS:55:Absence of other debt",
+        "DLS:56:Solvency"
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "other_neg_covs",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_other.chewy",
+        "section_locations": [
+          "ARTICLE 9",
+          "ARTICLE I",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE VIII"
+        ],
+        "shape_ref": "neg_cov_other.chewy"
+      },
+      "family_id": "credit_protection.lme_protections",
+      "id": "credit_protection.lme_protections.unsub_debt_holding",
+      "level": 2,
+      "name": "Unsub Debt Holding Restriction",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader permitted modifications; no operating lease restriction; no sub equity issuance restriction",
+        "dls_source": "DLS row 88",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "junior_debt_modifications: materially_adverse_standard vs no_restriction",
+          "org_doc_amendments: materially_adverse_standard vs no_restriction",
+          "negative_pledge: broad_prohibition vs limited",
+          "accounting_changes: prohibited vs notice_only",
+          "passive_holdco: strict vs limited_activities_permitted",
+          "contingent_obligations: prohibited vs capped",
+          "speculative_hedging: prohibited vs permitted",
+          "line_of_business: restricted vs unrestricted",
+          "sub_equity_issuance: restricted vs unrestricted",
+          "operating_leases: capped vs uncapped"
+        ],
+        "market_position": "",
+        "preferred_position": "Restrictions on: modifications to junior/subordinated debt docs, org doc amendments, burdensome/negative-pledge agreements, accounting/fiscal year changes, passive holdco, contingent obligations, speculative hedging, line of business changes, sub equity issuance, operating leases, Patriot Act/FCPA/OFAC",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "lme_protections.anti_unsub_debt_holding"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 67,
+          "term": "Unrestricted Subsidiaries - generally"
+        },
+        {
+          "coverage": "full",
+          "row": 150,
+          "term": "Representations"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "LME Provision Language Protection #8 (unsub debt holding: definition, temporal scope, inherent weakness); DLS Preferred row 92 (unrestricted sub designation condition: no debt recourse to Loan Party)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Requires cash-only consideration for borrower or affiliate debt buybacks, preventing non-cash exchange transactions.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.non_pro_rata_purchase.cash_consideration",
+          "level": 3,
+          "name": "Cash Consideration Requirement",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 97 (Unknown); KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Requirement that any open-market debt repurchase be structured as a pro rata offer to all lenders (Dutch auction or similar), preventing selective buybacks that create disparate treatment among lenders of the same class.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.non_pro_rata_purchase.pro_rata_offer",
+          "kct_ref": [
+            "cat3.15"
+          ],
+          "level": 3,
+          "name": "Pro Rata Offer Requirement",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 15"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Requires purchased loans to be immediately cancelled and commitments permanently reduced, preventing reissuance.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.non_pro_rata_purchase.cancellation",
+          "level": 3,
+          "name": "Cancellation Requirement",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 2"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Conditions or restrictions limiting the assignment provisions from being used to effectuate a non-pro-rata LME exchange (LME Protection #9). Per the LME Provision Language, these include requirements such as: assignment to the borrower must be made for cash consideration (preventing non-pro-rata debt-for-debt exchanges through the assignment mechanics). DLS Preferred permits buybacks of term loans through Dutch auctions open to all lenders on a pro rata basis, subject to conditions: (1) no EoD continuing, (2) loans permanently cancelled upon acquisition, (3) no revolving facility proceeds used for purchases. Alternative formulations allow open market purchases on a non-pro-rata basis as well.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "other_neg_covs",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_other.chewy",
+        "section_locations": [
+          "ARTICLE 9",
+          "ARTICLE I",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE VIII"
+        ],
+        "shape_ref": "neg_cov_other.chewy"
+      },
+      "family_id": "credit_protection.lme_protections",
+      "id": "credit_protection.lme_protections.non_pro_rata_purchase",
+      "kct_ref": [
+        "cat3.15"
+      ],
+      "level": 2,
+      "name": "Non-Pro-Rata Purchase Restrictions",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader permitted modifications; no operating lease restriction; no sub equity issuance restriction",
+        "dls_source": "DLS row 88",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "junior_debt_modifications: materially_adverse_standard vs no_restriction",
+          "org_doc_amendments: materially_adverse_standard vs no_restriction",
+          "negative_pledge: broad_prohibition vs limited",
+          "accounting_changes: prohibited vs notice_only",
+          "passive_holdco: strict vs limited_activities_permitted",
+          "contingent_obligations: prohibited vs capped",
+          "speculative_hedging: prohibited vs permitted",
+          "line_of_business: restricted vs unrestricted",
+          "sub_equity_issuance: restricted vs unrestricted",
+          "operating_leases: capped vs uncapped"
+        ],
+        "market_position": "",
+        "preferred_position": "Restrictions on: modifications to junior/subordinated debt docs, org doc amendments, burdensome/negative-pledge agreements, accounting/fiscal year changes, passive holdco, contingent obligations, speculative hedging, line of business changes, sub equity issuance, operating leases, Patriot Act/FCPA/OFAC",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "lme_protections.non_pro_rata_purchase_restrictions"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 133,
+          "term": "Assignments – open market purchases"
+        },
+        {
+          "coverage": "full",
+          "row": 150,
+          "term": "Representations"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "LME Provision Language protection #9 (non-pro-rata purchase restrictions with sample clause from RackSpace March 2024 CA); DLS Preferred row 96 (buyback provisions with pro rata Dutch auction requirement)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "low",
+          "definition": "Extensions must be offered ratably to all lenders of the specified tranche, not selectively to favored lenders.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.better_health.pro_rata_extension",
+          "level": 3,
+          "name": "Pro Rata Extension Requirement",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 7; LME Provision Language, Pro Rata Sharing, Waterfall Provisions Included in Sacred Rights (NYDJ)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether the pro rata extension requirement is itself a sacred right requiring all/affected lender consent to remove.",
+          "dls_ref": [
+            "DLS:62:Right to Appoint Additional Agents"
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.better_health.sacred_right_status",
+          "level": 3,
+          "name": "Sacred Right Status",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 62 (Right to Appoint Additional Agents)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Extended tranche must have the same or junior payment priority as the original tranche, preventing extension as a priming mechanism.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.better_health.payment_priority",
+          "level": 3,
+          "name": "Payment Priority Constraint",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 12"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Protection against using a credit agreement's amend-and-extend provisions to carry out a non-pro-rata LME exchange (LME Protection #13). Per the LME Provision Language, a Better Health blocker should: (a) require that any loans made under the extension provisions be made on a pro rata basis (the 'Pro Rata Extension Requirement'); and (b) protect that requirement as a sacred right. Additionally, any extended tranche must have the same or more junior payment priority than the specified existing tranche. PC Term Comparison: clients want extension offers to be pro rata; DLS Preferred: extensions permitted with consent of only extending lenders, subject to pro rata offer within the applicable class.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "lme_protections",
+        "extraction_ready": false,
+        "section_locations": [
+          "ARTICLE VII",
+          "Section 7.02",
+          "Section 7.05"
+        ],
+        "specimen_patterns": [
+          "subsidiary.*guarantor.*release.*transfer",
+          "Material.*Subsidiary.*disposition"
+        ],
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "boolean",
+        "playbook_ref": null,
+        "section_location": "ARTICLE VI-VII (Negative Covenants) / Anti-LME provisions"
+      },
+      "family_id": "credit_protection.lme_protections",
+      "id": "credit_protection.lme_protections.better_health",
+      "level": 2,
+      "name": "Better Health Blocker",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader permitted modifications; no operating lease restriction; no sub equity issuance restriction",
+        "dls_source": "DLS row 88",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "junior_debt_modifications: materially_adverse_standard vs no_restriction",
+          "org_doc_amendments: materially_adverse_standard vs no_restriction",
+          "negative_pledge: broad_prohibition vs limited",
+          "accounting_changes: prohibited vs notice_only",
+          "passive_holdco: strict vs limited_activities_permitted",
+          "contingent_obligations: prohibited vs capped",
+          "speculative_hedging: prohibited vs permitted",
+          "line_of_business: restricted vs unrestricted",
+          "sub_equity_issuance: restricted vs unrestricted",
+          "operating_leases: capped vs uncapped"
+        ],
+        "market_position": "",
+        "preferred_position": "Restrictions on: modifications to junior/subordinated debt docs, org doc amendments, burdensome/negative-pledge agreements, accounting/fiscal year changes, passive holdco, contingent obligations, speculative hedging, line of business changes, sub equity issuance, operating leases, Patriot Act/FCPA/OFAC",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "lme_protections.anti_better_health"
+      ],
+      "type": "concept",
+      "definition_source": "LME Provision Language protection #13 (Better Health specification with sample clause from private company CA); PC Term Comparison Amend and Extend section ('Would want offers to be pro rata'); DLS Preferred row 17 (Amend and Extend: subject to pro rata offer within applicable class)",
+      "pc_ref": [
+        "Amend and Extend"
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Scope element testing whether the omni-blocker captures uptier exchange transactions (Serta-style), where a subset of lenders exchange existing loans into new super-priority debt. Uptier exchanges are the most direct form of lender-on-lender violence because they explicitly subordinate non-participating lenders within the same credit facility through a new priority tranche. This is the most commonly covered priming vector.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.omni_blocker.priming_definition.covers_uptier",
+              "kct_ref": [
+                "cat3.15"
+              ],
+              "level": 4,
+              "name": "Covers Uptier",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 15"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Scope element testing whether the omni-blocker captures non-pro-rata open market purchases or selective debt buybacks that benefit participating lenders at the expense of holdouts. Unlike uptier exchanges that involve structural re-tranching, non-pro-rata transactions operate through selective purchasing in secondary markets, making them harder to detect and requiring specific contractual language to prohibit.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.omni_blocker.priming_definition.covers_non_pro_rata",
+              "kct_ref": [
+                "cat3.15"
+              ],
+              "level": 4,
+              "name": "Covers Non-Pro-Rata",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 15"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Scope element testing whether the omni-blocker extends to indirect methods that achieve priming effects without a direct uptier exchange or non-pro-rata purchase. Circumvention tactics include subsidiary asset transfers (J.Crew trapdoor), collateral releases followed by new secured debt issuance, and lien priority manipulation through covenant amendment. This is the hardest priming vector to draft against because the methods are creative.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.lme_protections",
+              "id": "credit_protection.lme_protections.omni_blocker.priming_definition.covers_circumvention",
+              "kct_ref": [
+                "cat3.15"
+              ],
+              "level": 4,
+              "name": "Covers Circumvention",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 15"
+            }
+          ],
+          "corpus_prevalence": "low",
+          "definition": "The defined scope of 'Priming Financing' or 'Liability Management Transaction' that triggers the omni-blocker. Breadth determines effectiveness.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.omni_blocker.priming_definition",
+          "kct_ref": [
+            "cat3.15"
+          ],
+          "level": 3,
+          "name": "Priming Financing Definition",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 15"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Permitted exceptions to the omni-blocker: acquisition financing, pre-existing senior debt, permitted refinancing.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.omni_blocker.carveouts",
+          "level": 3,
+          "name": "Omni-Blocker Carveouts",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 12; LME Provision Language, Anti-LME Covenant (\"Omni-Blocker\")"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether the omni-blocker includes a bona fide purpose determination requirement, limiting its scope to transactions lacking legitimate business purpose.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.omni_blocker.bona_fide_purpose_test",
+          "level": 3,
+          "name": "Bona Fide Purpose Test",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "A comprehensive anti-LME covenant that seeks to prevent all types of liability management exercises (LME Protection #14). Per the LME Provision Language, an omni-blocker should protect against the end (a non-pro-rata LME) as well as the means (the known routes to an LME), helping to protect against both known and unknown forms of LMEs. Sample clause from Getty Images February 2025 CA defines 'Priming Financing/Liability Management Transaction' as any exchange of term loans with new debt 'specifically designed to uptier holders on a non-pro-rata basis into New LMT Debt that is contractually or structurally senior relative to then existing Term Loans,' with enumerated carve-outs for bona fide acquisition financing, debt already contractually/structurally senior, and permitted refinancings.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "lme_protections",
+        "extraction_ready": false,
+        "section_locations": [
+          "ARTICLE VII",
+          "ARTICLE X",
+          "Section 7.02",
+          "Section 10.01"
+        ],
+        "specimen_patterns": [
+          "anti-LME",
+          "liability management.*exercise",
+          "up-tier.*priming.*subordinat"
+        ],
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "boolean",
+        "playbook_ref": null,
+        "section_location": "ARTICLE VI-VII (Negative Covenants) / Anti-LME provisions"
+      },
+      "family_id": "credit_protection.lme_protections",
+      "id": "credit_protection.lme_protections.omni_blocker",
+      "kct_ref": [
+        "cat3.15"
+      ],
+      "level": 2,
+      "name": "Omni-Blocker (Anti-LME Covenant)",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader permitted modifications; no operating lease restriction; no sub equity issuance restriction",
+        "dls_source": "DLS row 88",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "junior_debt_modifications: materially_adverse_standard vs no_restriction",
+          "org_doc_amendments: materially_adverse_standard vs no_restriction",
+          "negative_pledge: broad_prohibition vs limited",
+          "accounting_changes: prohibited vs notice_only",
+          "passive_holdco: strict vs limited_activities_permitted",
+          "contingent_obligations: prohibited vs capped",
+          "speculative_hedging: prohibited vs permitted",
+          "line_of_business: restricted vs unrestricted",
+          "sub_equity_issuance: restricted vs unrestricted",
+          "operating_leases: capped vs uncapped"
+        ],
+        "market_position": "",
+        "preferred_position": "Restrictions on: modifications to junior/subordinated debt docs, org doc amendments, burdensome/negative-pledge agreements, accounting/fiscal year changes, passive holdco, contingent obligations, speculative hedging, line of business changes, sub equity issuance, operating leases, Patriot Act/FCPA/OFAC",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "lme_protections.omni_blocker"
+      ],
+      "type": "concept",
+      "definition_source": "LME Provision Language protection #14 (Omni-Blocker specification with sample clause from Getty Images February 2025 CA)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether the J.Crew blocker is included as a sacred right requiring more than Required Lender consent to modify.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.sacred_rights_embedding.jcrew_embedded",
+          "level": 3,
+          "name": "J.Crew Embedded as Sacred Right",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 69 (Unknown); KCT Cat 1 Item 3; Learning Material: 4) J. Crew Protection in Credit Agreements; LME Provision Language, Restrictions on Material Intellectual Property or Other Asset Leakage to Unsubs (J.Crew)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether the Envision blocker is included as a sacred right requiring more than Required Lender consent to modify.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.sacred_rights_embedding.envision_embedded",
+          "level": 3,
+          "name": "Envision Embedded as Sacred Right",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether the Pluralsight-style non-guarantor transfer blocker is elevated to sacred right status requiring more than Required Lender consent (typically all-lender or affected-lender) for amendment or waiver.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.sacred_rights_embedding.pluralsight_embedded",
+          "level": 3,
+          "name": "Pluralsight Embedded as Sacred Right",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether additional LME blockers beyond the four named protections (J.Crew, Chewy, Serta, Envision) are embedded as sacred rights requiring heightened consent thresholds for amendment or waiver.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.sacred_rights_embedding.other_blockers",
+          "level": 3,
+          "name": "Other Blockers Embedded",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 84 (Unknown); KCT Cat 1 Item 2"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Elevation of LME blockers (J.Crew, Envision, Pluralsight, At Home, etc.) to sacred rights requiring affected/all lender consent to modify. LME Provision Language Protection #12: 'In credit agreements, it is common for Serta and NYDJ blockers to be included as sacred rights. Sometimes (usually in post-LME credit agreements), other LME blockers also are included as sacred rights. This gives lenders additional protection, because only affected lender consent can remove the blockers.' Sample from AMC July 2024: sacred rights include prohibition on amendments that would 'permit any Subsidiary to be designated as an \"unrestricted Subsidiary\" or permit the transfer of any assets to \"unrestricted Subsidiaries\"' without 'written consent of each Lender.' PC Term Comparison: 'Include all other customary sacred rights protections.'",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "other_neg_covs",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_other.chewy",
+        "section_locations": [
+          "ARTICLE 9",
+          "ARTICLE I",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX",
+          "ARTICLE VIII"
+        ],
+        "shape_ref": "neg_cov_other.chewy"
+      },
+      "family_id": "credit_protection.lme_protections",
+      "id": "credit_protection.lme_protections.sacred_rights_embedding",
+      "kct_ref": [
+        "cat3.5"
+      ],
+      "level": 2,
+      "name": "Non-Serta/NYDJ Blockers in Sacred Rights",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader permitted modifications; no operating lease restriction; no sub equity issuance restriction",
+        "dls_source": "DLS row 88",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "junior_debt_modifications: materially_adverse_standard vs no_restriction",
+          "org_doc_amendments: materially_adverse_standard vs no_restriction",
+          "negative_pledge: broad_prohibition vs limited",
+          "accounting_changes: prohibited vs notice_only",
+          "passive_holdco: strict vs limited_activities_permitted",
+          "contingent_obligations: prohibited vs capped",
+          "speculative_hedging: prohibited vs permitted",
+          "line_of_business: restricted vs unrestricted",
+          "sub_equity_issuance: restricted vs unrestricted",
+          "operating_leases: capped vs uncapped"
+        ],
+        "market_position": "",
+        "preferred_position": "Restrictions on: modifications to junior/subordinated debt docs, org doc amendments, burdensome/negative-pledge agreements, accounting/fiscal year changes, passive holdco, contingent obligations, speculative hedging, line of business changes, sub equity issuance, operating leases, Patriot Act/FCPA/OFAC",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "lme_protections.non_serta_nydj_sacred_rights"
+      ],
+      "type": "concept",
+      "definition_source": "LME Provision Language Protection #12 (non-Serta/NYDJ blockers as sacred rights; AMC July 2024 sample clause); PC Term Comparison Amendments section line 497 ('Include all other customary sacred rights protections')",
+      "pc_ref": [
+        "Amendments"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Category of protections against value leakage through transfers to unrestricted or nonguarantor subsidiaries. Includes J.Crew, Pluralsight, Envision.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.general_lme.drop_down_category",
+          "level": 3,
+          "name": "Drop-Down LME Protections",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 8; LME Provision Language, Protections Against Using a Credit Agreement's Amend-and-Extend Provisions to Carry Out a Non-Pro-Rata LME Exchange (Better Health)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Category of protections against subordination of existing debt through amendment mechanics. Includes Serta, NYDJ, Wesco/Incora.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.general_lme.uptier_category",
+          "kct_ref": [
+            "cat3.15"
+          ],
+          "level": 3,
+          "name": "Uptier LME Protections",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 15"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Category of protections against claim multiplication through intercompany debt and structural subordination. Includes At Home blocker.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.general_lme.double_dip_category",
+          "level": 3,
+          "market_benchmarks": {
+            "r17_gap_flagged": true
+          },
+          "name": "Double-Dip / Pari-Plus Protections",
+          "negotiation_spectrum": {
+            "r17_gap_flagged": true
+          },
+          "type": "sub_component",
+          "definition_source": "Review Template Row 71 (Unknown); KCT Cat 2 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Restrictions on transactions between borrower group and sponsor/management affiliates that could facilitate LME-adjacent value extraction. Management fee caps, arms-length requirements.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.general_lme.sponsor_affiliate_controls",
+          "level": 3,
+          "market_benchmarks": {
+            "management_fee_cmm": "$800K-$1.5M/yr",
+            "management_fee_lmm": "$300K-$800K/yr",
+            "management_fee_umm": "$1.5M-$3M/yr"
+          },
+          "name": "Sponsor Affiliate Transaction Controls",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 124,
+              "term": "Negative Covenants – Transactions with Affiliates –"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 124 (Negative Covenants – Transactions with Affiliates –)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Historical progression of LME protections: pre-2016 (basic DQ lists), 2016-2019 (J.Crew watershed, 87.1% adoption), 2020+ (Chewy/Serta era, 93.5% adoption speed record).",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.lme_protections",
+          "id": "credit_protection.lme_protections.general_lme.evolution_timeline",
+          "level": 3,
+          "name": "Protection Evolution Timeline",
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Overarching LME awareness and protection architecture. LME Provision Language organizes 14 protections across four categories: (1) Drop-Down (J.Crew #1, Chewy #2, Pluralsight #3, Envision #4) -- against asset leakage to unrestricted or nonguarantor subsidiaries; (2) Uptier (Serta #5, NYDJ #6) -- against lien/payment subordination and pro-rata/waterfall modifications; (3) Double-Dip/Pari-Plus (At Home #7, Unsub Debt #8) -- against intercompany loan schemes creating duplicative claims; (4) General (Non-Pro-Rata Purchase #9, Wesco/Incora #10, Effect-of Language #11, Sacred Rights Embedding #12, Better Health #13, Omni-Blocker #14). PC Term Comparison notes 'currently with greater emphasis on tightening baskets that avoid leakage and present LME risk.'",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "lme_protections",
+        "extraction_ready": false,
+        "section_locations": [
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "specimen_patterns": [
+          "liability management",
+          "LME"
+        ],
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "boolean",
+        "playbook_ref": null,
+        "section_location": "ARTICLE VI-VII (Negative Covenants) / Anti-LME provisions"
+      },
+      "family_id": "credit_protection.lme_protections",
+      "id": "credit_protection.lme_protections.general_lme",
+      "level": 2,
+      "name": "General LME Framework",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader permitted modifications; no operating lease restriction; no sub equity issuance restriction",
+        "dls_source": "DLS row 88",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "junior_debt_modifications: materially_adverse_standard vs no_restriction",
+          "org_doc_amendments: materially_adverse_standard vs no_restriction",
+          "negative_pledge: broad_prohibition vs limited",
+          "accounting_changes: prohibited vs notice_only",
+          "passive_holdco: strict vs limited_activities_permitted",
+          "contingent_obligations: prohibited vs capped",
+          "speculative_hedging: prohibited vs permitted",
+          "line_of_business: restricted vs unrestricted",
+          "sub_equity_issuance: restricted vs unrestricted",
+          "operating_leases: capped vs uncapped"
+        ],
+        "market_position": "",
+        "preferred_position": "Restrictions on: modifications to junior/subordinated debt docs, org doc amendments, burdensome/negative-pledge agreements, accounting/fiscal year changes, passive holdco, contingent obligations, speculative hedging, line of business changes, sub equity issuance, operating leases, Patriot Act/FCPA/OFAC",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "lme_protections.effect_of_language"
+      ],
+      "type": "concept",
+      "definition_source": "LME Provision Language (complete 14-protection framework across 4 categories); PC Term Comparison Negative Covenants General Note ('greater emphasis on tightening baskets that avoid leakage and present LME risk')",
+      "pc_ref": [
+        "Negative Covenants General Note ('greater emphasis on tightening baskets that avoid leakage and present LME risk')"
+      ]
+    }
+  ],
+  "corpus_prevalence": "high",
+  "dealdata_benchmarks": {
+    "Serta Provisions?": {
+      "pc_pct_range": "75.0%-100.0%"
+    }
+  },
+  "definition": "Protections against liability management exercises (LMEs) -- transactions that subordinate, strip, or dilute existing lenders' credit position without their individual consent. The LME Provision Language catalogs 14 named protections organized under 4 categories: Category 1 (Drop-Down) protects against moving material assets to unrestricted or nonguarantor subsidiaries and monetizing them through structurally senior debt (J.Crew/Pluralsight/Envision blockers, Chewy automatic release restrictions); Category 2 (Uptier) protects against subordination of liens or payment priority through majority-consent amendments (Serta/NYDJ blockers); Category 3 (Double-Dip/Pari-Plus) protects against intercompany loan structures that create duplicative claims (At Home subordination, unsub debt holding restrictions); Category 4 (General) provides broader protections including non-pro-rata purchase restrictions, Wesco/Incora voting manipulation restrictions, 'effect of' language, non-Serta/NYDJ blockers as sacred rights, Better Health pro rata extension requirements, and the Omni-Blocker anti-LME covenant.",
+  "domain_id": "credit_protection",
+  "extraction_difficulty": "hard",
+  "family_id": "credit_protection.lme_protections",
+  "id": "credit_protection.lme_protections",
+  "level": 1,
+  "name": "LME Protections",
+  "r18_concept_ids": [
+    "lme_protections.anti_jcrew",
+    "lme_protections.anti_chewy",
+    "lme_protections.anti_pluralsight",
+    "lme_protections.anti_envision",
+    "lme_protections.anti_serta",
+    "lme_protections.anti_nydj",
+    "lme_protections.anti_at_home",
+    "lme_protections.anti_unsub_debt_holding",
+    "lme_protections.non_pro_rata_purchase_restrictions",
+    "lme_protections.anti_wesco_incora",
+    "lme_protections.effect_of_language",
+    "lme_protections.non_serta_nydj_sacred_rights",
+    "lme_protections.anti_better_health",
+    "lme_protections.omni_blocker"
+  ],
+  "type": "family",
+  "definition_source": "LME Provision Language (complete document: 14 protections across 4 categories with definitions, drafting considerations, common weaknesses, and sample clauses); PC Term Comparison section 5 neg covs (Chewy, J.Crew, Envision, double dip); KCT Category 3 item 15 (Serta structure)",
+  "pc_ref": [
+    "Section 5"
+  ]
+}

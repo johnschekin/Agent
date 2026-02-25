@@ -1,0 +1,122 @@
+[
+  {
+    "id": "credit_protection.guarantees.scope",
+    "name": "Guarantee Scope",
+    "family_id": "credit_protection.guarantees",
+    "concept_area": "guarantees",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Guaranty",
+        "Guarantee",
+        "Subsidiary Guaranty"
+      ],
+      "keyword_anchors": [
+        "Guaranty",
+        "Guarantee",
+        "Guarantor",
+        "guarantee release",
+        "Subsidiary Guarantor"
+      ],
+      "concept_specific_keywords": [
+        "Guarantee Scope"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.guarantees.excluded_subs",
+    "name": "Excluded Subsidiaries",
+    "family_id": "credit_protection.guarantees",
+    "concept_area": "guarantees",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Guaranty",
+        "Guarantee",
+        "Subsidiary Guaranty"
+      ],
+      "keyword_anchors": [
+        "Guaranty",
+        "Guarantee",
+        "Guarantor",
+        "guarantee release",
+        "Subsidiary Guarantor"
+      ],
+      "concept_specific_keywords": [
+        "Excluded Subsidiaries"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.guarantees.release",
+    "name": "Guarantee Release Conditions",
+    "family_id": "credit_protection.guarantees",
+    "concept_area": "guarantees",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Guaranty",
+        "Guarantee",
+        "Subsidiary Guaranty"
+      ],
+      "keyword_anchors": [
+        "Guaranty",
+        "Guarantee",
+        "Guarantor",
+        "guarantee release",
+        "Subsidiary Guarantor"
+      ],
+      "concept_specific_keywords": [
+        "Guarantee Release Conditions"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.guarantees.joinder",
+    "name": "Guarantor Joinder Requirements",
+    "family_id": "credit_protection.guarantees",
+    "concept_area": "guarantees",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Guaranty",
+        "Guarantee",
+        "Subsidiary Guaranty"
+      ],
+      "keyword_anchors": [
+        "Guaranty",
+        "Guarantee",
+        "Guarantor",
+        "guarantee release",
+        "Subsidiary Guarantor"
+      ],
+      "concept_specific_keywords": [
+        "Guarantor Joinder Requirements"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.guarantees.release_on_guarantor_act",
+    "name": "Guarantee Release Upon Act of Guarantor",
+    "family_id": "credit_protection.guarantees",
+    "concept_area": "guarantees",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Guaranty",
+        "Guarantee",
+        "Subsidiary Guaranty"
+      ],
+      "keyword_anchors": [
+        "Guaranty",
+        "Guarantee",
+        "Guarantor",
+        "guarantee release",
+        "Subsidiary Guarantor"
+      ],
+      "concept_specific_keywords": [
+        "Guarantee Release Upon Act of Guarantor"
+      ]
+    }
+  }
+]

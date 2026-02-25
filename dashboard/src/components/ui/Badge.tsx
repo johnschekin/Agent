@@ -2,23 +2,29 @@ import { cn } from "@/lib/cn";
 
 interface BadgeProps {
   children: React.ReactNode;
-  variant?: "default" | "blue" | "green" | "red" | "orange";
+  variant?: "default" | "blue" | "green" | "red" | "orange" | "amber" | "purple" | "cyan" | "teal";
+  className?: string;
 }
 
-const variantStyles = {
-  default: "bg-surface-tertiary text-text-secondary",
-  blue: "bg-accent-blue/15 text-accent-blue",
-  green: "bg-accent-green/15 text-accent-green",
-  red: "bg-accent-red/15 text-accent-red",
-  orange: "bg-accent-orange/15 text-accent-orange",
+const variantStyles: Record<string, string> = {
+  default: "bg-surface-3 text-text-secondary",
+  blue: "bg-glow-blue text-accent-blue",
+  green: "bg-glow-green text-accent-green",
+  red: "bg-glow-red text-accent-red",
+  orange: "bg-glow-amber text-accent-orange",
+  amber: "bg-glow-amber text-accent-amber",
+  purple: "bg-glow-purple text-accent-purple",
+  cyan: "bg-glow-cyan text-accent-cyan",
+  teal: "bg-glow-cyan text-accent-teal",
 };
 
-export function Badge({ children, variant = "default" }: BadgeProps) {
+export function Badge({ children, variant = "default", className }: BadgeProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center px-2 py-0.5 rounded text-xs font-medium",
-        variantStyles[variant]
+        "inline-flex items-center px-2.5 py-0.5 rounded-[10px] text-xs font-medium",
+        variantStyles[variant],
+        className
       )}
     >
       {children}

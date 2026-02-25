@@ -1,0 +1,709 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Restricted payment capacity redesignated as investment capacity. Allows the borrower to treat a distribution as a permitted investment (e.g., investment in unrestricted subsidiary). 57.7% prevalence among redesignation deals.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.cross_covenant",
+          "id": "cash_flow.cross_covenant.cc_rp_inv_redesignation.rp_to_inv",
+          "kct_ref": [
+            "cat4.2"
+          ],
+          "level": 3,
+          "name": "RP to Investment Direction",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 2"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Investment capacity redesignated as restricted payment capacity. Less common and more aggressive -- allows the borrower to treat investments as distributions. Very rare in bank deals; more common in bond-style documentation.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.cross_covenant",
+          "id": "cash_flow.cross_covenant.cc_rp_inv_redesignation.inv_to_rp",
+          "level": 3,
+          "name": "Investment to RP Direction",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Conditions required for redesignation: typically compliance with ratio test and no EoD. Some deals allow unconditional redesignation (most aggressive). Bank position: redesignation should require the same conditions as original usage.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.cross_covenant",
+          "id": "cash_flow.cross_covenant.cc_rp_inv_redesignation.conditions",
+          "level": 3,
+          "name": "Redesignation Conditions",
+          "red_flags": [
+            {
+              "category": "structural_risk",
+              "flag_id": "rf_cf_010",
+              "severity": "high",
+              "text": "Unrestricted redesignation between RP and investment baskets without ratio test -- enables unchecked capacity arbitrage across covenants"
+            }
+          ],
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Bidirectional redesignation channel between restricted payment and investment baskets. Per PC Term Comparison: reallocation is 'typically limited to reallocating from RPs to RDPs/Investments and RDPs to Investments but not the other way.' Per Learning Material: credit agreements 'often include baskets that allow the borrower to reallocate unused capacity under certain RP baskets for Investments and RDPs.' The reverse (Investment -> RP) is rare and aggressive. Per PC Term Comparison: 'Other than in Aggressive UMM/BSLR transactions, reject reallocations to build debt capacity.'",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "other_neg_covs",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE IX",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "Section 1.01",
+          "Section 1.01 / 10.5"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE VI-VII (Negative Covenants) cross-references"
+      },
+      "family_id": "cash_flow.cross_covenant",
+      "id": "cash_flow.cross_covenant.cc_rp_inv_redesignation",
+      "kct_ref": [
+        "cat4.2"
+      ],
+      "level": 2,
+      "name": "RP-Investment Redesignation",
+      "negotiation_spectrum": {
+        "aggressive_position": "Dollar baskets to also include a \"grower\" based on EBITDA or Total Assets Reclassification of baskets Excluding simultaneous \"fixed amount\" incurrences when calculating leverage ratios Covenants run from Borrower and restricted subs down, with a passive holding company covenant only, with respect to Holdings",
+        "dls_source_rows": [
+          {
+            "label": "Other Covenant Considerations (Growers, Reclassification)",
+            "row": 89
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "EBITDA or Total Assets grower for dollar baskets",
+          "Reclassification of baskets",
+          "Exclude simultaneous fixed-amount incurrences from ratio calc",
+          "Passive holding company covenant"
+        ],
+        "market_position": "Market practice for other covenant considerations (growers, reclassification) typically falls between lender-preferred restrictions and full borrower flexibility; negotiated on a deal-by-deal basis with leverage and sponsor reputation as key determinants.",
+        "preferred_position": "No other covenant considerations",
+        "source": "R14-B"
+      },
+      "red_flags": [
+        {
+          "category": "structural_risk",
+          "flag_id": "rf_cf_010",
+          "severity": "high",
+          "text": "Unrestricted redesignation between RP and investment baskets without ratio test -- enables unchecked capacity arbitrage across covenants"
+        },
+        {
+          "category": "capacity_excess",
+          "flag_id": "rf_cf_012",
+          "severity": "high",
+          "text": "Bond-style combined basket merges RP, RDP, and Investment into single pool -- full fungibility eliminates covenant segmentation"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison: 'Reallocation limited from RPs to RDPs/Investments, not the other way.' Learning Material: reallocation baskets. PC Term Comparison: 'reject reallocations to build debt capacity.'",
+      "pc_ref": [
+        ": 'Reallocation limited from RPs to RDPs/Investments, not the other way.' Learning Material: reallocation baskets. PC Term Comparison: 'reject reallocations to build debt capacity.'"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "One AA pool, one balance, shared across RP/Inv/RDP. Usage under any covenant reduces the single balance. Standard modern formulation. Requires careful tracking of which covenant consumed each dollar.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.cross_covenant",
+          "id": "cash_flow.cross_covenant.cc_aa_sharing.single_pool_model",
+          "level": 3,
+          "name": "Single Pool Shared Model",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "AA capacity is sub-allocated to each covenant with separate limits. Less common but provides clearer boundary control. E.g., 'AA available for RP shall not exceed the greater of $X and Y% of EBITDA'. Limits cross-covenant arbitrage.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.cross_covenant",
+          "id": "cash_flow.cross_covenant.cc_aa_sharing.sub_allocated_model",
+          "level": 3,
+          "name": "Sub-Allocated Pool Model",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Language preventing the same capacity from being used under multiple covenants. 'Amounts used pursuant to this clause shall not be deemed to be available under Section [X].' Universal in well-drafted agreements but the precise scope varies.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "hard",
+          "family_id": "cash_flow.cross_covenant",
+          "id": "cash_flow.cross_covenant.cc_aa_sharing.anti_double_dip",
+          "level": 3,
+          "name": "Anti-Double-Dip Controls",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 67 (Unrestricted Subsidiaries - generally); Review Template Row 71 (Negative Covenants – double dip)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "The Available Amount is a single pool that feeds RP, Investment, and RDP baskets with differentiated conditions. Per Learning Material: 'Available for Restricted Payments, Investments and Restricted Debt Payments. Governor is least restrictive for Investments.' Per DLS Preferred row 86: 'Available Amount to be used for Restricted Payments, Restricted Debt Prepayments and Investments.' Cross-covenant sharing means usage under one covenant reduces capacity under the others. Per PC Term Comparison: 'Include not otherwise applied language throughout agreement to avoid double counting.'",
+      "dls_ref": [
+        "DLS:86:Available Amount"
+      ],
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "other_neg_covs",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE IX",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "Section 1.01",
+          "Section 1.01 / 10.5"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE VI-VII (Negative Covenants) cross-references"
+      },
+      "family_id": "cash_flow.cross_covenant",
+      "id": "cash_flow.cross_covenant.cc_aa_sharing",
+      "level": 2,
+      "name": "Available Amount Capacity Sharing",
+      "negotiation_spectrum": {
+        "aggressive_position": "Dollar baskets to also include a \"grower\" based on EBITDA or Total Assets Reclassification of baskets Excluding simultaneous \"fixed amount\" incurrences when calculating leverage ratios Covenants run from Borrower and restricted subs down, with a passive holding company covenant only, with respect to Holdings",
+        "dls_source_rows": [
+          {
+            "label": "Other Covenant Considerations (Growers, Reclassification)",
+            "row": 89
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "EBITDA or Total Assets grower for dollar baskets",
+          "Reclassification of baskets",
+          "Exclude simultaneous fixed-amount incurrences from ratio calc",
+          "Passive holding company covenant"
+        ],
+        "market_position": "Market practice for other covenant considerations (growers, reclassification) typically falls between lender-preferred restrictions and full borrower flexibility; negotiated on a deal-by-deal basis with leverage and sponsor reputation as key determinants.",
+        "preferred_position": "No other covenant considerations",
+        "source": "R14-B"
+      },
+      "red_flags": [
+        {
+          "category": "capacity_excess",
+          "flag_id": "rf_cf_012",
+          "severity": "high",
+          "text": "Bond-style combined basket merges RP, RDP, and Investment into single pool -- full fungibility eliminates covenant segmentation"
+        }
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 95,
+          "term": "Negative Covenants – Investments – Other"
+        },
+        {
+          "coverage": "full",
+          "row": 118,
+          "term": "Negative Covenants – Available Amount"
+        },
+        {
+          "coverage": "full",
+          "row": 119,
+          "term": "Negative Covenants – Available Amount – Starter"
+        },
+        {
+          "coverage": "full",
+          "row": 122,
+          "term": "Negative Covenants – Available Amount – Ratio Test"
+        },
+        {
+          "coverage": "full",
+          "row": 123,
+          "term": "Negative Covenants – Available Amount – Other"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "Learning Material Section (5): 'Available for RPs, Investments and RDPs. Governor least restrictive for Investments.' DLS Preferred row 86. PC Term Comparison: 'not otherwise applied language.'"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "The sequence: (1) permitted reinvestment within reinvestment period, (2) if not reinvested, mandatory prepayment offer at par, (3) declined proceeds feed builder basket or are retained. Each step has sub-conditions that affect the final disposition of cash.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "hard",
+          "family_id": "cash_flow.cross_covenant",
+          "id": "cash_flow.cross_covenant.cc_disp_prepay_link.proceeds_waterfall",
+          "level": 3,
+          "name": "Proceeds Application Waterfall",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 72 (a. EBITDA); DLS Preferred Row 93 (o. Voting)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether the disposition covenant de minimis threshold and the mandatory prepayment trigger threshold are aligned. Misalignment creates gaps where sales can occur without triggering prepayment (aggressive for borrower).",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.cross_covenant",
+          "id": "cash_flow.cross_covenant.cc_disp_prepay_link.threshold_alignment",
+          "level": 3,
+          "name": "Threshold Alignment",
+          "red_flags": [
+            {
+              "category": "documentation_gap",
+              "flag_id": "rf_cf_014",
+              "severity": "medium",
+              "text": "Disposition covenant de minimis threshold and mandatory prepayment trigger threshold are misaligned -- creates gap for prepayment-free sales"
+            }
+          ],
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Asset disposition proceeds feed the mandatory prepayment waterfall. Per DLS Preferred row 83(iii): 'proceeds are used to prepay term loans under the asset sale sweep.' Per DLS Preferred row 70: '100% of net cash proceeds from all non-ordinary course asset sales.' The disposition covenant and mandatory prepayment provisions must be read together to determine actual cash leakage. Per Learning Material: the sweep, reinvestment right, and builder basket interaction creates a complex proceeds waterfall.",
+      "dls_ref": [
+        "DLS:83:Dispositions"
+      ],
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "other_neg_covs",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE IX",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "Section 1.01",
+          "Section 1.01 / 10.5"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE VI-VII (Negative Covenants) cross-references"
+      },
+      "family_id": "cash_flow.cross_covenant",
+      "id": "cash_flow.cross_covenant.cc_disp_prepay_link",
+      "level": 2,
+      "name": "Dispositions-Prepayment Link",
+      "negotiation_spectrum": {
+        "aggressive_position": "Dollar baskets to also include a \"grower\" based on EBITDA or Total Assets Reclassification of baskets Excluding simultaneous \"fixed amount\" incurrences when calculating leverage ratios Covenants run from Borrower and restricted subs down, with a passive holding company covenant only, with respect to Holdings",
+        "dls_source_rows": [
+          {
+            "label": "Other Covenant Considerations (Growers, Reclassification)",
+            "row": 89
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "EBITDA or Total Assets grower for dollar baskets",
+          "Reclassification of baskets",
+          "Exclude simultaneous fixed-amount incurrences from ratio calc",
+          "Passive holding company covenant"
+        ],
+        "market_position": "Market practice for other covenant considerations (growers, reclassification) typically falls between lender-preferred restrictions and full borrower flexibility; negotiated on a deal-by-deal basis with leverage and sponsor reputation as key determinants.",
+        "preferred_position": "No other covenant considerations",
+        "source": "R14-B"
+      },
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 96,
+          "term": "Negative Covenants – Dispositions"
+        },
+        {
+          "coverage": "full",
+          "row": 99,
+          "term": "Negative Covenants – Dispositions – De Minimis Threshold"
+        },
+        {
+          "coverage": "full",
+          "row": 101,
+          "term": "Negative Covenants – Dispositions – Securitizations"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 83(iii): 'proceeds to asset sale sweep.' DLS row 70: '100% of NCP from asset sales.' Learning Material: sweep + reinvestment + builder basket waterfall."
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "The percentage split: if 50% ECF sweep, 50% retained for builder. Step-downs shift the split -- at 25% sweep, 75% is retained. Zero sweep means all ECF builds the basket. The step-down schedule is the key negotiation vector.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.cross_covenant",
+          "id": "cash_flow.cross_covenant.cc_ecf_builder_tension.sweep_retention_split",
+          "level": 3,
+          "name": "Sweep vs Retention Split",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 41 (Asset Sale Sweep - Coverage); Review Template Row 44 (Asset Sale Sweep – Stepdowns)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "ECF deductions (voluntary prepayments, capex, acquisitions) reduce the sweep amount but may also independently build the Available Amount. Double-counting risk: same dollar reduces sweep AND grows builder. Banks should ensure deduction amounts are deducted from the builder as well.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "hard",
+          "family_id": "cash_flow.cross_covenant",
+          "id": "cash_flow.cross_covenant.cc_ecf_builder_tension.deduction_overlap",
+          "level": 3,
+          "name": "Deduction Overlap with Builder Components",
+          "red_flags": [
+            {
+              "category": "structural_risk",
+              "flag_id": "rf_cf_009",
+              "severity": "high",
+              "text": "No anti-double-dip between AA growth sources and ECF deductions -- same dollar can reduce ECF sweep AND build the Available Amount"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 95 (Negative Covenants – Investments – Other); Review Template Row 118 (Negative Covenants – Available Amount); Review Template Row 122 (Negative Covenants – Available Amount – Ratio Test)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Fundamental tension between ECF mandatory prepayment (reduces debt) and retained ECF building the Available Amount (enables distributions). Per DLS Preferred row 86: the Available Amount builder is 'the percentage of Excess Cash Flow equal to the percentage thereof that is not taken into account in calculating the Excess Cash Flow prepayment.' Per Learning Material: 'Because of this effect on the Builder Basket, combined with the various exceptions to the sweep, an asset sale sweep with leveraged-based stepdowns may permit significant leakage from the credit without actually providing any benefit to the lenders.' Borrowers negotiate step-downs to shift value from sweeps to the builder basket.",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "other_neg_covs",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE IX",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "Section 1.01",
+          "Section 1.01 / 10.5"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE VI-VII (Negative Covenants) cross-references"
+      },
+      "family_id": "cash_flow.cross_covenant",
+      "id": "cash_flow.cross_covenant.cc_ecf_builder_tension",
+      "kct_ref": [
+        "cat4.3"
+      ],
+      "level": 2,
+      "name": "ECF Sweep vs Builder Basket Tension",
+      "negotiation_spectrum": {
+        "aggressive_position": "Dollar baskets to also include a \"grower\" based on EBITDA or Total Assets Reclassification of baskets Excluding simultaneous \"fixed amount\" incurrences when calculating leverage ratios Covenants run from Borrower and restricted subs down, with a passive holding company covenant only, with respect to Holdings",
+        "dls_source_rows": [
+          {
+            "label": "Other Covenant Considerations (Growers, Reclassification)",
+            "row": 89
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "EBITDA or Total Assets grower for dollar baskets",
+          "Reclassification of baskets",
+          "Exclude simultaneous fixed-amount incurrences from ratio calc",
+          "Passive holding company covenant"
+        ],
+        "market_position": "Market practice for other covenant considerations (growers, reclassification) typically falls between lender-preferred restrictions and full borrower flexibility; negotiated on a deal-by-deal basis with leverage and sponsor reputation as key determinants.",
+        "preferred_position": "No other covenant considerations",
+        "source": "R14-B"
+      },
+      "red_flags": [
+        {
+          "category": "below_market",
+          "flag_id": "rf_cf_001",
+          "severity": "medium",
+          "text": "No ECF sweep step-down -- 100% sweep at all leverage levels reduces builder basket growth to zero from ECF"
+        }
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 44,
+          "term": "Asset Sale Sweep – Stepdowns"
+        },
+        {
+          "coverage": "full",
+          "row": 45,
+          "term": "ECF Sweep – Holiday"
+        },
+        {
+          "coverage": "full",
+          "row": 46,
+          "term": "ECF Sweep – Percentages"
+        },
+        {
+          "coverage": "full",
+          "row": 47,
+          "term": "ECF Sweep – Threshold"
+        },
+        {
+          "coverage": "full",
+          "row": 48,
+          "term": "ECF Sweep – Credits"
+        },
+        {
+          "coverage": "full",
+          "row": 95,
+          "term": "Negative Covenants – Investments – Other"
+        },
+        {
+          "coverage": "full",
+          "row": 120,
+          "term": "Negative Covenants – Available Amount – Builder"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 86: retained ECF = percentage not swept. Learning Material: 'stepdowns may permit significant leakage without benefit to lenders.'"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether the same leverage metric applies across RP ratio, Investment ratio, builder basket gate, and incremental ratio baskets. Inconsistency creates arbitrage: borrower can use first lien ratio for investments (more permissive) while total net applies to RP (more restrictive).",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.cross_covenant",
+          "id": "cash_flow.cross_covenant.cc_ratio_test_hierarchy.metric_consistency",
+          "level": 3,
+          "name": "Metric Consistency Across Baskets",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 28 (Incremental – racking and stacking); Review Template Row 66 (Negative Covenants – carryforward/carryback); Review Template Row 92 (Negative Covenants – Investments – General Basket)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Relative ordering of ratio thresholds across baskets. Standard hierarchy: incremental < acquisition < RP ratio < investment ratio. When ordering is violated (e.g., RP threshold lower than incremental), creates hidden capacity.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "hard",
+          "family_id": "cash_flow.cross_covenant",
+          "id": "cash_flow.cross_covenant.cc_ratio_test_hierarchy.threshold_ordering",
+          "level": 3,
+          "name": "Threshold Ordering",
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "How leverage tests interact across different baskets within and across covenants. Per PC Term Comparison: 'Preference is Total Leverage Ratio not First Lien or Secured for incurrence based tests.' Ratio thresholds form an implicit hierarchy: incremental < acquisition < RP ratio < investment ratio < builder basket gate. Per PC Term Comparison: 'Reject non worse than tests.' 'High Water Mark: Greater of actual closing and hardwired leverage levels: Reject.'",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "other_neg_covs",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE IX",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "Section 1.01",
+          "Section 1.01 / 10.5"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE VI-VII (Negative Covenants) cross-references"
+      },
+      "family_id": "cash_flow.cross_covenant",
+      "id": "cash_flow.cross_covenant.cc_ratio_test_hierarchy",
+      "level": 2,
+      "name": "Ratio Test Hierarchy Across Baskets",
+      "negotiation_spectrum": {
+        "aggressive_position": "Dollar baskets to also include a \"grower\" based on EBITDA or Total Assets Reclassification of baskets Excluding simultaneous \"fixed amount\" incurrences when calculating leverage ratios Covenants run from Borrower and restricted subs down, with a passive holding company covenant only, with respect to Holdings",
+        "dls_source_rows": [
+          {
+            "label": "Other Covenant Considerations (Growers, Reclassification)",
+            "row": 89
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "EBITDA or Total Assets grower for dollar baskets",
+          "Reclassification of baskets",
+          "Exclude simultaneous fixed-amount incurrences from ratio calc",
+          "Passive holding company covenant"
+        ],
+        "market_position": "Market practice for other covenant considerations (growers, reclassification) typically falls between lender-preferred restrictions and full borrower flexibility; negotiated on a deal-by-deal basis with leverage and sponsor reputation as key determinants.",
+        "preferred_position": "No other covenant considerations",
+        "source": "R14-B"
+      },
+      "type": "concept",
+      "definition_source": "PC Term Comparison: 'Preference is TLR not FLR for incurrence tests.' 'Reject no worse than tests.' 'High Water Mark: Reject.'",
+      "pc_ref": [
+        ": 'Preference is TLR not FLR for incurrence tests.' 'Reject no worse than tests.' 'High Water Mark: Reject.'"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Investment returns (dividends, interest, sale proceeds, principal repayment) from investments made using AA capacity grow the AA and can fund new RP usage. Cap-to-original provisions limit returns to original investment cost.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "hard",
+          "family_id": "cash_flow.cross_covenant",
+          "id": "cash_flow.cross_covenant.cc_capacity_recycling.investment_return_path",
+          "level": 3,
+          "name": "Investment Return Recycling Path",
+          "red_flags": [
+            {
+              "category": "capacity_excess",
+              "flag_id": "rf_cf_015",
+              "severity": "medium",
+              "text": "Investment returns not capped to original investment amount in AA builder -- returns exceeding original cost create unbounded capacity growth"
+            }
+          ],
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Declined mandatory prepayment proceeds feed the builder basket, creating new RP/Inv/RDP capacity from amounts lenders declined. The proceeds bypass the repayment waterfall entirely and become extractable capacity.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.cross_covenant",
+          "id": "cash_flow.cross_covenant.cc_capacity_recycling.declined_proceeds_path",
+          "level": 3,
+          "name": "Declined Proceeds Recycling",
+          "red_flags": [
+            {
+              "category": "structural_risk",
+              "flag_id": "rf_cf_005",
+              "severity": "high",
+              "text": "Declined proceeds feed builder basket -- lender-declined mandatory prepayment proceeds become builder basket capacity for future distributions"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 70 (Mandatory Prepayments); Review Template Row 118 (Negative Covenants – Available Amount)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Provisions that limit recycling: cap-to-original on investment returns, 'not otherwise applied' language, anti-double-dip, and explicit exclusion of certain return types from AA growth. Effectiveness varies by drafting precision.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "hard",
+          "family_id": "cash_flow.cross_covenant",
+          "id": "cash_flow.cross_covenant.cc_capacity_recycling.anti_recycling_controls",
+          "level": 3,
+          "name": "Anti-Recycling Controls",
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "How capacity can be recycled through investment returns flowing back to the Available Amount and then redeployed as restricted payments. Per Learning Material: 'Returns on investments made using the primary RP builder prong, often capped at the amount of the original investment.' Per PC Term Comparison: 'Typically will seek to cap returns on investment type baskets to amount of original investment. Avoid allowing for double counting returns.' The recycling loop: Investment -> Returns -> AA Growth -> RP Builder -> Distribution.",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "other_neg_covs",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE IX",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "Section 1.01",
+          "Section 1.01 / 10.5"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE VI-VII (Negative Covenants) cross-references"
+      },
+      "family_id": "cash_flow.cross_covenant",
+      "id": "cash_flow.cross_covenant.cc_capacity_recycling",
+      "level": 2,
+      "name": "Capacity Recycling Loop",
+      "negotiation_spectrum": {
+        "aggressive_position": "Dollar baskets to also include a \"grower\" based on EBITDA or Total Assets Reclassification of baskets Excluding simultaneous \"fixed amount\" incurrences when calculating leverage ratios Covenants run from Borrower and restricted subs down, with a passive holding company covenant only, with respect to Holdings",
+        "dls_source_rows": [
+          {
+            "label": "Other Covenant Considerations (Growers, Reclassification)",
+            "row": 89
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "EBITDA or Total Assets grower for dollar baskets",
+          "Reclassification of baskets",
+          "Exclude simultaneous fixed-amount incurrences from ratio calc",
+          "Passive holding company covenant"
+        ],
+        "market_position": "Market practice for other covenant considerations (growers, reclassification) typically falls between lender-preferred restrictions and full borrower flexibility; negotiated on a deal-by-deal basis with leverage and sponsor reputation as key determinants.",
+        "preferred_position": "No other covenant considerations",
+        "source": "R14-B"
+      },
+      "type": "concept",
+      "definition_source": "Learning Material Section (4): 'Returns capped at original investment.' PC Term Comparison: 'Cap returns to original investment. Avoid double counting.'",
+      "pc_ref": [
+        ": 'Cap returns to original investment. Avoid double counting.'"
+      ]
+    }
+  ],
+  "corpus_prevalence": "high",
+  "definition": "Mechanics governing how capacity, conditions, and limits interact across negative covenant sections. The four leakage covenants share capacity pools (most importantly the Available Amount), use common leverage tests, and include redesignation/reallocation mechanisms. Per PC Term Comparison: reallocation is 'typically limited to reallocating from RPs to RDPs/Investments and RDPs to Investments but not the other way.' Stacking and phony ratio concerns arise when baskets from different covenants are combined. Per Intro Guide: lenders should analyze total leakage potential across all four channels.",
+  "dls_ref": [
+    "DLS:74:Cushion/Covenant Levels",
+    "DLS:89:Other Covenant Considerations"
+  ],
+  "domain_id": "cash_flow",
+  "extraction_difficulty": "hard",
+  "family_id": "cash_flow.cross_covenant",
+  "id": "cash_flow.cross_covenant",
+  "level": 1,
+  "market_benchmarks": {
+    "pctc_basket_range_umm_bslr": "Typically max out at 40-50% (similar to BSL) with emphasis on tightening leakage and LME risk baskets",
+    "pctc_basket_range_cmm_lmm": "10-25/30% range",
+    "pctc_reallocation": "Typically limited from RPs to RDPs/Investments and RDPs to Investments only",
+    "pctc_stacking": "Ideally limited to debt incurrence ratios, not for RPs/RDPs/RIs",
+    "pctc_rp_to_debt": "Reject except in Aggressive UMM/BSLR",
+    "source": "PC Term Comparison, Negative Covenants General Note and Leakage",
+    "_source": "PC Term Comparison (lines 346-378)"
+  },
+  "name": "Cross-Covenant Coordination Mechanics",
+  "negotiation_spectrum": {
+    "aggressive_position": "Dollar baskets to also include a \"grower\" based on EBITDA or Total Assets Reclassification of baskets Excluding simultaneous \"fixed amount\" incurrences when calculating leverage ratios Covenants run from Borrower and restricted subs down, with a passive holding company covenant only, with respect to Holdings",
+    "dls_source_rows": [
+      {
+        "label": "Other Covenant Considerations (Growers, Reclassification)",
+        "row": 89
+      }
+    ],
+    "is_highlighted": true,
+    "key_negotiation_points": [
+      "EBITDA or Total Assets grower for dollar baskets",
+      "Reclassification of baskets",
+      "Exclude simultaneous fixed-amount incurrences from ratio calc",
+      "Passive holding company covenant"
+    ],
+    "market_position": "Market practice for other covenant considerations (growers, reclassification) typically falls between lender-preferred restrictions and full borrower flexibility; negotiated on a deal-by-deal basis with leverage and sponsor reputation as key determinants.",
+    "preferred_position": "No other covenant considerations",
+    "source": "R14-B"
+  },
+  "review_ref": [
+    {
+      "coverage": "full",
+      "row": 66,
+      "term": "Negative Covenants – carryforward/carryback"
+    }
+  ],
+  "type": "family",
+  "definition_source": "PC Term Comparison: 'Reallocation typically limited from RPs to RDPs/Investments and RDPs to Investments but not the other way.' 'Stacking/Phony Ratio: reject excluding revolver outstandings altogether.' Intro Guide: leakage framework.",
+  "pc_ref": [
+    ": 'Reallocation typically limited from RPs to RDPs/Investments and RDPs to Investments but not the other way.' 'Stacking/Phony Ratio: reject excluding revolver outstandings altogether.' Intro Guide: leakage framework."
+  ]
+}

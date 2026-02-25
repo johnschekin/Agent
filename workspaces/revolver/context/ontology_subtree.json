@@ -1,0 +1,2359 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "DealData (N=62 PC deals, quantitative statistics only): $5-10M (32.4%), $15-20M (29.7%), $25-50M (21.6%), $60-100M (10.8%), $150M+ (5.4%). DLS Preferred (Row 6) specifies commitment as '$[___]' without market-standard sizing.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.amount.size_buckets",
+          "level": 3,
+          "market_benchmarks": {
+            "large_pct": "21.6%",
+            "small_pct": "32.4%",
+            "standard_pct": "29.7%"
+          },
+          "name": "Market Size Buckets",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Separate or combined multicurrency sub-facility permitting borrowing in EUR, GBP, or other approved currencies, with equivalent USD limit. Review Template (Row 18): 'Flag any non-USD currencies for revolver.' Geneva expert extraction: $440M Revolver with separate Euro TL at different pricing.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.amount.multicurrency",
+          "level": 3,
+          "name": "Multicurrency Tranche",
+          "r18_concept_ids": [
+            "facility_structure.revolver.currencies"
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template, Row 18 (revolver currencies)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Additional revolving commitments available under the accordion or incremental facility provisions. DLS Preferred (Row 9): accordion available as '(i) increased commitments in respect of the Revolving Facility or (ii) an increase in the Term Facility or additional term facilities.' Review Template (Row 29): RCF incremental subject to cap.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.amount.incremental_revolver",
+          "level": 3,
+          "name": "Incremental Revolver Capacity",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 9 (Accordion — revolver increase); Review Template, Row 29 (RCF sub-limit)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Maximum revolving credit facility commitment stated in the commitment schedule. DLS Preferred: '$[___]' with separate notation of maturity. Provides the liquidity buffer for working capital and general corporate purposes. Revolving loans plus outstanding letters of credit may not exceed aggregate revolving commitments at any time.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.01"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Revolving Facility)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.626653+00:00",
+          "term_packs": {
+            "TS_REVOLVER_QUANTUM": {
+              "label": "Term Sheet - Revolver Quantum",
+              "category": "TERM_SHEET",
+              "exactPhrases": [
+                "Revolver: [•]-year; $[•]mm",
+                "Revolving Credit Facility",
+                "$[•] Revolving Facility",
+                "aggregate revolving commitments",
+                "revolving credit commitment in an aggregate principal amount",
+                "total revolving credit commitments"
+              ],
+              "sectionHeaders": [
+                "Revolving Credit Facility",
+                "Revolver Commitments",
+                "ARTICLE I - DEFINITIONS",
+                "Summary of Principal Terms",
+                "Facilities"
+              ],
+              "semanticVariants": [
+                "revolving credit commitment principal amount",
+                "revolver size and capacity",
+                "revolving facility quantum",
+                "RCF commitment amount",
+                "working capital facility size",
+                "revolving credit availability"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Revolver: [•]-year; $[•]mm",
+              "Revolving Credit Facility",
+              "$[•] Revolving Facility",
+              "aggregate revolving commitments",
+              "revolving credit commitment in an aggregate principal amount",
+              "total revolving credit commitments"
+            ],
+            "sectionHeaders": [
+              "Revolving Credit Facility",
+              "Revolver Commitments",
+              "ARTICLE I - DEFINITIONS",
+              "Summary of Principal Terms",
+              "Facilities"
+            ],
+            "semanticVariants": [
+              "revolving credit commitment principal amount",
+              "revolver size and capacity",
+              "revolving facility quantum",
+              "RCF commitment amount",
+              "working capital facility size",
+              "revolving credit availability"
+            ]
+          }
+        }
+      },
+      "family_id": "deal_econ.revolver",
+      "id": "deal_econ.revolver.amount",
+      "level": 2,
+      "market_benchmarks": {
+        "average_value": "$30.5M",
+        "median_value": "$20M",
+        "prevalence": "59.7%",
+        "ratio_to_tl": "10-20%"
+      },
+      "name": "Revolver Commitment Amount",
+      "r18_concept_ids": [
+        "facility_structure.revolver"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 21,
+          "term": "[DDTL – availability period]"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 6 (Revolver)",
+      "neutron_field_refs": [
+        {
+          "term_type": "TS_REVOLVER_QUANTUM",
+          "label": "Term Sheet - Revolver Quantum",
+          "schema_file": "term-sheet-facilities-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.4852,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Revolver matures before the term loan to avoid payment subordination. Review Template (Row 3): standard Revolver tenor 5-6 years, inside TL-B at 7 years. Universal convention in leveraged credit.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.maturity.inside_maturity",
+          "level": 3,
+          "name": "Inside Maturity Principle",
+          "type": "sub_component",
+          "definition_source": "Review Template, Row 3 (Revolver 5-6 years, TL-B 7 years); DLS Preferred, Row 6"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Revolver maturity that springs earlier if specified conditions are not met (e.g., refinancing of senior notes or other debt by a certain date). Review Template (Row 3): 'Flag any deviation, springing maturities.'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.maturity.springing",
+          "kct_ref": [
+            "cat1.1"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "cov_lite_prevalence": "[TO_BE_POPULATED]",
+            "drawstop_only_prevalence": "[TO_BE_POPULATED]"
+          },
+          "name": "Springing Maturity",
+          "r18_concept_ids": [
+            "facility_structure.maturity.springing_maturity"
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template, Row 3 (springing maturities)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Borrower's right to request revolver maturity extension, typically requiring individual lender consent. DLS Preferred (Row 17): Amend and Extend provisions describe extension mechanics requiring 'consent of only extending lenders of such class.'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.maturity.extension_option",
+          "level": 3,
+          "name": "Extension Option",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 17 (Amend and Extend)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Final maturity date for the revolving facility. DLS Preferred: 'Maturity: [___] years.' Review Template standard: 5-6 years. Convention requires revolver maturity inside the term loan maturity to avoid effective subordination through payment timing.",
+      "dls_ref": [
+        "DLS:6:Revolver",
+        "DLS:17:Amend and Extend",
+        "DLS:19:Revolver"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": true,
+        "playbook_ref": "facility_structure.maturity",
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.01"
+        ],
+        "shape_ref": "facility_structure.maturity",
+        "aligned_difficulty": "hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=hard (playbook authority for extraction complexity)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.632745+00:00",
+          "term_packs": {
+            "TS_REVOLVER_TENOR": {
+              "label": "Term Sheet - Revolver Tenor",
+              "category": "TERM_SHEET",
+              "exactPhrases": [
+                "Revolver: [•]-year",
+                "[•]-year Revolving Credit Facility",
+                "fifth anniversary of the Closing Date",
+                "sixth anniversary of the Closing Date",
+                "Revolving Credit Maturity Date",
+                "springing maturity",
+                "91 days prior to"
+              ],
+              "sectionHeaders": [
+                "Maturity Date",
+                "Revolving Credit Maturity",
+                "Term",
+                "ARTICLE II - COMMITMENTS"
+              ],
+              "semanticVariants": [
+                "revolver maturity date and term",
+                "revolving facility tenor length",
+                "RCF maturity provisions",
+                "revolver term to maturity"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Revolver: [•]-year",
+              "[•]-year Revolving Credit Facility",
+              "fifth anniversary of the Closing Date",
+              "sixth anniversary of the Closing Date",
+              "Revolving Credit Maturity Date",
+              "springing maturity",
+              "91 days prior to"
+            ],
+            "sectionHeaders": [
+              "Maturity Date",
+              "Revolving Credit Maturity",
+              "Term",
+              "ARTICLE II - COMMITMENTS"
+            ],
+            "semanticVariants": [
+              "revolver maturity date and term",
+              "revolving facility tenor length",
+              "RCF maturity provisions",
+              "revolver term to maturity"
+            ]
+          }
+        }
+      },
+      "family_id": "deal_econ.revolver",
+      "id": "deal_econ.revolver.maturity",
+      "level": 2,
+      "market_benchmarks": {
+        "inside_offset": "1 year before TL",
+        "market_standard_value": "6 years (43.2%)"
+      },
+      "name": "Revolver Maturity",
+      "r18_concept_ids": [
+        "facility_structure.maturity.inside_maturity"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 3,
+          "term": "Debt Quantum"
+        },
+        {
+          "coverage": "full",
+          "row": 29,
+          "term": "Incremental – RCF sub-limit"
+        },
+        {
+          "coverage": "full",
+          "row": 33,
+          "term": "Incremental – inside maturity basket"
+        },
+        {
+          "coverage": "full",
+          "row": 37,
+          "term": "Refinancing Facilities – Inside Maturity"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 6 (Revolver); Review Template, Row 3 (Debt Quantum: '5-6 years')",
+      "neutron_field_refs": [
+        {
+          "term_type": "TS_REVOLVER_TENOR",
+          "label": "Term Sheet - Revolver Tenor",
+          "schema_file": "term-sheet-facilities-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.5237,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Revolver margin matches term loan margin. Simplifies administration but may underprice revolving risk.",
+          "dls_ref": [
+            "DLS:8:Term Loan"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.applicable_margin.same_as_tl",
+          "level": 3,
+          "name": "Same as Term Loan",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 8 (Term Loan)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Number of pricing tiers and leverage thresholds for the revolver grid, typically matching TL grid structure.",
+              "dls_ref": [
+                "DLS:25:Pricing Flex"
+              ],
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "hard",
+              "family_id": "deal_econ.revolver",
+              "id": "deal_econ.revolver.applicable_margin.leverage_grid.levels",
+              "kct_ref": [
+                "cat1.3"
+              ],
+              "level": 4,
+              "name": "Grid Pricing Levels",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 137,
+                  "term": "Equity Co-Invest"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 25 (Pricing Flex); KCT Cat 1 Item 3; Review Template Row 137 (Equity Co-Invest)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Basis point reduction per revolver grid level, typically 25 bps matching TL grid steps.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.revolver",
+              "id": "deal_econ.revolver.applicable_margin.leverage_grid.step_size",
+              "level": 4,
+              "name": "Step-Down Size",
+              "type": "sub_component"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Revolver margin that steps down based on leverage performance. Typically wider range than TL grid (50-100 bps total range).",
+          "dls_ref": [
+            "DLS:13:Leverage Ratios"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.applicable_margin.leverage_grid",
+          "level": 3,
+          "name": "Leverage-Based Grid",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 13 (Leverage Ratios)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "whether the springing covenant trigger is a fixed dollar amount or reduces proportionally as the RCF commitment decreases; a fixed threshold that does not shrink with the facility becomes progressively easier to avoid",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.applicable_margin.fixed_vs_proportional_threshold",
+          "kct_ref": [
+            "cat1.3"
+          ],
+          "level": 3,
+          "name": "Fixed vs proportional threshold",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "provision that excludes revolver drawings used to fund capital expenditure investments from the calculation of whether the springing covenant threshold has been breached, reducing the occasions on which the financial covenant is tested",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.applicable_margin.capex_drawing_exclusion",
+          "kct_ref": [
+            "cat1.3"
+          ],
+          "level": 3,
+          "name": "Capex drawing exclusion",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "ability of the borrower to repay the RCF below the springing threshold level after the end of the testing period, thereby avoiding the financial covenant test and curing a default that would otherwise have resulted",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.applicable_margin.post_period_repayment_avoidance",
+          "kct_ref": [
+            "cat1.3"
+          ],
+          "level": 3,
+          "name": "Post-period repayment avoidance",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Interest rate margin on drawn revolver. Average base margin: 578 bps.",
+      "dls_ref": [
+        "DLS:6:Revolver",
+        "DLS:19:Revolver",
+        "DLS:21:Term Loan Margin"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.06",
+          "Section 2.13"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Revolving Facility)"
+      },
+      "family_id": "deal_econ.revolver",
+      "id": "deal_econ.revolver.applicable_margin",
+      "kct_ref": [
+        "cat1.3"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "abl_availability_minimum": "[TO_BE_POPULATED]",
+        "abl_consecutive_days": "[TO_BE_POPULATED]",
+        "aggressive_threshold": "[TO_BE_POPULATED]",
+        "average_base": "578 bps",
+        "grid_pct": "59.5%",
+        "median_base": "575 bps",
+        "same_as_tl": "35.1%",
+        "standard_trigger_threshold": "[TO_BE_POPULATED]"
+      },
+      "name": "Revolver Applicable Margin",
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 3,
+          "term": "Debt Quantum"
+        },
+        {
+          "coverage": "full",
+          "row": 4,
+          "term": "Commitment and giveaway"
+        },
+        {
+          "coverage": "full",
+          "row": 12,
+          "term": "Minimum equity contribution"
+        },
+        {
+          "coverage": "full",
+          "row": 15,
+          "term": "Revolver closing date draws"
+        },
+        {
+          "coverage": "full",
+          "row": 16,
+          "term": "Revolver – borrowing notices"
+        },
+        {
+          "coverage": "full",
+          "row": 17,
+          "term": "Revolver – additional borrowers"
+        },
+        {
+          "coverage": "full",
+          "row": 18,
+          "term": "Revolver currencies"
+        },
+        {
+          "coverage": "full",
+          "row": 20,
+          "term": "LCs"
+        },
+        {
+          "coverage": "full",
+          "row": 21,
+          "term": "[DDTL – availability period]"
+        },
+        {
+          "coverage": "full",
+          "row": 23,
+          "term": "[DDTL – use of proceeds]"
+        },
+        {
+          "coverage": "full",
+          "row": 27,
+          "term": "Incremental DDTLs"
+        },
+        {
+          "coverage": "full",
+          "row": 29,
+          "term": "Incremental – RCF sub-limit"
+        },
+        {
+          "coverage": "full",
+          "row": 31,
+          "term": "Incremental – netting"
+        },
+        {
+          "coverage": "full",
+          "row": 34,
+          "term": "Incremental – MFN"
+        },
+        {
+          "coverage": "full",
+          "row": 62,
+          "term": "Leverage Ratio Calculations"
+        },
+        {
+          "coverage": "full",
+          "row": 128,
+          "term": "Limited Conditionality Transactions"
+        },
+        {
+          "coverage": "full",
+          "row": 137,
+          "term": "Equity Co-Invest"
+        },
+        {
+          "coverage": "full",
+          "row": 138,
+          "term": "Pricing"
+        },
+        {
+          "coverage": "full",
+          "row": 140,
+          "term": "RCF Commitment Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 141,
+          "term": "DDTL Commitment Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 142,
+          "term": "LC Fronting Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 149,
+          "term": "Waiver"
+        },
+        {
+          "coverage": "full",
+          "row": 151,
+          "term": "Acquisition Agreement"
+        },
+        {
+          "coverage": "full",
+          "row": 158,
+          "term": "Commitment/Underwriting Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 159,
+          "term": "Structuring Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 160,
+          "term": "Ticking Fee (Term/Revolver)"
+        },
+        {
+          "coverage": "full",
+          "row": 161,
+          "term": "Delayed Draw Ticking Fee"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 6 (Revolver); DLS Preferred Row 19 (Revolver); DLS Preferred Row 21 (Term Loan Margin); KCT Cat 1 Item 3; Review Template Row 3 (Debt Quantum); Review Template Row 4 (Commitment and giveaway); Review Template Row 12 (Minimum equity contribution); Review Template Row 15 (Revolver closing date draws); Review Template Row 16 (Revolver – borrowing notices); Review Template Row 17 (Revolver – additional borrowers); Review Template Row 18 (Revolver currencies); Review Template Row 20 (LCs); Review Template Row 21 ([DDTL – availability period]); Review Template Row 23 ([DDTL – use of proceeds]); Review Template Row 27 (Incremental DDTLs); Review Template Row 29 (Incremental – RCF sub-limit); Review Template Row 31 (Incremental – netting); Review Template Row 34 (Incremental – MFN); Review Template Row 62 (Leverage Ratio Calculations); Review Template Row 128 (Limited Conditionality Transactions); Review Template Row 137 (Equity Co-Invest); Review Template Row 138 (Pricing); Review Template Row 140 (RCF Commitment Fee); Review Template Row 141 (DDTL Commitment Fee); Review Template Row 142 (LC Fronting Fee); Review Template Row 149 (Waiver); Review Template Row 151 (Acquisition Agreement); Review Template Row 158 (Commitment/Underwriting Fee); Review Template Row 159 (Structuring Fee); Review Template Row 160 (Ticking Fee (Term/Revolver)); Review Template Row 161 (Delayed Draw Ticking Fee)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Revolver floor matches term loan SOFR floor, maintaining rate parity across facilities.",
+          "dls_ref": [
+            "DLS:30:Term Loan"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.floor.same_as_tl",
+          "level": 3,
+          "name": "Same as Term Loan",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 30 (Term Loan)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Explicit SOFR floor for revolver, most commonly 1.00%.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.floor.specified_level",
+          "level": 3,
+          "name": "Specified Floor Level",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 139 (Floor)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Minimum base rate for revolver. 1.00% most common specific level. May differ from TL floor.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.06",
+          "Section 2.13"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Revolving Facility)"
+      },
+      "family_id": "deal_econ.revolver",
+      "id": "deal_econ.revolver.floor",
+      "level": 2,
+      "market_benchmarks": {
+        "most_common_value": "1.00%"
+      },
+      "name": "Revolver SOFR Floor",
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 139,
+          "term": "Floor"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "Review Template Row 139 (Floor)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Revolver CSA matches term loan CSA, typically 10 bps flat.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.csa.same_as_tl",
+          "level": 3,
+          "name": "Same as Term Loan",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 8 (Term Loan); DLS Preferred Row 21 (Term Loan Margin); DLS Preferred Row 30 (a. Term Loan); Review Template Row 14 (Term Sheet); Review Template Row 127 (Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing); Review Template Row 160 (Ticking Fee (Term/Revolver))"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Explicit CSA for revolver, typically 10 bps flat or tenor-differentiated.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.csa.specified_level",
+          "level": 3,
+          "name": "Specified CSA Level",
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "SOFR credit spread adjustment for revolver. Standard: same as initial TL or 10 bps.",
+      "dls_ref": [
+        "DLS:7:Letters of Credit"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.06",
+          "Section 2.13"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Revolving Facility)"
+      },
+      "family_id": "deal_econ.revolver",
+      "id": "deal_econ.revolver.csa",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "90%+ (post-2023 transition)",
+        "standard": "SOFR + 10-26 bps credit spread adjustment",
+        "trend": "Declining prevalence as SOFR becomes direct benchmark"
+      },
+      "name": "Revolver Credit Spread Adjustment",
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 7 (Letters of Credit)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Advance notice for revolver draws. DLS Preferred (Row 6): LIBOR/SOFR Loans '3 business day prior'; Base Rate Loans '1 business day prior.' Review Template (Row 16): confirm operational notice periods.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.borrowing_mechanics.notice_period",
+          "level": 3,
+          "market_benchmarks": {
+            "market_standard_value": "3 BD SOFR / 1 BD BR (45.9%)"
+          },
+          "name": "Notice Period",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (notice periods); Review Template, Row 16"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Minimum per-draw amount for revolver. DLS Preferred (Row 6): 'Minimum Borrowings: $[___]/$[___].'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.borrowing_mechanics.minimum_draw",
+          "level": 3,
+          "market_benchmarks": {
+            "most_common_value": "$100k (32.4%)",
+            "second_value": "$500k (29.7%)"
+          },
+          "name": "Minimum Draw Amount",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (Minimum Borrowings)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether revolver permits same-day borrowing at Base Rate without advance notice. DLS Preferred (Row 6): same-day borrowings 'will be issued under a swingline facility.' Review Template (Row 19): 'some agents prefer same-day base rate advances in lieu of formal swingline.'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.borrowing_mechanics.same_day_base_rate",
+          "level": 3,
+          "market_benchmarks": {
+            "not_allowed_pct": "71.1%"
+          },
+          "name": "Same-Day Base Rate Borrowing",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 19,
+              "term": "Swingline"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (same-day base rate via swingline); Review Template, Row 19"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether revolver can be drawn at closing. DLS Preferred (Row 6 alternative): 'Availability at closing not to exceed $[___] which will be used to (1) pay the acquisition costs and (2) finance ordinary course working capital needs.' Review Template (Row 15): closing-date draws for 'OID/upfront fees, working capital, and backstop/cash collateralize LCs.'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.borrowing_mechanics.closing_date_draws",
+          "level": 3,
+          "name": "Closing Date Draws",
+          "r18_concept_ids": [
+            "facility_structure.revolver.closing_draws"
+          ],
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 15,
+              "term": "Revolver closing date draws"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (closing date availability); Review Template, Row 15 (closing date draws)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Mechanism allowing designated subsidiaries to borrow directly under the revolving facility. Review Template (Row 17): 'additional borrowers often require KYC and jurisdictional constraints. Align borrower-addition flexibility with agent requirements and tax structuring needs.'",
+          "dls_ref": [
+            "DLS:62:Right to Appoint Additional Agents"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.borrowing_mechanics.additional_borrowers",
+          "level": 3,
+          "name": "Additional Borrowers",
+          "r18_concept_ids": [
+            "facility_structure.revolver.additional_borrowers"
+          ],
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 17,
+              "term": "Revolver – additional borrowers"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template, Row 17 (additional borrowers — KYC and jurisdictional constraints)",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:41.598119+00:00",
+              "term_packs": {
+                "TS_REVOLVER_ADDITIONAL_BORROWER": {
+                  "label": "Term Sheet - Revolver Additional Borrowers",
+                  "category": "TERM_SHEET",
+                  "exactPhrases": [
+                    "Not subject to KYC requirements",
+                    "additional borrowers",
+                    "designate as borrower",
+                    "become a borrower",
+                    "Additional Borrower",
+                    "Co-Borrower"
+                  ],
+                  "sectionHeaders": [
+                    "Additional Borrowers",
+                    "Co-Borrowers",
+                    "Borrower Addition",
+                    "Designated Borrowers"
+                  ],
+                  "semanticVariants": [
+                    "adding borrowers to facility",
+                    "borrower designation mechanics",
+                    "additional obligor provisions",
+                    "subsidiary as borrower"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.58,
+                    "minKeywordScore": 0.48,
+                    "minConfidence": 0.65,
+                    "escalationThreshold": 0.48,
+                    "humanEscalationThreshold": 0.28
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "Not subject to KYC requirements",
+                  "additional borrowers",
+                  "designate as borrower",
+                  "become a borrower",
+                  "Additional Borrower",
+                  "Co-Borrower"
+                ],
+                "sectionHeaders": [
+                  "Additional Borrowers",
+                  "Co-Borrowers",
+                  "Borrower Addition",
+                  "Designated Borrowers"
+                ],
+                "semanticVariants": [
+                  "adding borrowers to facility",
+                  "borrower designation mechanics",
+                  "additional obligor provisions",
+                  "subsidiary as borrower"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "TS_REVOLVER_ADDITIONAL_BORROWER",
+              "label": "Term Sheet - Revolver Additional Borrowers",
+              "schema_file": "term-sheet-facilities-enhanced.schema.ts",
+              "field_count": 4,
+              "r1_domain": "deal_econ",
+              "mapping_confidence": 0.6592,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Procedural requirements for revolver borrowings. DLS Preferred (Row 6): LIBOR/SOFR Loans 3 BD notice, Base Rate Loans 1 BD notice, Swingline same-day, Minimum Borrowings $[___], no more than [5] series outstanding, conversion/continuation mechanics. Review Template (Row 16): 'Confirm operational notice periods.'",
+      "dls_ref": [
+        "DLS:6:Revolver",
+        "DLS:19:Revolver"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.02",
+          "Section 2.03"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Revolving Facility)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.613198+00:00",
+          "term_packs": {
+            "TS_REVOLVER_BORROWING_NOTICE": {
+              "label": "Term Sheet - Revolver Borrowing Notice",
+              "category": "TERM_SHEET",
+              "exactPhrases": [
+                "sufficient notice for revolving borrowings",
+                "borrowing notice",
+                "Notice of Borrowing",
+                "Borrowing Request",
+                "[•] Business Days prior notice",
+                "not later than [time] on the [•] Business Day prior",
+                "irrevocable notice"
+              ],
+              "sectionHeaders": [
+                "Notice of Borrowing",
+                "Borrowing Requests",
+                "Notice Requirements",
+                "Conditions to Borrowing"
+              ],
+              "semanticVariants": [
+                "notice period for revolving borrowings",
+                "advance notice requirements",
+                "borrowing request timing",
+                "days notice for draws",
+                "business days prior notification"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "sufficient notice for revolving borrowings",
+              "borrowing notice",
+              "Notice of Borrowing",
+              "Borrowing Request",
+              "[•] Business Days prior notice",
+              "not later than [time] on the [•] Business Day prior",
+              "irrevocable notice"
+            ],
+            "sectionHeaders": [
+              "Notice of Borrowing",
+              "Borrowing Requests",
+              "Notice Requirements",
+              "Conditions to Borrowing"
+            ],
+            "semanticVariants": [
+              "notice period for revolving borrowings",
+              "advance notice requirements",
+              "borrowing request timing",
+              "days notice for draws",
+              "business days prior notification"
+            ]
+          }
+        }
+      },
+      "family_id": "deal_econ.revolver",
+      "id": "deal_econ.revolver.borrowing_mechanics",
+      "level": 2,
+      "market_benchmarks": {
+        "minimum_borrowing": "$1M increments, $0.5M for swingline",
+        "prevalence": "99%+ (standard provision)",
+        "standard_notice": "3 business days (SOFR), same-day (swingline)"
+      },
+      "name": "Revolver Borrowing Mechanics",
+      "r18_concept_ids": [
+        "facility_structure.revolver.borrowing_notices"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 16,
+          "term": "Revolver – borrowing notices"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 6 (Revolver borrowing mechanics); Review Template, Row 16",
+      "neutron_field_refs": [
+        {
+          "term_type": "TS_REVOLVER_BORROWING_NOTICE",
+          "label": "Term Sheet - Revolver Borrowing Notice",
+          "schema_file": "term-sheet-facilities-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.5259,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Single unused commitment fee rate throughout the loan term. Typical: 50 bps in PC, 25-37.5 bps in BSL.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.commitment_fee.flat_rate",
+          "level": 3,
+          "market_benchmarks": {
+            "bsl_typical": "25-37.5 bps",
+            "pc_typical": "50 bps"
+          },
+          "name": "Flat Fee Rate",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 127 (Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing); Review Template Row 140 (RCF Commitment Fee); Review Template Row 141 (DDTL Commitment Fee); Review Template Row 158 (Commitment/Underwriting Fee); Review Template Row 160 (Ticking Fee (Term/Revolver))"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Commitment fee that varies with leverage ratio performance, typically 2-3 pricing levels with 12.5 bps steps.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.commitment_fee.leverage_grid",
+          "level": 3,
+          "name": "Leverage-Based Fee Grid",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 140,
+              "term": "RCF Commitment Fee"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 140 (RCF Commitment Fee)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Fee accrues daily on undrawn amount (excluding LC exposure) and is payable quarterly in arrears and on revolving facility maturity date.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.commitment_fee.accrual_basis",
+          "level": 3,
+          "name": "Accrual & Payment Mechanics",
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Annual fee on undrawn revolving commitments, compensating lenders for maintaining available credit. Expressed as basis points per annum on daily unused commitment. Neutron extraction context (PRICING_RCF_COMMITMENT_FEE): Fee paid on undrawn revolver commitments, typically expressed as a percentage with potential leverage-based step-downs. Compensates lenders for availability. Revolver commitment fees compensate for undrawn availability; step-downs at lower leverage are common.",
+      "dls_ref": [
+        "DLS:5:Commitment Percentage",
+        "DLS:20:Unused Line Fee",
+        "DLS:31:Revolving Facility underwriting fee",
+        "DLS:32:Ticking fee",
+        "DLS:33:Alternate transaction fee",
+        "DLS:35:Administration fee"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.09",
+          "Section 2.12"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Revolving Facility)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.172651+00:00",
+          "term_packs": {
+            "PRICING_RCF_COMMITMENT_FEE": {
+              "label": "Revolver Commitment Fee",
+              "category": "PRICING",
+              "exactPhrases": [
+                "[•] bps with [•] stepdown(s) at [•]x [FLNLR]",
+                "commitment fee of [•]%",
+                "[•]% of unused commitments",
+                "unused line fee",
+                "availability fee"
+              ],
+              "sectionHeaders": [
+                "RCF Commitment Fee",
+                "Commitment Fee",
+                "Unused Fee",
+                "Revolver Fee",
+                "Fees"
+              ],
+              "semanticVariants": [
+                "revolver commitment fee on undrawn",
+                "unused commitment fee",
+                "availability fee for revolving facility",
+                "standby fee on uncommitted revolver"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.65,
+                "minKeywordScore": 0.55,
+                "minConfidence": 0.8,
+                "escalationThreshold": 0.55,
+                "humanEscalationThreshold": 0.35
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 40000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "[•] bps with [•] stepdown(s) at [•]x [FLNLR]",
+              "commitment fee of [•]%",
+              "[•]% of unused commitments",
+              "unused line fee",
+              "availability fee"
+            ],
+            "sectionHeaders": [
+              "RCF Commitment Fee",
+              "Commitment Fee",
+              "Unused Fee",
+              "Revolver Fee",
+              "Fees"
+            ],
+            "semanticVariants": [
+              "revolver commitment fee on undrawn",
+              "unused commitment fee",
+              "availability fee for revolving facility",
+              "standby fee on uncommitted revolver"
+            ]
+          }
+        },
+        "neutron_definition_enrichment": {
+          "source": "Neutron schema term_type_index description/backgroundExplanation",
+          "imported_at": "2026-02-17T22:46:48.401716+00:00",
+          "entries": {
+            "PRICING_RCF_COMMITMENT_FEE": {
+              "term_type": "PRICING_RCF_COMMITMENT_FEE",
+              "schema_file": "pricing-enhanced.schema.ts",
+              "label": "Revolver Commitment Fee",
+              "mapping_mode": "domain_scored",
+              "mapping_confidence": 0.6812,
+              "label_similarity": 1.0,
+              "description": "Fee paid on undrawn revolver commitments, typically expressed as a percentage with potential leverage-based step-downs. Compensates lenders for availability.",
+              "backgroundExplanation": "Revolver commitment fees compensate for undrawn availability; step-downs at lower leverage are common. The sources suggest treating super-senior revolver cap increases as sacred rights and aligning fee adjustments across incremental revolver capacity to keep syndicate expectations stable. Commitment fees are typically 30-50% of the applicable margin and are paid quarterly in arrears.",
+              "summary_used": "Fee paid on undrawn revolver commitments, typically expressed as a percentage with potential leverage-based step-downs. Compensates lenders for availability. Revolver commitment fees compensate for undrawn availability; step-downs at lower leverage are common.",
+              "ported_at": "2026-02-17T22:46:48.401716+00:00"
+            }
+          }
+        }
+      },
+      "family_id": "deal_econ.revolver",
+      "id": "deal_econ.revolver.commitment_fee",
+      "level": 2,
+      "market_benchmarks": {
+        "bsl_range": "25-50 bps",
+        "pc_range": "37.5-50 bps"
+      },
+      "name": "Revolver Commitment Fee",
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 2,
+          "term": "Commitment Letter / Transaction Description"
+        },
+        {
+          "coverage": "full",
+          "row": 8,
+          "term": "Expense Reimbursement"
+        },
+        {
+          "coverage": "full",
+          "row": 9,
+          "term": "Countersign date"
+        },
+        {
+          "coverage": "full",
+          "row": 12,
+          "term": "Minimum equity contribution"
+        },
+        {
+          "coverage": "full",
+          "row": 15,
+          "term": "Revolver closing date draws"
+        },
+        {
+          "coverage": "full",
+          "row": 18,
+          "term": "Revolver currencies"
+        },
+        {
+          "coverage": "full",
+          "row": 21,
+          "term": "[DDTL – availability period]"
+        },
+        {
+          "coverage": "full",
+          "row": 140,
+          "term": "RCF Commitment Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 141,
+          "term": "DDTL Commitment Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 142,
+          "term": "LC Fronting Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 157,
+          "term": "Fee Letter"
+        },
+        {
+          "coverage": "full",
+          "row": 160,
+          "term": "Ticking Fee (Term/Revolver)"
+        },
+        {
+          "coverage": "full",
+          "row": 162,
+          "term": "Agency Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 163,
+          "term": "Alternate Transaction Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 164,
+          "term": "Sponsor Participation"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 5 (Commitment Percentage); DLS Preferred Row 20 (Unused Line Fee); DLS Preferred Row 31 (Revolving Facility underwriting fee); DLS Preferred Row 32 (Ticking fee); DLS Preferred Row 33 (Alternate transaction fee); DLS Preferred Row 35 (Administration fee); Review Template Row 2 (Commitment Letter / Transaction Description); Review Template Row 8 (Expense Reimbursement); Review Template Row 9 (Countersign date); Review Template Row 12 (Minimum equity contribution); Review Template Row 15 (Revolver closing date draws); Review Template Row 18 (Revolver currencies); Review Template Row 21 ([DDTL – availability period]); Review Template Row 140 (RCF Commitment Fee); Review Template Row 141 (DDTL Commitment Fee); Review Template Row 142 (LC Fronting Fee); Review Template Row 157 (Fee Letter); Review Template Row 160 (Ticking Fee (Term/Revolver)); Review Template Row 162 (Agency Fee); Review Template Row 163 (Alternate Transaction Fee); Review Template Row 164 (Sponsor Participation)",
+      "neutron_field_refs": [
+        {
+          "term_type": "PRICING_RCF_COMMITMENT_FEE",
+          "label": "Revolver Commitment Fee",
+          "schema_file": "pricing-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.6812,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Maximum aggregate swingline borrowings outstanding at any time, expressed as a dollar sublimit within the revolving commitment. DLS Preferred (Row 6): 'Swingline Facility: (i) sublimit not to exceed $[___].' The sublimit reduces available revolving capacity dollar-for-dollar.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.swingline.sublimit",
+          "level": 3,
+          "market_benchmarks": {
+            "typical_ratio": "10-25% of revolver"
+          },
+          "name": "Swingline Sublimit",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (Swingline Facility sublimit specification)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "The designated lender that makes swingline advances, bearing initial funding risk before settlement with the revolving lender group. DLS Preferred (Row 6): 'Swingline Lender to provide swingline loans to Borrower prior to [___] p.m. on the date of the requested borrowing.' Typically the administrative agent or an affiliate.",
+          "dls_ref": [
+            "DLS:60:Lender Selection"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.swingline.lender",
+          "level": 3,
+          "name": "Swingline Lender",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (Swingline Lender designation and funding obligation)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Same-day funding mechanics for swingline loans, bypassing standard SOFR notice periods. DLS Preferred (Row 6): 'available to Borrower upon written notice to the Administrative Agent prior to [___] a.m./p.m. on the date of the requested borrowing' and 'Base Rate Loans only.' Swingline provides intraday liquidity without the 3-business-day SOFR notice requirement.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.swingline.overnight_mechanics",
+          "level": 3,
+          "name": "Overnight Borrowing Mechanics",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (same-day swingline: notice timing, Base Rate only)",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:41.651763+00:00",
+              "term_packs": {
+                "TS_SWINGLINE": {
+                  "label": "Term Sheet - Swingline",
+                  "category": "TERM_SHEET",
+                  "exactPhrases": [
+                    "$[•]mm",
+                    "provide swingline or same-day ABR borrowings",
+                    "Swingline Sublimit",
+                    "Swingline Loan",
+                    "same-day notice"
+                  ],
+                  "sectionHeaders": [
+                    "Swingline",
+                    "Swingline Loans",
+                    "Swingline Sublimit",
+                    "Swingline Facility"
+                  ],
+                  "semanticVariants": [
+                    "swingline sublimit amount",
+                    "same-day borrowing facility",
+                    "intraday liquidity sublimit"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.58,
+                    "minKeywordScore": 0.48,
+                    "minConfidence": 0.65,
+                    "escalationThreshold": 0.48,
+                    "humanEscalationThreshold": 0.28
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "$[•]mm",
+                  "provide swingline or same-day ABR borrowings",
+                  "Swingline Sublimit",
+                  "Swingline Loan",
+                  "same-day notice"
+                ],
+                "sectionHeaders": [
+                  "Swingline",
+                  "Swingline Loans",
+                  "Swingline Sublimit",
+                  "Swingline Facility"
+                ],
+                "semanticVariants": [
+                  "swingline sublimit amount",
+                  "same-day borrowing facility",
+                  "intraday liquidity sublimit"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "TS_SWINGLINE",
+              "label": "Term Sheet - Swingline",
+              "schema_file": "term-sheet-facilities-enhanced.schema.ts",
+              "field_count": 3,
+              "r1_domain": "deal_econ",
+              "mapping_confidence": 0.4537,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Process by which swingline advances are settled among revolving lenders, converting swingline exposure to pro rata revolving loans. DLS Preferred (Row 6): 'Swingline Lender will notify other revolving lenders of their pro rata portion of swingline loans and such lenders shall reimburse swingline lender within 1 business day of such notice.' Settlement shifts the funding risk from the swingline lender to the revolving group.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.swingline.settlement",
+          "level": 3,
+          "name": "Settlement / Refunding Mechanics",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (swingline settlement: pro rata notification, 1 BD reimbursement)"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Short-term same-day borrowing sub-facility within the revolving credit facility, enabling rapid access to working capital without standard notice periods. DLS Preferred specifies: '(i) sublimit not to exceed $[___], (ii) available upon written notice prior to [___] a.m./p.m., (iii) Base Rate Loans only, (iv) swingline lender notifies other revolving lenders of pro rata portions within 1 business day.' Review Template: some agents prefer same-day base rate advances in lieu of formal swingline.",
+      "dls_ref": [
+        "DLS:28:Successful Syndication"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.04",
+          "Section 2.22"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Revolving Facility)"
+      },
+      "family_id": "deal_econ.revolver",
+      "id": "deal_econ.revolver.swingline",
+      "level": 2,
+      "market_benchmarks": {
+        "sublimit_ratio": "10-25% of revolver commitment"
+      },
+      "name": "Swingline Sub-Facility",
+      "r18_concept_ids": [
+        "facility_structure.swingline"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 17,
+          "term": "Revolver – additional borrowers"
+        },
+        {
+          "coverage": "full",
+          "row": 18,
+          "term": "Revolver currencies"
+        },
+        {
+          "coverage": "full",
+          "row": 19,
+          "term": "Swingline"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 6 (Swingline Facility within Revolver section); Review Template, Row 19 (Swingline)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Maximum aggregate face amount of outstanding letters of credit, expressed as a dollar sublimit within the revolving commitment. DLS Preferred (Row 7): '$[___] (Letter of Credit Sublimit).' The aggregate face amount of issued LCs reduces revolving availability dollar-for-dollar. DealData (N=62, quantitative only): sublimit range $1M-$20M, average $5.3M.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.lc_subfacility.sublimit",
+          "level": 3,
+          "name": "LC Sublimit",
+          "r18_concept_ids": [
+            "facility_structure.letter_of_credit_subfacility.sublimit"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 7 (LC Sublimit definition)",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:41.589696+00:00",
+              "term_packs": {
+                "TS_LC_SUBLIMIT": {
+                  "label": "Term Sheet - LC Sublimit",
+                  "category": "TERM_SHEET",
+                  "exactPhrases": [
+                    "$[•] sublimit",
+                    "No requirement to share pro rata",
+                    "Available in [specify any non-USD currencies]",
+                    "standby [or trade] LCs",
+                    "Letter of Credit Sublimit"
+                  ],
+                  "sectionHeaders": [
+                    "Letter of Credit Sublimit",
+                    "LC Sublimit",
+                    "Letters of Credit",
+                    "LC Facility"
+                  ],
+                  "semanticVariants": [
+                    "LC sublimit amount",
+                    "letter of credit capacity",
+                    "LC availability within revolver"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.58,
+                    "minKeywordScore": 0.48,
+                    "minConfidence": 0.65,
+                    "escalationThreshold": 0.48,
+                    "humanEscalationThreshold": 0.28
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "$[•] sublimit",
+                  "No requirement to share pro rata",
+                  "Available in [specify any non-USD currencies]",
+                  "standby [or trade] LCs",
+                  "Letter of Credit Sublimit"
+                ],
+                "sectionHeaders": [
+                  "Letter of Credit Sublimit",
+                  "LC Sublimit",
+                  "Letters of Credit",
+                  "LC Facility"
+                ],
+                "semanticVariants": [
+                  "LC sublimit amount",
+                  "letter of credit capacity",
+                  "LC availability within revolver"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "TS_LC_SUBLIMIT",
+              "label": "Term Sheet - LC Sublimit",
+              "schema_file": "term-sheet-facilities-enhanced.schema.ts",
+              "field_count": 4,
+              "r1_domain": "deal_econ",
+              "mapping_confidence": 0.4817,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Designated bank(s) that issue letters of credit under the facility. DLS Preferred (Row 7): 'the aggregate face amount of outstanding letters of credit issued by any Letter of Credit Issuer at any time shall not exceed the Letter of Credit Sublimit.' PC Term Comparison: 'Confirm who LC issuer will be. Clients often contract it out to third parties so LC Issuer definition may need to reflect that.'",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.lc_subfacility.issuer",
+          "level": 3,
+          "name": "LC Issuing Bank",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 7 (LC Issuer references); PC Term Comparison, LCs section",
+          "pc_ref": [
+            "LCs"
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Categories of letters of credit permitted under the facility. DLS Preferred (Row 7): 'Available for standby letters of credit or, if acceptable to the Letter of Credit Issuer, trade letters of credit.' PC Term Comparison: 'Confirm whether Clients can do commercial LCs and foreign currency LCs.' Standby LCs (performance/payment guarantees) are universally permitted; commercial/trade LCs require issuing bank agreement.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.lc_subfacility.lc_types",
+          "level": 3,
+          "name": "LC Types",
+          "r18_concept_ids": [
+            "facility_structure.letter_of_credit_subfacility.standby_commercial"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 7 (standby and trade LCs); PC Term Comparison, LCs section",
+          "pc_ref": [
+            "LCs"
+          ]
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Fee paid to all revolving lenders on outstanding LC exposure, equal to the applicable revolving margin. DLS Preferred (Row 22): 'Letter of Credit Fee: LIBOR margin applicable to revolving loans and paid to all Revolving Lenders.' Compensates each revolving lender for its pro rata share of LC exposure.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.revolver",
+              "id": "deal_econ.revolver.lc_subfacility.fees.participation_fee",
+              "level": 4,
+              "name": "LC Participation Fee",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 22 (LC participation fee = revolving margin)"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Fee paid to the issuing bank for bearing the fronting risk. Typically 12.5-25 bps per annum on face amount.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.revolver",
+              "id": "deal_econ.revolver.lc_subfacility.fees.fronting_fee",
+              "level": 4,
+              "name": "LC Fronting Fee",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 142,
+                  "term": "LC Fronting Fee"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "Review Template Row 142 (LC Fronting Fee)"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Fee structure for letters of credit comprising three components. DLS Preferred (Row 22): 'Fronting Fee: 12.5 bps per annum to LC Issuer' and 'Letter of Credit Fee: LIBOR margin applicable to revolving loans and paid to all Revolving Lenders.' The participation fee (equal to applicable revolving margin) compensates the revolving lender group; the fronting fee compensates the issuing bank for bearing fronting risk.",
+          "dls_ref": [
+            "DLS:34:Breakup fees"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.lc_subfacility.fees",
+          "level": 3,
+          "market_benchmarks": {
+            "fronting_fee": "12.5-25 bps",
+            "participation_fee": "equal to applicable margin"
+          },
+          "name": "LC Fee Structure",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 22 (LC Fees: fronting fee 12.5 bps, participation fee = revolving margin)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Requirement to cash collateralize outstanding LCs upon certain events including revolver maturity, acceleration, or default. DLS Preferred (Row 7): LCs 'shall expire not later than the earlier of (a) 12 months after its date of issuance... and (b) the fifth business day prior to the final maturity of the Revolving Facility.' Cash collateralization at 103-105% of face amount ensures LC obligations are covered when the revolving facility terminates.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.lc_subfacility.cash_collateral",
+          "level": 3,
+          "market_benchmarks": {
+            "standard_coverage": "103-105% of face amount"
+          },
+          "name": "LC Cash Collateralization",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 7 (LC expiry and maturity provisions); Review Template (LC cash collateral mechanics)"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Letter of credit issuance capability as a sub-limit of the revolving facility. DLS Preferred: '$[___] (Letter of Credit Sublimit); available for standby letters of credit or, if acceptable to the Letter of Credit Issuer, trade letters of credit. Each LC expires not later than the earlier of 12 months and 5 business days prior to final revolver maturity. Face amount reduces revolver availability dollar-for-dollar.' Geneva expert extraction: LC Sublimit $100M.",
+      "dls_ref": [
+        "DLS:7:Letters of Credit"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.05",
+          "Section 2.21"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Revolving Facility)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.542283+00:00",
+          "term_packs": {
+            "TS_BRIDGE": {
+              "label": "Term Sheet - Bridge Facility",
+              "category": "TERM_SHEET",
+              "exactPhrases": [
+                "customary bridge facilities",
+                "escrowed amounts",
+                "Bridge Facility",
+                "Bridge Loan",
+                "exchange notes",
+                "automatic conversion",
+                "rollover"
+              ],
+              "sectionHeaders": [
+                "Bridge Facility",
+                "Bridge Loan",
+                "Bridge Financing",
+                "Interim Financing"
+              ],
+              "semanticVariants": [
+                "bridge commitment",
+                "temporary financing",
+                "takeout financing",
+                "interim financing",
+                "bridge to bond"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            },
+            "TS_REVOLVER_AVAILABILITY": {
+              "label": "Term Sheet - Revolver Availability",
+              "category": "TERM_SHEET",
+              "exactPhrases": [
+                "replace, backstop or cash collateralize LCs",
+                "finance a portion of the transactions",
+                "for working capital",
+                "fund OID/upfront fees",
+                "cap of $[•]mm",
+                "Closing Date draw"
+              ],
+              "sectionHeaders": [
+                "Conditions to Closing",
+                "Use of Proceeds",
+                "Availability",
+                "Closing Date Borrowings"
+              ],
+              "semanticVariants": [
+                "closing date draw availability",
+                "initial revolver borrowing permitted uses",
+                "closing date LC backstop"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            },
+            "TS_REVOLVER_CURRENCIES": {
+              "label": "Term Sheet - Revolver Currencies",
+              "category": "TERM_SHEET",
+              "exactPhrases": [
+                "Available in [specify any non-USD currencies]",
+                "non-USD currencies",
+                "Alternative Currencies",
+                "Agreed Currencies",
+                "multicurrency",
+                "multi-currency"
+              ],
+              "sectionHeaders": [
+                "Alternative Currencies",
+                "Agreed Currencies",
+                "Currency Elections",
+                "Multicurrency Facility"
+              ],
+              "semanticVariants": [
+                "multi-currency availability",
+                "foreign currency borrowings",
+                "Euro borrowings",
+                "GBP borrowings",
+                "currency sublimit"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "customary bridge facilities",
+              "escrowed amounts",
+              "Bridge Facility",
+              "Bridge Loan",
+              "exchange notes",
+              "automatic conversion",
+              "rollover",
+              "replace, backstop or cash collateralize LCs",
+              "finance a portion of the transactions",
+              "for working capital",
+              "fund OID/upfront fees",
+              "cap of $[•]mm",
+              "Closing Date draw",
+              "Available in [specify any non-USD currencies]",
+              "non-USD currencies",
+              "Alternative Currencies",
+              "Agreed Currencies",
+              "multicurrency",
+              "multi-currency"
+            ],
+            "sectionHeaders": [
+              "Bridge Facility",
+              "Bridge Loan",
+              "Bridge Financing",
+              "Interim Financing",
+              "Conditions to Closing",
+              "Use of Proceeds",
+              "Availability",
+              "Closing Date Borrowings",
+              "Alternative Currencies",
+              "Agreed Currencies",
+              "Currency Elections",
+              "Multicurrency Facility"
+            ],
+            "semanticVariants": [
+              "bridge commitment",
+              "temporary financing",
+              "takeout financing",
+              "interim financing",
+              "bridge to bond",
+              "closing date draw availability",
+              "initial revolver borrowing permitted uses",
+              "closing date LC backstop",
+              "multi-currency availability",
+              "foreign currency borrowings",
+              "Euro borrowings",
+              "GBP borrowings",
+              "currency sublimit"
+            ]
+          }
+        }
+      },
+      "family_id": "deal_econ.revolver",
+      "id": "deal_econ.revolver.lc_subfacility",
+      "level": 2,
+      "market_benchmarks": {
+        "sublimit_ratio": "50-75% of revolver"
+      },
+      "name": "Letter of Credit Sub-Facility",
+      "r18_concept_ids": [
+        "facility_structure.letter_of_credit_subfacility"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 20,
+          "term": "LCs"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 7 (Letters of Credit)",
+      "neutron_field_refs": [
+        {
+          "term_type": "TS_BRIDGE",
+          "label": "Term Sheet - Bridge Facility",
+          "schema_file": "term-sheet-facilities-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.2536,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        },
+        {
+          "term_type": "TS_REVOLVER_AVAILABILITY",
+          "label": "Term Sheet - Revolver Availability",
+          "schema_file": "term-sheet-facilities-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.41,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        },
+        {
+          "term_type": "TS_REVOLVER_CURRENCIES",
+          "label": "Term Sheet - Revolver Currencies",
+          "schema_file": "term-sheet-facilities-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.4867,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "low",
+          "definition": "Number of consecutive days the revolver must be at zero or below the threshold during each annual period. Standard in BSL: 5 consecutive business days per year. The period must be short enough to be achievable but long enough to demonstrate genuine working capital self-sufficiency.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.clean_down.period_length",
+          "level": 3,
+          "name": "Clean-Down Period",
+          "type": "sub_component",
+          "definition_source": "Review Template (revolver mechanics); Learning Material (working capital facility conventions)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Maximum revolver outstanding permitted during the clean-down period. Zero is the strictest formulation; a small percentage of total commitment (e.g., 10-15%) is a borrower-friendly alternative that accommodates minimum operational cash needs.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.clean_down.threshold",
+          "level": 3,
+          "name": "Clean-Down Threshold",
+          "type": "sub_component",
+          "definition_source": "Review Template (revolver utilization thresholds); Learning Material"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Requirement that revolver outstanding be reduced to zero (or a specified threshold) for a consecutive period each year, demonstrating working capital self-sufficiency rather than permanent term-loan-like utilization. More common in BSL and bank-led facilities. PC Term Comparison does not address clean-down as a hot-button item, suggesting it is not standard in private credit transactions.",
+      "dls_ref": [
+        "DLS:11:Conditions to incurrence: Bring down of "
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.01",
+          "Section 2.09"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Revolving Facility)"
+      },
+      "family_id": "deal_econ.revolver",
+      "id": "deal_econ.revolver.clean_down",
+      "level": 2,
+      "market_benchmarks": {
+        "bsl_typical": "5 consecutive days per year at zero",
+        "prevalence_pc": "rare"
+      },
+      "name": "Clean-Down Requirement",
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 138,
+          "term": "Pricing"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "Review Template (revolver utilization monitoring); PC Term Comparison (absence suggests non-standard in PC)",
+      "pc_ref": [
+        "(absence suggests non-standard in PC)"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Borrower's right to permanently reduce revolving commitments without premium, typically with minimum reduction amounts and advance notice. DLS Preferred (Row 6): minimum borrowing amounts imply corresponding minimum reduction thresholds. Voluntary commitment reductions build the ECF sweep credit per DLS Row 70.",
+          "dls_ref": [
+            "DLS:69:Voluntary Prepayments"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.commitment_reductions.voluntary",
+          "level": 3,
+          "name": "Voluntary Reductions",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (minimum amounts); DLS Preferred, Row 70 (voluntary reduction credit)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Pre-agreed commitment reduction schedule reducing revolving availability over time. Uncommon in leveraged credit but present in some amortizing revolver structures. DLS Preferred does not contemplate scheduled revolver reductions, confirming this is a non-standard feature.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.commitment_reductions.scheduled",
+          "level": 3,
+          "name": "Scheduled Reductions",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 6 (no scheduled revolver reduction)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Events triggering automatic commitment reduction, such as asset sale proceeds or permanent prepayments in excess of scheduled amortization. DLS Preferred (Row 70): '100% of net cash proceeds from all non-ordinary course asset sales' applied to mandatory prepayment, which for revolver may trigger corresponding commitment reduction.",
+          "dls_ref": [
+            "DLS:70:Mandatory Prepayments"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.commitment_reductions.mandatory",
+          "level": 3,
+          "name": "Mandatory Reductions",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 70 (asset sale and mandatory prepayment triggers)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Voluntary and mandatory reductions of revolving commitments, permanently reducing available revolving credit capacity. DLS Preferred (Row 70): mandatory prepayments framework includes permanent commitment reductions. The distinction between voluntary and mandatory reductions affects the ECF sweep credit calculation.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.08",
+          "Section 2.09"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Revolving Facility)"
+      },
+      "family_id": "deal_econ.revolver",
+      "id": "deal_econ.revolver.commitment_reductions",
+      "level": 2,
+      "market_benchmarks": {
+        "mandatory": "Automatic reduction upon asset sale or equity issuance",
+        "prevalence": "95%+",
+        "standard": "Voluntary reduction in $1-5M increments, 3 business days notice"
+      },
+      "name": "Commitment Reductions",
+      "r18_concept_ids": [
+        "facility_structure.commitment_reductions"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 70 (permanent commitment reductions in ECF context)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "low",
+          "definition": "Accounts receivable meeting eligibility criteria (age, concentration, dilution limits) included in the borrowing base at a specified advance rate. Standard eligibility excludes receivables >90 days past due, receivables from concentrated obligors exceeding percentage caps, and cross-aged accounts. The receivables component typically constitutes 60-70% of total borrowing base availability.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.abl_borrowing_base.eligible_receivables",
+          "kct_ref": [
+            "cat1.3"
+          ],
+          "level": 3,
+          "name": "Eligible Receivables",
+          "r18_concept_ids": [
+            "facility_structure.abl_borrowing_base.eligible_assets"
+          ],
+          "type": "sub_component",
+          "definition_source": "Learning Material (ABL collateral valuation); Review Template (ABL monitoring provisions)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Inventory meeting eligibility criteria (type, location, appraisal) included in the borrowing base at a specified advance rate, typically lower than receivables to reflect greater liquidation risk. Excludes work-in-process, consigned goods, and inventory at non-controlled locations. Advance rates typically 50-65% of appraised orderly liquidation value.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.abl_borrowing_base.eligible_inventory",
+          "level": 3,
+          "name": "Eligible Inventory",
+          "type": "sub_component",
+          "definition_source": "Learning Material (ABL inventory valuation); Review Template (ABL appraisal requirements)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Percentage of eligible asset values available for borrowing: typically 85% for eligible receivables and 50-65% for eligible inventory (at orderly liquidation value). Advance rates are set based on periodic field examinations and appraisals. Rates may be reduced by the agent if collateral quality deteriorates.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.abl_borrowing_base.advance_rates",
+          "level": 3,
+          "market_benchmarks": {
+            "inventory_collateral": "65-75%",
+            "receivables_collateral": "85%"
+          },
+          "name": "Advance Rates",
+          "r18_concept_ids": [
+            "facility_structure.abl_borrowing_base.advance_rates"
+          ],
+          "type": "sub_component",
+          "definition_source": "Learning Material (ABL advance rate conventions); Review Template (ABL monitoring)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Discretionary or formulaic reductions to the borrowing base imposed by the administrative agent to protect against collateral valuation risk. Includes dilution reserves (for uncollectible receivables), availability reserves (for rent, taxes, or other priority claims), and specific reserves for identified risks. Agent typically has sole discretion to establish reserves.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.abl_borrowing_base.reserves",
+          "kct_ref": [
+            "cat1.3"
+          ],
+          "level": 3,
+          "name": "Reserves",
+          "r18_concept_ids": [
+            "facility_structure.abl_borrowing_base.reserves"
+          ],
+          "type": "sub_component",
+          "definition_source": "Learning Material (ABL reserve mechanics); Review Template (agent discretion provisions)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Periodic certification of the borrowing base calculation delivered by the borrower to the administrative agent. Frequency: monthly (standard), weekly (during trigger periods when availability drops below a specified threshold). DLS Preferred (Row 78) contemplates monthly financial statements for cash flow facilities; ABL certificates serve an analogous monitoring function.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.abl_borrowing_base.certificates",
+          "kct_ref": [
+            "cat1.3"
+          ],
+          "level": 3,
+          "name": "Borrowing Base Certificates",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 78 (monthly financial delivery); Learning Material (ABL certificate frequency)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Lender-conducted audits of receivables and inventory to verify borrowing base eligibility and advance rate adequacy. Frequency: 1-2x annually under normal conditions, increasing during trigger periods. DLS Preferred (Row 78): includes 'inspection rights (subject to frequency and cost reimbursement limitations)' in affirmative covenants. Cost borne by borrower.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.revolver",
+          "id": "deal_econ.revolver.abl_borrowing_base.field_exams",
+          "kct_ref": [
+            "cat1.3"
+          ],
+          "level": 3,
+          "name": "Field Exams / Appraisals",
+          "r18_concept_ids": [
+            "facility_structure.abl_borrowing_base.field_exams"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 78 (inspection rights); Learning Material (ABL field exam frequency)"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Asset-based lending mechanics where revolving availability is limited by a calculated borrowing base formula. Common in retail, distribution, and manufacturing credits where collateral value is measurable. PC Term Comparison does not address ABL as a hot-button item, indicating it is uncommon in sponsor-backed private credit. DLS Preferred contemplates cash flow-based revolvers rather than ABL structures.",
+      "dls_ref": [
+        "DLS:27:Other Flex"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.01",
+          "Section 2.17"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "numeric",
+        "section_location": "ARTICLE II (Revolving Facility)"
+      },
+      "family_id": "deal_econ.revolver",
+      "id": "deal_econ.revolver.abl_borrowing_base",
+      "kct_ref": [
+        "cat1.3"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "5-10% (ABL facilities only)",
+        "reserves": "Availability reserves, dilution reserves",
+        "standard_advance_rates": "85% eligible receivables + 65-75% eligible inventory"
+      },
+      "name": "ABL / Borrowing Base",
+      "r18_concept_ids": [
+        "facility_structure.abl_borrowing_base"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 12,
+          "term": "Minimum equity contribution"
+        },
+        {
+          "coverage": "full",
+          "row": 16,
+          "term": "Revolver – borrowing notices"
+        },
+        {
+          "coverage": "full",
+          "row": 19,
+          "term": "Swingline"
+        },
+        {
+          "coverage": "full",
+          "row": 20,
+          "term": "LCs"
+        },
+        {
+          "coverage": "full",
+          "row": 154,
+          "term": "Closing Deliverables"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 6 (cash flow revolver as standard); PC Term Comparison (ABL absent from hot-button items)",
+      "pc_ref": [
+        "(ABL absent from hot-button items)"
+      ]
+    }
+  ],
+  "corpus_prevalence": "high",
+  "definition": "Committed revolving credit facility providing working capital and general corporate purpose liquidity, available for repeated borrowing and repayment during its term. DLS Preferred specifies: commitment amount '$[___]', maturity '[___] years', with sublimits for letters of credit and swingline loans. Availability at closing may be limited to specific purposes (OID funding, working capital, LC backstop). Review Template: standard 5-6 year maturity with alignment to marketing.",
+  "dls_ref": [
+    "DLS:7:Letters of Credit",
+    "DLS:9:Accordion",
+    "DLS:22:L/C Fronting Fees / L/C Fees",
+    "DLS:36:Reimbursement of expenses"
+  ],
+  "domain_id": "deal_econ",
+  "extraction_difficulty": "medium",
+  "family_id": "deal_econ.revolver",
+  "id": "deal_econ.revolver",
+  "level": 1,
+  "market_benchmarks": "50 bps (DLS preferred); 37.5-25 bps with leverage step-downs",
+  "name": "Revolving Credit Facility",
+  "r18_concept_ids": [
+    "facility_structure.revolver",
+    "facility_structure.swingline",
+    "facility_structure.letter_of_credit_subfacility",
+    "facility_structure.commitment_reductions",
+    "facility_structure.abl_borrowing_base"
+  ],
+  "type": "family",
+  "definition_source": "DLS Preferred, Row 6 (Revolver); Review Template, Row 3 (Debt Quantum) and Row 15 (Revolver closing date draws)"
+}

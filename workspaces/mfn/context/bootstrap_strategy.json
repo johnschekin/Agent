@@ -1,0 +1,130 @@
+[
+  {
+    "id": "deal_econ.pricing.mfn_protection",
+    "name": "Most Favored Nation (MFN) Protection",
+    "family_id": "deal_econ.pricing",
+    "concept_area": "pricing",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Interest",
+        "Interest Rate",
+        "Applicable Rate",
+        "Applicable Margin"
+      ],
+      "keyword_anchors": [
+        "Applicable Rate",
+        "Applicable Margin",
+        "SOFR",
+        "Base Rate",
+        "interest rate",
+        "margin",
+        "floor"
+      ],
+      "concept_specific_keywords": [
+        "Most Favored Nation (MFN) Protection"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.mfn.trigger",
+    "name": "Trigger Threshold",
+    "family_id": "debt_capacity.incremental.mfn",
+    "concept_area": "mfn",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Trigger Threshold"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.mfn.exceptions",
+    "name": "MFN Exceptions",
+    "family_id": "debt_capacity.incremental.mfn",
+    "concept_area": "mfn",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "MFN Exceptions"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.mfn.sunset",
+    "name": "MFN Sunset",
+    "family_id": "debt_capacity.incremental.mfn",
+    "concept_area": "mfn",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "MFN Sunset",
+        "Most Favored Nation"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.mfn.variable_shadow",
+    "name": "Variable / Shadow MFN",
+    "family_id": "debt_capacity.incremental.mfn",
+    "concept_area": "mfn",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Variable / Shadow MFN"
+      ]
+    }
+  }
+]

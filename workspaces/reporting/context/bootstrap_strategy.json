@@ -1,0 +1,254 @@
+[
+  {
+    "id": "governance.reporting.financial_statements",
+    "name": "Financial Statements",
+    "family_id": "governance.reporting",
+    "concept_area": "reporting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Statements",
+        "Reports",
+        "Information",
+        "Reporting"
+      ],
+      "keyword_anchors": [
+        "financial statements",
+        "annual report",
+        "quarterly",
+        "compliance certificate",
+        "deliver"
+      ],
+      "concept_specific_keywords": [
+        "Financial Statements"
+      ]
+    }
+  },
+  {
+    "id": "governance.reporting.compliance_certificate",
+    "name": "Compliance Certificate",
+    "family_id": "governance.reporting",
+    "concept_area": "reporting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Statements",
+        "Reports",
+        "Information",
+        "Reporting"
+      ],
+      "keyword_anchors": [
+        "financial statements",
+        "annual report",
+        "quarterly",
+        "compliance certificate",
+        "deliver"
+      ],
+      "concept_specific_keywords": [
+        "Compliance Certificate"
+      ]
+    }
+  },
+  {
+    "id": "governance.reporting.budget",
+    "name": "Budget & Projections",
+    "family_id": "governance.reporting",
+    "concept_area": "reporting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Statements",
+        "Reports",
+        "Information",
+        "Reporting"
+      ],
+      "keyword_anchors": [
+        "financial statements",
+        "annual report",
+        "quarterly",
+        "compliance certificate",
+        "deliver"
+      ],
+      "concept_specific_keywords": [
+        "Budget & Projections"
+      ]
+    }
+  },
+  {
+    "id": "governance.reporting.lender_calls",
+    "name": "Lender Presentations / Calls",
+    "family_id": "governance.reporting",
+    "concept_area": "reporting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Statements",
+        "Reports",
+        "Information",
+        "Reporting"
+      ],
+      "keyword_anchors": [
+        "financial statements",
+        "annual report",
+        "quarterly",
+        "compliance certificate",
+        "deliver"
+      ],
+      "concept_specific_keywords": [
+        "Lender Presentations / Calls"
+      ]
+    }
+  },
+  {
+    "id": "governance.reporting.mda",
+    "name": "Management Discussion & Analysis",
+    "family_id": "governance.reporting",
+    "concept_area": "reporting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Statements",
+        "Reports",
+        "Information",
+        "Reporting"
+      ],
+      "keyword_anchors": [
+        "financial statements",
+        "annual report",
+        "quarterly",
+        "compliance certificate",
+        "deliver"
+      ],
+      "concept_specific_keywords": [
+        "Management Discussion & Analysis"
+      ]
+    }
+  },
+  {
+    "id": "governance.reporting.notices",
+    "name": "Event Notices",
+    "family_id": "governance.reporting",
+    "concept_area": "reporting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Statements",
+        "Reports",
+        "Information",
+        "Reporting"
+      ],
+      "keyword_anchors": [
+        "financial statements",
+        "annual report",
+        "quarterly",
+        "compliance certificate",
+        "deliver"
+      ],
+      "concept_specific_keywords": [
+        "Event Notices"
+      ]
+    }
+  },
+  {
+    "id": "governance.reporting.public_private_info",
+    "name": "Public vs. Private Side Information",
+    "family_id": "governance.reporting",
+    "concept_area": "reporting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Statements",
+        "Reports",
+        "Information",
+        "Reporting"
+      ],
+      "keyword_anchors": [
+        "financial statements",
+        "annual report",
+        "quarterly",
+        "compliance certificate",
+        "deliver"
+      ],
+      "concept_specific_keywords": [
+        "Public vs. Private Side Information",
+        "Governs Clear"
+      ]
+    }
+  },
+  {
+    "id": "governance.reporting.tax_reporting",
+    "name": "Tax Reporting",
+    "family_id": "governance.reporting",
+    "concept_area": "reporting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Statements",
+        "Reports",
+        "Information",
+        "Reporting"
+      ],
+      "keyword_anchors": [
+        "financial statements",
+        "annual report",
+        "quarterly",
+        "compliance certificate",
+        "deliver"
+      ],
+      "concept_specific_keywords": [
+        "Tax Reporting",
+        "Common Reporting Standard"
+      ]
+    }
+  },
+  {
+    "id": "governance.reporting.forecasts",
+    "name": "Forecasts / Projections",
+    "family_id": "governance.reporting",
+    "concept_area": "reporting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Statements",
+        "Reports",
+        "Information",
+        "Reporting"
+      ],
+      "keyword_anchors": [
+        "financial statements",
+        "annual report",
+        "quarterly",
+        "compliance certificate",
+        "deliver"
+      ],
+      "concept_specific_keywords": [
+        "Forecasts / Projections"
+      ]
+    }
+  },
+  {
+    "id": "governance.reporting.interest_rate_protection",
+    "name": "Interest rate protection/hedging covenant",
+    "family_id": "governance.reporting",
+    "concept_area": "reporting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Statements",
+        "Reports",
+        "Information",
+        "Reporting"
+      ],
+      "keyword_anchors": [
+        "financial statements",
+        "annual report",
+        "quarterly",
+        "compliance certificate",
+        "deliver"
+      ],
+      "concept_specific_keywords": [
+        "Interest rate protection/hedging covenant"
+      ]
+    }
+  }
+]

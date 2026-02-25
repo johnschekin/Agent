@@ -1,0 +1,187 @@
+[
+  {
+    "id": "fin_framework.lct.scope",
+    "name": "Transaction Scope",
+    "family_id": "fin_framework.lct",
+    "concept_area": "lct",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Limited Condition",
+        "Defined Terms",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Limited Condition",
+        "LCT Election",
+        "Limited Conditionality",
+        "Specified Transaction"
+      ],
+      "concept_specific_keywords": [
+        "Transaction Scope"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.lct.test_date",
+    "name": "Test Date Mechanics",
+    "family_id": "fin_framework.lct",
+    "concept_area": "lct",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Limited Condition",
+        "Defined Terms",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Limited Condition",
+        "LCT Election",
+        "Limited Conditionality",
+        "Specified Transaction"
+      ],
+      "concept_specific_keywords": [
+        "Test Date Mechanics"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.lct.eod_testing",
+    "name": "EOD Testing at Consummation",
+    "family_id": "fin_framework.lct",
+    "concept_area": "lct",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Limited Condition",
+        "Defined Terms",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Limited Condition",
+        "LCT Election",
+        "Limited Conditionality",
+        "Specified Transaction"
+      ],
+      "concept_specific_keywords": [
+        "EOD Testing at Consummation"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.lct.pro_forma",
+    "name": "Pro Forma Adjustments",
+    "family_id": "fin_framework.lct",
+    "concept_area": "lct",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Limited Condition",
+        "Defined Terms",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Limited Condition",
+        "LCT Election",
+        "Limited Conditionality",
+        "Specified Transaction"
+      ],
+      "concept_specific_keywords": [
+        "Pro Forma Adjustments"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.lct.scope_expansion",
+    "name": "Scope Expansion Mechanics",
+    "family_id": "fin_framework.lct",
+    "concept_area": "lct",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Limited Condition",
+        "Defined Terms",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Limited Condition",
+        "LCT Election",
+        "Limited Conditionality",
+        "Specified Transaction"
+      ],
+      "concept_specific_keywords": [
+        "Scope Expansion Mechanics"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.lct.subsequent_testing",
+    "name": "Subsequent Transaction Testing",
+    "family_id": "fin_framework.lct",
+    "concept_area": "lct",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Limited Condition",
+        "Defined Terms",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Limited Condition",
+        "LCT Election",
+        "Limited Conditionality",
+        "Specified Transaction"
+      ],
+      "concept_specific_keywords": [
+        "Subsequent Transaction Testing"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.lct.lct_exceptions",
+    "name": "LCT Exceptions / Carve-Outs",
+    "family_id": "fin_framework.lct",
+    "concept_area": "lct",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Limited Condition",
+        "Defined Terms",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Limited Condition",
+        "LCT Election",
+        "Limited Conditionality",
+        "Specified Transaction"
+      ],
+      "concept_specific_keywords": [
+        "LCT Exceptions / Carve-Outs",
+        "s temporal adjustment rules. Defines which financial tests must use current-date measurement rather than freeze-date measurement. The LCT exception list is a financial framework CONFIGURATION that determines when the standard testing methodology is overridden, affecting how other domains"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.lct.market_evolution",
+    "name": "Market Evolution",
+    "family_id": "fin_framework.lct",
+    "concept_area": "lct",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Limited Condition",
+        "Defined Terms",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Limited Condition",
+        "LCT Election",
+        "Limited Conditionality",
+        "Specified Transaction"
+      ],
+      "concept_specific_keywords": [
+        "Market Evolution"
+      ]
+    }
+  }
+]

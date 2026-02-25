@@ -28,7 +28,7 @@ function TagList({ items, color }: { items: string[]; color?: string }) {
           key={i}
           className={cn(
             "text-[11px] px-1.5 py-0.5 rounded font-mono",
-            color ?? "bg-surface-tertiary text-text-secondary"
+            color ?? "bg-surface-3 text-text-secondary"
           )}
         >
           {item}
@@ -64,7 +64,7 @@ export function StrategyDetailPanel({
   return (
     <div
       className={cn(
-        "fixed top-0 right-0 h-full bg-surface-secondary border-l border-border",
+        "fixed top-0 right-0 h-full bg-surface-2 border-l border-border",
         "w-[480px] max-w-[calc(100vw-260px)]",
         "transform transition-transform duration-200 ease-in-out z-30",
         "flex flex-col overflow-hidden",
@@ -72,7 +72,7 @@ export function StrategyDetailPanel({
       )}
     >
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-surface-tertiary flex-shrink-0">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-surface-3 flex-shrink-0">
         <h3 className="text-sm font-medium text-text-primary truncate pr-4">
           {data?.concept_name || conceptId || "Strategy Detail"}
         </h3>

@@ -52,6 +52,18 @@ class TestBuildCorpusIndex:
                         "definition_count": 0,
                         "text_length": 50,
                     },
+                    "articles": [
+                        {
+                            "doc_id": "doc1",
+                            "article_num": 7,
+                            "label": "VII",
+                            "title": "NEGATIVE COVENANTS",
+                            "concept": "negative_covenants",
+                            "char_start": 0,
+                            "char_end": 50,
+                            "is_synthetic": False,
+                        }
+                    ],
                     "sections": [
                         {
                             "doc_id": "doc1",
@@ -100,12 +112,79 @@ class TestBuildCorpusIndex:
             }
             assert "section_features" in feature_tables
             assert "clause_features" in feature_tables
+            assert "articles" in feature_tables
             val = con.execute(
                 "SELECT clause_text FROM clauses WHERE doc_id = 'doc1' AND clause_id = 'a'"
+            ).fetchone()
+            # Verify articles table data
+            art_row = con.execute(
+                "SELECT article_num, label, title, concept, char_start, char_end, is_synthetic "
+                "FROM articles WHERE doc_id = 'doc1'"
             ).fetchone()
             con.close()
             assert val is not None
             assert val[0] == "Permitted Debt"
+            assert art_row is not None
+            assert art_row[0] == 7  # article_num
+            assert art_row[1] == "VII"  # label
+            assert art_row[2] == "NEGATIVE COVENANTS"  # title
+            assert art_row[3] == "negative_covenants"  # concept
+            assert art_row[6] is False  # is_synthetic
+
+    def test_articles_table_persists_and_queries(self) -> None:
+        """Articles table stores article-level metadata from OutlineArticle."""
+        mod = _load_build_module()
+        with tempfile.TemporaryDirectory() as tmpdir:
+            out = Path(tmpdir) / "corpus.duckdb"
+            result = _make_doc_result("doc-art")
+            result["articles"] = [
+                {
+                    "doc_id": "doc-art",
+                    "article_num": 1,
+                    "label": "I",
+                    "title": "DEFINITIONS",
+                    "concept": "definitions",
+                    "char_start": 0,
+                    "char_end": 5000,
+                    "is_synthetic": False,
+                },
+                {
+                    "doc_id": "doc-art",
+                    "article_num": 7,
+                    "label": "VII",
+                    "title": "NEGATIVE COVENANTS",
+                    "concept": "negative_covenants",
+                    "char_start": 5001,
+                    "char_end": 10000,
+                    "is_synthetic": False,
+                },
+                {
+                    "doc_id": "doc-art",
+                    "article_num": 99,
+                    "label": "99",
+                    "title": "MISCELLANEOUS",
+                    "concept": None,
+                    "char_start": 10001,
+                    "char_end": 12000,
+                    "is_synthetic": True,
+                },
+            ]
+            mod._write_to_duckdb(out, [result], verbose=False)
+
+            con = duckdb.connect(str(out), read_only=True)
+            rows = con.execute(
+                "SELECT article_num, label, title, concept, is_synthetic "
+                "FROM articles WHERE doc_id = 'doc-art' ORDER BY article_num"
+            ).fetchall()
+            count = con.execute("SELECT COUNT(*) FROM articles").fetchone()
+            con.close()
+
+            assert count is not None
+            assert count[0] == 3
+            assert len(rows) == 3
+            assert rows[0] == (1, "I", "DEFINITIONS", "definitions", False)
+            assert rows[1] == (7, "VII", "NEGATIVE COVENANTS", "negative_covenants", False)
+            assert rows[2] == (99, "99", "MISCELLANEOUS", None, True)
 
     def test_template_family_map_applies_override(self) -> None:
         mod = _load_build_module()
@@ -139,6 +218,7 @@ class TestBuildCorpusIndex:
                         "definition_count": 0,
                         "text_length": 10,
                     },
+                    "articles": [],
                     "sections": [],
                     "clauses": [],
                     "definitions": [],
@@ -192,6 +272,7 @@ class TestBuildCorpusIndex:
                         "definition_count": 0,
                         "text_length": 120,
                     },
+                    "articles": [],
                     "sections": [
                         {
                             "doc_id": "doc-dup",
@@ -365,6 +446,7 @@ def _make_doc_result(doc_id: str, *, cohort: bool = True) -> dict:
             "definition_count": 0,
             "text_length": 100,
         },
+        "articles": [],
         "sections": [],
         "clauses": [],
         "definitions": [],
@@ -678,9 +760,9 @@ class TestRayV2SchemaParity:
             conn.close()
 
             expected_data_tables = {
-                "documents", "sections", "clauses", "definitions",
-                "section_text", "section_features", "clause_features",
-                "_schema_version",
+                "documents", "articles", "sections", "clauses",
+                "definitions", "section_text", "section_features",
+                "clause_features", "_schema_version",
             }
             assert expected_data_tables == tables
 

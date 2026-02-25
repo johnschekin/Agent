@@ -1,0 +1,330 @@
+[
+  {
+    "id": "cash_flow.restricted_debt_payments.rdp_scope",
+    "name": "RDP Scope / Covered Debt Definition",
+    "family_id": "cash_flow.restricted_debt_payments",
+    "concept_area": "restricted_debt_payments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Debt Payments",
+        "Junior Debt",
+        "Prepayment of Indebtedness",
+        "Subordinated Indebtedness"
+      ],
+      "keyword_anchors": [
+        "junior debt",
+        "subordinated",
+        "prepayment",
+        "restricted debt payment",
+        "Junior Financing"
+      ],
+      "concept_specific_keywords": [
+        "RDP Scope / Covered Debt Definition",
+        "all payments",
+        "prepayments only"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.restricted_debt_payments.rdp_general_basket",
+    "name": "General RDP Basket",
+    "family_id": "cash_flow.restricted_debt_payments",
+    "concept_area": "restricted_debt_payments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Debt Payments",
+        "Junior Debt",
+        "Prepayment of Indebtedness",
+        "Subordinated Indebtedness"
+      ],
+      "keyword_anchors": [
+        "junior debt",
+        "subordinated",
+        "prepayment",
+        "restricted debt payment",
+        "Junior Financing"
+      ],
+      "concept_specific_keywords": [
+        "General RDP Basket"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.restricted_debt_payments.rdp_ratio_basket",
+    "name": "Unlimited Ratio RDP Basket",
+    "family_id": "cash_flow.restricted_debt_payments",
+    "concept_area": "restricted_debt_payments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Debt Payments",
+        "Junior Debt",
+        "Prepayment of Indebtedness",
+        "Subordinated Indebtedness"
+      ],
+      "keyword_anchors": [
+        "junior debt",
+        "subordinated",
+        "prepayment",
+        "restricted debt payment",
+        "Junior Financing"
+      ],
+      "concept_specific_keywords": [
+        "Unlimited Ratio RDP Basket"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.restricted_debt_payments.rdp_refinancing",
+    "name": "Refinancing Rights",
+    "family_id": "cash_flow.restricted_debt_payments",
+    "concept_area": "restricted_debt_payments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Debt Payments",
+        "Junior Debt",
+        "Prepayment of Indebtedness",
+        "Subordinated Indebtedness"
+      ],
+      "keyword_anchors": [
+        "junior debt",
+        "subordinated",
+        "prepayment",
+        "restricted debt payment",
+        "Junior Financing"
+      ],
+      "concept_specific_keywords": [
+        "Refinancing Rights"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.restricted_debt_payments.rdp_open_market",
+    "name": "Open Market Purchases",
+    "family_id": "cash_flow.restricted_debt_payments",
+    "concept_area": "restricted_debt_payments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Debt Payments",
+        "Junior Debt",
+        "Prepayment of Indebtedness",
+        "Subordinated Indebtedness"
+      ],
+      "keyword_anchors": [
+        "junior debt",
+        "subordinated",
+        "prepayment",
+        "restricted debt payment",
+        "Junior Financing"
+      ],
+      "concept_specific_keywords": [
+        "Open Market Purchases"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.restricted_debt_payments.rdp_scheduled_payments",
+    "name": "Scheduled Payment Exceptions",
+    "family_id": "cash_flow.restricted_debt_payments",
+    "concept_area": "restricted_debt_payments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Debt Payments",
+        "Junior Debt",
+        "Prepayment of Indebtedness",
+        "Subordinated Indebtedness"
+      ],
+      "keyword_anchors": [
+        "junior debt",
+        "subordinated",
+        "prepayment",
+        "restricted debt payment",
+        "Junior Financing"
+      ],
+      "concept_specific_keywords": [
+        "Scheduled Payment Exceptions"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.restricted_debt_payments.rdp_conversion_exchange",
+    "name": "Conversion / Exchange",
+    "family_id": "cash_flow.restricted_debt_payments",
+    "concept_area": "restricted_debt_payments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Debt Payments",
+        "Junior Debt",
+        "Prepayment of Indebtedness",
+        "Subordinated Indebtedness"
+      ],
+      "keyword_anchors": [
+        "junior debt",
+        "subordinated",
+        "prepayment",
+        "restricted debt payment",
+        "Junior Financing"
+      ],
+      "concept_specific_keywords": [
+        "Conversion / Exchange"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.restricted_debt_payments.rdp_aa_basket",
+    "name": "Available Amount RDP Basket",
+    "family_id": "cash_flow.restricted_debt_payments",
+    "concept_area": "restricted_debt_payments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Debt Payments",
+        "Junior Debt",
+        "Prepayment of Indebtedness",
+        "Subordinated Indebtedness"
+      ],
+      "keyword_anchors": [
+        "junior debt",
+        "subordinated",
+        "prepayment",
+        "restricted debt payment",
+        "Junior Financing"
+      ],
+      "concept_specific_keywords": [
+        "Available Amount RDP Basket",
+        "Available Amount"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.restricted_debt_payments.rdp_customary_payments",
+    "name": "Customary Payments and Fees",
+    "family_id": "cash_flow.restricted_debt_payments",
+    "concept_area": "restricted_debt_payments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Debt Payments",
+        "Junior Debt",
+        "Prepayment of Indebtedness",
+        "Subordinated Indebtedness"
+      ],
+      "keyword_anchors": [
+        "junior debt",
+        "subordinated",
+        "prepayment",
+        "restricted debt payment",
+        "Junior Financing"
+      ],
+      "concept_specific_keywords": [
+        "Customary Payments and Fees"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.restricted_debt_payments.rdp_seller_note_earnout",
+    "name": "Seller Notes / Earnout Payments",
+    "family_id": "cash_flow.restricted_debt_payments",
+    "concept_area": "restricted_debt_payments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Debt Payments",
+        "Junior Debt",
+        "Prepayment of Indebtedness",
+        "Subordinated Indebtedness"
+      ],
+      "keyword_anchors": [
+        "junior debt",
+        "subordinated",
+        "prepayment",
+        "restricted debt payment",
+        "Junior Financing"
+      ],
+      "concept_specific_keywords": [
+        "Seller Notes / Earnout Payments"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.restricted_debt_payments.rdp_intercompany",
+    "name": "Intercompany Subordinated Obligations",
+    "family_id": "cash_flow.restricted_debt_payments",
+    "concept_area": "restricted_debt_payments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Debt Payments",
+        "Junior Debt",
+        "Prepayment of Indebtedness",
+        "Subordinated Indebtedness"
+      ],
+      "keyword_anchors": [
+        "junior debt",
+        "subordinated",
+        "prepayment",
+        "restricted debt payment",
+        "Junior Financing"
+      ],
+      "concept_specific_keywords": [
+        "Intercompany Subordinated Obligations"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.restricted_debt_payments.rdp_conditions",
+    "name": "General RDP Conditions",
+    "family_id": "cash_flow.restricted_debt_payments",
+    "concept_area": "restricted_debt_payments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Debt Payments",
+        "Junior Debt",
+        "Prepayment of Indebtedness",
+        "Subordinated Indebtedness"
+      ],
+      "keyword_anchors": [
+        "junior debt",
+        "subordinated",
+        "prepayment",
+        "restricted debt payment",
+        "Junior Financing"
+      ],
+      "concept_specific_keywords": [
+        "General RDP Conditions"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.restricted_debt_payments.rdp_redesignation",
+    "name": "RDP Redesignation / Reallocation",
+    "family_id": "cash_flow.restricted_debt_payments",
+    "concept_area": "restricted_debt_payments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Debt Payments",
+        "Junior Debt",
+        "Prepayment of Indebtedness",
+        "Subordinated Indebtedness"
+      ],
+      "keyword_anchors": [
+        "junior debt",
+        "subordinated",
+        "prepayment",
+        "restricted debt payment",
+        "Junior Financing"
+      ],
+      "concept_specific_keywords": [
+        "RDP Redesignation / Reallocation"
+      ]
+    }
+  }
+]

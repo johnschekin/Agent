@@ -1,0 +1,2477 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Comprehensive security grant covering personal property, equipment, inventory, receivables, IP, and equity interests. Standard in PC market (74.1% EDGAR, 100% DealData).",
+          "dls_ref": [
+            67
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.scope.all_assets",
+          "level": 3,
+          "name": "Substantially All Assets",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 67"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Targeted security approach limited to specific asset classes such as pledged stock and debt instruments of the issuer.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.scope.asset_specific",
+          "level": 3,
+          "name": "Asset-Specific Security",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 67 (Unknown); KCT Cat 1 Item 2"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "KCT cat4.12 requires the protective mechanism 'negative pledge coverage' but it is not adequately represented in the ontology.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.collateral",
+              "id": "credit_protection.collateral.scope.unsecured.negative_pledge_coverage",
+              "kct_ref": [
+                "cat4.12"
+              ],
+              "level": 4,
+              "name": "negative pledge coverage",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 4 Item 12"
+            },
+            {
+              "id": "credit_protection.collateral.scope.unsecured.credit_basis",
+              "name": "Credit Basis for Unsecured",
+              "level": 4,
+              "type": "sub_component",
+              "domain_id": "credit_protection",
+              "family_id": "credit_protection.collateral",
+              "corpus_prevalence": "low",
+              "extraction_difficulty": "easy",
+              "definition": "Unsecured structure has negative pledge coverage and the credit basis for unsecured lending.",
+              "definition_source": "KCT Cat 2 Item 1"
+            }
+          ],
+          "corpus_prevalence": "low",
+          "definition": "No collateral requirements. Credit-based or cash flow lending without asset pledge.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.scope.unsecured",
+          "kct_ref": [
+            "cat4.12"
+          ],
+          "level": 3,
+          "name": "Unsecured",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 12"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Tangible personal property pledged as collateral: inventory (raw materials, WIP, finished goods), equipment, fixtures, and leased assets.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.scope.physical_assets",
+          "level": 3,
+          "name": "Physical Assets",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Financial instruments pledged as collateral: accounts receivable, letter of credit rights, chattel paper, deposit accounts, securities accounts, and general intangibles.",
+          "dls_ref": [
+            "DLS:47:Financial statements"
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.scope.financial_assets",
+          "level": 3,
+          "name": "Financial Assets",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 47 (Financial statements)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "IP assets pledged as collateral: patents, copyrights, trademarks, trade secrets, and licenses. Exclusion is especially risky for asset-light businesses.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.scope.ip_assets",
+          "level": 3,
+          "name": "Intellectual Property",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; LME Provision Language, Restrictions on Material Intellectual Property or Other Asset Leakage to Unsubs (J.Crew)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Pledged equity interests in subsidiaries: 100% stock of domestic subs, 65% of first-tier foreign subs (tax-driven limitation under IRC Section 956).",
+          "dls_ref": [
+            "DLS:39:Minimum equity"
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.scope.equity_pledges",
+          "level": 3,
+          "market_benchmarks": {
+            "domestic_collateral": "100%",
+            "foreign_first_tier": "65%"
+          },
+          "name": "Equity Pledges",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 39 (Minimum equity)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Defines the breadth of assets pledged as security. Substantially all assets is standard in PC market (100% per DealData; 74.1% in EDGAR corpus). Determines what lenders can liquidate in enforcement. Neutron extraction context (COLL_SCOPE): Scope of collateral package including asset types, excluded assets, and overall coverage. Should be \"all assets\" of U.S. loan parties with standard exceptions.",
+      "dls_ref": [
+        "DLS:52:Collateral"
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "collateral_guarantees.cash_mgmt_hedging",
+        "section_locations": [
+          "ARTICLE 5",
+          "ARTICLE 8",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX"
+        ],
+        "shape_ref": "collateral_guarantees.cash_mgmt_hedging",
+        "aligned_difficulty": "hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=hard (playbook authority for extraction complexity)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.443332+00:00",
+          "term_packs": {
+            "COLL_SCOPE": {
+              "label": "Collateral - Scope",
+              "category": "COLLATERAL_GUARANTORS",
+              "exactPhrases": [
+                "Note any unusual aspects of collateral/guaranty structure",
+                "Will there be DACAs?",
+                "Note any exceptions for DACAs",
+                "May be noted as 'Under Review'",
+                "all assets of U.S. loan parties with standard exceptions",
+                "substantially all assets",
+                "security interest in the Collateral",
+                "first priority perfected security interest",
+                "Excluded Assets",
+                "Excluded Property"
+              ],
+              "sectionHeaders": [
+                "Collateral",
+                "Security",
+                "Collateral and Guarantors",
+                "Collateral Scope",
+                "Security Interest",
+                "Pledge Agreement",
+                "Security Agreement",
+                "Article [X] - Security"
+              ],
+              "semanticVariants": [
+                "collateral package scope and coverage",
+                "security interest in borrower assets",
+                "assets included in security package",
+                "all assets pledge",
+                "blanket lien coverage",
+                "secured creditor rights",
+                "perfected security interest scope"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.6,
+                "minKeywordScore": 0.5,
+                "minConfidence": 0.7,
+                "escalationThreshold": 0.5,
+                "humanEscalationThreshold": 0.3
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Note any unusual aspects of collateral/guaranty structure",
+              "Will there be DACAs?",
+              "Note any exceptions for DACAs",
+              "May be noted as 'Under Review'",
+              "all assets of U.S. loan parties with standard exceptions",
+              "substantially all assets",
+              "security interest in the Collateral",
+              "first priority perfected security interest",
+              "Excluded Assets",
+              "Excluded Property"
+            ],
+            "sectionHeaders": [
+              "Collateral",
+              "Security",
+              "Collateral and Guarantors",
+              "Collateral Scope",
+              "Security Interest",
+              "Pledge Agreement",
+              "Security Agreement",
+              "Article [X] - Security"
+            ],
+            "semanticVariants": [
+              "collateral package scope and coverage",
+              "security interest in borrower assets",
+              "assets included in security package",
+              "all assets pledge",
+              "blanket lien coverage",
+              "secured creditor rights",
+              "perfected security interest scope"
+            ]
+          }
+        },
+        "neutron_definition_enrichment": {
+          "source": "Neutron schema term_type_index description/backgroundExplanation",
+          "imported_at": "2026-02-17T22:46:48.401716+00:00",
+          "entries": {
+            "COLL_SCOPE": {
+              "term_type": "COLL_SCOPE",
+              "schema_file": "collateral-guarantors-enhanced.schema.ts",
+              "label": "Collateral - Scope",
+              "mapping_mode": "domain_scored",
+              "mapping_confidence": 0.5901,
+              "label_similarity": 1.0,
+              "description": "Scope of collateral package including asset types, excluded assets, and overall coverage. Should be \"all assets\" of U.S. loan parties with standard exceptions.",
+              "backgroundExplanation": "Collateral/guarantee scope should be \"all assets\" of U.S. loan parties with standard exceptions. Sources emphasize Sungard conditionality: UCC filings and stock certificates of borrower (and sometimes subs if readily deliverable) at close; other perfection steps (e.g., account control, mortgages, USPTO filings, foreign assets) move to post-closing covenants unless essential to the credit. The collateral package is fundamental credit support and directly impacts recovery in a workout scenario.",
+              "summary_used": "Scope of collateral package including asset types, excluded assets, and overall coverage. Should be \"all assets\" of U.S. loan parties with standard exceptions.",
+              "ported_at": "2026-02-17T22:46:48.401716+00:00"
+            }
+          }
+        }
+      },
+      "family_id": "credit_protection.collateral",
+      "id": "credit_protection.collateral.scope",
+      "level": 2,
+      "market_benchmarks": {
+        "substantially_all": "74.1%",
+        "unsecured_value": "3.4%"
+      },
+      "name": "Collateral Scope",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to stock pledge and material assets; excluded assets carve-outs for non-assignable permits, immaterial leasehold, foreign assets",
+        "dls_source": "DLS row 67",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "term_name: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "scope: substantially_all vs asset_specific vs stock_pledge_only",
+          "real_property: included_with_threshold vs excluded",
+          "ip_pledge: all_ip vs material_ip_only vs excluded",
+          "deposit_accounts: control_agreements_required vs springing",
+          "perfection_timeline: closing vs post_closing_30d vs post_closing_60d vs post_closing_90d",
+          "after_acquired_property: automatic vs best_efforts vs not_required",
+          "foreign_assets: 65pct_first_tier vs excluded_entirely",
+          "excluded_asset_scope: narrow vs broad vs expansive"
+        ],
+        "market_position": "",
+        "preferred_position": "First priority perfected lien on substantially all assets of Borrower and Guarantors; all personal property, real property (subject to threshold), IP, equity interests",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "collateral.scope"
+      ],
+      "term_analysis_sources": [
+        "TERM_ANALYSIS_DESCRIBE_COLLATERAL.md"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 52 (Collateral)",
+      "neutron_field_refs": [
+        {
+          "term_type": "COLL_SCOPE",
+          "label": "Collateral - Scope",
+          "schema_file": "collateral-guarantors-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "credit_protection",
+          "mapping_confidence": 0.5901,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Real property below FMV threshold ($1.5M-$7M) excluded from mortgage requirements. Higher thresholds in UMM. LMM: $1.5M, CMM: $2.5M, Geneva: excluded entirely.",
+          "dls_ref": [
+            67
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.excluded_assets.real_estate",
+          "level": 3,
+          "market_benchmarks": {
+            "cmm": "$2.5M",
+            "lmm": "$1.5M",
+            "umm": "excluded entirely"
+          },
+          "name": "Real Estate Thresholds",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 67"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Stock of first-tier foreign subsidiaries exceeding 65% excluded for tax reasons (IRC Section 956 deemed repatriation). CFC/FSHCO considerations apply.",
+          "dls_ref": [
+            67
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.excluded_assets.foreign_stock",
+          "level": 3,
+          "name": "Foreign Subsidiary Stock >65%",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 67"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Equity of subsidiaries below materiality thresholds (2.5% individual / 5% aggregate of total assets or revenue) excluded from pledge requirements.",
+          "dls_ref": [
+            67
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.excluded_assets.immaterial_subs",
+          "level": 3,
+          "market_benchmarks": {
+            "aggregate_value": "5%",
+            "individual_value": "2.5%"
+          },
+          "name": "Immaterial Subsidiary Equity",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 67"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Real property classified as principal property excluded due to mortgage cost. Primarily relevant for industrial/manufacturing borrowers with significant owned real estate.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.excluded_assets.principal_properties",
+          "kct_ref": [
+            "cat4.12"
+          ],
+          "level": 3,
+          "name": "Principal Properties",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 12"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Specific IP categories excluded from pledge: intent-to-use trademark applications (legal requirement), certain license agreements with anti-assignment clauses, software with third-party restrictions.",
+          "dls_ref": [
+            67
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.excluded_assets.ip_exclusions",
+          "level": 3,
+          "name": "Certain Intellectual Property",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 67"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Deposit accounts below de minimis threshold ($250K-$5M individual/aggregate) excluded from DACA requirements.",
+          "dls_ref": [
+            67
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.excluded_assets.deposit_accounts",
+          "level": 3,
+          "market_benchmarks": {
+            "threshold_range": "$250K-$5M"
+          },
+          "name": "Deposit Accounts Under Threshold",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 67"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Payroll accounts (79.3% excluded), tax withholding accounts (65.5% excluded), zero balance/sweep accounts (58.6% excluded). Essential operations accommodation.",
+          "dls_ref": [
+            67
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.excluded_assets.operational_accounts",
+          "level": 3,
+          "name": "Operational Accounts",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 67"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Low-value assets where perfection cost exceeds recovery value. Title-registration assets excluded as impracticable to perfect via certificate filing.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.excluded_assets.motor_vehicles",
+          "level": 3,
+          "name": "Motor Vehicles / Consumer Goods",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Assets excluded from the collateral pledge because third-party contractual agreements prohibit their assignment or encumbrance. Includes JV interests with transfer restrictions, franchise agreements with assignment prohibitions, and acquired assets subject to anti-pledge covenants. The 'not in contemplation' qualifier limits abuse by preventing borrowers from deliberately creating contractual restrictions to shield assets from the collateral package.",
+          "dls_ref": [
+            67
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.excluded_assets.contractual_restrictions",
+          "level": 3,
+          "name": "Contractual Restrictions",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 67"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Assets carved out from the security grant for operational, regulatory, tax, or cost-benefit reasons. Each exclusion creates a gap in collateral coverage that reduces lender recovery in enforcement.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "collateral_guarantees.cash_mgmt_hedging",
+        "section_locations": [
+          "ARTICLE 5",
+          "ARTICLE 8",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX"
+        ],
+        "shape_ref": "collateral_guarantees.cash_mgmt_hedging"
+      },
+      "family_id": "credit_protection.collateral",
+      "id": "credit_protection.collateral.excluded_assets",
+      "kct_ref": [
+        "cat4.12"
+      ],
+      "level": 2,
+      "name": "Excluded Assets",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to stock pledge and material assets; excluded assets carve-outs for non-assignable permits, immaterial leasehold, foreign assets",
+        "dls_source": "DLS row 67",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "term_name: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "scope: substantially_all vs asset_specific vs stock_pledge_only",
+          "real_property: included_with_threshold vs excluded",
+          "ip_pledge: all_ip vs material_ip_only vs excluded",
+          "deposit_accounts: control_agreements_required vs springing",
+          "perfection_timeline: closing vs post_closing_30d vs post_closing_60d vs post_closing_90d",
+          "after_acquired_property: automatic vs best_efforts vs not_required",
+          "foreign_assets: 65pct_first_tier vs excluded_entirely",
+          "excluded_asset_scope: narrow vs broad vs expansive"
+        ],
+        "market_position": "",
+        "preferred_position": "First priority perfected lien on substantially all assets of Borrower and Guarantors; all personal property, real property (subject to threshold), IP, equity interests",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "collateral.excluded_assets"
+      ],
+      "term_analysis_sources": [
+        "TERM_ANALYSIS_COLLATERAL_EXCEPTIONS.md"
+      ],
+      "type": "concept",
+      "definition_source": "KCT Cat 4 Item 12"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Initial UCC-1 financing statement filings required at closing. Covers all personal property in jurisdiction of organization. Continuation statements required every 5 years. [1): No immediate Event of Default for loss of lien or priority due to a carve-out broader than loss of possessory collateral or UCC continuation filing fa]",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.perfection.ucc_filings",
+          "kct_ref": [
+            "cat5.1"
+          ],
+          "level": 3,
+          "name": "UCC Filings",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 5 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Tri-party agreements providing lender control over deposit accounts (DACAs), securities accounts, and commodity accounts.",
+          "dls_ref": [
+            67
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.perfection.control_agreements",
+          "level": 3,
+          "market_benchmarks": {
+            "not_required": "30.6%",
+            "required_consent": "55.1%"
+          },
+          "name": "Control Agreements",
+          "term_analysis_sources": [
+            "TERM_ANALYSIS_DACAS_PART_COLLATERAL.md"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 67"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Dollar threshold above which commercial tort claims must be identified by written notice and added to the collateral package through a supplement to the security agreement. Below the threshold, such claims are excluded from the perfection requirements, recognizing the administrative burden of tracking and perfecting security interests in individual litigation claims.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.collateral",
+              "id": "credit_protection.collateral.perfection.thresholds.commercial_tort",
+              "kct_ref": [
+                "cat5.1"
+              ],
+              "level": 4,
+              "market_benchmarks": {
+                "observed_range": "$750K-$2M",
+                "prevalence": "70.7%"
+              },
+              "name": "Commercial Tort Claims",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 5 Item 1"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Dollar threshold above which negotiable instruments (promissory notes, drafts) held by the borrower must be delivered to the collateral agent for perfection by possession. Instruments below the threshold are perfected solely by the UCC filing, accepting a lower level of perfection security for immaterial instrument holdings.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.collateral",
+              "id": "credit_protection.collateral.perfection.thresholds.instruments",
+              "level": 4,
+              "market_benchmarks": {
+                "observed_range": "$500K-$750K",
+                "prevalence": "61.0%"
+              },
+              "name": "Instruments",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Dollar threshold above which chattel paper (records evidencing both a monetary obligation and a security interest or lease) must be delivered to the collateral agent for perfection by possession or control. Below the threshold, filing-only perfection is accepted, trading perfection certainty for administrative efficiency on low-value chattel paper portfolios.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.collateral",
+              "id": "credit_protection.collateral.perfection.thresholds.chattel_paper",
+              "level": 4,
+              "market_benchmarks": {
+                "observed_range": "$500K-$1M",
+                "prevalence": "48.8%"
+              },
+              "name": "Chattel Paper",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Dollar threshold above which promissory notes held by the borrower must be endorsed and delivered to the collateral agent for perfection by possession under UCC Article 9. Notes below the threshold remain perfected by the blanket UCC-1 filing, accepting the subordination risk to a holder in due course for immaterial note holdings.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.collateral",
+              "id": "credit_protection.collateral.perfection.thresholds.promissory_notes",
+              "level": 4,
+              "market_benchmarks": {
+                "observed_range": "$250K-$3M",
+                "prevalence": "46.3%"
+              },
+              "name": "Promissory Notes",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 2"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Materiality standards for physical delivery of possessory collateral. Dollar thresholds below which instruments, chattel paper, and promissory notes need not be delivered.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.perfection.thresholds",
+          "kct_ref": [
+            "cat5.1"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "chattel_paper_collateral": "48.8%",
+            "commercial_tort_collateral": "70.7%",
+            "instruments_collateral": "61.0%",
+            "promissory_notes_collateral": "46.3%"
+          },
+          "name": "Delivery Thresholds",
+          "term_analysis_sources": [
+            "TERM_ANALYSIS_COLLATERAL_THRESHOLDS.md"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 5 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "USPTO/USCO filing requirements for perfection of IP security interests. Not limited by materiality, exclusive copyright licenses, periodic after-acquired timing.",
+          "dls_ref": [
+            67
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.perfection.ip_filing",
+          "level": 3,
+          "name": "IP Filing Requirements",
+          "term_analysis_sources": [
+            "TERM_ANALYSIS_IP_FILING_REQUIREMENTS.md"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 67"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Timing for delivery of stock certificates representing pledged equity. At closing, 45-day, promptly, 30-day.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.perfection.stock_certificates",
+          "level": 3,
+          "market_benchmarks": {
+            "at_closing_value": "23.8%",
+            "notice_30_day": "14.3%",
+            "notice_45_day": "21.4%",
+            "promptly_pct": "19%"
+          },
+          "name": "Stock Certificate Delivery",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 154,
+              "term": "Closing Deliverables"
+            }
+          ],
+          "term_analysis_sources": [
+            "TERM_ANALYSIS_STOCK_CERTIFICATE_TIMING.md"
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 154 (Closing Deliverables)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Real property mortgage/deed of trust filing requirements for owned properties exceeding FMV threshold. Includes title insurance, surveys, and environmental assessments.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.perfection.mortgage_requirements",
+          "level": 3,
+          "name": "Mortgage Requirements",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Categories of collateral where perfection is not required: assets in jurisdictions where filing is impracticable, assets with de minimis value, after-acquired assets within grace period.",
+          "dls_ref": [
+            67
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.perfection.perfection_exceptions",
+          "level": 3,
+          "name": "Perfection Exceptions",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 67"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Steps required to establish and maintain priority security interests beyond initial UCC filing. Covers delivery of possessory collateral, control agreements, IP filings, and real property mortgages. Neutron extraction context (COLL_PERFECTION): Perfection requirements for security interests including UCC filings, pledges, control agreements, and other perfection steps. Under \"Sungard\" conditionality, require borrower/holdings stock pledges at closing and if any carveouts are included; UCCs are baseline. Consider IP filings for material portfolios, post-closing foreign collateral, and whether DACAs are required initially or post-closing.",
+      "dls_ref": [
+        "DLS:67:Security"
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "collateral_guarantees.cash_mgmt_hedging",
+        "section_locations": [
+          "ARTICLE 5",
+          "ARTICLE 8",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX"
+        ],
+        "shape_ref": "collateral_guarantees.cash_mgmt_hedging",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.431270+00:00",
+          "term_packs": {
+            "COLL_PERFECTION": {
+              "label": "Collateral - Perfection Requirements",
+              "category": "COLLATERAL_GUARANTORS",
+              "exactPhrases": [
+                "UCCs are baseline",
+                "IP filings for material portfolios",
+                "stock certificates of borrower",
+                "subs if readily deliverable",
+                "Sungard conditionality",
+                "file UCC-1 financing statements",
+                "deliver stock certificates",
+                "execute control agreements",
+                "perfected first priority security interest"
+              ],
+              "sectionHeaders": [
+                "Perfection",
+                "Security Interest Perfection",
+                "UCC Filings",
+                "Conditions Precedent",
+                "Post-Closing Covenants",
+                "Collateral and Perfection"
+              ],
+              "semanticVariants": [
+                "perfection requirements for security interest",
+                "UCC filing obligations",
+                "stock pledge delivery requirements",
+                "control agreement requirements",
+                "steps to perfect security interest",
+                "collateral perfection mechanics"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.6,
+                "minKeywordScore": 0.5,
+                "minConfidence": 0.7,
+                "escalationThreshold": 0.5,
+                "humanEscalationThreshold": 0.3
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            },
+            "COLL_POST_CLOSING": {
+              "label": "Collateral - Post-Closing Requirements",
+              "category": "COLLATERAL_GUARANTORS",
+              "exactPhrases": [
+                "post-closing covenants unless essential to the credit",
+                "post-closing foreign collateral",
+                "within [30/60/90] days after the Closing Date",
+                "post-closing obligations",
+                "post-closing deliverables",
+                "use commercially reasonable efforts",
+                "use best efforts"
+              ],
+              "sectionHeaders": [
+                "Post-Closing",
+                "Post-Closing Collateral",
+                "Post-Closing Covenants",
+                "Post-Closing Obligations",
+                "Schedule of Post-Closing Items",
+                "Exhibit [X] - Post-Closing"
+              ],
+              "semanticVariants": [
+                "post-closing collateral delivery requirements",
+                "deferred perfection obligations",
+                "post-closing security interest perfection",
+                "timelines for post-closing deliverables",
+                "collateral delivery after closing"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.6,
+                "minKeywordScore": 0.5,
+                "minConfidence": 0.7,
+                "escalationThreshold": 0.5,
+                "humanEscalationThreshold": 0.3
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "UCCs are baseline",
+              "IP filings for material portfolios",
+              "stock certificates of borrower",
+              "subs if readily deliverable",
+              "Sungard conditionality",
+              "file UCC-1 financing statements",
+              "deliver stock certificates",
+              "execute control agreements",
+              "perfected first priority security interest",
+              "post-closing covenants unless essential to the credit",
+              "post-closing foreign collateral",
+              "within [30/60/90] days after the Closing Date",
+              "post-closing obligations",
+              "post-closing deliverables",
+              "use commercially reasonable efforts",
+              "use best efforts"
+            ],
+            "sectionHeaders": [
+              "Perfection",
+              "Security Interest Perfection",
+              "UCC Filings",
+              "Conditions Precedent",
+              "Post-Closing Covenants",
+              "Collateral and Perfection",
+              "Post-Closing",
+              "Post-Closing Collateral",
+              "Post-Closing Obligations",
+              "Schedule of Post-Closing Items",
+              "Exhibit [X] - Post-Closing"
+            ],
+            "semanticVariants": [
+              "perfection requirements for security interest",
+              "UCC filing obligations",
+              "stock pledge delivery requirements",
+              "control agreement requirements",
+              "steps to perfect security interest",
+              "collateral perfection mechanics",
+              "post-closing collateral delivery requirements",
+              "deferred perfection obligations",
+              "post-closing security interest perfection",
+              "timelines for post-closing deliverables",
+              "collateral delivery after closing"
+            ]
+          }
+        },
+        "neutron_definition_enrichment": {
+          "source": "Neutron schema term_type_index description/backgroundExplanation",
+          "imported_at": "2026-02-17T22:46:48.401716+00:00",
+          "entries": {
+            "COLL_PERFECTION": {
+              "term_type": "COLL_PERFECTION",
+              "schema_file": "collateral-guarantors-enhanced.schema.ts",
+              "label": "Collateral - Perfection Requirements",
+              "mapping_mode": "domain_scored",
+              "mapping_confidence": 0.7146,
+              "label_similarity": 0.6667,
+              "description": "Perfection requirements for security interests including UCC filings, pledges, control agreements, and other perfection steps.",
+              "backgroundExplanation": "Under \"Sungard\" conditionality, require borrower/holdings stock pledges at closing and if any carveouts are included; UCCs are baseline. Consider IP filings for material portfolios, post-closing foreign collateral, and whether DACAs are required initially or post-closing. Sources emphasize that UCC filings and stock certificates of borrower (and sometimes subs if readily deliverable) should be delivered at close; other perfection steps (e.g., account control, mortgages, USPTO filings, foreign assets) move to post-closing covenants unless essential to the credit.",
+              "summary_used": "Perfection requirements for security interests including UCC filings, pledges, control agreements, and other perfection steps. Under \"Sungard\" conditionality, require borrower/holdings stock pledges at closing and if any carveouts are included; UCCs are baseline. Consider IP filings for material portfolios, post-closing foreign collateral, and whether DACAs are required initially or post-closing.",
+              "ported_at": "2026-02-17T22:46:48.401716+00:00"
+            }
+          }
+        }
+      },
+      "family_id": "credit_protection.collateral",
+      "id": "credit_protection.collateral.perfection",
+      "kct_ref": [
+        "cat5.1"
+      ],
+      "level": 2,
+      "name": "Perfection Requirements",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to stock pledge and material assets; excluded assets carve-outs for non-assignable permits, immaterial leasehold, foreign assets",
+        "dls_source": "DLS row 67",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "term_name: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "scope: substantially_all vs asset_specific vs stock_pledge_only",
+          "real_property: included_with_threshold vs excluded",
+          "ip_pledge: all_ip vs material_ip_only vs excluded",
+          "deposit_accounts: control_agreements_required vs springing",
+          "perfection_timeline: closing vs post_closing_30d vs post_closing_60d vs post_closing_90d",
+          "after_acquired_property: automatic vs best_efforts vs not_required",
+          "foreign_assets: 65pct_first_tier vs excluded_entirely",
+          "excluded_asset_scope: narrow vs broad vs expansive"
+        ],
+        "market_position": "",
+        "preferred_position": "First priority perfected lien on substantially all assets of Borrower and Guarantors; all personal property, real property (subject to threshold), IP, equity interests",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "collateral.perfection_requirements",
+        "collateral.lien_perfection_eod"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 39,
+          "term": "Collateral and Guarantors"
+        },
+        {
+          "coverage": "full",
+          "row": 154,
+          "term": "Closing Deliverables"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 67 (Security); KCT Cat 5 Item 1; Review Template Row 39 (Collateral and Guarantors); Review Template Row 154 (Closing Deliverables)",
+      "neutron_field_refs": [
+        {
+          "term_type": "COLL_PERFECTION",
+          "label": "Collateral - Perfection Requirements",
+          "schema_file": "collateral-guarantors-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "credit_protection",
+          "mapping_confidence": 0.7146,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        },
+        {
+          "term_type": "COLL_POST_CLOSING",
+          "label": "Collateral - Post-Closing Requirements",
+          "schema_file": "collateral-guarantors-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "credit_protection",
+          "mapping_confidence": 0.4605,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Automatic collateral release when asset sold or disposed of pursuant to the disposition covenant. Most common release trigger. Proceeds subject to mandatory prepayment / reinvestment rights.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.release.asset_sale",
+          "level": 3,
+          "name": "Release on Permitted Disposition",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Guarantee and collateral released when subsidiary designated unrestricted. Subject to Chewy blocker preventing IP trapdoor and J.Crew preventing material asset stripping.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.release.sub_designation",
+          "level": 3,
+          "name": "Release on Unrestricted Sub Designation",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 3"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "KCT cat4.4 requires the protective mechanism 'admin agent authority scope' but it is not adequately represented in the ontology.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.collateral",
+              "id": "credit_protection.collateral.release.permitted_lien.admin_agent_authority_scope",
+              "kct_ref": [
+                "cat4.4"
+              ],
+              "level": 4,
+              "name": "admin agent authority scope",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 4 Item 4"
+            },
+            {
+              "id": "credit_protection.collateral.release.permitted_lien.release_mechanism",
+              "name": "Release Mechanism (Auto vs. Discretionary)",
+              "level": 4,
+              "type": "sub_component",
+              "domain_id": "credit_protection",
+              "family_id": "credit_protection.collateral",
+              "corpus_prevalence": "medium",
+              "extraction_difficulty": "medium",
+              "definition": "Permitted lien collateral release involves admin agent authority and release mechanism (automatic vs. discretionary).",
+              "definition_source": "KCT Cat 4 Item 4"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Collateral agent releases or subordinates lien to accommodate permitted liens with priority status (e.g., purchase money liens, capital lease liens, ABL facility liens).",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.release.permitted_lien",
+          "kct_ref": [
+            "cat4.4",
+            "cat4.10",
+            "cat5.1"
+          ],
+          "level": 3,
+          "name": "Release for Permitted Lien Priority",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 4; KCT Cat 4 Item 10; KCT Cat 5 Item 1"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Collateral released upon satisfaction of defeasance conditions: deposit of sufficient funds, no EoD, legal opinion of tax neutrality. Rare in leveraged finance.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.release.covenant_defeasance",
+          "level": 3,
+          "name": "Covenant Defeasance Release",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Anti-value-stripping protections preventing collateral release: requires bona fide business purpose, bars release if entity holds material IP (J.Crew) or if minority sale is to affiliate (Chewy).",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.release.chewy_blocker",
+          "level": 3,
+          "market_benchmarks": {
+            "r17_gap_flagged": true
+          },
+          "name": "Chewy / J.Crew Release Blocker",
+          "negotiation_spectrum": {
+            "r17_gap_flagged": true
+          },
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 40,
+              "term": "Collateral/Guarantor release – Chewy"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 40 (Collateral/Guarantor release – Chewy)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Conditions under which collateral is automatically released from the security interest. Each release pathway creates potential value leakage if not properly constrained by Chewy/J.Crew protections.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "collateral_guarantees.cash_mgmt_hedging",
+        "section_locations": [
+          "ARTICLE 5",
+          "ARTICLE 8",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX"
+        ],
+        "shape_ref": "collateral_guarantees.cash_mgmt_hedging"
+      },
+      "family_id": "credit_protection.collateral",
+      "id": "credit_protection.collateral.release",
+      "level": 2,
+      "name": "Collateral Release Mechanics",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to stock pledge and material assets; excluded assets carve-outs for non-assignable permits, immaterial leasehold, foreign assets",
+        "dls_source": "DLS row 67",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "term_name: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "scope: substantially_all vs asset_specific vs stock_pledge_only",
+          "real_property: included_with_threshold vs excluded",
+          "ip_pledge: all_ip vs material_ip_only vs excluded",
+          "deposit_accounts: control_agreements_required vs springing",
+          "perfection_timeline: closing vs post_closing_30d vs post_closing_60d vs post_closing_90d",
+          "after_acquired_property: automatic vs best_efforts vs not_required",
+          "foreign_assets: 65pct_first_tier vs excluded_entirely",
+          "excluded_asset_scope: narrow vs broad vs expansive"
+        ],
+        "market_position": "",
+        "preferred_position": "First priority perfected lien on substantially all assets of Borrower and Guarantors; all personal property, real property (subject to threshold), IP, equity interests",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "collateral.collateral_release_conditions"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 52 (Collateral); Review Template Row 40 (Collateral/Guarantor release)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Equal-priority sharing arrangements between creditors with same-ranking liens. Ratable sharing of collateral proceeds in enforcement. Standard for revolving + term loan structures.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.intercreditor.pari_passu",
+          "kct_ref": [
+            "cat4.10"
+          ],
+          "level": 3,
+          "name": "Pari Passu Sharing",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 10"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "KCT cat4.4 requires the protective mechanism 'permitted creditor carve-outs' but it is not adequately represented in the ontology.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.collateral",
+              "id": "credit_protection.collateral.intercreditor.subordination.permitted_creditor_carv",
+              "kct_ref": [
+                "cat4.4"
+              ],
+              "level": 4,
+              "name": "permitted creditor carve-outs",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 4 Item 4"
+            },
+            {
+              "id": "credit_protection.collateral.intercreditor.subordination.standstill_period",
+              "name": "Standstill Period Duration",
+              "level": 4,
+              "type": "sub_component",
+              "domain_id": "credit_protection",
+              "family_id": "credit_protection.collateral",
+              "corpus_prevalence": "medium",
+              "extraction_difficulty": "hard",
+              "definition": "Lien subordination includes permitted creditor carve-outs and standstill mechanics.",
+              "definition_source": "KCT Cat 2 Item 1; Learning Material: STANDSTILL PERIOD"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Junior lien agreements where second-lien creditors accept lower priority on shared collateral. Standstill periods (90-180 days typical) limit junior creditor enforcement.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.intercreditor.subordination",
+          "kct_ref": [
+            "cat4.4",
+            "cat4.10",
+            "cat4.11"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence_of_agent_directed_ica_authority": "[cat4.11] KCT cat4.11 requires prevalence/severity data for 'prevalence of agent-directed ICA authority' but no existing node provides this benchmark.",
+            "prevalence_of_agent_directed_subordination": "[cat4.4] KCT cat4.4 requires prevalence/severity data for 'prevalence of agent-directed subordination' but no existing node provides this benchmark.",
+            "required_lender_vote_rates_for_ica": "[cat4.11] KCT cat4.11 requires prevalence/severity data for 'required lender vote rates for ICA' but no existing node provides this benchmark.",
+            "sacred_rights_coverage_of_lien_subordination": "[cat4.4] KCT cat4.4 requires prevalence/severity data for 'sacred rights coverage of lien subordination' but no existing node provides this benchmark."
+          },
+          "name": "Lien Subordination Arrangements",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 4; KCT Cat 4 Item 10; KCT Cat 4 Item 11"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Provision preserving each creditor class's right to assert claims against the borrower and guarantors notwithstanding the waterfall priority. Ensures that payment priority in the ABL/term loan waterfall does not constitute a waiver of underlying debt obligations. Prevents subordination arguments based solely on collateral priority allocation.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.collateral",
+              "id": "credit_protection.collateral.intercreditor.abl_term_waterfall.reservation_of_obl",
+              "kct_ref": [
+                "cat4.10"
+              ],
+              "level": 4,
+              "name": "Reservation Of Obligations",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 4 Item 10"
+            },
+            {
+              "id": "credit_protection.collateral.intercreditor.abl_term_waterfall.collateral_split",
+              "name": "Collateral Allocation Split",
+              "level": 4,
+              "type": "sub_component",
+              "domain_id": "credit_protection",
+              "family_id": "credit_protection.collateral",
+              "corpus_prevalence": "medium",
+              "extraction_difficulty": "hard",
+              "definition": "ABL/Term waterfall includes reservation of obligations and the collateral allocation split.",
+              "definition_source": "KCT Cat 4 Item 10"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Split-collateral intercreditor agreement: ABL has priority on current assets (receivables, inventory), term loan has priority on fixed assets (equipment, IP, equity). Each silent on other's collateral.",
+          "dls_ref": [
+            "DLS:8:Term Loan",
+            "DLS:21:Term Loan Margin",
+            "DLS:30:Term Loan"
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.intercreditor.abl_term_waterfall",
+          "kct_ref": [
+            "cat4.10"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "abl_intercreditor_agreement_prevalence": "[cat4.10] KCT cat4.10 requires prevalence/severity data for 'ABL intercreditor agreement prevalence' but no existing node provides this benchmark.",
+            "typical_ica_types": "[cat4.10] KCT cat4.10 requires prevalence/severity data for 'typical ICA types' but no existing node provides this benchmark."
+          },
+          "name": "ABL / Term Loan Waterfall",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 129,
+              "term": "Events of Default"
+            },
+            {
+              "coverage": "full",
+              "row": 154,
+              "term": "Closing Deliverables"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 8 (Term Loan); DLS Preferred Row 21 (Term Loan Margin); DLS Preferred Row 30 (Term Loan); KCT Cat 4 Item 10; Review Template Row 129 (Events of Default); Review Template Row 154 (Closing Deliverables)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "KCT cat4.11 requires the protective mechanism 'sacred rights protection against forced ICA' but it is not adequately represented in the ontology.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.collateral",
+              "id": "credit_protection.collateral.intercreditor.silent_second.sacred_rights_protectio",
+              "kct_ref": [
+                "cat4.11"
+              ],
+              "level": 4,
+              "name": "sacred rights protection against forced ICA",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 4 Item 11"
+            },
+            {
+              "id": "credit_protection.collateral.intercreditor.silent_second.enforcement_waiver",
+              "name": "Enforcement Rights Waiver Scope",
+              "level": 4,
+              "type": "sub_component",
+              "domain_id": "credit_protection",
+              "family_id": "credit_protection.collateral",
+              "corpus_prevalence": "low",
+              "extraction_difficulty": "hard",
+              "definition": "Silent second lien includes sacred rights protection and enforcement waiver mechanics.",
+              "definition_source": "Review Template Row 149 (Unknown); KCT Cat 2 Item 1"
+            }
+          ],
+          "corpus_prevalence": "low",
+          "definition": "Second-lien position with no independent enforcement rights. Junior creditor waives right to object to foreclosure, DIP financing, use of cash collateral. Maximum subordination.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.intercreditor.silent_second",
+          "kct_ref": [
+            "cat4.4",
+            "cat4.10",
+            "cat4.11"
+          ],
+          "level": 3,
+          "name": "Silent Second Lien",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 162,
+              "term": "Agency Fee"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 4; KCT Cat 4 Item 10; KCT Cat 4 Item 11; Review Template Row 162 (Agency Fee)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Contractual priority order for distribution of collateral proceeds in enforcement: (1) first-lien secured claims, (2) second-lien secured claims, (3) unsecured claims, (4) equity.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.intercreditor.proceeds_waterfall",
+          "level": 3,
+          "name": "Proceeds Distribution Waterfall",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Arrangements governing relative priority, sharing, and enforcement rights between creditors with security interests in the same collateral. DLS Preferred row 9 (Accordion) notes: 'To the extent the Credit Facility provides the ability to incur junior lien or unsecured debt, thought must be given to maturity date and mandatory prepayment terms.' DLS Preferred row 80 (Liens) alternative includes 'liens securing refinancing indebtedness; provided no up-tiering of debt is permitted.' KCT Category 4 item 11 flags: 'Language requiring the Admin Agent to enter into intercreditor agreements in respect of any permitted debt without a Required Lender vote (which could be read to require subordination to any and all permitted debt) or without having negotiated a form of intercreditor in advance.' PC Term Comparison Second Lien section directs: 'Anti-layering: avoid 1.5 lien and require any debt contractually subordinated to 1L to also be to 2L.'",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "collateral_guarantees.cash_mgmt_hedging",
+        "section_locations": [
+          "ARTICLE 5",
+          "ARTICLE 8",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX"
+        ],
+        "shape_ref": "collateral_guarantees.cash_mgmt_hedging"
+      },
+      "family_id": "credit_protection.collateral",
+      "id": "credit_protection.collateral.intercreditor",
+      "kct_ref": [
+        "cat4.10",
+        "cat4.11"
+      ],
+      "level": 2,
+      "name": "Intercreditor Provisions",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to stock pledge and material assets; excluded assets carve-outs for non-assignable permits, immaterial leasehold, foreign assets",
+        "dls_source": "DLS row 67",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "term_name: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "scope: substantially_all vs asset_specific vs stock_pledge_only",
+          "real_property: included_with_threshold vs excluded",
+          "ip_pledge: all_ip vs material_ip_only vs excluded",
+          "deposit_accounts: control_agreements_required vs springing",
+          "perfection_timeline: closing vs post_closing_30d vs post_closing_60d vs post_closing_90d",
+          "after_acquired_property: automatic vs best_efforts vs not_required",
+          "foreign_assets: 65pct_first_tier vs excluded_entirely",
+          "excluded_asset_scope: narrow vs broad vs expansive"
+        ],
+        "market_position": "",
+        "preferred_position": "First priority perfected lien on substantially all assets of Borrower and Guarantors; all personal property, real property (subject to threshold), IP, equity interests",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "collateral.intercreditor_arrangements"
+      ],
+      "type": "concept",
+      "definition_source": "KCT Category 4 item 11 (intercreditor without Required Lender vote risk); DLS Preferred rows 9, 80 (intercreditor in incremental and lien contexts); PC Term Comparison Second Lien section (anti-layering)",
+      "pc_ref": [
+        "Second Lien"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Flood insurance requirements that spring into effect when mortgaged property is in a FEMA-designated special flood hazard area. Federal regulation mandates compliance.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.springing.flood_insurance",
+          "level": 3,
+          "name": "Springing Flood Insurance",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Deposit account control agreements that activate from 'notice' to 'control' status upon occurrence of a trigger event (typically default or default + grace period expiry).",
+          "dls_ref": [
+            67
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.springing.daca_control",
+          "level": 3,
+          "name": "Springing DACA Control",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 67"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Mortgage filing requirements that activate when real property value exceeds FMV threshold. Allows operational flexibility below threshold while ensuring coverage above.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.springing.mortgage_filing",
+          "level": 3,
+          "name": "Springing Mortgage Requirements",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Collateral-related obligations that activate upon occurrence of specified triggers, typically crossing a dollar threshold or upon certain events. Defers compliance burden until material.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "collateral_guarantees.cash_mgmt_hedging",
+        "section_locations": [
+          "ARTICLE 5",
+          "ARTICLE 8",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX"
+        ],
+        "shape_ref": "collateral_guarantees.cash_mgmt_hedging"
+      },
+      "family_id": "credit_protection.collateral",
+      "id": "credit_protection.collateral.springing",
+      "level": 2,
+      "name": "Springing Obligations",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to stock pledge and material assets; excluded assets carve-outs for non-assignable permits, immaterial leasehold, foreign assets",
+        "dls_source": "DLS row 67",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "term_name: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "scope: substantially_all vs asset_specific vs stock_pledge_only",
+          "real_property: included_with_threshold vs excluded",
+          "ip_pledge: all_ip vs material_ip_only vs excluded",
+          "deposit_accounts: control_agreements_required vs springing",
+          "perfection_timeline: closing vs post_closing_30d vs post_closing_60d vs post_closing_90d",
+          "after_acquired_property: automatic vs best_efforts vs not_required",
+          "foreign_assets: 65pct_first_tier vs excluded_entirely",
+          "excluded_asset_scope: narrow vs broad vs expansive"
+        ],
+        "market_position": "",
+        "preferred_position": "First priority perfected lien on substantially all assets of Borrower and Guarantors; all personal property, real property (subject to threshold), IP, equity interests",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "collateral.springing_obligations"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 52 (Collateral)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "UCC blanket lien automatically attaches to after-acquired personal property. Additional actions required for real property (mortgages), IP (filings), and equity (certificate delivery).",
+          "dls_ref": [
+            67
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.after_acquired.collateral_sweep",
+          "level": 3,
+          "name": "After-Acquired Collateral Sweep",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 67"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Newly formed or acquired subsidiaries that qualify as loan parties must execute joinder agreements and pledge assets. Timing typically 30-60 days after formation/acquisition.",
+          "dls_ref": [
+            67
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.after_acquired.joinder_requirements",
+          "level": 3,
+          "market_benchmarks": {
+            "joinder_deadline": "30-60 days"
+          },
+          "name": "Subsidiary Joinder Requirements",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 67"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Compliance certificate disclosures of newly acquired assets requiring perfection: new IP registrations (19.5% periodic), new commercial tort claims, new deposit accounts.",
+          "dls_ref": [
+            67
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.after_acquired.periodic_updates",
+          "level": 3,
+          "name": "Periodic Collateral Updates",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 67"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Obligations to bring newly acquired or created assets into the collateral package. Prevents the collateral pool from shrinking as old assets are disposed of and new ones acquired.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "collateral_guarantees.cash_mgmt_hedging",
+        "section_locations": [
+          "ARTICLE 5",
+          "ARTICLE 8",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX"
+        ],
+        "shape_ref": "collateral_guarantees.cash_mgmt_hedging"
+      },
+      "family_id": "credit_protection.collateral",
+      "id": "credit_protection.collateral.after_acquired",
+      "level": 2,
+      "name": "After-Acquired Property",
+      "negotiation_spectrum": {
+        "aggressive_position": "120d for first audit; going-concern for maturity/covenant ok; 60d for first 3 quarters; no monthlies; no forecasts or 90-120d; no lender calls or choose between MD&A/calls; reporting limited to Borrower + restricted subs",
+        "dls_source": "DLS row 78",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(xvii) covenant to guarantee obligations and give security",
+          "(xix) further assurances as to security",
+          "(xxii) interest rate protection",
+          "alternative_terms: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "annual_financial_deadline: 90d vs 120d_first_year",
+          "audit_opinion_qualification: clean_only vs going_concern_maturity_ok vs going_concern_covenant_ok",
+          "quarterly_financial_deadline: 45d vs 60d_first_3Q",
+          "monthly_financials: required vs not_required",
+          "monthly_forecasts: required vs not_required vs 90d_forecasts",
+          "lender_calls: quarterly vs annual vs not_required",
+          "mda: with_financials vs not_required",
+          "compliance_certificate: quarterly vs annual",
+          "guarantee_security_covenant: affirmative_covenant vs best_efforts",
+          "further_assurances: required vs not_required",
+          "interest_rate_protection: required vs not_required",
+          "entity_scope: holdings_and_all_subs vs borrower_and_restricted_subs",
+          "inspection_frequency: unlimited_with_cost_cap vs annual_plus_eod"
+        ],
+        "market_position": "",
+        "preferred_position": "24 enumerated covenants: annual (90d, audited, clean opinion), quarterly (45d), monthly (30d), monthly forecasts, quarterly lender calls, MD&A, compliance certs, notices, tax/existence/property/insurance/ERISA/environmental, inspection rights, guarantee/security covenant, further assurances, IP, interest rate protection, FCPA/OFAC/Patriot Act",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "collateral.after_acquired_property"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 52 (Collateral)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Standard tax-driven exclusion: only 65% of voting stock of first-tier foreign subsidiaries pledged to avoid deemed repatriation under IRC Section 956. Does not apply to non-voting stock.",
+          "dls_ref": [
+            67
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.foreign_collateral.sixty_five_pct",
+          "level": 3,
+          "market_benchmarks": {
+            "market_standard_value": "65% of voting stock"
+          },
+          "name": "65% Stock Pledge Limitation",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 67"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Foreign Subsidiary Holding Company treated as CFC for pledge purposes. Equity of FSHCO capped at 65% to avoid deemed repatriation of earnings of underlying foreign subs.",
+          "dls_ref": [
+            67
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.foreign_collateral.fshco",
+          "level": 3,
+          "name": "FSHCO Treatment",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 67"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Foreign jurisdiction-specific perfection requirements: share register entries, notarization, apostille, local filings. Post-closing accommodation typical (60-90 day deadline).",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.foreign_collateral.local_law_perfection",
+          "level": 3,
+          "name": "Local Law Perfection",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 2"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Limitations and special treatment for security interests in foreign assets. Driven by tax efficiency (65% stock pledge cap), local law perfection requirements, and practical enforcement challenges.",
+      "dls_ref": [
+        "DLS:52:Collateral"
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "collateral_guarantees.cash_mgmt_hedging",
+        "section_locations": [
+          "ARTICLE 5",
+          "ARTICLE 8",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX"
+        ],
+        "shape_ref": "collateral_guarantees.cash_mgmt_hedging"
+      },
+      "family_id": "credit_protection.collateral",
+      "id": "credit_protection.collateral.foreign_collateral",
+      "level": 2,
+      "name": "Foreign Collateral",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to stock pledge and material assets; excluded assets carve-outs for non-assignable permits, immaterial leasehold, foreign assets",
+        "dls_source": "DLS row 67",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "term_name: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "scope: substantially_all vs asset_specific vs stock_pledge_only",
+          "real_property: included_with_threshold vs excluded",
+          "ip_pledge: all_ip vs material_ip_only vs excluded",
+          "deposit_accounts: control_agreements_required vs springing",
+          "perfection_timeline: closing vs post_closing_30d vs post_closing_60d vs post_closing_90d",
+          "after_acquired_property: automatic vs best_efforts vs not_required",
+          "foreign_assets: 65pct_first_tier vs excluded_entirely",
+          "excluded_asset_scope: narrow vs broad vs expansive"
+        ],
+        "market_position": "",
+        "preferred_position": "First priority perfected lien on substantially all assets of Borrower and Guarantors; all personal property, real property (subject to threshold), IP, equity interests",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "collateral.foreign_collateral"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 39,
+          "term": "Collateral and Guarantors"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 52 (Collateral); Review Template Row 39 (Collateral and Guarantors)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether DACAs are required, optional, or conditional. Universal in PC market per DealData.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.daca.requirements",
+          "level": 3,
+          "market_benchmarks": {
+            "not_required": "30.6%",
+            "required_consent": "55.1%"
+          },
+          "name": "DACA Requirements",
+          "type": "sub_component"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Excluded from DACA requirements. Essential operations accommodation.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.collateral",
+              "id": "credit_protection.collateral.daca.exceptions.payroll",
+              "level": 4,
+              "market_benchmarks": {
+                "exclusion_rate": "79.3%"
+              },
+              "name": "Payroll Accounts",
+              "type": "sub_component"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Tax withholding and trust fund accounts excluded from DACA. 65.5% exclude. Regulatory compliance facilitation.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.collateral",
+              "id": "credit_protection.collateral.daca.exceptions.tax",
+              "level": 4,
+              "market_benchmarks": {
+                "exclusion_rate": "65.5%"
+              },
+              "name": "Tax Withholding Accounts",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Zero balance accounts that sweep daily to a controlled master account. 58.6% excluded. Administrative efficiency — controlled indirectly via master account DACA.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.collateral",
+              "id": "credit_protection.collateral.daca.exceptions.zero_balance",
+              "level": 4,
+              "market_benchmarks": {
+                "exclusion_rate": "58.6%"
+              },
+              "name": "Zero Balance / Sweep Accounts",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Dollar threshold below which accounts exempt from DACA. $250K-$5M individual/aggregate.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.collateral",
+              "id": "credit_protection.collateral.daca.exceptions.de_minimis",
+              "level": 4,
+              "market_benchmarks": {
+                "prevalence": "27.6%",
+                "threshold_range": "$250K-$5M"
+              },
+              "name": "De Minimis Threshold",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 99 (Unknown); KCT Cat 1 Item 3"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Account categories excluded from DACA requirements for operational necessity.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.daca.exceptions",
+          "level": 3,
+          "name": "DACA Exceptions",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Deadline for execution and delivery of DACAs. 60-day standard, 90-day, at closing, 30-day.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.daca.delivery_timing",
+          "level": 3,
+          "market_benchmarks": {
+            "at_closing_value": "13.8%",
+            "notice_30_day": "10.3%",
+            "notice_60_day": "34.5%",
+            "notice_90_day": "24.1%"
+          },
+          "name": "Delivery Timing",
+          "term_analysis_sources": [
+            "TERM_ANALYSIS_TIMING_DELIVERY_DACAS.md"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 12"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Tri-party agreements providing lender control over borrower deposit accounts. Essential for cash management and ECF sweep enforcement.",
+      "dls_ref": [
+        "DLS:67:Security"
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "collateral_guarantees.cash_mgmt_hedging",
+        "section_locations": [
+          "ARTICLE 5",
+          "ARTICLE 8",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX"
+        ],
+        "shape_ref": "collateral_guarantees.cash_mgmt_hedging",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.424368+00:00",
+          "term_packs": {
+            "COLL_DACA": {
+              "label": "Collateral - DACA Requirements",
+              "category": "COLLATERAL_GUARANTORS",
+              "exactPhrases": [
+                "Will there be DACAs?",
+                "Note any exceptions for DACAs",
+                "deposit account control agreement",
+                "blocked account agreement",
+                "control agreement",
+                "springing control",
+                "cash dominion"
+              ],
+              "sectionHeaders": [
+                "DACA",
+                "Deposit Account Control Agreement",
+                "Control Agreement",
+                "Blocked Account",
+                "Cash Management",
+                "Deposit Accounts"
+              ],
+              "semanticVariants": [
+                "deposit account control requirements",
+                "bank account control agreements",
+                "cash dominion provisions",
+                "springing control mechanics",
+                "blocked account requirements",
+                "account control perfection"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.6,
+                "minKeywordScore": 0.5,
+                "minConfidence": 0.7,
+                "escalationThreshold": 0.5,
+                "humanEscalationThreshold": 0.3
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Will there be DACAs?",
+              "Note any exceptions for DACAs",
+              "deposit account control agreement",
+              "blocked account agreement",
+              "control agreement",
+              "springing control",
+              "cash dominion"
+            ],
+            "sectionHeaders": [
+              "DACA",
+              "Deposit Account Control Agreement",
+              "Control Agreement",
+              "Blocked Account",
+              "Cash Management",
+              "Deposit Accounts"
+            ],
+            "semanticVariants": [
+              "deposit account control requirements",
+              "bank account control agreements",
+              "cash dominion provisions",
+              "springing control mechanics",
+              "blocked account requirements",
+              "account control perfection"
+            ]
+          }
+        }
+      },
+      "family_id": "credit_protection.collateral",
+      "id": "credit_protection.collateral.daca",
+      "level": 2,
+      "name": "Deposit Account Control Agreements",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to stock pledge and material assets; excluded assets carve-outs for non-assignable permits, immaterial leasehold, foreign assets",
+        "dls_source": "DLS row 67",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "term_name: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "scope: substantially_all vs asset_specific vs stock_pledge_only",
+          "real_property: included_with_threshold vs excluded",
+          "ip_pledge: all_ip vs material_ip_only vs excluded",
+          "deposit_accounts: control_agreements_required vs springing",
+          "perfection_timeline: closing vs post_closing_30d vs post_closing_60d vs post_closing_90d",
+          "after_acquired_property: automatic vs best_efforts vs not_required",
+          "foreign_assets: 65pct_first_tier vs excluded_entirely",
+          "excluded_asset_scope: narrow vs broad vs expansive"
+        ],
+        "market_position": "",
+        "preferred_position": "First priority perfected lien on substantially all assets of Borrower and Guarantors; all personal property, real property (subject to threshold), IP, equity interests",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "collateral.daca_requirements"
+      ],
+      "term_analysis_sources": [
+        "TERM_ANALYSIS_DACAS_PART_COLLATERAL.md",
+        "TERM_ANALYSIS_DACA_REQUIREMENTS_EXCEPTIONS.md"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 67 (Security)",
+      "neutron_field_refs": [
+        {
+          "term_type": "COLL_DACA",
+          "label": "Collateral - DACA Requirements",
+          "schema_file": "collateral-guarantors-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "credit_protection",
+          "mapping_confidence": 0.5757,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "id": "credit_protection.collateral.landlord_bailee.required_locations",
+          "name": "Required Locations",
+          "definition": "Criteria for which leased locations require landlord lien waivers or bailee letters — typically locations holding inventory or equipment above a threshold value, or all locations with material assets.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.collateral",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 2; PC Term Comparison: 1. Key Definitions - Required Lenders"
+        },
+        {
+          "id": "credit_protection.collateral.landlord_bailee.agreement_form",
+          "name": "Agreement Form Requirements",
+          "definition": "Required content of landlord waivers and bailee agreements — waiver of landlord's lien, agent access rights for inspection and removal, notice periods, and form approval (agent-approved vs. borrower's form).",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.collateral",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "id": "credit_protection.collateral.landlord_bailee.timing_deadline",
+          "name": "Delivery Timing Deadline",
+          "definition": "When landlord/bailee agreements must be delivered — at closing (for material locations), within 60-90 days post-closing, or on a commercially reasonable efforts basis without hard deadline.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.collateral",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "easy",
+          "definition_source": "KCT Cat 2 Item 2"
+        },
+        {
+          "id": "credit_protection.collateral.landlord_bailee.failure_consequences",
+          "name": "Consequences of Non-Delivery",
+          "definition": "Remedies when landlord/bailee agreements cannot be obtained — exclusion from borrowing base, increased reserve, reporting obligation, or no consequence if best efforts were used.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.collateral",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 3"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "dealdata_benchmarks": {
+        "Are landlord agreements or bailee agreements part of the collateral package? ...": {
+          "pc_dollar_median": "$500,000",
+          "pc_dollar_range": "$250,000-$5,000,000"
+        }
+      },
+      "definition": "Collateral access arrangements for leased premises. Not required, headquarters only, threshold-based. Ensures lender can access and remove collateral from leased locations.",
+      "dls_ref": [
+        "DLS:45:Due diligence"
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "collateral_guarantees.cash_mgmt_hedging",
+        "section_locations": [
+          "ARTICLE 5",
+          "ARTICLE 8",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX"
+        ],
+        "shape_ref": "collateral_guarantees.cash_mgmt_hedging"
+      },
+      "family_id": "credit_protection.collateral",
+      "id": "credit_protection.collateral.landlord_bailee",
+      "level": 2,
+      "name": "Landlord / Bailee Agreements",
+      "term_analysis_sources": [
+        "TERM_ANALYSIS_LANDLORD_BAILEE_AGREEMENTS.md"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 45 (Due diligence)"
+    },
+    {
+      "children": [
+        {
+          "id": "credit_protection.collateral.proxies.irrevocable_proxy_grant",
+          "name": "Irrevocable Proxy Grant",
+          "definition": "Grant of irrevocable proxy to the administrative agent to vote pledged equity interests upon an Event of Default, enabling the agent to exercise governance control over subsidiary entities.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.collateral",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "id": "credit_protection.collateral.proxies.issuer_acknowledgement",
+          "name": "Issuer Acknowledgement",
+          "definition": "Written acknowledgement from the issuer of pledged equity that it recognizes the security interest and will comply with agent instructions regarding transfers, distributions, and voting upon enforcement.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.collateral",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "id": "credit_protection.collateral.proxies.pre_eod_voting_rights",
+          "name": "Pre-EoD Voting Rights Retention",
+          "definition": "Borrower's retained right to vote pledged equity and receive distributions prior to an Event of Default, with the proxy becoming effective only upon default — the standard pre-enforcement arrangement.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.collateral",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "easy",
+          "definition_source": "Review Template Row 131 (Unknown); KCT Cat 1 Item 1"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Enhanced control over pledged equity beyond certificate possession. Proxies required, not required. Enables agent to vote pledged stock in enforcement.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "collateral_guarantees.cash_mgmt_hedging",
+        "section_locations": [
+          "ARTICLE 5",
+          "ARTICLE 8",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX"
+        ],
+        "shape_ref": "collateral_guarantees.cash_mgmt_hedging",
+        "aligned_difficulty": "hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "credit_protection.collateral",
+      "id": "credit_protection.collateral.proxies",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "medium -- common in equity pledge collateral packages",
+        "source": "R19-C_corpus_analysis",
+        "typical_requirement": "irrevocable proxy in favor of agent"
+      },
+      "name": "Proxies / Issuer Acknowledgements",
+      "term_analysis_sources": [
+        "TERM_ANALYSIS_PROXIES_ISSUERS_ACKNOWLEDGEMENTS.md"
+      ],
+      "type": "concept",
+      "definition_source": "KCT Cat 1 Item 2"
+    },
+    {
+      "children": [
+        {
+          "id": "credit_protection.collateral.default_thresholds.dollar_levels",
+          "name": "Dollar Threshold Levels",
+          "definition": "Fixed dollar thresholds for collateral-related defaults, tiered by deal size — LMM ($1.5M-$3M), CMM ($2M-$5M), UMM ($17M or 10-15% of EBITDA) — below which collateral impairment is not actionable.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.collateral",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "id": "credit_protection.collateral.default_thresholds.ebitda_scaling",
+          "name": "EBITDA-Scaled Thresholds",
+          "definition": "Thresholds expressed as a percentage of EBITDA or total assets rather than fixed dollars, providing automatic scaling as the borrower grows and preventing technical defaults on de minimis collateral gaps.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.collateral",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "id": "credit_protection.collateral.default_thresholds.grace_periods",
+          "name": "Grace & Cure Periods",
+          "definition": "Time permitted to cure a collateral-related default after notice — typically 15-30 days for perfection failures, 5 days for insurance lapses — before the default becomes an actionable Event of Default.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.collateral",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "easy",
+          "definition_source": "KCT Cat 1 Item 1"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Materiality thresholds for collateral-related Events of Default. No threshold, dollar threshold, combined, agent carve-outs. Loss-of-lien EoD range: $1.5M-$17M.",
+      "dls_ref": [
+        "DLS:90:Events of Default"
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "collateral_guarantees.cash_mgmt_hedging",
+        "section_locations": [
+          "ARTICLE 5",
+          "ARTICLE 8",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX"
+        ],
+        "shape_ref": "collateral_guarantees.cash_mgmt_hedging"
+      },
+      "family_id": "credit_protection.collateral",
+      "id": "credit_protection.collateral.default_thresholds",
+      "level": 2,
+      "market_benchmarks": {
+        "cmm": "$2M-$5M",
+        "lmm": "$1.5M-$3M",
+        "umm": "$17M or 10-15% EBITDA"
+      },
+      "name": "Collateral Default Thresholds",
+      "r18_concept_ids": [
+        "collateral.collateral_thresholds"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 129,
+          "term": "Events of Default"
+        }
+      ],
+      "term_analysis_sources": [
+        "TERM_ANALYSIS_THRESHOLD_COLLATERAL_DEFAULTS.md"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 90 (Events of Default); Review Template Row 129 (Events of Default)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Grower baskets that increase excluded asset thresholds as EBITDA grows. Dollar-pegged exclusions may become immaterial relative to growing enterprise value.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.excluded_collateral_creep.basket_expansion",
+          "level": 3,
+          "name": "Basket Expansion Mechanics",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Borrower reclassifies assets from included to excluded categories (e.g., reclassifying a domestic sub as immaterial). Must be tested against objective financial tests.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.collateral",
+          "id": "credit_protection.collateral.excluded_collateral_creep.reclassification",
+          "level": 3,
+          "name": "Asset Reclassification",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; PC Term Comparison: 1. Key Definitions - Asset Sales:"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Borrower ability to expand excluded asset categories over time through basket resizing, definition amendments, or reclassification. Monitored via compliance certificate disclosures and annual collateral audits.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "collateral_guarantees.cash_mgmt_hedging",
+        "section_locations": [
+          "ARTICLE 5",
+          "ARTICLE 8",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE IV",
+          "ARTICLE IX"
+        ],
+        "shape_ref": "collateral_guarantees.cash_mgmt_hedging"
+      },
+      "family_id": "credit_protection.collateral",
+      "id": "credit_protection.collateral.excluded_collateral_creep",
+      "level": 2,
+      "name": "Excluded Collateral Creep",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to stock pledge and material assets; excluded assets carve-outs for non-assignable permits, immaterial leasehold, foreign assets",
+        "dls_source": "DLS row 67",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "term_name: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "scope: substantially_all vs asset_specific vs stock_pledge_only",
+          "real_property: included_with_threshold vs excluded",
+          "ip_pledge: all_ip vs material_ip_only vs excluded",
+          "deposit_accounts: control_agreements_required vs springing",
+          "perfection_timeline: closing vs post_closing_30d vs post_closing_60d vs post_closing_90d",
+          "after_acquired_property: automatic vs best_efforts vs not_required",
+          "foreign_assets: 65pct_first_tier vs excluded_entirely",
+          "excluded_asset_scope: narrow vs broad vs expansive"
+        ],
+        "market_position": "",
+        "preferred_position": "First priority perfected lien on substantially all assets of Borrower and Guarantors; all personal property, real property (subject to threshold), IP, equity interests",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "collateral.excluded_collateral_creep"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 52 (Collateral)"
+    },
+    {
+      "children": [
+        {
+          "id": "credit_protection.collateral.sungard_conditionality.certain_funds_period",
+          "name": "Certain Funds Period",
+          "definition": "The window during which SunGard limited conditionality applies — from signing of acquisition agreement through closing — during which only specified conditions precedent may block funding.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.collateral",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "id": "credit_protection.collateral.sungard_conditionality.specified_reps",
+          "name": "Specified Representations Scope",
+          "definition": "The narrow subset of representations (typically 10-12 of 34) that must be true at funding under SunGard conditionality — organization, authority, no-conflict, enforceability, solvency, PATRIOT Act, and OFAC.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.collateral",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "medium",
+          "definition_source": "DLS Preferred Row 57 (Unknown); Review Template Row 150 (Unknown); KCT Cat 1 Item 3"
+        },
+        {
+          "id": "credit_protection.collateral.sungard_conditionality.mac_exclusions",
+          "name": "MAE Exclusion Scope",
+          "definition": "Carve-outs from the Material Adverse Effect definition under SunGard conditionality — typically industry-wide changes, general economic conditions, changes in law, and effects of the transaction itself — narrowing what can block closing.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.collateral",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "hard",
+          "definition_source": "KCT Cat 1 Item 7"
+        },
+        {
+          "id": "credit_protection.collateral.sungard_conditionality.no_default_scope",
+          "name": "No-Default Testing Scope",
+          "definition": "Under SunGard conditionality, which defaults block funding — typically limited to payment defaults and bankruptcy EoDs, excluding financial covenant breaches and other non-payment defaults during the certain-funds period.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.collateral",
+          "corpus_prevalence": "high",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 1"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Framework for closing-day collateral perfection limiting what must be perfected at closing versus post-closing. Review Template row 39: 'Under Sungard, require borrower/holdings stock pledges at closing and if any carveouts are included; UCCs are baseline. Consider IP filings for material portfolios, post-closing foreign collateral, and whether DACAs are required initially or post-closing.' Learning Material section on Conditions Precedent covers the SunGard certain funds framework where specified collateral delivery is a closing condition while most perfection steps are deferred to post-closing covenants. This framework balances closing certainty (sponsor can close the acquisition) against lender protection (core collateral secured on day one).",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": false,
+        "section_locations": [
+          "ARTICLE IV",
+          "Section 4.01",
+          "Section 4.02"
+        ],
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "playbook_ref": null,
+        "section_location": "ARTICLE IV (Conditions) / Security Documents"
+      },
+      "family_id": "credit_protection.collateral",
+      "id": "credit_protection.collateral.sungard_conditionality",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "high in acquisition financing since 2005",
+        "source": "R19-C_corpus_analysis",
+        "standard": "limited conditions precedent per SunGard framework"
+      },
+      "name": "Sungard Conditionality",
+      "type": "concept",
+      "definition_source": "Review Template row 39 (Sungard collateral: stock pledges + UCCs at closing; IP/DACAs/foreign assets post-closing); Learning Material section on Conditions Precedent (certain funds framework)"
+    },
+    {
+      "children": [
+        {
+          "id": "credit_protection.collateral.lien_perfection_eod.perfection_failure_scope",
+          "name": "Perfection Failure Scope",
+          "definition": "Which perfection failures constitute a potential Event of Default — UCC filing lapses, failure to deliver stock certificates, missed mortgage recordings — and whether only material liens are covered.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.collateral",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "id": "credit_protection.collateral.lien_perfection_eod.materiality_filter",
+          "name": "Materiality Filter",
+          "definition": "Threshold requirement that the perfection failure affect a material portion of collateral before triggering an EoD, preventing technical defaults from minor filing errors or immaterial asset categories.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.collateral",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "id": "credit_protection.collateral.lien_perfection_eod.grace_period",
+          "name": "Grace Period After Notice",
+          "definition": "Cure period — typically 30 days after notice from the administrative agent — to remedy a lien perfection failure before it matures into an Event of Default, with possible extension for diligent pursuit.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.collateral",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "easy",
+          "definition_source": "KCT Cat 1 Item 1"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Event of Default trigger for loss of lien priority or perfection. Determines whether collateral impairment is immediately actionable.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": false,
+        "section_locations": [
+          "ARTICLE V",
+          "ARTICLE VIII",
+          "Section 5.11",
+          "Section 8.01"
+        ],
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "playbook_ref": null,
+        "section_location": "ARTICLE IV (Conditions) / Security Documents"
+      },
+      "family_id": "credit_protection.collateral",
+      "id": "credit_protection.collateral.lien_perfection_eod",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "medium -- failure to perfect as EoD subject to materiality",
+        "source": "R19-C_corpus_analysis",
+        "typical_grace_period": "30 days after notice"
+      },
+      "name": "Lien Perfection Eod",
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 52 (Collateral); Review Template Row 39 (Collateral and Guarantors)"
+    }
+  ],
+  "corpus_prevalence": "high",
+  "definition": "Security interests granted to lenders covering substantially all assets of U.S. loan parties with customary exceptions, perfection requirements, and release mechanics. Review Template row 39 (Collateral and Guarantors): 'Collateral/guarantee scope should be \"all assets\" of U.S. loan parties with standard exceptions. Sources emphasize Sungard conditionality: UCC filings and stock certificates of borrower (and sometimes subs if readily deliverable) at close; other perfection steps (e.g., account control, mortgages, USPTO filings, foreign assets) move to post-closing covenants unless essential to the credit.' DLS Preferred row 78 affirmative covenants clauses (xvii) 'covenant to guarantee obligations and give security' and (xix) 'further assurances as to security' (both highlighted) establish the ongoing obligation to maintain and expand the collateral package.",
+  "dls_ref": [
+    "DLS:52:Collateral",
+    "DLS:66:Guarantees",
+    "DLS:67:Security",
+    "DLS:78:Affirmative covenants",
+    "DLS:91:Representations and Warranties"
+  ],
+  "domain_id": "credit_protection",
+  "extraction_difficulty": "hard",
+  "family_id": "credit_protection.collateral",
+  "id": "credit_protection.collateral",
+  "level": 1,
+  "market_benchmarks": {
+    "r17_gap_flagged": true
+  },
+  "name": "Collateral Package",
+  "negotiation_spectrum": {
+    "r17_gap_flagged": true
+  },
+  "r18_concept_ids": [
+    "collateral.after_acquired_property",
+    "collateral.intercreditor_arrangements"
+  ],
+  "term_analysis_sources": [
+    "TERM_ANALYSIS_DESCRIBE_COLLATERAL.md",
+    "TERM_ANALYSIS_COLLATERAL_EXCEPTIONS.md",
+    "TERM_ANALYSIS_COLLATERAL_THRESHOLDS.md",
+    "TERM_ANALYSIS_DACAS_PART_COLLATERAL.md"
+  ],
+  "type": "family",
+  "definition_source": "Review Template row 39 (all-assets scope with standard exceptions, Sungard conditionality); DLS Preferred row 78 clauses (xvii) and (xix) (highlighted: guarantee/security covenant and further assurances)"
+}

@@ -1,0 +1,19 @@
+{
+  "family": "amendments_voting",
+  "iteration_count": 0,
+  "last_strategy_version": 1,
+  "last_update": "2026-02-23T06:40:48.272681+00:00",
+  "status": "completed",
+  "last_session": "agent-swarm",
+  "last_pane": "2",
+  "last_start_at": "2026-02-23T06:28:43.662709+00:00",
+  "current_concept_id": "governance.amendments_voting",
+  "last_concept_id": "governance.amendments_voting",
+  "last_evidence_file": "workspaces/amendments_voting/evidence/governance.amendments_voting_20260223T064032.jsonl",
+  "last_evidence_run_id": "wave3_batch1_amendments_voting_2026-02-23_v2",
+  "last_evidence_records": 300,
+  "last_evidence_at": "2026-02-23T06:40:32.419843+00:00",
+  "status_updated_at": "2026-02-23T06:40:48.272681+00:00",
+  "status_updated_by": "wave_promote_status.py",
+  "status_note": "wave3-batch1-bootstrap-evidence-complete"
+}

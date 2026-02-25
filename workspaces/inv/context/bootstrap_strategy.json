@@ -1,0 +1,484 @@
+[
+  {
+    "id": "cash_flow.available_amount.aa_investment_returns",
+    "name": "Investment Returns Component",
+    "family_id": "cash_flow.available_amount",
+    "concept_area": "available_amount",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "Growth Amount"
+      ],
+      "keyword_anchors": [
+        "Available Amount",
+        "Builder Basket",
+        "Cumulative Credit",
+        "retained Excess Cash Flow",
+        "Growth Amount"
+      ],
+      "concept_specific_keywords": [
+        "Investment Returns Component",
+        "Available Amount",
+        "recycling mechanism"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.rp.investment_return",
+    "name": "Investment Return Basket",
+    "family_id": "cash_flow.rp",
+    "concept_area": "rp",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Payments",
+        "Limitation on Restricted Payments",
+        "Dividends",
+        "Distributions"
+      ],
+      "keyword_anchors": [
+        "Restricted Payment",
+        "restricted payment",
+        "dividend",
+        "distribution",
+        "repurchase",
+        "redemption"
+      ],
+      "concept_specific_keywords": [
+        "Investment Return Basket",
+        "trap door"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.inv.permitted_acquisitions",
+    "name": "Permitted Acquisitions",
+    "family_id": "cash_flow.inv",
+    "concept_area": "inv",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Investments",
+        "Loans and Investments",
+        "Limitation on Investments",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Investment",
+        "Permitted Investment",
+        "Permitted Acquisition",
+        "loan",
+        "advance"
+      ],
+      "concept_specific_keywords": [
+        "Permitted Acquisitions"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.inv.general_basket",
+    "name": "General Investment Basket",
+    "family_id": "cash_flow.inv",
+    "concept_area": "inv",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Investments",
+        "Loans and Investments",
+        "Limitation on Investments",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Investment",
+        "Permitted Investment",
+        "Permitted Acquisition",
+        "loan",
+        "advance"
+      ],
+      "concept_specific_keywords": [
+        "General Investment Basket"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.inv.ratio_basket",
+    "name": "Unlimited Ratio Investment Basket",
+    "family_id": "cash_flow.inv",
+    "concept_area": "inv",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Investments",
+        "Loans and Investments",
+        "Limitation on Investments",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Investment",
+        "Permitted Investment",
+        "Permitted Acquisition",
+        "loan",
+        "advance"
+      ],
+      "concept_specific_keywords": [
+        "Unlimited Ratio Investment Basket"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.inv.available_amount",
+    "name": "Available Amount Basket (Investments)",
+    "family_id": "cash_flow.inv",
+    "concept_area": "inv",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Investments",
+        "Loans and Investments",
+        "Limitation on Investments",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Investment",
+        "Permitted Investment",
+        "Permitted Acquisition",
+        "loan",
+        "advance"
+      ],
+      "concept_specific_keywords": [
+        "Available Amount Basket (Investments)",
+        "Available Amount"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.inv.joint_ventures",
+    "name": "Joint Venture Investments",
+    "family_id": "cash_flow.inv",
+    "concept_area": "inv",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Investments",
+        "Loans and Investments",
+        "Limitation on Investments",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Investment",
+        "Permitted Investment",
+        "Permitted Acquisition",
+        "loan",
+        "advance"
+      ],
+      "concept_specific_keywords": [
+        "Joint Venture Investments"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.inv.non_guarantor",
+    "name": "Non-Guarantor Subsidiary Investments",
+    "family_id": "cash_flow.inv",
+    "concept_area": "inv",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Investments",
+        "Loans and Investments",
+        "Limitation on Investments",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Investment",
+        "Permitted Investment",
+        "Permitted Acquisition",
+        "loan",
+        "advance"
+      ],
+      "concept_specific_keywords": [
+        "Non-Guarantor Subsidiary Investments"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.inv.unrestricted_subs",
+    "name": "Unrestricted Subsidiary Designations",
+    "family_id": "cash_flow.inv",
+    "concept_area": "inv",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Investments",
+        "Loans and Investments",
+        "Limitation on Investments",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Investment",
+        "Permitted Investment",
+        "Permitted Acquisition",
+        "loan",
+        "advance"
+      ],
+      "concept_specific_keywords": [
+        "Unrestricted Subsidiary Designations"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.inv.management_loans",
+    "name": "Management Loans / Employee Advances",
+    "family_id": "cash_flow.inv",
+    "concept_area": "inv",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Investments",
+        "Loans and Investments",
+        "Limitation on Investments",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Investment",
+        "Permitted Investment",
+        "Permitted Acquisition",
+        "loan",
+        "advance"
+      ],
+      "concept_specific_keywords": [
+        "Management Loans / Employee Advances"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.inv.similar_business",
+    "name": "Similar Business Investments",
+    "family_id": "cash_flow.inv",
+    "concept_area": "inv",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Investments",
+        "Loans and Investments",
+        "Limitation on Investments",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Investment",
+        "Permitted Investment",
+        "Permitted Acquisition",
+        "loan",
+        "advance"
+      ],
+      "concept_specific_keywords": [
+        "Similar Business Investments",
+        "s permitted line of business. Breadth of the "
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.inv.other_baskets",
+    "name": "Other Investment Baskets",
+    "family_id": "cash_flow.inv",
+    "concept_area": "inv",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Investments",
+        "Loans and Investments",
+        "Limitation on Investments",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Investment",
+        "Permitted Investment",
+        "Permitted Acquisition",
+        "loan",
+        "advance"
+      ],
+      "concept_specific_keywords": [
+        "Other Investment Baskets"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.inv.redesignation",
+    "name": "Investment Redesignation / Reclassification",
+    "family_id": "cash_flow.inv",
+    "concept_area": "inv",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Investments",
+        "Loans and Investments",
+        "Limitation on Investments",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Investment",
+        "Permitted Investment",
+        "Permitted Acquisition",
+        "loan",
+        "advance"
+      ],
+      "concept_specific_keywords": [
+        "Investment Redesignation / Reclassification"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.inv.intercompany",
+    "name": "Intercompany Investments",
+    "family_id": "cash_flow.inv",
+    "concept_area": "inv",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Investments",
+        "Loans and Investments",
+        "Limitation on Investments",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Investment",
+        "Permitted Investment",
+        "Permitted Acquisition",
+        "loan",
+        "advance"
+      ],
+      "concept_specific_keywords": [
+        "Intercompany Investments"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.inv.hedging",
+    "name": "Hedging / Swap Investments",
+    "family_id": "cash_flow.inv",
+    "concept_area": "inv",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Investments",
+        "Loans and Investments",
+        "Limitation on Investments",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Investment",
+        "Permitted Investment",
+        "Permitted Acquisition",
+        "loan",
+        "advance"
+      ],
+      "concept_specific_keywords": [
+        "Hedging / Swap Investments"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.inv.existing_investments",
+    "name": "Existing / Closing Date Investments",
+    "family_id": "cash_flow.inv",
+    "concept_area": "inv",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Investments",
+        "Loans and Investments",
+        "Limitation on Investments",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Investment",
+        "Permitted Investment",
+        "Permitted Acquisition",
+        "loan",
+        "advance"
+      ],
+      "concept_specific_keywords": [
+        "Existing / Closing Date Investments"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.inv.cross_covenant",
+    "name": "Cross-Covenant Coordination",
+    "family_id": "cash_flow.inv",
+    "concept_area": "inv",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Investments",
+        "Loans and Investments",
+        "Limitation on Investments",
+        "Acquisitions"
+      ],
+      "keyword_anchors": [
+        "Investment",
+        "Permitted Investment",
+        "Permitted Acquisition",
+        "loan",
+        "advance"
+      ],
+      "concept_specific_keywords": [
+        "Cross-Covenant Coordination"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_reinvestment_period",
+    "name": "Reinvestment Period",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "Reinvestment Period"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.events_of_default.invalidity",
+    "name": "Invalidity of Documents Default",
+    "family_id": "credit_protection.events_of_default",
+    "concept_area": "events_of_default",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Events of Default",
+        "Default",
+        "Defaults and Remedies"
+      ],
+      "keyword_anchors": [
+        "Event of Default",
+        "Default",
+        "acceleration",
+        "cross-default",
+        "judgment",
+        "bankruptcy"
+      ],
+      "concept_specific_keywords": [
+        "Invalidity of Documents Default"
+      ]
+    }
+  }
+]

@@ -150,7 +150,7 @@ export default function StrategyResultsPage() {
                 className="border border-border rounded-md overflow-hidden"
               >
                 {/* Group header */}
-                <div className="flex items-center gap-3 px-4 py-2.5 bg-surface-tertiary border-b border-border">
+                <div className="flex items-center gap-3 px-4 py-2.5 bg-surface-3 border-b border-border">
                   <Badge variant="green">{group.name}</Badge>
                   <span className="text-xs text-text-muted">
                     {group.items.length} strategies
@@ -176,7 +176,7 @@ export default function StrategyResultsPage() {
                   {group.items.map((s) => (
                     <div
                       key={s.concept_id}
-                      className="flex items-center gap-3 px-4 py-2 hover:bg-surface-tertiary/40 transition-colors"
+                      className="flex items-center gap-3 px-4 py-2 hover:bg-surface-3/40 transition-colors"
                     >
                       <div className="flex-1 min-w-0">
                         <div className="text-sm text-text-primary truncate">

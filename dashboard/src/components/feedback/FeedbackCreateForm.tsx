@@ -39,7 +39,7 @@ export function FeedbackCreateForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-surface-secondary border border-border rounded-md p-4 space-y-3"
+      className="bg-surface-2 border border-border rounded-md p-4 space-y-3"
     >
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-medium text-text-primary">

@@ -10,6 +10,7 @@ import { HistogramChart } from "@/components/charts/HistogramChart";
 import { DonutChart } from "@/components/charts/DonutChart";
 import { useOverviewKpis, useDistribution, useCohortFunnel } from "@/lib/queries";
 import { formatNumber, formatPercent, formatCurrencyMM } from "@/lib/formatters";
+import { CHART_COLORS } from "@/lib/colors";
 import { CohortFunnel } from "./CohortFunnel";
 
 export default function OverviewPage() {
@@ -140,7 +141,7 @@ export default function OverviewPage() {
             <HistogramChart
               data={defCountDist.data.histogram}
               xLabel="Definitions"
-              color="#27AE60"
+              color={CHART_COLORS.green}
             />
           ) : (
             <LoadingState />
@@ -157,7 +158,7 @@ export default function OverviewPage() {
             <HistogramChart
               data={facilityDist.data.histogram}
               xLabel="Facility Size ($M)"
-              color="#D9822B"
+              color={CHART_COLORS.orange}
               tooltipFormatter={(v) => formatCurrencyMM(v)}
             />
           ) : (
@@ -171,7 +172,7 @@ export default function OverviewPage() {
             <HistogramChart
               data={sectionDist.data.histogram}
               xLabel="Section Count"
-              color="#8F56BF"
+              color={CHART_COLORS.purple}
             />
           ) : (
             <LoadingState />

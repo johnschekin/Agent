@@ -56,6 +56,16 @@ EXPECTED_COLUMNS: dict[str, tuple[str, ...]] = {
         "section_parser_mode",
         "section_fallback_used",
     ),
+    "articles": (
+        "doc_id",
+        "article_num",
+        "label",
+        "title",
+        "concept",
+        "char_start",
+        "char_end",
+        "is_synthetic",
+    ),
     "sections": (
         "doc_id",
         "section_number",

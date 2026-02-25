@@ -1,0 +1,861 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Permitted Holders must maintain majority (>50.1%) of voting control. Standard for private-equity-backed deals.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.change_of_control",
+              "id": "credit_protection.change_of_control.trigger_definitions.ownership_test.pre_ipo",
+              "level": 4,
+              "name": "Pre-IPO: Majority Standard",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 3"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Any person or group acquires 35% or more of voting stock post-IPO. Standard market threshold for public companies.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.change_of_control",
+              "id": "credit_protection.change_of_control.trigger_definitions.ownership_test.post_ipo",
+              "level": 4,
+              "market_benchmarks": {
+                "standard_threshold": "35%"
+              },
+              "name": "Post-IPO: 35% Threshold",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 108 (Unknown); KCT Cat 1 Item 2"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Rules for attributing ownership: direct vs. indirect, 'group' aggregation under Section 13(d), voting vs. economic rights distinctions.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.change_of_control",
+              "id": "credit_protection.change_of_control.trigger_definitions.ownership_test.attribution",
+              "level": 4,
+              "name": "Attribution & Aggregation Rules",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Whether the ownership test references 'person' only or 'person or group' including beneficial ownership aggregation under securities laws.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.change_of_control",
+              "id": "credit_protection.change_of_control.trigger_definitions.ownership_test.person_vs_group",
+              "level": 4,
+              "name": "'Person' vs. 'Group' Definitions",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 2"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Permitted Holders cease to own more than a specified percentage of voting equity. Most common trigger, with different pre-IPO and post-IPO standards.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.change_of_control",
+          "id": "credit_protection.change_of_control.trigger_definitions.ownership_test",
+          "kct_ref": [
+            "cat3.12"
+          ],
+          "level": 3,
+          "name": "Ownership / Voting Control Test",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 12"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Trigger based on inability to elect or maintain majority of board of directors. Continuing director concepts may expand or narrow the trigger.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.change_of_control",
+          "id": "credit_protection.change_of_control.trigger_definitions.board_control",
+          "level": 3,
+          "market_benchmarks": {
+            "inclusion_rate": "80%"
+          },
+          "name": "Board Control Test",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Sale of all or substantially all assets of the borrower and its restricted subsidiaries. Prevents empty-shell credit support.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.change_of_control",
+          "id": "credit_protection.change_of_control.trigger_definitions.asset_sale_test",
+          "level": 3,
+          "market_benchmarks": {
+            "inclusion_rate": "70%"
+          },
+          "name": "Asset Transfer Test",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Structural chain tests: Holdings ceases to own 100% of Borrower equity, or Borrower ceases to own key subsidiary equity.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.change_of_control",
+          "id": "credit_protection.change_of_control.trigger_definitions.structural_test",
+          "level": 3,
+          "market_benchmarks": {
+            "inclusion_rate": "50%"
+          },
+          "name": "Structural Test",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "CEO/COO/key management change triggers, typically combined with ownership test within a 12-month window. Selective inclusion.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.change_of_control",
+          "id": "credit_protection.change_of_control.trigger_definitions.management_continuity",
+          "level": 3,
+          "name": "Management Continuity Test",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Multi-test framework combining ownership, governance, structural, and management tests. PC Term Comparison provides detailed guidance: 'Flag if definition includes features like: Any investor at close is a Permitted Holder; Sponsor definition broader than Controlled Affiliates or includes portcos; Unlimited management inclusion; Loose \"group\" definitions; Below majority ownership pre-IPO.' KCT Category 3 item 12 flags: 'A change of control or dilution of the original shareholder/sponsor's control over the borrower's voting shares is allowed through: (a) any formulation of CoC that deviates from the standard loans-type CoC language that requires existing shareholders at the time of closing to maintain economic and voting control of the Borrower, or (b) the insertion exceptions to the concept \"change of control\" such as \"permitted change of control\" provisions.'",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "events_of_default",
+        "extraction_ready": true,
+        "playbook_ref": "other.change_of_control_def",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE XI",
+          "Section 1.01",
+          "Section 10.01",
+          "Section 10.01(s)"
+        ],
+        "shape_ref": "other.change_of_control_def"
+      },
+      "family_id": "credit_protection.change_of_control",
+      "id": "credit_protection.change_of_control.trigger_definitions",
+      "level": 2,
+      "name": "Trigger Definitions",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to material restricted subs; 5BD interest grace; 30d rep cure; covenant-lite (financial covenant default not EoD for TL until revolver accelerates); no non-monetary judgment EoD",
+        "dls_source": "DLS row 90",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(v) cross default and cross acceleration to material indebtedness",
+          "(x) actual (or assertion by a Loan Party in writing of) invalidity of any guarantee or any security documents or the invalidity of any lien with regard to any Collateral",
+          "(xi) change of control"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "payment_grace_principal: immediate vs 1BD vs 3BD",
+          "payment_grace_interest: 3BD vs 5BD vs 10BD",
+          "covenant_violation_grace: none vs 30d_for_affirmative",
+          "cross_default_trigger: cross_default vs cross_acceleration_only",
+          "cross_default_threshold: all_material vs dollar_amount",
+          "bankruptcy_involuntary_grace: 30d vs 60d vs 90d",
+          "judgment_threshold: dollar_amount vs MAE_standard",
+          "non_monetary_judgment: included vs MAE_subject vs excluded",
+          "invalidity_scope: any_material vs all_substantially_all",
+          "covenant_lite: no vs yes_revolver_only",
+          "rep_breach_cure: no_cure vs 30d_cure_for_curable",
+          "material_contract_termination: included vs excluded",
+          "subsidiary_scope: all vs material_only vs group_materiality",
+          "change_of_control: included_as_eod vs mandatory_prepay_only"
+        ],
+        "market_position": "",
+        "preferred_position": "14 enumerated triggers including: nonpayment (principal immediate, interest/fees 3BD), covenant violation, cross-default, bankruptcy (60d involuntary), ERISA, judgments, invalidity of docs/guarantees/liens, CoC, material contract termination, indemnification proceeds",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "events_of_default.change_of_control"
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison Change of Control: Permitted Holders section (5 flag items); KCT Category 3 item 12 (CoC dilution through deviation from standard language or permitted CoC provisions)",
+      "pc_ref": [
+        "Change of Control: Permitted Holders"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Core fund entities, controlled investment affiliates (77% include), successor funds, and parallel fund vehicles.",
+          "dls_ref": [
+            "DLS:87:Transactions with Affiliates"
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.change_of_control",
+          "id": "credit_protection.change_of_control.permitted_holders.sponsor",
+          "kct_ref": [
+            "cat3.12"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "affiliate_inclusion_rate": "77%"
+          },
+          "name": "Sponsor & Affiliates",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 87 (Transactions with Affiliates); KCT Cat 3 Item 12"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Current and future management rollover equity holders. 31.1% inclusion rate.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.change_of_control",
+          "id": "credit_protection.change_of_control.permitted_holders.management",
+          "level": 3,
+          "market_benchmarks": {
+            "inclusion_rate": "31.1%"
+          },
+          "name": "Management Stockholders",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Entities designated alongside the controlling sponsor as permitted holders whose acquisition of voting equity does not trigger the change of control provision. Typically includes co-investment vehicles, fund affiliates, and identified strategic partners that participated in the original acquisition, whose continued or increased ownership is consistent with the sponsor-led governance that lenders underwrote at closing.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.change_of_control",
+          "id": "credit_protection.change_of_control.permitted_holders.co_investors",
+          "level": 3,
+          "market_benchmarks": {
+            "inclusion_rate": "6.6%"
+          },
+          "name": "Co-Investors",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Spouse, children, family trusts, estate planning vehicles included as Permitted Holders. 4.9% inclusion rate.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.change_of_control",
+          "id": "credit_protection.change_of_control.permitted_holders.family_trust",
+          "level": 3,
+          "market_benchmarks": {
+            "inclusion_rate": "4.9%"
+          },
+          "name": "Family & Trust Provisions",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 7"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether passive financial investors or index funds that acquire ownership are excluded from triggering a CoC event.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.change_of_control",
+          "id": "credit_protection.change_of_control.permitted_holders.passive_investor_exclusion",
+          "level": 3,
+          "name": "Passive Investor Exclusion",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Designated equity investors whose ownership does not trigger a change of control. PC Term Comparison flags: 'Flag if definition includes features like: Any investor at close is a Permitted Holder; Sponsor definition broader than Controlled Affiliates or includes portcos; Unlimited management inclusion; Loose \"group\" definitions; Below majority ownership pre-IPO.' Standard formulation requires existing shareholders at closing to maintain economic and voting control. Loose Permitted Holder definitions allow equity dilution without triggering the covenant. PC Term Comparison portability guidance lists required conditions if portability is accepted: 'Min AUM or list of IDed sponsors; Permitted Jurisdiction, not sanctioned; Full KYC; Min equity contribution; Pro forma compliance with Leverage Ratio; Default Stopper; Only 1 permitted; With [24] months of close; Officer's certificate.'",
+      "dls_ref": [
+        "DLS:82:Permitted Acquisitions"
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "events_of_default",
+        "extraction_ready": true,
+        "playbook_ref": "other.change_of_control_def",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE XI",
+          "Section 1.01",
+          "Section 10.01",
+          "Section 10.01(s)"
+        ],
+        "shape_ref": "other.change_of_control_def"
+      },
+      "family_id": "credit_protection.change_of_control",
+      "id": "credit_protection.change_of_control.permitted_holders",
+      "kct_ref": [
+        "cat3.12"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "affiliate_inclusion_rate": "77.0%",
+        "prevalence": "98.4%",
+        "sponsor_only": "42.6%",
+        "sponsor_plus_mgmt": "29.5%"
+      },
+      "name": "Permitted Holders",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to material restricted subs; 5BD interest grace; 30d rep cure; covenant-lite (financial covenant default not EoD for TL until revolver accelerates); no non-monetary judgment EoD",
+        "dls_source": "DLS row 90",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(v) cross default and cross acceleration to material indebtedness",
+          "(x) actual (or assertion by a Loan Party in writing of) invalidity of any guarantee or any security documents or the invalidity of any lien with regard to any Collateral",
+          "(xi) change of control"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "payment_grace_principal: immediate vs 1BD vs 3BD",
+          "payment_grace_interest: 3BD vs 5BD vs 10BD",
+          "covenant_violation_grace: none vs 30d_for_affirmative",
+          "cross_default_trigger: cross_default vs cross_acceleration_only",
+          "cross_default_threshold: all_material vs dollar_amount",
+          "bankruptcy_involuntary_grace: 30d vs 60d vs 90d",
+          "judgment_threshold: dollar_amount vs MAE_standard",
+          "non_monetary_judgment: included vs MAE_subject vs excluded",
+          "invalidity_scope: any_material vs all_substantially_all",
+          "covenant_lite: no vs yes_revolver_only",
+          "rep_breach_cure: no_cure vs 30d_cure_for_curable",
+          "material_contract_termination: included vs excluded",
+          "subsidiary_scope: all vs material_only vs group_materiality",
+          "change_of_control: included_as_eod vs mandatory_prepay_only"
+        ],
+        "market_position": "",
+        "preferred_position": "14 enumerated triggers including: nonpayment (principal immediate, interest/fees 3BD), covenant violation, cross-default, bankruptcy (60d involuntary), ERISA, judgments, invalidity of docs/guarantees/liens, CoC, material contract termination, indemnification proceeds",
+        "source": "R14-C"
+      },
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 39,
+          "term": "Collateral and Guarantors"
+        },
+        {
+          "coverage": "full",
+          "row": 51,
+          "term": "Reps and Warranties"
+        },
+        {
+          "coverage": "full",
+          "row": 67,
+          "term": "Unrestricted Subsidiaries - generally"
+        },
+        {
+          "coverage": "full",
+          "row": 129,
+          "term": "Events of Default"
+        },
+        {
+          "coverage": "full",
+          "row": 130,
+          "term": "Change of Control"
+        },
+        {
+          "coverage": "full",
+          "row": 149,
+          "term": "Waiver"
+        },
+        {
+          "coverage": "full",
+          "row": 154,
+          "term": "Closing Deliverables"
+        },
+        {
+          "coverage": "full",
+          "row": 156,
+          "term": "Other"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison Change of Control: Permitted Holders section (5 definition risk flags); PC Term Comparison portability conditions (9 requirements if accepted)",
+      "pc_ref": [
+        "Change of Control: Permitted Holders",
+        "portability conditions (9 requirements if accepted)"
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Whether prepayment is at par (100%), par plus call premium, or 101% (high-yield convention).",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "easy",
+              "family_id": "credit_protection.change_of_control",
+              "id": "credit_protection.change_of_control.consequences.mandatory_prepay.price",
+              "level": 4,
+              "name": "Prepayment Price",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 2 Item 4"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Days borrower must provide notice of CoC prepayment offer. Typical: 30-60 days. DLS reveals thresholds not in definition: 3 business days, 30 day, 30 days, 5 business days",
+              "dls_ref": [
+                90
+              ],
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "easy",
+              "family_id": "credit_protection.change_of_control",
+              "id": "credit_protection.change_of_control.consequences.mandatory_prepay.notice_period",
+              "level": 4,
+              "name": "Notice Period",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 90"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Automatic exit right for each lender individually.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.change_of_control",
+          "id": "credit_protection.change_of_control.consequences.mandatory_prepay",
+          "level": 3,
+          "name": "Mandatory Prepayment",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 70 (Unknown); Review Template Row 147 (Unknown)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether the change of control provision specifies Event of Default as one of its enumerated consequences, alongside mandatory prepayment offers and commitment termination. This consequence perspective focuses on the CoC remedial framework — when a CoC occurs, what actions are triggered, rather than how CoC is classified among default types.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.change_of_control",
+          "id": "credit_protection.change_of_control.consequences.eod_trigger",
+          "level": 3,
+          "name": "Event of Default Trigger",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "CoC triggers both mandatory prepayment and an Event of Default. Most lender-protective consequence.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.change_of_control",
+          "id": "credit_protection.change_of_control.consequences.dual_trigger",
+          "level": 3,
+          "name": "Dual Trigger (Prepay + EoD)",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "CoC does not trigger mandatory prepayment or EoD. Only consent requirements and information rights apply.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.change_of_control",
+          "id": "credit_protection.change_of_control.consequences.no_consequence",
+          "level": 3,
+          "name": "No Mandatory Consequence",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "What happens when a change of control occurs: mandatory prepayment, EoD trigger, or both. DLS Preferred row 90 clause (xi) lists change of control as a standard Event of Default. PC Term Comparison: 'Portability is unlikely to be accepted. If present, flag for Clients.' The standard consequence in leveraged credit agreements is either (a) a put right requiring mandatory prepayment at par, (b) an Event of Default enabling acceleration, or (c) both. DLS Preferred treats CoC as an EoD (highlighted for negotiation). Some agreements include a dual mechanism where CoC triggers mandatory offer followed by EoD if not fully prepaid.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "events_of_default",
+        "extraction_ready": true,
+        "playbook_ref": "other.change_of_control_def",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE XI",
+          "Section 1.01",
+          "Section 10.01",
+          "Section 10.01(s)"
+        ],
+        "shape_ref": "other.change_of_control_def",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "credit_protection.change_of_control",
+      "id": "credit_protection.change_of_control.consequences",
+      "kct_ref": [
+        "cat3.12"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "dual_trigger": "35%",
+        "eod_standalone": "~12%",
+        "mandatory_prepay": "56.9%",
+        "no_consequence_flag": "43.1%"
+      },
+      "name": "Consequence Framework",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to material restricted subs; 5BD interest grace; 30d rep cure; covenant-lite (financial covenant default not EoD for TL until revolver accelerates); no non-monetary judgment EoD",
+        "dls_source": "DLS row 90",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(v) cross default and cross acceleration to material indebtedness",
+          "(x) actual (or assertion by a Loan Party in writing of) invalidity of any guarantee or any security documents or the invalidity of any lien with regard to any Collateral",
+          "(xi) change of control"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "payment_grace_principal: immediate vs 1BD vs 3BD",
+          "payment_grace_interest: 3BD vs 5BD vs 10BD",
+          "covenant_violation_grace: none vs 30d_for_affirmative",
+          "cross_default_trigger: cross_default vs cross_acceleration_only",
+          "cross_default_threshold: all_material vs dollar_amount",
+          "bankruptcy_involuntary_grace: 30d vs 60d vs 90d",
+          "judgment_threshold: dollar_amount vs MAE_standard",
+          "non_monetary_judgment: included vs MAE_subject vs excluded",
+          "invalidity_scope: any_material vs all_substantially_all",
+          "covenant_lite: no vs yes_revolver_only",
+          "rep_breach_cure: no_cure vs 30d_cure_for_curable",
+          "material_contract_termination: included vs excluded",
+          "subsidiary_scope: all vs material_only vs group_materiality",
+          "change_of_control: included_as_eod vs mandatory_prepay_only"
+        ],
+        "market_position": "",
+        "preferred_position": "14 enumerated triggers including: nonpayment (principal immediate, interest/fees 3BD), covenant violation, cross-default, bankruptcy (60d involuntary), ERISA, judgments, invalidity of docs/guarantees/liens, CoC, material contract termination, indemnification proceeds",
+        "source": "R14-C"
+      },
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 51,
+          "term": "Reps and Warranties"
+        },
+        {
+          "coverage": "full",
+          "row": 130,
+          "term": "Change of Control"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 90 clause (xi) (CoC as EoD, highlighted); PC Term Comparison Change of Control section (portability unlikely)",
+      "pc_ref": [
+        "Change of Control"
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "low",
+              "definition": "New sponsor must meet minimum assets under management threshold.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.change_of_control",
+              "id": "credit_protection.change_of_control.permitted_coc.conditions.min_aum",
+              "kct_ref": [
+                "cat3.12"
+              ],
+              "level": 4,
+              "name": "Minimum AUM Requirement",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 12"
+            },
+            {
+              "corpus_prevalence": "low",
+              "definition": "Pro forma leverage must satisfy specified ratio after giving effect to the change of control.",
+              "dls_ref": [
+                "DLS:41:Maximum leverage"
+              ],
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.change_of_control",
+              "id": "credit_protection.change_of_control.permitted_coc.conditions.leverage_compliance",
+              "kct_ref": [
+                "cat3.12"
+              ],
+              "level": 4,
+              "name": "Leverage Compliance",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 41 (Maximum leverage); KCT Cat 3 Item 12"
+            },
+            {
+              "corpus_prevalence": "low",
+              "definition": "Maximum period during which portability provisions apply (risk threshold: >24 months).",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "easy",
+              "family_id": "credit_protection.change_of_control",
+              "id": "credit_protection.change_of_control.permitted_coc.conditions.time_limit",
+              "kct_ref": [
+                "cat3.12"
+              ],
+              "level": 4,
+              "name": "Time Limit",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 12"
+            },
+            {
+              "corpus_prevalence": "low",
+              "definition": "Whether a 'no default or EoD' condition must be satisfied for the permitted CoC exception to apply.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "easy",
+              "family_id": "credit_protection.change_of_control",
+              "id": "credit_protection.change_of_control.permitted_coc.conditions.default_stopper",
+              "kct_ref": [
+                "cat3.12"
+              ],
+              "level": 4,
+              "name": "Default Stopper",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 12"
+            }
+          ],
+          "corpus_prevalence": "low",
+          "definition": "Requirements for a CoC to be 'permitted': minimum AUM of acquiror, KYC compliance, equity contribution, leverage compliance, no default, 24-month time limit.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.change_of_control",
+          "id": "credit_protection.change_of_control.permitted_coc.conditions",
+          "kct_ref": [
+            "cat3.12"
+          ],
+          "level": 3,
+          "name": "Permitted CoC Conditions",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 12"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether CoC triggers can be 'ported' to a new owner/sponsor group. Rare in leveraged loans; more common in high-yield bond context.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.change_of_control",
+          "id": "credit_protection.change_of_control.permitted_coc.portability",
+          "kct_ref": [
+            "cat3.12"
+          ],
+          "level": 3,
+          "name": "Portability",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 12"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Provisions permitting certain changes of control subject to conditions. Risk: if not time-limited (>24 months), creates prolonged exposure. KCT Risk Item 12.",
+      "dls_ref": [
+        "DLS:49:Forecasts"
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "events_of_default",
+        "extraction_ready": true,
+        "playbook_ref": "other.change_of_control_def",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE XI",
+          "Section 1.01",
+          "Section 10.01",
+          "Section 10.01(s)"
+        ],
+        "shape_ref": "other.change_of_control_def"
+      },
+      "family_id": "credit_protection.change_of_control",
+      "id": "credit_protection.change_of_control.permitted_coc",
+      "kct_ref": [
+        "cat3.12"
+      ],
+      "level": 2,
+      "name": "Permitted Change of Control / Portability",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to material restricted subs; 5BD interest grace; 30d rep cure; covenant-lite (financial covenant default not EoD for TL until revolver accelerates); no non-monetary judgment EoD",
+        "dls_source": "DLS row 90",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(v) cross default and cross acceleration to material indebtedness",
+          "(x) actual (or assertion by a Loan Party in writing of) invalidity of any guarantee or any security documents or the invalidity of any lien with regard to any Collateral",
+          "(xi) change of control"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "payment_grace_principal: immediate vs 1BD vs 3BD",
+          "payment_grace_interest: 3BD vs 5BD vs 10BD",
+          "covenant_violation_grace: none vs 30d_for_affirmative",
+          "cross_default_trigger: cross_default vs cross_acceleration_only",
+          "cross_default_threshold: all_material vs dollar_amount",
+          "bankruptcy_involuntary_grace: 30d vs 60d vs 90d",
+          "judgment_threshold: dollar_amount vs MAE_standard",
+          "non_monetary_judgment: included vs MAE_subject vs excluded",
+          "invalidity_scope: any_material vs all_substantially_all",
+          "covenant_lite: no vs yes_revolver_only",
+          "rep_breach_cure: no_cure vs 30d_cure_for_curable",
+          "material_contract_termination: included vs excluded",
+          "subsidiary_scope: all vs material_only vs group_materiality",
+          "change_of_control: included_as_eod vs mandatory_prepay_only"
+        ],
+        "market_position": "",
+        "preferred_position": "14 enumerated triggers including: nonpayment (principal immediate, interest/fees 3BD), covenant violation, cross-default, bankruptcy (60d involuntary), ERISA, judgments, invalidity of docs/guarantees/liens, CoC, material contract termination, indemnification proceeds",
+        "source": "R14-C"
+      },
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 130,
+          "term": "Change of Control"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 49 (Forecasts); KCT Cat 3 Item 12; Review Template Row 130 (Change of Control)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "How the CoC ownership trigger changes post-IPO: from >50% Permitted Holder control to 35% third-party acquisition threshold.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.change_of_control",
+          "id": "credit_protection.change_of_control.ipo_adaptation.trigger_modification",
+          "level": 3,
+          "name": "Trigger Modification",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Exception for widely-held public companies where no single holder exceeds the threshold.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.change_of_control",
+          "id": "credit_protection.change_of_control.ipo_adaptation.public_float_exception",
+          "kct_ref": [
+            "cat3.12"
+          ],
+          "level": 3,
+          "name": "Public Float Exception",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 12"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Special provisions for de-SPAC transactions addressing change of control mechanics in blank-check company contexts.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.change_of_control",
+          "id": "credit_protection.change_of_control.ipo_adaptation.spac_accommodation",
+          "level": 3,
+          "name": "SPAC Accommodation",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 12"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Modifications to CoC triggers and Permitted Holder definitions upon an IPO event. Pre-IPO sponsor majority standard transitions to post-IPO third-party acquisition threshold.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "events_of_default",
+        "extraction_ready": true,
+        "playbook_ref": "other.change_of_control_def",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE XI",
+          "Section 1.01",
+          "Section 10.01",
+          "Section 10.01(s)"
+        ],
+        "shape_ref": "other.change_of_control_def",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "credit_protection.change_of_control",
+      "id": "credit_protection.change_of_control.ipo_adaptation",
+      "kct_ref": [
+        "cat3.12"
+      ],
+      "level": 2,
+      "name": "IPO Adaptation",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to material restricted subs; 5BD interest grace; 30d rep cure; covenant-lite (financial covenant default not EoD for TL until revolver accelerates); no non-monetary judgment EoD",
+        "dls_source": "DLS row 90",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(v) cross default and cross acceleration to material indebtedness",
+          "(x) actual (or assertion by a Loan Party in writing of) invalidity of any guarantee or any security documents or the invalidity of any lien with regard to any Collateral",
+          "(xi) change of control"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "payment_grace_principal: immediate vs 1BD vs 3BD",
+          "payment_grace_interest: 3BD vs 5BD vs 10BD",
+          "covenant_violation_grace: none vs 30d_for_affirmative",
+          "cross_default_trigger: cross_default vs cross_acceleration_only",
+          "cross_default_threshold: all_material vs dollar_amount",
+          "bankruptcy_involuntary_grace: 30d vs 60d vs 90d",
+          "judgment_threshold: dollar_amount vs MAE_standard",
+          "non_monetary_judgment: included vs MAE_subject vs excluded",
+          "invalidity_scope: any_material vs all_substantially_all",
+          "covenant_lite: no vs yes_revolver_only",
+          "rep_breach_cure: no_cure vs 30d_cure_for_curable",
+          "material_contract_termination: included vs excluded",
+          "subsidiary_scope: all vs material_only vs group_materiality",
+          "change_of_control: included_as_eod vs mandatory_prepay_only"
+        ],
+        "market_position": "",
+        "preferred_position": "14 enumerated triggers including: nonpayment (principal immediate, interest/fees 3BD), covenant violation, cross-default, bankruptcy (60d involuntary), ERISA, judgments, invalidity of docs/guarantees/liens, CoC, material contract termination, indemnification proceeds",
+        "source": "R14-C"
+      },
+      "type": "concept",
+      "definition_source": "KCT Cat 3 Item 12"
+    }
+  ],
+  "corpus_prevalence": "high",
+  "dealdata_benchmarks": {
+    "Change of Control": {
+      "pc_dollar_median": "$5,000,000",
+      "pc_dollar_range": "$0-$3,000,000,000",
+      "pc_pct_range": "15.0%-100.0%",
+      "pc_ratio_median": "7.00x",
+      "pc_ratio_range": "2.75x-7.50x"
+    },
+    "Change of Control?": {
+      "pc_dollar_median": "$25,480,000",
+      "pc_dollar_range": "$25,480,000-$25,480,000",
+      "pc_pct_range": "1.0%-100.0%",
+      "pc_ratio_median": "1.25x",
+      "pc_ratio_range": "1.25x-1.25x"
+    }
+  },
+  "definition": "Provisions triggering a mandatory prepayment obligation or Event of Default upon a change in ownership or control of the borrower group. DLS Preferred includes change of control as EoD clause (xi). KCT Category 3 item 12 flags deviations from standard loans-type CoC language requiring existing shareholders at closing to maintain economic and voting control, including: (a) any formulation deviating from standard language, and (b) insertion of exceptions such as 'permitted change of control' provisions. PC Term Comparison: portability (permitting a CoC without triggering the provision) is unlikely to be accepted; if present, should include minimum AUM or identified sponsors, permitted jurisdiction, not sanctioned, full KYC, minimum equity contribution, pro forma leverage compliance, Default stopper, limited to one occurrence within 24 months of close, and officer's certificate. Permitted Holder definition should be scrutinized for: any investor at close being a Permitted Holder, sponsor definition broader than controlled affiliates, unlimited management inclusion, loose 'group' definitions, and below-majority ownership pre-IPO.",
+  "dls_ref": [
+    "DLS:40:Market MAC",
+    "DLS:45:Due diligence",
+    "DLS:56:Solvency",
+    "DLS:66:Guarantees"
+  ],
+  "domain_id": "credit_protection",
+  "extraction_difficulty": "hard",
+  "family_id": "credit_protection.change_of_control",
+  "id": "credit_protection.change_of_control",
+  "kct_ref": [
+    "cat3.12"
+  ],
+  "level": 1,
+  "name": "Change of Control",
+  "r18_concept_ids": [
+    "events_of_default.change_of_control"
+  ],
+  "type": "family",
+  "definition_source": "DLS Preferred row 90 clause (xi) (CoC as EoD); KCT Category 3 item 12 (CoC deviations and exceptions); PC Term Comparison Change of Control section (portability conditions, Permitted Holder definition flags)",
+  "market_benchmarks": {
+    "pctc_portability_conditions": "Min AUM or listed sponsors, permitted jurisdiction, not sanctioned, full KYC, min equity, pro forma leverage compliance, Default stopper, only 1 permitted, within 24 months, officer cert",
+    "pctc_portability_acceptance": "Unlikely to be accepted; if present, flag for Clients",
+    "permitted_holder_flags": "Any investor at close, sponsor broader than controlled affiliates, unlimited management, loose group definitions, below-majority pre-IPO",
+    "pctc_portability_conditions_source": "PC Term Comparison Change of Control section",
+    "permitted_holder_flags_source": "PC Term Comparison Change of Control section",
+    "_source": "PC Term Comparison Change of Control section; KCT Category 3 item 12"
+  },
+  "pc_ref": [
+    "Change of Control"
+  ]
+}

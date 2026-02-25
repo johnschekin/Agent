@@ -1,0 +1,517 @@
+[
+  {
+    "id": "debt_capacity.liens.non_collateral_liens",
+    "name": "Liens on Non-Collateral Assets",
+    "family_id": "debt_capacity.liens",
+    "concept_area": "liens",
+    "playbook_ref": "neg_cov_liens.agent_ica",
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "Non-Credit Party",
+        "non-Guarantor",
+        "not required to be pledged",
+        "Foreign Subsidiary"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_liens.non_loan_party] Present in 5/9 deals. Pass 2: removed 'Non-Loan Party' (0/9 — dead; deals use 'Non-Credit Party' or 'non-Guarantor' instead)."
+      ],
+      "defined_term_dependencies": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "Permitted Lien",
+        "Lien",
+        "Ratio Debt",
+        "Permitted Ratio Debt",
+        "Purchase Money Obligation",
+        "Capital Lease Obligation",
+        "Permitted Refinancing"
+      ],
+      "fallback_escalation": "Search for 'Permitted Liens' or 'Permitted Encumbrances' in Section 1.01 defined terms. If inline, search for 'other Liens' or 'materialmen' near negative covenant headings. 'Permitted Liens' (5/9) and 'Permitted Encumbrances' (2/9) have complementary coverage — need both.",
+      "heading_patterns": [
+        "Liens",
+        "Limitation on Liens",
+        "Liens; Negative Pledge",
+        "Negative Pledge",
+        "Basket and Ratio Calculations",
+        "Restricted Payments"
+      ],
+      "keyword_anchors": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "other Liens",
+        "securing Indebtedness",
+        "materialmen",
+        "Restricted Payment"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "incur",
+        "assume",
+        "pledge",
+        "mortgage",
+        "encumbrance"
+      ],
+      "source_file": "neg_cov_liens.json",
+      "xref_follow": [
+        "Section 1.01 for 'Permitted Liens' definition (Arch, National Vision) or 'Permitted Encumbrances' definition (LendingTree, Viavi) — baskets may be split between covenant section and defined term",
+        "Cross-references to specific Indebtedness section baskets (e.g., 'Liens securing Section 10.01(j) Indebtedness')",
+        "Intercreditor Agreement references for lien priority mechanics"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.liens.cash_collateral_liens",
+    "name": "Cash Collateral Liens",
+    "family_id": "debt_capacity.liens",
+    "concept_area": "liens",
+    "playbook_ref": "neg_cov_liens.agent_ica",
+    "search_strategy": {
+      "concept_specific_keywords": [],
+      "concept_specific_notes": [],
+      "defined_term_dependencies": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "Permitted Lien",
+        "Lien",
+        "Ratio Debt",
+        "Permitted Ratio Debt",
+        "Purchase Money Obligation",
+        "Capital Lease Obligation",
+        "Permitted Refinancing"
+      ],
+      "fallback_escalation": "Search for 'Permitted Liens' or 'Permitted Encumbrances' in Section 1.01 defined terms. If inline, search for 'other Liens' or 'materialmen' near negative covenant headings. 'Permitted Liens' (5/9) and 'Permitted Encumbrances' (2/9) have complementary coverage — need both.",
+      "heading_patterns": [
+        "Liens",
+        "Limitation on Liens",
+        "Liens; Negative Pledge",
+        "Negative Pledge",
+        "Basket and Ratio Calculations",
+        "Restricted Payments"
+      ],
+      "keyword_anchors": [
+        "Permitted Liens",
+        "Permitted Encumbrances",
+        "other Liens",
+        "securing Indebtedness",
+        "materialmen",
+        "Restricted Payment"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "incur",
+        "assume",
+        "pledge",
+        "mortgage",
+        "encumbrance"
+      ],
+      "source_file": "neg_cov_liens.json",
+      "xref_follow": [
+        "Section 1.01 for 'Permitted Liens' definition (Arch, National Vision) or 'Permitted Encumbrances' definition (LendingTree, Viavi) — baskets may be split between covenant section and defined term",
+        "Cross-references to specific Indebtedness section baskets (e.g., 'Liens securing Section 10.01(j) Indebtedness')",
+        "Intercreditor Agreement references for lien priority mechanics"
+      ]
+    }
+  },
+  {
+    "id": "cash_flow.dispositions.disp_non_collateral",
+    "name": "Non-Collateral Dispositions",
+    "family_id": "cash_flow.dispositions",
+    "concept_area": "dispositions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Asset Sales",
+        "Dispositions",
+        "Sale of Assets",
+        "Limitation on Asset Sales",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Disposition",
+        "Asset Sale",
+        "sale of assets",
+        "transfer",
+        "conveyance"
+      ],
+      "concept_specific_keywords": [
+        "Non-Collateral Dispositions",
+        "s security interest. 75% prevalence. In the cash flow framework, this basket defines the borrower"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.collateral.scope",
+    "name": "Collateral Scope",
+    "family_id": "credit_protection.collateral",
+    "concept_area": "collateral",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Collateral",
+        "Security",
+        "Pledge",
+        "Collateral and Guarantee"
+      ],
+      "keyword_anchors": [
+        "Collateral",
+        "Pledge",
+        "Security Interest",
+        "Excluded Asset",
+        "Excluded Property"
+      ],
+      "concept_specific_keywords": [
+        "Collateral Scope"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.collateral.excluded_assets",
+    "name": "Excluded Assets",
+    "family_id": "credit_protection.collateral",
+    "concept_area": "collateral",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Collateral",
+        "Security",
+        "Pledge",
+        "Collateral and Guarantee"
+      ],
+      "keyword_anchors": [
+        "Collateral",
+        "Pledge",
+        "Security Interest",
+        "Excluded Asset",
+        "Excluded Property"
+      ],
+      "concept_specific_keywords": [
+        "Excluded Assets"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.collateral.perfection",
+    "name": "Perfection Requirements",
+    "family_id": "credit_protection.collateral",
+    "concept_area": "collateral",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Collateral",
+        "Security",
+        "Pledge",
+        "Collateral and Guarantee"
+      ],
+      "keyword_anchors": [
+        "Collateral",
+        "Pledge",
+        "Security Interest",
+        "Excluded Asset",
+        "Excluded Property"
+      ],
+      "concept_specific_keywords": [
+        "Perfection Requirements"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.collateral.release",
+    "name": "Collateral Release Mechanics",
+    "family_id": "credit_protection.collateral",
+    "concept_area": "collateral",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Collateral",
+        "Security",
+        "Pledge",
+        "Collateral and Guarantee"
+      ],
+      "keyword_anchors": [
+        "Collateral",
+        "Pledge",
+        "Security Interest",
+        "Excluded Asset",
+        "Excluded Property"
+      ],
+      "concept_specific_keywords": [
+        "Collateral Release Mechanics"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.collateral.intercreditor",
+    "name": "Intercreditor Provisions",
+    "family_id": "credit_protection.collateral",
+    "concept_area": "collateral",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Collateral",
+        "Security",
+        "Pledge",
+        "Collateral and Guarantee"
+      ],
+      "keyword_anchors": [
+        "Collateral",
+        "Pledge",
+        "Security Interest",
+        "Excluded Asset",
+        "Excluded Property"
+      ],
+      "concept_specific_keywords": [
+        "Intercreditor Provisions"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.collateral.springing",
+    "name": "Springing Obligations",
+    "family_id": "credit_protection.collateral",
+    "concept_area": "collateral",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Collateral",
+        "Security",
+        "Pledge",
+        "Collateral and Guarantee"
+      ],
+      "keyword_anchors": [
+        "Collateral",
+        "Pledge",
+        "Security Interest",
+        "Excluded Asset",
+        "Excluded Property"
+      ],
+      "concept_specific_keywords": [
+        "Springing Obligations"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.collateral.after_acquired",
+    "name": "After-Acquired Property",
+    "family_id": "credit_protection.collateral",
+    "concept_area": "collateral",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Collateral",
+        "Security",
+        "Pledge",
+        "Collateral and Guarantee"
+      ],
+      "keyword_anchors": [
+        "Collateral",
+        "Pledge",
+        "Security Interest",
+        "Excluded Asset",
+        "Excluded Property"
+      ],
+      "concept_specific_keywords": [
+        "After-Acquired Property"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.collateral.foreign_collateral",
+    "name": "Foreign Collateral",
+    "family_id": "credit_protection.collateral",
+    "concept_area": "collateral",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Collateral",
+        "Security",
+        "Pledge",
+        "Collateral and Guarantee"
+      ],
+      "keyword_anchors": [
+        "Collateral",
+        "Pledge",
+        "Security Interest",
+        "Excluded Asset",
+        "Excluded Property"
+      ],
+      "concept_specific_keywords": [
+        "Foreign Collateral"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.collateral.daca",
+    "name": "Deposit Account Control Agreements",
+    "family_id": "credit_protection.collateral",
+    "concept_area": "collateral",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Collateral",
+        "Security",
+        "Pledge",
+        "Collateral and Guarantee"
+      ],
+      "keyword_anchors": [
+        "Collateral",
+        "Pledge",
+        "Security Interest",
+        "Excluded Asset",
+        "Excluded Property"
+      ],
+      "concept_specific_keywords": [
+        "Deposit Account Control Agreements"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.collateral.landlord_bailee",
+    "name": "Landlord / Bailee Agreements",
+    "family_id": "credit_protection.collateral",
+    "concept_area": "collateral",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Collateral",
+        "Security",
+        "Pledge",
+        "Collateral and Guarantee"
+      ],
+      "keyword_anchors": [
+        "Collateral",
+        "Pledge",
+        "Security Interest",
+        "Excluded Asset",
+        "Excluded Property"
+      ],
+      "concept_specific_keywords": [
+        "Landlord / Bailee Agreements"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.collateral.proxies",
+    "name": "Proxies / Issuer Acknowledgements",
+    "family_id": "credit_protection.collateral",
+    "concept_area": "collateral",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Collateral",
+        "Security",
+        "Pledge",
+        "Collateral and Guarantee"
+      ],
+      "keyword_anchors": [
+        "Collateral",
+        "Pledge",
+        "Security Interest",
+        "Excluded Asset",
+        "Excluded Property"
+      ],
+      "concept_specific_keywords": [
+        "Proxies / Issuer Acknowledgements"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.collateral.default_thresholds",
+    "name": "Collateral Default Thresholds",
+    "family_id": "credit_protection.collateral",
+    "concept_area": "collateral",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Collateral",
+        "Security",
+        "Pledge",
+        "Collateral and Guarantee"
+      ],
+      "keyword_anchors": [
+        "Collateral",
+        "Pledge",
+        "Security Interest",
+        "Excluded Asset",
+        "Excluded Property"
+      ],
+      "concept_specific_keywords": [
+        "Collateral Default Thresholds"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.collateral.excluded_collateral_creep",
+    "name": "Excluded Collateral Creep",
+    "family_id": "credit_protection.collateral",
+    "concept_area": "collateral",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Collateral",
+        "Security",
+        "Pledge",
+        "Collateral and Guarantee"
+      ],
+      "keyword_anchors": [
+        "Collateral",
+        "Pledge",
+        "Security Interest",
+        "Excluded Asset",
+        "Excluded Property"
+      ],
+      "concept_specific_keywords": [
+        "Excluded Collateral Creep"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.collateral.sungard_conditionality",
+    "name": "Sungard Conditionality",
+    "family_id": "credit_protection.collateral",
+    "concept_area": "collateral",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Collateral",
+        "Security",
+        "Pledge",
+        "Collateral and Guarantee"
+      ],
+      "keyword_anchors": [
+        "Collateral",
+        "Pledge",
+        "Security Interest",
+        "Excluded Asset",
+        "Excluded Property"
+      ],
+      "concept_specific_keywords": [
+        "Sungard Conditionality"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.collateral.lien_perfection_eod",
+    "name": "Lien Perfection Eod",
+    "family_id": "credit_protection.collateral",
+    "concept_area": "collateral",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Collateral",
+        "Security",
+        "Pledge",
+        "Collateral and Guarantee"
+      ],
+      "keyword_anchors": [
+        "Collateral",
+        "Pledge",
+        "Security Interest",
+        "Excluded Asset",
+        "Excluded Property"
+      ],
+      "concept_specific_keywords": [
+        "Lien Perfection Eod"
+      ]
+    }
+  }
+]

@@ -1,0 +1,28 @@
+[
+  {
+    "id": "cash_flow.rp.dividend_blockers",
+    "name": "Dividend Blockers",
+    "family_id": "cash_flow.rp",
+    "concept_area": "rp",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Restricted Payments",
+        "Limitation on Restricted Payments",
+        "Dividends",
+        "Distributions"
+      ],
+      "keyword_anchors": [
+        "Restricted Payment",
+        "restricted payment",
+        "dividend",
+        "distribution",
+        "repurchase",
+        "redemption"
+      ],
+      "concept_specific_keywords": [
+        "Dividend Blockers"
+      ]
+    }
+  }
+]

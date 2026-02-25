@@ -82,7 +82,7 @@ export default function OntologyPage() {
               "px-2.5 py-1 rounded-sm text-xs font-medium transition-colors",
               viewMode === "tree"
                 ? "bg-accent-blue/20 text-accent-blue"
-                : "bg-surface-tertiary text-text-muted hover:text-text-secondary border border-border"
+                : "bg-surface-3 text-text-muted hover:text-text-secondary border border-border"
             )}
           >
             Tree
@@ -98,7 +98,7 @@ export default function OntologyPage() {
               "px-2.5 py-1 rounded-sm text-xs font-medium transition-colors",
               viewMode === "graph"
                 ? "bg-accent-blue/20 text-accent-blue"
-                : "bg-surface-tertiary text-text-muted hover:text-text-secondary border border-border"
+                : "bg-surface-3 text-text-muted hover:text-text-secondary border border-border"
             )}
           >
             Graph
@@ -146,7 +146,7 @@ export default function OntologyPage() {
         style={{ marginRight: selectedNodeId ? 480 : 0, transition: "margin-right 200ms" }}
       >
         {/* Left sidebar: tree */}
-        <div className="w-[320px] flex-shrink-0 flex flex-col bg-surface-secondary border border-border rounded overflow-hidden">
+        <div className="w-[320px] flex-shrink-0 flex flex-col bg-surface-2 border border-border rounded overflow-hidden">
           {/* Search + filter */}
           <div className="p-2 space-y-2 border-b border-border">
             <input
@@ -194,7 +194,7 @@ export default function OntologyPage() {
         </div>
 
         {/* Right: main content */}
-        <div className="flex-1 min-w-0 bg-surface-secondary border border-border rounded overflow-hidden flex flex-col">
+        <div className="flex-1 min-w-0 bg-surface-2 border border-border rounded overflow-hidden flex flex-col">
           {viewMode === "tree" ? (
             // Tree mode — show welcome / stats
             <div className="flex-1 flex items-center justify-center p-8">

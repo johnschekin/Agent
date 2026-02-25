@@ -14,11 +14,11 @@ import type { Job, JobStatus } from "@/lib/types";
 // --- Status badge ---
 
 const STATUS_STYLES: Record<JobStatus, string> = {
-  pending: "bg-surface-tertiary text-text-muted border border-border",
+  pending: "bg-surface-3 text-text-muted border border-border",
   running: "bg-accent-blue/20 text-accent-blue",
   completed: "bg-accent-green/20 text-accent-green",
   failed: "bg-accent-red/20 text-accent-red",
-  cancelled: "bg-surface-tertiary text-text-muted border border-border",
+  cancelled: "bg-surface-3 text-text-muted border border-border",
 };
 
 // L4 RT2 FIX: Prefix symbols for accessibility (not color-only)
@@ -43,15 +43,15 @@ function StatusBadge({ status }: { status: JobStatus }) {
 function ProgressBar({ progress, status }: { progress: number; status: JobStatus }) {
   const color =
     status === "completed"
-      ? "#27AE60"
+      ? "#22C55E"
       : status === "failed"
-        ? "#DB3737"
+        ? "#EF4444"
         : status === "cancelled"
           ? "#738091"
-          : "#137CBD";
+          : "#3B82F6";
 
   return (
-    <div className="w-24 h-1.5 bg-surface-tertiary rounded-full overflow-hidden">
+    <div className="w-24 h-1.5 bg-surface-3 rounded-full overflow-hidden">
       <div
         className={cn(
           "h-full rounded-full transition-all duration-500",
@@ -111,7 +111,7 @@ function JobRow({
   onCancel: (jobId: string) => void;
 }) {
   return (
-    <tr className="border-t border-border hover:bg-surface-tertiary/50 transition-colors">
+    <tr className="border-t border-border hover:bg-surface-3/50 transition-colors">
       <td className="px-3 py-2 text-xs font-mono text-text-muted">
         {job.job_id}
       </td>
@@ -220,7 +220,7 @@ export default function JobsPage() {
           ) : (
             <div className="overflow-auto max-h-[600px]">
               <table className="w-full text-sm" aria-label="Background jobs">
-                <thead className="sticky top-0 bg-surface-tertiary z-10">
+                <thead className="sticky top-0 bg-surface-3 z-10">
                   <tr className="text-left text-xs text-text-muted uppercase">
                     <th className="px-3 py-2">Job ID</th>
                     <th className="px-3 py-2">Type</th>

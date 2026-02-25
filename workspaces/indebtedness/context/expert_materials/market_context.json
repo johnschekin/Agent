@@ -1,0 +1,113 @@
+{
+  "_meta": {
+    "description": "Market context for the Indebtedness Covenant — how basket sizing, ratio debt capacity, and structural protections vary across market segments",
+    "generated": "2026-02-12"
+  },
+  "segment_ranges": {
+    "LMM": {
+      "ebitda_range": "<$50M",
+      "general_basket": "15-20% of EBITDA",
+      "capital_lease": "15-20% of EBITDA",
+      "contribution_debt": "Capped (0-50%), must be unsecured if permitted",
+      "non_guarantor_cap": "10-15% of EBITDA (standalone or shared)",
+      "ratio_debt_IED": "No IED (bank preferred); if permitted, full MFN/maturity/WAL protections",
+      "seller_debt_earnouts": "Capped, subordinated, acceptable terms",
+      "sale_leaseback": "Capped",
+      "securitization": "Capped",
+      "overall_posture": "Most conservative — small baskets, no ratio debt outside credit agreement"
+    },
+    "CMM": {
+      "ebitda_range": "$50-100M",
+      "general_basket": "20-30% of EBITDA",
+      "capital_lease": "15-20% of EBITDA",
+      "contribution_debt": "Capped (0-100%), must be unsecured",
+      "non_guarantor_cap": "10-15% of EBITDA (shared with acquisition debt)",
+      "ratio_debt_IED": "Permitted with full protections — MFN, non-guarantor cap, maturity/WAL",
+      "seller_debt_earnouts": "Capped with subordination terms",
+      "sale_leaseback": "Capped",
+      "securitization": "Capped",
+      "overall_posture": "Moderate — baskets sized for M&A flexibility with structural protections"
+    },
+    "UMM": {
+      "ebitda_range": ">$100M",
+      "general_basket": "20-40% of EBITDA",
+      "capital_lease": "20-25% of EBITDA",
+      "contribution_debt": "100% unsecured, no time limit",
+      "non_guarantor_cap": "Shared or standalone, generous",
+      "ratio_debt_IED": "Permitted — MFN sunset 12-18 months; 'no worse' and FCCR prongs rejected; inside maturity basket 50-100% EBITDA",
+      "seller_debt_earnouts": "If not 'Indebtedness', no cap",
+      "sale_leaseback": "Often uncapped",
+      "securitization": "Capped but generous",
+      "overall_posture": "Aggressive — large baskets, ratio debt standard, structural protections narrower"
+    },
+    "BSL": {
+      "ebitda_range": "Broadly syndicated ($200M+)",
+      "general_basket": "40-50%+ of EBITDA",
+      "capital_lease": "20-25% of EBITDA",
+      "contribution_debt": "100% unsecured, standard",
+      "non_guarantor_cap": "Generous or broadly shared",
+      "ratio_debt_IED": "Standard; may lack maturity/WAL; MFN sunset",
+      "seller_debt_earnouts": "May not be 'Indebtedness' — uncapped",
+      "sale_leaseback": "Often uncapped",
+      "securitization": "Broad",
+      "overall_posture": "Most aggressive — reflects competitive syndication dynamics"
+    }
+  },
+  "corpus_distribution": {
+    "coverage": {
+      "general_debt_basket": {"populated": 62, "total": 62, "pct": 100.0},
+      "capital_lease": {"populated": 62, "total": 62, "pct": 100.0},
+      "ied": {"populated": 62, "total": 62, "pct": 100.0},
+      "incurred_acquisition_debt": {"populated": 62, "total": 62, "pct": 100.0},
+      "assumed_acquisition_debt": {"populated": 62, "total": 62, "pct": 100.0},
+      "non_guarantor_debt": {"populated": 62, "total": 62, "pct": 100.0},
+      "contribution_debt": {"populated": 62, "total": 62, "pct": 100.0},
+      "earnout_seller_notes": {"populated": 62, "total": 62, "pct": 100.0},
+      "ratio_debt": {"populated": 0, "total": 62, "pct": 0.0, "note": "Empty — embedded in IED/acquisition debt"}
+    }
+  },
+  "negotiation_dynamics": {
+    "bank_preferred": {
+      "structure": "Credit facilities + fixed dollar general basket + acquisition debt (DLS Row 79)",
+      "ied": "No IED basket (DLS Row 12)",
+      "protections": "MFN on all pari debt; non-guarantor cap; maturity/WAL limits; no inside maturity except bridges",
+      "contribution_debt": "100%, no liens carveout",
+      "earnouts": "Always 'Indebtedness', capped, measured at maximum obligation",
+      "reclassification": "Limited"
+    },
+    "sponsor_push": {
+      "structure": "Credit facilities + IED + ratio debt + incurred acquisition ratio debt + general basket with growers",
+      "ied": "Full IED at multiple leverage tiers; MFN sunset; 'no worse' for acquisition debt",
+      "protections": "MFN sunset 12-18 months; relax maturity/WAL; inside maturity basket 50-100% EBITDA",
+      "contribution_debt": "100-200% of contributions; may be secured; no time limit",
+      "earnouts": "Exclude from 'Indebtedness' — no cap needed",
+      "reclassification": "Broad — general debt, RP, investment, AA capacity all reallocable to incremental"
+    },
+    "key_levers": [
+      {"lever": "Basket stacking and reclassification", "impact": "highest"},
+      {"lever": "Ratio debt existence and conditions", "impact": "highest"},
+      {"lever": "Non-guarantor debt capacity", "impact": "high"},
+      {"lever": "IED/ratio debt structural protections", "impact": "high"},
+      {"lever": "Debt exclusions from financial covenant", "impact": "high"},
+      {"lever": "General basket sizing", "impact": "medium-high"},
+      {"lever": "Contribution debt multiplier", "impact": "medium"},
+      {"lever": "Earnout treatment", "impact": "medium"}
+    ]
+  },
+  "ground_truth_comparison": {
+    "geneva": {
+      "general_basket": "$450M / 100% EBITDA with pari liens capability",
+      "contribution_debt": "100% of cash and FMV contributions",
+      "intercompany": "Non-loan party to loan party: note required, pledged if >$25M",
+      "material_indebtedness": "$113M / 25% EBITDA"
+    },
+    "rinchem": {
+      "general_basket_reallocation": "Unused capacity reallocates to incremental",
+      "foreign_sub_debt": "$10M / 10% foreign subsidiary total assets",
+      "material_indebtedness": "$30M / 50% EBITDA"
+    },
+    "scientific_games": {
+      "contribution_debt": "100% of cash and FMV contributions (same as Geneva)"
+    }
+  }
+}

@@ -1,0 +1,1978 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Freebie basket amounts are disregarded when testing ratio basket compliance for concurrent incurrence. DLS Preferred Row 9 alternative: 'any amounts incurred under the Free and Clear Incremental Amount that is concurrently incurred with amounts under clause (b), shall be excluded from the calculation of the applicable ratio under clause (b).' This maximizes combined capacity by preventing the freebie from consuming ratio headroom.",
+              "domain_id": "debt_capacity",
+              "extraction_difficulty": "hard",
+              "family_id": "debt_capacity.incremental.stacking_reclass",
+              "id": "debt_capacity.incremental.stacking_reclass.stacking.fixed_plus_ratio.freebie_excluded",
+              "kct_ref": [
+                "cat1.5",
+                "cat2.1"
+              ],
+              "level": 4,
+              "market_benchmarks": {
+                "basket_types_excluded": "[TO_BE_POPULATED]",
+                "typical_exclusion_prevalence": "[TO_BE_POPULATED]"
+              },
+              "name": "Freebie Excluded from Ratio",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 24,
+                  "term": "Incremental Amount – freebie"
+                },
+                {
+                  "coverage": "full",
+                  "row": 28,
+                  "term": "Incremental – racking and stacking"
+                },
+                {
+                  "coverage": "full",
+                  "row": 30,
+                  "term": "Incremental – reclassification"
+                }
+              ],
+              "type": "sub_component",
+              "value_type": "boolean",
+              "definition_source": "DLS Preferred Row 9 alternative",
+              "extraction_refs": {
+                "concept_area": "incremental",
+                "extraction_ready": true,
+                "corpus_atlas": {
+                  "artifact": "analysis/incremental_language_atlas.json",
+                  "version": "1.0.0",
+                  "generated_at": "2026-02-17T22:31:22.512361"
+                }
+              }
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Voluntary prepayment builder amounts are disregarded when testing ratio basket compliance. Same principle as freebie exclusion: fixed-capacity amounts are excluded from the ratio calculation when incurred concurrently with ratio amounts. DLS Preferred Row 9 alternative establishes the concurrent exclusion principle for clause (a) amounts.",
+              "domain_id": "debt_capacity",
+              "extraction_difficulty": "hard",
+              "family_id": "debt_capacity.incremental.stacking_reclass",
+              "id": "debt_capacity.incremental.stacking_reclass.stacking.fixed_plus_ratio.prepay_excluded",
+              "kct_ref": [
+                "cat2.1",
+                "cat4.9"
+              ],
+              "level": 4,
+              "name": "Prepayment Excluded from Ratio",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 28,
+                  "term": "Incremental – racking and stacking"
+                },
+                {
+                  "coverage": "full",
+                  "row": 30,
+                  "term": "Incremental – reclassification"
+                }
+              ],
+              "type": "sub_component",
+              "value_type": "boolean",
+              "definition_source": "DLS Preferred Row 9 alternative",
+              "extraction_refs": {
+                "concept_area": "incremental",
+                "extraction_ready": true,
+                "corpus_atlas": {
+                  "artifact": "analysis/incremental_language_atlas.json",
+                  "version": "1.0.0",
+                  "generated_at": "2026-02-17T22:31:22.512361"
+                }
+              }
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Core stacking mechanic: when free-and-clear and ratio amounts are incurred simultaneously, the fixed amounts are excluded from the ratio calculation. DLS Preferred alternative: 'cash proceeds of such incremental facility then being incurred will not be netted for purposes of calculating the applicable leverage ratio.' This prevents the free-and-clear amount from being counted as debt when testing the ratio prong. Distinguished from sequential incurrence by being a simultaneous transaction optimization.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "hard",
+          "family_id": "debt_capacity.incremental.stacking_reclass",
+          "id": "debt_capacity.incremental.stacking_reclass.stacking.fixed_plus_ratio",
+          "level": 3,
+          "name": "Fixed + Ratio Combination",
+          "red_flags": [
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.liens.permitted_pari_passu_liens",
+                "debt_capacity.liens"
+              ],
+              "id": "rf_002",
+              "market_context": "Stacking can multiply effective debt capacity beyond any single basket",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Baskets (opening 1L leverage, pari passu, structurally senior) may be stacked or reclassified to allow additional pari or structurally senior debt — identify all stackable components"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual"
+              ],
+              "id": "rf_003",
+              "market_context": "Cross-covenant reallocation creates hidden debt capacity not visible from indebtedness covenant alone",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Investment baskets can be reclassified/reallocated to pari passu debt capacity"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual"
+              ],
+              "id": "rf_004",
+              "market_context": "RP-to-debt reallocation is aggressive even in UMM/BSLR transactions",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Restricted Payment amount can be reclassified/reallocated to pari passu debt capacity"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.indebtedness.general_basket",
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.indebtedness.general_basket.reallocation.reclassification_from_debt"
+              ],
+              "id": "rf_038",
+              "market_context": "PC market: typically no reallocation from general debt/RP/RDP/investment; only aggressive UMM/BSLR may give general debt",
+              "severity": "high",
+              "source": "PC Term Comparison",
+              "source_tier": 1,
+              "text": "Reallocation from general debt, general RP, general RDP, or general investment baskets to build incremental debt capacity"
+            },
+            {
+              "category": "structural_risk",
+              "concept_ids": [
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification.timing"
+              ],
+              "id": "rf_083",
+              "market_context": "Template: automatic versus elective reclassification; lenders monitor for stealth capacity expansion",
+              "severity": "medium",
+              "source": "Review Template",
+              "source_tier": 2,
+              "text": "Automatic reclassification from starter/prepayment to ratio prong — stealth capacity expansion without borrower election transparency"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 9 alternative (cash netting exclusion for concurrent incurrence)",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Cross-covenant basket stacking where a single secured debt transaction simultaneously consumes capacity under both the indebtedness covenant (debt basket) and the liens covenant (lien basket). Secured debt necessarily uses both because incurrence of debt requires indebtedness covenant capacity and the grant of a security interest requires liens covenant capacity. Per PC Term Comparison line 407: 'Avoid having both a general liens basket and a crossing lien to general debt basket' — this warning addresses the risk of debt-plus-liens stacking where both baskets are available for the same transaction, potentially creating more aggregate secured capacity than either covenant intended independently. The liens covenant's mechanical-derivative principle means lien capacity should mirror debt capacity, not add to it.",
+              "dls_ref": [
+                "DLS:80:Liens"
+              ],
+              "domain_id": "debt_capacity",
+              "extraction_difficulty": "hard",
+              "family_id": "debt_capacity.incremental.stacking_reclass",
+              "id": "debt_capacity.incremental.stacking_reclass.stacking.cross_basket.debt_plus_liens",
+              "level": 4,
+              "name": "Debt + Liens Stacking",
+              "negotiation_spectrum": {
+                "aggressive_position": "Other Lien Baskets:\n(i) liens securing debt permitted to be secured under the Ratio Debt Basket and the Incurred Acquisition Debt Basket\n(ii) acquired liens (not incurred in contemplation of such acquisition, so long as such acquired liens are limited to the property acquired unless any expansion of such liens is otherwise permitted) [...]",
+                "dls_rows": [
+                  80
+                ],
+                "dls_terms": [
+                  "Liens Covenant (Permitted Liens)"
+                ],
+                "is_highlighted": true,
+                "market_position": "Spectrum from fixed-dollar cap (lender) to ratio-based (borrower). Market often lands on greater-of formulation.",
+                "preferred_position": "(i) securing indebtedness under the Credit Facilities [(including any incremental, delayed draw and refinancing facilities permitted thereunder)]\n(ii) a general fixed-dollar basket\n(iii) [liens incurred in connection with Permitted Acquisitions in an amount and on terms to be agreed]",
+                "source": "R14-A"
+              },
+              "type": "sub_component",
+              "definition_source": "PC Term Comparison line 407 (avoid crossing lien baskets)",
+              "pc_ref": [
+                "lines 407"
+              ],
+              "extraction_refs": {
+                "concept_area": "incremental",
+                "extraction_ready": true,
+                "corpus_atlas": {
+                  "artifact": "analysis/incremental_language_atlas.json",
+                  "version": "1.0.0",
+                  "generated_at": "2026-02-17T22:31:22.512361"
+                }
+              }
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Cross-covenant basket stacking where a single transaction simultaneously consumes capacity under both the indebtedness covenant and the investment covenant. This occurs primarily with intercompany debt, which is both a 'permitted indebtedness' (debt from the borrower to a subsidiary) and a 'permitted investment' (investment by the borrower in the subsidiary). Per DLS Preferred Row 81 (Investments): 'permitting unlimited ordinary course intercompany investments among Loan Parties' — unlimited LP-to-LP intercompany investments automatically provide unlimited intercompany debt capacity between loan parties. Per PCTC line 398: 'Intercompany loans to non-Loan Parties capped/shared baskets with investments in non Loan Parties' — confirming that non-LP intercompany debt shares capacity with investment baskets.",
+              "dls_ref": [
+                "DLS:81:Investments"
+              ],
+              "domain_id": "debt_capacity",
+              "extraction_difficulty": "hard",
+              "family_id": "debt_capacity.incremental.stacking_reclass",
+              "id": "debt_capacity.incremental.stacking_reclass.stacking.cross_basket.debt_plus_investments",
+              "level": 4,
+              "name": "Debt + Investments Stacking",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 81 (unlimited LP intercompany investments); PC Term Comparison line 398 (intercompany debt shared with investment baskets)",
+              "pc_ref": [
+                "lines 398"
+              ],
+              "extraction_refs": {
+                "concept_area": "incremental",
+                "extraction_ready": true,
+                "corpus_atlas": {
+                  "artifact": "analysis/incremental_language_atlas.json",
+                  "version": "1.0.0",
+                  "generated_at": "2026-02-17T22:31:22.512361"
+                }
+              }
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Cross-covenant basket stacking where a single transaction simultaneously consumes capacity under both the indebtedness covenant and the restricted payments covenant. The primary example is contribution debt — cash equity contributed to the borrower that is simultaneously used to incur debt, combining the equity contribution (which may build Available Amount under the RP covenant per DLS Preferred Row 86) with the debt incurrence (which uses the contribution debt basket under the indebtedness covenant). Per PC Term Comparison lines 402-404: 'Contribution debt: Flag for Client. Aggressive UMM/BSLR: typically 100% and unsecured with outside date for incurrence.' Per Key Credit Terms Cat 4 Item 3, Available Amount growing with 'proceeds of permitted indebtedness' compounds this stacking risk.",
+              "dls_ref": [
+                "DLS:84:Restricted Payments"
+              ],
+              "domain_id": "debt_capacity",
+              "extraction_difficulty": "hard",
+              "family_id": "debt_capacity.incremental.stacking_reclass",
+              "id": "debt_capacity.incremental.stacking_reclass.stacking.cross_basket.debt_plus_rp",
+              "level": 4,
+              "name": "Debt + Restricted Payments Stacking",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 103,
+                  "term": "Negative Covenants – Restricted Payments –"
+                },
+                {
+                  "coverage": "full",
+                  "row": 111,
+                  "term": "Negative Covenants – Restricted Debt Payments"
+                },
+                {
+                  "coverage": "full",
+                  "row": 113,
+                  "term": "Negative Covenants – Restricted Debt Payments – Threshold"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "PC Term Comparison lines 402-404 (contribution debt — flag for client); DLS Preferred Row 86 (Available Amount); Key Credit Terms Cat 4 Item 3 (AA growth risk)",
+              "pc_ref": [
+                "lines 402-404"
+              ],
+              "extraction_refs": {
+                "concept_area": "incremental",
+                "extraction_ready": true,
+                "corpus_atlas": {
+                  "artifact": "analysis/incremental_language_atlas.json",
+                  "version": "1.0.0",
+                  "generated_at": "2026-02-17T22:31:22.512361"
+                }
+              }
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Combining debt, investment, and other covenant baskets for a single transaction. KCT Cat 2 Item 1: 'identify baskets that may be stacked to allow the incurrence of additional pari or structurally senior debt.' PC Term Comparison: 'Stacking/Phony Ratio: Clients will consider excluding concurrent revolver draws but will reject excluding revolver outstandings altogether.' Distinguished from same-covenant stacking by crossing covenant category boundaries.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "hard",
+          "family_id": "debt_capacity.incremental.stacking_reclass",
+          "id": "debt_capacity.incremental.stacking_reclass.stacking.cross_basket",
+          "level": 3,
+          "name": "Cross-Basket Stacking",
+          "red_flags": [
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.liens.permitted_pari_passu_liens",
+                "debt_capacity.liens"
+              ],
+              "id": "rf_002",
+              "market_context": "Stacking can multiply effective debt capacity beyond any single basket",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Baskets (opening 1L leverage, pari passu, structurally senior) may be stacked or reclassified to allow additional pari or structurally senior debt — identify all stackable components"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual"
+              ],
+              "id": "rf_003",
+              "market_context": "Cross-covenant reallocation creates hidden debt capacity not visible from indebtedness covenant alone",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Investment baskets can be reclassified/reallocated to pari passu debt capacity"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual"
+              ],
+              "id": "rf_004",
+              "market_context": "RP-to-debt reallocation is aggressive even in UMM/BSLR transactions",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Restricted Payment amount can be reclassified/reallocated to pari passu debt capacity"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.indebtedness.general_basket",
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.indebtedness.general_basket.reallocation.reclassification_from_debt"
+              ],
+              "id": "rf_038",
+              "market_context": "PC market: typically no reallocation from general debt/RP/RDP/investment; only aggressive UMM/BSLR may give general debt",
+              "severity": "high",
+              "source": "PC Term Comparison",
+              "source_tier": 1,
+              "text": "Reallocation from general debt, general RP, general RDP, or general investment baskets to build incremental debt capacity"
+            },
+            {
+              "category": "structural_risk",
+              "concept_ids": [
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification.timing"
+              ],
+              "id": "rf_083",
+              "market_context": "Template: automatic versus elective reclassification; lenders monitor for stealth capacity expansion",
+              "severity": "medium",
+              "source": "Review Template",
+              "source_tier": 2,
+              "text": "Automatic reclassification from starter/prepayment to ratio prong — stealth capacity expansion without borrower election transparency"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 1; PC Term Comparison lines 371-373",
+          "pc_ref": [
+            "lines 371-373"
+          ],
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Preventing same capacity from being counted twice across different covenant baskets. PC Term Comparison: 'Include not otherwise applied language throughout agreement to avoid double counting.' PC Term Comparison Negative Covenants: 'Double Dip: Require that intercompany debt owed by Loan Parties to non-Loan Parties is subordinated.' Distinguished from stacking by preventing capacity multiplication rather than combination.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "hard",
+          "family_id": "debt_capacity.incremental.stacking_reclass",
+          "id": "debt_capacity.incremental.stacking_reclass.stacking.anti_double_dip",
+          "level": 3,
+          "name": "Anti-Double-Dipping Rules",
+          "red_flags": [
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.liens.permitted_pari_passu_liens",
+                "debt_capacity.liens"
+              ],
+              "id": "rf_002",
+              "market_context": "Stacking can multiply effective debt capacity beyond any single basket",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Baskets (opening 1L leverage, pari passu, structurally senior) may be stacked or reclassified to allow additional pari or structurally senior debt — identify all stackable components"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual"
+              ],
+              "id": "rf_003",
+              "market_context": "Cross-covenant reallocation creates hidden debt capacity not visible from indebtedness covenant alone",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Investment baskets can be reclassified/reallocated to pari passu debt capacity"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual"
+              ],
+              "id": "rf_004",
+              "market_context": "RP-to-debt reallocation is aggressive even in UMM/BSLR transactions",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Restricted Payment amount can be reclassified/reallocated to pari passu debt capacity"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.indebtedness.general_basket",
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.indebtedness.general_basket.reallocation.reclassification_from_debt"
+              ],
+              "id": "rf_038",
+              "market_context": "PC market: typically no reallocation from general debt/RP/RDP/investment; only aggressive UMM/BSLR may give general debt",
+              "severity": "high",
+              "source": "PC Term Comparison",
+              "source_tier": 1,
+              "text": "Reallocation from general debt, general RP, general RDP, or general investment baskets to build incremental debt capacity"
+            },
+            {
+              "category": "structural_risk",
+              "concept_ids": [
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification.timing"
+              ],
+              "id": "rf_083",
+              "market_context": "Template: automatic versus elective reclassification; lenders monitor for stealth capacity expansion",
+              "severity": "medium",
+              "source": "Review Template",
+              "source_tier": 2,
+              "text": "Automatic reclassification from starter/prepayment to ratio prong — stealth capacity expansion without borrower election transparency"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison lines 84, 375",
+          "pc_ref": [
+            "lines 84, 375"
+          ],
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Rules for determining whether concurrent or related transactions are treated as a single transaction (requiring sufficient aggregate capacity across all baskets) or as separate transactions (each drawing from its own basket independently). Series-transaction rules prevent borrowers from artificially splitting a single economic transaction into multiple smaller transactions to avoid basket limitations. Per DLS Preferred Row 89 (Other Covenant Considerations alternative terms): 'Excluding simultaneous fixed amount incurrences when calculating leverage ratios' — this convention treats simultaneous transactions as separate for ratio calculation purposes, which is borrower-favorable. Without series-transaction rules, a borrower could incur free-and-clear debt and ratio debt simultaneously while excluding the free-and-clear amount from the ratio test.",
+          "dls_ref": [
+            "DLS:87:Transactions with Affiliates"
+          ],
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "hard",
+          "family_id": "debt_capacity.incremental.stacking_reclass",
+          "id": "debt_capacity.incremental.stacking_reclass.stacking.series_transactions",
+          "level": 3,
+          "market_data": {
+            "typical_window": "5 business days"
+          },
+          "name": "Series of Related Transactions",
+          "red_flags": [
+            {
+              "category": "below_market",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.structural_controls",
+                "debt_capacity.incremental.stacking_reclass.stacking.series_transactions"
+              ],
+              "id": "rf_051",
+              "market_context": "PC market: common in CMM/LMM; atypical in UMM/BSLR",
+              "severity": "low",
+              "source": "PC Term Comparison",
+              "source_tier": 1,
+              "text": "No existing lender ROFR on incremental facilities in CMM/LMM transactions — below market for direct lending"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.liens.permitted_pari_passu_liens",
+                "debt_capacity.liens"
+              ],
+              "id": "rf_002",
+              "market_context": "Stacking can multiply effective debt capacity beyond any single basket",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Baskets (opening 1L leverage, pari passu, structurally senior) may be stacked or reclassified to allow additional pari or structurally senior debt — identify all stackable components"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual"
+              ],
+              "id": "rf_003",
+              "market_context": "Cross-covenant reallocation creates hidden debt capacity not visible from indebtedness covenant alone",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Investment baskets can be reclassified/reallocated to pari passu debt capacity"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual"
+              ],
+              "id": "rf_004",
+              "market_context": "RP-to-debt reallocation is aggressive even in UMM/BSLR transactions",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Restricted Payment amount can be reclassified/reallocated to pari passu debt capacity"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.indebtedness.general_basket",
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.indebtedness.general_basket.reallocation.reclassification_from_debt"
+              ],
+              "id": "rf_038",
+              "market_context": "PC market: typically no reallocation from general debt/RP/RDP/investment; only aggressive UMM/BSLR may give general debt",
+              "severity": "high",
+              "source": "PC Term Comparison",
+              "source_tier": 1,
+              "text": "Reallocation from general debt, general RP, general RDP, or general investment baskets to build incremental debt capacity"
+            },
+            {
+              "category": "structural_risk",
+              "concept_ids": [
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification.timing"
+              ],
+              "id": "rf_083",
+              "market_context": "Template: automatic versus elective reclassification; lenders monitor for stealth capacity expansion",
+              "severity": "medium",
+              "source": "Review Template",
+              "source_tier": 2,
+              "text": "Automatic reclassification from starter/prepayment to ratio prong — stealth capacity expansion without borrower election transparency"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 89 (simultaneous incurrence exclusion)",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether free-and-clear, prepayment, and ratio prongs can be used in any order. DLS Preferred Row 9 alternative: 'The Borrower shall select utilization under clause (a) or (b) of the Available Incremental Amount in its sole discretion.' Ordering flexibility allows the borrower to optimize basket usage. Distinguished from stacking by governing sequence rather than combination.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.stacking_reclass",
+          "id": "debt_capacity.incremental.stacking_reclass.stacking.ordering_flexibility",
+          "level": 3,
+          "name": "Ordering Flexibility",
+          "r18_concept_ids": [
+            "incremental.racking_stacking.ordering_flexibility"
+          ],
+          "type": "sub_component",
+          "value_type": "boolean",
+          "definition_source": "DLS Preferred Row 9 alternative",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether amounts used under one capacity source reduce another. DLS Preferred Row 9 alternative: 'cash proceeds of such incremental facility then being incurred will not be netted for purposes of calculating the applicable leverage ratio.' PC Term Comparison: 'Ideally limited to ratios for debt incurrence baskets and not for RPs, RDPs or RIs.' Distinguished from anti-double-dip by governing netting within a single transaction rather than across time.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "hard",
+          "family_id": "debt_capacity.incremental.stacking_reclass",
+          "id": "debt_capacity.incremental.stacking_reclass.stacking.netting_anti_duplication",
+          "level": 3,
+          "name": "Netting / Anti-Duplication",
+          "r18_concept_ids": [
+            "incremental.netting_mechanics"
+          ],
+          "type": "sub_component",
+          "value_type": "boolean",
+          "definition_source": "DLS Preferred Row 9 alternative; PC Term Comparison line 373",
+          "pc_ref": [
+            "lines 373"
+          ],
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Combining the fixed dollar basket (free-and-clear) and ratio-based basket in a single transaction. DLS Preferred Row 9 alternative: 'any amounts incurred under the Free and Clear Incremental Amount that is concurrently incurred with, or in a single transaction or series of related transactions with, amounts under clause (b), shall be excluded from the calculation of the applicable ratio under clause (b).' The freebie amount is disregarded for the ratio test, maximizing combined capacity. PC Term Comparison warns about 'phony ratio' risks from this mechanic.",
+      "dls_ref": [
+        "DLS:89:Other Covenant Considerations"
+      ],
+      "domain_id": "debt_capacity",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "incremental",
+        "extraction_ready": true,
+        "playbook_ref": "incremental.unused_capacity_realloc",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE II",
+          "Section 1.01",
+          "Section 2.17(a)"
+        ],
+        "shape_ref": "incremental.unused_capacity_realloc",
+        "aligned_difficulty": "easy",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=hard vs playbook=easy (playbook authority for extraction complexity)",
+        "corpus_atlas": {
+          "artifact": "analysis/incremental_language_atlas.json",
+          "version": "1.0.0",
+          "generated_at": "2026-02-17T22:31:22.512361"
+        }
+      },
+      "family_id": "debt_capacity.incremental.stacking_reclass",
+      "id": "debt_capacity.incremental.stacking_reclass.stacking",
+      "level": 2,
+      "market_data": {
+        "coverage": "77.4%",
+        "full_permission": "25.0%",
+        "incremental_only": "10.4%",
+        "no_stacking": "12.5%"
+      },
+      "name": "Stacking Mechanics",
+      "red_flags": [
+        {
+          "category": "capacity_excess",
+          "concept_ids": [
+            "debt_capacity.incremental.ied",
+            "debt_capacity.incremental.stacking_reclass",
+            "debt_capacity.incremental.stacking_reclass.reclassification",
+            "debt_capacity.liens.permitted_pari_passu_liens",
+            "debt_capacity.liens"
+          ],
+          "id": "rf_002",
+          "market_context": "Stacking can multiply effective debt capacity beyond any single basket",
+          "severity": "high",
+          "source": "Key Credit Terms",
+          "source_tier": 1,
+          "text": "Baskets (opening 1L leverage, pari passu, structurally senior) may be stacked or reclassified to allow additional pari or structurally senior debt — identify all stackable components"
+        },
+        {
+          "category": "capacity_excess",
+          "concept_ids": [
+            "debt_capacity.incremental.ied",
+            "debt_capacity.incremental.stacking_reclass",
+            "debt_capacity.incremental.stacking_reclass.reclassification",
+            "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+            "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual"
+          ],
+          "id": "rf_003",
+          "market_context": "Cross-covenant reallocation creates hidden debt capacity not visible from indebtedness covenant alone",
+          "severity": "high",
+          "source": "Key Credit Terms",
+          "source_tier": 1,
+          "text": "Investment baskets can be reclassified/reallocated to pari passu debt capacity"
+        },
+        {
+          "category": "capacity_excess",
+          "concept_ids": [
+            "debt_capacity.incremental.ied",
+            "debt_capacity.incremental.stacking_reclass",
+            "debt_capacity.incremental.stacking_reclass.reclassification",
+            "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+            "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual"
+          ],
+          "id": "rf_004",
+          "market_context": "RP-to-debt reallocation is aggressive even in UMM/BSLR transactions",
+          "severity": "high",
+          "source": "Key Credit Terms",
+          "source_tier": 1,
+          "text": "Restricted Payment amount can be reclassified/reallocated to pari passu debt capacity"
+        },
+        {
+          "category": "capacity_excess",
+          "concept_ids": [
+            "debt_capacity.indebtedness.general_basket",
+            "debt_capacity.incremental.ied",
+            "debt_capacity.incremental.stacking_reclass",
+            "debt_capacity.incremental.stacking_reclass.reclassification",
+            "debt_capacity.indebtedness.general_basket.reallocation.reclassification_from_debt"
+          ],
+          "id": "rf_038",
+          "market_context": "PC market: typically no reallocation from general debt/RP/RDP/investment; only aggressive UMM/BSLR may give general debt",
+          "severity": "high",
+          "source": "PC Term Comparison",
+          "source_tier": 1,
+          "text": "Reallocation from general debt, general RP, general RDP, or general investment baskets to build incremental debt capacity"
+        },
+        {
+          "category": "structural_risk",
+          "concept_ids": [
+            "debt_capacity.incremental.stacking_reclass.reclassification",
+            "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual",
+            "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+            "debt_capacity.incremental.stacking_reclass",
+            "debt_capacity.incremental.stacking_reclass.reclassification.timing"
+          ],
+          "id": "rf_083",
+          "market_context": "Template: automatic versus elective reclassification; lenders monitor for stealth capacity expansion",
+          "severity": "medium",
+          "source": "Review Template",
+          "source_tier": 2,
+          "text": "Automatic reclassification from starter/prepayment to ratio prong — stealth capacity expansion without borrower election transparency"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 9 alternative (stacking paragraph); PC Term Comparison lines 371-373",
+      "pc_ref": [
+        "lines 371-373"
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Reclassification permission allowing the entire amount of debt originally incurred under the free-and-clear basket to be redesignated to the ratio basket, restoring the full free-and-clear capacity for future use. This is the most borrower-favorable reclassification formulation because it enables complete capacity recycling — the borrower incurs free-and-clear debt (no ratio test required), then reclassifies it to the ratio basket (if it could have satisfied the ratio test), freeing up the entire free-and-clear amount for additional incurrence. Per DLS Preferred Row 89 (alternative terms): 'Reclassification of baskets' is listed as a sponsor-favorable feature. The capacity multiplication effect of full-amount reclassification can significantly exceed the originally negotiated free-and-clear basket size.",
+              "domain_id": "debt_capacity",
+              "extraction_difficulty": "medium",
+              "family_id": "debt_capacity.incremental.stacking_reclass",
+              "id": "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio.full_amount",
+              "level": 4,
+              "name": "Full Amount Redesignation",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 89 (reclassification of baskets)",
+              "extraction_refs": {
+                "concept_area": "incremental",
+                "extraction_ready": true,
+                "corpus_atlas": {
+                  "artifact": "analysis/incremental_language_atlas.json",
+                  "version": "1.0.0",
+                  "generated_at": "2026-02-17T22:31:22.512361"
+                }
+              }
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Reclassification permission allowing only a portion of debt originally incurred under the free-and-clear basket to be redesignated to the ratio basket, subject to a minimum threshold amount. Partial reclassification is a compromise between full reclassification (which provides complete capacity recycling) and no reclassification (which locks free-and-clear usage permanently). The minimum threshold prevents de minimis reclassifications that create administrative burden without meaningful capacity restoration. The portion that cannot be reclassified remains permanently allocated to the free-and-clear basket, limiting the total capacity multiplication effect compared to full-amount reclassification.",
+              "domain_id": "debt_capacity",
+              "extraction_difficulty": "hard",
+              "family_id": "debt_capacity.incremental.stacking_reclass",
+              "id": "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio.partial_amount",
+              "level": 4,
+              "name": "Partial Amount Redesignation",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 89 (reclassification — concept)",
+              "extraction_refs": {
+                "concept_area": "incremental",
+                "extraction_ready": true,
+                "corpus_atlas": {
+                  "artifact": "analysis/incremental_language_atlas.json",
+                  "version": "1.0.0",
+                  "generated_at": "2026-02-17T22:31:22.512361"
+                }
+              }
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Redesignation of debt incurred under free-and-clear to the ratio basket, freeing the fixed basket for reuse. DLS Preferred Row 9 alternative: 'Any portion of any incremental facility incurred in reliance on clause (a) shall be reclassified as incurred under clause (b) if the Borrower meets the applicable ratio at such time on a pro forma basis.' Distinguished from ratio-to-FC by moving debt from fixed to unlimited capacity.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "hard",
+          "family_id": "debt_capacity.incremental.stacking_reclass",
+          "id": "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+          "level": 3,
+          "name": "Free-and-Clear to Ratio",
+          "red_flags": [
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual"
+              ],
+              "id": "rf_003",
+              "market_context": "Cross-covenant reallocation creates hidden debt capacity not visible from indebtedness covenant alone",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Investment baskets can be reclassified/reallocated to pari passu debt capacity"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual"
+              ],
+              "id": "rf_004",
+              "market_context": "RP-to-debt reallocation is aggressive even in UMM/BSLR transactions",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Restricted Payment amount can be reclassified/reallocated to pari passu debt capacity"
+            },
+            {
+              "category": "structural_risk",
+              "concept_ids": [
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification.timing"
+              ],
+              "id": "rf_083",
+              "market_context": "Template: automatic versus elective reclassification; lenders monitor for stealth capacity expansion",
+              "severity": "medium",
+              "source": "Review Template",
+              "source_tier": 2,
+              "text": "Automatic reclassification from starter/prepayment to ratio prong — stealth capacity expansion without borrower election transparency"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.liens.permitted_pari_passu_liens",
+                "debt_capacity.liens"
+              ],
+              "id": "rf_002",
+              "market_context": "Stacking can multiply effective debt capacity beyond any single basket",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Baskets (opening 1L leverage, pari passu, structurally senior) may be stacked or reclassified to allow additional pari or structurally senior debt — identify all stackable components"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.indebtedness.general_basket",
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.indebtedness.general_basket.reallocation.reclassification_from_debt"
+              ],
+              "id": "rf_038",
+              "market_context": "PC market: typically no reallocation from general debt/RP/RDP/investment; only aggressive UMM/BSLR may give general debt",
+              "severity": "high",
+              "source": "PC Term Comparison",
+              "source_tier": 1,
+              "text": "Reallocation from general debt, general RP, general RDP, or general investment baskets to build incremental debt capacity"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.liens.redesignation",
+                "debt_capacity.liens",
+                "debt_capacity.incremental.stacking_reclass.reclassification.scope",
+                "debt_capacity.liens.redesignation.source_baskets.investment_to_lien"
+              ],
+              "id": "rf_104",
+              "market_context": "Template: redesignation should be limited and not allowed to build debt/lien capacity from RP/investment baskets",
+              "severity": "high",
+              "source": "Review Template",
+              "source_tier": 2,
+              "text": "Redesignation of debt, RPs, liens, and investments permitted across covenants without restriction — enables cross-covenant capacity multiplication"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 9 alternative",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether reclassification is self-executing (automatic when conditions are met) or requires affirmative borrower election. DLS Preferred Row 9 alternative: 'as the Borrower may elect from time to time' — indicating elective/manual reclassification. Distinguished from timing by governing the mechanism trigger rather than the temporal window.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.stacking_reclass",
+          "id": "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual",
+          "level": 3,
+          "name": "Automatic vs. Manual",
+          "red_flags": [
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual"
+              ],
+              "id": "rf_003",
+              "market_context": "Cross-covenant reallocation creates hidden debt capacity not visible from indebtedness covenant alone",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Investment baskets can be reclassified/reallocated to pari passu debt capacity"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual"
+              ],
+              "id": "rf_004",
+              "market_context": "RP-to-debt reallocation is aggressive even in UMM/BSLR transactions",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Restricted Payment amount can be reclassified/reallocated to pari passu debt capacity"
+            },
+            {
+              "category": "structural_risk",
+              "concept_ids": [
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification.timing"
+              ],
+              "id": "rf_083",
+              "market_context": "Template: automatic versus elective reclassification; lenders monitor for stealth capacity expansion",
+              "severity": "medium",
+              "source": "Review Template",
+              "source_tier": 2,
+              "text": "Automatic reclassification from starter/prepayment to ratio prong — stealth capacity expansion without borrower election transparency"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.liens.permitted_pari_passu_liens",
+                "debt_capacity.liens"
+              ],
+              "id": "rf_002",
+              "market_context": "Stacking can multiply effective debt capacity beyond any single basket",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Baskets (opening 1L leverage, pari passu, structurally senior) may be stacked or reclassified to allow additional pari or structurally senior debt — identify all stackable components"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.indebtedness.general_basket",
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.indebtedness.general_basket.reallocation.reclassification_from_debt"
+              ],
+              "id": "rf_038",
+              "market_context": "PC market: typically no reallocation from general debt/RP/RDP/investment; only aggressive UMM/BSLR may give general debt",
+              "severity": "high",
+              "source": "PC Term Comparison",
+              "source_tier": 1,
+              "text": "Reallocation from general debt, general RP, general RDP, or general investment baskets to build incremental debt capacity"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.liens.redesignation",
+                "debt_capacity.liens",
+                "debt_capacity.incremental.stacking_reclass.reclassification.scope",
+                "debt_capacity.liens.redesignation.source_baskets.investment_to_lien"
+              ],
+              "id": "rf_104",
+              "market_context": "Template: redesignation should be limited and not allowed to build debt/lien capacity from RP/investment baskets",
+              "severity": "high",
+              "source": "Review Template",
+              "source_tier": 2,
+              "text": "Redesignation of debt, RPs, liens, and investments permitted across covenants without restriction — enables cross-covenant capacity multiplication"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 9 alternative",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether reclassification is only available at incurrence or can be done at any time. DLS Preferred Row 9 alternative: 'from time to time' — suggesting ongoing availability. Post-incurrence reclassification is more borrower-favorable as it allows optimization when leverage improves. Distinguished from the mechanism (auto vs manual) by governing when the option is available.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.stacking_reclass",
+          "id": "debt_capacity.incremental.stacking_reclass.reclassification.timing",
+          "level": 3,
+          "name": "Timing (Incurrence vs. Any Time)",
+          "red_flags": [
+            {
+              "category": "structural_risk",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.ratio",
+                "debt_capacity.incremental.contribution_debt.allowance_structure.ratio_based",
+                "debt_capacity.incremental.stacking_reclass.reclassification.timing",
+                "debt_capacity.indebtedness.contribution_debt.allowance_ratio.ratio_based"
+              ],
+              "id": "rf_006",
+              "market_context": "Without full-draw pro forma testing, borrower could obtain $50M day 1, $50M day 2 without stacking test",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "DDTL incurrence test does not account for all DDTL commitments on a fully-drawn basis going forward — enables serial incurrence of untested commitments"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.ratio",
+                "debt_capacity.incremental.contribution_debt.allowance_structure.ratio_based",
+                "debt_capacity.incremental.acquisition_debt.incurred.unlimited_ratio",
+                "debt_capacity.incremental.stacking_reclass.reclassification.timing"
+              ],
+              "id": "rf_040",
+              "market_context": "PC market: very atypical even in Aggressive UMM/BSLR; if agreed, limit to acquisitions",
+              "severity": "high",
+              "source": "PC Term Comparison",
+              "source_tier": 1,
+              "text": "'No worse' prong for incremental ratio test — allows debt incurrence without actual leverage improvement"
+            },
+            {
+              "category": "structural_risk",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass.reclassification.timing",
+                "debt_capacity.incremental.acquisition_debt.assumed.could_incur_test",
+                "debt_capacity.incremental.acquisition_debt.incurred.unlimited_ratio",
+                "debt_capacity.incremental.ied.capacity_integration.shared_incremental"
+              ],
+              "id": "rf_082",
+              "market_context": "Template: caution against netting proceeds; support operational clarity for DDTLs",
+              "severity": "high",
+              "source": "Review Template",
+              "source_tier": 2,
+              "text": "Incremental DDTLs tested at commitment with no requirement to deem fully drawn thereafter — enables serial untested incurrence"
+            },
+            {
+              "category": "structural_risk",
+              "concept_ids": [
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification.timing"
+              ],
+              "id": "rf_083",
+              "market_context": "Template: automatic versus elective reclassification; lenders monitor for stealth capacity expansion",
+              "severity": "medium",
+              "source": "Review Template",
+              "source_tier": 2,
+              "text": "Automatic reclassification from starter/prepayment to ratio prong — stealth capacity expansion without borrower election transparency"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.liens.permitted_pari_passu_liens",
+                "debt_capacity.liens"
+              ],
+              "id": "rf_002",
+              "market_context": "Stacking can multiply effective debt capacity beyond any single basket",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Baskets (opening 1L leverage, pari passu, structurally senior) may be stacked or reclassified to allow additional pari or structurally senior debt — identify all stackable components"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual"
+              ],
+              "id": "rf_003",
+              "market_context": "Cross-covenant reallocation creates hidden debt capacity not visible from indebtedness covenant alone",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Investment baskets can be reclassified/reallocated to pari passu debt capacity"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual"
+              ],
+              "id": "rf_004",
+              "market_context": "RP-to-debt reallocation is aggressive even in UMM/BSLR transactions",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Restricted Payment amount can be reclassified/reallocated to pari passu debt capacity"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.indebtedness.general_basket",
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.indebtedness.general_basket.reallocation.reclassification_from_debt"
+              ],
+              "id": "rf_038",
+              "market_context": "PC market: typically no reallocation from general debt/RP/RDP/investment; only aggressive UMM/BSLR may give general debt",
+              "severity": "high",
+              "source": "PC Term Comparison",
+              "source_tier": 1,
+              "text": "Reallocation from general debt, general RP, general RDP, or general investment baskets to build incremental debt capacity"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.liens.redesignation",
+                "debt_capacity.liens",
+                "debt_capacity.incremental.stacking_reclass.reclassification.scope",
+                "debt_capacity.liens.redesignation.source_baskets.investment_to_lien"
+              ],
+              "id": "rf_104",
+              "market_context": "Template: redesignation should be limited and not allowed to build debt/lien capacity from RP/investment baskets",
+              "severity": "high",
+              "source": "Review Template",
+              "source_tier": 2,
+              "text": "Redesignation of debt, RPs, liens, and investments permitted across covenants without restriction — enables cross-covenant capacity multiplication"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 9 alternative",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Identification of which negative covenants permit reclassification of basket usage, allowing the borrower to retroactively or prospectively redesignate amounts from one basket to another within or across covenant types. Common reclassification paths: (1) indebtedness free-and-clear to ratio (most common), (2) liens general basket to ratio liens, (3) investment baskets to debt baskets (less common, per PCTC lines 214-215 'typically no reallocation'), and (4) RP baskets to debt baskets. Per DLS Preferred Row 89: 'Reclassification of baskets' is listed as a sponsor-favorable alternative term without specifying which covenants, leaving scope as a negotiated term. Broader scope provides more optimization flexibility; narrower scope limits capacity manipulation.",
+          "dls_ref": [
+            "DLS:78:Affirmative covenants",
+            "DLS:88:Other Negative Covenants"
+          ],
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "hard",
+          "family_id": "debt_capacity.incremental.stacking_reclass",
+          "id": "debt_capacity.incremental.stacking_reclass.reclassification.scope",
+          "level": 3,
+          "name": "Covered Covenants",
+          "red_flags": [
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.liens.redesignation",
+                "debt_capacity.liens",
+                "debt_capacity.incremental.stacking_reclass.reclassification.scope",
+                "debt_capacity.liens.redesignation.source_baskets.investment_to_lien"
+              ],
+              "id": "rf_104",
+              "market_context": "Template: redesignation should be limited and not allowed to build debt/lien capacity from RP/investment baskets",
+              "severity": "high",
+              "source": "Review Template",
+              "source_tier": 2,
+              "text": "Redesignation of debt, RPs, liens, and investments permitted across covenants without restriction — enables cross-covenant capacity multiplication"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.liens.permitted_pari_passu_liens",
+                "debt_capacity.liens"
+              ],
+              "id": "rf_002",
+              "market_context": "Stacking can multiply effective debt capacity beyond any single basket",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Baskets (opening 1L leverage, pari passu, structurally senior) may be stacked or reclassified to allow additional pari or structurally senior debt — identify all stackable components"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual"
+              ],
+              "id": "rf_003",
+              "market_context": "Cross-covenant reallocation creates hidden debt capacity not visible from indebtedness covenant alone",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Investment baskets can be reclassified/reallocated to pari passu debt capacity"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual"
+              ],
+              "id": "rf_004",
+              "market_context": "RP-to-debt reallocation is aggressive even in UMM/BSLR transactions",
+              "severity": "high",
+              "source": "Key Credit Terms",
+              "source_tier": 1,
+              "text": "Restricted Payment amount can be reclassified/reallocated to pari passu debt capacity"
+            },
+            {
+              "category": "capacity_excess",
+              "concept_ids": [
+                "debt_capacity.indebtedness.general_basket",
+                "debt_capacity.incremental.ied",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.indebtedness.general_basket.reallocation.reclassification_from_debt"
+              ],
+              "id": "rf_038",
+              "market_context": "PC market: typically no reallocation from general debt/RP/RDP/investment; only aggressive UMM/BSLR may give general debt",
+              "severity": "high",
+              "source": "PC Term Comparison",
+              "source_tier": 1,
+              "text": "Reallocation from general debt, general RP, general RDP, or general investment baskets to build incremental debt capacity"
+            },
+            {
+              "category": "structural_risk",
+              "concept_ids": [
+                "debt_capacity.incremental.stacking_reclass.reclassification",
+                "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual",
+                "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+                "debt_capacity.incremental.stacking_reclass",
+                "debt_capacity.incremental.stacking_reclass.reclassification.timing"
+              ],
+              "id": "rf_083",
+              "market_context": "Template: automatic versus elective reclassification; lenders monitor for stealth capacity expansion",
+              "severity": "medium",
+              "source": "Review Template",
+              "source_tier": 2,
+              "text": "Automatic reclassification from starter/prepayment to ratio prong — stealth capacity expansion without borrower election transparency"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 89 (reclassification — no scope specification); PC Term Comparison lines 214-215 (no reallocation standard)",
+          "pc_ref": [
+            "lines 214-215"
+          ],
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Ability to redesignate debt from the fixed basket to the ratio basket (and vice versa). DLS Preferred Row 9 alternative: 'Any portion of any incremental facility incurred in reliance on clause (a) shall be reclassified, as the Borrower may elect from time to time, as incurred under clause (b) if the Borrower meets the applicable ratio under clause (b) at such time on a pro forma basis.' Reclassification restores the fixed basket capacity. Distinguished from stacking (which is concurrent) by being a post-incurrence recharacterization.",
+      "dls_ref": [
+        "DLS:89:Other Covenant Considerations"
+      ],
+      "domain_id": "debt_capacity",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "incremental",
+        "extraction_ready": true,
+        "playbook_ref": "incremental.unused_capacity_realloc",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE II",
+          "Section 1.01",
+          "Section 2.17(a)"
+        ],
+        "shape_ref": "incremental.unused_capacity_realloc",
+        "aligned_difficulty": "easy",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=hard vs playbook=easy (playbook authority for extraction complexity)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.933652+00:00",
+          "term_packs": {
+            "INCREMENTAL_RECLASSIFICATION": {
+              "label": "Incremental Reclassification",
+              "category": "INCREMENTAL",
+              "exactPhrases": [
+                "Able to redesignate starter and prepayment prongs to the ratio prong",
+                "automatic redesignation",
+                "elective reclassification",
+                "deemed incurred under"
+              ],
+              "sectionHeaders": [
+                "Redesignation",
+                "Incremental Facilities",
+                "Reclassification",
+                "Incremental Commitments",
+                "Incremental Credit Extensions",
+                "Incremental Loans",
+                "Incremental Term Loans",
+                "Incremental Borrowings",
+                "Incremental Facility",
+                "Incremental Increases",
+                "Incremental Loan",
+                "Incremental Credit",
+                "Incremental Revolving Commitments",
+                "Incremental Term Facilities",
+                "Incremental Term Facility",
+                "Incremental Term Loan Commitments",
+                "Incremental Term Loan Facility",
+                "Incremental Loan Commitments",
+                "Incremental Notes",
+                "Incremental Equivalent Debt",
+                "Incremental Extensions of Credit",
+                "Incremental Credit Facilities",
+                "Incremental Refinancing Facilities",
+                "Incremental Revolving Credit Facility Increases",
+                "Increase in Commitments",
+                "Increase in Commitment",
+                "Increases in Commitments",
+                "Commitment Increase",
+                "Commitment Increases",
+                "Additional Commitments",
+                "Additional Loan",
+                "Accordion"
+              ],
+              "semanticVariants": [
+                "basket reclassification",
+                "prong redesignation",
+                "capacity restoration"
+              ],
+              "searchThresholds": null,
+              "searchEscalation": null
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Able to redesignate starter and prepayment prongs to the ratio prong",
+              "automatic redesignation",
+              "elective reclassification",
+              "deemed incurred under",
+              "Incremental Term Loan",
+              "Incremental Commitment",
+              "Incremental Facility",
+              "Incremental Revolving",
+              "Incremental Loan",
+              "Incremental Equivalent Debt",
+              "Incremental Lender",
+              "Incremental Amount",
+              "Incremental Increase",
+              "Incremental Borrowing",
+              "Incremental Joinder"
+            ],
+            "sectionHeaders": [
+              "Redesignation",
+              "Incremental Facilities",
+              "Reclassification",
+              "Incremental Commitments",
+              "Incremental Credit Extensions",
+              "Incremental Loans",
+              "Incremental Term Loans",
+              "Incremental Borrowings",
+              "Incremental Facility",
+              "Incremental Increases",
+              "Incremental Loan",
+              "Incremental Credit",
+              "Incremental Revolving Commitments",
+              "Incremental Term Facilities",
+              "Incremental Term Facility",
+              "Incremental Term Loan Commitments",
+              "Incremental Term Loan Facility",
+              "Incremental Loan Commitments",
+              "Incremental Notes",
+              "Incremental Equivalent Debt",
+              "Incremental Extensions of Credit",
+              "Incremental Credit Facilities",
+              "Incremental Refinancing Facilities",
+              "Incremental Revolving Credit Facility Increases",
+              "Increase in Commitments",
+              "Increase in Commitment",
+              "Increases in Commitments",
+              "Commitment Increase",
+              "Commitment Increases",
+              "Additional Commitments",
+              "Additional Loan",
+              "Accordion"
+            ],
+            "semanticVariants": [
+              "basket reclassification",
+              "prong redesignation",
+              "capacity restoration"
+            ]
+          }
+        },
+        "corpus_atlas": {
+          "artifact": "analysis/incremental_language_atlas.json",
+          "version": "1.0.0",
+          "generated_at": "2026-02-17T22:31:22.512361"
+        }
+      },
+      "family_id": "debt_capacity.incremental.stacking_reclass",
+      "id": "debt_capacity.incremental.stacking_reclass.reclassification",
+      "level": 2,
+      "market_data": {
+        "coverage": "82.3%",
+        "full_permission": "27.5%",
+        "limited_scope": "15.7%",
+        "prohibited": "13.7%"
+      },
+      "name": "Reclassification",
+      "r18_concept_ids": [
+        "incremental.refinancing_provisions",
+        "neg_cov_indebtedness.redesignation_mechanics"
+      ],
+      "red_flags": [
+        {
+          "category": "capacity_excess",
+          "concept_ids": [
+            "debt_capacity.incremental.ied",
+            "debt_capacity.incremental.stacking_reclass",
+            "debt_capacity.incremental.stacking_reclass.reclassification",
+            "debt_capacity.liens.permitted_pari_passu_liens",
+            "debt_capacity.liens"
+          ],
+          "id": "rf_002",
+          "market_context": "Stacking can multiply effective debt capacity beyond any single basket",
+          "severity": "high",
+          "source": "Key Credit Terms",
+          "source_tier": 1,
+          "text": "Baskets (opening 1L leverage, pari passu, structurally senior) may be stacked or reclassified to allow additional pari or structurally senior debt — identify all stackable components"
+        },
+        {
+          "category": "capacity_excess",
+          "concept_ids": [
+            "debt_capacity.incremental.ied",
+            "debt_capacity.incremental.stacking_reclass",
+            "debt_capacity.incremental.stacking_reclass.reclassification",
+            "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+            "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual"
+          ],
+          "id": "rf_003",
+          "market_context": "Cross-covenant reallocation creates hidden debt capacity not visible from indebtedness covenant alone",
+          "severity": "high",
+          "source": "Key Credit Terms",
+          "source_tier": 1,
+          "text": "Investment baskets can be reclassified/reallocated to pari passu debt capacity"
+        },
+        {
+          "category": "capacity_excess",
+          "concept_ids": [
+            "debt_capacity.incremental.ied",
+            "debt_capacity.incremental.stacking_reclass",
+            "debt_capacity.incremental.stacking_reclass.reclassification",
+            "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+            "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual"
+          ],
+          "id": "rf_004",
+          "market_context": "RP-to-debt reallocation is aggressive even in UMM/BSLR transactions",
+          "severity": "high",
+          "source": "Key Credit Terms",
+          "source_tier": 1,
+          "text": "Restricted Payment amount can be reclassified/reallocated to pari passu debt capacity"
+        },
+        {
+          "category": "capacity_excess",
+          "concept_ids": [
+            "debt_capacity.indebtedness.general_basket",
+            "debt_capacity.incremental.ied",
+            "debt_capacity.incremental.stacking_reclass",
+            "debt_capacity.incremental.stacking_reclass.reclassification",
+            "debt_capacity.indebtedness.general_basket.reallocation.reclassification_from_debt"
+          ],
+          "id": "rf_038",
+          "market_context": "PC market: typically no reallocation from general debt/RP/RDP/investment; only aggressive UMM/BSLR may give general debt",
+          "severity": "high",
+          "source": "PC Term Comparison",
+          "source_tier": 1,
+          "text": "Reallocation from general debt, general RP, general RDP, or general investment baskets to build incremental debt capacity"
+        },
+        {
+          "category": "structural_risk",
+          "concept_ids": [
+            "debt_capacity.incremental.stacking_reclass.reclassification",
+            "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual",
+            "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+            "debt_capacity.incremental.stacking_reclass",
+            "debt_capacity.incremental.stacking_reclass.reclassification.timing"
+          ],
+          "id": "rf_083",
+          "market_context": "Template: automatic versus elective reclassification; lenders monitor for stealth capacity expansion",
+          "severity": "medium",
+          "source": "Review Template",
+          "source_tier": 2,
+          "text": "Automatic reclassification from starter/prepayment to ratio prong — stealth capacity expansion without borrower election transparency"
+        },
+        {
+          "category": "capacity_excess",
+          "concept_ids": [
+            "debt_capacity.incremental.stacking_reclass.reclassification",
+            "debt_capacity.liens.redesignation",
+            "debt_capacity.liens",
+            "debt_capacity.incremental.stacking_reclass.reclassification.scope",
+            "debt_capacity.liens.redesignation.source_baskets.investment_to_lien"
+          ],
+          "id": "rf_104",
+          "market_context": "Template: redesignation should be limited and not allowed to build debt/lien capacity from RP/investment baskets",
+          "severity": "high",
+          "source": "Review Template",
+          "source_tier": 2,
+          "text": "Redesignation of debt, RPs, liens, and investments permitted across covenants without restriction — enables cross-covenant capacity multiplication"
+        }
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 28,
+          "term": "Incremental – racking and stacking"
+        },
+        {
+          "coverage": "full",
+          "row": 30,
+          "term": "Incremental – reclassification"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 9 alternative (reclassification paragraph)",
+      "neutron_field_refs": [
+        {
+          "term_type": "INCREMENTAL_RECLASSIFICATION",
+          "label": "Incremental Reclassification",
+          "schema_file": "incremental.schema.ts",
+          "field_count": 3,
+          "r1_domain": "debt_capacity",
+          "mapping_confidence": 0.7078,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "id": "debt_capacity.incremental.stacking_reclass.anti_stacking",
+      "name": "Anti-Stacking Provisions",
+      "domain_id": "debt_capacity",
+      "family_id": "debt_capacity.incremental.stacking_reclass",
+      "level": 2,
+      "type": "concept",
+      "corpus_prevalence": "low",
+      "extraction_difficulty": "hard",
+      "definition": "Explicit contractual prohibitions preventing the borrower from combining (stacking) multiple basket capacities for a single transaction. Only 0.8% of CAs contain explicit anti-stacking provisions — the near-universal absence of anti-stacking means stacking is the default market position. This is one of the most significant structural features in the debt capacity framework: without anti-stacking, a borrower can combine free-and-clear capacity + ratio capacity + general basket capacity for a single incurrence, maximizing aggregate debt capacity well beyond what any individual basket would permit. Per PC Term Comparison line 407 (liens): 'Avoid having both a general liens basket and a crossing lien to general debt basket' — this is the closest the market comes to an anti-stacking principle, and it addresses only liens-to-debt crossing, not broader stacking.",
+      "extraction_refs": {
+        "aligned_difficulty": "very_hard",
+        "concept_area": "incremental",
+        "difficulty_note": "Anti-stacking provisions are embedded within incremental facility definitions and require cross-reference parsing",
+        "difficulty_source": "ontology",
+        "extraction_ready": true,
+        "playbook_ref": "incremental.anti_stacking",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE II",
+          "Section 1.01",
+          "Section 2.17",
+          "Section 2.18"
+        ],
+        "shape_ref": "incremental.anti_stacking",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.910786+00:00",
+          "term_packs": {
+            "INCREMENTAL_RACKING_STACKING": {
+              "label": "Incremental Racking/Stacking",
+              "category": "INCREMENTAL",
+              "exactPhrases": [
+                "Starter, prepayment and ratio prongs can be used in any order",
+                "freebie and prepayment prongs can be ignored in running ratio tests",
+                "not required to be concurrent incurrences",
+                "rack and stack"
+              ],
+              "sectionHeaders": [
+                "Racking and Stacking",
+                "Incremental Amount",
+                "Incremental Facilities",
+                "Incremental Commitments",
+                "Incremental Credit Extensions",
+                "Incremental Loans",
+                "Incremental Term Loans",
+                "Incremental Borrowings",
+                "Incremental Facility",
+                "Incremental Increases",
+                "Incremental Loan",
+                "Incremental Credit",
+                "Incremental Revolving Commitments",
+                "Incremental Term Facilities",
+                "Incremental Term Facility",
+                "Incremental Term Loan Commitments",
+                "Incremental Term Loan Facility",
+                "Incremental Loan Commitments",
+                "Incremental Notes",
+                "Incremental Equivalent Debt",
+                "Incremental Extensions of Credit",
+                "Incremental Credit Facilities",
+                "Incremental Refinancing Facilities",
+                "Incremental Revolving Credit Facility Increases",
+                "Increase in Commitments",
+                "Increase in Commitment",
+                "Increases in Commitments",
+                "Commitment Increase",
+                "Commitment Increases",
+                "Additional Commitments",
+                "Additional Loan",
+                "Accordion"
+              ],
+              "semanticVariants": [
+                "combining incremental baskets",
+                "sequencing capacity prongs",
+                "stacking freebie and ratio"
+              ],
+              "searchThresholds": null,
+              "searchEscalation": null
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Starter, prepayment and ratio prongs can be used in any order",
+              "freebie and prepayment prongs can be ignored in running ratio tests",
+              "rack and stack",
+              "not required to be concurrent incurrences",
+              "Incremental Term Loan",
+              "Incremental Commitment",
+              "Incremental Facility",
+              "Incremental Revolving",
+              "Incremental Loan",
+              "Incremental Equivalent Debt",
+              "Incremental Lender",
+              "Incremental Amount",
+              "Incremental Increase",
+              "Incremental Borrowing",
+              "Incremental Joinder"
+            ],
+            "sectionHeaders": [
+              "Racking and Stacking",
+              "Incremental Amount",
+              "Incremental Facilities",
+              "Incremental Commitments",
+              "Incremental Credit Extensions",
+              "Incremental Loans",
+              "Incremental Term Loans",
+              "Incremental Borrowings",
+              "Incremental Facility",
+              "Incremental Increases",
+              "Incremental Loan",
+              "Incremental Credit",
+              "Incremental Revolving Commitments",
+              "Incremental Term Facilities",
+              "Incremental Term Facility",
+              "Incremental Term Loan Commitments",
+              "Incremental Term Loan Facility",
+              "Incremental Loan Commitments",
+              "Incremental Notes",
+              "Incremental Equivalent Debt",
+              "Incremental Extensions of Credit",
+              "Incremental Credit Facilities",
+              "Incremental Refinancing Facilities",
+              "Incremental Revolving Credit Facility Increases",
+              "Increase in Commitments",
+              "Increase in Commitment",
+              "Increases in Commitments",
+              "Commitment Increase",
+              "Commitment Increases",
+              "Additional Commitments",
+              "Additional Loan",
+              "Accordion"
+            ],
+            "semanticVariants": [
+              "combining incremental baskets",
+              "sequencing capacity prongs",
+              "stacking freebie and ratio"
+            ]
+          }
+        },
+        "corpus_atlas": {
+          "artifact": "analysis/incremental_language_atlas.json",
+          "version": "1.0.0",
+          "generated_at": "2026-02-17T22:31:22.512361"
+        }
+      },
+      "definition_source": "PC Term Comparison line 407 (crossing lien — closest anti-stacking principle)",
+      "pc_ref": [
+        "lines 407"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "INCREMENTAL_RACKING_STACKING",
+          "label": "Incremental Racking/Stacking",
+          "schema_file": "incremental.schema.ts",
+          "field_count": 3,
+          "r1_domain": "debt_capacity",
+          "mapping_confidence": 0.5006,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    }
+  ],
+  "corpus_prevalence": "high",
+  "definition": "Mechanics for combining multiple baskets for a single transaction (stacking) and redesignating debt from one basket to another (reclassification). DLS Preferred Row 9 alternative: 'The Borrower shall select utilization under clause (a) or (b) of the Available Incremental Amount in its sole discretion. Any portion of any incremental facility incurred in reliance on clause (a) shall be reclassified, as the Borrower may elect from time to time, as incurred under clause (b) if the Borrower meets the applicable ratio under clause (b) at such time on a pro forma basis.' Stacking: freebie amounts excluded from ratio test when concurrently used. Reclassification restores fixed basket capacity by moving debt to ratio prong.",
+  "dls_ref": [
+    "DLS:89:Other Covenant Considerations"
+  ],
+  "domain_id": "debt_capacity",
+  "extraction_difficulty": "hard",
+  "family_id": "debt_capacity.incremental.stacking_reclass",
+  "id": "debt_capacity.incremental.stacking_reclass",
+  "kg_concept_ids": [
+    "incremental.racking_stacking",
+    "incremental.reclassification"
+  ],
+  "level": 1,
+  "name": "Stacking & Reclassification",
+  "r18_concept_ids": [
+    "incremental.racking_stacking"
+  ],
+  "red_flags": [
+    {
+      "category": "capacity_excess",
+      "concept_ids": [
+        "debt_capacity.incremental.ied",
+        "debt_capacity.incremental.stacking_reclass",
+        "debt_capacity.incremental.stacking_reclass.reclassification",
+        "debt_capacity.liens.permitted_pari_passu_liens",
+        "debt_capacity.liens"
+      ],
+      "id": "rf_002",
+      "market_context": "Stacking can multiply effective debt capacity beyond any single basket",
+      "severity": "high",
+      "source": "Key Credit Terms",
+      "source_tier": 1,
+      "text": "Baskets (opening 1L leverage, pari passu, structurally senior) may be stacked or reclassified to allow additional pari or structurally senior debt — identify all stackable components"
+    },
+    {
+      "category": "capacity_excess",
+      "concept_ids": [
+        "debt_capacity.incremental.ied",
+        "debt_capacity.incremental.stacking_reclass",
+        "debt_capacity.incremental.stacking_reclass.reclassification",
+        "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+        "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual"
+      ],
+      "id": "rf_003",
+      "market_context": "Cross-covenant reallocation creates hidden debt capacity not visible from indebtedness covenant alone",
+      "severity": "high",
+      "source": "Key Credit Terms",
+      "source_tier": 1,
+      "text": "Investment baskets can be reclassified/reallocated to pari passu debt capacity"
+    },
+    {
+      "category": "capacity_excess",
+      "concept_ids": [
+        "debt_capacity.incremental.ied",
+        "debt_capacity.incremental.stacking_reclass",
+        "debt_capacity.incremental.stacking_reclass.reclassification",
+        "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+        "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual"
+      ],
+      "id": "rf_004",
+      "market_context": "RP-to-debt reallocation is aggressive even in UMM/BSLR transactions",
+      "severity": "high",
+      "source": "Key Credit Terms",
+      "source_tier": 1,
+      "text": "Restricted Payment amount can be reclassified/reallocated to pari passu debt capacity"
+    },
+    {
+      "category": "capacity_excess",
+      "concept_ids": [
+        "debt_capacity.indebtedness.general_basket",
+        "debt_capacity.incremental.ied",
+        "debt_capacity.incremental.stacking_reclass",
+        "debt_capacity.incremental.stacking_reclass.reclassification",
+        "debt_capacity.indebtedness.general_basket.reallocation.reclassification_from_debt"
+      ],
+      "id": "rf_038",
+      "market_context": "PC market: typically no reallocation from general debt/RP/RDP/investment; only aggressive UMM/BSLR may give general debt",
+      "severity": "high",
+      "source": "PC Term Comparison",
+      "source_tier": 1,
+      "text": "Reallocation from general debt, general RP, general RDP, or general investment baskets to build incremental debt capacity"
+    },
+    {
+      "category": "structural_risk",
+      "concept_ids": [
+        "debt_capacity.incremental.stacking_reclass.reclassification",
+        "debt_capacity.incremental.stacking_reclass.reclassification.automatic_vs_manual",
+        "debt_capacity.incremental.stacking_reclass.reclassification.fc_to_ratio",
+        "debt_capacity.incremental.stacking_reclass",
+        "debt_capacity.incremental.stacking_reclass.reclassification.timing"
+      ],
+      "id": "rf_083",
+      "market_context": "Template: automatic versus elective reclassification; lenders monitor for stealth capacity expansion",
+      "severity": "medium",
+      "source": "Review Template",
+      "source_tier": 2,
+      "text": "Automatic reclassification from starter/prepayment to ratio prong — stealth capacity expansion without borrower election transparency"
+    }
+  ],
+  "term_analysis_sources": [
+    "TERM_ANALYSIS_STACKING.md",
+    "TERM_ANALYSIS_RECLASSIFICATION.md"
+  ],
+  "type": "family",
+  "definition_source": "DLS Preferred Row 9 alternative (stacking/reclassification paragraph); PC Term Comparison lines 371-373",
+  "market_benchmarks": {
+    "anti_stacking_prevalence": "0.8% of CAs (Round 10 Basket Stacking CSP)",
+    "reclassification_median_unlock": "$150M median capacity unlock (Round 10)",
+    "strategy_irrelevance": "99.8% of strategies yield same outcome regardless of stacking order (Round 10)",
+    "reallocation_aggressive": "May give general debt basket reallocation to free-and-clear in aggressive UMM/BSL (PCTC line 215)",
+    "_source": "PC Term Comparison lines 214-215; Round 10 Basket Stacking CSP findings"
+  },
+  "pc_ref": [
+    "lines 371-373"
+  ],
+  "extraction_refs": {
+    "concept_area": "incremental",
+    "extraction_ready": true,
+    "corpus_atlas": {
+      "artifact": "analysis/incremental_language_atlas.json",
+      "version": "1.0.0",
+      "generated_at": "2026-02-17T22:31:22.512361"
+    },
+    "corpus_exact_phrases": [
+      "reclassify",
+      "reclassification",
+      "redesignate",
+      "redesignation",
+      "combination of",
+      "simultaneously satisfy"
+    ]
+  }
+}

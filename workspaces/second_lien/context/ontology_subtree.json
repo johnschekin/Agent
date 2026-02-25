@@ -1,0 +1,1289 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Enhancement of fixed-dollar baskets for second lien holders, typically 10-20% above first lien basket levels. PC Term Comparison: 'Typically cushions on dollar baskets only and not ratios.' Applied to general debt, RP, investment, and restricted debt payment baskets. Dollar basket cushioning is the standard form of second lien covenant relaxation.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.second_lien",
+          "golden_record_benchmarks": [
+            {
+              "count": 8,
+              "median": 32.75,
+              "parameter": "ebitda_percentage:percent_ebitda",
+              "range": "2.5 - 100",
+              "reason": "Parameter distribution data available but no ontology benchmark",
+              "source": "R16-D golden_record",
+              "source_file": "parameter_distributions.json"
+            },
+            {
+              "count": 14,
+              "median": 113750000.0,
+              "parameter": "fixed_dollar_cap:dollars",
+              "range": "5000000 - 750000000",
+              "reason": "Parameter distribution data available but no ontology benchmark",
+              "source": "R16-D golden_record",
+              "source_file": "parameter_distributions.json"
+            }
+          ],
+          "id": "deal_econ.second_lien.cushioning.dollar_basket",
+          "level": 3,
+          "name": "Dollar Basket Cushioning",
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Second Lien Transactions (dollar basket cushioning as standard); Review Template (second lien covenant levels)",
+          "pc_ref": [
+            "Second Lien Transactions (dollar basket cushioning as standard)"
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Higher leverage thresholds for incurrence-based baskets in second lien documents. PC Term Comparison: 'Typically cushions on dollar baskets only and not ratios' — indicating ratio cushioning is NOT standard and represents a more borrower-friendly negotiated outcome. When present, typically adds 0.25-0.75x to leverage ratio tests.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.cushioning.incurrence_ratio",
+          "kct_ref": [
+            "cat2.1",
+            "cat2.2"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "opening_1l_leverage": "[TO_BE_POPULATED]",
+            "reclass_capacity": "[TO_BE_POPULATED]",
+            "typical_stacking_capacity": "[TO_BE_POPULATED]"
+          },
+          "name": "Incurrence Ratio Cushioning",
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Second Lien Transactions ('not ratios' — ratio cushioning non-standard)",
+          "pc_ref": [
+            "Second Lien Transactions ('not ratios' — ratio cushioning non-standard)"
+          ]
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Specific leverage ratio turn cushion between first and second lien covenant levels. Typical range: 0.25x-0.50x additional turns above the first lien level. DLS Preferred (Row 74): sets the first lien covenant starting point; the second lien turn cushion is negotiated relative to that level.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.second_lien",
+              "id": "deal_econ.second_lien.cushioning.financial_covenant.leverage_turns",
+              "level": 4,
+              "name": "Leverage Turn Cushion",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 74 (first lien covenant levels as baseline); Review Template (second lien differential)"
+            },
+            {
+              "corpus_prevalence": "low",
+              "definition": "Percentage relaxation applied to covenant levels rather than absolute turn cushion. E.g., 15% cushion on a 5.00x first lien covenant yields approximately 5.75x second lien level. Less common than absolute turn cushion in market practice.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.second_lien",
+              "id": "deal_econ.second_lien.cushioning.financial_covenant.percentage",
+              "level": 4,
+              "name": "Percentage Cushion",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 74 (percentage cushion methodology: '[___]% non cumulative cushion')"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Relaxed maintenance covenant levels for second lien facilities. DLS Preferred (Row 74): '[___]% non cumulative cushion to EBITDA from the Sponsor's model' — this sets the first lien cushion; second lien adds further relaxation. PC Term Comparison, Financial Covenant: cushion ranges of 30-40% for cov-lite. Second lien covenant cushion typically adds 15-25% relaxation on top of the first lien level.",
+          "dls_ref": [
+            "DLS:47:Financial statements"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.cushioning.financial_covenant",
+          "kct_ref": [
+            "cat1.1"
+          ],
+          "level": 3,
+          "name": "Financial Covenant Cushioning",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 146,
+              "term": "Cross-default"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 74 (first lien cushion methodology); PC Term Comparison, Financial Covenant (cushion ranges)",
+          "pc_ref": [
+            "Financial Covenant (cushion ranges)"
+          ]
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Cushioning applied selectively to specific covenant types. PC Term Comparison: 'Typically cushions on dollar baskets only and not ratios' — confirming that selective application (dollar-only cushioning) is the market standard rather than blanket cushioning across all basket types.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.cushioning.selective_application",
+          "level": 3,
+          "name": "Selective Application",
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Second Lien Transactions (selective application: dollar baskets only)",
+          "pc_ref": [
+            "Second Lien Transactions (selective application: dollar baskets only)"
+          ]
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Enhanced baskets and relaxed covenants for subordinated debt positions. PC Term Comparison, Second Lien Transactions: 'Typically cushions on dollar baskets only and not ratios.' This is a bank-side observation that ratio baskets are NOT cushioned, while dollar baskets receive 10-20% uplift. The asymmetric cushioning structure compensates second lien holders for their junior position.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "INTERCREDITOR",
+          "Section 2.14",
+          "Section 2.17"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "Intercreditor Agreement / ARTICLE II",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.639869+00:00",
+          "term_packs": {
+            "TS_SECOND_LIEN": {
+              "label": "Term Sheet - Second Lien Facility",
+              "category": "TERM_SHEET",
+              "exactPhrases": [
+                "[Second Lien Term Loan: [•]-year; $[•]mm]",
+                "Second Lien",
+                "Junior Lien",
+                "intercreditor",
+                "setback",
+                "first lien discharge"
+              ],
+              "sectionHeaders": [
+                "Second Lien Facility",
+                "Second Lien Term Loan",
+                "Junior Lien",
+                "Intercreditor Agreement"
+              ],
+              "semanticVariants": [
+                "second lien term loan structure",
+                "junior lien facility terms",
+                "subordinated lien provisions"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "[Second Lien Term Loan: [•]-year; $[•]mm]",
+              "Second Lien",
+              "Junior Lien",
+              "intercreditor",
+              "setback",
+              "first lien discharge"
+            ],
+            "sectionHeaders": [
+              "Second Lien Facility",
+              "Second Lien Term Loan",
+              "Junior Lien",
+              "Intercreditor Agreement"
+            ],
+            "semanticVariants": [
+              "second lien term loan structure",
+              "junior lien facility terms",
+              "subordinated lien provisions"
+            ]
+          }
+        }
+      },
+      "family_id": "deal_econ.second_lien",
+      "id": "deal_econ.second_lien.cushioning",
+      "level": 2,
+      "market_data": {
+        "adoption_rate": "95.5%",
+        "typical_covenant_cushion": "15-25%",
+        "typical_dollar_cushion": "10-20%"
+      },
+      "name": "Covenant Cushioning",
+      "r18_concept_ids": [
+        "financial_covenant.second_lien_cushions"
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison, Second Lien Transactions ('Typically cushions on dollar baskets only and not ratios')",
+      "pc_ref": [
+        "Second Lien Transactions ('Typically cushions on dollar baskets only and not ratios')"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "TS_SECOND_LIEN",
+          "label": "Term Sheet - Second Lien Facility",
+          "schema_file": "term-sheet-facilities-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.433,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Number of days in the standstill period. Standard range: 90-180 days. Longer periods favor first lien holders by extending their exclusive enforcement window. Shorter periods favor second lien holders by reducing their blocked period.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.second_lien",
+              "id": "deal_econ.second_lien.intercreditor.standstill_period.duration",
+              "level": 4,
+              "name": "Standstill Duration",
+              "type": "sub_component",
+              "definition_source": "Learning Material (standstill duration standards); Review Template (ICA provisions)"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the standstill period resets if the underlying default is cured and a new default subsequently occurs. Standard: yes, each new default triggers a fresh standstill. Non-resetting (cumulative) standstill is borrower/second-lien-favorable.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.second_lien",
+              "id": "deal_econ.second_lien.intercreditor.standstill_period.reset_on_cure",
+              "kct_ref": [
+                "cat4.10"
+              ],
+              "level": 4,
+              "name": "Reset on Cure",
+              "type": "sub_component",
+              "definition_source": "Learning Material (standstill reset mechanics); Review Template (ICA provisions)"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Period during which second lien holders are blocked from exercising remedies against shared collateral. Typically 90-180 days from notice of default to first lien agent. Resets upon cure. Gives first lien holders priority to control enforcement.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.intercreditor.standstill_period",
+          "level": 3,
+          "name": "Standstill Period",
+          "type": "sub_component",
+          "definition_source": "Learning Material (ICA standstill provisions); Review Template (intercreditor mechanics)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Events that activate payment blockage: payment default (typically automatic blockage) and non-payment default (requires notice from first lien agent). Conservative: any EoD triggers blockage. Aggressive: payment/bankruptcy default only.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.second_lien",
+              "id": "deal_econ.second_lien.intercreditor.payment_blockage.trigger_events",
+              "level": 4,
+              "name": "Blockage Trigger Events",
+              "type": "sub_component",
+              "definition_source": "Learning Material (blockage trigger events); Review Template (ICA trigger mechanics)"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Maximum consecutive days of payment blockage per year. Standard: 179 days (designed to stay below the 180-day bankruptcy preference period). Minimum gap between consecutive blockage periods typically 180 days to prevent perpetual blockage.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "easy",
+              "family_id": "deal_econ.second_lien",
+              "id": "deal_econ.second_lien.intercreditor.payment_blockage.duration",
+              "level": 4,
+              "name": "Blockage Duration",
+              "type": "sub_component",
+              "definition_source": "Learning Material (blockage duration: 179-day standard); Review Template (ICA provisions)"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "First lien holder right to block payments on second lien debt following a payment or bankruptcy default on first lien debt. Typically limited to 179-day blockage period per year (designed to stay below the 180-day bankruptcy preference period). Key protection ensuring first lien debt service priority in distress.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.intercreditor.payment_blockage",
+          "level": 3,
+          "name": "Payment Blockage",
+          "type": "sub_component",
+          "definition_source": "Learning Material (payment blockage provisions); Review Template (intercreditor mechanics)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Rules governing which lien holder controls enforcement actions against shared collateral. First lien holders have exclusive right to control foreclosure and asset disposition during the standstill period. Second lien holders may exercise remedies only after standstill expiry or upon first lien inaction.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.intercreditor.exercise_remedies",
+          "level": 3,
+          "name": "Remedy Exercise Priority",
+          "type": "sub_component",
+          "definition_source": "Learning Material (ICA remedy exercise priority); Review Template (enforcement provisions)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Obligation of second lien holders to turn over any collateral proceeds received to first lien holders until first lien obligations are repaid in full. The core subordination mechanism in intercreditor agreements. Covers direct receipt, indirect receipt (via setoff), and bankruptcy distributions.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.intercreditor.turnover_provisions",
+          "kct_ref": [
+            "cat4.10"
+          ],
+          "level": 3,
+          "name": "Turnover Provisions",
+          "type": "sub_component",
+          "definition_source": "Learning Material (ICA turnover provisions); Review Template (intercreditor waterfall)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Standard intercreditor for split-lien capital structures with separate first and second lien facilities on shared collateral. The most common ICA type in leveraged finance multi-lien structures.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.second_lien",
+              "id": "deal_econ.second_lien.intercreditor.ica_type.first_second",
+              "level": 4,
+              "name": "First Lien / Second Lien",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 145,
+                  "term": "Anti-layering"
+                },
+                {
+                  "coverage": "full",
+                  "row": 147,
+                  "term": "Mandatory Prepayments"
+                },
+                {
+                  "coverage": "full",
+                  "row": 159,
+                  "term": "Structuring Fee"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "Learning Material (first/second lien ICA)"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Intercreditor governing priority between an asset-based lending facility (priority on current assets: receivables, inventory) and a term loan (priority on fixed assets: equipment, real property, IP). Split-collateral structure with each lien holder having priority on its designated collateral pool.",
+              "dls_ref": [
+                "DLS:8:Term Loan",
+                "DLS:21:Term Loan Margin",
+                "DLS:30:Term Loan"
+              ],
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.second_lien",
+              "id": "deal_econ.second_lien.intercreditor.ica_type.abl_term",
+              "kct_ref": [
+                "cat4.10"
+              ],
+              "level": 4,
+              "name": "ABL / Term Loan",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 10,
+                  "term": "Termination of commitments"
+                },
+                {
+                  "coverage": "full",
+                  "row": 14,
+                  "term": "Term Sheet"
+                },
+                {
+                  "coverage": "full",
+                  "row": 158,
+                  "term": "Commitment/Underwriting Fee"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "Learning Material (ABL/TL intercreditor); Review Template (split-collateral provisions)"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Intercreditor governing multiple debt tranches sharing collateral at the same lien priority, with proceeds distributed pro rata by outstanding principal. Common for incremental facilities and incremental equivalent debt issued alongside the initial first lien facility.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.second_lien",
+              "id": "deal_econ.second_lien.intercreditor.ica_type.pari_passu",
+              "kct_ref": [
+                "cat4.10"
+              ],
+              "level": 4,
+              "name": "Pari Passu",
+              "type": "sub_component",
+              "definition_source": "Learning Material (pari passu ICA); DLS Preferred, Row 11 (incremental must be 'pari passu with the Term Facility')"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Form of intercreditor agreement: first lien/second lien (standard for split-lien structures), ABL/term loan (for ABL + TL structures), or pari passu (equal priority incremental). Pre-negotiated forms increasingly common to avoid closing delay.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.intercreditor.ica_type",
+          "kct_ref": [
+            "cat4.10"
+          ],
+          "level": 3,
+          "name": "ICA Type",
+          "type": "sub_component",
+          "definition_source": "Learning Material (ICA type classification); Review Template (intercreditor form selection)"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Agreement governing the relationship between first lien and second lien holders, defining standstill periods, payment blockage rights, remedy exercise priority, and turnover obligations. PC Term Comparison, Second Lien Transactions: 'Anti-layering: avoid 1.5 lien and require any debt contractually subordinated to 1L to also be to 2L.' Required for all multi-lien structures.",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "INTERCREDITOR"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "Intercreditor Agreement / ARTICLE II"
+      },
+      "family_id": "deal_econ.second_lien",
+      "id": "deal_econ.second_lien.intercreditor",
+      "kct_ref": [
+        "cat4.10",
+        "cat4.11"
+      ],
+      "level": 2,
+      "market_data": {
+        "agent_authority": "Standard: agent authorized for pre-negotiated forms",
+        "kct_risk": "Cat 4.11: Agent required to enter ICA without Required Lender vote"
+      },
+      "name": "Intercreditor Agreement",
+      "r18_concept_ids": [
+        "collateral.intercreditor_arrangements"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 3,
+          "term": "Debt Quantum"
+        },
+        {
+          "coverage": "full",
+          "row": 145,
+          "term": "Anti-layering"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison, Second Lien Transactions (anti-layering and intercreditor); Learning Material (ICA provisions)",
+      "pc_ref": [
+        "Second Lien Transactions (anti-layering and intercreditor)"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "How the cushion ratio is calculated: difference between second lien total leverage ratio and first lien senior secured leverage ratio at closing. Must account for pro forma adjustments and whether step-downs apply differently to each tranche. DLS Preferred (Row 13): leverage ratio definitions provide the calculation framework.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.cushion_ratio.calculation",
+          "level": 3,
+          "name": "Cushion Calculation Mechanics",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 13 (leverage ratio definitions); Review Template (covenant level calculation)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether the cushion narrows, widens, or stays constant as covenant levels step down over time. Parallel step-downs maintain constant cushion. Divergent step-downs (first lien steps down faster) widen the cushion over time, favoring second lien holders. DLS Preferred (Row 73): covenant step-downs apply to first lien levels; second lien step-down schedule is negotiated independently.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.cushion_ratio.step_down_differential",
+          "level": 3,
+          "name": "Step-Down Differential",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 73 (covenant step-down framework); Review Template (second lien covenant schedules)"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "The leverage differential between first lien and second lien attachment points, measuring the buffer protecting first lien lenders. PC Term Comparison does not specify cushion ratios directly, but DLS Preferred (Row 4): 'Funded Debt at Closing' includes Senior, Total, and Secured leverage — the spread between these ratios defines the cushion. A larger cushion (e.g., 2.0x between 4.0x first lien and 6.0x total) provides greater first lien protection.",
+      "dls_ref": [
+        "DLS:74:Cushion/Covenant Levels"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "INTERCREDITOR",
+          "Section 2.14",
+          "Section 2.17"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "Intercreditor Agreement / ARTICLE II"
+      },
+      "family_id": "deal_econ.second_lien",
+      "id": "deal_econ.second_lien.cushion_ratio",
+      "level": 2,
+      "market_data": {
+        "bsl_market": "0.25-0.50x in broadly syndicated",
+        "pc_market": "0.50x most common in private credit",
+        "typical_cushion": "0.25-0.75x above first lien"
+      },
+      "name": "Cushion Ratio",
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 144,
+          "term": "Cushions to first lien"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 4 (leverage ratio framework); Review Template, Row 3 (second lien 7.5-8 year maturity specification)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Lien priority arrangement where second lien holds junior security interest on the same collateral pool. First lien recovers in full before second lien receives any proceeds. The dominant second lien structure in leveraged finance. This priority drives the pricing differential between first and second lien tranches.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.subordination.lien_subordination",
+          "kct_ref": [
+            "cat4.4"
+          ],
+          "level": 3,
+          "name": "Lien Subordination",
+          "type": "sub_component",
+          "definition_source": "Learning Material (lien subordination mechanics); DLS Preferred, Row 67 (Security — collateral framework)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Contractual payment priority where second lien cash interest and principal payments are blocked during first lien default. More restrictive than lien subordination alone. DLS Preferred (Row 85): restricted debt prepayments to junior lien are a baseline restriction; payment subordination in the ICA adds additional blocking rights during distress.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.subordination.payment_subordination",
+          "kct_ref": [
+            "cat5.3"
+          ],
+          "level": 3,
+          "name": "Payment Subordination",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 85 (restricted debt payments); Learning Material (payment subordination mechanics)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "low",
+              "definition": "Pari passu collateral arrangement where both tranches share collateral at the same priority level with proceeds split pro rata. Uncommon for true first/second lien structures; more typical for incremental pari passu debt. DLS Preferred (Row 11): incremental must be 'secured by Collateral and must be pari passu with the Term Facility.'",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.second_lien",
+              "id": "deal_econ.second_lien.subordination.shared_collateral.equal_priority",
+              "kct_ref": [
+                "cat4.4",
+                "cat4.10",
+                "cat5.1"
+              ],
+              "level": 4,
+              "name": "Equal Priority",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred, Row 11 (pari passu incremental collateral); Learning Material"
+            },
+            {
+              "children": [
+                {
+                  "corpus_prevalence": "medium",
+                  "definition": "Provisions in the intercreditor agreement preserving second lien economic rights during collateral realization. Ensures amounts reserved for contingent first lien claims do not permanently extinguish second lien recovery rights.",
+                  "domain_id": "deal_econ",
+                  "extraction_difficulty": "medium",
+                  "family_id": "deal_econ.second_lien",
+                  "id": "deal_econ.second_lien.subordination.shared_collateral.junior_priority.reservation",
+                  "kct_ref": [
+                    "cat4.10"
+                  ],
+                  "level": 5,
+                  "name": "reservation mechanics",
+                  "type": "parameter",
+                  "definition_source": "Learning Material (ICA reservation mechanics)"
+                },
+                {
+                  "id": "deal_econ.second_lien.subordination.shared_collateral.junior_priority.enforcement_standstill",
+                  "name": "Enforcement Standstill",
+                  "level": 5,
+                  "type": "sub_component",
+                  "domain_id": "deal_econ",
+                  "family_id": "deal_econ.second_lien",
+                  "corpus_prevalence": "medium",
+                  "extraction_difficulty": "medium",
+                  "definition": "Enforcement standstill on shared collateral where junior lien holders are blocked from initiating foreclosure or other enforcement actions during the standstill period. Complements the general standstill provisions in the intercreditor agreement.",
+                  "definition_source": "Learning Material (ICA enforcement standstill); Review Template (standstill provisions)"
+                }
+              ],
+              "corpus_prevalence": "medium",
+              "definition": "Intercreditor arrangement where second lien creditors hold security interests with contractually subordinated priority. First lien claims must be satisfied in full before recovery flows to the junior tranche. The standard arrangement for true first lien / second lien structures.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.second_lien",
+              "id": "deal_econ.second_lien.subordination.shared_collateral.junior_priority",
+              "kct_ref": [
+                "cat4.4",
+                "cat4.10",
+                "cat5.1"
+              ],
+              "level": 4,
+              "name": "Junior Priority",
+              "type": "sub_component",
+              "definition_source": "Learning Material (junior priority collateral); Review Template (intercreditor waterfall)"
+            },
+            {
+              "corpus_prevalence": "low",
+              "definition": "Split collateral arrangement where first and second lien are secured by different asset pools (e.g., ABL on current assets, term loan on fixed assets). Creates distinct economic exposure profiles for each lien tranche and requires separate intercreditor provisions with cross-lien mechanics.",
+              "domain_id": "deal_econ",
+              "extraction_difficulty": "medium",
+              "family_id": "deal_econ.second_lien",
+              "id": "deal_econ.second_lien.subordination.shared_collateral.separate_pools",
+              "kct_ref": [
+                "cat4.4",
+                "cat4.10",
+                "cat4.12"
+              ],
+              "level": 4,
+              "name": "Separate Collateral Pools",
+              "type": "sub_component",
+              "definition_source": "Learning Material (split-collateral structures)"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Provisions governing how first and second lien holders share the same collateral pool. Defines the proceeds waterfall upon realization and whether second lien holders have independent enforcement rights. DLS Preferred (Row 67): 'All assets... of Holdings, the Borrower and the subsidiary Guarantors' defines the collateral pool that is shared between liens.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.subordination.shared_collateral",
+          "kct_ref": [
+            "cat4.4"
+          ],
+          "level": 3,
+          "name": "Shared Collateral Provisions",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 67 (collateral pool definition); Learning Material (shared collateral provisions)"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Structural priority arrangement defining the economic relationship between first and second lien tranches. DLS Preferred (Row 85): restricted debt prepayments 'Applies to junior lien, unsecured and subordinated indebtedness.' Two primary forms: lien subordination (same collateral, junior priority) and payment subordination (cash payment restrictions during first lien distress).",
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "INTERCREDITOR"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "Intercreditor Agreement / ARTICLE II",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:41.646526+00:00",
+          "term_packs": {
+            "TS_SUBORDINATED": {
+              "label": "Term Sheet - Subordinated Debt",
+              "category": "TERM_SHEET",
+              "exactPhrases": [
+                "Subordinated Debt",
+                "Subordinated Notes",
+                "subordinated in right of payment",
+                "contractually subordinated",
+                "payment subordination",
+                "Subordination Agreement"
+              ],
+              "sectionHeaders": [
+                "Subordinated Debt",
+                "Subordinated Notes",
+                "Mezzanine Facility",
+                "Junior Debt"
+              ],
+              "semanticVariants": [
+                "junior debt facility",
+                "mezzanine debt",
+                "subordinated financing",
+                "contractually junior debt"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Subordinated Debt",
+              "Subordinated Notes",
+              "subordinated in right of payment",
+              "contractually subordinated",
+              "payment subordination",
+              "Subordination Agreement"
+            ],
+            "sectionHeaders": [
+              "Subordinated Debt",
+              "Subordinated Notes",
+              "Mezzanine Facility",
+              "Junior Debt"
+            ],
+            "semanticVariants": [
+              "junior debt facility",
+              "mezzanine debt",
+              "subordinated financing",
+              "contractually junior debt"
+            ]
+          }
+        }
+      },
+      "family_id": "deal_econ.second_lien",
+      "id": "deal_econ.second_lien.subordination",
+      "kct_ref": [
+        "cat4.4"
+      ],
+      "level": 2,
+      "market_data": {
+        "lien_subordination": "~85% of second lien structures",
+        "payment_subordination": "~15% (declining)",
+        "serta_blocker_adoption": "93.5%"
+      },
+      "name": "Subordination Mechanics",
+      "r18_concept_ids": [
+        "lme_protections.anti_serta"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 85 (restricted debt payments to junior lien); Learning Material (subordination mechanics)",
+      "neutron_field_refs": [
+        {
+          "term_type": "TS_SUBORDINATED",
+          "label": "Term Sheet - Subordinated Debt",
+          "schema_file": "term-sheet-facilities-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 0.3649,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Incremental facility within the second lien credit agreement, expanding the second lien tranche size. Sized with a cushioned leverage test, typically 0.25-0.75x above the first lien incremental ratio test. DLS Preferred (Row 9): incremental subject to 'pro forma compliance with Senior [Net] Leverage Ratio' — second lien incremental uses a higher threshold.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.accordion.incremental_facility",
+          "level": 3,
+          "name": "Second Lien Incremental",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 143,
+              "term": "Second Lien Facility"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 9 (incremental leverage test framework); PC Term Comparison, Incremental",
+          "pc_ref": [
+            "Incremental"
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether MFN pricing protection applies when incremental second lien debt is issued. DLS Preferred (Row 11): 'MFN: 50 bps of MFN for life' — the MFN protection on first lien incremental may interact with second lien pricing. Standard: MFN applies within the same lien class but not cross-lien.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.accordion.mfn_interaction",
+          "level": 3,
+          "name": "MFN Protection Interaction",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 11 (MFN: 50 bps for life); PC Term Comparison, MFN section",
+          "pc_ref": [
+            "MFN"
+          ]
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Right of the borrower to expand the second lien facility by incurring incremental second lien debt. DLS Preferred (Row 9): accordion available as 'an increase in the Term Facility or additional term facilities' — the framework extends to second lien when present. PC Term Comparison: incremental leverage test sets at 'equivalent closing level' — second lien incremental uses a cushioned version of this test.",
+      "dls_ref": [
+        "DLS:9:Accordion"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "INTERCREDITOR",
+          "Section 2.14",
+          "Section 2.17"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "Intercreditor Agreement / ARTICLE II"
+      },
+      "family_id": "deal_econ.second_lien",
+      "id": "deal_econ.second_lien.accordion",
+      "level": 2,
+      "market_data": {
+        "mfn_interaction": "MFN typically applies to pari debt, not junior",
+        "prevalence": "~60% of second lien deals permit incremental"
+      },
+      "name": "Accordion Rights",
+      "r18_concept_ids": [
+        "incremental.incremental_equivalent_debt"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 9 (accordion framework); PC Term Comparison, Incremental Facilities (leverage test levels)",
+      "pc_ref": [
+        "Incremental Facilities (leverage test levels)"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether second lien holders vote as a separate class on amendments affecting their economic terms. DLS Preferred (Row 93): includes 'Class voting' as a standard feature. Separate class ensures second lien terms cannot be modified by first lien majority without second lien consent.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.voting.separate_class",
+          "level": 3,
+          "name": "Separate Class Voting",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 93 ('Class voting' as standard); PC Term Comparison, Amendments",
+          "pc_ref": [
+            "Amendments"
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Fundamental protections requiring unanimous second lien consent for core economic changes: maturity extension, rate reduction, principal forgiveness, collateral release, subordination changes. DLS Preferred (Row 93): '100% vote for: (i) releases of all or substantially all of the Guarantors or all or substantially all of the value of the Collateral, (ii) changes in voting thresholds.' These sacred rights mirror first lien protections.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.voting.sacred_rights",
+          "kct_ref": [
+            "cat3.5"
+          ],
+          "level": 3,
+          "name": "Second Lien Sacred Rights",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 143,
+              "term": "Second Lien Facility"
+            },
+            {
+              "coverage": "full",
+              "row": 159,
+              "term": "Structuring Fee"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 93 (100% vote sacred rights enumeration); PC Term Comparison, Amendments",
+          "pc_ref": [
+            "Amendments"
+          ]
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether second lien commitments are included in the Required Lender calculation. Standard: separate denominators for each lien class. DLS Preferred (Row 93): Required Lender definition based on 'aggregate unused commitments and outstanding loans' — if cross-class, second lien holders influence first lien amendments. Most structures use separate class voting.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.voting.denominator_inclusion",
+          "level": 3,
+          "name": "Denominator Inclusion",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred, Row 93 (Required Lender denominator); PC Term Comparison, Amendments",
+          "pc_ref": [
+            "Amendments"
+          ]
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Voting rights specific to the second lien tranche, governing governance participation. DLS Preferred (Row 93): Required Lenders hold 'more than 50% of the aggregate unused commitments and outstanding loans.' PC Term Comparison, Second Lien: 'Restrict sponsor ability to buy 1L debt' — a governance concern affecting voting dynamics.",
+      "dls_ref": [
+        "DLS:93:Voting"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE X",
+          "INTERCREDITOR",
+          "Section 10.01"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "Intercreditor Agreement / ARTICLE II"
+      },
+      "family_id": "deal_econ.second_lien",
+      "id": "deal_econ.second_lien.voting",
+      "kct_ref": [
+        "cat3.3"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "90%+ (of CAs with second lien)",
+        "standard": "Silent second — no enforcement rights during standstill",
+        "standstill_period": "90-180 days"
+      },
+      "name": "Second Lien Voting Rights",
+      "r18_concept_ids": [
+        "facility_structure.separate_class_voting"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 3,
+          "term": "Debt Quantum"
+        },
+        {
+          "coverage": "partial",
+          "row": 7,
+          "term": "Other advisory roles"
+        },
+        {
+          "coverage": "full",
+          "row": 16,
+          "term": "Revolver – borrowing notices"
+        },
+        {
+          "coverage": "full",
+          "row": 18,
+          "term": "Revolver currencies"
+        },
+        {
+          "coverage": "full",
+          "row": 24,
+          "term": "Incremental Amount – freebie"
+        },
+        {
+          "coverage": "full",
+          "row": 25,
+          "term": "Incremental Amount – prepayments"
+        },
+        {
+          "coverage": "full",
+          "row": 26,
+          "term": "Incremental Amount – ratio"
+        },
+        {
+          "coverage": "full",
+          "row": 127,
+          "term": "Other Term Sheet Issues – LCT, EoDs, Voting, Assignments, Pricing"
+        },
+        {
+          "coverage": "full",
+          "row": 143,
+          "term": "Second Lien Facility"
+        },
+        {
+          "coverage": "full",
+          "row": 144,
+          "term": "Cushions to first lien"
+        },
+        {
+          "coverage": "full",
+          "row": 145,
+          "term": "Anti-layering"
+        },
+        {
+          "coverage": "full",
+          "row": 147,
+          "term": "Mandatory Prepayments"
+        },
+        {
+          "coverage": "full",
+          "row": 151,
+          "term": "Acquisition Agreement"
+        },
+        {
+          "coverage": "full",
+          "row": 157,
+          "term": "Fee Letter"
+        },
+        {
+          "coverage": "full",
+          "row": 158,
+          "term": "Commitment/Underwriting Fee"
+        },
+        {
+          "coverage": "full",
+          "row": 159,
+          "term": "Structuring Fee"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred, Row 93 (Required Lender definition); PC Term Comparison, Second Lien (governance concerns)",
+      "pc_ref": [
+        "Second Lien (governance concerns)"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Events activating the purchase option: acceleration of first lien debt, bankruptcy filing, or prolonged payment default. Notice requirements and exercise windows vary. Standard: 30-day exercise window after trigger event notification.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.purchase_option.trigger",
+          "level": 3,
+          "name": "Purchase Trigger Events",
+          "type": "sub_component",
+          "definition_source": "Learning Material (purchase option trigger events)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Price at which second lien holders may purchase first lien debt. Standard: par (100% of outstanding principal plus accrued interest, fees, and breakage costs). Some agreements permit purchase at discounted market price during severe distress.",
+          "dls_ref": [
+            "DLS:25:Pricing Flex"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.purchase_option.pricing",
+          "level": 3,
+          "name": "Purchase Pricing",
+          "type": "sub_component",
+          "definition_source": "Learning Material (purchase option pricing)"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Right of second lien holders to purchase first lien debt at par in distressed scenarios. PC Term Comparison, Second Lien: 'Restrict sponsor ability to buy 1L debt' — purchase options interact with sponsor buyback restrictions. Triggered typically upon acceleration of first lien debt or commencement of bankruptcy proceedings.",
+      "dls_ref": [
+        "DLS:27:Other Flex"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "INTERCREDITOR"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "Intercreditor Agreement / ARTICLE II"
+      },
+      "family_id": "deal_econ.second_lien",
+      "id": "deal_econ.second_lien.purchase_option",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "60-70% (of intercreditor agreements)",
+        "standard": "Second lien may purchase first lien at par during enforcement",
+        "trigger": "Acceleration or bankruptcy filing"
+      },
+      "name": "Purchase Option",
+      "type": "concept",
+      "definition_source": "PC Term Comparison, Second Lien ('Restrict sponsor ability to buy 1L debt'); Learning Material (purchase option provisions)",
+      "pc_ref": [
+        "Second Lien ('Restrict sponsor ability to buy 1L debt')"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Triggers for release of second lien security interest in specific collateral. Standard: automatic release if first lien releases the same collateral. PC Term Comparison: 'Avoid automatic release; require Agent action.' Also releases upon permitted disposition or designation as unrestricted subsidiary.",
+          "dls_ref": [
+            "DLS:52:Collateral"
+          ],
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "medium",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.release_conditions.collateral_release",
+          "kct_ref": [
+            "cat4.4"
+          ],
+          "level": 3,
+          "name": "Collateral Release",
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Negative Covenants (Chewy: 'Avoid automatic release; require Agent action'); Review Template, Row 40",
+          "pc_ref": [
+            "Negative Covenants (Chewy: 'Avoid automatic release; require Agent action')"
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Conditions under which subsidiary guarantees supporting second lien obligations are released. PC Term Comparison: 'Require investment capacity for FMV of released guarantor. If foreign Sub voluntarily guaranteed and seeks release add EOD stopper.' Automatic release tied to first lien release is most borrower-friendly.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "hard",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.release_conditions.guarantee_release",
+          "kct_ref": [
+            "cat3.11"
+          ],
+          "level": 3,
+          "market_data": {
+            "chewy_adoption": "90.3%",
+            "r10_finding": "Guarantee release = weakest gatekeeping mechanism"
+          },
+          "name": "Guarantee Release",
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Negative Covenants (Chewy: guarantee release conditions); Review Template, Row 40",
+          "pc_ref": [
+            "Negative Covenants (Chewy: guarantee release conditions)"
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Intercreditor provision requiring automatic release of second lien security interests upon release of corresponding first lien collateral. PC Term Comparison: 'Avoid automatic release; require Agent action' — bank-preferred position is to require affirmative agent action rather than automatic release. Ensures second lien creditors cannot block first-lien-approved dispositions.",
+          "domain_id": "deal_econ",
+          "extraction_difficulty": "easy",
+          "family_id": "deal_econ.second_lien",
+          "id": "deal_econ.second_lien.release_conditions.automatic_release",
+          "level": 3,
+          "name": "Automatic Release on First Lien Release",
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, Negative Covenants ('Avoid automatic release; require Agent action')",
+          "pc_ref": [
+            "Negative Covenants ('Avoid automatic release; require Agent action')"
+          ]
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Conditions under which second lien collateral and guarantees are released, negotiated alongside the intercreditor agreement. Review Template (Row 40): Chewy provisions — 'Require investment capacity for FMV of released guarantor. Sale of equity to a non affiliate and/or bona fide business purpose.' Release triggers mirror first lien provisions.",
+      "dls_ref": [
+        "DLS:11:Conditions to incurrence: Bring down of ",
+        "DLS:58:Other conditions"
+      ],
+      "domain_id": "deal_econ",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE VIII",
+          "INTERCREDITOR",
+          "Section 8.10",
+          "Section 8.11"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "Intercreditor Agreement / ARTICLE II"
+      },
+      "family_id": "deal_econ.second_lien",
+      "id": "deal_econ.second_lien.release_conditions",
+      "level": 2,
+      "market_benchmarks": {
+        "exception": "No release if second lien has independent security interest",
+        "prevalence": "90%+ (of CAs with second lien)",
+        "standard": "Automatic release upon first lien release in connection with permitted transactions"
+      },
+      "name": "Release Conditions",
+      "r18_concept_ids": [
+        "collateral.collateral_release_conditions",
+        "guarantors.guarantee_release_conditions"
+      ],
+      "type": "concept",
+      "definition_source": "Review Template, Row 40 (Chewy: release conditions); PC Term Comparison, Negative Covenants (Chewy formulations)",
+      "pc_ref": [
+        "Negative Covenants (Chewy formulations)"
+      ]
+    }
+  ],
+  "corpus_prevalence": "medium",
+  "definition": "Economic terms specific to second lien, mezzanine, and holdco facilities — the complete deal-level architecture of the junior lien tranche. Review Template: 'Second Lien Term Loan: [___]-year; $[___]mm' with standard tenor 7.5-8 years and no amortization. PC Term Comparison: '2Ls: typically 3/2/1/0 or NC-1/2/1/0' for call protection. Covers covenant cushioning, intercreditor economics, pricing premium, and facility-specific structural features.",
+  "dls_ref": [
+    "DLS:17:Amend and Extend",
+    "DLS:28:Successful Syndication"
+  ],
+  "domain_id": "deal_econ",
+  "extraction_difficulty": "medium",
+  "family_id": "deal_econ.second_lien",
+  "id": "deal_econ.second_lien",
+  "level": 1,
+  "name": "Second Lien Economics",
+  "r18_concept_ids": [
+    "financial_covenant.second_lien_cushions",
+    "collateral.intercreditor_arrangements"
+  ],
+  "review_ref": [
+    {
+      "coverage": "full",
+      "row": 147,
+      "term": "Mandatory Prepayments"
+    }
+  ],
+  "type": "family",
+  "definition_source": "Review Template, Row 3 (Debt Quantum: 'Second Lien Term Loan: 7.5-8 years; no amortization'); PC Term Comparison, Call Protection section (2L schedule); Learning Material, Section 30 (Second Lien Covenants)",
+  "pc_ref": [
+    "Call Protection"
+  ]
+}

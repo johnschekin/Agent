@@ -1,0 +1,184 @@
+{
+  "children": [
+    {
+      "id": "cash_flow.simultaneous_incurrence_netting.definition",
+      "name": "Simultaneous Incurrence Definition",
+      "definition": "Contractual definition of what constitutes 'simultaneous' transactions for netting purposes. Per PC Term Comparison: 'Stacking/Phony Ratio: Clients will consider excluding concurrent revolver draws but will reject excluding revolver outstandings altogether. Ideally limited to ratios for debt incurrence baskets and not for RPs, RDPs or RIs.' The definition typically covers transactions closing on the same date or as part of a single integrated transaction. Key negotiation point is whether literal simultaneity is required vs. 'substantially concurrent.'",
+      "type": "concept",
+      "level": 2,
+      "domain_id": "cash_flow",
+      "family_id": "cash_flow.simultaneous_incurrence_netting",
+      "corpus_prevalence": "medium",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "indebtedness",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "shape_ref": null,
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 6",
+          "ARTICLE I",
+          "Section 1",
+          "Section 1.11",
+          "Section 2.10"
+        ],
+        "section_location_source": "domain_siblings",
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE VI-VII (Negative Covenants) / Definitions"
+      },
+      "definition_source": "PC Term Comparison: 'Stacking/Phony Ratio: exclude concurrent revolver draws, reject excluding outstandings altogether. Ideally limited to debt incurrence ratios.'",
+      "pc_ref": [
+        ": 'Stacking/Phony Ratio: exclude concurrent revolver draws, reject excluding outstandings altogether. Ideally limited to debt incurrence ratios.'"
+      ]
+    },
+    {
+      "id": "cash_flow.simultaneous_incurrence_netting.ratio_test_netting",
+      "name": "Ratio Test Netting Mechanics",
+      "definition": "Mechanics governing how multiple simultaneously incurred transactions interact with pro forma ratio tests. Per PC Term Comparison: stacking is 'ideally limited to ratios for debt incurrence baskets and not for RPs, RDPs or RIs.' Determines whether each transaction is tested independently (sequential) or all given pro forma effect together (concurrent), which can produce materially different results. Per PC Term Comparison: 'High Water Mark: Greater of actual closing and hardwired leverage levels: Reject.'",
+      "type": "concept",
+      "level": 2,
+      "domain_id": "cash_flow",
+      "family_id": "cash_flow.simultaneous_incurrence_netting",
+      "corpus_prevalence": "medium",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "indebtedness",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "shape_ref": null,
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 6",
+          "ARTICLE I",
+          "Section 1",
+          "Section 1.11",
+          "Section 2.10"
+        ],
+        "section_location_source": "domain_siblings",
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE VI-VII (Negative Covenants) / Definitions"
+      },
+      "definition_source": "PC Term Comparison: 'stacking ideally limited to debt incurrence ratios, not RPs/RDPs/RIs.' 'High Water Mark: Reject.'",
+      "pc_ref": [
+        ": 'stacking ideally limited to debt incurrence ratios, not RPs/RDPs/RIs.' 'High Water Mark: Reject.'"
+      ]
+    },
+    {
+      "id": "cash_flow.simultaneous_incurrence_netting.basket_ordering",
+      "name": "Basket Utilization Ordering",
+      "definition": "Rules governing the order in which basket capacity is consumed when multiple baskets are available. Per PC Term Comparison framework: borrowers generally prefer flexibility to designate basket utilization; lenders prefer mandatory sequential ordering. Per Learning Material: reclassification is permitted 'if the Consolidated Total Leverage Ratio test for the incurrence would be satisfied on a pro forma basis as of the end of any subsequent fiscal quarter, the reclassification shall be deemed to have occurred automatically.'",
+      "type": "concept",
+      "level": 2,
+      "domain_id": "cash_flow",
+      "family_id": "cash_flow.simultaneous_incurrence_netting",
+      "corpus_prevalence": "medium",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "indebtedness",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "shape_ref": null,
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 6",
+          "ARTICLE I",
+          "Section 1",
+          "Section 1.11",
+          "Section 2.10"
+        ],
+        "section_location_source": "domain_siblings",
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE VI-VII (Negative Covenants) / Definitions"
+      },
+      "definition_source": "Learning Material: automatic reclassification when ratio test satisfied. PC Term Comparison: basket ordering and reclassification framework.",
+      "pc_ref": [
+        ": basket ordering and reclassification framework."
+      ]
+    },
+    {
+      "id": "cash_flow.simultaneous_incurrence_netting.cross_covenant_netting",
+      "name": "Cross-Covenant Netting",
+      "definition": "Rules for netting across different covenant categories when a single transaction triggers multiple covenants simultaneously. Per PC Term Comparison: 'Stacking/Phony Ratio: Ideally limited to ratios for debt incurrence baskets and not for RPs, RDPs or RIs.' Cross-covenant netting determines whether an acquisition that requires both debt incurrence and an investment can net for ratio testing purposes across separate covenant calculations.",
+      "type": "concept",
+      "level": 2,
+      "domain_id": "cash_flow",
+      "family_id": "cash_flow.simultaneous_incurrence_netting",
+      "corpus_prevalence": "low",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "indebtedness",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "shape_ref": null,
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 6",
+          "ARTICLE I",
+          "Section 1",
+          "Section 1.11",
+          "Section 2.10"
+        ],
+        "section_location_source": "domain_siblings",
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE VI-VII (Negative Covenants) / Definitions"
+      },
+      "definition_source": "PC Term Comparison: 'Stacking ideally limited to debt incurrence ratios, not for RPs/RDPs/RIs.'",
+      "pc_ref": [
+        ": 'Stacking ideally limited to debt incurrence ratios, not for RPs/RDPs/RIs.'"
+      ]
+    },
+    {
+      "id": "cash_flow.simultaneous_incurrence_netting.reclassification_interaction",
+      "name": "Reclassification at Time of Incurrence",
+      "definition": "Borrower's right to reclassify amounts between baskets at the time of simultaneous incurrence. Per Learning Material: the borrower 'will be entitled to divide or classify (or later divide, classify or reclassify in whole or in part in its sole discretion) such Restricted Payment among such clauses and the first paragraph and/or clauses of Permitted Investments.' Per PC Term Comparison: 'Other than in Aggressive UMM/BSLR, reject reallocations to build debt capacity.'",
+      "type": "concept",
+      "level": 2,
+      "domain_id": "cash_flow",
+      "family_id": "cash_flow.simultaneous_incurrence_netting",
+      "corpus_prevalence": "medium",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "indebtedness",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "shape_ref": null,
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 6",
+          "ARTICLE I",
+          "Section 1",
+          "Section 1.11",
+          "Section 2.10"
+        ],
+        "section_location_source": "domain_siblings",
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE VI-VII (Negative Covenants) / Definitions"
+      },
+      "definition_source": "Learning Material: borrower right to 'divide, classify or reclassify in its sole discretion.' PC Term Comparison: 'reject reallocations to build debt capacity.'",
+      "pc_ref": [
+        ": 'reject reallocations to build debt capacity.'"
+      ]
+    }
+  ],
+  "corpus_prevalence": "low",
+  "definition": "Provisions governing the netting of simultaneously incurred transactions for leverage ratio calculations. When multiple baskets are used concurrently, the pro forma test must give effect to all concurrent transactions. Per PC Term Comparison: stacking 'ideally limited to ratios for debt incurrence baskets and not for RPs, RDPs or RIs.' Interacts with the free-and-clear reclassification ability whereby fixed basket amounts can be reclassified as ratio basket amounts if the ratio is satisfied.",
+  "domain_id": "cash_flow",
+  "extraction_difficulty": "medium",
+  "family_id": "cash_flow.simultaneous_incurrence_netting",
+  "id": "cash_flow.simultaneous_incurrence_netting",
+  "level": 1,
+  "name": "Simultaneous Incurrence Netting",
+  "type": "family",
+  "definition_source": "PC Term Comparison: 'Stacking/Phony Ratio: Ideally limited to ratios for debt incurrence baskets and not for RPs, RDPs or RIs.' DLS Preferred row 9 alt: reclassification from clause (a) to clause (b) at borrower's election."
+}

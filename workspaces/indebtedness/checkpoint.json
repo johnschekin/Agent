@@ -1,0 +1,13 @@
+{
+  "family": "indebtedness",
+  "iteration_count": 0,
+  "last_strategy_version": 0,
+  "last_update": "2026-02-23T06:06:27.045611+00:00",
+  "status": "completed",
+  "last_session": "agent-swarm",
+  "last_pane": "2",
+  "last_start_at": "2026-02-23T06:02:01.005219+00:00",
+  "status_updated_at": "2026-02-23T06:06:27.045611+00:00",
+  "status_updated_by": "wave_promote_status.py",
+  "status_note": "wave2-bootstrap-evidence-complete"
+}

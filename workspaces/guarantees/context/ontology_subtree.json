@@ -1,0 +1,1232 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether the parent holding company provides a guarantee. Standard in PC market. May be limited to equity value of the borrower. Present in 100% of DealData deals.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.scope.holdco_guarantee",
+          "kct_ref": [
+            "cat4.5"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "100% (PC)"
+          },
+          "name": "Holdings Guarantee",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 5"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "All direct and indirect wholly-owned U.S. subsidiaries must guarantee. Bank preferred position per DLS Row 66. Material restricted subsidiaries in BSL.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.scope.domestic_subs",
+          "level": 3,
+          "name": "Domestic Subsidiary Requirement",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 3"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Obligation for parent entities to cause downstream subsidiaries to provide guarantees and pledge collateral for the credit facility. Addresses structural subordination risk by requiring that value held at lower-tier subsidiaries supports the credit. Scope limited by fraudulent conveyance savings clauses and local law restrictions in non-US jurisdictions.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.guarantees",
+              "id": "credit_protection.guarantees.scope.upstream_downstream.down_streaming_requiremen",
+              "kct_ref": [
+                "cat4.5"
+              ],
+              "level": 4,
+              "name": "Down-Streaming Requirement",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 4 Item 5"
+            },
+            {
+              "id": "credit_protection.guarantees.scope.upstream_downstream.upstream_limitation",
+              "name": "Upstream Guarantee Limitation",
+              "level": 4,
+              "type": "sub_component",
+              "domain_id": "credit_protection",
+              "family_id": "credit_protection.guarantees",
+              "corpus_prevalence": "high",
+              "extraction_difficulty": "medium",
+              "definition": "Guarantee direction scope includes down-streaming requirement and upstream guarantee limitations."
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Direction of guarantee flow: upstream (sub guarantees parent), downstream (parent guarantees sub), cross-stream (sister entities cross-guarantee). Upstream guarantees subject to fraudulent transfer risk.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.scope.upstream_downstream",
+          "kct_ref": [
+            "cat4.5"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence_of_holdco_debt_service_permissions": "[cat4.5] KCT cat4.5 requires prevalence/severity data for 'prevalence of holdco debt service permissions' but no existing node provides this benchmark.",
+            "sponsor_management_fee_ranges": "[cat4.5] KCT cat4.5 requires prevalence/severity data for 'sponsor/management fee ranges' but no existing node provides this benchmark.",
+            "typical_holdco_expense_caps": "[cat4.5] KCT cat4.5 requires prevalence/severity data for 'typical holdco expense caps' but no existing node provides this benchmark."
+          },
+          "name": "Upstream / Downstream / Cross-Stream",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 5"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Each guarantor liable for the full guaranteed amount, not just its proportional share. Standard in leveraged finance. Lenders can pursue any single guarantor for full recovery.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.scope.joint_several",
+          "level": 3,
+          "name": "Joint and Several Liability",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Financial test for 'material' subsidiary designation: 2.5% of consolidated total assets (individual, 81.1% use), 2.5% revenue, 2.5% EBITDA. 5% aggregate cap.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.scope.material_sub_threshold",
+          "level": 3,
+          "market_benchmarks": {
+            "aggregate_value": "5%",
+            "individual_asset_threshold": "2.5%",
+            "individual_revenue_threshold": "2.5%"
+          },
+          "name": "Material Subsidiary Threshold",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Reduces guaranteed amount to the maximum that can be guaranteed without constituting a fraudulent transfer under applicable law. Limits upstream guarantee to net assets of guarantor.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.scope.guarantee_limitation",
+          "level": 3,
+          "name": "Guarantee Limitation / Savings Clause",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Defines which entities in the corporate structure provide credit support (guarantees) to the facility. Scope determines lender claim breadth across the corporate group and recovery breadth in default.",
+      "dls_ref": [
+        "DLS:49:Forecasts",
+        "DLS:66:Guarantees"
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "collateral_guarantees.foreign_credit_support",
+        "section_locations": [
+          "ARTICLE 4",
+          "ARTICLE 5",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE III",
+          "ARTICLE IV"
+        ],
+        "shape_ref": "collateral_guarantees.foreign_credit_support",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.813889+00:00",
+          "term_packs": {
+            "GUAR_SCOPE": {
+              "label": "Guarantors - Scope",
+              "category": "COLLATERAL_GUARANTORS",
+              "exactPhrases": [
+                "Note any unusual aspects of collateral/guaranty structure",
+                "all existing and future direct and indirect domestic subsidiaries",
+                "material domestic subsidiaries",
+                "Excluded Subsidiary",
+                "Immaterial Subsidiary",
+                "joint and several guarantee"
+              ],
+              "sectionHeaders": [
+                "Guarantors",
+                "Guarantee",
+                "Guarantor Scope",
+                "Loan Parties",
+                "Subsidiary Guarantors",
+                "Guarantee Agreement"
+              ],
+              "semanticVariants": [
+                "guarantor requirements and scope",
+                "which subsidiaries guarantee the obligations",
+                "subsidiary guarantee coverage",
+                "immaterial subsidiary exclusion threshold",
+                "excluded subsidiary definition",
+                "upstream and downstream guarantees"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.6,
+                "minKeywordScore": 0.5,
+                "minConfidence": 0.7,
+                "escalationThreshold": 0.5,
+                "humanEscalationThreshold": 0.3
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Note any unusual aspects of collateral/guaranty structure",
+              "all existing and future direct and indirect domestic subsidiaries",
+              "material domestic subsidiaries",
+              "Excluded Subsidiary",
+              "Immaterial Subsidiary",
+              "joint and several guarantee"
+            ],
+            "sectionHeaders": [
+              "Guarantors",
+              "Guarantee",
+              "Guarantor Scope",
+              "Loan Parties",
+              "Subsidiary Guarantors",
+              "Guarantee Agreement"
+            ],
+            "semanticVariants": [
+              "guarantor requirements and scope",
+              "which subsidiaries guarantee the obligations",
+              "subsidiary guarantee coverage",
+              "immaterial subsidiary exclusion threshold",
+              "excluded subsidiary definition",
+              "upstream and downstream guarantees"
+            ]
+          }
+        }
+      },
+      "family_id": "credit_protection.guarantees",
+      "id": "credit_protection.guarantees.scope",
+      "level": 2,
+      "market_benchmarks": {
+        "alternative_value": "Material wholly-owned U.S. subs only",
+        "bank_preferred": "Holdings + all direct/indirect wholly-owned U.S. subs"
+      },
+      "name": "Guarantee Scope",
+      "negotiation_spectrum": {
+        "aggressive_position": "Guarantees limited to material subsidiaries only; excluded subsidiaries for immaterial subs; foreign subsidiaries excluded entirely",
+        "dls_source": "DLS row 66",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "scope: all domestic vs material only",
+          "holdings_guarantee: yes vs no",
+          "foreign_sub_guarantee: yes_with_limitation vs no",
+          "joinder_timing: 30_days vs 60_days vs 90_days",
+          "excluded_subsidiary_threshold: none vs revenue_based vs asset_based"
+        ],
+        "market_position": "",
+        "preferred_position": "All domestic subsidiaries (existing and future) guarantee on joint & several basis; Holdings guarantee; pledge 100% domestic equity, 65% first-tier foreign equity",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "guarantors.guarantee_scope"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 49 (Forecasts); DLS Preferred Row 66 (Guarantees)",
+      "neutron_field_refs": [
+        {
+          "term_type": "GUAR_SCOPE",
+          "label": "Guarantors - Scope",
+          "schema_file": "collateral-guarantors-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "credit_protection",
+          "mapping_confidence": 0.5433,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Excluded from guarantee requirement (standard). Includes CFCs and FSHCOs. 65% stock pledge substitutes for direct guarantee. IRC Section 956 driven.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.excluded_subs.foreign",
+          "level": 3,
+          "name": "Foreign Subsidiaries",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 3; Learning Material: 1) Subsidiaries of foreign borrower",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:40.794037+00:00",
+              "term_packs": {
+                "GUAR_FOREIGN": {
+                  "label": "Guarantors - Foreign Subsidiary Treatment",
+                  "category": "COLLATERAL_GUARANTORS",
+                  "exactPhrases": [
+                    "$[X][, foreign revolving lines uncapped]",
+                    "foreign subsidiary",
+                    "controlled foreign corporation",
+                    "CFC",
+                    "FSHCO",
+                    "foreign subsidiary holding company",
+                    "65% of the voting stock",
+                    "no recourse to U.S. loan parties"
+                  ],
+                  "sectionHeaders": [
+                    "Non-guarantor/foreign subsidiary debt",
+                    "Foreign Subsidiary",
+                    "Foreign Guarantors",
+                    "CFC Pledge Limitation",
+                    "FSHCO Pledge Limitation"
+                  ],
+                  "semanticVariants": [
+                    "foreign subsidiary guarantee requirements",
+                    "CFC pledge limitations",
+                    "foreign subsidiary debt caps",
+                    "recourse to U.S. loan parties",
+                    "controlled foreign corporation treatment",
+                    "foreign revolving line flexibility"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.6,
+                    "minKeywordScore": 0.5,
+                    "minConfidence": 0.7,
+                    "escalationThreshold": 0.5,
+                    "humanEscalationThreshold": 0.3
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "$[X][, foreign revolving lines uncapped]",
+                  "foreign subsidiary",
+                  "controlled foreign corporation",
+                  "CFC",
+                  "FSHCO",
+                  "foreign subsidiary holding company",
+                  "65% of the voting stock",
+                  "no recourse to U.S. loan parties"
+                ],
+                "sectionHeaders": [
+                  "Non-guarantor/foreign subsidiary debt",
+                  "Foreign Subsidiary",
+                  "Foreign Guarantors",
+                  "CFC Pledge Limitation",
+                  "FSHCO Pledge Limitation"
+                ],
+                "semanticVariants": [
+                  "foreign subsidiary guarantee requirements",
+                  "CFC pledge limitations",
+                  "foreign subsidiary debt caps",
+                  "recourse to U.S. loan parties",
+                  "controlled foreign corporation treatment",
+                  "foreign revolving line flexibility"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "GUAR_FOREIGN",
+              "label": "Guarantors - Foreign Subsidiary Treatment",
+              "schema_file": "collateral-guarantors-enhanced.schema.ts",
+              "field_count": 4,
+              "r1_domain": "credit_protection",
+              "mapping_confidence": 0.4083,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "2.5% of consolidated total assets individually.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.guarantees",
+              "id": "credit_protection.guarantees.excluded_subs.immaterial.asset_test",
+              "level": 4,
+              "market_benchmarks": {
+                "prevalence": "81.1%",
+                "threshold": "2.5%"
+              },
+              "name": "Asset-Based Test",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 2"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Revenue test for immaterial subsidiary exclusion from guarantee requirements: subsidiaries contributing less than a specified percentage (typically 2.5%) of consolidated revenues individually may be excluded from the guarantor group.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.guarantees",
+              "id": "credit_protection.guarantees.excluded_subs.immaterial.revenue_test",
+              "level": 4,
+              "market_benchmarks": {
+                "prevalence": "58.5%",
+                "threshold": "2.5%"
+              },
+              "name": "Revenue-Based Test",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 2"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "2.5% of consolidated EBITDA individually. Most sophisticated test — correlates with earning power.",
+              "dls_ref": [
+                "DLS:42:Minimum EBITDA"
+              ],
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.guarantees",
+              "id": "credit_protection.guarantees.excluded_subs.immaterial.ebitda_test",
+              "level": 4,
+              "market_benchmarks": {
+                "prevalence": "37.7%",
+                "threshold": "2.5%"
+              },
+              "name": "EBITDA-Based Test",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 42 (Minimum EBITDA)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Cumulative ceiling on excluded immaterial subsidiaries. 5% aggregate of total assets standard. Prevents death-by-a-thousand-cuts exclusion.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.guarantees",
+              "id": "credit_protection.guarantees.excluded_subs.immaterial.aggregate_cap",
+              "level": 4,
+              "market_benchmarks": {
+                "prevalence": "84.9%",
+                "threshold": "5%"
+              },
+              "name": "Aggregate Immaterial Cap",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 8"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Subsidiaries below materiality threshold excluded. Individual: 2.5% total assets or revenue. Aggregate: 5% cap. Threshold must be defined objectively to prevent gaming.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.excluded_subs.immaterial",
+          "level": 3,
+          "market_benchmarks": {
+            "aggregate_value": "5%",
+            "individual_value": "2.5%"
+          },
+          "name": "Immaterial Subsidiaries",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; Learning Material: Equity Interests in Unrestricted and Immaterial Subsidiaries"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Subsidiaries designated as unrestricted are excluded from guarantee requirements by definition. Subject to designation conditions (no EoD, investment capacity, pro forma compliance).",
+          "dls_ref": [
+            "DLS:92:Unrestricted Subsidiaries"
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.excluded_subs.unrestricted",
+          "level": 3,
+          "name": "Unrestricted Subsidiaries",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 92 (Unrestricted Subsidiaries)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Subsidiaries subject to regulatory capital requirements that preclude or limit guarantees (FINRA broker-dealers, insurance companies, regulated utilities). Regulatory exclusion.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.excluded_subs.broker_dealer",
+          "level": 3,
+          "name": "Broker-Dealer / Regulated Subsidiaries",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Foreign Subsidiary Holding Companies treated as CFCs. Excluded from guarantee to avoid deemed repatriation of earnings of underlying foreign subs (IRC Section 956). 65% stock pledge instead.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.excluded_subs.fshco",
+          "level": 3,
+          "name": "FSHCO / CFC Holdcos",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Captive insurance companies excluded from guarantee requirements due to regulatory restrictions on encumbering insurance company assets. Standard carveout.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.excluded_subs.captive_insurance",
+          "level": 3,
+          "name": "Captive Insurance Subsidiaries",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 3"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "SPEs, not-for-profits, and other special-purpose subsidiaries excluded from guarantee. Contractual restrictions and organizational document limitations prevent guarantee.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.excluded_subs.spe",
+          "level": 3,
+          "name": "Special Purpose Entities",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Subsidiaries with pre-existing contractual restrictions preventing guarantee (joint venture agreements, license agreements). 'Not in contemplation' qualifier limits abuse.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.excluded_subs.contractual",
+          "level": 3,
+          "name": "Contractually Prohibited Subsidiaries",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Subsidiaries where cost of providing guarantee exceeds benefit to lenders (agent determination). Used for immaterial foreign subs or subs in challenging jurisdictions.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.excluded_subs.cost_excessive",
+          "level": 3,
+          "name": "Cost-Excessive Subsidiaries",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Categories of subsidiaries exempt from guarantee requirements. Each exclusion creates a structural gap in lender claim breadth. Aggregate excluded value must be monitored against collateral coverage.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "collateral_guarantees.foreign_credit_support",
+        "section_locations": [
+          "ARTICLE 4",
+          "ARTICLE 5",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE III",
+          "ARTICLE IV"
+        ],
+        "shape_ref": "collateral_guarantees.foreign_credit_support"
+      },
+      "family_id": "credit_protection.guarantees",
+      "id": "credit_protection.guarantees.excluded_subs",
+      "level": 2,
+      "name": "Excluded Subsidiaries",
+      "negotiation_spectrum": {
+        "aggressive_position": "Guarantees limited to material subsidiaries only; excluded subsidiaries for immaterial subs; foreign subsidiaries excluded entirely",
+        "dls_source": "DLS row 66",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "scope: all domestic vs material only",
+          "holdings_guarantee: yes vs no",
+          "foreign_sub_guarantee: yes_with_limitation vs no",
+          "joinder_timing: 30_days vs 60_days vs 90_days",
+          "excluded_subsidiary_threshold: none vs revenue_based vs asset_based"
+        ],
+        "market_position": "",
+        "preferred_position": "All domestic subsidiaries (existing and future) guarantee on joint & several basis; Holdings guarantee; pledge 100% domestic equity, 65% first-tier foreign equity",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "guarantors.excluded_subsidiaries"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 66 (Guarantees); Review Template Row 39 (Collateral and Guarantors)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Guarantee released upon sale or other disposition of all equity interests in the guarantor to a non-affiliate in a permitted transaction. Most common release trigger.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.release.disposition",
+          "kct_ref": [
+            "cat3.11"
+          ],
+          "level": 3,
+          "name": "Disposition Release",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 11"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Guarantee released upon designation of guarantor as unrestricted subsidiary pursuant to the unrestricted subsidiary covenant. Subject to designation conditions.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.release.unrestricted_designation",
+          "kct_ref": [
+            "cat3.11"
+          ],
+          "level": 3,
+          "name": "Unrestricted Sub Designation Release",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 11"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Guarantee released when guarantor falls below materiality threshold and is reclassified as immaterial. Must satisfy aggregate immaterial cap. Tested at compliance certificate delivery.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.release.immaterial_reclassification",
+          "kct_ref": [
+            "cat3.11"
+          ],
+          "level": 3,
+          "name": "Immaterial Sub Reclassification",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 11"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "No automatic release solely because sub becomes non-wholly-owned. Release only if: (1) no longer sub, or (2) equity sale to non-affiliate for bona fide business purpose.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.guarantees",
+              "id": "credit_protection.guarantees.release.non_wholly_owned.chewy_present",
+              "kct_ref": [
+                "cat3.11"
+              ],
+              "level": 4,
+              "market_benchmarks": {
+                "prevalence": "98.4% (DealData)"
+              },
+              "name": "Chewy Blocker Present",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 11"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Release of non-wholly-owned sub guarantee requires bona fide business purpose (not solely to shed guarantee). Subjective test — borrower determines in good faith.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "hard",
+              "family_id": "credit_protection.guarantees",
+              "id": "credit_protection.guarantees.release.non_wholly_owned.bona_fide_test",
+              "kct_ref": [
+                "cat3.11"
+              ],
+              "level": 4,
+              "name": "Bona Fide Purpose Test",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 11"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Release when subsidiary becomes non-wholly owned. PRIMARY LME TARGET: Chewy protection blocks automatic release solely because sub becomes non-wholly-owned.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.release.non_wholly_owned",
+          "kct_ref": [
+            "cat3.11"
+          ],
+          "level": 3,
+          "name": "Non-Wholly-Owned Release (Chewy Target)",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 40,
+              "term": "Collateral/Guarantor release – Chewy"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 11; Review Template Row 40 (Collateral/Guarantor release – Chewy)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Guarantee released when guarantor merged into borrower or another guarantor (no net reduction in guarantee coverage). Successor assumes all obligations.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.release.merger_release",
+          "kct_ref": [
+            "cat3.11"
+          ],
+          "level": 3,
+          "name": "Merger / Consolidation Release",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 11"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Circumstances under which a guarantor's obligation terminates. PC Term Comparison Chewy protection guidance: 'Typically include tighter formulation. Require investment capacity for FMV of released guarantor. Sale of equity to a non affiliate and/or bona fide business purpose (other than incurring the debt or lien). Avoid automatic release; require Agent action. If foreign Sub voluntarily guaranteed and seeks release add EOD stopper. Ask discuss whether to require that at the time of release that released sub cannot be guarantor of incremental/equivalent debt, ratio debt, incurred acquisition debt or refi debt.' LME Provision Language Protection #2 (Chewy) provides detailed drafting considerations and sample clause from MillerKnoll April 2025. KCT Category 3 item 11(a) flags: 'Guarantee that expressly releases a guarantor of its obligations to perform under the guarantee in the event of act(s) of war, hostilities, or escalation(s).'",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "collateral_guarantees.foreign_credit_support",
+        "section_locations": [
+          "ARTICLE 4",
+          "ARTICLE 5",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE III",
+          "ARTICLE IV"
+        ],
+        "shape_ref": "collateral_guarantees.foreign_credit_support",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.809313+00:00",
+          "term_packs": {
+            "GUAR_RELEASE_CHEWY": {
+              "label": "Guarantors - Chewy Release Protection",
+              "category": "COLLATERAL_GUARANTORS",
+              "exactPhrases": [
+                "[Included; describe formulation] / [Not included]",
+                "Release [is] / [is not] automatic",
+                "[Can]/[Cannot] remain guarantor under other debt",
+                "ceases to be a wholly owned subsidiary",
+                "primarily for the purpose of release",
+                "continued subsidiary status",
+                "shall be released as a Guarantor",
+                "automatic release"
+              ],
+              "sectionHeaders": [
+                "Collateral/Guarantor release - Chewy",
+                "Chewy protection",
+                "Guarantee release",
+                "Release of Guarantors",
+                "Guarantee Release Conditions"
+              ],
+              "semanticVariants": [
+                "Chewy blocker for guarantee release",
+                "automatic guarantee release protection",
+                "guarantee shedding prevention",
+                "subsidiary release limitations",
+                "LME guarantee protection",
+                "release upon sale provisions"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.6,
+                "minKeywordScore": 0.5,
+                "minConfidence": 0.7,
+                "escalationThreshold": 0.5,
+                "humanEscalationThreshold": 0.3
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "[Included; describe formulation] / [Not included]",
+              "Release [is] / [is not] automatic",
+              "[Can]/[Cannot] remain guarantor under other debt",
+              "ceases to be a wholly owned subsidiary",
+              "primarily for the purpose of release",
+              "continued subsidiary status",
+              "shall be released as a Guarantor",
+              "automatic release"
+            ],
+            "sectionHeaders": [
+              "Collateral/Guarantor release - Chewy",
+              "Chewy protection",
+              "Guarantee release",
+              "Release of Guarantors",
+              "Guarantee Release Conditions"
+            ],
+            "semanticVariants": [
+              "Chewy blocker for guarantee release",
+              "automatic guarantee release protection",
+              "guarantee shedding prevention",
+              "subsidiary release limitations",
+              "LME guarantee protection",
+              "release upon sale provisions"
+            ]
+          }
+        }
+      },
+      "family_id": "credit_protection.guarantees",
+      "id": "credit_protection.guarantees.release",
+      "kct_ref": [
+        "cat3.11"
+      ],
+      "level": 2,
+      "name": "Guarantee Release Conditions",
+      "negotiation_spectrum": {
+        "aggressive_position": "Guarantees limited to material subsidiaries only; excluded subsidiaries for immaterial subs; foreign subsidiaries excluded entirely",
+        "dls_source": "DLS row 66",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "scope: all domestic vs material only",
+          "holdings_guarantee: yes vs no",
+          "foreign_sub_guarantee: yes_with_limitation vs no",
+          "joinder_timing: 30_days vs 60_days vs 90_days",
+          "excluded_subsidiary_threshold: none vs revenue_based vs asset_based"
+        ],
+        "market_position": "",
+        "preferred_position": "All domestic subsidiaries (existing and future) guarantee on joint & several basis; Holdings guarantee; pledge 100% domestic equity, 65% first-tier foreign equity",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "guarantors.guarantee_release_conditions"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 40,
+          "term": "Collateral/Guarantor release – Chewy"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison Negative Covenants: Chewy section (6 conditions for tighter formulation); LME Provision Language Protection #2 (Chewy drafting considerations and common weaknesses); KCT Category 3 item 11(a) (force majeure release flag)",
+      "pc_ref": [
+        "Negative Covenants: Chewy"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "GUAR_RELEASE_CHEWY",
+          "label": "Guarantors - Chewy Release Protection",
+          "schema_file": "collateral-guarantors-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "credit_protection",
+          "mapping_confidence": 0.5195,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Newly acquired subsidiaries that qualify as loan parties must execute joinder agreement within specified period after closing of acquisition. Standard 30-60 day deadline.",
+          "dls_ref": [
+            "DLS:53:Amendments to Acquisition Agreement"
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.joinder.acquisition_joinder",
+          "level": 3,
+          "market_benchmarks": {
+            "typical_deadline": "30-60 days"
+          },
+          "name": "Acquisition Joinder",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 53 (Amendments to Acquisition Agreement)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Newly formed subsidiaries must become guarantors promptly upon formation (typically within 30 days). Shorter deadline than acquisition joinder due to no third-party complexity.",
+          "dls_ref": [
+            78
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.joinder.formation_joinder",
+          "level": 3,
+          "market_benchmarks": {
+            "typical_deadline": "30 days"
+          },
+          "name": "Formation Joinder",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 78"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Time period to execute joinder agreement and deliver collateral documentation. Days after acquisition (30-60 typical) or days after formation (30 typical).",
+          "dls_ref": [
+            78
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.joinder.joinder_deadline",
+          "level": 3,
+          "market_benchmarks": {
+            "acquisition_value": "30-60 days",
+            "formation_value": "30 days"
+          },
+          "name": "Joinder Deadline",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 78"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Time period to complete perfection of security interests in new guarantor's assets after joinder execution. Typically 30-60 days after joinder, with extensions for real property.",
+          "dls_ref": [
+            78
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.joinder.perfection_deadline",
+          "level": 3,
+          "market_benchmarks": {
+            "typical_value": "30-60 days post-joinder"
+          },
+          "name": "Perfection Deadline",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 78"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "When pre-existing contractual restrictions on guarantees lapse (e.g., joint venture agreement expires), the subsidiary must become a guarantor within the standard joinder deadline.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.joinder.lapse_provision",
+          "level": 3,
+          "name": "Contractual Restriction Lapse",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 3"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Provisions allowing temporary delay of joinder for specific circumstances: regulatory approvals pending, local law opinions required, or material tax consequences identified.",
+          "dls_ref": [
+            "DLS:96:Buyback Provisions"
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.joinder.holdback_provisions",
+          "level": 3,
+          "name": "Holdback Provisions",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 96 (Buyback Provisions)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Requirements for newly formed or acquired subsidiaries to join as guarantors. Timing, documentation, and holdback provisions govern the gap between acquisition and full guarantee coverage.",
+      "dls_ref": [
+        "DLS:66:Guarantees"
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "collateral",
+        "extraction_ready": true,
+        "playbook_ref": "collateral_guarantees.foreign_credit_support",
+        "section_locations": [
+          "ARTICLE 4",
+          "ARTICLE 5",
+          "ARTICLE 9",
+          "ARTICLE II",
+          "ARTICLE III",
+          "ARTICLE IV"
+        ],
+        "shape_ref": "collateral_guarantees.foreign_credit_support",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "credit_protection.guarantees",
+      "id": "credit_protection.guarantees.joinder",
+      "kct_ref": [
+        "cat3.11"
+      ],
+      "level": 2,
+      "name": "Guarantor Joinder Requirements",
+      "negotiation_spectrum": {
+        "aggressive_position": "120d for first audit; going-concern for maturity/covenant ok; 60d for first 3 quarters; no monthlies; no forecasts or 90-120d; no lender calls or choose between MD&A/calls; reporting limited to Borrower + restricted subs",
+        "dls_source": "DLS row 78",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(xvii) covenant to guarantee obligations and give security",
+          "(xix) further assurances as to security",
+          "(xxii) interest rate protection",
+          "alternative_terms: entire field highlighted"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "annual_financial_deadline: 90d vs 120d_first_year",
+          "audit_opinion_qualification: clean_only vs going_concern_maturity_ok vs going_concern_covenant_ok",
+          "quarterly_financial_deadline: 45d vs 60d_first_3Q",
+          "monthly_financials: required vs not_required",
+          "monthly_forecasts: required vs not_required vs 90d_forecasts",
+          "lender_calls: quarterly vs annual vs not_required",
+          "mda: with_financials vs not_required",
+          "compliance_certificate: quarterly vs annual",
+          "guarantee_security_covenant: affirmative_covenant vs best_efforts",
+          "further_assurances: required vs not_required",
+          "interest_rate_protection: required vs not_required",
+          "entity_scope: holdings_and_all_subs vs borrower_and_restricted_subs",
+          "inspection_frequency: unlimited_with_cost_cap vs annual_plus_eod"
+        ],
+        "market_position": "",
+        "preferred_position": "24 enumerated covenants: annual (90d, audited, clean opinion), quarterly (45d), monthly (30d), monthly forecasts, quarterly lender calls, MD&A, compliance certs, notices, tax/existence/property/insurance/ERISA/environmental, inspection rights, guarantee/security covenant, further assurances, IP, interest rate protection, FCPA/OFAC/Patriot Act",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "guarantors.joinder_requirements"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 39,
+          "term": "Collateral and Guarantors"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 66 (Guarantees); KCT Cat 3 Item 11; Review Template Row 39 (Collateral and Guarantors)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Release triggered by the guarantor disposing of all or substantially all of its assets. Risk: guarantor can sell assets to a non-guarantor affiliate and shed guarantee obligations.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.release_on_guarantor_act.disposition_trigger",
+          "kct_ref": [
+            "cat3.11"
+          ],
+          "level": 3,
+          "name": "Disposition-Triggered Release",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 11"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Release triggered by the guarantor being designated as an unrestricted subsidiary. Risk: effectively removes guarantor from the credit group while retaining its assets outside the lender reach.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.guarantees",
+          "id": "credit_protection.guarantees.release_on_guarantor_act.designation_trigger",
+          "kct_ref": [
+            "cat3.11"
+          ],
+          "level": 3,
+          "name": "Unrestricted Subsidiary Designation Release",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 11"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Provision that expressly releases a guarantor of its obligations to perform under the guarantee upon the occurrence of an act by the guarantor itself (e.g., asset disposition, equity transfer, designation as an unrestricted subsidiary). KCT risk item: this creates a pathway for guarantors to engineer their own release, potentially leaving lenders with unsecured exposure. Must be cross-referenced with disposition covenant, unrestricted subsidiary designation, and J.Crew/Chewy blocker protections.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "guarantees",
+        "extraction_ready": true,
+        "playbook_ref": "collateral_guarantees.collateral_exceptions",
+        "section_locations": [
+          "ARTICLE IV",
+          "ARTICLE V",
+          "Section 5.10"
+        ],
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.801700+00:00",
+          "term_packs": {
+            "GUAR_NON_GUARANTOR_CAP": {
+              "label": "Guarantors - Non-Guarantor Subsidiary Cap",
+              "category": "COLLATERAL_GUARANTORS",
+              "exactPhrases": [
+                "Greater of $[X] / [X]% LTM EBITDA",
+                "[shared with Incurred Acquisition Debt]",
+                "non-guarantor subsidiary",
+                "non-loan party",
+                "structurally senior",
+                "debt at non-guarantors",
+                "investments in non-loan parties"
+              ],
+              "sectionHeaders": [
+                "Non-guarantor cap",
+                "Non-Loan Party cap",
+                "Structural subordination",
+                "Indebtedness of Non-Loan Parties",
+                "Investments in Non-Loan Parties"
+              ],
+              "semanticVariants": [
+                "cap on non-guarantor subsidiary debt",
+                "limitation on structural subordination",
+                "non-loan party debt restrictions",
+                "leakage to non-guarantor subsidiaries",
+                "structural seniority limitations"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.6,
+                "minKeywordScore": 0.5,
+                "minConfidence": 0.7,
+                "escalationThreshold": 0.5,
+                "humanEscalationThreshold": 0.3
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Greater of $[X] / [X]% LTM EBITDA",
+              "[shared with Incurred Acquisition Debt]",
+              "non-guarantor subsidiary",
+              "non-loan party",
+              "structurally senior",
+              "debt at non-guarantors",
+              "investments in non-loan parties"
+            ],
+            "sectionHeaders": [
+              "Non-guarantor cap",
+              "Non-Loan Party cap",
+              "Structural subordination",
+              "Indebtedness of Non-Loan Parties",
+              "Investments in Non-Loan Parties"
+            ],
+            "semanticVariants": [
+              "cap on non-guarantor subsidiary debt",
+              "limitation on structural subordination",
+              "non-loan party debt restrictions",
+              "leakage to non-guarantor subsidiaries",
+              "structural seniority limitations"
+            ]
+          }
+        }
+      },
+      "family_id": "credit_protection.guarantees",
+      "id": "credit_protection.guarantees.release_on_guarantor_act",
+      "kct_ref": [
+        "cat3.11"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "high -- standard in leveraged CAs",
+        "source": "R19-C_corpus_analysis",
+        "typical_triggers": "disposition of guarantor, designation as unrestricted sub, merger into non-guarantor"
+      },
+      "name": "Guarantee Release Upon Act of Guarantor",
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 40,
+          "term": "Collateral/Guarantor release – Chewy"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "KCT Cat 3 Item 11; Review Template Row 40 (Collateral/Guarantor release – Chewy)",
+      "neutron_field_refs": [
+        {
+          "term_type": "GUAR_NON_GUARANTOR_CAP",
+          "label": "Guarantors - Non-Guarantor Subsidiary Cap",
+          "schema_file": "collateral-guarantors-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "credit_protection",
+          "mapping_confidence": 0.406,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    }
+  ],
+  "corpus_prevalence": "high",
+  "definition": "Entity coverage provisions defining which subsidiaries provide credit support. DLS Preferred row 78 affirmative covenants clause (xvii) requires a 'covenant to guarantee obligations and give security' (highlighted) and clause (xviii) covers 'creation or acquisitions of subsidiaries.' Review Template row 39: 'Collateral/guarantee scope should be \"all assets\" of U.S. loan parties with standard exceptions.' Learning Material section on Guarantees and Collateral discusses the standard formulation requiring all domestic restricted subsidiaries to guarantee. The guarantee perimeter directly determines the lender's claim base in distress and interacts with the Chewy protection (automatic release upon loss of wholly-owned status) and J.Crew/Pluralsight protections (asset leakage to non-guarantor entities).",
+  "dls_ref": [
+    "DLS:7:Letters of Credit",
+    "DLS:56:Solvency",
+    "DLS:66:Guarantees",
+    "DLS:67:Security",
+    "DLS:78:Affirmative covenants"
+  ],
+  "domain_id": "credit_protection",
+  "extraction_difficulty": "hard",
+  "family_id": "credit_protection.guarantees",
+  "id": "credit_protection.guarantees",
+  "kct_ref": [
+    "cat3.11"
+  ],
+  "level": 1,
+  "market_benchmarks": {
+    "bank_preferred": "Holdings + all direct/indirect wholly-owned U.S. subs",
+    "sponsor_push": "Material wholly-owned U.S. subs only"
+  },
+  "name": "Guarantees",
+  "r18_concept_ids": [
+    "guarantors.guarantee_scope",
+    "guarantors.joinder_requirements"
+  ],
+  "review_ref": [
+    {
+      "coverage": "full",
+      "row": 51,
+      "term": "Reps and Warranties"
+    }
+  ],
+  "type": "family",
+  "definition_source": "DLS Preferred row 78 clause (xvii) (highlighted: guarantee covenant); Review Template row 39 (all-assets scope for guarantors); Learning Material section on Guarantees and Collateral"
+}

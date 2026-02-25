@@ -69,7 +69,7 @@ export function DefinitionTooltip({ definition, children }: DefinitionTooltipPro
           className={cn(
             "absolute z-50 left-0 top-full mt-1",
             "w-[320px] max-w-[calc(100vw-2rem)]",
-            "bg-surface-secondary border border-border rounded shadow-lg",
+            "bg-surface-2 border border-border rounded shadow-lg",
             "p-3 space-y-2"
           )}
         >

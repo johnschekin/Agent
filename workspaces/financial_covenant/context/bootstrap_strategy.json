@@ -1,0 +1,399 @@
+[
+  {
+    "id": "fin_framework.financial_covenant.application",
+    "name": "Covenant Application",
+    "family_id": "fin_framework.financial_covenant",
+    "concept_area": "financial_covenant",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Covenant",
+        "Financial Condition",
+        "Financial Tests",
+        "Maintenance Covenants"
+      ],
+      "keyword_anchors": [
+        "Financial Covenant",
+        "Leverage Ratio",
+        "Coverage Ratio",
+        "maintenance",
+        "testing",
+        "Consolidated"
+      ],
+      "concept_specific_keywords": [
+        "Covenant Application"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.financial_covenant.types",
+    "name": "Covenant Test Types",
+    "family_id": "fin_framework.financial_covenant",
+    "concept_area": "financial_covenant",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Covenant",
+        "Financial Condition",
+        "Financial Tests",
+        "Maintenance Covenants"
+      ],
+      "keyword_anchors": [
+        "Financial Covenant",
+        "Leverage Ratio",
+        "Coverage Ratio",
+        "maintenance",
+        "testing",
+        "Consolidated"
+      ],
+      "concept_specific_keywords": [
+        "Covenant Test Types",
+        "Total Net Leverage",
+        "Senior Secured Net Leverage",
+        "Maximum Capex"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.financial_covenant.tests",
+    "name": "Covenant Tests",
+    "family_id": "fin_framework.financial_covenant",
+    "concept_area": "financial_covenant",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Covenant",
+        "Financial Condition",
+        "Financial Tests",
+        "Maintenance Covenants"
+      ],
+      "keyword_anchors": [
+        "Financial Covenant",
+        "Leverage Ratio",
+        "Coverage Ratio",
+        "maintenance",
+        "testing",
+        "Consolidated"
+      ],
+      "concept_specific_keywords": [
+        "Covenant Tests"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.financial_covenant.cushion",
+    "name": "Cushion Mechanics",
+    "family_id": "fin_framework.financial_covenant",
+    "concept_area": "financial_covenant",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Covenant",
+        "Financial Condition",
+        "Financial Tests",
+        "Maintenance Covenants"
+      ],
+      "keyword_anchors": [
+        "Financial Covenant",
+        "Leverage Ratio",
+        "Coverage Ratio",
+        "maintenance",
+        "testing",
+        "Consolidated"
+      ],
+      "concept_specific_keywords": [
+        "Cushion Mechanics",
+        "Review Template",
+        "s projected EBITDA per the sponsor"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.financial_covenant.springing_mechanics",
+    "name": "Springing Mechanics",
+    "family_id": "fin_framework.financial_covenant",
+    "concept_area": "financial_covenant",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Covenant",
+        "Financial Condition",
+        "Financial Tests",
+        "Maintenance Covenants"
+      ],
+      "keyword_anchors": [
+        "Financial Covenant",
+        "Leverage Ratio",
+        "Coverage Ratio",
+        "maintenance",
+        "testing",
+        "Consolidated"
+      ],
+      "concept_specific_keywords": [
+        "Springing Mechanics"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.financial_covenant.compliance_certificate",
+    "name": "Compliance Certificate",
+    "family_id": "fin_framework.financial_covenant",
+    "concept_area": "financial_covenant",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Covenant",
+        "Financial Condition",
+        "Financial Tests",
+        "Maintenance Covenants"
+      ],
+      "keyword_anchors": [
+        "Financial Covenant",
+        "Leverage Ratio",
+        "Coverage Ratio",
+        "maintenance",
+        "testing",
+        "Consolidated"
+      ],
+      "concept_specific_keywords": [
+        "Compliance Certificate"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.financial_covenant.testing_mechanics",
+    "name": "Testing Mechanics",
+    "family_id": "fin_framework.financial_covenant",
+    "concept_area": "financial_covenant",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Covenant",
+        "Financial Condition",
+        "Financial Tests",
+        "Maintenance Covenants"
+      ],
+      "keyword_anchors": [
+        "Financial Covenant",
+        "Leverage Ratio",
+        "Coverage Ratio",
+        "maintenance",
+        "testing",
+        "Consolidated"
+      ],
+      "concept_specific_keywords": [
+        "Testing Mechanics"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.financial_covenant.step_downs",
+    "name": "Step-Down Schedules",
+    "family_id": "fin_framework.financial_covenant",
+    "concept_area": "financial_covenant",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Covenant",
+        "Financial Condition",
+        "Financial Tests",
+        "Maintenance Covenants"
+      ],
+      "keyword_anchors": [
+        "Financial Covenant",
+        "Leverage Ratio",
+        "Coverage Ratio",
+        "maintenance",
+        "testing",
+        "Consolidated"
+      ],
+      "concept_specific_keywords": [
+        "Step-Down Schedules"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.financial_covenant.levels",
+    "name": "Covenant Levels",
+    "family_id": "fin_framework.financial_covenant",
+    "concept_area": "financial_covenant",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Covenant",
+        "Financial Condition",
+        "Financial Tests",
+        "Maintenance Covenants"
+      ],
+      "keyword_anchors": [
+        "Financial Covenant",
+        "Leverage Ratio",
+        "Coverage Ratio",
+        "maintenance",
+        "testing",
+        "Consolidated"
+      ],
+      "concept_specific_keywords": [
+        "Covenant Levels"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.financial_covenant.debt_exclusions",
+    "name": "Debt Exclusions from Covenant",
+    "family_id": "fin_framework.financial_covenant",
+    "concept_area": "financial_covenant",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Covenant",
+        "Financial Condition",
+        "Financial Tests",
+        "Maintenance Covenants"
+      ],
+      "keyword_anchors": [
+        "Financial Covenant",
+        "Leverage Ratio",
+        "Coverage Ratio",
+        "maintenance",
+        "testing",
+        "Consolidated"
+      ],
+      "concept_specific_keywords": [
+        "Debt Exclusions from Covenant",
+        "Debt incurred under fixed baskets (freebie, non-guarantor, general, acquisition) excluded from calculating compliance with financial covenant."
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.financial_covenant.waiver_mechanics",
+    "name": "Waiver Mechanics",
+    "family_id": "fin_framework.financial_covenant",
+    "concept_area": "financial_covenant",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Covenant",
+        "Financial Condition",
+        "Financial Tests",
+        "Maintenance Covenants"
+      ],
+      "keyword_anchors": [
+        "Financial Covenant",
+        "Leverage Ratio",
+        "Coverage Ratio",
+        "maintenance",
+        "testing",
+        "Consolidated"
+      ],
+      "concept_specific_keywords": [
+        "Waiver Mechanics"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.financial_covenant.holiday",
+    "name": "Covenant Holiday",
+    "family_id": "fin_framework.financial_covenant",
+    "concept_area": "financial_covenant",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Covenant",
+        "Financial Condition",
+        "Financial Tests",
+        "Maintenance Covenants"
+      ],
+      "keyword_anchors": [
+        "Financial Covenant",
+        "Leverage Ratio",
+        "Coverage Ratio",
+        "maintenance",
+        "testing",
+        "Consolidated"
+      ],
+      "concept_specific_keywords": [
+        "Covenant Holiday"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.financial_covenant.noteworthy",
+    "name": "Other Noteworthy Terms",
+    "family_id": "fin_framework.financial_covenant",
+    "concept_area": "financial_covenant",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Covenant",
+        "Financial Condition",
+        "Financial Tests",
+        "Maintenance Covenants"
+      ],
+      "keyword_anchors": [
+        "Financial Covenant",
+        "Leverage Ratio",
+        "Coverage Ratio",
+        "maintenance",
+        "testing",
+        "Consolidated"
+      ],
+      "concept_specific_keywords": [
+        "Other Noteworthy Terms"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.financial_covenant.market_benchmarks",
+    "name": "Market Benchmarks",
+    "family_id": "fin_framework.financial_covenant",
+    "concept_area": "financial_covenant",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Covenant",
+        "Financial Condition",
+        "Financial Tests",
+        "Maintenance Covenants"
+      ],
+      "keyword_anchors": [
+        "Financial Covenant",
+        "Leverage Ratio",
+        "Coverage Ratio",
+        "maintenance",
+        "testing",
+        "Consolidated"
+      ],
+      "concept_specific_keywords": [
+        "Market Benchmarks"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.financial_covenant.drawstop_only_consequence_no_eod",
+    "name": "Drawstop-only consequence (no EoD)",
+    "family_id": "fin_framework.financial_covenant",
+    "concept_area": "financial_covenant",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Covenant",
+        "Financial Condition",
+        "Financial Tests",
+        "Maintenance Covenants"
+      ],
+      "keyword_anchors": [
+        "Financial Covenant",
+        "Leverage Ratio",
+        "Coverage Ratio",
+        "maintenance",
+        "testing",
+        "Consolidated"
+      ],
+      "concept_specific_keywords": [
+        "Drawstop-only consequence (no EoD)",
+        "No Financial Covenants"
+      ]
+    }
+  }
+]

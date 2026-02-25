@@ -1,0 +1,2878 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "KCT cat5.3 requires the protective mechanism 'unconditional payment obligation' but it is not adequately represented in the ontology.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.events_of_default",
+              "id": "credit_protection.events_of_default.payment.principal.unconditional_payment_obli",
+              "kct_ref": [
+                "cat5.3"
+              ],
+              "level": 4,
+              "name": "unconditional payment obligation",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 5 Item 3"
+            },
+            {
+              "id": "credit_protection.events_of_default.payment.principal.grace_period",
+              "name": "Grace Period (Days)",
+              "level": 4,
+              "type": "sub_component",
+              "domain_id": "credit_protection",
+              "family_id": "credit_protection.events_of_default",
+              "corpus_prevalence": "high",
+              "extraction_difficulty": "easy",
+              "definition": "Principal payment default has unconditional obligation and a grace period parameter (even if typically zero).",
+              "definition_source": "KCT Cat 1 Item 2"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Default upon failure to pay principal when due. No grace period -- immediate trigger in virtually all credit agreements.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.payment.principal",
+          "kct_ref": [
+            "cat5.3"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "good_faith_payment_provision_rates": "[cat5.3] KCT cat5.3 requires prevalence/severity data for 'good faith payment provision rates' but no existing node provides this benchmark.",
+            "payment_grace_period_ranges": "[cat5.3] KCT cat5.3 requires prevalence/severity data for 'payment grace period ranges' but no existing node provides this benchmark.",
+            "prevalence_of_notice_contingent_payment_obligations": "[cat5.3] KCT cat5.3 requires prevalence/severity data for 'prevalence of notice-contingent payment obligations' but no existing node provides this benchmark."
+          },
+          "name": "Principal Payment Default",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 5 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Default upon failure to pay interest when due. Grace period is bimodal: 51.6% immediate (no grace), 11.3% allow 5 BDs, 11.3% allow 3 BDs.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.payment.interest",
+          "kct_ref": [
+            "cat4.6",
+            "cat5.3"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "alternative_value": "5 BDs",
+            "dls_preferred": "3 BDs"
+          },
+          "name": "Interest Payment Default",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 6; KCT Cat 5 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Default upon failure to pay fees and other amounts when due. Typically treated similarly to interest with 3-5 BD grace period.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.payment.fees",
+          "kct_ref": [
+            "cat5.3"
+          ],
+          "level": 3,
+          "name": "Fee Payment Default",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 5 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Number of business days allowed after payment is due before an Event of Default is triggered. Separate thresholds for principal vs. interest/fees.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.payment.grace_period",
+          "kct_ref": [
+            "cat3.14",
+            "cat5.3"
+          ],
+          "level": 3,
+          "name": "Payment Grace Period",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 14; KCT Cat 5 Item 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Default triggered by failure to make scheduled payments of principal, interest, or fees when due -- the most fundamental EoD trigger with the shortest or no grace periods. DLS Preferred: principal default is immediate (no grace period); interest and fee default triggers after 3 business days. Alternative (borrower-favorable): 5 business day grace for interest/fees. KCT Category 5 item 3 flags risk where borrower's obligation to pay P&I is subject to receipt of notice/invoice from the Administrative Agent or language permitting borrower to pay 'in good faith' -- such formulations can negate the payment default trigger.",
+      "dls_ref": [
+        "DLS:45:Due diligence",
+        "DLS:51:Payment of fees",
+        "DLS:90:Events of Default"
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "events_of_default",
+        "extraction_ready": true,
+        "playbook_ref": "events_of_default.cross_default",
+        "section_locations": [
+          "ARTICLE II",
+          "ARTICLE VII",
+          "ARTICLE VIII",
+          "ARTICLE XI",
+          "Section 11.01",
+          "Section 2.08"
+        ],
+        "shape_ref": "events_of_default.cross_default",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "credit_protection.events_of_default",
+      "id": "credit_protection.events_of_default.payment",
+      "kct_ref": [
+        "cat3.9",
+        "cat5.3"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "principal_grace": "0 days (immediate)",
+        "interest_fees_grace_dls_preferred": "3 business days",
+        "interest_fees_grace_alternative": "5 business days",
+        "interest_grace_bimodal_corpus": "51.6% immediate, 11.3% 5 BDs, 11.3% 3 BDs",
+        "principal_grace_source": "DLS Preferred row 90 clause (i)",
+        "interest_fees_grace_dls_preferred_source": "DLS Preferred row 90 clause (ii)",
+        "interest_fees_grace_alternative_source": "DLS Preferred row 90 alternative",
+        "interest_grace_bimodal_corpus_source": "DealData (N=62 PC deals): 32/62 deals",
+        "_source": "DLS Preferred row 90 clauses (i)-(ii); DealData N=62"
+      },
+      "name": "Payment Default",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to material restricted subs; 5BD interest grace; 30d rep cure; covenant-lite (financial covenant default not EoD for TL until revolver accelerates); no non-monetary judgment EoD",
+        "dls_source": "DLS row 90",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(v) cross default and cross acceleration to material indebtedness",
+          "(x) actual (or assertion by a Loan Party in writing of) invalidity of any guarantee or any security documents or the invalidity of any lien with regard to any Collateral",
+          "(xi) change of control"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "payment_grace_principal: immediate vs 1BD vs 3BD",
+          "payment_grace_interest: 3BD vs 5BD vs 10BD",
+          "covenant_violation_grace: none vs 30d_for_affirmative",
+          "cross_default_trigger: cross_default vs cross_acceleration_only",
+          "cross_default_threshold: all_material vs dollar_amount",
+          "bankruptcy_involuntary_grace: 30d vs 60d vs 90d",
+          "judgment_threshold: dollar_amount vs MAE_standard",
+          "non_monetary_judgment: included vs MAE_subject vs excluded",
+          "invalidity_scope: any_material vs all_substantially_all",
+          "covenant_lite: no vs yes_revolver_only",
+          "rep_breach_cure: no_cure vs 30d_cure_for_curable",
+          "material_contract_termination: included vs excluded",
+          "subsidiary_scope: all vs material_only vs group_materiality",
+          "change_of_control: included_as_eod vs mandatory_prepay_only"
+        ],
+        "market_position": "",
+        "preferred_position": "Nonpayment of principal immediately due; interest/fees after 3 business days. No cure period for principal shortfalls",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "events_of_default.payment_default"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 22,
+          "term": "[DDTL – conditions to draw]"
+        },
+        {
+          "coverage": "full",
+          "row": 39,
+          "term": "Collateral and Guarantors"
+        },
+        {
+          "coverage": "full",
+          "row": 130,
+          "term": "Change of Control"
+        },
+        {
+          "coverage": "full",
+          "row": 150,
+          "term": "Representations"
+        },
+        {
+          "coverage": "full",
+          "row": 154,
+          "term": "Closing Deliverables"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 90 clauses (i)-(ii) (principal immediate, interest/fees 3 BDs; alternative 5 BDs); KCT Category 5 item 3 (payment obligation conditioned on agent notice)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Default triggered by breach of negative covenants (indebtedness, liens, RP, investments, etc.).",
+          "dls_ref": [
+            "DLS:88:Other Negative Covenants"
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.covenant.negative",
+          "level": 3,
+          "name": "Negative Covenant Default",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 88 (Other Negative Covenants)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Grace period for critical affirmative covenants like financial statement delivery. DLS reveals thresholds not in definition: 3 business days, 30 day, 30 days, 5 business days.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "easy",
+              "family_id": "credit_protection.events_of_default",
+              "id": "credit_protection.events_of_default.covenant.affirmative.short_grace",
+              "kct_ref": [
+                "cat3.9"
+              ],
+              "level": 4,
+              "name": "Short Grace Period (5-10 BD)",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 9"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Grace period for general affirmative covenants and administrative obligations.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "easy",
+              "family_id": "credit_protection.events_of_default",
+              "id": "credit_protection.events_of_default.covenant.affirmative.extended_grace",
+              "kct_ref": [
+                "cat3.9"
+              ],
+              "level": 4,
+              "name": "Extended Grace Period (30 days)",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 9"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Default triggered by breach of affirmative covenants (financial statements, compliance certificates, administrative obligations). Grace period of 5-30 days typical.",
+          "dls_ref": [
+            "DLS:78:Affirmative covenants"
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.covenant.affirmative",
+          "kct_ref": [
+            "cat3.9"
+          ],
+          "level": 3,
+          "name": "Affirmative Covenant Default",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 78 (Affirmative covenants); KCT Cat 3 Item 9"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Whether financial covenant EoD applies only to the revolver in covenant-lite structures, with term loan acceleration dependent on revolver acceleration.",
+              "dls_ref": [
+                "DLS:6:Revolver"
+              ],
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.events_of_default",
+              "id": "credit_protection.events_of_default.covenant.financial.revolver_only",
+              "kct_ref": [
+                "cat1.1",
+                "cat5.1"
+              ],
+              "level": 4,
+              "name": "Revolver-Only Trigger",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 6 (Revolver); KCT Cat 1 Item 1; KCT Cat 5 Item 1"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Whether equity cure rights allow sponsors to retroactively satisfy the financial test after breach. Typical: 1-2 cures per 4 consecutive quarters, 5 lifetime.",
+              "dls_ref": [
+                "DLS:75:Equity Cure"
+              ],
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.events_of_default",
+              "id": "credit_protection.events_of_default.covenant.financial.equity_cure_interaction",
+              "kct_ref": [
+                "cat1.2",
+                "cat3.1"
+              ],
+              "level": 4,
+              "name": "Equity Cure Interaction",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 75 (Equity Cure); KCT Cat 1 Item 2; KCT Cat 3 Item 1"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Default triggered by breach of financial maintenance covenants. In covenant-lite structures, triggers EoD only on revolver; term loan accelerates only if revolver is first accelerated.",
+          "dls_ref": [
+            "DLS:47:Financial statements"
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "hard",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.covenant.financial",
+          "kct_ref": [
+            "cat5.1"
+          ],
+          "level": 3,
+          "name": "Financial Covenant Default",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 57,
+              "term": "Financial Covenant – application"
+            },
+            {
+              "coverage": "full",
+              "row": 129,
+              "term": "Events of Default"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 47 (Financial statements); KCT Cat 5 Item 1; Review Template Row 57 (Financial Covenant – application); Review Template Row 129 (Events of Default)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether administrative agent or lender notice is required before grace period commences. Standard: 'earlier of notice or actual knowledge.' []",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.covenant.notice_requirement",
+          "kct_ref": [
+            "cat3.2",
+            "cat3.9",
+            "cat5.3"
+          ],
+          "level": 3,
+          "name": "Notice Requirement",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 2; KCT Cat 3 Item 9; KCT Cat 5 Item 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Default triggered by violation of affirmative or negative covenants. DLS Preferred: violation of any covenant triggers EoD. Alternative formulations provide differentiated grace periods: negative covenants trigger immediately (no grace); affirmative covenants (other than financial statement delivery, notice of default, and maintenance of legal existence) receive a 30-day grace period following written notice from the Administrative Agent; financial covenant defaults in covenant-lite structures apply only to the revolver and do not constitute a term loan EoD until revolving lenders have terminated commitments and accelerated. KCT Category 1 item 1 flags financial covenant defaults that only result in a drawstop rather than an EoD, and item 10 requires that the existence of any Default should prohibit new borrowings.",
+      "dls_ref": [
+        "DLS:73:Covenant",
+        "DLS:74:Cushion/Covenant Levels",
+        "DLS:89:Other Covenant Considerations"
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "events_of_default",
+        "extraction_ready": true,
+        "playbook_ref": "events_of_default.cross_default",
+        "section_locations": [
+          "ARTICLE II",
+          "ARTICLE VII",
+          "ARTICLE VIII",
+          "ARTICLE XI",
+          "Section 11.01",
+          "Section 2.08"
+        ],
+        "shape_ref": "events_of_default.cross_default",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.724788+00:00",
+          "term_packs": {
+            "EOD_TYPES": {
+              "label": "Events of Default",
+              "category": "DOCUMENTATION",
+              "exactPhrases": [
+                "[*] grace period for interest; [*] for other amounts",
+                "30 day grace period for misrepresentations capable of being cured",
+                "$[*] cross-default threshold",
+                "Includes 'cured default' language",
+                "[*] statute of limitations",
+                "Includes 'net short' provisions",
+                "Events of Default",
+                "each of the following shall constitute an Event of Default",
+                "cross-default",
+                "cross-acceleration",
+                "Material Indebtedness",
+                "Waiving payment defaults is a Req Lender vote"
+              ],
+              "sectionHeaders": [
+                "Events of Default",
+                "Event of Default",
+                "ARTICLE VIII - EVENTS OF DEFAULT",
+                "Section [X] - Events of Default",
+                "Defaults",
+                "Acceleration"
+              ],
+              "semanticVariants": [
+                "events of default triggering acceleration",
+                "payment default grace periods",
+                "cross-default and cross-acceleration provisions",
+                "financial covenant default treatment",
+                "insolvency and bankruptcy triggers",
+                "net short lender voting provisions"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.6,
+                "minKeywordScore": 0.5,
+                "minConfidence": 0.7,
+                "escalationThreshold": 0.5,
+                "humanEscalationThreshold": 0.3
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "[*] grace period for interest; [*] for other amounts",
+              "30 day grace period for misrepresentations capable of being cured",
+              "$[*] cross-default threshold",
+              "Includes 'cured default' language",
+              "[*] statute of limitations",
+              "Includes 'net short' provisions",
+              "Events of Default",
+              "each of the following shall constitute an Event of Default",
+              "cross-default",
+              "cross-acceleration",
+              "Material Indebtedness",
+              "Waiving payment defaults is a Req Lender vote"
+            ],
+            "sectionHeaders": [
+              "Events of Default",
+              "Event of Default",
+              "ARTICLE VIII - EVENTS OF DEFAULT",
+              "Section [X] - Events of Default",
+              "Defaults",
+              "Acceleration"
+            ],
+            "semanticVariants": [
+              "events of default triggering acceleration",
+              "payment default grace periods",
+              "cross-default and cross-acceleration provisions",
+              "financial covenant default treatment",
+              "insolvency and bankruptcy triggers",
+              "net short lender voting provisions"
+            ]
+          }
+        }
+      },
+      "family_id": "credit_protection.events_of_default",
+      "golden_record_extraction_parameters": [
+        {
+          "description": "Certain specified covenants (existence, reporting, negative covenants) — always immediate, no cure",
+          "evidence_source": "events_of_default.covenant_default",
+          "parameter": "immediate_covenants",
+          "source": "R16-C"
+        }
+      ],
+      "id": "credit_protection.events_of_default.covenant",
+      "kct_ref": [
+        "cat3.9",
+        "cat5.1"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "negative_covenant_grace": "0 days (immediate) -- 90.3% of corpus",
+        "affirmative_covenant_grace": "30 days following written notice from Administrative Agent (95.2%)",
+        "financial_covenant_treatment_cov_lite": "Revolver-only; term loan EoD only after revolving lenders terminate and accelerate",
+        "dls_preferred_affirmative_grace": "30 days following written notice (excludes financial statement delivery, notice of default, maintenance of existence)",
+        "negative_covenant_grace_source": "DealData (N=62 PC deals): 56/62 deals; DLS Preferred row 90 clause (iv)",
+        "affirmative_covenant_grace_source": "DealData (N=62 PC deals): 59/62 deals; DLS Preferred row 90 alternative",
+        "financial_covenant_treatment_source": "DLS Preferred row 73 alternative (covenant-lite option)",
+        "_source": "DLS Preferred rows 73, 90; DealData N=62"
+      },
+      "name": "Covenant Default",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to material restricted subs; 5BD interest grace; 30d rep cure; covenant-lite (financial covenant default not EoD for TL until revolver accelerates); no non-monetary judgment EoD",
+        "dls_source": "DLS row 90",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(v) cross default and cross acceleration to material indebtedness",
+          "(x) actual (or assertion by a Loan Party in writing of) invalidity of any guarantee or any security documents or the invalidity of any lien with regard to any Collateral",
+          "(xi) change of control"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "payment_grace_principal: immediate vs 1BD vs 3BD",
+          "payment_grace_interest: 3BD vs 5BD vs 10BD",
+          "covenant_violation_grace: none vs 30d_for_affirmative",
+          "cross_default_trigger: cross_default vs cross_acceleration_only",
+          "cross_default_threshold: all_material vs dollar_amount",
+          "bankruptcy_involuntary_grace: 30d vs 60d vs 90d",
+          "judgment_threshold: dollar_amount vs MAE_standard",
+          "non_monetary_judgment: included vs MAE_subject vs excluded",
+          "invalidity_scope: any_material vs all_substantially_all",
+          "covenant_lite: no vs yes_revolver_only",
+          "rep_breach_cure: no_cure vs 30d_cure_for_curable",
+          "material_contract_termination: included vs excluded",
+          "subsidiary_scope: all vs material_only vs group_materiality",
+          "change_of_control: included_as_eod vs mandatory_prepay_only"
+        ],
+        "market_position": "",
+        "preferred_position": "Any covenant violation is immediate EoD; 30-day cure only for affirmative covenants (excluding financial statements and corporate existence)",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "events_of_default.covenant_default"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 39,
+          "term": "Collateral and Guarantors"
+        },
+        {
+          "coverage": "full",
+          "row": 51,
+          "term": "Reps and Warranties"
+        },
+        {
+          "coverage": "full",
+          "row": 56,
+          "term": "Affirmative Covenants – other"
+        },
+        {
+          "coverage": "full",
+          "row": 57,
+          "term": "Financial Covenant – application"
+        },
+        {
+          "coverage": "full",
+          "row": 66,
+          "term": "Negative Covenants – carryforward/carryback"
+        },
+        {
+          "coverage": "full",
+          "row": 68,
+          "term": "Negative Covenants – Unrestricted Subsidiaries – Envision"
+        },
+        {
+          "coverage": "full",
+          "row": 72,
+          "term": "Negative Covenants - Indebtedness"
+        },
+        {
+          "coverage": "full",
+          "row": 74,
+          "term": "Negative Covenants – Indebtedness – Ratio Debt – non-guarantor cap"
+        },
+        {
+          "coverage": "full",
+          "row": 78,
+          "term": "Negative Covenants – Indebtedness – Incurred Acquisition Debt – non-guarantor cap"
+        },
+        {
+          "coverage": "full",
+          "row": 80,
+          "term": "Negative Covenants – Indebtedness – Securitization Facilities"
+        },
+        {
+          "coverage": "full",
+          "row": 83,
+          "term": "Negative Covenants – Indebtedness – Non-guarantor/foreign subsidiary debt"
+        },
+        {
+          "coverage": "full",
+          "row": 85,
+          "term": "Negative Covenants - Liens"
+        },
+        {
+          "coverage": "full",
+          "row": 88,
+          "term": "Negative Covenants – Investments"
+        },
+        {
+          "coverage": "full",
+          "row": 91,
+          "term": "Negative Covenants – Investments – Investments in Unsubs/JVs"
+        },
+        {
+          "coverage": "full",
+          "row": 96,
+          "term": "Negative Covenants – Dispositions"
+        },
+        {
+          "coverage": "full",
+          "row": 99,
+          "term": "Negative Covenants – Dispositions – De Minimis Threshold"
+        },
+        {
+          "coverage": "full",
+          "row": 111,
+          "term": "Negative Covenants – Restricted Debt Payments"
+        },
+        {
+          "coverage": "full",
+          "row": 124,
+          "term": "Negative Covenants – Transactions with Affiliates –"
+        },
+        {
+          "coverage": "full",
+          "row": 125,
+          "term": "Negative Covenants – Transactions with Affiliates – De Minimis Threshold"
+        },
+        {
+          "coverage": "full",
+          "row": 129,
+          "term": "Events of Default"
+        },
+        {
+          "coverage": "full",
+          "row": 130,
+          "term": "Change of Control"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 90 clause (iv) and alternative (30-day affirmative covenant grace, covenant-lite exception); KCT Category 1 item 1 (drawstop-only financial covenants, Default blocking borrowings)",
+      "neutron_field_refs": [
+        {
+          "term_type": "EOD_TYPES",
+          "label": "Events of Default",
+          "schema_file": "documentation-enhanced.schema.ts",
+          "field_count": 6,
+          "r1_domain": "credit_protection",
+          "mapping_confidence": 0.4687,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Triggers upon default under other material debt, regardless of whether that debt is accelerated.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.events_of_default",
+              "id": "credit_protection.events_of_default.cross_default.trigger_type.default_only",
+              "level": 4,
+              "name": "Cross-Default Only",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 146 (Unknown); KCT Cat 1 Item 1"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Triggers only upon actual acceleration of other material debt (narrower, more borrower-favorable). DLS reveals thresholds not in definition: 5 business days, 30 days, 30 day, 3 business days",
+              "dls_ref": [
+                90
+              ],
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.events_of_default",
+              "id": "credit_protection.events_of_default.cross_default.trigger_type.acceleration_only",
+              "level": 4,
+              "name": "Cross-Acceleration Only",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 90"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Whether the provision triggers on default (broader) or only upon acceleration (narrower) of other debt. Some deals include both mechanisms.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.cross_default.trigger_type",
+          "level": 3,
+          "name": "Trigger Type",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Fixed dollar threshold for material debt cross-default trigger.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "easy",
+              "family_id": "credit_protection.events_of_default",
+              "id": "credit_protection.events_of_default.cross_default.threshold.dollar_amount",
+              "level": 4,
+              "market_benchmarks": {
+                "cmm": "$5-25M",
+                "lmm": "$1-10M",
+                "umm_bsl": "$10-50M"
+              },
+              "name": "Dollar Amount",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "EBITDA-based percentage threshold, typically 5-10% of Consolidated EBITDA, used as greater-of with dollar amount.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.events_of_default",
+              "id": "credit_protection.events_of_default.cross_default.threshold.pct_ebitda",
+              "level": 4,
+              "name": "Percentage of EBITDA",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3; PC Term Comparison: 1. Key Definitions - EBITDA"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Dollar threshold defining 'material' debt for cross-default purposes. Must exceed permitted debt basket sizes to avoid technical defaults.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.cross_default.threshold",
+          "level": 3,
+          "name": "Threshold Amount",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Separate cross-default threshold for swap/hedging agreement terminations. Often different from general cross-default threshold.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.cross_default.swap_threshold",
+          "level": 3,
+          "market_benchmarks": {
+            "risepoint_example": "$11.2M/10% EBITDA"
+          },
+          "name": "Swap Agreement Threshold",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Debt instruments or obligations excluded from cross-default trigger: intercompany debt, contingent obligations, trade payables.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.cross_default.exclusions",
+          "level": 3,
+          "name": "Cross-Default Exclusions",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 146 (Unknown); KCT Cat 1 Item 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Default triggered by breach or acceleration of other material indebtedness obligations, preventing the borrower's creditworthiness from silently deteriorating through obligations outside the credit agreement. DLS Preferred includes both cross-default (triggered by default under other debt, regardless of acceleration) and cross-acceleration (triggered only upon actual acceleration of other debt) to 'material indebtedness,' defined by a dollar threshold. Threshold calibration is critical: it must exceed the sizes of permitted debt baskets to avoid technical defaults from immaterial subsidiary obligations. KCT Category 5 item 1 flags the absence of an immediate EoD for loss of lien or priority, noting that carveouts broader than loss of possessory collateral or failure to file UCC continuation statements are risk items.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "events_of_default",
+        "extraction_ready": true,
+        "playbook_ref": "events_of_default.cross_default",
+        "section_locations": [
+          "ARTICLE II",
+          "ARTICLE VII",
+          "ARTICLE VIII",
+          "ARTICLE XI",
+          "Section 11.01",
+          "Section 2.08"
+        ],
+        "shape_ref": "events_of_default.cross_default",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.522503+00:00",
+          "term_packs": {
+            "DEFAULT_CROSS_DEFAULT": {
+              "label": "Cross-Default / Cross-Acceleration",
+              "category": "DEFAULT_CURE",
+              "exactPhrases": [
+                "cross-default",
+                "cross default",
+                "cross-acceleration",
+                "cross acceleration",
+                "default under any Material Indebtedness",
+                "acceleration of Material Indebtedness",
+                "any event or condition occurs that results in any Material Indebtedness",
+                "default (as defined in any agreement or instrument relating to Material Indebtedness)"
+              ],
+              "sectionHeaders": [
+                "Events of Default",
+                "Cross-Default",
+                "Cross-Acceleration",
+                "Section [•] - Cross-Default"
+              ],
+              "semanticVariants": [
+                "default on other debt triggers loan default",
+                "acceleration of other debt constitutes event of default",
+                "cross-default provision in loan agreement",
+                "other indebtedness default trigger"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.6,
+                "minKeywordScore": 0.5,
+                "minConfidence": 0.7,
+                "escalationThreshold": 0.5,
+                "humanEscalationThreshold": 0.3
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "cross-default",
+              "cross default",
+              "cross-acceleration",
+              "cross acceleration",
+              "default under any Material Indebtedness",
+              "acceleration of Material Indebtedness",
+              "any event or condition occurs that results in any Material Indebtedness",
+              "default (as defined in any agreement or instrument relating to Material Indebtedness)"
+            ],
+            "sectionHeaders": [
+              "Events of Default",
+              "Cross-Default",
+              "Cross-Acceleration",
+              "Section [•] - Cross-Default"
+            ],
+            "semanticVariants": [
+              "default on other debt triggers loan default",
+              "acceleration of other debt constitutes event of default",
+              "cross-default provision in loan agreement",
+              "other indebtedness default trigger"
+            ]
+          }
+        }
+      },
+      "family_id": "credit_protection.events_of_default",
+      "id": "credit_protection.events_of_default.cross_default",
+      "kct_ref": [
+        "cat3.9"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "average_threshold": "$29.7M",
+        "both_mechanisms_flag": "33.9%",
+        "cross_acceleration_only": "8.1%",
+        "cross_default_only": "58.1%"
+      },
+      "name": "Cross-Default / Cross-Acceleration",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to material restricted subs; 5BD interest grace; 30d rep cure; covenant-lite (financial covenant default not EoD for TL until revolver accelerates); no non-monetary judgment EoD",
+        "dls_source": "DLS row 90",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(v) cross default and cross acceleration to material indebtedness",
+          "(x) actual (or assertion by a Loan Party in writing of) invalidity of any guarantee or any security documents or the invalidity of any lien with regard to any Collateral",
+          "(xi) change of control"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "payment_grace_principal: immediate vs 1BD vs 3BD",
+          "payment_grace_interest: 3BD vs 5BD vs 10BD",
+          "covenant_violation_grace: none vs 30d_for_affirmative",
+          "cross_default_trigger: cross_default vs cross_acceleration_only",
+          "cross_default_threshold: all_material vs dollar_amount",
+          "bankruptcy_involuntary_grace: 30d vs 60d vs 90d",
+          "judgment_threshold: dollar_amount vs MAE_standard",
+          "non_monetary_judgment: included vs MAE_subject vs excluded",
+          "invalidity_scope: any_material vs all_substantially_all",
+          "covenant_lite: no vs yes_revolver_only",
+          "rep_breach_cure: no_cure vs 30d_cure_for_curable",
+          "material_contract_termination: included vs excluded",
+          "subsidiary_scope: all vs material_only vs group_materiality",
+          "change_of_control: included_as_eod vs mandatory_prepay_only"
+        ],
+        "market_position": "",
+        "preferred_position": "Cross-default AND cross-acceleration to material indebtedness; low dollar threshold for materiality; no cure period",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "events_of_default.cross_default"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 40,
+          "term": "Collateral/Guarantor release – Chewy"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 90 clause (v) ('cross default and cross acceleration to material indebtedness'); KCT Category 5 item 1 (lien loss EoD)",
+      "neutron_field_refs": [
+        {
+          "term_type": "DEFAULT_CROSS_DEFAULT",
+          "label": "Cross-Default / Cross-Acceleration",
+          "schema_file": "default-cure-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "credit_protection",
+          "mapping_confidence": 0.7987,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Event of default triggered when the borrower or a material subsidiary voluntarily commences bankruptcy proceedings by filing a petition under Chapter 7 or Chapter 11 of the Bankruptcy Code, making an assignment for the benefit of creditors, or consenting to the appointment of a receiver or trustee. Immediate acceleration is typical, with no cure period available.",
+          "dls_ref": [
+            90
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.bankruptcy.voluntary",
+          "level": 3,
+          "name": "Voluntary Bankruptcy",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 90"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Number of days allowed for dismissal of involuntary petition before EoD triggers. Standard: 60 days.",
+              "dls_ref": [
+                90
+              ],
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "easy",
+              "family_id": "credit_protection.events_of_default",
+              "id": "credit_protection.events_of_default.bankruptcy.involuntary.dismissal_period",
+              "level": 4,
+              "market_benchmarks": {
+                "market_standard_value": "60 days"
+              },
+              "name": "Dismissal Period",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 90"
+            },
+            {
+              "id": "credit_protection.events_of_default.bankruptcy.involuntary.covered_proceedings",
+              "name": "Covered Proceeding Types",
+              "level": 4,
+              "type": "sub_component",
+              "domain_id": "credit_protection",
+              "family_id": "credit_protection.events_of_default",
+              "corpus_prevalence": "high",
+              "extraction_difficulty": "medium",
+              "definition": "Involuntary bankruptcy EoD has dismissal period and scope of covered proceedings."
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Event of default triggered when a third party files an involuntary bankruptcy petition against the borrower or a material subsidiary that is not dismissed within a specified grace period (typically 60 days). The grace period distinguishes involuntary filings from voluntary ones, recognizing that involuntary petitions may be frivolous or strategic actions by creditors.",
+          "dls_ref": [
+            90
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.bankruptcy.involuntary",
+          "level": 3,
+          "name": "Involuntary Bankruptcy",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 90"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Non-filing insolvency triggers: inability to pay debts as they become due, admission of inability to pay, appointment of receiver or trustee.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.bankruptcy.insolvency_indicators",
+          "level": 3,
+          "name": "Insolvency Indicators",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 5"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Default triggered by voluntary or involuntary bankruptcy filing, insolvency, admission of inability to pay debts, appointment of a receiver/trustee, or similar proceedings involving Holdings, the Borrower, or any subsidiary. Always immediate with no cure period for voluntary filings. DLS Preferred specifies a 60-day grace period for involuntary events (petitions not dismissed within 60 days). The alternative (borrower-favorable) formulation limits applicability to 'material' restricted subsidiaries or a group of restricted subsidiaries that would be 'material.' Bankruptcy/payment EoD is the most fundamental trigger, serving as the universal blocker condition that gates nearly all basket utilization in modern credit agreements.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "events_of_default",
+        "extraction_ready": true,
+        "playbook_ref": "events_of_default.cross_default",
+        "section_locations": [
+          "ARTICLE II",
+          "ARTICLE VII",
+          "ARTICLE VIII",
+          "ARTICLE XI",
+          "Section 11.01",
+          "Section 2.08"
+        ],
+        "shape_ref": "events_of_default.cross_default",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=easy vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "credit_protection.events_of_default",
+      "golden_record_extraction_parameters": [
+        {
+          "description": "Borrower and Material/Restricted Subsidiaries; some deals carve out 'Subject Subsidiaries' (boyd)",
+          "evidence_source": "events_of_default.bankruptcy_insolvency",
+          "parameter": "entity_scope",
+          "source": "R16-C"
+        }
+      ],
+      "id": "credit_protection.events_of_default.bankruptcy",
+      "level": 2,
+      "market_benchmarks": {
+        "grace_period": "0 days -- immediate"
+      },
+      "name": "Bankruptcy / Insolvency",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to material restricted subs; 5BD interest grace; 30d rep cure; covenant-lite (financial covenant default not EoD for TL until revolver accelerates); no non-monetary judgment EoD",
+        "dls_source": "DLS row 90",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(v) cross default and cross acceleration to material indebtedness",
+          "(x) actual (or assertion by a Loan Party in writing of) invalidity of any guarantee or any security documents or the invalidity of any lien with regard to any Collateral",
+          "(xi) change of control"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "payment_grace_principal: immediate vs 1BD vs 3BD",
+          "payment_grace_interest: 3BD vs 5BD vs 10BD",
+          "covenant_violation_grace: none vs 30d_for_affirmative",
+          "cross_default_trigger: cross_default vs cross_acceleration_only",
+          "cross_default_threshold: all_material vs dollar_amount",
+          "bankruptcy_involuntary_grace: 30d vs 60d vs 90d",
+          "judgment_threshold: dollar_amount vs MAE_standard",
+          "non_monetary_judgment: included vs MAE_subject vs excluded",
+          "invalidity_scope: any_material vs all_substantially_all",
+          "covenant_lite: no vs yes_revolver_only",
+          "rep_breach_cure: no_cure vs 30d_cure_for_curable",
+          "material_contract_termination: included vs excluded",
+          "subsidiary_scope: all vs material_only vs group_materiality",
+          "change_of_control: included_as_eod vs mandatory_prepay_only"
+        ],
+        "market_position": "",
+        "preferred_position": "Voluntary bankruptcy immediate EoD; involuntary with 60-day cure period. Covers Holdings, Borrower, and all subsidiaries",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "events_of_default.bankruptcy_insolvency"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 90 clause (vi) ('bankruptcy events or other insolvency events (with a 60-day grace period for involuntary events) of Holdings, the Borrower or any subsidiary')"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Fixed dollar threshold for judgment default. Determines how this parameter is applied in practice and affects overall covenant flexibility.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "easy",
+              "family_id": "credit_protection.events_of_default",
+              "id": "credit_protection.events_of_default.judgment.threshold.dollar_amount",
+              "level": 4,
+              "name": "Dollar Amount",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "EBITDA percentage threshold for judgment default, used in larger deals.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.events_of_default",
+              "id": "credit_protection.events_of_default.judgment.threshold.pct_ebitda",
+              "level": 4,
+              "name": "Percentage of EBITDA",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3; PC Term Comparison: 1. Key Definitions - EBITDA"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Dollar amount above which unsatisfied judgments constitute an EoD. Low thresholds in LMM create technical default risk from routine litigation.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.judgment.threshold",
+          "level": 3,
+          "name": "Judgment Threshold",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Number of days to satisfy, discharge, or stay a judgment before EoD triggers. Standard: 30-60 days. DLS reveals thresholds not in definition: 3 business days, 30 day, 30 days, 5 business days",
+          "dls_ref": [
+            90
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.judgment.stay_period",
+          "level": 3,
+          "name": "Stay / Appeal Period",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 90"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether insured judgments are excluded from the threshold or whether insurance coverage reduces the EoD-triggering amount.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.judgment.insurance_offset",
+          "level": 3,
+          "name": "Insurance Offset",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether the threshold applies to individual judgments or aggregate outstanding judgments across all loan parties.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.judgment.aggregate_vs_individual",
+          "level": 3,
+          "name": "Aggregate vs. Individual",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 8"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Default triggered by adverse court judgments exceeding a dollar threshold that remain unsatisfied, undischarged, and unstayed for a specified period. DLS Preferred row 90 clause (viii) specifies 'unpaid monetary judgments in excess of $[___]; non-monetary judgments.' Alternative formulations limit this to 'material' restricted subsidiaries, or apply a MAE qualifier to non-monetary judgments, or eliminate the non-monetary judgment EoD entirely. The dollar threshold is a key negotiation point as it determines the sensitivity of the trigger.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "events_of_default",
+        "extraction_ready": true,
+        "playbook_ref": "events_of_default.cross_default",
+        "section_locations": [
+          "ARTICLE II",
+          "ARTICLE VII",
+          "ARTICLE VIII",
+          "ARTICLE XI",
+          "Section 11.01",
+          "Section 2.08"
+        ],
+        "shape_ref": "events_of_default.cross_default",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "credit_protection.events_of_default",
+      "id": "credit_protection.events_of_default.judgment",
+      "kct_ref": [
+        "cat3.9"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "cmm": "$5M (3.8% TL)",
+        "lmm": "$3M (2.7% TL)",
+        "umm": "$17M/15% EBITDA (5.9% TL)"
+      },
+      "name": "Judgment Default",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to material restricted subs; 5BD interest grace; 30d rep cure; covenant-lite (financial covenant default not EoD for TL until revolver accelerates); no non-monetary judgment EoD",
+        "dls_source": "DLS row 90",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(v) cross default and cross acceleration to material indebtedness",
+          "(x) actual (or assertion by a Loan Party in writing of) invalidity of any guarantee or any security documents or the invalidity of any lien with regard to any Collateral",
+          "(xi) change of control"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "payment_grace_principal: immediate vs 1BD vs 3BD",
+          "payment_grace_interest: 3BD vs 5BD vs 10BD",
+          "covenant_violation_grace: none vs 30d_for_affirmative",
+          "cross_default_trigger: cross_default vs cross_acceleration_only",
+          "cross_default_threshold: all_material vs dollar_amount",
+          "bankruptcy_involuntary_grace: 30d vs 60d vs 90d",
+          "judgment_threshold: dollar_amount vs MAE_standard",
+          "non_monetary_judgment: included vs MAE_subject vs excluded",
+          "invalidity_scope: any_material vs all_substantially_all",
+          "covenant_lite: no vs yes_revolver_only",
+          "rep_breach_cure: no_cure vs 30d_cure_for_curable",
+          "material_contract_termination: included vs excluded",
+          "subsidiary_scope: all vs material_only vs group_materiality",
+          "change_of_control: included_as_eod vs mandatory_prepay_only"
+        ],
+        "market_position": "",
+        "preferred_position": "Monetary judgments exceeding fixed dollar threshold; non-monetary judgments also triggering. No MAE qualifier on judgment EoD",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "events_of_default.judgment_default"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 90 clause (viii) (monetary judgment threshold and non-monetary judgments); DLS Preferred row 90 alternatives (material subsidiary limitation, MAE qualifier)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether the default requires the misrepresentation to be 'material' or 'in any material respect,' and how materiality is measured.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.representation_breach.materiality_qualifier",
+          "level": 3,
+          "name": "Materiality Qualifier",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Grace period for representations capable of being cured. Bank-preferred: immediate for material misrepresentation; alternative: 30-day cure for curable reps.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.representation_breach.cure_period",
+          "kct_ref": [
+            "cat3.1"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "alternative_value": "30 days",
+            "bank_preferred": "immediate"
+          },
+          "name": "Cure Period",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 1"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Subset of representations that must be true as a condition to borrowing (SunGard provisions). Failure of specified reps is a more immediate trigger than general rep breach.",
+          "dls_ref": [
+            "DLS:57:Specified Representations",
+            "DLS:91:Representations and Warranties"
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.representation_breach.specified_reps",
+          "kct_ref": [
+            "cat3.10"
+          ],
+          "level": 3,
+          "name": "Specified Representations (SunGard)",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 51,
+              "term": "Reps and Warranties"
+            },
+            {
+              "coverage": "full",
+              "row": 148,
+              "term": "Conditions Annex"
+            },
+            {
+              "coverage": "full",
+              "row": 150,
+              "term": "Representations"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 57 (Specified Representations); DLS Preferred Row 91 (Representations and Warranties); KCT Cat 3 Item 10; Review Template Row 51 (Reps and Warranties); Review Template Row 148 (Conditions Annex); Review Template Row 150 (Representations)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Default triggered by material inaccuracy of representations and warranties made at closing or during drawdowns. DLS Preferred row 90 clause (iii) specifies 'inaccuracy of a representation or warranty in any material respect.' Alternative allows a '30 day cure period for reps and warranties that can be cured.' Review Template row 51 notes that Specified Representations under SunGard conditionality include existence, power, enforceability, solvency, margin regulations, Investment Company Act, PATRIOT Act, OFAC/FCPA, use-of-proceeds, and creation/perfection. The cure period and materiality standard are key negotiation dimensions.",
+      "dls_ref": [
+        "DLS:49:Forecasts"
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "events_of_default",
+        "extraction_ready": true,
+        "playbook_ref": "events_of_default.cross_default",
+        "section_locations": [
+          "ARTICLE II",
+          "ARTICLE VII",
+          "ARTICLE VIII",
+          "ARTICLE XI",
+          "Section 11.01",
+          "Section 2.08"
+        ],
+        "shape_ref": "events_of_default.cross_default",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "credit_protection.events_of_default",
+      "id": "credit_protection.events_of_default.representation_breach",
+      "kct_ref": [
+        "cat3.9"
+      ],
+      "level": 2,
+      "name": "Representation Breach Default",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to material restricted subs; 5BD interest grace; 30d rep cure; covenant-lite (financial covenant default not EoD for TL until revolver accelerates); no non-monetary judgment EoD",
+        "dls_source": "DLS row 90",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(v) cross default and cross acceleration to material indebtedness",
+          "(x) actual (or assertion by a Loan Party in writing of) invalidity of any guarantee or any security documents or the invalidity of any lien with regard to any Collateral",
+          "(xi) change of control"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "payment_grace_principal: immediate vs 1BD vs 3BD",
+          "payment_grace_interest: 3BD vs 5BD vs 10BD",
+          "covenant_violation_grace: none vs 30d_for_affirmative",
+          "cross_default_trigger: cross_default vs cross_acceleration_only",
+          "cross_default_threshold: all_material vs dollar_amount",
+          "bankruptcy_involuntary_grace: 30d vs 60d vs 90d",
+          "judgment_threshold: dollar_amount vs MAE_standard",
+          "non_monetary_judgment: included vs MAE_subject vs excluded",
+          "invalidity_scope: any_material vs all_substantially_all",
+          "covenant_lite: no vs yes_revolver_only",
+          "rep_breach_cure: no_cure vs 30d_cure_for_curable",
+          "material_contract_termination: included vs excluded",
+          "subsidiary_scope: all vs material_only vs group_materiality",
+          "change_of_control: included_as_eod vs mandatory_prepay_only"
+        ],
+        "market_position": "",
+        "preferred_position": "14 enumerated triggers including: nonpayment (principal immediate, interest/fees 3BD), covenant violation, cross-default, bankruptcy (60d involuntary), ERISA, judgments, invalidity of docs/guarantees/liens, CoC, material contract termination, indemnification proceeds",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "events_of_default.representation_breach"
+      ],
+      "review_ref": [
+        {
+          "coverage": "partial",
+          "row": 6,
+          "term": "Information"
+        },
+        {
+          "coverage": "full",
+          "row": 51,
+          "term": "Reps and Warranties"
+        },
+        {
+          "coverage": "full",
+          "row": 148,
+          "term": "Conditions Annex"
+        },
+        {
+          "coverage": "full",
+          "row": 150,
+          "term": "Representations"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 90 clause (iii) (representation inaccuracy in material respect; alternative: 30-day cure for curable reps); Review Template row 51 (Specified Reps listing)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Which ERISA events constitute a default: reportable events, plan termination, withdrawal liability, prohibited transactions, funding failures.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.erisa.trigger_events",
+          "level": 3,
+          "name": "Trigger Events",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Dollar or qualitative threshold above which ERISA events constitute an EoD. May reference Material Adverse Effect standard.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.erisa.materiality_threshold",
+          "level": 3,
+          "name": "Materiality Threshold",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 14"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether ERISA events are entirely excluded from the EoD framework.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.erisa.exclusion",
+          "level": 3,
+          "market_benchmarks": {
+            "exclusion_rate": "14.7%"
+          },
+          "name": "ERISA Exclusion",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 14"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Default triggered by ERISA violations, plan underfunding, or withdrawal liability events. DLS Preferred row 90 clause (vii) lists 'ERISA events' as a standard EoD category. DLS Preferred row 91 (Representations) clause (xvii) includes ERISA as a required representation. DLS Preferred row 78 affirmative covenants clause (xiii) requires 'compliance with laws, including ERISA and environmental laws.' Treatment varies by deal: some agreements limit the EoD to events exceeding a materiality threshold, while others trigger on any ERISA event affecting a plan maintained by the borrower or any ERISA affiliate.",
+      "dls_ref": [
+        "DLS:90:Events of Default"
+      ],
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "events_of_default",
+        "extraction_ready": true,
+        "playbook_ref": "events_of_default.cross_default",
+        "section_locations": [
+          "ARTICLE II",
+          "ARTICLE VII",
+          "ARTICLE VIII",
+          "ARTICLE XI",
+          "Section 11.01",
+          "Section 2.08"
+        ],
+        "shape_ref": "events_of_default.cross_default",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.536710+00:00",
+          "term_packs": {
+            "DEFAULT_EVENTS_OF_DEFAULT": {
+              "label": "Events of Default",
+              "category": "DEFAULT_CURE",
+              "exactPhrases": [
+                "Events of Default",
+                "Event of Default",
+                "shall constitute an Event of Default",
+                "the following shall constitute Events of Default",
+                "each of the following events is an \"Event of Default\"",
+                "if any of the following events shall occur",
+                "Default Event",
+                "occurrence of a Default"
+              ],
+              "sectionHeaders": [
+                "ARTICLE VIII - EVENTS OF DEFAULT",
+                "ARTICLE VII - EVENTS OF DEFAULT",
+                "Section 8.01 - Events of Default",
+                "Events of Default and Remedies",
+                "DEFAULTS AND REMEDIES"
+              ],
+              "semanticVariants": [
+                "events triggering default under credit agreement",
+                "default trigger events in loan documentation",
+                "circumstances constituting borrower default",
+                "conditions that cause a loan default",
+                "events giving rise to lender acceleration rights"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.6,
+                "minKeywordScore": 0.5,
+                "minConfidence": 0.7,
+                "escalationThreshold": 0.5,
+                "humanEscalationThreshold": 0.3
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            },
+            "DEFAULT_MAC": {
+              "label": "Material Adverse Change / Effect (MAC/MAE)",
+              "category": "DEFAULT_CURE",
+              "exactPhrases": [
+                "Material Adverse Change",
+                "Material Adverse Effect",
+                "MAC",
+                "MAE",
+                "material adverse change in the business",
+                "materially and adversely affect",
+                "material adverse effect on the business, operations, property, or financial condition",
+                "no Material Adverse Change shall have occurred"
+              ],
+              "sectionHeaders": [
+                "Definitions",
+                "Material Adverse Effect",
+                "Material Adverse Change",
+                "Conditions to Closing",
+                "Representations and Warranties"
+              ],
+              "semanticVariants": [
+                "material deterioration in business condition",
+                "adverse change affecting ability to perform",
+                "significant negative change in operations",
+                "material adverse development"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.6,
+                "minKeywordScore": 0.5,
+                "minConfidence": 0.7,
+                "escalationThreshold": 0.5,
+                "humanEscalationThreshold": 0.3
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Events of Default",
+              "Event of Default",
+              "shall constitute an Event of Default",
+              "the following shall constitute Events of Default",
+              "each of the following events is an \"Event of Default\"",
+              "if any of the following events shall occur",
+              "Default Event",
+              "occurrence of a Default",
+              "Material Adverse Change",
+              "Material Adverse Effect",
+              "MAC",
+              "MAE",
+              "material adverse change in the business",
+              "materially and adversely affect",
+              "material adverse effect on the business, operations, property, or financial condition",
+              "no Material Adverse Change shall have occurred"
+            ],
+            "sectionHeaders": [
+              "ARTICLE VIII - EVENTS OF DEFAULT",
+              "ARTICLE VII - EVENTS OF DEFAULT",
+              "Section 8.01 - Events of Default",
+              "Events of Default and Remedies",
+              "DEFAULTS AND REMEDIES",
+              "Definitions",
+              "Material Adverse Effect",
+              "Material Adverse Change",
+              "Conditions to Closing",
+              "Representations and Warranties"
+            ],
+            "semanticVariants": [
+              "events triggering default under credit agreement",
+              "default trigger events in loan documentation",
+              "circumstances constituting borrower default",
+              "conditions that cause a loan default",
+              "events giving rise to lender acceleration rights",
+              "material deterioration in business condition",
+              "adverse change affecting ability to perform",
+              "significant negative change in operations",
+              "material adverse development"
+            ]
+          }
+        }
+      },
+      "family_id": "credit_protection.events_of_default",
+      "golden_record_extraction_parameters": [
+        {
+          "description": "ERISA Events taken together, aggregate effect",
+          "evidence_source": "events_of_default.erisa",
+          "parameter": "scope",
+          "source": "R16-C"
+        }
+      ],
+      "id": "credit_protection.events_of_default.erisa",
+      "kct_ref": [
+        "cat3.9"
+      ],
+      "level": 2,
+      "name": "ERISA Events Default",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to material restricted subs; 5BD interest grace; 30d rep cure; covenant-lite (financial covenant default not EoD for TL until revolver accelerates); no non-monetary judgment EoD",
+        "dls_source": "DLS row 90",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(v) cross default and cross acceleration to material indebtedness",
+          "(x) actual (or assertion by a Loan Party in writing of) invalidity of any guarantee or any security documents or the invalidity of any lien with regard to any Collateral",
+          "(xi) change of control"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "payment_grace_principal: immediate vs 1BD vs 3BD",
+          "payment_grace_interest: 3BD vs 5BD vs 10BD",
+          "covenant_violation_grace: none vs 30d_for_affirmative",
+          "cross_default_trigger: cross_default vs cross_acceleration_only",
+          "cross_default_threshold: all_material vs dollar_amount",
+          "bankruptcy_involuntary_grace: 30d vs 60d vs 90d",
+          "judgment_threshold: dollar_amount vs MAE_standard",
+          "non_monetary_judgment: included vs MAE_subject vs excluded",
+          "invalidity_scope: any_material vs all_substantially_all",
+          "covenant_lite: no vs yes_revolver_only",
+          "rep_breach_cure: no_cure vs 30d_cure_for_curable",
+          "material_contract_termination: included vs excluded",
+          "subsidiary_scope: all vs material_only vs group_materiality",
+          "change_of_control: included_as_eod vs mandatory_prepay_only"
+        ],
+        "market_position": "",
+        "preferred_position": "ERISA events as EoD without materiality filter; covers all plans, not limited to material underfunding",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "events_of_default.erisa_events"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 40,
+          "term": "Collateral/Guarantor release – Chewy"
+        },
+        {
+          "coverage": "full",
+          "row": 56,
+          "term": "Affirmative Covenants – other"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 90 clause (vii) (ERISA events as EoD); DLS Preferred row 91 clause (xvii) (ERISA representation); DLS Preferred row 78 clause (xiii) (ERISA compliance covenant)",
+      "neutron_field_refs": [
+        {
+          "term_type": "DEFAULT_EVENTS_OF_DEFAULT",
+          "label": "Events of Default",
+          "schema_file": "default-cure-enhanced.schema.ts",
+          "field_count": 5,
+          "r1_domain": "credit_protection",
+          "mapping_confidence": 0.5843,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        },
+        {
+          "term_type": "DEFAULT_MAC",
+          "label": "Material Adverse Change / Effect (MAC/MAE)",
+          "schema_file": "default-cure-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "credit_protection",
+          "mapping_confidence": 0.3829,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Default if any guarantee becomes invalid, unenforceable, or ceases to be in full force and effect. 11.8% explicitly address.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.invalidity.guarantee_invalidity",
+          "level": 3,
+          "name": "Guarantee Invalidity",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Default if security interests become invalid, unperfected, or lose priority. Protects collateral position.",
+          "dls_ref": [
+            "DLS:67:Security"
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.invalidity.security_document_invalidity",
+          "level": 3,
+          "name": "Security Document Invalidity",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 67 (Security)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether invalidity trigger applies only to 'material' portions of the loan documents or any invalidity regardless of significance.",
+          "dls_ref": [
+            90
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.invalidity.materiality_qualifier",
+          "level": 3,
+          "name": "Materiality Qualifier",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 90"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Default triggered when loan documents (guarantees, security documents, intercreditor agreements) are found invalid or unenforceable. DLS Preferred row 90 clauses (ix) and (x) specify two variants: (ix) 'actual (or assertion by a Loan Party in writing of) invalidity of any material provisions of loan documents' and (x) 'actual (or assertion by a Loan Party in writing of) invalidity of any guarantee or any security documents or the invalidity of any lien with regard to any Collateral.' Alternative formulations limit to 'material' guarantee or collateral, narrowing the trigger. KCT Category 5 item 1 flags language implying the Admin Agent had an obligation to file continuation statements or take actions within their control as a risk concern.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "events_of_default",
+        "extraction_ready": true,
+        "playbook_ref": "events_of_default.cross_default",
+        "section_locations": [
+          "ARTICLE II",
+          "ARTICLE VII",
+          "ARTICLE VIII",
+          "ARTICLE XI",
+          "Section 11.01",
+          "Section 2.08"
+        ],
+        "shape_ref": "events_of_default.cross_default",
+        "secondary_playbook_refs": [
+          "events_of_default.material_collateral_default"
+        ],
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "credit_protection.events_of_default",
+      "golden_record_extraction_parameters": [
+        {
+          "description": "Some deals combine loan doc, security, and guarantee invalidity into one clause; others split across 2-3 clauses",
+          "evidence_source": "events_of_default.guarantee_security_invalidity",
+          "parameter": "combined_vs_separate",
+          "source": "R16-C"
+        },
+        {
+          "description": "Common carve-outs: failure of Collateral Agent to maintain possession of certificates or file UCC continuation statements; lender's title insurance coverage",
+          "evidence_source": "events_of_default.guarantee_security_invalidity",
+          "parameter": "carve_outs",
+          "source": "R16-C"
+        }
+      ],
+      "id": "credit_protection.events_of_default.invalidity",
+      "kct_ref": [
+        "cat3.9"
+      ],
+      "level": 2,
+      "name": "Invalidity of Documents Default",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to material restricted subs; 5BD interest grace; 30d rep cure; covenant-lite (financial covenant default not EoD for TL until revolver accelerates); no non-monetary judgment EoD",
+        "dls_source": "DLS row 90",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(v) cross default and cross acceleration to material indebtedness",
+          "(x) actual (or assertion by a Loan Party in writing of) invalidity of any guarantee or any security documents or the invalidity of any lien with regard to any Collateral",
+          "(xi) change of control"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "payment_grace_principal: immediate vs 1BD vs 3BD",
+          "payment_grace_interest: 3BD vs 5BD vs 10BD",
+          "covenant_violation_grace: none vs 30d_for_affirmative",
+          "cross_default_trigger: cross_default vs cross_acceleration_only",
+          "cross_default_threshold: all_material vs dollar_amount",
+          "bankruptcy_involuntary_grace: 30d vs 60d vs 90d",
+          "judgment_threshold: dollar_amount vs MAE_standard",
+          "non_monetary_judgment: included vs MAE_subject vs excluded",
+          "invalidity_scope: any_material vs all_substantially_all",
+          "covenant_lite: no vs yes_revolver_only",
+          "rep_breach_cure: no_cure vs 30d_cure_for_curable",
+          "material_contract_termination: included vs excluded",
+          "subsidiary_scope: all vs material_only vs group_materiality",
+          "change_of_control: included_as_eod vs mandatory_prepay_only"
+        ],
+        "market_position": "",
+        "preferred_position": "14 enumerated triggers including: nonpayment (principal immediate, interest/fees 3BD), covenant violation, cross-default, bankruptcy (60d involuntary), ERISA, judgments, invalidity of docs/guarantees/liens, CoC, material contract termination, indemnification proceeds",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "events_of_default.invalidity_of_documents"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 90 clauses (ix)-(x) (invalidity of loan documents, guarantees, security documents, liens); KCT Category 5 item 1 (loss of lien/priority carveout concerns)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Default triggered by violation of OFAC sanctions, UK financial sanctions, EU restrictive measures, or other applicable sanctions regimes.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.sanctions.sanctions_violation",
+          "kct_ref": [
+            "cat5.2"
+          ],
+          "level": 3,
+          "name": "Sanctions Violation",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 5 Item 2"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Default triggered by FCPA, UK Bribery Act, or other applicable anti-corruption law violations.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.sanctions.anticorruption_breach",
+          "kct_ref": [
+            "cat5.2"
+          ],
+          "level": 3,
+          "name": "Anti-Corruption Breach",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 5 Item 2"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "KCT cat5.2 requires the protective mechanism 'restricted subsidiary scope' but it is not adequately represented in the ontology.",
+              "domain_id": "credit_protection",
+              "extraction_difficulty": "medium",
+              "family_id": "credit_protection.events_of_default",
+              "id": "credit_protection.events_of_default.sanctions.scope_limitation.restricted_subsid",
+              "kct_ref": [
+                "cat5.2"
+              ],
+              "level": 4,
+              "name": "restricted subsidiary scope",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 5 Item 2"
+            },
+            {
+              "id": "credit_protection.events_of_default.sanctions.scope_limitation.designated_persons",
+              "name": "Designated Persons Coverage",
+              "level": 4,
+              "type": "sub_component",
+              "domain_id": "credit_protection",
+              "family_id": "credit_protection.events_of_default",
+              "corpus_prevalence": "low",
+              "extraction_difficulty": "medium",
+              "definition": "Sanctions scope limitation covers restricted subsidiaries and designated persons.",
+              "definition_source": "KCT Cat 5 Item 2"
+            }
+          ],
+          "corpus_prevalence": "low",
+          "definition": "Whether very limited sanctions representations elevate risk (KCT Cat 5 Item 2).",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.sanctions.scope_limitation",
+          "kct_ref": [
+            "cat5.2"
+          ],
+          "level": 3,
+          "name": "Scope Limitation",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 5 Item 2"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Default triggered by sanctions violations, FCPA/anti-corruption breaches, or anti-money laundering violations. DLS Preferred row 88 (Other Negative Covenants) includes 'Prohibitions on Holdings and its subsidiaries violating Patriot Act, FCPA, OFAC and other anti-terrorism, anti-money laundering and anti-corruption laws.' DLS Preferred row 78 affirmative covenants clause (xxi) requires compliance with 'FCPA, OFAC, Patriot Act and other sanctions, anti-terrorism, anti-money laundering and anti-corruption laws.' DLS Preferred row 91 clause (xxv) includes the sanctions representation. KCT Category 5 item 2 flags: 'No (or very limited) sanctions representation from borrower and its restricted subsidiaries.'",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "events_of_default",
+        "extraction_ready": true,
+        "playbook_ref": "events_of_default.cross_default",
+        "section_locations": [
+          "ARTICLE II",
+          "ARTICLE VII",
+          "ARTICLE VIII",
+          "ARTICLE XI",
+          "Section 11.01",
+          "Section 2.08"
+        ],
+        "shape_ref": "events_of_default.cross_default",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "credit_protection.events_of_default",
+      "id": "credit_protection.events_of_default.sanctions",
+      "kct_ref": [
+        "cat3.9",
+        "cat5.2"
+      ],
+      "level": 2,
+      "name": "Sanctions / Anti-Corruption Default",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to material restricted subs; 5BD interest grace; 30d rep cure; covenant-lite (financial covenant default not EoD for TL until revolver accelerates); no non-monetary judgment EoD",
+        "dls_source": "DLS row 90",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(v) cross default and cross acceleration to material indebtedness",
+          "(x) actual (or assertion by a Loan Party in writing of) invalidity of any guarantee or any security documents or the invalidity of any lien with regard to any Collateral",
+          "(xi) change of control"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "payment_grace_principal: immediate vs 1BD vs 3BD",
+          "payment_grace_interest: 3BD vs 5BD vs 10BD",
+          "covenant_violation_grace: none vs 30d_for_affirmative",
+          "cross_default_trigger: cross_default vs cross_acceleration_only",
+          "cross_default_threshold: all_material vs dollar_amount",
+          "bankruptcy_involuntary_grace: 30d vs 60d vs 90d",
+          "judgment_threshold: dollar_amount vs MAE_standard",
+          "non_monetary_judgment: included vs MAE_subject vs excluded",
+          "invalidity_scope: any_material vs all_substantially_all",
+          "covenant_lite: no vs yes_revolver_only",
+          "rep_breach_cure: no_cure vs 30d_cure_for_curable",
+          "material_contract_termination: included vs excluded",
+          "subsidiary_scope: all vs material_only vs group_materiality",
+          "change_of_control: included_as_eod vs mandatory_prepay_only"
+        ],
+        "market_position": "",
+        "preferred_position": "14 enumerated triggers including: nonpayment (principal immediate, interest/fees 3BD), covenant violation, cross-default, bankruptcy (60d involuntary), ERISA, judgments, invalidity of docs/guarantees/liens, CoC, material contract termination, indemnification proceeds",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "events_of_default.sanctions_compliance"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred rows 78(xxi), 88, 91(xxv) (sanctions compliance covenant, negative covenant, and representation); KCT Category 5 item 2 (limited sanctions representation risk flag)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Any Event of Default (including technical or procedural) prevents basket usage. Most conservative approach.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.default_blockers.full_eod",
+          "kct_ref": [
+            "cat3.14"
+          ],
+          "level": 3,
+          "name": "Full EoD Blocker",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 14"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Only payment defaults and bankruptcy defaults block basket usage. Market-standard minimum protection. Permits basket usage during covenant defaults.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.default_blockers.payment_bankruptcy",
+          "level": 3,
+          "market_benchmarks": {
+            "market_standard_value": "Minimum acceptable blocker"
+          },
+          "name": "Payment & Bankruptcy Blocker",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 3"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "No EoD condition gates basket usage. Most borrower-favorable. Emerging trend in UMM/BSL for certain baskets.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "easy",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.default_blockers.no_blocker",
+          "kct_ref": [
+            "cat3.10"
+          ],
+          "level": 3,
+          "name": "No Default Blocker",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 10"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "How default blockers interact with the Available Amount / Builder Basket. KCT Risk Item 7: absence of payment/bankruptcy blocker for RP is HIGH risk.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.default_blockers.builder_basket_interaction",
+          "kct_ref": [
+            "cat4.7"
+          ],
+          "level": 3,
+          "name": "Builder Basket Interaction",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 7"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "EoD conditions that gate access to covenant baskets during distress, determining which baskets remain available when a Default or Event of Default is continuing. PC Term Comparison provides detailed guidance by segment: 'Clients generally prefer EOD stoppers on the baskets that would ordinarily have them and not payment/bankruptcy stoppers especially RP and incurrence basket baskets.' By basket type: for starter/non-grower Available Amount prongs, 'CMM/LMM: Typically full EOD stopper and Leverage Test; Aggressive UMM/BSLR: often no EOD stopper or limited to bankruptcy/payment EOD stopper.' For general RP baskets: 'subject to EOD stopper; for TTS Transactions Clients may accept bankruptcy/payment EoD.' KCT Category 4 item 7 flags: 'Absence of bankruptcy or payment default blocker for restricted payments made under the available amount and/or builder baskets.'",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "events_of_default",
+        "extraction_ready": true,
+        "playbook_ref": "events_of_default.cross_default",
+        "section_locations": [
+          "ARTICLE II",
+          "ARTICLE VII",
+          "ARTICLE VIII",
+          "ARTICLE XI",
+          "Section 11.01",
+          "Section 2.08"
+        ],
+        "shape_ref": "events_of_default.cross_default",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "credit_protection.events_of_default",
+      "id": "credit_protection.events_of_default.default_blockers",
+      "kct_ref": [
+        "cat3.9"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "dividend_blockers": "62/62 (100%) universal"
+      },
+      "name": "Default Blockers",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to material restricted subs; 5BD interest grace; 30d rep cure; covenant-lite (financial covenant default not EoD for TL until revolver accelerates); no non-monetary judgment EoD",
+        "dls_source": "DLS row 90",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(v) cross default and cross acceleration to material indebtedness",
+          "(x) actual (or assertion by a Loan Party in writing of) invalidity of any guarantee or any security documents or the invalidity of any lien with regard to any Collateral",
+          "(xi) change of control"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "payment_grace_principal: immediate vs 1BD vs 3BD",
+          "payment_grace_interest: 3BD vs 5BD vs 10BD",
+          "covenant_violation_grace: none vs 30d_for_affirmative",
+          "cross_default_trigger: cross_default vs cross_acceleration_only",
+          "cross_default_threshold: all_material vs dollar_amount",
+          "bankruptcy_involuntary_grace: 30d vs 60d vs 90d",
+          "judgment_threshold: dollar_amount vs MAE_standard",
+          "non_monetary_judgment: included vs MAE_subject vs excluded",
+          "invalidity_scope: any_material vs all_substantially_all",
+          "covenant_lite: no vs yes_revolver_only",
+          "rep_breach_cure: no_cure vs 30d_cure_for_curable",
+          "material_contract_termination: included vs excluded",
+          "subsidiary_scope: all vs material_only vs group_materiality",
+          "change_of_control: included_as_eod vs mandatory_prepay_only"
+        ],
+        "market_position": "",
+        "preferred_position": "14 enumerated triggers including: nonpayment (principal immediate, interest/fees 3BD), covenant violation, cross-default, bankruptcy (60d involuntary), ERISA, judgments, invalidity of docs/guarantees/liens, CoC, material contract termination, indemnification proceeds",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "events_of_default.default_blockers"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 22,
+          "term": "[DDTL – conditions to draw]"
+        },
+        {
+          "coverage": "full",
+          "row": 56,
+          "term": "Affirmative Covenants – other"
+        },
+        {
+          "coverage": "full",
+          "row": 154,
+          "term": "Closing Deliverables"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison Available Amount Usage (EOD stopper variations by segment and basket type); PC Term Comparison Negative Covenants General Note (EOD stopper preference); KCT Category 4 item 7 (absence of default blocker as risk flag)",
+      "pc_ref": [
+        "Available Amount Usage (EOD stopper variations by segment and basket type)",
+        "Negative Covenants General Note (EOD stopper preference)"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "low",
+          "definition": "Explicit provision treating cured defaults as if they never occurred, restoring full covenant capacity. Rare in PC. [].",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.cured_default.formal_provision",
+          "kct_ref": [
+            "cat1.4",
+            "cat3.1"
+          ],
+          "level": 3,
+          "name": "Formal Cured Default Provision",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 4; KCT Cat 3 Item 1"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Limited cure mechanics for procedural defaults such as failure to deliver notices or compliance certificates. 27% of PC deals include. []",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.cured_default.notice_cure",
+          "kct_ref": [
+            "cat1.4",
+            "cat3.1",
+            "cat3.2",
+            "cat3.9"
+          ],
+          "level": 3,
+          "name": "Notice-Cure Mechanics",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 4; KCT Cat 3 Item 1; KCT Cat 3 Item 2; KCT Cat 3 Item 9"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Exception for defaults knowingly and willfully caused by borrower -- such defaults may not be eligible for cure.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.cured_default.knowledge_qualifier",
+          "kct_ref": [
+            "cat3.1",
+            "cat3.2"
+          ],
+          "level": 3,
+          "name": "Knowledge / Willfulness Qualifier",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 1; KCT Cat 3 Item 2"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "assessment of whether a cured default formulation covers all EoDs, only certain categories (e.g., covenant breaches excluding financial maintenance or misrepresentation), or a single specific EoD such as failure to provide timely notice or cross-default",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.cured_default.breadth_assessment_all_eods_vs",
+          "kct_ref": [
+            "KCT:Cat3:1"
+          ],
+          "level": 3,
+          "name": "Breadth assessment — all EoDs vs selective curable",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "cure formulation triggered by 'failure to take an action by a specified time,' relating to affirmative covenants with a temporal element: delivery of financial statements, compliance certificates, payment of taxes, further assurances, and post-closing obligations",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.cured_default.temporal_element_cure_failure",
+          "kct_ref": [
+            "KCT:Cat3:1"
+          ],
+          "level": 3,
+          "name": "Temporal element cure (failure to act by specified time)",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "tracking whether the same cured default formulation has been previously agreed to with the same borrower or sponsor where the bank acted as lead, serving as a reference point for escalation and negotiation of the provision's breadth and carve-outs",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.cured_default.sponsor_precedent_tracking",
+          "kct_ref": [
+            "KCT:Cat3:1"
+          ],
+          "level": 3,
+          "name": "Sponsor precedent tracking",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Framework governing whether a default that has been remedied remains on record or is treated as if it never occurred. KCT Appendix I provides a detailed evaluation framework with three steps: (1) Breadth -- whether all EoDs are curable, only some, or a specific EoD only; (2) Carveouts -- knowledge qualifier (was the failure to provide notice deliberate/intentional?) and other carveouts; (3) Other Factors -- cure after acceleration/commencement of remedies, precedent with same borrower/sponsor. KCT notes: 'we do not deem broadly and vaguely drafted formulations that simply state \"an event of default may be cured\" to constitute a \"cured default\" provision.' PC Term Comparison: 'Raise with Clients. In TTS Transactions may accept as long as it is the tighter formulation. Flag references to \"and is continuing\" or \"and continuance\" in events of default as may be a back door cure.'",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "events_of_default",
+        "extraction_ready": true,
+        "playbook_ref": "events_of_default.cross_default",
+        "section_locations": [
+          "ARTICLE II",
+          "ARTICLE VII",
+          "ARTICLE VIII",
+          "ARTICLE XI",
+          "Section 11.01",
+          "Section 2.08"
+        ],
+        "shape_ref": "events_of_default.cross_default",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "credit_protection.events_of_default",
+      "golden_record_extraction_parameters": [
+        {
+          "description": "Usually max 2 cures per 4 consecutive quarters, max 5 during facility term",
+          "evidence_source": "events_of_default.financial_covenant_cure",
+          "parameter": "frequency_limits",
+          "source": "R16-C"
+        },
+        {
+          "description": "FinCov EoD may only apply to Covenant Facilities/Revolving, not Term B Loans",
+          "evidence_source": "events_of_default.financial_covenant_cure",
+          "parameter": "covenant_lite_structure",
+          "source": "R16-C"
+        }
+      ],
+      "id": "credit_protection.events_of_default.cured_default",
+      "kct_ref": [
+        "cat1.4",
+        "cat3.1",
+        "cat3.9"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "absent_flag": "69%",
+        "formal_provision_flag": "3%",
+        "notice_cure_mechanics": "27%"
+      },
+      "name": "Cured Default Provisions",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to material restricted subs; 5BD interest grace; 30d rep cure; covenant-lite (financial covenant default not EoD for TL until revolver accelerates); no non-monetary judgment EoD",
+        "dls_source": "DLS row 90",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(v) cross default and cross acceleration to material indebtedness",
+          "(x) actual (or assertion by a Loan Party in writing of) invalidity of any guarantee or any security documents or the invalidity of any lien with regard to any Collateral",
+          "(xi) change of control"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "payment_grace_principal: immediate vs 1BD vs 3BD",
+          "payment_grace_interest: 3BD vs 5BD vs 10BD",
+          "covenant_violation_grace: none vs 30d_for_affirmative",
+          "cross_default_trigger: cross_default vs cross_acceleration_only",
+          "cross_default_threshold: all_material vs dollar_amount",
+          "bankruptcy_involuntary_grace: 30d vs 60d vs 90d",
+          "judgment_threshold: dollar_amount vs MAE_standard",
+          "non_monetary_judgment: included vs MAE_subject vs excluded",
+          "invalidity_scope: any_material vs all_substantially_all",
+          "covenant_lite: no vs yes_revolver_only",
+          "rep_breach_cure: no_cure vs 30d_cure_for_curable",
+          "material_contract_termination: included vs excluded",
+          "subsidiary_scope: all vs material_only vs group_materiality",
+          "change_of_control: included_as_eod vs mandatory_prepay_only"
+        ],
+        "market_position": "",
+        "preferred_position": "14 enumerated triggers including: nonpayment (principal immediate, interest/fees 3BD), covenant violation, cross-default, bankruptcy (60d involuntary), ERISA, judgments, invalidity of docs/guarantees/liens, CoC, material contract termination, indemnification proceeds",
+        "source": "R14-C"
+      },
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 39,
+          "term": "Collateral and Guarantors"
+        },
+        {
+          "coverage": "full",
+          "row": 40,
+          "term": "Collateral/Guarantor release – Chewy"
+        },
+        {
+          "coverage": "full",
+          "row": 129,
+          "term": "Events of Default"
+        },
+        {
+          "coverage": "full",
+          "row": 154,
+          "term": "Closing Deliverables"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison Events of Default section lines 479-480 (raise with clients, flag 'and is continuing' language); KCT Category 3 item 2 (statute of limitations)",
+      "pc_ref": [
+        "Events of Default"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether a change of control is classified as an enumerated Event of Default trigger within the Events of Default article (Article VIII), alongside payment defaults, covenant breaches, and cross-defaults. This classification perspective focuses on the EoD taxonomy — how CoC is categorized among the universe of default triggers and what collective lender remedies (acceleration, enforcement) attach to it.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.change_of_control.eod_trigger",
+          "kct_ref": [
+            "cat3.14"
+          ],
+          "level": 3,
+          "name": "EoD Trigger",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 14"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "CoC triggers a mandatory offer to prepay at par or par plus premium. Individual lender choice, not collective acceleration.",
+          "dls_ref": [
+            "DLS:62:Right to Appoint Additional Agents"
+          ],
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.change_of_control.put_right",
+          "level": 3,
+          "name": "Put Right / Mandatory Prepayment",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 62 (Right to Appoint Additional Agents)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "CoC triggers both an EoD and a mandatory prepayment right. Most lender-protective approach.",
+          "domain_id": "credit_protection",
+          "extraction_difficulty": "medium",
+          "family_id": "credit_protection.events_of_default",
+          "id": "credit_protection.events_of_default.change_of_control.dual_mechanism",
+          "level": 3,
+          "name": "Dual Trigger (EoD + Put)",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 14"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Change of control as an Event of Default trigger, cross-referencing the comprehensive change of control provisions at the credit_protection level. DLS Preferred row 90 clause (xi) lists 'change of control' as a standard EoD category (highlighted for negotiation). The CoC EoD is typically one of the consequences triggered alongside mandatory prepayment when a change of control occurs. PC Term Comparison: 'Portability is unlikely to be accepted. If present, flag for Clients.' KCT Category 3 item 12 flags non-standard CoC formulations and permitted change of control provisions. The CoC EoD interacts with the sacred rights framework since it typically requires all-lender or affected-lender consent to modify.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "events_of_default",
+        "extraction_ready": true,
+        "playbook_ref": "events_of_default.cross_default",
+        "section_locations": [
+          "ARTICLE II",
+          "ARTICLE VII",
+          "ARTICLE VIII",
+          "ARTICLE XI",
+          "Section 11.01",
+          "Section 2.08"
+        ],
+        "shape_ref": "events_of_default.cross_default",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.417921+00:00",
+          "term_packs": {
+            "COC_DEFINITION": {
+              "label": "Change of Control Definition",
+              "category": "DOCUMENTATION",
+              "exactPhrases": [
+                "Can be sold to other portcos / continuation funds",
+                "Uncapped management/closing date investors",
+                "Change of Control portability",
+                "Change of Control",
+                "change in ownership",
+                "Permitted Holders",
+                "cease to own directly or indirectly",
+                "mandatory prepayment upon Change of Control",
+                "Change of Control shall constitute an Event of Default",
+                "continuation fund",
+                "portability"
+              ],
+              "sectionHeaders": [
+                "Change of Control",
+                "Change in Control",
+                "Mandatory Prepayment - Change of Control",
+                "Definition of Change of Control",
+                "Prepayments",
+                "Events of Default"
+              ],
+              "semanticVariants": [
+                "change of control definition and triggers",
+                "mandatory prepayment on ownership change",
+                "permitted holders and sponsor control",
+                "portability of credit facilities",
+                "continuation fund treatment under CoC",
+                "ownership threshold for control change"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.6,
+                "minKeywordScore": 0.5,
+                "minConfidence": 0.7,
+                "escalationThreshold": 0.5,
+                "humanEscalationThreshold": 0.3
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Can be sold to other portcos / continuation funds",
+              "Uncapped management/closing date investors",
+              "Change of Control portability",
+              "Change of Control",
+              "change in ownership",
+              "Permitted Holders",
+              "cease to own directly or indirectly",
+              "mandatory prepayment upon Change of Control",
+              "Change of Control shall constitute an Event of Default",
+              "continuation fund",
+              "portability"
+            ],
+            "sectionHeaders": [
+              "Change of Control",
+              "Change in Control",
+              "Mandatory Prepayment - Change of Control",
+              "Definition of Change of Control",
+              "Prepayments",
+              "Events of Default"
+            ],
+            "semanticVariants": [
+              "change of control definition and triggers",
+              "mandatory prepayment on ownership change",
+              "permitted holders and sponsor control",
+              "portability of credit facilities",
+              "continuation fund treatment under CoC",
+              "ownership threshold for control change"
+            ]
+          }
+        }
+      },
+      "family_id": "credit_protection.events_of_default",
+      "golden_record_extraction_parameters": [
+        {
+          "description": "Always a defined term — look in Article I / Definitions section",
+          "evidence_source": "events_of_default.change_of_control",
+          "parameter": "definition_location",
+          "source": "R16-C"
+        }
+      ],
+      "id": "credit_protection.events_of_default.change_of_control",
+      "kct_ref": [
+        "cat3.12",
+        "cat3.14"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "dual_trigger": "35%",
+        "eod_standalone": "~12%",
+        "mandatory_prepay_only": "30%",
+        "no_consequence_flag": "43.1%"
+      },
+      "name": "Change of Control as EoD",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to material restricted subs; 5BD interest grace; 30d rep cure; covenant-lite (financial covenant default not EoD for TL until revolver accelerates); no non-monetary judgment EoD",
+        "dls_source": "DLS row 90",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [
+          "(v) cross default and cross acceleration to material indebtedness",
+          "(x) actual (or assertion by a Loan Party in writing of) invalidity of any guarantee or any security documents or the invalidity of any lien with regard to any Collateral",
+          "(xi) change of control"
+        ],
+        "is_highlighted": true,
+        "key_negotiation_axes": [
+          "payment_grace_principal: immediate vs 1BD vs 3BD",
+          "payment_grace_interest: 3BD vs 5BD vs 10BD",
+          "covenant_violation_grace: none vs 30d_for_affirmative",
+          "cross_default_trigger: cross_default vs cross_acceleration_only",
+          "cross_default_threshold: all_material vs dollar_amount",
+          "bankruptcy_involuntary_grace: 30d vs 60d vs 90d",
+          "judgment_threshold: dollar_amount vs MAE_standard",
+          "non_monetary_judgment: included vs MAE_subject vs excluded",
+          "invalidity_scope: any_material vs all_substantially_all",
+          "covenant_lite: no vs yes_revolver_only",
+          "rep_breach_cure: no_cure vs 30d_cure_for_curable",
+          "material_contract_termination: included vs excluded",
+          "subsidiary_scope: all vs material_only vs group_materiality",
+          "change_of_control: included_as_eod vs mandatory_prepay_only"
+        ],
+        "market_position": "",
+        "preferred_position": "Broad CoC definition triggering mandatory prepayment offer at par; includes asset sales of all/substantially all assets",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "events_of_default.change_of_control"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 130,
+          "term": "Change of Control"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 90 clause (xi) (change of control as highlighted EoD); PC Term Comparison Change of Control section (portability unlikely, flag for clients); KCT Category 3 item 12 (CoC formulation risk flags)",
+      "pc_ref": [
+        "Change of Control"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "COC_DEFINITION",
+          "label": "Change of Control Definition",
+          "schema_file": "documentation-enhanced.schema.ts",
+          "field_count": 5,
+          "r1_domain": "credit_protection",
+          "mapping_confidence": 0.4919,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "id": "credit_protection.events_of_default.indemnification_proceeds.trigger_condition",
+          "name": "Trigger Condition",
+          "definition": "The specific failure triggering this EoD — non-contribution of R&W insurance or seller indemnification proceeds to the credit parties when required under the acquisition agreement or credit agreement.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.events_of_default",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "id": "credit_protection.events_of_default.indemnification_proceeds.materiality_threshold",
+          "name": "Materiality Threshold",
+          "definition": "Dollar or percentage threshold below which failure to contribute indemnification proceeds does not constitute an Event of Default, preventing technical defaults for immaterial claims.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.events_of_default",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "id": "credit_protection.events_of_default.indemnification_proceeds.cure_period",
+          "name": "Cure Period",
+          "definition": "Grace period (typically 30 days after notice) within which the borrower may remedy the failure to contribute indemnification proceeds before the Event of Default becomes actionable.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.events_of_default",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "easy",
+          "definition_source": "KCT Cat 1 Item 1"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Event of default related to the borrower's failure to make required indemnification payments to the administrative agent or lenders for losses arising from environmental liabilities, tax claims, or other indemnified matters. This specialized default provision ensures that indemnification obligations are treated as binding payment requirements rather than mere contractual undertakings.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "events_of_default",
+        "extraction_ready": true,
+        "playbook_ref": "events_of_default.cross_default",
+        "section_locations": [
+          "ARTICLE VII",
+          "ARTICLE VIII",
+          "Section 8.01"
+        ],
+        "shape_ref": "events_of_default.cross_default",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "credit_protection.events_of_default",
+      "id": "credit_protection.events_of_default.indemnification_proceeds",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "low -- appears in acquisition financing CAs",
+        "source": "R19-C_corpus_analysis",
+        "typical_threshold": "material amount, often tied to acquisition agreement"
+      },
+      "name": "Indemnification Proceeds Failure",
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 90 (Events of Default)"
+    },
+    {
+      "children": [
+        {
+          "id": "credit_protection.events_of_default.illegality.regulatory_trigger",
+          "name": "Regulatory Change Trigger",
+          "definition": "The regulatory event making it unlawful for a lender to maintain or fund loans — change in law, regulation, treaty, or official interpretation — and whether the illegality must affect the lender's home jurisdiction or any jurisdiction.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.events_of_default",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "id": "credit_protection.events_of_default.illegality.substitute_lending_office",
+          "name": "Substitute Lending Office",
+          "definition": "Obligation on the affected lender to designate a different lending office or branch that can lawfully maintain the loans, as a precondition before invoking illegality protections against the borrower.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.events_of_default",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "id": "credit_protection.events_of_default.illegality.breakage_costs",
+          "name": "Breakage Cost Allocation",
+          "definition": "Rules for allocating breakage costs when loans must be prepaid or converted due to illegality — whether the borrower bears SOFR/LIBOR breakage or the affected lender absorbs the economic cost of its own regulatory change.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.events_of_default",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "hard",
+          "definition_source": "KCT Cat 1 Item 7"
+        },
+        {
+          "id": "credit_protection.events_of_default.illegality.benchmark_fallback",
+          "name": "Benchmark Fallback Mechanism",
+          "definition": "Alternative rate mechanics when illegality prevents lending at the benchmark rate — conversion to base rate, suspension of affected tranche, or replacement benchmark determination process.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "credit_protection",
+          "family_id": "credit_protection.events_of_default",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Event of Default triggered when it becomes illegal for a lender to maintain its loans or commitments, typically requiring assignment to a replacement lender or termination of affected commitments.",
+      "domain_id": "credit_protection",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "events_of_default",
+        "extraction_ready": true,
+        "playbook_ref": "events_of_default.cross_default",
+        "section_locations": [
+          "ARTICLE II",
+          "ARTICLE VIII",
+          "Section 2.15",
+          "Section 8.01"
+        ],
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.515440+00:00",
+          "term_packs": {
+            "DEFAULT_ACCELERATION_RIGHTS": {
+              "label": "Acceleration Rights",
+              "category": "DEFAULT_CURE",
+              "exactPhrases": [
+                "acceleration",
+                "accelerate the maturity",
+                "declare all Loans immediately due and payable",
+                "Loans shall automatically become due and payable",
+                "Required Lenders may",
+                "Administrative Agent at the direction of Required Lenders",
+                "terminate Commitments",
+                "declare the Obligations due and payable"
+              ],
+              "sectionHeaders": [
+                "Remedies",
+                "Acceleration",
+                "Events of Default - Remedies",
+                "Section [•] - Remedies upon Event of Default"
+              ],
+              "semanticVariants": [
+                "lender right to accelerate loans",
+                "making loans immediately due",
+                "terminating loan commitments",
+                "calling loans due upon default"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.6,
+                "minKeywordScore": 0.5,
+                "minConfidence": 0.7,
+                "escalationThreshold": 0.5,
+                "humanEscalationThreshold": 0.3
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 45000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "acceleration",
+              "accelerate the maturity",
+              "declare all Loans immediately due and payable",
+              "Loans shall automatically become due and payable",
+              "Required Lenders may",
+              "Administrative Agent at the direction of Required Lenders",
+              "terminate Commitments",
+              "declare the Obligations due and payable"
+            ],
+            "sectionHeaders": [
+              "Remedies",
+              "Acceleration",
+              "Events of Default - Remedies",
+              "Section [•] - Remedies upon Event of Default"
+            ],
+            "semanticVariants": [
+              "lender right to accelerate loans",
+              "making loans immediately due",
+              "terminating loan commitments",
+              "calling loans due upon default"
+            ]
+          }
+        }
+      },
+      "family_id": "credit_protection.events_of_default",
+      "id": "credit_protection.events_of_default.illegality",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "medium -- most CAs address in ARTICLE II or ARTICLE III",
+        "source": "R19-C_corpus_analysis",
+        "treatment": "typically handled as increased cost / yield protection, not standalone EoD"
+      },
+      "name": "Illegality Event",
+      "r18c_source": {
+        "prevalence_rate": 0.2762,
+        "round": "R8"
+      },
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 90 (Events of Default)",
+      "neutron_field_refs": [
+        {
+          "term_type": "DEFAULT_ACCELERATION_RIGHTS",
+          "label": "Acceleration Rights",
+          "schema_file": "default-cure-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "credit_protection",
+          "mapping_confidence": 0.4068,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    }
+  ],
+  "corpus_prevalence": "high",
+  "definition": "Trigger mechanisms enabling lenders to accelerate outstanding obligations, terminate commitments, require cash collateralization of LCs, demand default interest, foreclose on collateral, and demand payment from guarantors. DLS Preferred enumerates 14 EoD categories: (i) nonpayment of principal when due; (ii) nonpayment of interest/fees/other amounts after 3 business days; (iii) inaccuracy of representations in any material respect; (iv) violation of covenants; (v) cross-default and cross-acceleration to material indebtedness; (vi) bankruptcy/insolvency events (60-day grace for involuntary); (vii) ERISA events; (viii) unpaid monetary judgments exceeding threshold, plus non-monetary judgments; (ix) invalidity of material loan document provisions; (x) invalidity of guarantee/security documents or liens; (xi) change of control; (xii) termination/amendment of material contracts; (xiii) failure to contribute acquisition agreement indemnification/rep&warranty insurance proceeds; (xiv) company-specific events. PC Term Comparison: cured defaults should use the tighter formulation; flag 'and is continuing' or 'and continuance' language as potential back-door cure; statute of limitations typically rejected; affirmative covenant notice should be on Default (not Event of Default).",
+  "dls_ref": [
+    "DLS:44:Business MAC",
+    "DLS:66:Guarantees",
+    "DLS:90:Events of Default",
+    "DLS:94:Assignments"
+  ],
+  "domain_id": "credit_protection",
+  "extraction_difficulty": "medium",
+  "family_id": "credit_protection.events_of_default",
+  "golden_record_benchmarks": [
+    {
+      "count": 13,
+      "max": 50000000,
+      "median": 75,
+      "min": 10,
+      "parameter": "dollar_amount:dollars",
+      "reason": "Cross-deal parameter range available but no ontology benchmark",
+      "source": "R16-D golden_record",
+      "source_file": "cross_deal_comparison.json"
+    },
+    {
+      "count": 4,
+      "max": 50,
+      "median": 27.5,
+      "min": 15,
+      "parameter": "percentage:percent",
+      "reason": "Cross-deal parameter range available but no ontology benchmark",
+      "source": "R16-D golden_record",
+      "source_file": "cross_deal_comparison.json"
+    },
+    {
+      "count": 10,
+      "max": 400000000,
+      "median": 62500000.0,
+      "min": 10000000,
+      "parameter": "scaled_amount:dollars",
+      "reason": "Cross-deal parameter range available but no ontology benchmark",
+      "source": "R16-D golden_record",
+      "source_file": "cross_deal_comparison.json"
+    },
+    {
+      "count": 5,
+      "median": 30,
+      "parameter": "time_period:days",
+      "range": "30 - 181",
+      "reason": "Parameter distribution data available but no ontology benchmark",
+      "source": "R16-D golden_record",
+      "source_file": "parameter_distributions.json"
+    }
+  ],
+  "golden_record_extraction_parameters": [
+    {
+      "description": "Boyd, Caesars, Red Rock — license revocation affecting 10%+ of Consolidated EBITDA or MAE, with 30-day cure",
+      "evidence_source": "events_of_default.industry_specific",
+      "parameter": "gaming_license",
+      "source": "R16-C"
+    },
+    {
+      "description": "Quidel — loss of ISO 9001/13485 certifications if MAE",
+      "evidence_source": "events_of_default.industry_specific",
+      "parameter": "iso_certification",
+      "source": "R16-C"
+    },
+    {
+      "description": "Caesars — Tenant Event of Default under Las Vegas or Regional Master Lease",
+      "evidence_source": "events_of_default.industry_specific",
+      "parameter": "master_lease",
+      "source": "R16-C"
+    },
+    {
+      "description": "Quidel — subordination provisions ceasing to be effective",
+      "evidence_source": "events_of_default.industry_specific",
+      "parameter": "subordination",
+      "source": "R16-C"
+    }
+  ],
+  "id": "credit_protection.events_of_default",
+  "kct_ref": [
+    "cat3.9"
+  ],
+  "level": 1,
+  "name": "Events of Default",
+  "r18_concept_ids": [
+    "events_of_default.payment_default",
+    "events_of_default.covenant_default",
+    "events_of_default.cross_default",
+    "events_of_default.bankruptcy_insolvency",
+    "events_of_default.judgment_default",
+    "events_of_default.representation_breach",
+    "events_of_default.erisa_events",
+    "events_of_default.invalidity_of_documents",
+    "events_of_default.sanctions_compliance",
+    "events_of_default.default_blockers",
+    "events_of_default.change_of_control"
+  ],
+  "type": "family",
+  "definition_source": "DLS Preferred row 90 (complete EoD enumeration with 14 categories and alternative formulations); PC Term Comparison section 7 (Events of Default guidance); KCT Category 3 items 2, 9, 14 (statute of limitations, notice requirement, excluded matters); Intro Guide (negative covenants: breach triggers automatic EoD)",
+  "pc_ref": [
+    "Section 7"
+  ]
+}

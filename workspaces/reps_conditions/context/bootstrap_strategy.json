@@ -1,0 +1,333 @@
+[
+  {
+    "id": "governance.reps_conditions.cure_period",
+    "name": "Reps & Warranties Cure Period",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Reps & Warranties Cure Period"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.specified_reps",
+    "name": "Specified Representations",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Specified Representations"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.conditions_precedent",
+    "name": "Conditions Precedent",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Conditions Precedent"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.mac_definition",
+    "name": "Material Adverse Effect Definition",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Material Adverse Effect Definition",
+        "Material Adverse Change"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.no_default_rep",
+    "name": "No Default / No EoD Representation",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "No Default / No EoD Representation"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.bring_down",
+    "name": "Bring-Down Mechanics",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Bring-Down Mechanics"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.cross_default",
+    "name": "Cross-Default Thresholds",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Cross-Default Thresholds"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.inconsistent_agreements",
+    "name": "Inconsistent Agreements",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Inconsistent Agreements"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.beneficial_ownership",
+    "name": "Beneficial Ownership Certification",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Beneficial Ownership Certification",
+        "Corporate Transparency Act",
+        "Beneficial Ownership Rule"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.force_majeure",
+    "name": "Force Majeure / War Guarantee Release",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Force Majeure / War Guarantee Release"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.sungard_conditionality",
+    "name": "Sungard Conditionality",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Sungard Conditionality",
+        "Specified Reps",
+        "Specified Acquisition Agreement Reps"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.jury_trial_waiver",
+    "name": "Jury Trial Waiver",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Jury Trial Waiver"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.labor_matters",
+    "name": "Labor Matters Representation",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Labor Matters Representation",
+        "Material Adverse Effect"
+      ]
+    }
+  }
+]

@@ -1,0 +1,739 @@
+[
+  {
+    "id": "debt_capacity.indebtedness.incremental_equivalent",
+    "name": "Incremental Equivalent Debt (IED)",
+    "family_id": "debt_capacity.indebtedness",
+    "concept_area": "indebtedness",
+    "playbook_ref": "neg_cov_debt.incremental_equiv_debt_cov",
+    "search_strategy": {
+      "concept_specific_keywords": [
+        "Incremental Equivalent Debt",
+        "Ratio Debt",
+        "pari passu",
+        "junior lien"
+      ],
+      "concept_specific_notes": [
+        "[neg_cov_debt.incremental_equiv_debt_cov] Incremental Equivalent Debt (5/9, 103 hits). Boyd calls its equivalent 'Ratio Debt' instead. Removed 'substantially equivalent' (0/9 in debt sections — only appears in definitions). Not present in Arch, Sleep Number, National Vision, Caesars (these deals lack IED mechanics entirely)."
+      ],
+      "defined_term_dependencies": [
+        "Indebtedness",
+        "Debt",
+        "Consolidated EBITDA",
+        "Capital Lease Obligations",
+        "Finance Lease",
+        "Capitalized Lease",
+        "Disqualified Stock",
+        "Disqualified Equity Interests",
+        "Leverage Ratio",
+        "Consolidated Total Leverage Ratio",
+        "Unrestricted Subsidiary",
+        "Available Amount",
+        "Hedge Agreement",
+        "Cash Management Agreement"
+      ],
+      "fallback_escalation": "Search for 'shall not incur' or 'Permitted Indebtedness' or 'incurrence of Indebtedness'. If none found, search for 'other Indebtedness' or 'aggregate principal amount' near negative covenant headings.",
+      "heading_patterns": [
+        "Indebtedness",
+        "Limitation on Indebtedness",
+        "Borrowing",
+        "Debt"
+      ],
+      "keyword_anchors": [
+        "incur",
+        "incurrence",
+        "Permitted Indebtedness",
+        "Permitted Refinancing",
+        "Incremental Equivalent Debt",
+        "Disqualified Stock"
+      ],
+      "keyword_anchors_in_section_only": [
+        "create",
+        "assume",
+        "Leverage Ratio",
+        "intercompany",
+        "Guarantee"
+      ],
+      "source_file": "neg_cov_debt.json",
+      "xref_follow": [
+        "Section 1.01 for Indebtedness/Debt definition",
+        "Cross-references to ratio test / Leverage Ratio definition",
+        "Cross-references to Permitted Acquisition / Limited Condition Acquisition",
+        "Section 2.14/2.20 for Incremental Facility mechanics (incremental_facility basket lives there, not in neg cov section)"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.free_clear.dollar",
+    "name": "Dollar Amount Component",
+    "family_id": "debt_capacity.incremental",
+    "concept_area": "free_clear",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Dollar Amount Component"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.free_clear.sharing",
+    "name": "Sharing Provisions",
+    "family_id": "debt_capacity.incremental",
+    "concept_area": "free_clear",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Sharing Provisions"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.free_clear.ebitda_correlation",
+    "name": "EBITDA Size Correlation",
+    "family_id": "debt_capacity.incremental",
+    "concept_area": "free_clear",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "EBITDA Size Correlation"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.free_clear.grower",
+    "name": "Grower Mechanism",
+    "family_id": "debt_capacity.incremental",
+    "concept_area": "free_clear",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Grower Mechanism"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.ratio.tiering",
+    "name": "Ratio Tiering by Seniority",
+    "family_id": "debt_capacity.incremental",
+    "concept_area": "ratio",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Ratio Tiering by Seniority"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.ratio.calculation",
+    "name": "Calculation Mechanics",
+    "family_id": "debt_capacity.incremental",
+    "concept_area": "ratio",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Calculation Mechanics"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.ratio.no_worse_prong",
+    "name": "No-Worse-Than-Closing Prong",
+    "family_id": "debt_capacity.incremental",
+    "concept_area": "ratio",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "No-Worse-Than-Closing Prong"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.ratio.leverage_metric",
+    "name": "Leverage Metric Selection",
+    "family_id": "debt_capacity.incremental",
+    "concept_area": "ratio",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Leverage Metric Selection"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.ratio.no_worse_acquisitions",
+    "name": "No-Worse-For-Acquisitions Test",
+    "family_id": "debt_capacity.incremental",
+    "concept_area": "ratio",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "No-Worse-For-Acquisitions Test"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.ratio.interest_coverage_alternative",
+    "name": "Interest Coverage Ratio Alternative",
+    "family_id": "debt_capacity.incremental",
+    "concept_area": "ratio",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Interest Coverage Ratio Alternative"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.builders.voluntary_prepay",
+    "name": "Voluntary Prepayment Builder",
+    "family_id": "debt_capacity.incremental",
+    "concept_area": "builders",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Voluntary Prepayment Builder"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.builders.other",
+    "name": "Other Capacity Builders",
+    "family_id": "debt_capacity.incremental",
+    "concept_area": "builders",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Other Capacity Builders"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.builders.commitment_reduction",
+    "name": "Commitment Reduction Builder",
+    "family_id": "debt_capacity.incremental",
+    "concept_area": "builders",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Commitment Reduction Builder"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.mfn.trigger",
+    "name": "Trigger Threshold",
+    "family_id": "debt_capacity.incremental.mfn",
+    "concept_area": "mfn",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Trigger Threshold"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.mfn.exceptions",
+    "name": "MFN Exceptions",
+    "family_id": "debt_capacity.incremental.mfn",
+    "concept_area": "mfn",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "MFN Exceptions"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.mfn.sunset",
+    "name": "MFN Sunset",
+    "family_id": "debt_capacity.incremental.mfn",
+    "concept_area": "mfn",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "MFN Sunset",
+        "Most Favored Nation"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.mfn.variable_shadow",
+    "name": "Variable / Shadow MFN",
+    "family_id": "debt_capacity.incremental.mfn",
+    "concept_area": "mfn",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Variable / Shadow MFN"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.stacking_reclass.stacking",
+    "name": "Stacking Mechanics",
+    "family_id": "debt_capacity.incremental.stacking_reclass",
+    "concept_area": "stacking_reclass",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Stacking Mechanics"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.stacking_reclass.reclassification",
+    "name": "Reclassification",
+    "family_id": "debt_capacity.incremental.stacking_reclass",
+    "concept_area": "stacking_reclass",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": []
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.structural_controls.conditions_precedent",
+    "name": "Conditions Precedent to Incurrence",
+    "family_id": "debt_capacity.incremental.structural_controls",
+    "concept_area": "structural_controls",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Conditions Precedent to Incurrence"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.structural_controls.maturity",
+    "name": "Maturity and WALM Restrictions",
+    "family_id": "debt_capacity.incremental.structural_controls",
+    "concept_area": "structural_controls",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Maturity and WALM Restrictions"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.structural_controls.pricing",
+    "name": "Pricing Restrictions",
+    "family_id": "debt_capacity.incremental.structural_controls",
+    "concept_area": "structural_controls",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Pricing Restrictions"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.structural_controls.security",
+    "name": "Security / Credit Support Requirements",
+    "family_id": "debt_capacity.incremental.structural_controls",
+    "concept_area": "structural_controls",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Security / Credit Support Requirements"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.structural_controls.rofr",
+    "name": "Right of First Refusal (ROFR)",
+    "family_id": "debt_capacity.incremental.structural_controls",
+    "concept_area": "structural_controls",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Right of First Refusal (ROFR)"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.structural_controls.pro_rata_sharing",
+    "name": "Pro Rata Sharing / Prepayment Waterfall",
+    "family_id": "debt_capacity.incremental.structural_controls",
+    "concept_area": "structural_controls",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Pro Rata Sharing / Prepayment Waterfall"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.structural_controls.rcf_sublimit",
+    "name": "Revolving Credit Facility Sublimit",
+    "family_id": "debt_capacity.incremental.structural_controls",
+    "concept_area": "structural_controls",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Revolving Credit Facility Sublimit"
+      ]
+    }
+  },
+  {
+    "id": "debt_capacity.incremental.structural_controls.ddtl",
+    "name": "Incremental DDTL Mechanics",
+    "family_id": "debt_capacity.incremental.structural_controls",
+    "concept_area": "structural_controls",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Incremental",
+        "Incremental Facility",
+        "Incremental Term Loan",
+        "Additional Credit Extensions"
+      ],
+      "keyword_anchors": [
+        "Incremental",
+        "incremental facility",
+        "Incremental Term Loan",
+        "Incremental Equivalent Debt",
+        "Additional Credit Extension"
+      ],
+      "concept_specific_keywords": [
+        "Incremental DDTL Mechanics"
+      ]
+    }
+  }
+]

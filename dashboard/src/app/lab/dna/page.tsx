@@ -8,6 +8,7 @@ import { KpiCard, KpiCardGrid } from "@/components/ui/KpiCard";
 import { LoadingState } from "@/components/ui/Spinner";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { useDnaDiscovery } from "@/lib/queries";
+import { CHART_COLORS } from "@/lib/colors";
 import { formatNumber, validateRegexPatterns, formatApiError } from "@/lib/formatters";
 import { cn, SELECT_CLASS } from "@/lib/cn";
 import type { DnaCandidate } from "@/lib/types";
@@ -18,7 +19,7 @@ function ScoreBar({ value, max, color }: { value: number; max: number; color: st
   const pct = max > 0 ? Math.min(100, (value / max) * 100) : 0;
   return (
     <div className="flex items-center gap-1.5">
-      <div className="w-16 h-1.5 bg-surface-tertiary rounded-full overflow-hidden">
+      <div className="w-16 h-1.5 bg-surface-3 rounded-full overflow-hidden">
         <div
           className="h-full rounded-full"
           style={{ width: `${pct}%`, backgroundColor: color }}
@@ -41,7 +42,7 @@ function CandidateRow({
   onSearch: (phrase: string) => void;
 }) {
   return (
-    <tr className="border-t border-border hover:bg-surface-tertiary/50 transition-colors">
+    <tr className="border-t border-border hover:bg-surface-3/50 transition-colors">
       <td className="px-3 py-2">
         <button
           className="text-accent-blue hover:underline text-xs font-mono text-left"
@@ -52,7 +53,7 @@ function CandidateRow({
         </button>
       </td>
       <td className="px-3 py-2">
-        <ScoreBar value={item.combined_score} max={maxCombined} color="#137CBD" />
+        <ScoreBar value={item.combined_score} max={maxCombined} color={CHART_COLORS.blue} />
       </td>
       <td className="px-3 py-2 text-right tabular-nums text-xs">
         {item.tfidf_score.toFixed(3)}
@@ -274,7 +275,7 @@ export default function DnaPage() {
           ) : (
             <div className="overflow-auto max-h-[600px]">
               <table className="w-full text-sm" aria-label="DNA candidates">
-                <thead className="sticky top-0 bg-surface-tertiary z-10">
+                <thead className="sticky top-0 bg-surface-3 z-10">
                   <tr className="text-left text-xs text-text-muted uppercase">
                     <th className="px-3 py-2">Phrase</th>
                     <th className="px-3 py-2">Combined Score</th>

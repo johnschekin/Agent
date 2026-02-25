@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-surface-primary text-text-primary text-sm antialiased;
+    @apply bg-canvas text-text-primary text-sm antialiased;
     font-feature-settings: "tnum" 1;
   }
 
@@ -12,22 +12,91 @@
     @apply box-border;
   }
 
-  /* Scrollbar styling for the dark theme */
+  /* Thin scrollbar (6px, transparent track, rounded surface-4 thumb) */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-surface-primary;
+    background: transparent;
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: #404854;
-    @apply rounded;
+    background-color: #2C333B;
+    border-radius: 3px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background-color: #505A66;
+    background-color: #3A4250;
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #2C333B transparent;
+  }
+}
+
+@layer components {
+  /* Filter chip styling */
+  .filter-chip {
+    @apply inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium
+           bg-surface-2 text-text-secondary border border-transparent
+           transition-all cursor-pointer select-none;
+  }
+
+  .filter-chip:hover {
+    @apply text-text-primary bg-surface-3;
+  }
+
+  .filter-chip.active {
+    @apply text-accent-blue bg-glow-blue border-accent-blue/30;
+  }
+
+  /* Ghost button (pagination, actions) */
+  .btn-ghost {
+    @apply px-3 py-1.5 text-xs font-medium rounded-md
+           text-text-secondary bg-transparent
+           hover:text-text-primary hover:bg-surface-3
+           disabled:opacity-30 disabled:cursor-not-allowed
+           transition-colors;
+  }
+
+  /* Progress bar */
+  .progress-bar-track {
+    @apply h-1.5 w-full rounded-full bg-surface-3;
+  }
+
+  .progress-bar-fill {
+    @apply h-full rounded-full bg-accent-blue transition-all;
+  }
+
+  /* Reader highlights */
+  .highlight-green-glow {
+    @apply bg-glow-green rounded-sm px-0.5;
+  }
+
+  .highlight-red-glow {
+    @apply bg-glow-red rounded-sm px-0.5 line-through;
+  }
+
+  .highlight-purple {
+    @apply underline decoration-purple-400 decoration-1 underline-offset-2;
+  }
+
+  .highlight-blue-term {
+    @apply underline decoration-dotted decoration-blue-400 decoration-1 underline-offset-2 cursor-help;
+  }
+}
+
+/* Reduced motion: disable transform animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

@@ -1,12 +1,18 @@
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const LINKS_API_TOKEN =
+  process.env.NEXT_PUBLIC_LINKS_API_TOKEN || "local-dev-links-token";
 
 async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
+  const headers = new Headers(init?.headers);
+  headers.set("Accept", "application/json");
+  if (path.startsWith("/api/links") || path.startsWith("/api/jobs")) {
+    if (!headers.has("X-Links-Token")) {
+      headers.set("X-Links-Token", LINKS_API_TOKEN);
+    }
+  }
   const res = await fetch(`${API_BASE}${path}`, {
     ...init,
-    headers: {
-      Accept: "application/json",
-      ...init?.headers,
-    },
+    headers,
   });
   if (!res.ok) {
     const text = await res.text().catch(() => "");
@@ -199,6 +205,7 @@ export function fetchQualityAnomalies(params: QualityAnomalyParams = {}) {
 // --- Edge Cases ---
 export interface EdgeCaseParams {
   category?: string;
+  tier?: string;
   page?: number;
   pageSize?: number;
   cohortOnly?: boolean;
@@ -207,10 +214,19 @@ export interface EdgeCaseParams {
 export function fetchEdgeCases(params: EdgeCaseParams = {}) {
   const sp = new URLSearchParams();
   if (params.category) sp.set("category", params.category);
+  if (params.tier) sp.set("tier", params.tier);
   if (params.page !== undefined) sp.set("page", String(params.page));
   if (params.pageSize !== undefined) sp.set("page_size", String(params.pageSize));
   if (params.cohortOnly !== undefined) sp.set("cohort_only", String(params.cohortOnly));
   return fetchJson<import("./types").EdgeCasesResponse>(`/api/edge-cases?${sp}`);
+}
+
+// --- Edge Case Clause Detail ---
+export function fetchEdgeCaseClauseDetail(docId: string, category: string) {
+  const sp = new URLSearchParams({ category });
+  return fetchJson<import("./types").EdgeCaseClauseDetailResponse>(
+    `/api/edge-cases/${encodeURIComponent(docId)}/clause-detail?${sp}`
+  );
 }
 
 // --- Section Frequency ---
@@ -228,6 +244,69 @@ export function fetchSectionFrequency(params: SectionFrequencyParams = {}) {
   if (params.limit !== undefined) sp.set("limit", String(params.limit));
   return fetchJson<import("./types").SectionFrequencyResponse>(
     `/api/stats/section-frequency?${sp}`
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Corpus Query Builder
+// ---------------------------------------------------------------------------
+
+export function fetchArticleConcepts(cohortOnly = true) {
+  const sp = new URLSearchParams({ cohort_only: String(cohortOnly) });
+  return fetchJson<import("./types").ArticleConceptsResponse>(
+    `/api/articles/concepts?${sp}`
+  );
+}
+
+export interface FilterChip {
+  value: string;
+  op: "or" | "and" | "not" | "and_not";
+}
+
+export interface CorpusQueryParams {
+  concept?: string;
+  articleNum?: number;
+  articleTitleFilters?: FilterChip[];
+  headingFilters?: FilterChip[];
+  sectionNumber?: string;
+  clauseTextFilters?: FilterChip[];
+  clauseHeaderFilters?: FilterChip[];
+  minDepth?: number;
+  maxDepth?: number;
+  minClauseChars?: number;
+  cohortOnly?: boolean;
+  limit?: number;
+}
+
+export function fetchCorpusQuery(params: CorpusQueryParams) {
+  return fetchJson<import("./types").CorpusQueryResponse>(
+    "/api/corpus/query",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        concept: params.concept || undefined,
+        article_num: params.articleNum,
+        article_title_filters: params.articleTitleFilters?.length
+          ? params.articleTitleFilters
+          : undefined,
+        heading_filters: params.headingFilters?.length
+          ? params.headingFilters
+          : undefined,
+        section_number: params.sectionNumber || undefined,
+        clause_text_filters: params.clauseTextFilters?.length
+          ? params.clauseTextFilters
+          : undefined,
+        clause_header_filters: params.clauseHeaderFilters?.length
+          ? params.clauseHeaderFilters
+          : undefined,
+        min_depth: params.minDepth ?? 0,
+        max_depth: params.maxDepth ?? 10,
+        min_clause_chars: params.minClauseChars ?? 0,
+        cohort_only: params.cohortOnly ?? true,
+        limit: params.limit ?? 200,
+      }),
+    }
   );
 }
 
@@ -699,4 +778,1223 @@ export function fetchConceptsWithEvidence() {
   return fetchJson<import("./types").ConceptsWithEvidenceResponse>(
     "/api/ml/concepts-with-evidence"
   );
+}
+
+// ---------------------------------------------------------------------------
+// Phase 3: Bulk Section-to-Ontology-Family Linking
+// ---------------------------------------------------------------------------
+
+// ── Helpers ────────────────────────────────────────────────────────────────
+
+async function postJson<T>(path: string, data: unknown): Promise<T> {
+  return fetchJson<T>(path, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+}
+
+async function patchJson<T>(path: string, data: unknown): Promise<T> {
+  return fetchJson<T>(path, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+}
+
+async function deleteJson<T>(path: string): Promise<T> {
+  return fetchJson<T>(path, { method: "DELETE" });
+}
+
+// ── Links CRUD ─────────────────────────────────────────────────────────────
+
+export interface LinksQueryParams {
+  familyId?: string;
+  status?: string;
+  confidenceTier?: string;
+  docId?: string;
+  templateFamily?: string;
+  vintageYear?: number;
+  search?: string;
+  sortBy?: string;
+  sortDir?: "asc" | "desc";
+  page?: number;
+  pageSize?: number;
+  cursor?: string;
+}
+
+export function fetchLinks(params: LinksQueryParams = {}) {
+  const sp = new URLSearchParams();
+  if (params.familyId) sp.set("family_id", params.familyId);
+  if (params.status) sp.set("status", params.status);
+  if (params.confidenceTier) sp.set("confidence_tier", params.confidenceTier);
+  if (params.docId) sp.set("doc_id", params.docId);
+  if (params.templateFamily) sp.set("template_family", params.templateFamily);
+  if (params.vintageYear !== undefined) sp.set("vintage_year", String(params.vintageYear));
+  if (params.search) sp.set("search", params.search);
+  if (params.sortBy) sp.set("sort_by", params.sortBy);
+  if (params.sortDir) sp.set("sort_dir", params.sortDir);
+  if (params.page !== undefined) sp.set("page", String(params.page));
+  if (params.pageSize !== undefined) sp.set("page_size", String(params.pageSize));
+  if (params.cursor) sp.set("cursor", params.cursor);
+  return fetchJson<Record<string, unknown>>(`/api/links?${sp}`).then((raw) => {
+    const links = Array.isArray(raw.links)
+      ? raw.links
+      : Array.isArray(raw.items)
+      ? raw.items
+      : [];
+    const total = typeof raw.total === "number" ? raw.total : links.length;
+    const page = typeof raw.page === "number" ? raw.page : params.page ?? 1;
+    const pageSize =
+      typeof raw.page_size === "number"
+        ? raw.page_size
+        : params.pageSize ?? 50;
+    const summaryRaw =
+      raw.summary && typeof raw.summary === "object"
+        ? (raw.summary as Record<string, unknown>)
+        : {};
+    const summary: import("./types").FamilyLinkSummary = {
+      total:
+        typeof summaryRaw.total === "number"
+          ? summaryRaw.total
+          : total,
+      by_family: Array.isArray(summaryRaw.by_family)
+        ? (summaryRaw.by_family as import("./types").FamilyLinkSummary["by_family"])
+        : [],
+      by_status: Array.isArray(summaryRaw.by_status)
+        ? (summaryRaw.by_status as import("./types").FamilyLinkSummary["by_status"])
+        : [],
+      by_confidence_tier: Array.isArray(summaryRaw.by_confidence_tier)
+        ? (summaryRaw.by_confidence_tier as import("./types").FamilyLinkSummary["by_confidence_tier"])
+        : [],
+      unique_docs:
+        typeof summaryRaw.unique_docs === "number"
+          ? summaryRaw.unique_docs
+          : 0,
+      pending_review:
+        typeof summaryRaw.pending_review === "number"
+          ? summaryRaw.pending_review
+          : 0,
+      unlinked:
+        typeof summaryRaw.unlinked === "number"
+          ? summaryRaw.unlinked
+          : 0,
+      drift_alerts:
+        typeof summaryRaw.drift_alerts === "number"
+          ? summaryRaw.drift_alerts
+          : 0,
+    };
+    return {
+      ...raw,
+      links,
+      items: links,
+      total,
+      page,
+      page_size: pageSize,
+      summary,
+    } as import("./types").LinksListResponse;
+  });
+}
+
+export function fetchLink(linkId: string) {
+  return fetchJson<import("./types").FamilyLink>(
+    `/api/links/${encodeURIComponent(linkId)}`
+  );
+}
+
+export function fetchLinkSummary() {
+  return fetchJson<import("./types").FamilyLinkSummary>("/api/links/summary");
+}
+
+export function unlinkLink(linkId: string, reason: string) {
+  return patchJson<{ updated: boolean }>(
+    `/api/links/${encodeURIComponent(linkId)}/unlink`,
+    { reason }
+  );
+}
+
+export function relinkLink(linkId: string) {
+  return patchJson<{ updated: boolean }>(
+    `/api/links/${encodeURIComponent(linkId)}/relink`,
+    {}
+  );
+}
+
+export function bookmarkLink(linkId: string) {
+  return patchJson<{ updated: boolean }>(
+    `/api/links/${encodeURIComponent(linkId)}/bookmark`,
+    {}
+  );
+}
+
+export function addLinkNote(linkId: string, note: string) {
+  return patchJson<{ updated: boolean }>(
+    `/api/links/${encodeURIComponent(linkId)}/note`,
+    { note }
+  );
+}
+
+export function deferLink(linkId: string) {
+  return patchJson<{ updated: boolean }>(
+    `/api/links/${encodeURIComponent(linkId)}/defer`,
+    {}
+  );
+}
+
+export function updateLinkRole(linkId: string, role: string) {
+  return patchJson<import("./types").RoleUpdateResponse>(
+    `/api/links/${encodeURIComponent(linkId)}/role`,
+    { role }
+  );
+}
+
+export function batchUnlink(linkIds: string[], reason: string) {
+  return postJson<{ updated: number }>("/api/links/batch/unlink", {
+    link_ids: linkIds,
+    reason,
+  });
+}
+
+export function batchRelink(linkIds: string[]) {
+  return postJson<{ updated: number }>("/api/links/batch/relink", {
+    link_ids: linkIds,
+  });
+}
+
+export function batchBookmark(linkIds: string[]) {
+  return postJson<{ updated: number }>("/api/links/batch/bookmark", {
+    link_ids: linkIds,
+  });
+}
+
+// ── Why matched / not matched ──────────────────────────────────────────────
+
+export function fetchWhyMatched(linkId: string) {
+  return fetchJson<import("./types").WhyMatched>(
+    `/api/links/${encodeURIComponent(linkId)}/why-matched`
+  );
+}
+
+export function fetchWhyNotMatched(docId: string, sectionNumber: string, familyId: string) {
+  const sp = new URLSearchParams({
+    doc_id: docId,
+    section_number: sectionNumber,
+    family_id: familyId,
+  });
+  return fetchJson<import("./types").WhyNotMatched>(`/api/links/why-not-matched?${sp}`);
+}
+
+// ── Context strip ──────────────────────────────────────────────────────────
+
+export function fetchContextStrip(linkId: string) {
+  return fetchJson<Record<string, unknown>>(
+    `/api/links/${encodeURIComponent(linkId)}/context-strip`
+  ).then((raw) => {
+    const definitions = Array.isArray(raw.definitions)
+      ? raw.definitions
+      : Array.isArray(raw.defined_terms)
+      ? raw.defined_terms
+      : [];
+    const xrefs = Array.isArray(raw.xrefs)
+      ? raw.xrefs
+      : Array.isArray(raw.related_links)
+      ? raw.related_links
+      : [];
+    return {
+      link_id: String(raw.link_id ?? linkId),
+      primary_covenant_heading: String(raw.primary_covenant_heading ?? ""),
+      primary_covenant_preview: String(raw.primary_covenant_preview ?? ""),
+      definitions: definitions.map((def) => {
+        const item = def as Record<string, unknown>;
+        return {
+          term: String(item.term ?? ""),
+          definition_text: String(
+            item.definition_text ??
+              item.definition ??
+              (item.definition_section_path
+                ? `Defined in section ${String(item.definition_section_path)}`
+                : ""),
+          ),
+        };
+      }),
+      xrefs: xrefs.map((xref) => {
+        const item = xref as Record<string, unknown>;
+        return {
+          section_ref: String(item.section_ref ?? item.section_number ?? ""),
+          heading: String(item.heading ?? ""),
+          text_preview: String(item.text_preview ?? item.heading ?? ""),
+        };
+      }),
+      section_text:
+        typeof raw.section_text === "string" ? raw.section_text : null,
+      section_families: Array.isArray(raw.section_families)
+        ? raw.section_families
+        : [],
+    } as import("./types").ContextStripData;
+  });
+}
+
+// ── Comparables ────────────────────────────────────────────────────────────
+
+export function fetchComparables(linkId: string) {
+  return fetchJson<Record<string, unknown>>(
+    `/api/links/${encodeURIComponent(linkId)}/comparables`
+  ).then((raw) => {
+    const comparables = Array.isArray(raw.comparables) ? raw.comparables : [];
+    return {
+      link_id: String(raw.link_id ?? linkId),
+      comparables: comparables as import("./types").ComparableSection[],
+    } as import("./types").ComparablesResponse;
+  });
+}
+
+// ── Reassign ───────────────────────────────────────────────────────────────
+
+export function fetchReassignSuggestions(linkId: string) {
+  return fetchJson<Record<string, unknown>>(
+    `/api/links/${encodeURIComponent(linkId)}/reassign-suggestions`
+  ).then((raw) => {
+    const suggestionsRaw = Array.isArray(raw.suggestions) ? raw.suggestions : [];
+    const suggestions = suggestionsRaw.map((item) => {
+      const row = item as Record<string, unknown>;
+      const familyId = String(row.family_id ?? "");
+      return {
+        family_id: familyId,
+        family_name:
+          String(row.family_name ?? "") ||
+          familyId.replace(/^FAM-/, "").replace(/[-_]/g, " "),
+        confidence:
+          typeof row.confidence === "number"
+            ? row.confidence
+            : row.match_type === "exact"
+            ? 0.7
+            : 0.55,
+        reason: String(
+          row.reason ??
+            (row.match_type ? `Matched via ${String(row.match_type)}` : "Rule match"),
+        ),
+      };
+    });
+    return {
+      link_id: linkId,
+      current_family_id: String(raw.current_family_id ?? ""),
+      suggestions,
+    } as import("./types").ReassignSuggestionsResponse;
+  });
+}
+
+export function reassignLink(linkId: string, newFamilyId: string) {
+  return postJson<{ reassigned: boolean; new_link_id: string }>(
+    `/api/links/${encodeURIComponent(linkId)}/reassign`,
+    { new_family_id: newFamilyId }
+  );
+}
+
+// ── Preview / Apply ────────────────────────────────────────────────────────
+
+export function createPreview(familyId: string, ruleId?: string) {
+  return postJson<import("./types").LinkPreviewResponse>(
+    "/api/links/query/preview",
+    { family_id: familyId, rule_id: ruleId }
+  );
+}
+
+export function fetchPreviewCandidates(previewId: string) {
+  return fetchPreviewCandidatesPage(previewId, {});
+}
+
+export function fetchPreviewCandidatesPage(
+  previewId: string,
+  params: {
+    pageSize?: number;
+    confidenceTier?: import("./types").ConfidenceTier;
+    afterScore?: number | null;
+    afterDocId?: string | null;
+  }
+) {
+  const sp = new URLSearchParams();
+  if (params.pageSize !== undefined) sp.set("page_size", String(params.pageSize));
+  if (params.confidenceTier) sp.set("confidence_tier", params.confidenceTier);
+  if (
+    params.afterScore !== undefined &&
+    params.afterScore !== null &&
+    params.afterDocId
+  ) {
+    sp.set("after_score", String(params.afterScore));
+    sp.set("after_doc_id", params.afterDocId);
+  }
+  return fetchJson<Record<string, unknown>>(
+    `/api/links/previews/${encodeURIComponent(previewId)}/candidates?${sp}`
+  ).then((raw) => {
+    const itemsRaw = Array.isArray(raw.items) ? raw.items : [];
+    const items = itemsRaw.map((row) => {
+      const r = row as Record<string, unknown>;
+      return {
+        doc_id: String(r.doc_id ?? ""),
+        borrower: String(r.borrower ?? r.doc_id ?? ""),
+        section_number: String(r.section_number ?? ""),
+        heading: String(r.heading ?? ""),
+        confidence: Number(r.confidence ?? 0),
+        confidence_tier: String(r.confidence_tier ?? "low") as import("./types").ConfidenceTier,
+        factors: [],
+        verdict: String(r.user_verdict ?? r.verdict ?? "pending") as
+          | "pending"
+          | "accepted"
+          | "rejected"
+          | "deferred",
+        existing_link_id:
+          r.existing_link_id === null || r.existing_link_id === undefined
+            ? null
+            : String(r.existing_link_id),
+        priority_score: Number(r.priority_score ?? 0),
+      } satisfies import("./types").PreviewCandidate;
+    });
+    const nextCursorRaw =
+      raw.next_cursor && typeof raw.next_cursor === "object"
+        ? (raw.next_cursor as Record<string, unknown>)
+        : null;
+    return {
+      total: Number(raw.total ?? items.length),
+      items,
+      candidate_set_hash: String(raw.candidate_set_hash ?? ""),
+      next_cursor: nextCursorRaw
+        ? {
+            after_score: Number(nextCursorRaw.after_score ?? 0),
+            after_doc_id: String(nextCursorRaw.after_doc_id ?? ""),
+          }
+        : null,
+      page: Number(raw.page ?? 1),
+      page_size: Number(raw.page_size ?? params.pageSize ?? 50),
+    } satisfies import("./types").PreviewCandidatesResponse;
+  });
+}
+
+export function updateCandidateVerdicts(
+  previewId: string,
+  verdicts: { doc_id: string; section_number: string; verdict: string }[]
+) {
+  return patchJson<{ updated: number }>(
+    `/api/links/previews/${encodeURIComponent(previewId)}/candidates/verdict`,
+    { verdicts }
+  );
+}
+
+export function applyPreview(previewId: string, candidateSetHash: string) {
+  return postJson<import("./types").LinkApplyResponse>(
+    "/api/links/query/apply",
+    { preview_id: previewId, candidate_set_hash: candidateSetHash }
+  );
+}
+
+// ── Rules ──────────────────────────────────────────────────────────────────
+
+export interface LinkRulesQueryParams {
+  familyId?: string;
+  status?: string;
+  page?: number;
+  pageSize?: number;
+}
+
+function normalizeLinkRule(raw: Record<string, unknown>): import("./types").LinkRule {
+  const headingDsl = String(raw.heading_filter_dsl ?? "");
+  const filterDsl = String(raw.filter_dsl ?? "").trim();
+  const granularity = String(raw.result_granularity ?? "section");
+  return {
+    rule_id: String(raw.rule_id ?? ""),
+    family_id: String(raw.family_id ?? ""),
+    family_name: String(raw.family_name ?? raw.family_id ?? ""),
+    name: String(raw.name ?? ""),
+    filter_dsl: filterDsl || headingDsl,
+    result_granularity: granularity === "clause" ? "clause" : "section",
+    heading_filter_ast:
+      raw.heading_filter_ast && typeof raw.heading_filter_ast === "object"
+        ? (raw.heading_filter_ast as Record<string, unknown>)
+        : {},
+    heading_filter_dsl: headingDsl,
+    keyword_anchors: Array.isArray(raw.keyword_anchors)
+      ? raw.keyword_anchors.map((value) => String(value))
+      : [],
+    dna_phrases: Array.isArray(raw.dna_phrases)
+      ? raw.dna_phrases.map((value) => String(value))
+      : [],
+    status:
+      String(raw.status ?? "draft") === "published" || String(raw.status ?? "") === "archived"
+        ? (String(raw.status) as "published" | "archived")
+        : "draft",
+    version: Number(raw.version ?? 1),
+    created_at: String(raw.created_at ?? ""),
+    updated_at: raw.updated_at === null || raw.updated_at === undefined ? null : String(raw.updated_at),
+    pin_count: Number(raw.pin_count ?? 0),
+    last_eval_pass_rate:
+      raw.last_eval_pass_rate === null || raw.last_eval_pass_rate === undefined
+        ? null
+        : Number(raw.last_eval_pass_rate),
+    locked_by:
+      raw.locked_by === null || raw.locked_by === undefined
+        ? null
+        : String(raw.locked_by),
+    locked_at:
+      raw.locked_at === null || raw.locked_at === undefined
+        ? null
+        : String(raw.locked_at),
+  };
+}
+
+export function fetchLinkRules(params: LinkRulesQueryParams = {}) {
+  const sp = new URLSearchParams();
+  if (params.familyId) sp.set("family_id", params.familyId);
+  if (params.status) sp.set("status", params.status);
+  if (params.page !== undefined) sp.set("page", String(params.page));
+  if (params.pageSize !== undefined) sp.set("page_size", String(params.pageSize));
+  return fetchJson<Record<string, unknown>>(`/api/links/rules?${sp}`).then((raw) => ({
+    total: Number(raw.total ?? 0),
+    rules: Array.isArray(raw.rules)
+      ? raw.rules
+          .filter((value): value is Record<string, unknown> => !!value && typeof value === "object")
+          .map(normalizeLinkRule)
+      : [],
+  }));
+}
+
+export function fetchLinkRule(ruleId: string) {
+  return fetchJson<Record<string, unknown>>(
+    `/api/links/rules/${encodeURIComponent(ruleId)}`
+  ).then(normalizeLinkRule);
+}
+
+export function createLinkRule(data: {
+  family_id: string;
+  filter_dsl?: string;
+  result_granularity?: "section" | "clause";
+  heading_filter_dsl?: string;
+  heading_filter_ast?: Record<string, unknown>;
+  keyword_anchors?: string[];
+  dna_phrases?: string[];
+}) {
+  return postJson<{ rule_id: string; status: string }>("/api/links/rules", data);
+}
+
+export function updateLinkRule(ruleId: string, data: Record<string, unknown>) {
+  return patchJson<{ updated: boolean }>(
+    `/api/links/rules/${encodeURIComponent(ruleId)}`,
+    data
+  );
+}
+
+export function deleteLinkRule(ruleId: string) {
+  return deleteJson<{ deleted: boolean; rule_id: string }>(
+    `/api/links/rules/${encodeURIComponent(ruleId)}`
+  );
+}
+
+export function publishLinkRule(ruleId: string) {
+  return postJson<{ published: boolean }>(
+    `/api/links/rules/${encodeURIComponent(ruleId)}/publish`,
+    {}
+  );
+}
+
+export function archiveLinkRule(ruleId: string) {
+  return postJson<{ archived: boolean }>(
+    `/api/links/rules/${encodeURIComponent(ruleId)}/archive`,
+    {}
+  );
+}
+
+export function compareLinkRules(ruleIdA: string, ruleIdB: string) {
+  const sp = new URLSearchParams({ rule_id_a: ruleIdA, rule_id_b: ruleIdB });
+  return fetchJson<import("./types").RuleCompareResult>(`/api/links/rules/compare?${sp}`);
+}
+
+// ── Rule pins ──────────────────────────────────────────────────────────────
+
+export function fetchRulePins(ruleId: string) {
+  return fetchJson<Record<string, unknown>>(
+    `/api/links/rules/${encodeURIComponent(ruleId)}/pins`
+  ).then((raw) => ({
+    total: Number(raw.total ?? 0),
+    pins: Array.isArray(raw.pins)
+      ? raw.pins
+          .filter((value): value is Record<string, unknown> => !!value && typeof value === "object")
+          .map((pin) => ({
+            pin_id: String(pin.pin_id ?? ""),
+            rule_id: String(pin.rule_id ?? ruleId),
+            doc_id: String(pin.doc_id ?? ""),
+            section_number: String(pin.section_number ?? ""),
+            heading: String(pin.heading ?? ""),
+            expected_verdict:
+              String(pin.expected_verdict ?? pin.expected ?? "true_positive") === "true_negative"
+                ? "true_negative"
+                : "true_positive",
+            created_at: String(pin.created_at ?? ""),
+            note: pin.note === null || pin.note === undefined ? null : String(pin.note),
+          }))
+      : [],
+  }));
+}
+
+export function createRulePin(ruleId: string, data: {
+  doc_id: string;
+  section_number: string;
+  expected_verdict: "true_positive" | "true_negative";
+  note?: string;
+}) {
+  return postJson<{ pin_id: string }>(
+    `/api/links/rules/${encodeURIComponent(ruleId)}/pins`,
+    data
+  );
+}
+
+export function deleteRulePin(ruleId: string, pinId: string) {
+  return deleteJson<{ deleted: boolean }>(
+    `/api/links/rules/${encodeURIComponent(ruleId)}/pins/${encodeURIComponent(pinId)}`
+  );
+}
+
+export function evaluateRulePins(ruleId: string) {
+  return postJson<Record<string, unknown>>(
+    `/api/links/rules/${encodeURIComponent(ruleId)}/evaluate-pins`,
+    {}
+  ).then((raw) => {
+    const evals = Array.isArray(raw.evaluations)
+      ? raw.evaluations
+      : Array.isArray(raw.results)
+      ? raw.results
+      : [];
+    const evaluations = evals
+      .filter((value): value is Record<string, unknown> => !!value && typeof value === "object")
+      .map((entry) => ({
+        pin_id: String(entry.pin_id ?? ""),
+        rule_id: String(raw.rule_id ?? ruleId),
+        passed: Boolean(entry.passed),
+        actual_confidence: Number(entry.actual_confidence ?? 0),
+        actual_tier: (String(entry.actual_tier ?? "low") as import("./types").ConfidenceTier),
+        expected_verdict: String(
+          entry.expected_verdict ??
+            (entry.pin_type === "tn" ? "true_negative" : "true_positive")
+        ),
+        detail: String(entry.detail ?? entry.match_type ?? ""),
+      }));
+    const total = Number(raw.total_pins ?? raw.total ?? evaluations.length);
+    const passed = Number(raw.passed ?? evaluations.filter((entry) => entry.passed).length);
+    const failed = Number(raw.failed ?? Math.max(total - passed, 0));
+    return {
+      rule_id: String(raw.rule_id ?? ruleId),
+      total_pins: total,
+      passed,
+      failed,
+      pass_rate: Number(raw.pass_rate ?? (total ? passed / total : 1)),
+      evaluations,
+    } satisfies import("./types").PinEvaluationResponse;
+  });
+}
+
+// ── DSL validation ─────────────────────────────────────────────────────────
+
+export function validateDslStandalone(text: string) {
+  return postJson<import("./types").DslValidationResponse>(
+    "/api/links/rules/validate-dsl-standalone",
+    { text }
+  );
+}
+
+export function validateDslForRule(ruleId: string, text: string) {
+  return postJson<import("./types").DslValidationResponse>(
+    `/api/links/rules/${encodeURIComponent(ruleId)}/validate-dsl`,
+    { text }
+  );
+}
+
+// ── Rule evaluate-text ─────────────────────────────────────────────────────
+
+export function evaluateRuleText(data: {
+  rule_ast: Record<string, unknown>;
+  raw_text: string;
+  heading?: string;
+}) {
+  return postJson<import("./types").RuleEvaluateTextResponse>(
+    "/api/links/rules/evaluate-text",
+    data
+  );
+}
+
+export function fetchRuleAutocomplete(
+  field: "heading" | "article" | "clause" | "section" | "defined_term" | "template" | "admin_agent" | "vintage" | "market" | "doc_type" | "facility_size_mm" | "macro",
+  prefix = "",
+  limit = 8
+) {
+  const sp = new URLSearchParams({
+    field,
+    prefix,
+    limit: String(limit),
+  });
+  return fetchJson<{ field: string; suggestions: string[] }>(
+    `/api/links/rules/autocomplete?${sp}`
+  );
+}
+
+// ── Conflicts ──────────────────────────────────────────────────────────────
+
+export function fetchConflicts() {
+  return fetchJson<import("./types").ConflictsResponse>("/api/links/conflicts");
+}
+
+export function fetchConflictPolicies() {
+  return fetchJson<import("./types").ConflictPoliciesResponse>(
+    "/api/links/conflict-policies"
+  );
+}
+
+export function createConflictPolicy(data: {
+  family_a: string;
+  family_b: string;
+  policy: string;
+  reason?: string;
+}) {
+  return postJson<{ status: string }>("/api/links/conflict-policies", data);
+}
+
+// ── Macros ─────────────────────────────────────────────────────────────────
+
+export function fetchMacros() {
+  return fetchJson<import("./types").MacrosResponse>("/api/links/macros");
+}
+
+export function createMacro(data: {
+  name: string;
+  description: string;
+  family_id?: string;
+  ast_json: string;
+}) {
+  return postJson<{ status: string }>("/api/links/macros", data);
+}
+
+export function deleteMacro(name: string) {
+  return deleteJson<{ deleted: boolean }>(
+    `/api/links/macros/${encodeURIComponent(name)}`
+  );
+}
+
+// ── Template baselines ─────────────────────────────────────────────────────
+
+export interface TemplateBaselinesQueryParams {
+  familyId?: string;
+}
+
+export function fetchTemplateBaselines(params: TemplateBaselinesQueryParams = {}) {
+  const sp = new URLSearchParams();
+  if (params.familyId) sp.set("family_id", params.familyId);
+  return fetchJson<import("./types").TemplateBaselinesResponse>(
+    `/api/links/template-baselines?${sp}`
+  );
+}
+
+export function createTemplateBaseline(data: {
+  family_id: string;
+  template: string;
+  expected_sections: string[];
+  min_confidence: number;
+  description?: string;
+}) {
+  return postJson<{ status: string }>("/api/links/template-baselines", data);
+}
+
+// ── Sessions ───────────────────────────────────────────────────────────────
+
+function normalizeReviewSessionResponse(
+  raw: Record<string, unknown>,
+  fallbackFamilyId?: string,
+): import("./types").ReviewSessionResponse {
+  const source =
+    raw.session && typeof raw.session === "object"
+      ? (raw.session as Record<string, unknown>)
+      : raw;
+  return {
+    session: {
+      session_id: String(source.session_id ?? ""),
+      family_id:
+        source.family_id === null || source.family_id === undefined
+          ? fallbackFamilyId ?? null
+          : String(source.family_id),
+      started_at: String(source.started_at ?? ""),
+      last_cursor:
+        source.last_cursor === null || source.last_cursor === undefined
+          ? null
+          : String(source.last_cursor),
+      total_reviewed: Number(source.total_reviewed ?? 0),
+      total_unlinked: Number(source.total_unlinked ?? 0),
+      total_bookmarked: Number(source.total_bookmarked ?? 0),
+      total_links: Number(source.total_links ?? 0),
+    },
+  };
+}
+
+export function createSession(familyId?: string) {
+  return postJson<Record<string, unknown>>(
+    "/api/links/sessions",
+    { family_id: familyId }
+  ).then((raw) => normalizeReviewSessionResponse(raw, familyId));
+}
+
+export function fetchSession(sessionId: string) {
+  return fetchJson<Record<string, unknown>>(
+    `/api/links/sessions/${encodeURIComponent(sessionId)}`
+  ).then((raw) => normalizeReviewSessionResponse(raw));
+}
+
+export function updateSessionCursor(sessionId: string, cursor: string) {
+  return patchJson<{ updated: boolean }>(
+    `/api/links/sessions/${encodeURIComponent(sessionId)}/cursor`,
+    { cursor, cursor_link_id: cursor }
+  );
+}
+
+export function addReviewMark(sessionId: string, data: {
+  link_id: string;
+  action: string;
+  reason?: string;
+}) {
+  const actionToMark: Record<string, string> = {
+    reviewed: "viewed",
+    bookmarked: "bookmarked",
+    unlinked: "unlinked",
+    relinked: "relinked",
+    pinned_tp: "flagged",
+    pinned_tn: "flagged",
+    deferred: "deferred",
+    reassigned: "reassigned",
+    noted: "noted",
+  };
+  return postJson<{ mark_id: string }>(
+    `/api/links/sessions/${encodeURIComponent(sessionId)}/marks`,
+    {
+      ...data,
+      mark_type: actionToMark[data.action] ?? "viewed",
+      note: data.reason,
+    }
+  );
+}
+
+export function fetchReviewMarks(sessionId: string) {
+  return fetchJson<import("./types").ReviewMarksResponse>(
+    `/api/links/sessions/${encodeURIComponent(sessionId)}/marks`
+  );
+}
+
+export function claimSessionBatch(sessionId: string, batchSize = 50) {
+  return postJson<{ claimed: string[]; count: number }>(
+    `/api/links/sessions/${encodeURIComponent(sessionId)}/claim-batch`,
+    { batch_size: batchSize },
+  );
+}
+
+// ── Undo / Redo ────────────────────────────────────────────────────────────
+
+export function undoLastAction() {
+  return postJson<import("./types").UndoResponse>("/api/links/undo", {});
+}
+
+export function redoLastAction() {
+  return postJson<import("./types").RedoResponse>("/api/links/redo", {});
+}
+
+// ── Runs ───────────────────────────────────────────────────────────────────
+
+export function fetchLinkRuns() {
+  return fetchJson<import("./types").LinkRunListResponse>("/api/links/runs");
+}
+
+// ── Link Jobs ──────────────────────────────────────────────────────────────
+
+export function fetchLinkJobs() {
+  return fetchJson<import("./types").LinkJobListResponse>("/api/links/jobs");
+}
+
+export function fetchLinkJobStatus(jobId: string) {
+  return fetchJson<import("./types").LinkJob>(
+    `/api/jobs/${encodeURIComponent(jobId)}/status`
+  );
+}
+
+export function cancelLinkJob(jobId: string) {
+  return postJson<{ cancelled: boolean }>(
+    `/api/jobs/${encodeURIComponent(jobId)}/cancel`,
+    {}
+  );
+}
+
+export function submitLinkJob(data: { job_type: string; params: Record<string, unknown> }) {
+  return postJson<import("./types").LinkJobSubmitResponse>("/api/jobs/submit", data);
+}
+
+// ── Export ──────────────────────────────────────────────────────────────────
+
+export function exportLinks(format: string, familyId?: string) {
+  return postJson<import("./types").ExportJobResponse>("/api/links/export", {
+    format,
+    family_id: familyId,
+  });
+}
+
+// ── Drift & Analytics ──────────────────────────────────────────────────────
+
+export function fetchDriftAlerts() {
+  return fetchJson<import("./types").DriftAlertsResponse>("/api/links/drift/alerts");
+}
+
+export function fetchDriftChecks() {
+  return fetchJson<import("./types").DriftChecksResponse>("/api/links/drift/checks");
+}
+
+export function fetchAnalyticsDashboard() {
+  return fetchJson<import("./types").AnalyticsDashboard>("/api/links/analytics");
+}
+
+// ── Calibrations ───────────────────────────────────────────────────────────
+
+export function fetchCalibrations() {
+  return fetchJson<import("./types").CalibrationsResponse>("/api/links/calibrations");
+}
+
+// ── Crossref peek ──────────────────────────────────────────────────────────
+
+export function fetchCrossrefPeek(sectionRef: string) {
+  const sp = new URLSearchParams();
+  let section = sectionRef;
+  if (sectionRef.includes(":")) {
+    const [docId, ...rest] = sectionRef.split(":");
+    if (docId && rest.length > 0) {
+      sp.set("doc_id", docId);
+      section = rest.join(":");
+    }
+  }
+  sp.set("section_ref", section);
+  return fetchJson<import("./types").CrossrefPeekResponse>(
+    `/api/links/crossref-peek?${sp}`
+  );
+}
+
+// ── Counterfactual ─────────────────────────────────────────────────────────
+
+export function fetchCounterfactual(data: {
+  family_id: string;
+  heading_filter_ast: Record<string, unknown>;
+  muted_node_path?: string;
+}) {
+  return postJson<import("./types").CounterfactualResponse>(
+    "/api/links/coverage/counterfactual",
+    data
+  );
+}
+
+// ── Child-node linking ─────────────────────────────────────────────────────
+
+export function fetchNodeLinks(linkId: string) {
+  return fetchJson<Record<string, unknown>>(
+    `/api/links/${encodeURIComponent(linkId)}/node-links`
+  ).then((raw) => {
+    const rows = Array.isArray(raw.node_links)
+      ? raw.node_links
+      : Array.isArray(raw.nodes)
+      ? raw.nodes
+      : [];
+    const node_links = rows
+      .filter((value): value is Record<string, unknown> => !!value && typeof value === "object")
+      .map((row) => ({
+        node_link_id: String(row.node_link_id ?? ""),
+        link_id: String(row.link_id ?? row.parent_link_id ?? ""),
+        node_id: String(row.node_id ?? row.concept_id ?? ""),
+        node_name: String(row.node_name ?? row.node_id ?? row.concept_id ?? ""),
+        clause_path: String(row.clause_path ?? row.clause_id ?? ""),
+        confidence: Number(row.confidence ?? 0),
+        confidence_tier: (String(row.confidence_tier ?? "low") as import("./types").ConfidenceTier),
+        status: (String(row.status ?? "active") as import("./types").LinkStatus),
+        created_at: String(row.created_at ?? ""),
+      }));
+    return {
+      total: Number(raw.total ?? node_links.length),
+      node_links,
+    } satisfies import("./types").NodeLinksResponse;
+  });
+}
+
+export function fetchNodeLinkRules(familyId?: string) {
+  const sp = new URLSearchParams();
+  if (familyId) sp.set("family_id", familyId);
+  return fetchJson<import("./types").NodeLinkRulesResponse>(`/api/links/node-rules?${sp}`);
+}
+
+export function createChildLinkPreview(linkId: string, familyId?: string) {
+  return postJson<Record<string, unknown>>(
+    `/api/links/${encodeURIComponent(linkId)}/child-link-preview`,
+    { family_id: familyId, parent_link_id: linkId }
+  ).then((raw) => {
+    const candidates = Array.isArray(raw.candidates)
+      ? raw.candidates
+          .filter((value): value is Record<string, unknown> => !!value && typeof value === "object")
+          .map((entry) => ({
+            clause_path: String(entry.clause_path ?? entry.clause_id ?? ""),
+            clause_label: String(entry.clause_label ?? entry.clause_text ?? ""),
+            node_id: String(entry.node_id ?? ""),
+            node_name: String(entry.node_name ?? entry.node_id ?? ""),
+            confidence: Number(entry.confidence ?? 0),
+            confidence_tier: (String(entry.confidence_tier ?? "low") as import("./types").ConfidenceTier),
+            factors: Array.isArray(entry.factors)
+              ? (entry.factors as import("./types").WhyMatchedFactor[])
+              : [],
+          }))
+      : [];
+    return {
+      preview_id: String(raw.preview_id ?? ""),
+      link_id: String(raw.link_id ?? raw.parent_link_id ?? linkId),
+      candidate_count: Number(raw.candidate_count ?? candidates.length),
+      candidates,
+    } satisfies import("./types").ChildLinkPreviewResponse;
+  });
+}
+
+export function applyChildLinks(
+  linkId: string,
+  previewId: string,
+  verdicts?: { clause_id: string; doc_id: string; verdict: "accepted" | "rejected" }[],
+) {
+  return postJson<{ job_id: string }>(
+    `/api/links/${encodeURIComponent(linkId)}/child-links/apply`,
+    { preview_id: previewId, verdicts: verdicts ?? [] }
+  );
+}
+
+export function unlinkNodeLink(nodeLinkId: string, reason = "user_action") {
+  return patchJson<{ unlinked: boolean }>(
+    `/api/links/nodes/${encodeURIComponent(nodeLinkId)}/unlink`,
+    { reason },
+  );
+}
+
+// ── Embeddings ─────────────────────────────────────────────────────────────
+
+export function fetchEmbeddingsStats() {
+  return fetchJson<import("./types").EmbeddingsStatsResponse>("/api/links/embeddings/stats");
+}
+
+export function computeEmbeddings(familyId?: string) {
+  return postJson<{ job_id: string }>("/api/links/embeddings/compute", {
+    family_id: familyId,
+  });
+}
+
+export function fetchFamilyCentroids() {
+  return fetchJson<{ centroids: import("./types").FamilyCentroid[] }>(
+    "/api/links/embeddings/centroids"
+  );
+}
+
+// ── Starter kits ───────────────────────────────────────────────────────────
+
+export function fetchStarterKits() {
+  return fetchJson<import("./types").StarterKitsResponse>("/api/links/starter-kits");
+}
+
+export function fetchStarterKit(familyId: string) {
+  return fetchJson<import("./types").StarterKit>(
+    `/api/links/starter-kits/${encodeURIComponent(familyId)}`
+  );
+}
+
+// ── Compound covenants ─────────────────────────────────────────────────────
+
+export function fetchCompoundCovenants() {
+  return fetchJson<import("./types").CompoundCovenantsResponse>(
+    "/api/links/compound-covenants"
+  );
+}
+
+export function resolveCompoundCovenant(docId: string, sectionNumber: string, resolution: string) {
+  return postJson<{ resolved: boolean }>("/api/links/compound-covenants/resolve", {
+    doc_id: docId,
+    section_number: sectionNumber,
+    resolution,
+  });
+}
+
+// ── Template redline (baseline text for diff) ──────────────────────────────
+
+export function fetchTemplateBaselineText(familyId: string, template: string) {
+  const sp = new URLSearchParams({ family_id: familyId, template });
+  return fetchJson<{ text: string | null; baseline_id: string | null }>(
+    `/api/links/template-baselines/text?${sp}`
+  );
+}
+
+// ── Phase 4: Coverage gaps ──────────────────────────────────────────────────
+
+export function fetchCoverageGaps(familyId?: string) {
+  const sp = new URLSearchParams();
+  if (familyId) sp.set("family_id", familyId);
+  return fetchJson<import("./types").CoverageGapsResponse>(
+    `/api/links/coverage?${sp}`
+  );
+}
+
+export function fetchWhyNotCoverage(
+  docId: string,
+  ruleId: string,
+  sectionNumber?: string
+) {
+  return postJson<import("./types").WhyNotMatched>(
+    "/api/links/coverage/why-not",
+    { doc_id: docId, rule_id: ruleId, section_number: sectionNumber }
+  );
+}
+
+// ── Phase 4: Term expansion ─────────────────────────────────────────────────
+
+export function fetchExpandTerm(term: string) {
+  return postJson<{ expansions: string[] }>(
+    "/api/links/rules/expand-term",
+    { term }
+  );
+}
+
+// ── Phase 4: Query count ────────────────────────────────────────────────────
+
+export function fetchQueryCount(
+  familyId?: string,
+  headingAst?: Record<string, unknown>,
+  metaFilters?: Record<string, unknown>,
+  signal?: AbortSignal,
+  filterDsl?: string,
+) {
+  const sp = new URLSearchParams();
+  if (familyId) sp.set("family_id", familyId);
+  if (filterDsl) {
+    sp.set("filter_dsl", filterDsl);
+  } else if (headingAst) {
+    sp.set("heading_filter_ast", JSON.stringify(headingAst));
+  }
+  if (metaFilters && Object.keys(metaFilters).length > 0) {
+    sp.set("meta_filters", JSON.stringify(metaFilters));
+  }
+  return fetchJson<{ count: number; query_cost: number }>(
+    `/api/links/query/count?${sp}`,
+    { signal }
+  );
+}
+
+// ── Phase 4: Semantic candidates ────────────────────────────────────────────
+
+export function fetchSemanticCandidates(familyId: string) {
+  const sp = new URLSearchParams({ family_id: familyId });
+  return fetchJson<{ candidates: import("./types").SemanticCandidate[] }>(
+    `/api/links/embeddings/similar?${sp}`
+  );
+}
+
+// ── Phase 4: Canary apply ───────────────────────────────────────────────────
+
+export function fetchCanaryApply(previewId: string, limit = 10) {
+  return postJson<import("./types").LinkApplyResponse>(
+    "/api/links/query/canary",
+    { preview_id: previewId, canary_n: limit }
+  );
+}
+
+// ── Phase 4: Preview from AST ───────────────────────────────────────────────
+
+export function createPreviewFromAst(
+  familyId: string,
+  ast: Record<string, unknown>,
+  metaFilters?: Record<string, unknown>,
+  textFields?: Record<string, unknown>,
+  filterDsl?: string,
+  resultGranularity?: "section" | "clause",
+) {
+  return postJson<import("./types").LinkPreviewResponse>(
+    "/api/links/query/preview",
+    {
+      family_id: familyId,
+      heading_filter_ast: ast,
+      filter_dsl: filterDsl,
+      result_granularity: resultGranularity ?? "section",
+      text_fields: textFields ?? {},
+      meta_filters: metaFilters ?? {},
+    }
+  );
+}
+
+// ── Phase 5: Acknowledge drift alert ────────────────────────────────────────
+
+export function acknowledgeDriftAlert(alertId: string) {
+  return postJson<{ acknowledged: boolean }>(
+    `/api/links/drift/alerts/${encodeURIComponent(alertId)}/acknowledge`,
+    {}
+  );
+}
+
+// ── Phase 5: Import labels ──────────────────────────────────────────────────
+
+export function importLabels(file: File) {
+  const formData = new FormData();
+  formData.append("file", file);
+  return fetch(`${API_BASE}/api/links/import`, {
+    method: "POST",
+    body: formData,
+  }).then((r) => {
+    if (!r.ok) throw new Error(`Import failed: ${r.status}`);
+    return r.json() as Promise<{ job_id: string; rows_parsed: number }>;
+  });
+}
+
+// ── Phase 5: Clone rule ─────────────────────────────────────────────────────
+
+export function cloneLinkRule(ruleId: string) {
+  return postJson<import("./types").LinkRule>(
+    `/api/links/rules/${encodeURIComponent(ruleId)}/clone`,
+    {}
+  );
+}
+
+// ── Phase 5: Promote rule ───────────────────────────────────────────────────
+
+export function promoteRule(ruleIdFrom: string, ruleIdTo: string) {
+  return postJson<{ promoted: boolean }>(
+    `/api/links/rules/promote`,
+    { rule_id_from: ruleIdFrom, rule_id_to: ruleIdTo }
+  );
+}
+
+// ── Phase 5: Lock / unlock rule ─────────────────────────────────────────────
+
+export function lockRule(ruleId: string) {
+  return postJson<{ locked: boolean }>(
+    `/api/links/rules/${encodeURIComponent(ruleId)}/lock`,
+    {}
+  );
+}
+
+export function unlockRule(ruleId: string) {
+  return postJson<{ unlocked: boolean }>(
+    `/api/links/rules/${encodeURIComponent(ruleId)}/unlock`,
+    {}
+  );
+}
+
+// ── Phase 5: Promotion gate check ───────────────────────────────────────────
+
+export function checkPromotionGates(ruleId: string) {
+  return fetchJson<{
+    rule_id: string;
+    gates: { gate: string; passed: boolean; detail: string }[];
+    all_passed: boolean;
+  }>(`/api/links/rules/${encodeURIComponent(ruleId)}/promotion-gates`);
+}
+
+// ── Phase 5: Vintage heatmap data ───────────────────────────────────────────
+
+export function fetchVintageHeatmap(familyId?: string) {
+  const params = new URLSearchParams();
+  if (familyId) params.set("family_id", familyId);
+  return fetchJson<{
+    cells: { vintage_year: number; template_family: string; coverage_pct: number; link_count: number }[];
+  }>(`/api/links/analytics/vintage-heatmap?${params.toString()}`);
 }

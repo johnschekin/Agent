@@ -69,7 +69,7 @@ export function OntologyNodeDetail({
   return (
     <div
       className={cn(
-        "fixed top-0 right-0 h-full bg-surface-secondary border-l border-border",
+        "fixed top-0 right-0 h-full bg-surface-2 border-l border-border",
         "w-[480px] max-w-[calc(100vw-260px)]",
         "transform transition-transform duration-200 ease-in-out z-30",
         "flex flex-col overflow-hidden",
@@ -77,7 +77,7 @@ export function OntologyNodeDetail({
       )}
     >
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-surface-tertiary flex-shrink-0">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-surface-3 flex-shrink-0">
         <h3 className="text-sm font-medium text-text-primary truncate pr-4">
           {data?.name || nodeId || "Node Detail"}
         </h3>
@@ -171,7 +171,7 @@ export function OntologyNodeDetail({
                 )}
               </div>
               <textarea
-                className="w-full bg-surface-tertiary border border-border rounded px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-1 focus:ring-accent-blue resize-y min-h-[72px]"
+                className="w-full bg-surface-3 border border-border rounded px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-1 focus:ring-accent-blue resize-y min-h-[72px]"
                 placeholder="Add notes about this node..."
                 value={localNotes}
                 onChange={(e) => { setLocalNotes(e.target.value); setSaveStatus("idle"); }}
@@ -186,7 +186,7 @@ export function OntologyNodeDetail({
                     "px-3 py-1 text-xs font-medium rounded-sm transition-colors",
                     isDirty && !saveNotes.isPending
                       ? "bg-accent-blue text-white hover:bg-accent-blue/80"
-                      : "bg-surface-tertiary text-text-muted cursor-not-allowed"
+                      : "bg-surface-3 text-text-muted cursor-not-allowed"
                   )}
                   data-testid="notes-save-btn"
                 >
@@ -201,7 +201,7 @@ export function OntologyNodeDetail({
                 <h4 className="text-xs font-medium text-text-muted uppercase tracking-wide mb-2">
                   Market Benchmarks
                 </h4>
-                <div className="bg-surface-tertiary rounded p-3 space-y-1.5">
+                <div className="bg-surface-3 rounded p-3 space-y-1.5">
                   {Object.entries(data.market_benchmarks).map(([key, val]) => (
                     <div key={key} className="flex justify-between text-xs">
                       <span className="text-text-muted">{key.replace(/_/g, " ")}</span>
@@ -230,7 +230,7 @@ export function OntologyNodeDetail({
                           ? "bg-accent-red/10 text-accent-red"
                           : rf.severity === "medium"
                             ? "bg-accent-orange/10 text-accent-orange"
-                            : "bg-surface-tertiary text-text-secondary"
+                            : "bg-surface-3 text-text-secondary"
                       )}
                     >
                       {rf.text}
@@ -246,7 +246,7 @@ export function OntologyNodeDetail({
                 <h4 className="text-xs font-medium text-text-muted uppercase tracking-wide mb-2">
                   Negotiation Spectrum
                 </h4>
-                <div className="bg-surface-tertiary rounded p-3 space-y-1.5">
+                <div className="bg-surface-3 rounded p-3 space-y-1.5">
                   {Object.entries(data.negotiation_spectrum).map(([key, val]) => (
                     <div key={key} className="flex justify-between gap-3 text-xs">
                       <span className="text-text-muted capitalize flex-shrink-0">
@@ -294,7 +294,7 @@ export function OntologyNodeDetail({
                     <span className="text-[10px] text-text-muted uppercase">DLS Refs:</span>
                     <div className="flex flex-wrap gap-1 mt-1">
                       {data.dls_ref.map((ref) => (
-                        <span key={ref} className="text-xs px-1.5 py-0.5 bg-surface-tertiary rounded font-mono">
+                        <span key={ref} className="text-xs px-1.5 py-0.5 bg-surface-3 rounded font-mono">
                           {ref}
                         </span>
                       ))}
@@ -306,7 +306,7 @@ export function OntologyNodeDetail({
                     <span className="text-[10px] text-text-muted uppercase">R18 Concepts:</span>
                     <div className="flex flex-wrap gap-1 mt-1">
                       {data.r18_concept_ids.map((ref) => (
-                        <span key={ref} className="text-xs px-1.5 py-0.5 bg-surface-tertiary rounded font-mono">
+                        <span key={ref} className="text-xs px-1.5 py-0.5 bg-surface-3 rounded font-mono">
                           {ref}
                         </span>
                       ))}
@@ -326,7 +326,7 @@ export function OntologyNodeDetail({
                   {data.children_ids.map((childId) => (
                     <button
                       key={childId}
-                      className="text-xs px-1.5 py-0.5 bg-surface-tertiary rounded font-mono text-accent-blue hover:underline hover:bg-accent-blue/10 transition-colors"
+                      className="text-xs px-1.5 py-0.5 bg-surface-3 rounded font-mono text-accent-blue hover:underline hover:bg-accent-blue/10 transition-colors"
                       onClick={() => onNodeClick(childId)}
                     >
                       {childId.split(".").pop()}

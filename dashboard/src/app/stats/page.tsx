@@ -28,7 +28,7 @@ function GroupStatsTable({
   return (
     <div className="overflow-auto max-h-[400px]">
       <table className="w-full text-sm">
-        <thead className="sticky top-0 bg-surface-tertiary">
+        <thead className="sticky top-0 bg-surface-3">
           <tr className="text-left text-xs text-text-muted uppercase">
             <th className="px-3 py-2">Group</th>
             <th className="px-3 py-2 text-right">Count</th>
@@ -45,7 +45,7 @@ function GroupStatsTable({
           {groups.map((g, idx) => (
             <tr
               key={g.group || `__empty_${idx}`}
-              className="border-t border-border hover:bg-surface-tertiary/50"
+              className="border-t border-border hover:bg-surface-3/50"
             >
               <td
                 className="px-3 py-2 text-text-primary font-medium truncate max-w-[200px]"
@@ -94,7 +94,7 @@ function OutlierTable({
   return (
     <div className="overflow-auto max-h-[300px]">
       <table className="w-full text-sm">
-        <thead className="sticky top-0 bg-surface-tertiary">
+        <thead className="sticky top-0 bg-surface-3">
           <tr className="text-left text-xs text-text-muted uppercase">
             <th className="px-3 py-2">Doc ID</th>
             <th className="px-3 py-2">Borrower</th>
@@ -107,7 +107,7 @@ function OutlierTable({
           {outliers.map((o, idx) => (
             <tr
               key={`${o.doc_id}_${o.direction}_${idx}`}
-              className="border-t border-border hover:bg-surface-tertiary/50"
+              className="border-t border-border hover:bg-surface-3/50"
             >
               <td className="px-3 py-2 font-mono text-xs text-text-secondary truncate max-w-[160px]">
                 {o.doc_id}
@@ -158,7 +158,7 @@ export default function StatsPage() {
   });
 
   const selectClass =
-    "bg-surface-tertiary border border-border rounded-sm px-2 py-1.5 text-sm text-text-primary focus:outline-none focus:ring-1 focus:ring-accent-blue";
+    "bg-surface-3 border border-border rounded-sm px-2 py-1.5 text-sm text-text-primary focus:outline-none focus:ring-1 focus:ring-accent-blue";
 
   const data = stats.data;
   const overall = data?.overall;

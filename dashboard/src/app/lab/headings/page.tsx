@@ -24,7 +24,7 @@ function HeadingRow({
   onSearch: (heading: string) => void;
 }) {
   return (
-    <tr className="border-t border-border hover:bg-surface-tertiary/50 transition-colors">
+    <tr className="border-t border-border hover:bg-surface-3/50 transition-colors">
       <td className="px-3 py-2">
         <button
           className="text-accent-blue hover:underline text-xs text-left"
@@ -224,7 +224,7 @@ export default function HeadingsPage() {
             ) : (
               <div className="overflow-auto max-h-[500px]">
                 <table className="w-full text-sm" aria-label="Discovered headings">
-                  <thead className="sticky top-0 bg-surface-tertiary z-10">
+                  <thead className="sticky top-0 bg-surface-3 z-10">
                     <tr className="text-left text-xs text-text-muted uppercase">
                       <th className="px-3 py-2">Heading</th>
                       <th className="px-3 py-2 text-right">Frequency</th>

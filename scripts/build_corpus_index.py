@@ -115,6 +115,18 @@ CREATE TABLE documents (
     section_fallback_used BOOLEAN DEFAULT false
 );
 
+CREATE TABLE articles (
+    doc_id VARCHAR NOT NULL,
+    article_num INTEGER NOT NULL,
+    label VARCHAR,
+    title VARCHAR,
+    concept VARCHAR,
+    char_start INTEGER,
+    char_end INTEGER,
+    is_synthetic BOOLEAN DEFAULT false,
+    PRIMARY KEY (doc_id, article_num)
+);
+
 CREATE TABLE sections (
     doc_id VARCHAR NOT NULL,
     section_number VARCHAR NOT NULL,
@@ -582,6 +594,15 @@ def _execute_inserts(conn: Any, table_data: dict[str, list[tuple[Any, ...]]]) ->
                        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
             docs,
         )
+    articles = table_data.get("articles", [])
+    if articles:
+        conn.executemany(
+            """INSERT INTO articles
+               (doc_id, article_num, label, title, concept,
+                char_start, char_end, is_synthetic)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+            articles,
+        )
     sections = table_data.get("sections", [])
     if sections:
         conn.executemany(
@@ -656,6 +677,7 @@ def _prepare_batch_tuples(
     clause deduplication, and clause count recomputation.
     """
     all_docs: list[dict[str, Any]] = []
+    all_articles: list[dict[str, Any]] = []
     all_sections: list[dict[str, Any]] = []
     all_clauses: list[dict[str, Any]] = []
     all_definitions: list[dict[str, Any]] = []
@@ -681,6 +703,8 @@ def _prepare_batch_tuples(
                 )
             doc_id = new_doc_id
             doc["doc_id"] = doc_id
+            for rec in result.get("articles", []):
+                rec["doc_id"] = doc_id
             for rec in result.get("sections", []):
                 rec["doc_id"] = doc_id
             for rec in result.get("clauses", []):
@@ -702,6 +726,7 @@ def _prepare_batch_tuples(
                 doc["template_family"] = family
 
         all_docs.append(doc)
+        all_articles.extend(result.get("articles", []))
         all_sections.extend(result.get("sections", []))
         all_clauses.extend(result.get("clauses", []))
         all_definitions.extend(result.get("definitions", []))
@@ -765,6 +790,13 @@ def _prepare_batch_tuples(
         )
         for d in all_docs
     ]
+    article_tuples = [
+        (
+            a["doc_id"], a["article_num"], a["label"], a["title"],
+            a["concept"], a["char_start"], a["char_end"], a["is_synthetic"],
+        )
+        for a in all_articles
+    ]
     section_tuples = [
         (
             s["doc_id"], s["section_number"], s["heading"],
@@ -822,6 +854,7 @@ def _prepare_batch_tuples(
 
     return {
         "documents": doc_tuples,
+        "articles": article_tuples,
         "sections": section_tuples,
         "clauses": clause_tuples,
         "definitions": def_tuples,
@@ -1007,7 +1040,7 @@ def _diff_corpus(
 
 
 def _delete_doc_ids(conn: Any, doc_ids: list[str]) -> None:
-    """Delete rows for given doc_ids from all 7 data tables in a transaction."""
+    """Delete rows for given doc_ids from all data tables in a transaction."""
     if not doc_ids:
         return
     conn.execute("BEGIN")
@@ -1015,7 +1048,7 @@ def _delete_doc_ids(conn: Any, doc_ids: list[str]) -> None:
         # Delete in reverse dependency order
         tables = [
             "clause_features", "section_features", "section_text",
-            "clauses", "definitions", "sections", "documents",
+            "clauses", "definitions", "sections", "articles", "documents",
         ]
         for table in tables:
             placeholders = ", ".join("?" for _ in doc_ids)
@@ -1034,6 +1067,7 @@ def _delete_doc_ids(conn: Any, doc_ids: list[str]) -> None:
 # ---------------------------------------------------------------------------
 
 _TABLE_DEPS: dict[str, set[str]] = {
+    "articles": set(),
     "sections": {"section_text", "section_features", "clauses", "clause_features"},
     "clauses": {"clause_features"},
     "definitions": set(),
@@ -1043,7 +1077,7 @@ _TABLE_DEPS: dict[str, set[str]] = {
 }
 
 _ALL_DATA_TABLES = frozenset({
-    "documents", "sections", "clauses", "definitions",
+    "documents", "articles", "sections", "clauses", "definitions",
     "section_text", "section_features", "clause_features",
 })
 
@@ -1068,7 +1102,7 @@ def _delete_table_rows_for_doc(conn: Any, doc_id: str, tables: set[str]) -> None
     # Delete in reverse dependency order
     ordered = [
         "clause_features", "section_features", "section_text",
-        "clauses", "definitions", "sections",
+        "clauses", "definitions", "sections", "articles",
     ]
     for table in ordered:
         if table in tables:
@@ -1094,20 +1128,37 @@ def _reprocess_tables_for_doc(
 
         result: dict[str, list[dict[str, Any]]] = {"doc_id_str": [{"doc_id": doc_id}]}
 
-        need_sections = (
-            "sections" in tables
+        need_outline = (
+            "articles" in tables
+            or "sections" in tables
             or "section_text" in tables
             or "section_features" in tables
         )
         need_clauses = "clauses" in tables or "clause_features" in tables
 
         all_sections_list: list[OutlineSection] = []
-        if need_sections or need_clauses:
+        outline: DocOutline | None = None
+        if need_outline or need_clauses:
             outline = DocOutline.from_text(normalized_text, filename=file_path.name)
             all_sections_list = outline.sections
             if not all_sections_list:
                 from agent.section_parser import find_sections
                 all_sections_list = find_sections(normalized_text)  # type: ignore[assignment]
+
+        if "articles" in tables and outline is not None:
+            result["articles"] = [
+                {
+                    "doc_id": doc_id,
+                    "article_num": a.num,
+                    "label": a.label,
+                    "title": a.title,
+                    "concept": a.concept,
+                    "char_start": a.char_start,
+                    "char_end": a.char_end,
+                    "is_synthetic": a.is_synthetic,
+                }
+                for a in outline.articles
+            ]
 
         if "sections" in tables:
             result["sections"] = [
@@ -1465,6 +1516,7 @@ def main() -> None:
                         did = res["doc_id_str"][0]["doc_id"]  # type: ignore[index]
                         for table in sorted(rebuild_tables):  # type: ignore[arg-type]
                             key_map = {
+                                "articles": "articles",
                                 "sections": "sections",
                                 "section_text": "section_texts",
                                 "section_features": "section_features",

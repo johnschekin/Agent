@@ -64,7 +64,7 @@ export default function ReviewOpsHomePage() {
               <Link
                 key={view.href}
                 href={view.href}
-                className="rounded-md border border-border bg-surface-secondary p-4 transition-colors hover:bg-surface-tertiary"
+                className="rounded-md border border-border bg-surface-2 p-4 transition-colors hover:bg-surface-3"
               >
                 <div className="text-sm font-semibold text-text-primary">{view.title}</div>
                 <div className="mt-1 text-xs text-text-muted">{view.description}</div>

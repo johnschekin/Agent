@@ -1,0 +1,1460 @@
+[
+  {
+    "id": "governance.amendments_voting.required_lenders",
+    "name": "Required Lenders Definition",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Required Lenders Definition",
+        "Required Lenders"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.sacred_rights",
+    "name": "Sacred Rights",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Sacred Rights",
+        "Required Lender",
+        "Admin Agent"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.pro_rata_sharing",
+    "name": "Pro Rata Sharing / Waterfall",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Pro Rata Sharing / Waterfall"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.deemed_consent",
+    "name": "Deemed Consent",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Deemed Consent",
+        "snooze-you-lose"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.yank_a_bank",
+    "name": "Yank-a-Bank",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Yank-a-Bank"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.serta_blockers",
+    "name": "Anti-Serta / Anti-Priming Provisions",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Anti-Serta / Anti-Priming Provisions",
+        "Serta Simmons"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.net_short",
+    "name": "Net Short Lender Restrictions",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Net Short Lender Restrictions"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.omp_voting",
+    "name": "Open Market Purchase Voting",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Open Market Purchase Voting"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.supermajority",
+    "name": "Supermajority Provisions",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Supermajority Provisions",
+        "Required Lender"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.amendment_types",
+    "name": "Amendment Types",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Amendment Types"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.separate_class_voting",
+    "name": "Separate Class Voting",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Separate Class Voting"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.statute_limitations",
+    "name": "Default Statute of Limitations",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Default Statute of Limitations"
+      ]
+    }
+  },
+  {
+    "id": "governance.amendments_voting.dilution_of_rights",
+    "name": "Dilution of Lender Rights Audit",
+    "family_id": "governance.amendments_voting",
+    "concept_area": "amendments_voting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Amendments",
+        "Waivers",
+        "Modifications",
+        "Consents"
+      ],
+      "keyword_anchors": [
+        "amendment",
+        "waiver",
+        "consent",
+        "Required Lenders",
+        "Super Majority",
+        "unanimous"
+      ],
+      "concept_specific_keywords": [
+        "Dilution of Lender Rights Audit",
+        "Key Credit Terms Category",
+        "Lender Rights"
+      ]
+    }
+  },
+  {
+    "id": "governance.assignments.assignment_mechanics",
+    "name": "Assignment Mechanics",
+    "family_id": "governance.assignments",
+    "concept_area": "assignments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Assignments",
+        "Participations",
+        "Transfers"
+      ],
+      "keyword_anchors": [
+        "assignment",
+        "participation",
+        "transfer",
+        "Register",
+        "Eligible Assignee",
+        "Disqualified Institution"
+      ],
+      "concept_specific_keywords": [
+        "Assignment Mechanics"
+      ]
+    }
+  },
+  {
+    "id": "governance.assignments.dq_list",
+    "name": "Disqualified Lenders List",
+    "family_id": "governance.assignments",
+    "concept_area": "assignments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Assignments",
+        "Participations",
+        "Transfers"
+      ],
+      "keyword_anchors": [
+        "assignment",
+        "participation",
+        "transfer",
+        "Register",
+        "Eligible Assignee",
+        "Disqualified Institution"
+      ],
+      "concept_specific_keywords": [
+        "Disqualified Lenders List"
+      ]
+    }
+  },
+  {
+    "id": "governance.assignments.affiliated_lender",
+    "name": "Affiliated Lender Restrictions",
+    "family_id": "governance.assignments",
+    "concept_area": "assignments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Assignments",
+        "Participations",
+        "Transfers"
+      ],
+      "keyword_anchors": [
+        "assignment",
+        "participation",
+        "transfer",
+        "Register",
+        "Eligible Assignee",
+        "Disqualified Institution"
+      ],
+      "concept_specific_keywords": [
+        "Affiliated Lender Restrictions"
+      ]
+    }
+  },
+  {
+    "id": "governance.assignments.borrower_buybacks",
+    "name": "Borrower Buybacks",
+    "family_id": "governance.assignments",
+    "concept_area": "assignments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Assignments",
+        "Participations",
+        "Transfers"
+      ],
+      "keyword_anchors": [
+        "assignment",
+        "participation",
+        "transfer",
+        "Register",
+        "Eligible Assignee",
+        "Disqualified Institution"
+      ],
+      "concept_specific_keywords": [
+        "Borrower Buybacks"
+      ]
+    }
+  },
+  {
+    "id": "governance.assignments.participations",
+    "name": "Participation Mechanics",
+    "family_id": "governance.assignments",
+    "concept_area": "assignments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Assignments",
+        "Participations",
+        "Transfers"
+      ],
+      "keyword_anchors": [
+        "assignment",
+        "participation",
+        "transfer",
+        "Register",
+        "Eligible Assignee",
+        "Disqualified Institution"
+      ],
+      "concept_specific_keywords": [
+        "Participation Mechanics"
+      ]
+    }
+  },
+  {
+    "id": "governance.assignments.sponsor_debt",
+    "name": "Sponsor Debt Limitation",
+    "family_id": "governance.assignments",
+    "concept_area": "assignments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Assignments",
+        "Participations",
+        "Transfers"
+      ],
+      "keyword_anchors": [
+        "assignment",
+        "participation",
+        "transfer",
+        "Register",
+        "Eligible Assignee",
+        "Disqualified Institution"
+      ],
+      "concept_specific_keywords": [
+        "Sponsor Debt Limitation"
+      ]
+    }
+  },
+  {
+    "id": "governance.assignments.assignment_restrictions",
+    "name": "Assignment Amendment Restrictions",
+    "family_id": "governance.assignments",
+    "concept_area": "assignments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Assignments",
+        "Participations",
+        "Transfers"
+      ],
+      "keyword_anchors": [
+        "assignment",
+        "participation",
+        "transfer",
+        "Register",
+        "Eligible Assignee",
+        "Disqualified Institution"
+      ],
+      "concept_specific_keywords": [
+        "Assignment Amendment Restrictions",
+        "Required Lender"
+      ]
+    }
+  },
+  {
+    "id": "governance.assignments.modification_covenants",
+    "name": "Modification Covenants",
+    "family_id": "governance.assignments",
+    "concept_area": "assignments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Assignments",
+        "Participations",
+        "Transfers"
+      ],
+      "keyword_anchors": [
+        "assignment",
+        "participation",
+        "transfer",
+        "Register",
+        "Eligible Assignee",
+        "Disqualified Institution"
+      ],
+      "concept_specific_keywords": [
+        "Modification Covenants"
+      ]
+    }
+  },
+  {
+    "id": "governance.assignments.net_short",
+    "name": "Net Short Lender Disenfranchisement",
+    "family_id": "governance.assignments",
+    "concept_area": "assignments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Assignments",
+        "Participations",
+        "Transfers"
+      ],
+      "keyword_anchors": [
+        "assignment",
+        "participation",
+        "transfer",
+        "Register",
+        "Eligible Assignee",
+        "Disqualified Institution"
+      ],
+      "concept_specific_keywords": [
+        "Net Short Lender Disenfranchisement"
+      ]
+    }
+  },
+  {
+    "id": "governance.assignments.additional_agents",
+    "name": "Right to Appoint Additional Agents",
+    "family_id": "governance.assignments",
+    "concept_area": "assignments",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Assignments",
+        "Participations",
+        "Transfers"
+      ],
+      "keyword_anchors": [
+        "assignment",
+        "participation",
+        "transfer",
+        "Register",
+        "Eligible Assignee",
+        "Disqualified Institution"
+      ],
+      "concept_specific_keywords": [
+        "Right to Appoint Additional Agents",
+        "Administrative Agent"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.covenant_type",
+    "name": "Covenant Structure",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "Covenant Structure"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.general_prohibition",
+    "name": "General Prohibition & Arms-Length Standard",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "General Prohibition & Arms-Length Standard"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.approval_tiers",
+    "name": "Approval Tiers",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "Approval Tiers"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.de_minimis",
+    "name": "De Minimis Threshold",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "De Minimis Threshold"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.management_agreement",
+    "name": "Sponsor Management Agreement",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "Sponsor Management Agreement"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.tax_sharing",
+    "name": "Tax Sharing Arrangements",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "Tax Sharing Arrangements"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.employee_comp",
+    "name": "Employee Compensation Arrangements",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "Employee Compensation Arrangements"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.insurance_indem",
+    "name": "Insurance & Indemnification",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "Insurance & Indemnification"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.other_baskets",
+    "name": "Other Affiliate Baskets",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "Other Affiliate Baskets"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.affiliated_lender_restrictions",
+    "name": "Affiliated Lender Restrictions (NegCov)",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "Affiliated Lender Restrictions (NegCov)"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.unrestricted_subsidiary_controls",
+    "name": "Unrestricted Subsidiary Controls",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "Unrestricted Subsidiary Controls",
+        "unrestricted"
+      ]
+    }
+  },
+  {
+    "id": "governance.affiliate_txns.hwm_ratchet",
+    "name": "Hwm Ratchet",
+    "family_id": "governance.affiliate_txns",
+    "concept_area": "affiliate_txns",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Affiliate Transactions",
+        "Transactions with Affiliates",
+        "Related Party"
+      ],
+      "keyword_anchors": [
+        "Affiliate",
+        "affiliate transaction",
+        "arm's length",
+        "Related Party"
+      ],
+      "concept_specific_keywords": [
+        "Hwm Ratchet"
+      ]
+    }
+  },
+  {
+    "id": "governance.reporting.financial_statements",
+    "name": "Financial Statements",
+    "family_id": "governance.reporting",
+    "concept_area": "reporting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Statements",
+        "Reports",
+        "Information",
+        "Reporting"
+      ],
+      "keyword_anchors": [
+        "financial statements",
+        "annual report",
+        "quarterly",
+        "compliance certificate",
+        "deliver"
+      ],
+      "concept_specific_keywords": [
+        "Financial Statements"
+      ]
+    }
+  },
+  {
+    "id": "governance.reporting.compliance_certificate",
+    "name": "Compliance Certificate",
+    "family_id": "governance.reporting",
+    "concept_area": "reporting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Statements",
+        "Reports",
+        "Information",
+        "Reporting"
+      ],
+      "keyword_anchors": [
+        "financial statements",
+        "annual report",
+        "quarterly",
+        "compliance certificate",
+        "deliver"
+      ],
+      "concept_specific_keywords": [
+        "Compliance Certificate"
+      ]
+    }
+  },
+  {
+    "id": "governance.reporting.budget",
+    "name": "Budget & Projections",
+    "family_id": "governance.reporting",
+    "concept_area": "reporting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Statements",
+        "Reports",
+        "Information",
+        "Reporting"
+      ],
+      "keyword_anchors": [
+        "financial statements",
+        "annual report",
+        "quarterly",
+        "compliance certificate",
+        "deliver"
+      ],
+      "concept_specific_keywords": [
+        "Budget & Projections"
+      ]
+    }
+  },
+  {
+    "id": "governance.reporting.lender_calls",
+    "name": "Lender Presentations / Calls",
+    "family_id": "governance.reporting",
+    "concept_area": "reporting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Statements",
+        "Reports",
+        "Information",
+        "Reporting"
+      ],
+      "keyword_anchors": [
+        "financial statements",
+        "annual report",
+        "quarterly",
+        "compliance certificate",
+        "deliver"
+      ],
+      "concept_specific_keywords": [
+        "Lender Presentations / Calls"
+      ]
+    }
+  },
+  {
+    "id": "governance.reporting.mda",
+    "name": "Management Discussion & Analysis",
+    "family_id": "governance.reporting",
+    "concept_area": "reporting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Statements",
+        "Reports",
+        "Information",
+        "Reporting"
+      ],
+      "keyword_anchors": [
+        "financial statements",
+        "annual report",
+        "quarterly",
+        "compliance certificate",
+        "deliver"
+      ],
+      "concept_specific_keywords": [
+        "Management Discussion & Analysis"
+      ]
+    }
+  },
+  {
+    "id": "governance.reporting.notices",
+    "name": "Event Notices",
+    "family_id": "governance.reporting",
+    "concept_area": "reporting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Statements",
+        "Reports",
+        "Information",
+        "Reporting"
+      ],
+      "keyword_anchors": [
+        "financial statements",
+        "annual report",
+        "quarterly",
+        "compliance certificate",
+        "deliver"
+      ],
+      "concept_specific_keywords": [
+        "Event Notices"
+      ]
+    }
+  },
+  {
+    "id": "governance.reporting.public_private_info",
+    "name": "Public vs. Private Side Information",
+    "family_id": "governance.reporting",
+    "concept_area": "reporting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Statements",
+        "Reports",
+        "Information",
+        "Reporting"
+      ],
+      "keyword_anchors": [
+        "financial statements",
+        "annual report",
+        "quarterly",
+        "compliance certificate",
+        "deliver"
+      ],
+      "concept_specific_keywords": [
+        "Public vs. Private Side Information",
+        "Governs Clear"
+      ]
+    }
+  },
+  {
+    "id": "governance.reporting.tax_reporting",
+    "name": "Tax Reporting",
+    "family_id": "governance.reporting",
+    "concept_area": "reporting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Statements",
+        "Reports",
+        "Information",
+        "Reporting"
+      ],
+      "keyword_anchors": [
+        "financial statements",
+        "annual report",
+        "quarterly",
+        "compliance certificate",
+        "deliver"
+      ],
+      "concept_specific_keywords": [
+        "Tax Reporting",
+        "Common Reporting Standard"
+      ]
+    }
+  },
+  {
+    "id": "governance.reporting.forecasts",
+    "name": "Forecasts / Projections",
+    "family_id": "governance.reporting",
+    "concept_area": "reporting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Statements",
+        "Reports",
+        "Information",
+        "Reporting"
+      ],
+      "keyword_anchors": [
+        "financial statements",
+        "annual report",
+        "quarterly",
+        "compliance certificate",
+        "deliver"
+      ],
+      "concept_specific_keywords": [
+        "Forecasts / Projections"
+      ]
+    }
+  },
+  {
+    "id": "governance.reporting.interest_rate_protection",
+    "name": "Interest rate protection/hedging covenant",
+    "family_id": "governance.reporting",
+    "concept_area": "reporting",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Financial Statements",
+        "Reports",
+        "Information",
+        "Reporting"
+      ],
+      "keyword_anchors": [
+        "financial statements",
+        "annual report",
+        "quarterly",
+        "compliance certificate",
+        "deliver"
+      ],
+      "concept_specific_keywords": [
+        "Interest rate protection/hedging covenant"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.cure_period",
+    "name": "Reps & Warranties Cure Period",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Reps & Warranties Cure Period"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.specified_reps",
+    "name": "Specified Representations",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Specified Representations"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.conditions_precedent",
+    "name": "Conditions Precedent",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Conditions Precedent"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.mac_definition",
+    "name": "Material Adverse Effect Definition",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Material Adverse Effect Definition",
+        "Material Adverse Change"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.no_default_rep",
+    "name": "No Default / No EoD Representation",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "No Default / No EoD Representation"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.bring_down",
+    "name": "Bring-Down Mechanics",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Bring-Down Mechanics"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.cross_default",
+    "name": "Cross-Default Thresholds",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Cross-Default Thresholds"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.inconsistent_agreements",
+    "name": "Inconsistent Agreements",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Inconsistent Agreements"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.beneficial_ownership",
+    "name": "Beneficial Ownership Certification",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Beneficial Ownership Certification",
+        "Corporate Transparency Act",
+        "Beneficial Ownership Rule"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.force_majeure",
+    "name": "Force Majeure / War Guarantee Release",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Force Majeure / War Guarantee Release"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.sungard_conditionality",
+    "name": "Sungard Conditionality",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Sungard Conditionality",
+        "Specified Reps",
+        "Specified Acquisition Agreement Reps"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.jury_trial_waiver",
+    "name": "Jury Trial Waiver",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Jury Trial Waiver"
+      ]
+    }
+  },
+  {
+    "id": "governance.reps_conditions.labor_matters",
+    "name": "Labor Matters Representation",
+    "family_id": "governance.reps_conditions",
+    "concept_area": "reps_conditions",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Representations",
+        "Warranties",
+        "Conditions Precedent",
+        "Conditions to Closing"
+      ],
+      "keyword_anchors": [
+        "representation",
+        "warranty",
+        "condition precedent",
+        "solvency",
+        "material adverse"
+      ],
+      "concept_specific_keywords": [
+        "Labor Matters Representation",
+        "Material Adverse Effect"
+      ]
+    }
+  }
+]

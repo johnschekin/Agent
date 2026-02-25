@@ -16,21 +16,21 @@ const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
 
 // --- Domain color map (hex for canvas rendering) ---
 const DOMAIN_COLORS: Record<string, string> = {
-  deal_econ: "#137CBD",
-  debt_capacity: "#27AE60",
-  cash_flow: "#D9822B",
-  fin_framework: "#8F56BF",
-  credit_protection: "#DB3737",
+  deal_econ: "#3B82F6",
+  debt_capacity: "#22C55E",
+  cash_flow: "#F59E0B",
+  fin_framework: "#A855F7",
+  credit_protection: "#EF4444",
   governance: "#00A396",
 };
 
 // Edge type colors (top 8 types get distinct colors, rest get gray)
 const EDGE_TYPE_COLORS: Record<string, string> = {
-  CONSTRAINS: "#DB3737",
-  FEEDS_INTO: "#27AE60",
-  MIRRORS: "#137CBD",
-  SHARED_CAP: "#D9822B",
-  DEPENDS_ON: "#8F56BF",
+  CONSTRAINS: "#EF4444",
+  FEEDS_INTO: "#22C55E",
+  MIRRORS: "#3B82F6",
+  SHARED_CAP: "#F59E0B",
+  DEPENDS_ON: "#A855F7",
   EXCLUDES_FROM: "#C23E83",
   STACKS_WITH: "#00A396",
   TRIGGERS: "#00B3D4",
@@ -172,7 +172,7 @@ export function OntologyGraph({
   return (
     <div className="flex flex-col h-full">
       {/* Depth control */}
-      <div className="flex items-center gap-3 px-3 py-2 border-b border-border bg-surface-tertiary flex-shrink-0">
+      <div className="flex items-center gap-3 px-3 py-2 border-b border-border bg-surface-3 flex-shrink-0">
         <span className="text-xs text-text-muted">Depth:</span>
         {[1, 2, 3].map((d) => (
           <button
@@ -183,7 +183,7 @@ export function OntologyGraph({
               "px-2 py-0.5 rounded-sm text-xs font-medium transition-colors",
               depth === d
                 ? "bg-accent-blue/20 text-accent-blue"
-                : "bg-surface-tertiary text-text-muted hover:text-text-secondary border border-border"
+                : "bg-surface-3 text-text-muted hover:text-text-secondary border border-border"
             )}
           >
             {d}

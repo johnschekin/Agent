@@ -1,0 +1,3565 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "The exact name used in the credit agreement for the builder basket. Common variants: 'Available Amount' (most common), 'Cumulative Credit' (bond-style), 'Available Basket', 'Builder Basket Amount', 'Growth Amount'.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_definition.defined_term_name",
+          "level": 3,
+          "name": "Defined Term Name",
+          "type": "sub_component"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Standalone defined term in Article I or similar definitions article. Standard modern approach.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_definition.location.definitions_section",
+              "level": 4,
+              "name": "Definitions Section",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 48 (ECF Sweep – Credits)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Defined within the body of the Restricted Payments or Investments covenant. Bond-style approach.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_definition.location.covenant_inline",
+              "level": 4,
+              "name": "Covenant Inline",
+              "type": "sub_component"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Where the Available Amount is defined within the credit agreement structure. Typically in the Definitions section (Article I or Appendix) as a standalone defined term, but in some bond-style or older CAs it may be defined inline within the Restricted Payments covenant itself.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_definition.location",
+          "level": 3,
+          "name": "Definition Location",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "The mathematical structure of the Available Amount definition. Typically additive: Starter + Growth_ECF_or_CNI + Equity_Proceeds + Investment_Returns + Other_Components - Usage_Deductions.",
+          "dls_ref": [
+            "DLS:26:Structure Flex"
+          ],
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "hard",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_definition.formula_structure",
+          "level": 3,
+          "name": "Formula Structure",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 26 (Structure Flex)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "The defined term establishing the builder basket capacity pool. Typically defined as 'Available Amount', 'Cumulative Credit', or 'Builder Amount.' Per Learning Material: 'In credit agreements, often called the Cumulative Credit or Available Amount.' The formula structure is additive: Starter + Growth (ECF or CNI) + Equity Proceeds + Investment Returns + [Declined Proceeds] + [Retained Asset Sale Proceeds], minus usages. May be defined in the Definitions section (Article I) or inline within the RP or Investment covenant (bond-style approach).",
+      "dls_ref": [
+        "DLS:86:Available Amount"
+      ],
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "available_amount",
+        "extraction_ready": true,
+        "playbook_ref": "available_amount.starter",
+        "primary_section_pattern": "X.01",
+        "section_locations": [
+          "1.01",
+          "10.5",
+          "ARTICLE X",
+          "Section 10",
+          "Section 10.04",
+          "Section 10.06"
+        ],
+        "shape_ref": "available_amount.starter",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.262039+00:00",
+          "term_packs": {
+            "AVAILABLE_AMOUNT_DEFINITION": {
+              "label": "Available Amount - Definition",
+              "category": "AVAILABLE_AMOUNT",
+              "exactPhrases": [
+                "\"Available Amount\" means",
+                "Cumulative Credit",
+                "Builder Basket",
+                "the greater of (a) $",
+                "plus the sum of",
+                "minus the sum of",
+                "Starter Amount",
+                "retained Excess Cash Flow"
+              ],
+              "sectionHeaders": [
+                "ARTICLE I - DEFINITIONS",
+                "Available Amount",
+                "Cumulative Credit",
+                "Builder Basket"
+              ],
+              "semanticVariants": [
+                "available amount definition",
+                "builder basket formula",
+                "cumulative credit calculation",
+                "running capacity for restricted payments",
+                "RP capacity builder"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.65,
+                "minKeywordScore": 0.55,
+                "minConfidence": 0.78,
+                "escalationThreshold": 0.55,
+                "humanEscalationThreshold": 0.35
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            },
+            "AVAIL_AMT_BUILDER_ECF": {
+              "label": "Available Amount - Builder (ECF)",
+              "category": "AVAILABLE_AMOUNT",
+              "exactPhrases": [
+                "retained ECF",
+                "or 50% of CNI",
+                "ECF/CNI cannot be negative",
+                "Builds with voluntary prepayments",
+                "retained asset sale proceeds",
+                "builder amounts not limited to the amount originally made",
+                "financial builder prong",
+                "Retained Excess Cash Flow",
+                "cumulative Excess Cash Flow",
+                "50% of Excess Cash Flow",
+                "portion of Excess Cash Flow not required to be applied"
+              ],
+              "sectionHeaders": [
+                "Available Amount - Builder",
+                "Cumulative Credit - Builder",
+                "Financial Performance Builder",
+                "Retained Excess Cash Flow",
+                "Definition of Available Amount"
+              ],
+              "semanticVariants": [
+                "ECF builder component",
+                "excess cash flow contribution to available amount",
+                "retained ECF builds builder basket",
+                "financial performance builder ECF",
+                "ECF not swept to available amount",
+                "cumulative excess cash flow builder"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.65,
+                "minKeywordScore": 0.55,
+                "minConfidence": 0.78,
+                "escalationThreshold": 0.55,
+                "humanEscalationThreshold": 0.35
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            },
+            "AVAIL_AMT_OTHER": {
+              "label": "Available Amount - Other Components",
+              "category": "AVAILABLE_AMOUNT",
+              "exactPhrases": [
+                "Note any issues with respect to the Available Amount build",
+                "Align Cumulative Credit parameters to precedent",
+                "clarify any and all elements of Available Amount",
+                "Other elements include equity proceeds and returns on investments",
+                "uncapped returns on investments",
+                "asset sale proceeds unswept due to stepdowns",
+                "double counting",
+                "plus any voluntary prepayments",
+                "plus declined proceeds",
+                "minus amounts used for",
+                "reduced by"
+              ],
+              "sectionHeaders": [
+                "Available Amount - Other",
+                "Cumulative Credit - Other Components",
+                "Additional Builder Elements",
+                "Reductions to Available Amount"
+              ],
+              "semanticVariants": [
+                "other available amount components",
+                "additional builder elements",
+                "miscellaneous cumulative credit",
+                "other capacity builders",
+                "available amount reductions"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.65,
+                "minKeywordScore": 0.55,
+                "minConfidence": 0.78,
+                "escalationThreshold": 0.55,
+                "humanEscalationThreshold": 0.35
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "\"Available Amount\" means",
+              "Cumulative Credit",
+              "Builder Basket",
+              "the greater of (a) $",
+              "plus the sum of",
+              "minus the sum of",
+              "Starter Amount",
+              "retained Excess Cash Flow",
+              "retained ECF",
+              "or 50% of CNI",
+              "ECF/CNI cannot be negative",
+              "Builds with voluntary prepayments",
+              "retained asset sale proceeds",
+              "builder amounts not limited to the amount originally made",
+              "financial builder prong",
+              "Retained Excess Cash Flow",
+              "cumulative Excess Cash Flow",
+              "50% of Excess Cash Flow",
+              "portion of Excess Cash Flow not required to be applied",
+              "Note any issues with respect to the Available Amount build",
+              "Align Cumulative Credit parameters to precedent",
+              "clarify any and all elements of Available Amount",
+              "Other elements include equity proceeds and returns on investments",
+              "uncapped returns on investments",
+              "asset sale proceeds unswept due to stepdowns",
+              "double counting",
+              "plus any voluntary prepayments",
+              "plus declined proceeds",
+              "minus amounts used for",
+              "reduced by"
+            ],
+            "sectionHeaders": [
+              "ARTICLE I - DEFINITIONS",
+              "Available Amount",
+              "Cumulative Credit",
+              "Builder Basket",
+              "Available Amount - Builder",
+              "Cumulative Credit - Builder",
+              "Financial Performance Builder",
+              "Retained Excess Cash Flow",
+              "Definition of Available Amount",
+              "Available Amount - Other",
+              "Cumulative Credit - Other Components",
+              "Additional Builder Elements",
+              "Reductions to Available Amount"
+            ],
+            "semanticVariants": [
+              "available amount definition",
+              "builder basket formula",
+              "cumulative credit calculation",
+              "running capacity for restricted payments",
+              "RP capacity builder",
+              "ECF builder component",
+              "excess cash flow contribution to available amount",
+              "retained ECF builds builder basket",
+              "financial performance builder ECF",
+              "ECF not swept to available amount",
+              "cumulative excess cash flow builder",
+              "other available amount components",
+              "additional builder elements",
+              "miscellaneous cumulative credit",
+              "other capacity builders",
+              "available amount reductions"
+            ]
+          }
+        }
+      },
+      "family_id": "cash_flow.available_amount",
+      "id": "cash_flow.available_amount.aa_definition",
+      "level": 2,
+      "market_benchmarks": {
+        "pctc_umm_bsl": "Typically full EOD stopper but in Aggressive deals RJDPs may be subject to payment/bktcy EOD stopper and RIs may be have no stopper at all"
+      },
+      "name": "Available Amount Definition",
+      "negotiation_spectrum": {
+        "aggressive_position": "Starter dollar basket 50% of CNI based builder (deducting 100% of losses) Other Add Backs: (i) contributions of cash and the fair value of assets received after the Closing Date (other than from restricted subsidiaries and excluded contributions, disqualified equity, equity used to raise contribution debt and equity used to fund an equity cure) (ii) returns (including proceeds upon sale, return of",
+        "dls_source_rows": [
+          {
+            "label": "Available Amount / Builder Basket",
+            "row": 86
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Available Amount builder components",
+          "Retained ECF percentage as builder",
+          "CNI builder (50% of CNI minus 100% of losses)",
+          "Starter dollar basket",
+          "Equity proceeds as builder",
+          "Investment returns/distributions as builder",
+          "Debt-to-equity conversion proceeds",
+          "Declined mandatory prepayment proceeds",
+          "EoD blocker on restricted payments",
+          "Ratio test required for usage",
+          "Available for RP, RDP, and Investments",
+          "Anti-double-dip provisions"
+        ],
+        "market_position": "Market standard for available amount / builder basket reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "Narrow AA definition: sum of retained ECF and net equity proceeds only; no starter basket, no returns on investments",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "available_amount.starter",
+        "available_amount.builder_ecf",
+        "available_amount.builder_cni"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 84,
+          "term": "Other"
+        },
+        {
+          "coverage": "full",
+          "row": 95,
+          "term": "Negative Covenants – Investments – Other"
+        },
+        {
+          "coverage": "full",
+          "row": 118,
+          "term": "Negative Covenants – Available Amount"
+        },
+        {
+          "coverage": "full",
+          "row": 119,
+          "term": "Negative Covenants – Available Amount – Starter"
+        },
+        {
+          "coverage": "full",
+          "row": 121,
+          "term": "Negative Covenants – Available Amount – EoD Blocker"
+        },
+        {
+          "coverage": "full",
+          "row": 122,
+          "term": "Negative Covenants – Available Amount – Ratio Test"
+        },
+        {
+          "coverage": "full",
+          "row": 123,
+          "term": "Negative Covenants – Available Amount – Other"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "Learning Material: 'In credit agreements, often called the Cumulative Credit or Available Amount.' DLS Preferred row 86 alt: 'Starter dollar basket. 50% of CNI based builder (deducting 100% of losses).'",
+      "neutron_field_refs": [
+        {
+          "term_type": "AVAILABLE_AMOUNT_DEFINITION",
+          "label": "Available Amount - Definition",
+          "schema_file": "available-amount-hub-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "cash_flow",
+          "mapping_confidence": 0.779,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        },
+        {
+          "term_type": "AVAIL_AMT_BUILDER_ECF",
+          "label": "Available Amount - Builder (ECF)",
+          "schema_file": "available-amount-enhanced.schema.ts",
+          "field_count": 5,
+          "r1_domain": "cash_flow",
+          "mapping_confidence": 0.5997,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        },
+        {
+          "term_type": "AVAIL_AMT_OTHER",
+          "label": "Available Amount - Other Components",
+          "schema_file": "available-amount-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "cash_flow",
+          "mapping_confidence": 0.4633,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Starter dollar amounts in the $10-25M range, typical for lower middle market deals with EBITDA under $50M.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_starter_amount.fixed_dollar.small_deal",
+              "level": 4,
+              "name": "$10-25M Range (Small Deals)",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 45 (ECF Sweep – Holiday)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Starter dollar amounts in the $25-50M range, typical for core middle market deals with $50-100M EBITDA.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_starter_amount.fixed_dollar.mid_market",
+              "level": 4,
+              "name": "$25-50M Range (Mid-Market)",
+              "type": "sub_component"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Starter dollar amounts exceeding $50M, typical for upper middle market and BSL deals.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_starter_amount.fixed_dollar.large_cap",
+              "level": 4,
+              "name": "$50M+ Range (Large Cap)",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 97 (Negative Covenants – Dispositions – 75% Cash Consideration Basket); Review Template Row 106 (Negative Covenants – Restricted Payments – Employee Stock Repurchases); Review Template Row 122 (Negative Covenants – Available Amount – Ratio Test)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Absolute dollar amount component of the starter. Range: $1.5M to $93M in DealData corpus. Sized relative to deal economics -- typically 20-30% of EBITDA.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.available_amount",
+          "golden_record_refs": [
+            {
+              "absence_count": 1,
+              "deal_count": 8,
+              "deals": [
+                "arch",
+                "arcosa",
+                "boyd",
+                "caesars",
+                "lendingtree",
+                "national_vision",
+                "red_rock",
+                "viavi"
+              ],
+              "golden_concept_id": "available_amount.starter",
+              "high_confidence_count": 8,
+              "record_count": 8
+            }
+          ],
+          "id": "cash_flow.available_amount.aa_starter_amount.fixed_dollar",
+          "level": 3,
+          "name": "Fixed Dollar Component",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 7 (Letters of Credit); DLS Preferred Row 14 (Delayed Draw Term Loans); DLS Preferred Row 79 (a. Indebtedness)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "EBITDA percentage in the 10-20% range, providing modest initial capacity. Typical for bank-conservative LMM deals.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_starter_amount.ebitda_pct.conservative",
+              "level": 4,
+              "market_benchmarks": {
+                "starter_pct_of_ebitda_bsl": {
+                  "field": "starter_pct_of_ebitda",
+                  "segment": "BSL",
+                  "source": "R17-A (debt_capacity)",
+                  "value": "{'typical': '10-30%', 'aggressive': '40-50%'}"
+                },
+                "starter_pct_of_ebitda_cmm": {
+                  "field": "starter_pct_of_ebitda",
+                  "segment": "CMM",
+                  "source": "R17-A (debt_capacity)",
+                  "value": "{'typical': '5-25%', 'aggressive': '25-40%'}"
+                },
+                "starter_pct_of_ebitda_lmm": {
+                  "field": "starter_pct_of_ebitda",
+                  "segment": "LMM",
+                  "source": "R17-A (debt_capacity)",
+                  "value": "{'typical': '5-25%', 'aggressive': '25-35%'}"
+                },
+                "starter_pct_of_ebitda_umm": {
+                  "field": "starter_pct_of_ebitda",
+                  "segment": "UMM",
+                  "source": "R17-A (debt_capacity)",
+                  "value": "{'typical': '10-30%', 'aggressive': '40-50%'}"
+                }
+              },
+              "name": "Conservative (10-20%)",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 121 (Negative Covenants – Available Amount – EoD Blocker)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "EBITDA percentage in the 25-35% range, the most common market standard across deal sizes.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_starter_amount.ebitda_pct.standard",
+              "level": 4,
+              "name": "Standard (25-35%)",
+              "type": "sub_component"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "EBITDA percentage of 40% or higher, considered aggressive. Seen in strong sponsor deals and BSL transactions.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_starter_amount.ebitda_pct.aggressive",
+              "level": 4,
+              "name": "Aggressive (40%+)",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 48 (ECF Sweep – Credits)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Percentage of LTM EBITDA in grower formulation. Distribution: 25% (9 deals), 30% (4), 35% (4), 20% (4), 40% (2). PC ranges: LMM 5-25%, UMM 10-30%, aggressive 40-50%.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.available_amount",
+          "golden_record_refs": [
+            {
+              "absence_count": 1,
+              "deal_count": 8,
+              "deals": [
+                "arch",
+                "arcosa",
+                "boyd",
+                "caesars",
+                "lendingtree",
+                "national_vision",
+                "red_rock",
+                "viavi"
+              ],
+              "golden_concept_id": "available_amount.starter",
+              "high_confidence_count": 8,
+              "record_count": 8
+            }
+          ],
+          "id": "cash_flow.available_amount.aa_starter_amount.ebitda_pct",
+          "level": 3,
+          "name": "EBITDA Percentage Component",
+          "r18_concept_ids": [
+            "available_amount.starter"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 15 (Limited Condition Acquisition); DLS Preferred Row 86 (h. Available Amount); Review Template Row 42 (Asset Sale Sweep - Threshold)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether the starter uses a 'greater of' structure combining fixed dollar and EBITDA percentage, allowing the starter to grow as EBITDA grows. The grower ensures day-one capacity scales with the business.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.available_amount",
+          "golden_record_refs": [
+            {
+              "absence_count": 1,
+              "deal_count": 8,
+              "deals": [
+                "arch",
+                "arcosa",
+                "boyd",
+                "caesars",
+                "lendingtree",
+                "national_vision",
+                "red_rock",
+                "viavi"
+              ],
+              "golden_concept_id": "available_amount.starter",
+              "high_confidence_count": 8,
+              "record_count": 8
+            }
+          ],
+          "id": "cash_flow.available_amount.aa_starter_amount.grower_formulation",
+          "level": 3,
+          "name": "Grower Formulation",
+          "r18_concept_ids": [
+            "available_amount.starter"
+          ],
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Some CAs (17.3% in corpus) have no day-one starter amount. The Available Amount starts at zero and builds only through performance-based growth components. More restrictive for the borrower.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_starter_amount.no_starter",
+          "level": 3,
+          "name": "No Starter (Zero Base)",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 118 (Negative Covenants – Available Amount); Review Template Row 119 (Negative Covenants – Available Amount – Starter)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Fixed initial capacity seed available from closing date, providing day-one builder basket capacity before any performance metrics accrue. May be a flat dollar amount, a percentage of EBITDA, or a 'greater of' grower formulation combining both. The starter size signals deal aggressiveness: 5-25% EBITDA for CMM/LMM, 10-30% typical for UMM/BSLR, and 40-50% in aggressive UMM/BSLR deals. Some CAs have no day-one starter, meaning the Available Amount starts at zero and builds only through retained ECF or CNI.",
+      "dls_ref": [
+        "DLS:86:Available Amount"
+      ],
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "available_amount",
+        "extraction_ready": true,
+        "playbook_ref": "available_amount.available_amount_basket_inv",
+        "section_locations": [
+          "ARTICLE X",
+          "Section 10",
+          "Section 10.04",
+          "Section 10.06"
+        ],
+        "shape_ref": "available_amount.available_amount_basket_inv",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.364072+00:00",
+          "term_packs": {
+            "AVAIL_AMT_STARTER": {
+              "label": "Available Amount - Starter",
+              "category": "AVAILABLE_AMOUNT",
+              "exactPhrases": [
+                "Greater of $[*] / [*]% LTM EBITDA",
+                "starter component provides immediate capacity from closing",
+                "fixed dollar amount and a percentage of EBITDA",
+                "sizing conservatively",
+                "governors for RPs",
+                "prevent early leakage",
+                "Available Amount shall initially equal",
+                "the greater of (a) $ and (b) % of EBITDA",
+                "Starter Amount",
+                "initial Available Amount"
+              ],
+              "sectionHeaders": [
+                "ARTICLE VII - NEGATIVE COVENANTS",
+                "Section [*] - Available Amount",
+                "Available Amount - Starter",
+                "Definition of Available Amount",
+                "Cumulative Credit",
+                "Builder Basket"
+              ],
+              "semanticVariants": [
+                "builder basket starter amount",
+                "initial available amount capacity",
+                "day one RP capacity",
+                "closing date available amount",
+                "EBITDA-based grower starter",
+                "cumulative credit starter component",
+                "starting capacity for restricted payments"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.65,
+                "minKeywordScore": 0.55,
+                "minConfidence": 0.78,
+                "escalationThreshold": 0.55,
+                "humanEscalationThreshold": 0.35
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Greater of $[*] / [*]% LTM EBITDA",
+              "starter component provides immediate capacity from closing",
+              "fixed dollar amount and a percentage of EBITDA",
+              "sizing conservatively",
+              "governors for RPs",
+              "prevent early leakage",
+              "Available Amount shall initially equal",
+              "the greater of (a) $ and (b) % of EBITDA",
+              "Starter Amount",
+              "initial Available Amount"
+            ],
+            "sectionHeaders": [
+              "ARTICLE VII - NEGATIVE COVENANTS",
+              "Section [*] - Available Amount",
+              "Available Amount - Starter",
+              "Definition of Available Amount",
+              "Cumulative Credit",
+              "Builder Basket"
+            ],
+            "semanticVariants": [
+              "builder basket starter amount",
+              "initial available amount capacity",
+              "day one RP capacity",
+              "closing date available amount",
+              "EBITDA-based grower starter",
+              "cumulative credit starter component",
+              "starting capacity for restricted payments"
+            ]
+          }
+        }
+      },
+      "family_id": "cash_flow.available_amount",
+      "golden_record_refs": [
+        {
+          "absence_count": 1,
+          "deal_count": 8,
+          "deals": [
+            "arch",
+            "arcosa",
+            "boyd",
+            "caesars",
+            "lendingtree",
+            "national_vision",
+            "red_rock",
+            "viavi"
+          ],
+          "golden_concept_id": "available_amount.starter",
+          "high_confidence_count": 8,
+          "record_count": 8
+        }
+      ],
+      "id": "cash_flow.available_amount.aa_starter_amount",
+      "level": 2,
+      "market_benchmarks": {
+        "pctc_umm_bslr_aggressive": "40-50% EBITDA",
+        "pctc_umm_bslr_typical": "10-30% EBITDA",
+        "pctc_cmm_lmm": "5-25% EBITDA",
+        "source": "PC Term Comparison, Available Amount - Starter",
+        "_source": "PC Term Comparison, Available Amount section"
+      },
+      "name": "Starter Amount",
+      "negotiation_spectrum": {
+        "aggressive_position": "Starter dollar basket 50% of CNI based builder (deducting 100% of losses) Other Add Backs: (i) contributions of cash and the fair value of assets received after the Closing Date (other than from restricted subsidiaries and excluded contributions, disqualified equity, equity used to raise contribution debt and equity used to fund an equity cure) (ii) returns (including proceeds upon sale, return of",
+        "dls_source_rows": [
+          {
+            "label": "Available Amount / Builder Basket",
+            "row": 86
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Available Amount builder components",
+          "Retained ECF percentage as builder",
+          "CNI builder (50% of CNI minus 100% of losses)",
+          "Starter dollar basket",
+          "Equity proceeds as builder",
+          "Investment returns/distributions as builder",
+          "Debt-to-equity conversion proceeds",
+          "Declined mandatory prepayment proceeds",
+          "EoD blocker on restricted payments",
+          "Ratio test required for usage",
+          "Available for RP, RDP, and Investments",
+          "Anti-double-dip provisions"
+        ],
+        "market_position": "Market standard for available amount / builder basket reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "No starter dollar basket; Available Amount begins at zero and builds only from actual retained ECF and equity contributions",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "available_amount.starter"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 77,
+          "term": "Negative Covenants – Indebtedness – Incurred Acquisition Debt – amount"
+        },
+        {
+          "coverage": "full",
+          "row": 90,
+          "term": "Negative Covenants – Investments – Investments in ‘similar businesses’"
+        },
+        {
+          "coverage": "full",
+          "row": 119,
+          "term": "Negative Covenants – Available Amount – Starter"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison, Available Amount - Starter: 'UMM/BSLR: Aggressive 40-50% EBITDA; Otherwise 10-30%. CMM/LMM Typically 5-25% EBITDA.' Learning Material Section (1) The Starter Component: 'The Builder Basket may start at $0, or at a specified starter level.'",
+      "pc_ref": [
+        "Available Amount - Starter: 'UMM/BSLR: Aggressive 40-50% EBITDA"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "AVAIL_AMT_STARTER",
+          "label": "Available Amount - Starter",
+          "schema_file": "available-amount-enhanced.schema.ts",
+          "field_count": 5,
+          "r1_domain": "cash_flow",
+          "mapping_confidence": 0.6049,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Percentage of ECF retained for builder (100% minus sweep percentage). Standard: 50% retained from a 50% sweep. Some deals have step-down sweeps that increase retention over time as leverage decreases.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_retained_ecf.retention_pct",
+          "level": 3,
+          "name": "ECF Retention Percentage",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 15 (Limited Condition Acquisition); DLS Preferred Row 86 (h. Available Amount); Review Template Row 41 (Asset Sale Sweep - Coverage)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether ECF cannot be negative in any fiscal year (floor at zero). Standard bank position: yes, each period floors at zero so negative ECF years do not reduce cumulative capacity. Absence of floor is borrower-aggressive.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_retained_ecf.floor_at_zero",
+          "level": 3,
+          "name": "Negative ECF Floor",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 15 (Limited Condition Acquisition); Review Template Row 45 (ECF Sweep – Holiday); Review Template Row 47 (ECF Sweep – Threshold)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Whether voluntary prepayments that reduce ECF sweep obligation also build retained ECF. Bank position: should NOT build.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_retained_ecf.deduction_interaction.vol_prepay_credits",
+              "level": 4,
+              "name": "Voluntary Prepayment Credit Effect",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 9 (Accordion); DLS Preferred Row 14 (Delayed Draw Term Loans); DLS Preferred Row 15 (Limited Condition Acquisition)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Whether permitted add-backs for growth capex affect both ECF sweep and retained ECF calculation.",
+              "dls_ref": [
+                "DLS:76:Capex"
+              ],
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_retained_ecf.deduction_interaction.capex_credits",
+              "level": 4,
+              "name": "Capital Expenditure Credit Effect",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 76 (Capex)"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Critical risk item: whether dollar-for-dollar credits to ECF sweep (from voluntary prepayments) also increase retained ECF. If yes, voluntary prepayment credits double-build: they reduce the sweep AND increase the builder basket. Aggressive formulation that banks should resist.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "hard",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_retained_ecf.deduction_interaction",
+          "level": 3,
+          "name": "Dollar-for-Dollar Deduction Interaction",
+          "red_flags": [
+            {
+              "category": "structural_risk",
+              "flag_id": "rf_cf_009",
+              "severity": "high",
+              "text": "No anti-double-dip between AA growth sources and ECF deductions -- same dollar can reduce ECF sweep AND build the Available Amount"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 7 (Letters of Credit); DLS Preferred Row 14 (Delayed Draw Term Loans); Review Template Row 45 (ECF Sweep – Holiday)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "When ECF accumulation begins. Typically the first full fiscal year after closing. Earlier start dates (partial year from closing) are more borrower-friendly.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_retained_ecf.start_date",
+          "level": 3,
+          "name": "Accumulation Start Date",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 45 (ECF Sweep – Holiday)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether ECF amounts below the de minimis sweep threshold build retained ECF. Bank position: below-threshold amounts should NOT build the basket. Aggressive deals allow de minimis amounts to accumulate in the builder.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_retained_ecf.de_minimis_treatment",
+          "level": 3,
+          "name": "De Minimis Threshold Treatment",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 42 (Asset Sale Sweep - Threshold); Review Template Row 47 (ECF Sweep – Threshold); Review Template Row 99 (Negative Covenants – Dispositions – De Minimis Threshold)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Cumulative retained Excess Cash Flow -- the traditional loan-style growth mechanism for the builder basket. Retained ECF equals the percentage of ECF that is not required to prepay term loans under the ECF sweep (e.g., if 50% sweep, 50% retained). Bank position per PC Term Comparison: retained ECF should only be increased by the retained percentage of ECF, not the net ECF unswept amount; de minimis deductible amounts below the sweep threshold should not build retained ECF; and dollar-for-dollar credits to the ECF sweep from voluntary prepayments should not also increase retained ECF. These guardrails prevent double-counting between the sweep reduction and builder accumulation. Negative ECF periods should be disregarded in the cumulative calculation (floor at zero per period).",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "available_amount",
+        "extraction_ready": true,
+        "playbook_ref": "available_amount.available_amount_basket_inv",
+        "section_locations": [
+          "ARTICLE X",
+          "Section 10",
+          "Section 10.04",
+          "Section 10.06"
+        ],
+        "shape_ref": "available_amount.available_amount_basket_inv"
+      },
+      "family_id": "cash_flow.available_amount",
+      "id": "cash_flow.available_amount.aa_retained_ecf",
+      "level": 2,
+      "name": "Retained ECF Builder Component",
+      "negotiation_spectrum": {
+        "aggressive_position": "Starter dollar basket 50% of CNI based builder (deducting 100% of losses) Other Add Backs: (i) contributions of cash and the fair value of assets received after the Closing Date (other than from restricted subsidiaries and excluded contributions, disqualified equity, equity used to raise contribution debt and equity used to fund an equity cure) (ii) returns (including proceeds upon sale, return of",
+        "dls_source_rows": [
+          {
+            "label": "Available Amount / Builder Basket",
+            "row": 86
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Available Amount builder components",
+          "Retained ECF percentage as builder",
+          "CNI builder (50% of CNI minus 100% of losses)",
+          "Starter dollar basket",
+          "Equity proceeds as builder",
+          "Investment returns/distributions as builder",
+          "Debt-to-equity conversion proceeds",
+          "Declined mandatory prepayment proceeds",
+          "EoD blocker on restricted payments",
+          "Ratio test required for usage",
+          "Available for RP, RDP, and Investments",
+          "Anti-double-dip provisions"
+        ],
+        "market_position": "Market standard for available amount / builder basket reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "Retained ECF = ECF not swept under mandatory prepayment; lender prefers high sweep percentages to minimize builder accumulation",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "available_amount.builder_ecf"
+      ],
+      "red_flags": [
+        {
+          "category": "below_market",
+          "flag_id": "rf_cf_001",
+          "severity": "medium",
+          "text": "No ECF sweep step-down -- 100% sweep at all leverage levels reduces builder basket growth to zero from ECF"
+        },
+        {
+          "category": "capacity_excess",
+          "flag_id": "rf_cf_008",
+          "severity": "high",
+          "text": "Greater-of ECF/CNI builder formulation -- decouples capacity from cash generation by using accounting income instead of actual cash flow"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison, Available Amount - Builder: 'Retained ECF should only be increased by retained percentage of ECF and not the net ECF unswept amount. De minimis deductible should not build Retained ECF. Dollar for dollar deducts to mandatory prepayment for voluntary prepayments etc should not build Retained ECF.' Learning Material Section (2) Option B: 'Often calculated so that if ECF is negative for any particular year, the negative ECF is disregarded in the cumulative calculation.'",
+      "pc_ref": [
+        "Available Amount - Builder: 'Retained ECF should only be increased by retained percentage of ECF and not the net ECF unswept amount. De minimis deductible should not build Retained ECF. Dollar for dollar deducts to mandatory prepayment for voluntary prepayments etc should not build Retained ECF.' Learning Material"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Percentage of cumulative CNI that builds capacity. Standard: 50%. Some aggressive deals use 75% or 100%.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_cni_builder.cni_percentage",
+          "level": 3,
+          "name": "CNI Percentage",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 86 (h. Available Amount); Review Template Row 47 (ECF Sweep – Threshold); Review Template Row 59 (Financial Covenant – testing thresholds)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether negative CNI periods reduce the builder. Bank position: bar negative-period floors so that losses in any period reduce cumulative builder capacity. Borrower-friendly: floor each period at zero.",
+          "dls_ref": [
+            "DLS:88:Other Negative Covenants"
+          ],
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_cni_builder.negative_period_floor",
+          "level": 3,
+          "name": "Negative Period Floor",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 88 (Other Negative Covenants)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Most aggressive formulation: the greater of retained ECF and 50% of cumulative CNI. Decouples capacity from cash generation. Observed in Geneva and Scientific Games expert extractions. Banks should avoid this structure.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "hard",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_cni_builder.greater_of_ecf_cni",
+          "level": 3,
+          "name": "Greater-of ECF/CNI Formulation",
+          "red_flags": [
+            {
+              "category": "capacity_excess",
+              "flag_id": "rf_cf_008",
+              "severity": "high",
+              "text": "Greater-of ECF/CNI builder formulation -- decouples capacity from cash generation by using accounting income instead of actual cash flow"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 15 (Limited Condition Acquisition); Review Template Row 45 (ECF Sweep – Holiday); Review Template Row 47 (ECF Sweep – Threshold)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Alternative builder formula using EBITDA minus fixed charges instead of CNI. Creates even larger capacity than CNI because it avoids income tax and non-cash charges. The most aggressive builder variant.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "hard",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_cni_builder.ebitda_minus_charges",
+          "kct_ref": [
+            "cat1.8"
+          ],
+          "level": 3,
+          "name": "EBITDA-Minus-Fixed-Charges Variant",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 8"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "50% of cumulative Consolidated Net Income -- traditional in bond indentures, increasingly used in credit agreements, particularly in UMM/BSLR deals. If cumulative CNI is a loss, 100% of such cumulative loss is deducted. Some aggressive sponsor transactions use the 'greater of' retained ECF and 50% of cumulative CNI, creating the largest possible builder basket by decoupling capacity from actual cash generation. CNI is measured from the first day of the fiscal quarter containing the closing date to the end of the most recently completed fiscal quarter. PC Term Comparison notes CNI-based builders are typical in UMM/BSLR but retained ECF remains standard in CMM/LMM.",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "available_amount",
+        "extraction_ready": true,
+        "playbook_ref": "available_amount.available_amount_basket_inv",
+        "section_locations": [
+          "ARTICLE X",
+          "Section 10",
+          "Section 10.04",
+          "Section 10.06"
+        ],
+        "shape_ref": "available_amount.available_amount_basket_inv",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.272984+00:00",
+          "term_packs": {
+            "AVAIL_AMT_BUILDER_CNI": {
+              "label": "Available Amount - Builder (CNI)",
+              "category": "AVAILABLE_AMOUNT",
+              "exactPhrases": [
+                "50% of CNI",
+                "If CNI, reference CNI summary above",
+                "ECF/CNI cannot be negative",
+                "borrower to elect ECF or CNI prior to syndication",
+                "traditional in bonds",
+                "Consolidated Net Income",
+                "50% of Consolidated Net Income",
+                "cumulative Consolidated Net Income",
+                "positive Consolidated Net Income"
+              ],
+              "sectionHeaders": [
+                "Available Amount - Builder (CNI)",
+                "Consolidated Net Income Builder",
+                "Financial Performance Builder",
+                "Cumulative Credit"
+              ],
+              "semanticVariants": [
+                "CNI builder component",
+                "net income contribution to available amount",
+                "50% of consolidated net income",
+                "financial performance builder CNI",
+                "cumulative net income builder"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.65,
+                "minKeywordScore": 0.55,
+                "minConfidence": 0.78,
+                "escalationThreshold": 0.55,
+                "humanEscalationThreshold": 0.35
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "50% of CNI",
+              "If CNI, reference CNI summary above",
+              "ECF/CNI cannot be negative",
+              "borrower to elect ECF or CNI prior to syndication",
+              "traditional in bonds",
+              "Consolidated Net Income",
+              "50% of Consolidated Net Income",
+              "cumulative Consolidated Net Income",
+              "positive Consolidated Net Income"
+            ],
+            "sectionHeaders": [
+              "Available Amount - Builder (CNI)",
+              "Consolidated Net Income Builder",
+              "Financial Performance Builder",
+              "Cumulative Credit"
+            ],
+            "semanticVariants": [
+              "CNI builder component",
+              "net income contribution to available amount",
+              "50% of consolidated net income",
+              "financial performance builder CNI",
+              "cumulative net income builder"
+            ]
+          }
+        }
+      },
+      "family_id": "cash_flow.available_amount",
+      "id": "cash_flow.available_amount.aa_cni_builder",
+      "kct_ref": [
+        "cat1.8"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "earned_income_limitation": "[TO_BE_POPULATED]"
+      },
+      "name": "CNI Builder Component",
+      "negotiation_spectrum": {
+        "aggressive_position": "Starter dollar basket 50% of CNI based builder (deducting 100% of losses) Other Add Backs: (i) contributions of cash and the fair value of assets received after the Closing Date (other than from restricted subsidiaries and excluded contributions, disqualified equity, equity used to raise contribution debt and equity used to fund an equity cure) (ii) returns (including proceeds upon sale, return of",
+        "dls_source_rows": [
+          {
+            "label": "Available Amount / Builder Basket",
+            "row": 86
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Available Amount builder components",
+          "Retained ECF percentage as builder",
+          "CNI builder (50% of CNI minus 100% of losses)",
+          "Starter dollar basket",
+          "Equity proceeds as builder",
+          "Investment returns/distributions as builder",
+          "Debt-to-equity conversion proceeds",
+          "Declined mandatory prepayment proceeds",
+          "EoD blocker on restricted payments",
+          "Ratio test required for usage",
+          "Available for RP, RDP, and Investments",
+          "Anti-double-dip provisions"
+        ],
+        "market_position": "Market standard for available amount / builder basket reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "No CNI-based builder; reject 50%-of-CNI formulation. ECF-only accumulation is more restrictive and measurable",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "available_amount.builder_cni"
+      ],
+      "red_flags": [
+        {
+          "category": "capacity_excess",
+          "flag_id": "rf_cf_008",
+          "severity": "high",
+          "text": "Greater-of ECF/CNI builder formulation -- decouples capacity from cash generation by using accounting income instead of actual cash flow"
+        }
+      ],
+      "review_ref": [
+        {
+          "coverage": "partial",
+          "row": 7,
+          "term": "Other advisory roles"
+        },
+        {
+          "coverage": "full",
+          "row": 41,
+          "term": "Asset Sale Sweep - Coverage"
+        },
+        {
+          "coverage": "full",
+          "row": 44,
+          "term": "Asset Sale Sweep – Stepdowns"
+        },
+        {
+          "coverage": "full",
+          "row": 48,
+          "term": "ECF Sweep – Credits"
+        },
+        {
+          "coverage": "full",
+          "row": 102,
+          "term": "Negative Covenants – Dispositions – Other"
+        },
+        {
+          "coverage": "full",
+          "row": 120,
+          "term": "Negative Covenants – Available Amount – Builder"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "Learning Material Section (2) Option A: '50% of cumulative Consolidated Net Income, or if such cumulative CNI is a loss, 100% of such cumulative loss.' PC Term Comparison: 'Typically Retained ECF based but for UMM/BSLR transactions may also be 50% of CNI.'",
+      "pc_ref": [
+        ": 'Typically Retained ECF based but for UMM/BSLR transactions may also be 50% of CNI.'"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "AVAIL_AMT_BUILDER_CNI",
+          "label": "Available Amount - Builder (CNI)",
+          "schema_file": "available-amount-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "cash_flow",
+          "mapping_confidence": 0.6282,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Proceeds from issuance of common stock or equivalent LLC membership interests.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_equity_proceeds.qualifying_equity.common_stock",
+              "level": 4,
+              "name": "Common Stock / LLC Interests",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 52 (o. Collateral); DLS Preferred Row 72 (a. EBITDA); DLS Preferred Row 86 (h. Available Amount)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Proceeds from preferred stock that is not disqualified (not mandatorily redeemable before maturity).",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_equity_proceeds.qualifying_equity.preferred_stock",
+              "kct_ref": [
+                "cat2.3"
+              ],
+              "level": 4,
+              "name": "Qualified Preferred Stock",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 2 Item 3"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Cash equity contributions (excluding proceeds of Disqualified Equity Interests) received by the borrower or a parent entity that are contributed to the borrower, feeding into the Available Amount builder basket. Only contributions not otherwise applied to cure rights, contribution debt, or other specified baskets qualify, preventing double-counting across the interconnected capacity framework.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_equity_proceeds.qualifying_equity.capital_contributions",
+              "level": 4,
+              "name": "Capital Contributions",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 86 (h. Available Amount)"
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Which equity issuances qualify to build the AA. Includes common stock, qualified preferred stock, capital contributions. Excludes cure equity, disqualified stock, and equity used for Excluded Contributions.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_equity_proceeds.qualifying_equity",
+          "level": 3,
+          "name": "Qualifying Equity Types",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 14 (Delayed Draw Term Loans); DLS Preferred Row 86 (h. Available Amount); Review Template Row 12 (Minimum equity contribution)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Equity proceeds that do NOT build the Available Amount. Includes: cure equity (used under Section 7.02), disqualified stock, Excluded Contributions already credited to specific permitted baskets, and proceeds used for permitted acquisitions.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_equity_proceeds.excluded_equity",
+          "level": 3,
+          "name": "Excluded Equity Proceeds",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 7 (Letters of Credit); DLS Preferred Row 9 (Accordion); DLS Preferred Row 14 (Delayed Draw Term Loans)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether the equity builder component is available for restricted payments or limited to investments and RDPs only. Some deals restrict equity-sourced AA from being used for dividends (only investments/debt paydown).",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_equity_proceeds.rp_restriction",
+          "level": 3,
+          "name": "RP Usage Restriction",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 86 (h. Available Amount); Review Template Row 68 (Negative Covenants – Unrestricted Subsidiaries – Envision); Review Template Row 122 (Negative Covenants – Available Amount – Ratio Test)"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Net cash proceeds from qualified equity issuances and capital contributions received after the closing date that build the Available Amount. Includes proceeds from sale of equity interests and cash capital contributions. Excludes cure equity, disqualified equity interests, equity used to build other baskets, and closing date equity contributions. Also includes the principal amount of debt converted to qualified equity. Per DLS Preferred, should exclude 'equity otherwise applied' to prevent double-counting with other baskets.",
+      "dls_ref": [
+        "DLS:39:Minimum equity"
+      ],
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "available_amount",
+        "extraction_ready": true,
+        "playbook_ref": "available_amount.available_amount_basket_inv",
+        "section_locations": [
+          "ARTICLE X",
+          "Section 10",
+          "Section 10.04",
+          "Section 10.06"
+        ],
+        "shape_ref": "available_amount.available_amount_basket_inv",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.319003+00:00",
+          "term_packs": {
+            "AVAIL_AMT_EQUITY": {
+              "label": "Available Amount - Equity Proceeds",
+              "category": "AVAILABLE_AMOUNT",
+              "exactPhrases": [
+                "equity proceeds",
+                "equity contribution builder",
+                "Excluded Contributions",
+                "Net Cash Proceeds of equity",
+                "cash equity contribution",
+                "Available Equity Amount",
+                "100% of the Net Cash Proceeds of any issuance of Equity Interests",
+                "equity contributions received",
+                "Excluded Equity Contributions",
+                "cure contributions excluded"
+              ],
+              "sectionHeaders": [
+                "Available Amount - Equity Proceeds",
+                "Equity Contribution Builder",
+                "Available Equity Amount",
+                "Excluded Contributions",
+                "Definition of Available Amount"
+              ],
+              "semanticVariants": [
+                "equity contribution builds available amount",
+                "capital contribution to builder basket",
+                "equity issuance proceeds in available amount",
+                "equity injection builds capacity",
+                "proceeds of equity to available amount"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.65,
+                "minKeywordScore": 0.55,
+                "minConfidence": 0.78,
+                "escalationThreshold": 0.55,
+                "humanEscalationThreshold": 0.35
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "equity proceeds",
+              "equity contribution builder",
+              "Excluded Contributions",
+              "Net Cash Proceeds of equity",
+              "cash equity contribution",
+              "Available Equity Amount",
+              "100% of the Net Cash Proceeds of any issuance of Equity Interests",
+              "equity contributions received",
+              "Excluded Equity Contributions",
+              "cure contributions excluded"
+            ],
+            "sectionHeaders": [
+              "Available Amount - Equity Proceeds",
+              "Equity Contribution Builder",
+              "Available Equity Amount",
+              "Excluded Contributions",
+              "Definition of Available Amount"
+            ],
+            "semanticVariants": [
+              "equity contribution builds available amount",
+              "capital contribution to builder basket",
+              "equity issuance proceeds in available amount",
+              "equity injection builds capacity",
+              "proceeds of equity to available amount"
+            ]
+          }
+        }
+      },
+      "family_id": "cash_flow.available_amount",
+      "id": "cash_flow.available_amount.aa_equity_proceeds",
+      "level": 2,
+      "name": "Equity Proceeds Builder",
+      "negotiation_spectrum": {
+        "aggressive_position": "Starter dollar basket 50% of CNI based builder (deducting 100% of losses) Other Add Backs: (i) contributions of cash and the fair value of assets received after the Closing Date (other than from restricted subsidiaries and excluded contributions, disqualified equity, equity used to raise contribution debt and equity used to fund an equity cure) (ii) returns (including proceeds upon sale, return of",
+        "dls_source_rows": [
+          {
+            "label": "Available Amount / Builder Basket",
+            "row": 86
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Available Amount builder components",
+          "Retained ECF percentage as builder",
+          "CNI builder (50% of CNI minus 100% of losses)",
+          "Starter dollar basket",
+          "Equity proceeds as builder",
+          "Investment returns/distributions as builder",
+          "Debt-to-equity conversion proceeds",
+          "Declined mandatory prepayment proceeds",
+          "EoD blocker on restricted payments",
+          "Ratio test required for usage",
+          "Available for RP, RDP, and Investments",
+          "Anti-double-dip provisions"
+        ],
+        "market_position": "Market standard for available amount / builder basket reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "Net equity proceeds builder limited to qualified common equity; exclude cure equity, disqualified equity, and rollover amounts",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "available_amount.equity_builder"
+      ],
+      "type": "concept",
+      "definition_source": "Learning Material Section (3) Additional Equity Component: 'Proceeds from qualified equity issuances... excluding Equity Cures and equity contributions that are used to build other baskets.' DLS Preferred row 86: 'the net cash proceeds from qualified equity issuances... excluding any cure equity and equity otherwise applied.'",
+      "neutron_field_refs": [
+        {
+          "term_type": "AVAIL_AMT_EQUITY",
+          "label": "Available Amount - Equity Proceeds",
+          "schema_file": "available-amount-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "cash_flow",
+          "mapping_confidence": 0.5294,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Which debt conversions qualify -- typically subordinated or junior lien debt converted to common equity.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_debt_conversion.conversion_scope",
+          "level": 3,
+          "name": "Conversion Scope",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "How the conversion amount is measured -- face value, fair market value, or net cash proceeds equivalent.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_debt_conversion.valuation_method",
+          "level": 3,
+          "name": "Valuation Method",
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Proceeds from conversion of permitted debt into equity interests that build the Available Amount. Per DLS Preferred (row 86, alternative): 'debt or disqualified stock of Holdings or its subsidiaries which have been converted to qualified equity of the Borrower, Holdings or any parent entity thereof.' Per Learning Material: 'Amount of any debt of the credit group that has been converted to qualified equity of the borrower.' Only qualified equity conversions count; disqualified equity conversions do not build the AA.",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "available_amount",
+        "extraction_ready": true,
+        "playbook_ref": "available_amount.available_amount_basket_inv",
+        "section_locations": [
+          "ARTICLE X",
+          "Section 10",
+          "Section 10.04",
+          "Section 10.06"
+        ],
+        "shape_ref": "available_amount.available_amount_basket_inv",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "cash_flow.available_amount",
+      "id": "cash_flow.available_amount.aa_debt_conversion",
+      "kct_ref": [
+        "cat4.3"
+      ],
+      "level": 2,
+      "name": "Debt-to-Equity Conversion Proceeds",
+      "negotiation_spectrum": {
+        "aggressive_position": "Starter dollar basket 50% of CNI based builder (deducting 100% of losses) Other Add Backs: (i) contributions of cash and the fair value of assets received after the Closing Date (other than from restricted subsidiaries and excluded contributions, disqualified equity, equity used to raise contribution debt and equity used to fund an equity cure) (ii) returns (including proceeds upon sale, return of",
+        "dls_source_rows": [
+          {
+            "label": "Available Amount / Builder Basket",
+            "row": 86
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Available Amount builder components",
+          "Retained ECF percentage as builder",
+          "CNI builder (50% of CNI minus 100% of losses)",
+          "Starter dollar basket",
+          "Equity proceeds as builder",
+          "Investment returns/distributions as builder",
+          "Debt-to-equity conversion proceeds",
+          "Declined mandatory prepayment proceeds",
+          "EoD blocker on restricted payments",
+          "Ratio test required for usage",
+          "Available for RP, RDP, and Investments",
+          "Anti-double-dip provisions"
+        ],
+        "market_position": "Market standard for available amount / builder basket reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "Debt-to-equity conversions do not build Available Amount; only fresh cash equity contributions qualify",
+        "source": "R14-B"
+      },
+      "type": "concept",
+      "definition_source": "DLS Preferred row 86 alt(iv): 'debt or disqualified stock of Holdings or its subsidiaries which have been converted to qualified equity.' Learning Material Section (3): 'Amount of any debt of the credit group that has been converted to qualified equity of the borrower.'"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Cash dividends and other distributions received from entities in which AA-funded investments were made.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_investment_returns.return_types.dividends",
+              "level": 4,
+              "name": "Dividends and Distributions",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 103 (Negative Covenants – Restricted Payments –)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Interest income and fees received on AA-funded debt investments (intercompany loans, etc.).",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_investment_returns.return_types.interest",
+              "level": 4,
+              "name": "Interest and Fees",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 13 (Leverage Ratios); DLS Preferred Row 14 (Delayed Draw Term Loans); DLS Preferred Row 16 (Refinancing Debt)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Proceeds from sale or other disposition of investments originally made using AA capacity.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_investment_returns.return_types.sale_proceeds",
+              "level": 4,
+              "name": "Sale / Disposition Proceeds",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 7 (Letters of Credit); DLS Preferred Row 9 (Accordion); DLS Preferred Row 14 (Delayed Draw Term Loans)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Return of principal on intercompany loans or notes funded from the Available Amount.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_investment_returns.return_types.principal_repayment",
+              "level": 4,
+              "name": "Principal Repayment",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 9 (Accordion); DLS Preferred Row 14 (Delayed Draw Term Loans); Review Template Row 118 (Negative Covenants – Available Amount)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Categories of investment returns that build the AA: dividends, distributions, interest income, repayment of principal, and proceeds from sale/disposition of the investment.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_investment_returns.return_types",
+          "level": 3,
+          "name": "Return Types Included",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether returns are capped at the original investment amount to prevent double-counting. Bank position: cap returns at original AA usage amount. Without this cap, profitable investments generate infinite AA capacity.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_investment_returns.cap_to_original",
+          "level": 3,
+          "name": "Original Investment Cap",
+          "red_flags": [
+            {
+              "category": "capacity_excess",
+              "flag_id": "rf_cf_015",
+              "severity": "medium",
+              "text": "Investment returns not capped to original investment amount in AA builder -- returns exceeding original cost create unbounded capacity growth"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 68 (Negative Covenants – Unrestricted Subsidiaries – Envision); Review Template Row 95 (Negative Covenants – Investments – Other); Review Template Row 97 (Negative Covenants – Dispositions – 75% Cash Consideration Basket)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether returns must come from investments originally made using the AA basket (vs. any investment basket). Bank position: require AA-sourced. Aggressive: returns from ALL investments build AA regardless of source basket.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "hard",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_investment_returns.source_requirement",
+          "level": 3,
+          "name": "Source Requirement",
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Returns, dividends, and proceeds from investments originally made using Available Amount capacity that flow back to rebuild the builder basket. Includes dividends, distributions, interest, principal repayment, sale proceeds, and FMV of redesignated unrestricted subsidiaries. Bank position per PC Term Comparison: returns should be capped at the original investment amount to prevent double-counting. The 'not otherwise applied' language prevents returns from building both the AA and other baskets simultaneously.",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "available_amount",
+        "extraction_ready": true,
+        "playbook_ref": "available_amount.available_amount_basket_inv",
+        "section_locations": [
+          "ARTICLE X",
+          "Section 10",
+          "Section 10.04",
+          "Section 10.06"
+        ],
+        "shape_ref": "available_amount.available_amount_basket_inv",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.354228+00:00",
+          "term_packs": {
+            "AVAIL_AMT_RETURNS": {
+              "label": "Available Amount - Investment Returns",
+              "category": "AVAILABLE_AMOUNT",
+              "exactPhrases": [
+                "returns on investments",
+                "trap door",
+                "uncapped returns on investments",
+                "inclusion of asset sale proceeds unswept",
+                "amounts originally funded from the builder basket",
+                "convert investment capacity into RP capacity",
+                "return of capital",
+                "dividends received",
+                "returns on Investments",
+                "proceeds from sale or disposition of Investments"
+              ],
+              "sectionHeaders": [
+                "Available Amount - Investment Returns",
+                "Trap Door",
+                "Return of Investment Builder",
+                "Investment Returns"
+              ],
+              "semanticVariants": [
+                "investment return rebuilds available amount",
+                "return on investment trap door",
+                "investment proceeds rebuild builder",
+                "investment disposition builds available amount",
+                "returns credited to available amount"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.65,
+                "minKeywordScore": 0.55,
+                "minConfidence": 0.78,
+                "escalationThreshold": 0.55,
+                "humanEscalationThreshold": 0.35
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "returns on investments",
+              "trap door",
+              "uncapped returns on investments",
+              "inclusion of asset sale proceeds unswept",
+              "amounts originally funded from the builder basket",
+              "convert investment capacity into RP capacity",
+              "return of capital",
+              "dividends received",
+              "returns on Investments",
+              "proceeds from sale or disposition of Investments"
+            ],
+            "sectionHeaders": [
+              "Available Amount - Investment Returns",
+              "Trap Door",
+              "Return of Investment Builder",
+              "Investment Returns"
+            ],
+            "semanticVariants": [
+              "investment return rebuilds available amount",
+              "return on investment trap door",
+              "investment proceeds rebuild builder",
+              "investment disposition builds available amount",
+              "returns credited to available amount"
+            ]
+          }
+        }
+      },
+      "family_id": "cash_flow.available_amount",
+      "id": "cash_flow.available_amount.aa_investment_returns",
+      "kct_ref": [
+        "cat4.3"
+      ],
+      "level": 2,
+      "name": "Investment Returns Component",
+      "negotiation_spectrum": {
+        "aggressive_position": "Starter dollar basket 50% of CNI based builder (deducting 100% of losses) Other Add Backs: (i) contributions of cash and the fair value of assets received after the Closing Date (other than from restricted subsidiaries and excluded contributions, disqualified equity, equity used to raise contribution debt and equity used to fund an equity cure) (ii) returns (including proceeds upon sale, return of",
+        "dls_source_rows": [
+          {
+            "label": "Available Amount / Builder Basket",
+            "row": 86
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Available Amount builder components",
+          "Retained ECF percentage as builder",
+          "CNI builder (50% of CNI minus 100% of losses)",
+          "Starter dollar basket",
+          "Equity proceeds as builder",
+          "Investment returns/distributions as builder",
+          "Debt-to-equity conversion proceeds",
+          "Declined mandatory prepayment proceeds",
+          "EoD blocker on restricted payments",
+          "Ratio test required for usage",
+          "Available for RP, RDP, and Investments",
+          "Anti-double-dip provisions"
+        ],
+        "market_position": "Market standard for available amount / builder basket reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "No returns-on-investments builder; investment returns do not increase Available Amount capacity",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "available_amount.returns_on_investments"
+      ],
+      "red_flags": [
+        {
+          "category": "capacity_excess",
+          "flag_id": "rf_cf_015",
+          "severity": "medium",
+          "text": "Investment returns not capped to original investment amount in AA builder -- returns exceeding original cost create unbounded capacity growth"
+        }
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 89,
+          "term": "Negative Covenants – Investments – Investments in non-Loan Parties"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison: 'Typically will seek to cap returns on investment type baskets to amount of original investment. Avoid allowing for double counting returns.' Learning Material Section (4): 'Returns on investments made using the primary RP builder prong, often capped at the amount of the original investment.'",
+      "pc_ref": [
+        ": 'Typically will seek to cap returns on investment type baskets to amount of original investment. Avoid allowing for double counting returns.' Learning Material"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "AVAIL_AMT_RETURNS",
+          "label": "Available Amount - Investment Returns",
+          "schema_file": "available-amount-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "cash_flow",
+          "mapping_confidence": 0.5647,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Any asset sale proceeds not applied to mandatory prepayment build the AA, regardless of reason for retention.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_asset_sale_proceeds.scope.all_retained",
+              "kct_ref": [
+                "cat4.3"
+              ],
+              "level": 4,
+              "name": "All Retained Proceeds",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 4 Item 3"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Only proceeds retained because leverage-based step-down reduced the sweep percentage below 100%.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_asset_sale_proceeds.scope.stepdown_only",
+              "kct_ref": [
+                "cat4.3"
+              ],
+              "level": 4,
+              "name": "Stepdown Retained Only",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 4 Item 3"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Whether ANY unsold/retained asset sale proceeds build AA or only proceeds retained due to leverage-based stepdowns. Broader scope (any retained) is more aggressive. Bank position: reject unless tied to stepdown mechanics.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_asset_sale_proceeds.scope",
+          "kct_ref": [
+            "cat4.3"
+          ],
+          "level": 3,
+          "name": "Proceeds Scope",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "How the reinvestment exception interacts with AA building. Proceeds subject to reinvestment period should not build AA until reinvestment period expires without application. Double-counting risk if proceeds build AA during reinvestment window.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "hard",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_asset_sale_proceeds.reinvestment_interaction",
+          "kct_ref": [
+            "cat4.3"
+          ],
+          "level": 3,
+          "name": "Reinvestment Period Interaction",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 3"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Retained asset sale proceeds not subject to mandatory prepayment sweep that build the Available Amount. Per KCT Cat 4 Item 3, it is a risk escalation item when the AA grows with proceeds of any asset sale not subject to the sweep (vs. only proceeds retained due to leverage-based step-down). PC Term Comparison: 'Typically will reject retained asset sale proceeds building Available Amount other than transactions with asset sale percentage stepdown.'",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "available_amount",
+        "extraction_ready": true,
+        "playbook_ref": "available_amount.available_amount_basket_inv",
+        "section_locations": [
+          "ARTICLE X",
+          "Section 10",
+          "Section 10.04",
+          "Section 10.06"
+        ],
+        "shape_ref": "available_amount.available_amount_basket_inv"
+      },
+      "family_id": "cash_flow.available_amount",
+      "id": "cash_flow.available_amount.aa_asset_sale_proceeds",
+      "kct_ref": [
+        "cat4.3"
+      ],
+      "level": 2,
+      "name": "Asset Sale Proceeds Builder",
+      "negotiation_spectrum": {
+        "aggressive_position": "Starter dollar basket 50% of CNI based builder (deducting 100% of losses) Other Add Backs: (i) contributions of cash and the fair value of assets received after the Closing Date (other than from restricted subsidiaries and excluded contributions, disqualified equity, equity used to raise contribution debt and equity used to fund an equity cure) (ii) returns (including proceeds upon sale, return of",
+        "dls_source_rows": [
+          {
+            "label": "Available Amount / Builder Basket",
+            "row": 86
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Available Amount builder components",
+          "Retained ECF percentage as builder",
+          "CNI builder (50% of CNI minus 100% of losses)",
+          "Starter dollar basket",
+          "Equity proceeds as builder",
+          "Investment returns/distributions as builder",
+          "Debt-to-equity conversion proceeds",
+          "Declined mandatory prepayment proceeds",
+          "EoD blocker on restricted payments",
+          "Ratio test required for usage",
+          "Available for RP, RDP, and Investments",
+          "Anti-double-dip provisions"
+        ],
+        "market_position": "Market standard for available amount / builder basket reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "(i) the percentage of Excess Cash Flow, commencing with respect to the 20[ ] fiscal year equal to the percentage thereof that is not taken into account in calculating the Excess Cash Flow prepayment of the Term Loans for the applicable year (ii) the net cash proceeds from qualified equity issuances of [Holdings (to the extent contributed to the common equity capital of the Borrower)/the Borrower] ",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "available_amount.asset_sale_proceeds"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 41,
+          "term": "Asset Sale Sweep - Coverage"
+        },
+        {
+          "coverage": "full",
+          "row": 42,
+          "term": "Asset Sale Sweep - Threshold"
+        },
+        {
+          "coverage": "full",
+          "row": 43,
+          "term": "Asset Sale Sweep – Reinvestment"
+        },
+        {
+          "coverage": "full",
+          "row": 44,
+          "term": "Asset Sale Sweep – Stepdowns"
+        },
+        {
+          "coverage": "full",
+          "row": 120,
+          "term": "Negative Covenants – Available Amount – Builder"
+        },
+        {
+          "coverage": "full",
+          "row": 123,
+          "term": "Negative Covenants – Available Amount – Other"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "KCT Cat 4 Item 3: 'Available Amount grows with the proceeds of any asset sale not subject to the sweep.' PC Term Comparison: 'Typically will reject retained asset sale proceeds building Available Amount other than transactions with asset sale percentage stepdown.'"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether declined proceeds flow to the AA (standard) or are simply retained without building capacity.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_declined_distributions.builds_aa",
+          "level": 3,
+          "name": "Builds Available Amount",
+          "red_flags": [
+            {
+              "category": "structural_risk",
+              "flag_id": "rf_cf_005",
+              "severity": "high",
+              "text": "Declined proceeds feed builder basket -- lender-declined mandatory prepayment proceeds become builder basket capacity for future distributions"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 7 (Letters of Credit); DLS Preferred Row 9 (Accordion); DLS Preferred Row 14 (Delayed Draw Term Loans)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Declined ECF sweep amounts that build AA capacity.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_declined_distributions.source_types.ecf_declined",
+              "level": 4,
+              "name": "ECF Sweep Declined",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 46,
+                  "term": "ECF Sweep – Percentages"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "Review Template Row 46 (ECF Sweep – Percentages)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Declined asset sale mandatory prepayment amounts that build AA capacity.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_declined_distributions.source_types.asset_sale_declined",
+              "kct_ref": [
+                "cat4.3"
+              ],
+              "level": 4,
+              "name": "Asset Sale Sweep Declined",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 42,
+                  "term": "Asset Sale Sweep - Threshold"
+                },
+                {
+                  "coverage": "full",
+                  "row": 43,
+                  "term": "Asset Sale Sweep – Reinvestment"
+                },
+                {
+                  "coverage": "full",
+                  "row": 44,
+                  "term": "Asset Sale Sweep – Stepdowns"
+                },
+                {
+                  "coverage": "full",
+                  "row": 96,
+                  "term": "Negative Covenants – Dispositions"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "KCT Cat 4 Item 3; Review Template Row 42 (Asset Sale Sweep - Threshold); Review Template Row 43 (Asset Sale Sweep – Reinvestment); Review Template Row 44 (Asset Sale Sweep – Stepdowns); Review Template Row 96 (Negative Covenants – Dispositions)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Which mandatory prepayment sources feed declined proceeds to AA: ECF sweep declines, asset sale sweep declines, debt issuance sweep declines, and insurance/condemnation proceeds.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_declined_distributions.source_types",
+          "level": 3,
+          "name": "Source Types",
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Mandatory prepayment proceeds declined by lenders that flow to the builder basket. Per DLS Preferred: 'Lenders may elect to decline any mandatory prepayments (other than from non-permitted debt). Declined proceeds shall be retained by the Borrower.' DLS alternative: 'Declined proceeds shall be retained by the Borrower and build the Available Amount.' Per Learning Material: 'amounts that were required to prepay loans from ECF or asset sale proceeds but are declined by lenders' are 'commonly added to the Builder Basket.' Creates a one-way ratchet: lenders decline, proceeds build AA capacity for RPs/Investments/RDPs. If a second lien exists, declined first lien proceeds must be offered to second lien lenders before building AA.",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "available_amount",
+        "extraction_ready": true,
+        "playbook_ref": "available_amount.available_amount_basket_inv",
+        "section_locations": [
+          "ARTICLE X",
+          "Section 10",
+          "Section 10.04",
+          "Section 10.06"
+        ],
+        "shape_ref": "available_amount.available_amount_basket_inv",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "cash_flow.available_amount",
+      "id": "cash_flow.available_amount.aa_declined_distributions",
+      "level": 2,
+      "name": "Declined Mandatory Prepayment Proceeds",
+      "negotiation_spectrum": {
+        "aggressive_position": "Starter dollar basket 50% of CNI based builder (deducting 100% of losses) Other Add Backs: (i) contributions of cash and the fair value of assets received after the Closing Date (other than from restricted subsidiaries and excluded contributions, disqualified equity, equity used to raise contribution debt and equity used to fund an equity cure) (ii) returns (including proceeds upon sale, return of",
+        "dls_source_rows": [
+          {
+            "label": "Available Amount / Builder Basket",
+            "row": 86
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Available Amount builder components",
+          "Retained ECF percentage as builder",
+          "CNI builder (50% of CNI minus 100% of losses)",
+          "Starter dollar basket",
+          "Equity proceeds as builder",
+          "Investment returns/distributions as builder",
+          "Debt-to-equity conversion proceeds",
+          "Declined mandatory prepayment proceeds",
+          "EoD blocker on restricted payments",
+          "Ratio test required for usage",
+          "Available for RP, RDP, and Investments",
+          "Anti-double-dip provisions"
+        ],
+        "market_position": "Market standard for available amount / builder basket reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "(i) the percentage of Excess Cash Flow, commencing with respect to the 20[ ] fiscal year equal to the percentage thereof that is not taken into account in calculating the Excess Cash Flow prepayment of the Term Loans for the applicable year (ii) the net cash proceeds from qualified equity issuances of [Holdings (to the extent contributed to the common equity capital of the Borrower)/the Borrower] ",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "available_amount.declined_proceeds"
+      ],
+      "red_flags": [
+        {
+          "category": "structural_risk",
+          "flag_id": "rf_cf_005",
+          "severity": "high",
+          "text": "Declined proceeds feed builder basket -- lender-declined mandatory prepayment proceeds become builder basket capacity for future distributions"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 70: 'Lenders may elect to decline. Declined proceeds retained by Borrower.' DLS alt: 'Declined proceeds build the Available Amount.' Learning Material Section (5)(2): 'Declined Proceeds commonly added to the Builder Basket.'"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "How fair market value is determined for redesignation -- typically board determination, but may require independent appraisal above threshold.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_unsub_redesignation.valuation",
+          "level": 3,
+          "name": "FMV Valuation Method",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether the redesignation credit is capped at the original investment amount used to designate the subsidiary as unrestricted.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_unsub_redesignation.cap_to_original",
+          "level": 3,
+          "name": "Cap to Original Designation Amount",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 97 (Negative Covenants – Dispositions – 75% Cash Consideration Basket); Review Template Row 106 (Negative Covenants – Restricted Payments – Employee Stock Repurchases); Review Template Row 122 (Negative Covenants – Available Amount – Ratio Test)"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Fair market value of unrestricted subsidiaries redesignated as restricted that builds the Available Amount. Per DLS Preferred (row 86, alternative): 'returns (including redesignation of unrestricted subsidiaries) on restricted investments.' Per Learning Material: 'FMV of the assets of an Unrestricted Subsidiary if it is re-designated a Restricted Subsidiary. Ideally each should be limited to amounts invested into the Unrestricted Subsidiary using the Builder Basket.' The redesignation conditions per DLS Preferred (row 92, alternative): 'after giving effect thereto, the Borrower would be in compliance with (x) a Total Net Leverage Ratio equal to the Closing Date TLR and (y) a Senior Secured Net Leverage Ratio equal to the Closing Date SSNLR.'",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "available_amount",
+        "extraction_ready": true,
+        "playbook_ref": "available_amount.available_amount_basket_inv",
+        "section_locations": [
+          "ARTICLE X",
+          "Section 10",
+          "Section 10.04",
+          "Section 10.06"
+        ],
+        "shape_ref": "available_amount.available_amount_basket_inv",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "cash_flow.available_amount",
+      "id": "cash_flow.available_amount.aa_unsub_redesignation",
+      "level": 2,
+      "name": "Unrestricted Subsidiary Redesignation Component",
+      "negotiation_spectrum": {
+        "aggressive_position": "Starter dollar basket 50% of CNI based builder (deducting 100% of losses) Other Add Backs: (i) contributions of cash and the fair value of assets received after the Closing Date (other than from restricted subsidiaries and excluded contributions, disqualified equity, equity used to raise contribution debt and equity used to fund an equity cure) (ii) returns (including proceeds upon sale, return of",
+        "dls_source_rows": [
+          {
+            "label": "Available Amount / Builder Basket",
+            "row": 86
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Available Amount builder components",
+          "Retained ECF percentage as builder",
+          "CNI builder (50% of CNI minus 100% of losses)",
+          "Starter dollar basket",
+          "Equity proceeds as builder",
+          "Investment returns/distributions as builder",
+          "Debt-to-equity conversion proceeds",
+          "Declined mandatory prepayment proceeds",
+          "EoD blocker on restricted payments",
+          "Ratio test required for usage",
+          "Available for RP, RDP, and Investments",
+          "Anti-double-dip provisions"
+        ],
+        "market_position": "Market standard for available amount / builder basket reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "(i) the percentage of Excess Cash Flow, commencing with respect to the 20[ ] fiscal year equal to the percentage thereof that is not taken into account in calculating the Excess Cash Flow prepayment of the Term Loans for the applicable year (ii) the net cash proceeds from qualified equity issuances of [Holdings (to the extent contributed to the common equity capital of the Borrower)/the Borrower] ",
+        "source": "R14-B"
+      },
+      "type": "concept",
+      "definition_source": "DLS Preferred row 86 alt(ii): 'redesignation of unrestricted subsidiaries.' Learning Material Section (4): 'FMV of an Unrestricted Subsidiary redesignated as Restricted. Ideally limited to amounts invested using the Builder Basket.' DLS Preferred row 92 alt: redesignation conditions."
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Which leverage ratio is tested. Distribution: Total Net Leverage, First Lien Net Leverage, Total Leverage, Secured Net Leverage (rare). First Lien metric is more permissive (excludes unsecured debt).",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_ratio_test.leverage_metric",
+          "level": 3,
+          "market_benchmarks": {
+            "leverage_test_bsl": {
+              "field": "leverage_test",
+              "segment": "BSL",
+              "source": "R17-A (debt_capacity)",
+              "value": "Higher thresholds"
+            },
+            "leverage_test_cmm": {
+              "field": "leverage_test",
+              "segment": "CMM",
+              "source": "R17-A (debt_capacity)",
+              "value": "0.5-1.5x inside closing leverage"
+            },
+            "leverage_test_lmm": {
+              "field": "leverage_test",
+              "segment": "LMM",
+              "source": "R17-A (debt_capacity)",
+              "value": "Required, typically 3.0x-5.0x TNLR"
+            },
+            "leverage_test_umm": {
+              "field": "leverage_test",
+              "segment": "UMM",
+              "source": "R17-A (debt_capacity)",
+              "value": "Higher thresholds (5x-7x TNLR)"
+            }
+          },
+          "name": "Leverage Metric Type",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 9 (Accordion); DLS Preferred Row 14 (Delayed Draw Term Loans); DLS Preferred Row 86 (h. Available Amount)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Leverage ratio threshold for AA usage. Range: 2.5x to 7.1x in corpus. Typical: 3.5x-5.5x. Median: 4.75x. Should be set 0.50-1.0x inside closing leverage to require meaningful deleveraging before distributions.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_ratio_test.ratio_level",
+          "level": 3,
+          "name": "Ratio Threshold Level",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 9 (Accordion); DLS Preferred Row 14 (Delayed Draw Term Loans); DLS Preferred Row 86 (h. Available Amount)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Requirement that the leverage ratio test gating Available Amount usage be calculated on a pro forma basis, giving effect to the proposed restricted payment, investment, or debt incurrence as if it had already occurred. Pro forma testing ensures that the borrower's post-transaction leverage does not exceed the specified threshold, providing a forward-looking check on capacity deployment.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_ratio_test.pro_forma_basis",
+          "level": 3,
+          "name": "Pro Forma Basis",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 7 (Letters of Credit); DLS Preferred Row 9 (Accordion); DLS Preferred Row 14 (Delayed Draw Term Loans)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether different ratio levels apply for RPs vs. investments vs. RDPs. Common structure: tighter ratio for RPs (e.g., 4.00x), looser for investments (e.g., 5.00x), intermediate for RDPs. Iridium: 5.5x for RPs, 4.5x for investment ratio basket.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_ratio_test.per_use_differentiation",
+          "level": 3,
+          "name": "Per-Use-Type Differentiation",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 97 (Negative Covenants – Dispositions – 75% Cash Consideration Basket); Review Template Row 108 (Negative Covenants – Restricted Payments – Post-IPO Basket); Review Template Row 118 (Negative Covenants – Available Amount)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Alternative satisfaction: leverage ratio no worse than at closing date. PC explicitly rejects this for RDPs because repaying debt is inherently leverage-neutral, so 'no worse' would always be satisfied.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_ratio_test.no_worse_prong",
+          "level": 3,
+          "name": "No-Worse-Than-Closing Prong",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 15 (Limited Condition Acquisition); Review Template Row 28 (Incremental – racking and stacking); Review Template Row 103 (Negative Covenants – Restricted Payments –)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Pro forma leverage ratio test gating usage of the Available Amount. Per DLS Preferred, usage requires 'pro forma compliance with a Senior Secured Net Leverage Ratio and a Total Net Leverage Ratio.' The ratio test is differentiated by usage type: RPs tightest, RDPs intermediate, investments lightest. PC Term Comparison: CMM/LMM RPs at 0.75-1.0x inside closing TLR; CMM/LMM RDPs at 0.5-0.75x inside; UMM/BSLR typically at closing TLR. Investments may have no leverage condition in aggressive deals.",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "available_amount",
+        "extraction_ready": true,
+        "playbook_ref": "available_amount.ratio_test",
+        "primary_section_pattern": "X.03-06",
+        "section_locations": [
+          "10.04(l), 10.06(j), 10.09(a)(ii)",
+          "10.5(a)(i), 10.5(a)(ii), 10.5(a)(4)(iii)(B)",
+          "6.04",
+          "6.04(j)(ii), 6.06(e), 6.09(b)(i)(E)",
+          "6.06",
+          "ARTICLE X",
+          "Section 10",
+          "Section 10.04",
+          "Section 10.06"
+        ],
+        "shape_ref": "available_amount.ratio_test",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "cash_flow.available_amount",
+      "id": "cash_flow.available_amount.aa_ratio_test",
+      "level": 2,
+      "name": "Leverage Ratio Governor",
+      "negotiation_spectrum": {
+        "aggressive_position": "Starter dollar basket 50% of CNI based builder (deducting 100% of losses) Other Add Backs: (i) contributions of cash and the fair value of assets received after the Closing Date (other than from restricted subsidiaries and excluded contributions, disqualified equity, equity used to raise contribution debt and equity used to fund an equity cure) (ii) returns (including proceeds upon sale, return of",
+        "dls_source_rows": [
+          {
+            "label": "Available Amount / Builder Basket",
+            "row": 86
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Available Amount builder components",
+          "Retained ECF percentage as builder",
+          "CNI builder (50% of CNI minus 100% of losses)",
+          "Starter dollar basket",
+          "Equity proceeds as builder",
+          "Investment returns/distributions as builder",
+          "Debt-to-equity conversion proceeds",
+          "Declined mandatory prepayment proceeds",
+          "EoD blocker on restricted payments",
+          "Ratio test required for usage",
+          "Available for RP, RDP, and Investments",
+          "Anti-double-dip provisions"
+        ],
+        "market_position": "Market standard for available amount / builder basket reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "(i) the percentage of Excess Cash Flow, commencing with respect to the 20[ ] fiscal year equal to the percentage thereof that is not taken into account in calculating the Excess Cash Flow prepayment of the Term Loans for the applicable year (ii) the net cash proceeds from qualified equity issuances of [Holdings (to the extent contributed to the common equity capital of the Borrower)/the Borrower] ",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "available_amount.ratio_test"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 105,
+          "term": "Negative Covenants – Restricted Payments – Ratio Basket"
+        },
+        {
+          "coverage": "full",
+          "row": 122,
+          "term": "Negative Covenants – Available Amount – Ratio Test"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 86: 'pro forma compliance with a Senior Secured [Net] Leverage Ratio and a Total Net Leverage Ratio.' PC Term Comparison: 'RPs: 0.75-1.0 inside closing TLR... RJDPs: 0.5-0.75 inside.'"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "One cumulative AA pool shared across all usage types (RP, investment, RDP). Usage under any basket depletes the same pool.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_usage_tracking.single_pool",
+          "level": 3,
+          "name": "Single Shared Pool",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "AA capacity split into designated sub-pools for each usage type, with or without reallocation between sub-pools.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_usage_tracking.sub_pool_allocation",
+          "level": 3,
+          "name": "Sub-Pool Allocation",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "How usage reduces the Available Amount. Standard: dollar-for-dollar reduction. Some deals reduce by the amount used minus any returns or recoveries. The 'minus usage' clause at the end of the definition is the key extraction target.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "hard",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_usage_tracking.usage_deduction_mechanics",
+          "level": 3,
+          "name": "Usage Deduction Mechanics",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 86 (h. Available Amount); Review Template Row 45 (ECF Sweep – Holiday); Review Template Row 122 (Negative Covenants – Available Amount – Ratio Test)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Mechanism for tracking cumulative usage of Available Amount capacity across RP, investment, and RDP baskets. Per Learning Material: 'Available for Restricted Payments, Investments and Restricted Debt Payments. Governor is least restrictive for Investments, compared to other uses.' The tracking mechanic determines whether AA is a single shared pool (standard modern approach) or split into sub-pools with separate limits per covenant. Per PC Term Comparison: 'Include not otherwise applied language throughout agreement to avoid double counting.' Usage under one basket depletes the shared pool, and anti-double-dip provisions prevent the same dollar from being credited to multiple pools.",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "available_amount",
+        "extraction_ready": true,
+        "playbook_ref": "available_amount.available_amount_basket_inv",
+        "section_locations": [
+          "ARTICLE X",
+          "Section 10",
+          "Section 10.04",
+          "Section 10.06"
+        ],
+        "shape_ref": "available_amount.available_amount_basket_inv"
+      },
+      "family_id": "cash_flow.available_amount",
+      "id": "cash_flow.available_amount.aa_usage_tracking",
+      "level": 2,
+      "name": "Cumulative Usage Tracking",
+      "negotiation_spectrum": {
+        "aggressive_position": "Starter dollar basket 50% of CNI based builder (deducting 100% of losses) Other Add Backs: (i) contributions of cash and the fair value of assets received after the Closing Date (other than from restricted subsidiaries and excluded contributions, disqualified equity, equity used to raise contribution debt and equity used to fund an equity cure) (ii) returns (including proceeds upon sale, return of",
+        "dls_source_rows": [
+          {
+            "label": "Available Amount / Builder Basket",
+            "row": 86
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Available Amount builder components",
+          "Retained ECF percentage as builder",
+          "CNI builder (50% of CNI minus 100% of losses)",
+          "Starter dollar basket",
+          "Equity proceeds as builder",
+          "Investment returns/distributions as builder",
+          "Debt-to-equity conversion proceeds",
+          "Declined mandatory prepayment proceeds",
+          "EoD blocker on restricted payments",
+          "Ratio test required for usage",
+          "Available for RP, RDP, and Investments",
+          "Anti-double-dip provisions"
+        ],
+        "market_position": "Market standard for available amount / builder basket reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "(i) the percentage of Excess Cash Flow, commencing with respect to the 20[ ] fiscal year equal to the percentage thereof that is not taken into account in calculating the Excess Cash Flow prepayment of the Term Loans for the applicable year (ii) the net cash proceeds from qualified equity issuances of [Holdings (to the extent contributed to the common equity capital of the Borrower)/the Borrower] ",
+        "source": "R14-B"
+      },
+      "type": "concept",
+      "definition_source": "Learning Material Section (5): 'Available for Restricted Payments, Investments and Restricted Debt Payments.' PC Term Comparison: 'Include not otherwise applied language to avoid double counting.'",
+      "pc_ref": [
+        ": 'Include not otherwise applied language to avoid double counting.'"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Equity contributions designated as Excluded Contributions (used for specific permitted baskets like cure equity) are excluded from building the AA. Prevents the same equity dollar from both curing a covenant and building AA.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_anti_double_dip.excluded_contributions",
+          "level": 3,
+          "name": "Excluded Contribution Guard",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 14 (Delayed Draw Term Loans)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Prevents the same amount from being credited to multiple capacity pools. If an investment return builds AA, it cannot also be credited to the general investment basket or incremental capacity.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_anti_double_dip.cross_basket_guard",
+          "level": 3,
+          "name": "Cross-Basket Credit Guard",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Equity contributions used for financial covenant cures are excluded from the AA builder to prevent double benefit.",
+          "dls_ref": [
+            "DLS:75:Equity Cure"
+          ],
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_anti_double_dip.cure_equity_exclusion",
+          "level": 3,
+          "name": "Cure Equity Exclusion",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 75 (Equity Cure)"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Provisions preventing the same dollar from being counted twice across the Available Amount and other capacity baskets. Includes 'not otherwise applied' language throughout the credit agreement. PC Term Comparison: 'Include not otherwise applied language throughout agreement to avoid double counting (e.g., equity contributions).' Specific guardrails include cure equity exclusion, excluded contributions designation, and cross-basket credit guards.",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "available_amount",
+        "extraction_ready": true,
+        "playbook_ref": "available_amount.available_amount_basket_inv",
+        "section_locations": [
+          "ARTICLE X",
+          "Section 10",
+          "Section 10.04",
+          "Section 10.06"
+        ],
+        "shape_ref": "available_amount.available_amount_basket_inv"
+      },
+      "family_id": "cash_flow.available_amount",
+      "id": "cash_flow.available_amount.aa_anti_double_dip",
+      "level": 2,
+      "name": "Anti-Double-Dip Provisions",
+      "negotiation_spectrum": {
+        "aggressive_position": "Starter dollar basket 50% of CNI based builder (deducting 100% of losses) Other Add Backs: (i) contributions of cash and the fair value of assets received after the Closing Date (other than from restricted subsidiaries and excluded contributions, disqualified equity, equity used to raise contribution debt and equity used to fund an equity cure) (ii) returns (including proceeds upon sale, return of",
+        "dls_source_rows": [
+          {
+            "label": "Available Amount / Builder Basket",
+            "row": 86
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Available Amount builder components",
+          "Retained ECF percentage as builder",
+          "CNI builder (50% of CNI minus 100% of losses)",
+          "Starter dollar basket",
+          "Equity proceeds as builder",
+          "Investment returns/distributions as builder",
+          "Debt-to-equity conversion proceeds",
+          "Declined mandatory prepayment proceeds",
+          "EoD blocker on restricted payments",
+          "Ratio test required for usage",
+          "Available for RP, RDP, and Investments",
+          "Anti-double-dip provisions"
+        ],
+        "market_position": "Market standard for available amount / builder basket reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "(i) the percentage of Excess Cash Flow, commencing with respect to the 20[ ] fiscal year equal to the percentage thereof that is not taken into account in calculating the Excess Cash Flow prepayment of the Term Loans for the applicable year (ii) the net cash proceeds from qualified equity issuances of [Holdings (to the extent contributed to the common equity capital of the Borrower)/the Borrower] ",
+        "source": "R14-B"
+      },
+      "red_flags": [
+        {
+          "category": "structural_risk",
+          "flag_id": "rf_cf_009",
+          "severity": "high",
+          "text": "No anti-double-dip between AA growth sources and ECF deductions -- same dollar can reduce ECF sweep AND build the Available Amount"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison: 'Avoid allowing for double counting returns. Include not otherwise applied language throughout agreement to avoid double counting (eg, equity contributions).'",
+      "pc_ref": [
+        ": 'Avoid allowing for double counting returns. Include not otherwise applied language throughout agreement to avoid double counting (eg, equity contributions).'"
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "No default or Event of Default -- the most protective level. Blocks AA usage on any default.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_eod_blocker.blocker_type.full_eod",
+              "kct_ref": [
+                "cat4.7"
+              ],
+              "level": 4,
+              "name": "Full EoD Blocker",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 4 Item 7"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Blocks only on payment default or bankruptcy EoD. Allows AA usage during covenant defaults.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_eod_blocker.blocker_type.payment_bankruptcy",
+              "kct_ref": [
+                "cat4.7"
+              ],
+              "level": 4,
+              "market_benchmarks": {
+                "eod_blocker_bsl": {
+                  "field": "eod_blocker",
+                  "segment": "BSL",
+                  "source": "R17-A (debt_capacity)",
+                  "value": "Aggressive deals may have payment/bankruptcy EoD only or no blocker"
+                },
+                "eod_blocker_cmm": {
+                  "field": "eod_blocker",
+                  "segment": "CMM",
+                  "source": "R17-A (debt_capacity)",
+                  "value": "Full EoD blocker or payment/bankruptcy EoD"
+                },
+                "eod_blocker_lmm": {
+                  "field": "eod_blocker",
+                  "segment": "LMM",
+                  "source": "R17-A (debt_capacity)",
+                  "value": "Full EoD blocker (no default)"
+                },
+                "eod_blocker_umm": {
+                  "field": "eod_blocker",
+                  "segment": "UMM",
+                  "source": "R17-A (debt_capacity)",
+                  "value": "Payment/bankruptcy EoD only (more permissive)"
+                }
+              },
+              "name": "Payment + Bankruptcy Only",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 4 Item 7"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Blocks only on payment default. Allows usage during bankruptcy proceedings and covenant defaults.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_eod_blocker.blocker_type.payment_only",
+              "kct_ref": [
+                "cat4.7",
+                "cat5.3"
+              ],
+              "level": 4,
+              "name": "Payment Default Only",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 4 Item 7; KCT Cat 5 Item 3"
+            },
+            {
+              "corpus_prevalence": "low",
+              "definition": "No default condition at all. Rare and aggressive -- requires KCT escalation.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_eod_blocker.blocker_type.no_blocker",
+              "level": 4,
+              "name": "No Blocker",
+              "red_flags": [
+                {
+                  "category": "missing_protection",
+                  "flag_id": "rf_cf_004",
+                  "severity": "high",
+                  "text": "Builder basket not subject to EoD blocker -- permits distributions from the Available Amount even during Events of Default"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "Review Template Row 121 (Negative Covenants – Available Amount – EoD Blocker)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Level of default protection. Spectrum from most to least protective: (1) Full EoD blocker (no default or Event of Default), (2) Payment + bankruptcy EoD only, (3) Payment EoD only, (4) No blocker (rare, escalation trigger).",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_eod_blocker.blocker_type",
+          "kct_ref": [
+            "cat4.7"
+          ],
+          "level": 3,
+          "name": "Blocker Type",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 7"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether different blocker levels apply to starter vs. growth usage. Common structure: lighter blocker (or no blocker) for starter usage, full EoD blocker for growth component usage.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_eod_blocker.starter_growth_differentiation",
+          "level": 3,
+          "market_benchmarks": {
+            "growth_metric_bsl": {
+              "field": "growth_metric",
+              "segment": "BSL",
+              "source": "R17-A (debt_capacity)",
+              "value": "50% CNI or greater of ECF/CNI (indenture-style)"
+            },
+            "growth_metric_lmm": {
+              "field": "growth_metric",
+              "segment": "LMM",
+              "source": "R17-A (debt_capacity)",
+              "value": "Retained ECF (strongly dominant)"
+            },
+            "growth_metric_umm": {
+              "field": "growth_metric",
+              "segment": "UMM",
+              "source": "R17-A (debt_capacity)",
+              "value": "May be 50% CNI or greater of ECF/CNI"
+            }
+          },
+          "name": "Starter vs Growth Differentiation",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 45 (ECF Sweep – Holiday); Review Template Row 118 (Negative Covenants – Available Amount); Review Template Row 119 (Negative Covenants – Available Amount – Starter)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Event of Default blocker conditions restricting usage of the Available Amount when defaults exist. Per KCT Cat 4 Item 7, absence of a bankruptcy or payment default blocker for RPs made under the available amount and/or builder baskets is a risk escalation item. PC Term Comparison differentiates by segment and usage type: CMM/LMM typically requires full EoD blocker; UMM/BSLR aggressive may have no blocker or only payment/bankruptcy. DLS Preferred requires 'absence of any continuing default or event of default' for all AA usage.",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "available_amount",
+        "extraction_ready": true,
+        "playbook_ref": "available_amount.available_amount_basket_inv",
+        "section_locations": [
+          "ARTICLE X",
+          "Section 10",
+          "Section 10.04",
+          "Section 10.06"
+        ],
+        "shape_ref": "available_amount.available_amount_basket_inv",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.307336+00:00",
+          "term_packs": {
+            "AVAIL_AMT_EOD_BLOCKER": {
+              "label": "Available Amount - Default Blocker",
+              "category": "AVAILABLE_AMOUNT",
+              "exactPhrases": [
+                "Subject to [no EoD] / [no payment/bankruptcy EoD]",
+                "applicable to [*]",
+                "default blocker",
+                "no default rather than no payment/bankruptcy EoD only",
+                "leverage test for using the growth prong",
+                "trend to weaken blockers",
+                "no Default or Event of Default shall have occurred",
+                "no Default exists",
+                "no payment or bankruptcy Default",
+                "no continuing Event of Default"
+              ],
+              "sectionHeaders": [
+                "Available Amount - EoD Blocker",
+                "Default Blocker",
+                "Conditions to Using Builder Basket",
+                "Restricted Payments Conditions"
+              ],
+              "semanticVariants": [
+                "default condition on available amount usage",
+                "EOD blocker for builder basket",
+                "payment bankruptcy default only",
+                "default stopper for RPs",
+                "condition precedent to restricted payments"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.62,
+                "minKeywordScore": 0.52,
+                "minConfidence": 0.72,
+                "escalationThreshold": 0.52,
+                "humanEscalationThreshold": 0.32
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Subject to [no EoD] / [no payment/bankruptcy EoD]",
+              "applicable to [*]",
+              "default blocker",
+              "no default rather than no payment/bankruptcy EoD only",
+              "leverage test for using the growth prong",
+              "trend to weaken blockers",
+              "no Default or Event of Default shall have occurred",
+              "no Default exists",
+              "no payment or bankruptcy Default",
+              "no continuing Event of Default"
+            ],
+            "sectionHeaders": [
+              "Available Amount - EoD Blocker",
+              "Default Blocker",
+              "Conditions to Using Builder Basket",
+              "Restricted Payments Conditions"
+            ],
+            "semanticVariants": [
+              "default condition on available amount usage",
+              "EOD blocker for builder basket",
+              "payment bankruptcy default only",
+              "default stopper for RPs",
+              "condition precedent to restricted payments"
+            ]
+          }
+        }
+      },
+      "family_id": "cash_flow.available_amount",
+      "id": "cash_flow.available_amount.aa_eod_blocker",
+      "kct_ref": [
+        "cat4.7"
+      ],
+      "level": 2,
+      "name": "Event of Default Blocker",
+      "negotiation_spectrum": {
+        "aggressive_position": "Starter dollar basket 50% of CNI based builder (deducting 100% of losses) Other Add Backs: (i) contributions of cash and the fair value of assets received after the Closing Date (other than from restricted subsidiaries and excluded contributions, disqualified equity, equity used to raise contribution debt and equity used to fund an equity cure) (ii) returns (including proceeds upon sale, return of",
+        "dls_source_rows": [
+          {
+            "label": "Available Amount / Builder Basket",
+            "row": 86
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Available Amount builder components",
+          "Retained ECF percentage as builder",
+          "CNI builder (50% of CNI minus 100% of losses)",
+          "Starter dollar basket",
+          "Equity proceeds as builder",
+          "Investment returns/distributions as builder",
+          "Debt-to-equity conversion proceeds",
+          "Declined mandatory prepayment proceeds",
+          "EoD blocker on restricted payments",
+          "Ratio test required for usage",
+          "Available for RP, RDP, and Investments",
+          "Anti-double-dip provisions"
+        ],
+        "market_position": "Market standard for available amount / builder basket reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "(i) the percentage of Excess Cash Flow, commencing with respect to the 20[ ] fiscal year equal to the percentage thereof that is not taken into account in calculating the Excess Cash Flow prepayment of the Term Loans for the applicable year (ii) the net cash proceeds from qualified equity issuances of [Holdings (to the extent contributed to the common equity capital of the Borrower)/the Borrower] ",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "available_amount.eod_blocker"
+      ],
+      "red_flags": [
+        {
+          "category": "missing_protection",
+          "flag_id": "rf_cf_004",
+          "severity": "high",
+          "text": "Builder basket not subject to EoD blocker -- permits distributions from the Available Amount even during Events of Default"
+        }
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 121,
+          "term": "Negative Covenants – Available Amount – EoD Blocker"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "KCT Cat 4 Item 7: 'Absence of bankruptcy or payment default blocker for restricted payments made under the available amount and/or builder baskets.' PC Term Comparison: 'UMM/BSLR Aggressive: often no EOD stopper.' DLS Preferred row 86: 'subject to the absence of any continuing default or event of default.'",
+      "neutron_field_refs": [
+        {
+          "term_type": "AVAIL_AMT_EOD_BLOCKER",
+          "label": "Available Amount - Default Blocker",
+          "schema_file": "available-amount-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "cash_flow",
+          "mapping_confidence": 0.5786,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether AA growth accrues automatically each period (standard) or requires borrower election. Some deals require borrower to elect ECF vs. CNI builder pre-syndication. Bank position: force election pre-closing.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_growth_mechanics.automatic_vs_election",
+          "level": 3,
+          "name": "Automatic vs. Election-Based",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 15 (Limited Condition Acquisition); DLS Preferred Row 70 (Mandatory Prepayments); Review Template Row 28 (Incremental – racking and stacking)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "When growth components are credited: at fiscal year-end, upon receipt of equity proceeds, upon completion of asset sales, or upon delivery of compliance certificate. Timing affects when capacity becomes available.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_growth_mechanics.accrual_timing",
+          "level": 3,
+          "name": "Accrual Timing",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether the Available Amount resets (to a new starter) upon amendment and restatement. Observed in some A&R credit agreements.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_growth_mechanics.reset_at_amendment",
+          "level": 3,
+          "name": "Reset at Amendment",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 14 (Delayed Draw Term Loans)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "How the Available Amount grows over time from its components. Per Learning Material: 'The borrower may grow the Builder Basket over time based on a specified financial performance metric + other transactions that are supposed to increase (or refresh) the borrowers equity cushion.' Growth is typically automatic (cumulative) for the financial performance component, but equity proceeds and investment returns build only when received. Per Learning Material: 'If the borrower makes Restricted Payments using the Builder Basket, Builder Basket decreases and may be re-built later.'",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "available_amount",
+        "extraction_ready": true,
+        "playbook_ref": "available_amount.available_amount_basket_inv",
+        "section_locations": [
+          "ARTICLE X",
+          "Section 10",
+          "Section 10.04",
+          "Section 10.06"
+        ],
+        "shape_ref": "available_amount.available_amount_basket_inv",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "cash_flow.available_amount",
+      "golden_record_refs": [
+        {
+          "absence_count": 0,
+          "deal_count": 7,
+          "deals": [
+            "arch",
+            "boyd",
+            "caesars",
+            "lendingtree",
+            "national_vision",
+            "red_rock",
+            "viavi"
+          ],
+          "golden_concept_id": "available_amount.other",
+          "high_confidence_count": 6,
+          "record_count": 7
+        }
+      ],
+      "id": "cash_flow.available_amount.aa_growth_mechanics",
+      "level": 2,
+      "name": "Growth Mechanics",
+      "type": "concept",
+      "definition_source": "Learning Material Section 3: 'The borrower may grow the Builder Basket based on a specified financial performance metric + other transactions that increase equity cushion.' 'If the borrower makes Restricted Payments using the Builder Basket, Builder Basket decreases and may be re-built later.'"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Additional conditions for RP usage beyond the baseline AA conditions -- typically tighter leverage test.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_cross_covenant_allocation.rp_connection.conditions",
+              "level": 4,
+              "name": "RP-Specific Conditions",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 14 (Delayed Draw Term Loans); DLS Preferred Row 15 (Limited Condition Acquisition); DLS Preferred Row 86 (h. Available Amount)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Whether RP usage is capped at a subset of total AA capacity or has access to full pool.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_cross_covenant_allocation.rp_connection.capacity_limit",
+              "level": 4,
+              "name": "RP Capacity Limit",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 24 (Incremental Amount – freebie); Review Template Row 28 (Incremental – racking and stacking); Review Template Row 33 (Incremental – inside maturity basket)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "How AA capacity flows to the Restricted Payments basket. Typically the most conditioned connection (ratio test + EoD blocker required). The 'builder basket' RP basket references the Available Amount definition.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_cross_covenant_allocation.rp_connection",
+          "kct_ref": [
+            "cat4.1"
+          ],
+          "level": 3,
+          "name": "RP Basket Connection",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 103,
+              "term": "Negative Covenants – Restricted Payments –"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 1; Review Template Row 103 (Negative Covenants – Restricted Payments –)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Conditions for investment usage -- often lighter or absent compared to RP usage.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_cross_covenant_allocation.inv_connection.conditions",
+              "level": 4,
+              "name": "Investment-Specific Conditions",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 14 (Delayed Draw Term Loans); DLS Preferred Row 15 (Limited Condition Acquisition); DLS Preferred Row 63 (d. Syndication Assistance)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Whether investment usage draws from the full Available Amount pool or a designated sub-allocation specifically earmarked for investment covenant capacity. Investment-specific sub-allocations prevent the borrower from consuming the entire Available Amount through investments alone, preserving capacity for restricted payments and debt prepayments. Investment sub-allocations tend to be more generous than RDP sub-allocations because investments add assets to the credit group, partially offsetting the cash outflow.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_cross_covenant_allocation.inv_connection.capacity_limit",
+              "level": 4,
+              "name": "Investment Capacity Limit",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 24 (Incremental Amount – freebie); Review Template Row 28 (Incremental – racking and stacking); Review Template Row 33 (Incremental – inside maturity basket)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "How AA capacity flows to the Investments basket. Often with lighter conditions than RP usage -- some deals allow AA investments with no ratio test and only EoD blocker (or no conditions at all). Iridium: no conditions for builder basket investments.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "golden_record_refs": [
+            {
+              "absence_count": 3,
+              "deal_count": 3,
+              "deals": [
+                "arch",
+                "arcosa",
+                "red_rock"
+              ],
+              "golden_concept_id": "available_amount.available_amount_basket_inv",
+              "high_confidence_count": 4,
+              "record_count": 6
+            }
+          ],
+          "id": "cash_flow.available_amount.aa_cross_covenant_allocation.inv_connection",
+          "level": 3,
+          "name": "Investment Basket Connection",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 14 (Delayed Draw Term Loans); DLS Preferred Row 15 (Limited Condition Acquisition); DLS Preferred Row 63 (d. Syndication Assistance)"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Conditions for RDP usage of AA capacity. PC rejects 'no worse' prong for RDPs.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_cross_covenant_allocation.rdp_connection.conditions",
+              "level": 4,
+              "name": "RDP-Specific Conditions",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 14 (Delayed Draw Term Loans); DLS Preferred Row 15 (Limited Condition Acquisition); DLS Preferred Row 86 (h. Available Amount)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Whether restricted debt payment (RDP) usage draws from the full Available Amount pool or a designated sub-allocation earmarked for RDP covenant capacity. RDP-specific sub-allocations are typically more restrictive than investment sub-allocations because prepaying junior debt directly reduces the subordination cushion protecting senior lenders without adding offsetting assets to the credit group.",
+              "domain_id": "cash_flow",
+              "extraction_difficulty": "medium",
+              "family_id": "cash_flow.available_amount",
+              "id": "cash_flow.available_amount.aa_cross_covenant_allocation.rdp_connection.capacity_limit",
+              "level": 4,
+              "name": "RDP Capacity Limit",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 24 (Incremental Amount – freebie); Review Template Row 28 (Incremental – racking and stacking); Review Template Row 33 (Incremental – inside maturity basket)"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "How AA capacity flows to the Restricted Debt Payments basket. Conditions typically intermediate between RP (tightest) and investment (lightest).",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_cross_covenant_allocation.rdp_connection",
+          "level": 3,
+          "name": "RDP Basket Connection",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 14 (Delayed Draw Term Loans); DLS Preferred Row 15 (Limited Condition Acquisition); Review Template Row 118 (Negative Covenants – Available Amount)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether AA capacity can be reallocated to incremental debt capacity. Some deals allow unused AA to be used as incremental facility commitments. Creates path from builder basket to new first-lien debt -- significant risk.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "hard",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_cross_covenant_allocation.incremental_connection",
+          "level": 3,
+          "name": "Incremental Basket Connection",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 14 (Delayed Draw Term Loans); DLS Preferred Row 15 (Limited Condition Acquisition); DLS Preferred Row 79 (a. Indebtedness)",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:40.826408+00:00",
+              "term_packs": {
+                "INCREMENTAL_AVAILABLE_AMOUNT": {
+                  "label": "Incremental - Available Amount Basket",
+                  "category": "INCREMENTAL",
+                  "exactPhrases": [
+                    "Incremental Facilities in an aggregate amount not to exceed the Available Amount",
+                    "incremental capacity from Available Amount",
+                    "AA-funded incremental"
+                  ],
+                  "sectionHeaders": [
+                    "Section [*] - Incremental Facilities",
+                    "Incremental Term Loans",
+                    "ARTICLE VII - NEGATIVE COVENANTS"
+                  ],
+                  "semanticVariants": [
+                    "incremental available amount basket",
+                    "incremental from builder capacity",
+                    "AA-based incremental"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.65,
+                    "minKeywordScore": 0.55,
+                    "minConfidence": 0.78,
+                    "escalationThreshold": 0.55,
+                    "humanEscalationThreshold": 0.35
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "Incremental Facilities in an aggregate amount not to exceed the Available Amount",
+                  "incremental capacity from Available Amount",
+                  "AA-funded incremental"
+                ],
+                "sectionHeaders": [
+                  "Section [*] - Incremental Facilities",
+                  "Incremental Term Loans",
+                  "ARTICLE VII - NEGATIVE COVENANTS"
+                ],
+                "semanticVariants": [
+                  "incremental available amount basket",
+                  "incremental from builder capacity",
+                  "AA-based incremental"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "INCREMENTAL_AVAILABLE_AMOUNT",
+              "label": "Incremental - Available Amount Basket",
+              "schema_file": "available-amount-hub-enhanced.schema.ts",
+              "field_count": 2,
+              "r1_domain": "cash_flow",
+              "mapping_confidence": 0.6275,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Structure where the AA has two tiers: (1) a 'qualified' tier with lighter conditions (investments, certain RDPs) and (2) a 'restricted' tier with full conditions (dividends, distributions). The two-tier approach controls leakage while allowing operational flexibility.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "hard",
+          "family_id": "cash_flow.available_amount",
+          "id": "cash_flow.available_amount.aa_cross_covenant_allocation.two_tier_structure",
+          "level": 3,
+          "name": "Two-Tier Structure",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 15 (Limited Condition Acquisition); Review Template Row 48 (ECF Sweep – Credits); Review Template Row 95 (Negative Covenants – Investments – Other)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "How Available Amount capacity is shared and allocated across the RP, investment, and RDP covenants. The builder basket is usually available for all three usage types with differentiated conditions. Per PC Term Comparison, reallocation is 'typically limited to reallocating from RPs to RDPs/Investments and RDPs to Investments but not the other way.' Anti-double-dip provisions prevent the same dollar from being credited to multiple capacity pools.",
+      "dls_ref": [
+        "DLS:73:Covenant"
+      ],
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "available_amount",
+        "extraction_ready": true,
+        "playbook_ref": "available_amount.available_amount_basket_inv",
+        "section_locations": [
+          "ARTICLE X",
+          "Section 10",
+          "Section 10.04",
+          "Section 10.06"
+        ],
+        "shape_ref": "available_amount.available_amount_basket_inv"
+      },
+      "family_id": "cash_flow.available_amount",
+      "golden_record_refs": [
+        {
+          "absence_count": 0,
+          "deal_count": 7,
+          "deals": [
+            "arch",
+            "boyd",
+            "caesars",
+            "lendingtree",
+            "national_vision",
+            "red_rock",
+            "viavi"
+          ],
+          "golden_concept_id": "available_amount.other",
+          "high_confidence_count": 6,
+          "record_count": 7
+        }
+      ],
+      "id": "cash_flow.available_amount.aa_cross_covenant_allocation",
+      "level": 2,
+      "name": "Cross-Covenant Allocation",
+      "negotiation_spectrum": {
+        "aggressive_position": "Starter dollar basket 50% of CNI based builder (deducting 100% of losses) Other Add Backs: (i) contributions of cash and the fair value of assets received after the Closing Date (other than from restricted subsidiaries and excluded contributions, disqualified equity, equity used to raise contribution debt and equity used to fund an equity cure) (ii) returns (including proceeds upon sale, return of",
+        "dls_source_rows": [
+          {
+            "label": "Available Amount / Builder Basket",
+            "row": 86
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Available Amount builder components",
+          "Retained ECF percentage as builder",
+          "CNI builder (50% of CNI minus 100% of losses)",
+          "Starter dollar basket",
+          "Equity proceeds as builder",
+          "Investment returns/distributions as builder",
+          "Debt-to-equity conversion proceeds",
+          "Declined mandatory prepayment proceeds",
+          "EoD blocker on restricted payments",
+          "Ratio test required for usage",
+          "Available for RP, RDP, and Investments",
+          "Anti-double-dip provisions"
+        ],
+        "market_position": "Market standard for available amount / builder basket reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "(i) the percentage of Excess Cash Flow, commencing with respect to the 20[ ] fiscal year equal to the percentage thereof that is not taken into account in calculating the Excess Cash Flow prepayment of the Term Loans for the applicable year (ii) the net cash proceeds from qualified equity issuances of [Holdings (to the extent contributed to the common equity capital of the Borrower)/the Borrower] ",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "available_amount.sharing_mechanism",
+        "available_amount.conditionality_matrix"
+      ],
+      "type": "concept",
+      "definition_source": "Learning Material: 'Available for Restricted Payments, Investments and Restricted Debt Payments. Governor is least restrictive for Investments.' PC Term Comparison: 'Reallocation typically limited to reallocating from RPs to RDPs/Investments and RDPs to Investments but not the other way.'",
+      "pc_ref": [
+        ": 'Reallocation typically limited to reallocating from RPs to RDPs/Investments and RDPs to Investments but not the other way.'"
+      ]
+    },
+    {
+      "children": [
+        {
+          "id": "cash_flow.available_amount.maintenance_covenant_as_mitigant.compliance_test",
+          "name": "Pro Forma Compliance Test",
+          "definition": "Requirement to demonstrate pro forma compliance with maintenance financial covenants (typically leverage ratio) before utilizing Available Amount capacity for restricted payments or investments.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "cash_flow",
+          "family_id": "cash_flow.available_amount",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "DLS Preferred Row 7 (Letters of Credit); DLS Preferred Row 9 (Accordion); DLS Preferred Row 14 (Delayed Draw Term Loans)"
+        },
+        {
+          "id": "cash_flow.available_amount.maintenance_covenant_as_mitigant.ratio_threshold",
+          "name": "Ratio Threshold Level",
+          "definition": "The specific financial ratio level (e.g., inside leverage ratio by 0.25-0.50x) that must be satisfied on a pro forma basis before Available Amount usage is permitted as a protective mitigant.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "cash_flow",
+          "family_id": "cash_flow.available_amount",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "DLS Preferred Row 9 (Accordion); DLS Preferred Row 14 (Delayed Draw Term Loans); DLS Preferred Row 86 (h. Available Amount)"
+        },
+        {
+          "id": "cash_flow.available_amount.maintenance_covenant_as_mitigant.basket_scope",
+          "name": "Applicable Basket Scope",
+          "definition": "Which specific negative covenant baskets (restricted payments, investments, debt prepayments) require maintenance covenant compliance as a precondition to Available Amount utilization.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "cash_flow",
+          "family_id": "cash_flow.available_amount",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "DLS Preferred Row 7 (Letters of Credit); DLS Preferred Row 14 (Delayed Draw Term Loans); DLS Preferred Row 78 (Affirmative covenants)"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Per KCT Cat 4 Item 1, the ability to pay dividends without reference to baskets or ratios requires escalation, but 'outside counsel to note potential mitigants such as the presence of an effective maintenance covenant (like a Total Net Leverage) when determining if elevation is required.' A springing or maintenance financial covenant provides backstop protection even when individual RP baskets lack leverage tests.",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "medium",
+      "family_id": "cash_flow.available_amount",
+      "id": "cash_flow.available_amount.maintenance_covenant_as_mitigant",
+      "kct_ref": [
+        "cat4.1"
+      ],
+      "level": 2,
+      "name": "maintenance covenant as mitigant",
+      "type": "concept",
+      "extraction_refs": {
+        "concept_area": "available_amount",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "shape_ref": null,
+        "section_locations": [
+          "ARTICLE X",
+          "Section 10",
+          "Section 10.04",
+          "Section 10.06"
+        ],
+        "section_location_source": "family_siblings",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "readiness_reason": "no_playbook_concept_available",
+        "section_location": "ARTICLE I Definitions (Available Amount / Builder Basket)"
+      },
+      "definition_source": "KCT Cat 4 Item 1: 'Outside counsel to note potential mitigants such as the presence of an effective maintenance covenant (like a Total Net Leverage) when determining if elevation is required.'"
+    }
+  ],
+  "corpus_prevalence": "high",
+  "definition": "The builder basket / available amount framework that accumulates capacity from retained Excess Cash Flow, equity contributions, and investment returns over the life of the credit agreement, providing a growing pool of permitted capacity for restricted payments, investments, and restricted debt payments. In credit agreements, typically called the 'Cumulative Credit' or 'Available Amount'. The builder basket formula is: Starter + Financial Performance Builder (retained ECF or 50% of cumulative CNI) + New Qualified Equity Proceeds + Returns on Investments + [Declined Mandatory Prepayments] + [Retained Asset Sale Proceeds from leverage-based step-downs], minus cumulative usages. Usage is typically shared across RP, Investment, and RDP baskets with differentiated conditions -- tightest for RPs (leverage test + EoD blocker), intermediate for RDPs, and lightest for investments.",
+  "dls_ref": [
+    "DLS:79:Indebtedness",
+    "DLS:86:Available Amount"
+  ],
+  "dna_pattern_refs": [
+    "ABSENCE:NO_AVAILABLE_AMOUNT_FOR_RPS",
+    "BASKET:AVAILABLE_AMOUNT:WITH_EOD_BLOCKER:WITH_FINANCIAL_COVENANT:WITH_5X_LEVERAGE_RATIO",
+    "BASKET:AVAILABLE_AMOUNT:WITH_LEVERAGE_TEST:4X+DEFAULT_BLOCKER:PRO_FORMA",
+    "BASKET:FIXED_DOLLAR:PCT_EBITDA:GREATER_OF:NO_RATIO_TEST:WITH_DEFAULT_BLOCKER",
+    "BASKET:FIXED_DOLLAR:PCT_EBITDA:GREATER_OF:WITH_RATIO_CONDITION:WITH_DEFAULT_BLOCKER",
+    "BASKET:NO_RATIO_TEST:WITH_DEFAULT_BLOCKER"
+  ],
+  "domain_id": "cash_flow",
+  "edgar_analysis_refs": [
+    {
+      "file": "TERM_ANALYSIS_AVAILABLE_AMOUNT_DEFINITION.md",
+      "topic": "AVAILABLE_AMOUNT_DEFINITION"
+    }
+  ],
+  "extraction_difficulty": "hard",
+  "family_id": "cash_flow.available_amount",
+  "golden_record_ids": [
+    "available_amount.available_amount_basket_inv"
+  ],
+  "golden_record_refs": [
+    {
+      "deal_count": 3,
+      "golden_concept_id": "available_amount.available_amount_basket_inv",
+      "has_absence": true,
+      "parameter_count": 2,
+      "total_records": 6
+    }
+  ],
+  "id": "cash_flow.available_amount",
+  "kct_ref": [
+    "cat4.1",
+    "cat4.3",
+    "cat4.7"
+  ],
+  "level": 1,
+  "market_benchmarks": {
+    "pctc_starter_umm_bslr": "Aggressive 40-50% EBITDA; Otherwise 10-30%",
+    "pctc_starter_cmm_lmm": "Typically 5-25% EBITDA",
+    "pctc_builder_metric": "Typically Retained ECF based but for UMM/BSLR transactions may also be 50% of CNI",
+    "pctc_retained_ecf_guardrails": "Retained ECF should only be increased by retained percentage of ECF and not the net ECF unswept amount. De minimis deductible should not build Retained ECF. Dollar for dollar deducts to mandatory prepayment for voluntary prepayments should not build Retained ECF.",
+    "pctc_asset_sale_proceeds": "Typically will reject retained asset sale proceeds building Available Amount other than transactions with asset sale percentage stepdown",
+    "pctc_investment_returns": "Typically will seek to cap returns on investment type baskets to amount of original investment",
+    "pctc_eod_blocker_starter_umm": "Aggressive often no EOD stopper or limited to bktcy/payment. CMM/LMM: full EOD stopper + Leverage Test.",
+    "pctc_eod_blocker_grower": "Typically full EOD stopper but in Aggressive deals RJDPs may be subject to payment/bktcy EOD stopper and RIs may have no stopper at all",
+    "pctc_leverage_test_rp_umm": "Closing TLR",
+    "pctc_leverage_test_rp_cmm_lmm": "0.75-1.0x inside closing TLR; Aggressive 0.5-0.75x inside",
+    "pctc_leverage_test_rdp_cmm_lmm": "0.5-0.75x inside; Aggressive 0.5x inside",
+    "pctc_leverage_test_ri_cmm_lmm": "Closing TLR; Aggressive no condition or subject to Financial Covenant",
+    "source": "PC Term Comparison, Available Amount section",
+    "_source": "PC Term Comparison, Available Amount section (lines 71-100)"
+  },
+  "market_data": {
+    "adoption_rate": "85-90%",
+    "median_leverage_test": "4.75x TNL"
+  },
+  "name": "Available Amount / Builder Basket",
+  "negotiation_spectrum": {
+    "aggressive_position": "Starter dollar basket 50% of CNI based builder (deducting 100% of losses) Other Add Backs: (i) contributions of cash and the fair value of assets received after the Closing Date (other than from restricted subsidiaries and excluded contributions, disqualified equity, equity used to raise contribution debt and equity used to fund an equity cure) (ii) returns (including proceeds upon sale, return of",
+    "dls_source_rows": [
+      {
+        "label": "Available Amount / Builder Basket",
+        "row": 86
+      }
+    ],
+    "is_highlighted": true,
+    "key_negotiation_points": [
+      "Available Amount builder components",
+      "Retained ECF percentage as builder",
+      "CNI builder (50% of CNI minus 100% of losses)",
+      "Starter dollar basket",
+      "Equity proceeds as builder",
+      "Investment returns/distributions as builder",
+      "Debt-to-equity conversion proceeds",
+      "Declined mandatory prepayment proceeds",
+      "EoD blocker on restricted payments",
+      "Ratio test required for usage",
+      "Available for RP, RDP, and Investments",
+      "Anti-double-dip provisions"
+    ],
+    "market_position": "Market standard for available amount / builder basket reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+    "preferred_position": "Limited Available Amount: retained ECF + qualified equity proceeds only; usage subject to no-default and pro forma leverage compliance",
+    "source": "R14-B"
+  },
+  "playbook_ref": {
+    "concept_id": "available_amount.available_amount_basket_inv",
+    "dependency_count": 4,
+    "extraction_difficulty": "very_hard",
+    "phase": 3
+  },
+  "r18_concept_ids": [
+    "neg_cov_other.carryforward_carryback"
+  ],
+  "review_ref": [
+    {
+      "coverage": "full",
+      "row": 18,
+      "term": "Revolver currencies"
+    },
+    {
+      "coverage": "full",
+      "row": 45,
+      "term": "ECF Sweep – Holiday"
+    },
+    {
+      "coverage": "full",
+      "row": 48,
+      "term": "ECF Sweep – Credits"
+    },
+    {
+      "coverage": "full",
+      "row": 65,
+      "term": "Negative Covenants – high water mark ratchet"
+    },
+    {
+      "coverage": "full",
+      "row": 84,
+      "term": "Other"
+    },
+    {
+      "coverage": "full",
+      "row": 90,
+      "term": "Negative Covenants – Investments – Investments in ‘similar businesses’"
+    },
+    {
+      "coverage": "full",
+      "row": 95,
+      "term": "Negative Covenants – Investments – Other"
+    },
+    {
+      "coverage": "full",
+      "row": 97,
+      "term": "Negative Covenants – Dispositions – 75% Cash Consideration Basket"
+    },
+    {
+      "coverage": "full",
+      "row": 103,
+      "term": "Negative Covenants – Restricted Payments –"
+    },
+    {
+      "coverage": "full",
+      "row": 104,
+      "term": "Negative Covenants – Restricted Payments – General Basket"
+    },
+    {
+      "coverage": "full",
+      "row": 106,
+      "term": "Negative Covenants – Restricted Payments – Employee Stock Repurchases"
+    },
+    {
+      "coverage": "full",
+      "row": 108,
+      "term": "Negative Covenants – Restricted Payments – Post-IPO Basket"
+    },
+    {
+      "coverage": "full",
+      "row": 109,
+      "term": "Negative Covenants – Restricted Payments – Management Agreement"
+    },
+    {
+      "coverage": "full",
+      "row": 110,
+      "term": "Negative Covenants – Restricted Payments – Permitted Tax Distribution"
+    },
+    {
+      "coverage": "full",
+      "row": 118,
+      "term": "Negative Covenants – Available Amount"
+    },
+    {
+      "coverage": "full",
+      "row": 119,
+      "term": "Negative Covenants – Available Amount – Starter"
+    },
+    {
+      "coverage": "full",
+      "row": 120,
+      "term": "Negative Covenants – Available Amount – Builder"
+    },
+    {
+      "coverage": "full",
+      "row": 121,
+      "term": "Negative Covenants – Available Amount – EoD Blocker"
+    },
+    {
+      "coverage": "full",
+      "row": 122,
+      "term": "Negative Covenants – Available Amount – Ratio Test"
+    },
+    {
+      "coverage": "full",
+      "row": 123,
+      "term": "Negative Covenants – Available Amount – Other"
+    },
+    {
+      "coverage": "full",
+      "row": 126,
+      "term": "Negative Covenants – Transactions with Affiliates – Sponsor Management Fees"
+    }
+  ],
+  "search_strategy_ref": {
+    "heading_pattern_count": 0,
+    "keyword_anchor_count": 8,
+    "r18_family": "available_amount",
+    "term_override_count": 14
+  },
+  "type": "family",
+  "definition_source": "Learning Material, Section 3 'The Builder Basket': 'The borrower may grow the Builder Basket over time based on a specified financial performance metric + other transactions that are supposed to increase (or refresh) the borrowers equity cushion.' DLS Preferred row 86 (Available Amount): builder = retained ECF + equity proceeds, with conditions for usage. PC Term Comparison, Available Amount section."
+}

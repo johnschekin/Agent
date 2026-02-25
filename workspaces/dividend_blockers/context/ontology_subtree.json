@@ -1,0 +1,738 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Any Event of Default blocks all distributions. Broadest protection. Standard for general and builder baskets. Covers financial covenant breaches, cross-defaults, judgments, ERISA, change of control, and all other EoD categories.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.dividend_blockers",
+          "id": "cash_flow.dividend_blockers.db_eod_blocker.full_eod",
+          "kct_ref": [
+            "cat4.7"
+          ],
+          "level": 3,
+          "name": "Full Event of Default",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 7"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Only payment default and bankruptcy/insolvency events trigger the blocker. Permits distributions during financial covenant breach, cross-default, or judgment EoDs.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.dividend_blockers",
+          "id": "cash_flow.dividend_blockers.db_eod_blocker.payment_bankruptcy_only",
+          "kct_ref": [
+            "cat4.7"
+          ],
+          "level": 3,
+          "name": "Payment and Bankruptcy EoD Only",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 7"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "A curated list of 'Specified Defaults' (typically payment, bankruptcy, breach of certain negative covenants) triggers the blocker. Middle ground between full EoD and payment-only. The Specified Default definition itself is a key negotiation item.",
+          "dls_ref": [
+            "DLS:57:Specified Representations"
+          ],
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.dividend_blockers",
+          "id": "cash_flow.dividend_blockers.db_eod_blocker.specified_default",
+          "level": 3,
+          "name": "Specified Default Only",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 57 (Specified Representations)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "No Event of Default condition on the basket at all. Extremely aggressive -- permits distributions even during ongoing defaults. Seen primarily in uncapped ratio baskets in UMM/BSL deals where leverage test is deemed sufficient protection.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.dividend_blockers",
+          "id": "cash_flow.dividend_blockers.db_eod_blocker.no_eod_condition",
+          "level": 3,
+          "name": "No EoD Condition",
+          "red_flags": [
+            {
+              "category": "missing_protection",
+              "flag_id": "rf_cf_004",
+              "severity": "high",
+              "text": "Builder basket not subject to EoD blocker -- permits distributions from the Available Amount even during Events of Default"
+            }
+          ],
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Prohibition on distributions during any Event of Default. Per PC Term Comparison: 'Clients generally prefer EOD stoppers on the baskets that would ordinarily have them and not payment/bktcy stoppers esp RP and incurrence basket baskets.' Per DLS Preferred row 84: 'no default or event of default has occurred and is continuing before or thereafter.' The broadest blocker, covering all 14+ EoD categories including financial covenant breach, cross-default, change of control, ERISA, and judgment.",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "other_neg_covs",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE IX",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "Section 1.01",
+          "Section 1.01 / 10.5"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "boolean",
+        "section_location": "ARTICLE VI-VII (Negative Covenants - Restricted Payments)"
+      },
+      "family_id": "cash_flow.dividend_blockers",
+      "id": "cash_flow.dividend_blockers.db_eod_blocker",
+      "kct_ref": [
+        "cat4.7"
+      ],
+      "level": 2,
+      "name": "Event of Default Blocker",
+      "red_flags": [
+        {
+          "category": "missing_protection",
+          "flag_id": "rf_cf_013",
+          "severity": "high",
+          "text": "RDP general basket has no default blocker -- permits junior debt payments during Events of Default when senior debt is at risk"
+        }
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 93,
+          "term": "Negative Covenants – Investments – Ratio Basket"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison: 'Clients prefer EOD stoppers not payment/bktcy stoppers.' DLS Preferred row 84: 'no default or event of default has occurred and is continuing.'"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Blocks RDP when payment default exists on subordinated indebtedness. Aligns with subordination agreement provisions that prohibit junior debt service during senior default periods.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.dividend_blockers",
+          "id": "cash_flow.dividend_blockers.db_payment_default_blocker.subordinated_debt",
+          "level": 3,
+          "name": "Subordinated Debt Payment Default",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 13 (Leverage Ratios); DLS Preferred Row 14 (Delayed Draw Term Loans); DLS Preferred Row 15 (Limited Condition Acquisition)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Blocks RDP when payment default exists on junior lien indebtedness. More nuanced than subordinated debt blocker because junior lien debt may not have a separate subordination agreement.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.dividend_blockers",
+          "id": "cash_flow.dividend_blockers.db_payment_default_blocker.junior_lien_debt",
+          "level": 3,
+          "name": "Junior Lien Debt Payment Default",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 112,
+              "term": "Negative Covenants – Restricted Debt Payments – Scope"
+            },
+            {
+              "coverage": "full",
+              "row": 117,
+              "term": "Negative Covenants – Restricted Debt Payments – Earnouts"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 112 (Negative Covenants – Restricted Debt Payments – Scope); Review Template Row 117 (Negative Covenants – Restricted Debt Payments – Earnouts)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Specific blocker tied to payment defaults on the credit facility or junior/subordinated debt. Per KCT Cat 4 Item 7: 'Absence of bankruptcy or payment default blocker for restricted payments made under the available amount and/or builder baskets' is a risk escalation item. Per PC Term Comparison: in TTS transactions, clients may accept payment/bankruptcy EoD only, but this is the aggressive end of the spectrum.",
+      "dls_ref": [
+        "DLS:51:Payment of fees",
+        "DLS:90:Events of Default"
+      ],
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "other_neg_covs",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE IX",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "Section 1.01",
+          "Section 1.01 / 10.5"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "boolean",
+        "section_location": "ARTICLE VI-VII (Negative Covenants - Restricted Payments)"
+      },
+      "family_id": "cash_flow.dividend_blockers",
+      "id": "cash_flow.dividend_blockers.db_payment_default_blocker",
+      "kct_ref": [
+        "cat4.7",
+        "cat5.3"
+      ],
+      "level": 2,
+      "name": "Payment Default Blocker on Junior Debt",
+      "red_flags": [
+        {
+          "category": "missing_protection",
+          "flag_id": "rf_cf_013",
+          "severity": "high",
+          "text": "RDP general basket has no default blocker -- permits junior debt payments during Events of Default when senior debt is at risk"
+        }
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 64,
+          "term": "Negative Covenants – General"
+        },
+        {
+          "coverage": "full",
+          "row": 71,
+          "term": "Negative Covenants – double dip"
+        },
+        {
+          "coverage": "full",
+          "row": 103,
+          "term": "Negative Covenants – Restricted Payments –"
+        },
+        {
+          "coverage": "full",
+          "row": 104,
+          "term": "Negative Covenants – Restricted Payments – General Basket"
+        },
+        {
+          "coverage": "full",
+          "row": 106,
+          "term": "Negative Covenants – Restricted Payments – Employee Stock Repurchases"
+        },
+        {
+          "coverage": "full",
+          "row": 108,
+          "term": "Negative Covenants – Restricted Payments – Post-IPO Basket"
+        },
+        {
+          "coverage": "full",
+          "row": 109,
+          "term": "Negative Covenants – Restricted Payments – Management Agreement"
+        },
+        {
+          "coverage": "full",
+          "row": 110,
+          "term": "Negative Covenants – Restricted Payments – Permitted Tax Distribution"
+        },
+        {
+          "coverage": "full",
+          "row": 111,
+          "term": "Negative Covenants – Restricted Debt Payments"
+        },
+        {
+          "coverage": "full",
+          "row": 112,
+          "term": "Negative Covenants – Restricted Debt Payments – Scope"
+        },
+        {
+          "coverage": "full",
+          "row": 113,
+          "term": "Negative Covenants – Restricted Debt Payments – Threshold"
+        },
+        {
+          "coverage": "full",
+          "row": 114,
+          "term": "Negative Covenants – Restricted Debt Payments – General Basket"
+        },
+        {
+          "coverage": "full",
+          "row": 116,
+          "term": "Negative Covenants – Restricted Debt Payments – Refinancings"
+        },
+        {
+          "coverage": "full",
+          "row": 117,
+          "term": "Negative Covenants – Restricted Debt Payments – Earnouts"
+        },
+        {
+          "coverage": "full",
+          "row": 121,
+          "term": "Negative Covenants – Available Amount – EoD Blocker"
+        },
+        {
+          "coverage": "full",
+          "row": 134,
+          "term": "Assignments – Affiliated lenders and buybacks"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "KCT Cat 4 Item 7: payment/bankruptcy default blocker as risk escalation item. PC Term Comparison: 'TTS may accept bktcy/payment EoD.'"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Which leverage ratio applies: Total Net Leverage (64%), First Lien Net (20%), Senior Secured (10%), or FCCR (6%). Total Net is the institutional standard; First Lien is more borrower-friendly as it excludes unsecured and subordinated debt.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.dividend_blockers",
+          "id": "cash_flow.dividend_blockers.db_leverage_blocker.ratio_metric",
+          "kct_ref": [
+            "cat2.1"
+          ],
+          "level": 3,
+          "name": "Leverage Ratio Metric",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "The leverage ratio threshold. Median 4.75x for builder basket, higher (often 0.25-0.5x cushion) for ratio basket. Conservative: 3.5x or below. Aggressive: 5.5x+. Market standard allows 0.25x inside the financial covenant level.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.dividend_blockers",
+          "id": "cash_flow.dividend_blockers.db_leverage_blocker.threshold_level",
+          "level": 3,
+          "name": "Threshold Level",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether the pro forma calculation gives effect to the distribution itself (cash leaves the restricted group) and any related financing. Standard: pro forma after giving effect. Aggressive: tested before giving effect, overstating available capacity.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.dividend_blockers",
+          "id": "cash_flow.dividend_blockers.db_leverage_blocker.pro_forma_methodology",
+          "level": 3,
+          "name": "Pro Forma Methodology",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 9 (Accordion); DLS Preferred Row 14 (Delayed Draw Term Loans); DLS Preferred Row 15 (Limited Condition Acquisition)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Restricts distributions unless a pro forma leverage test is satisfied. Per DLS Preferred row 86: 'pro forma compliance with a Senior Secured Net Leverage Ratio and a Total Net Leverage Ratio.' Per PC Term Comparison: ratio thresholds differentiated by usage type -- RPs at 0.75-1.0x inside closing TLR for CMM/LMM, RDPs at 0.5-0.75x inside, investments lightest. The leverage blocker functions as a gating condition that scales with borrower performance.",
+      "dls_ref": [
+        "DLS:13:Leverage Ratios",
+        "DLS:41:Maximum leverage"
+      ],
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "other_neg_covs",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE IX",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "Section 1.01",
+          "Section 1.01 / 10.5"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "boolean",
+        "section_location": "ARTICLE VI-VII (Negative Covenants - Restricted Payments)"
+      },
+      "family_id": "cash_flow.dividend_blockers",
+      "id": "cash_flow.dividend_blockers.db_leverage_blocker",
+      "level": 2,
+      "name": "Pro Forma Leverage Test Blocker",
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 93,
+          "term": "Negative Covenants – Investments – Ratio Basket"
+        },
+        {
+          "coverage": "full",
+          "row": 105,
+          "term": "Negative Covenants – Restricted Payments – Ratio Basket"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 86: 'pro forma compliance with SSNLR and TNLR.' PC Term Comparison: segment-level ratio thresholds."
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Absolute dollar minimum (e.g., $10M minimum availability). Simple to test but does not scale with business size.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.dividend_blockers",
+          "id": "cash_flow.dividend_blockers.db_liquidity_blocker.dollar_threshold",
+          "level": 3,
+          "name": "Fixed Dollar Threshold",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 79 (a. Indebtedness); DLS Preferred Row 80 (b. Liens); DLS Preferred Row 81 (c. Investments)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Minimum availability as percentage of total revolving commitments (e.g., 15-20%). Scales with facility size. Standard in ABL structures.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.dividend_blockers",
+          "id": "cash_flow.dividend_blockers.db_liquidity_blocker.pct_of_commitments",
+          "level": 3,
+          "name": "Percentage of Commitments",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 59 (Financial Covenant – testing thresholds)"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Requires minimum liquidity (cash + revolver availability) or minimum revolver availability as a condition to distributions. Common in ABL facilities and smaller middle market deals. Provides a cash flow cushion separate from leverage tests. Per PC Term Comparison framework: tighter formulations in CMM/LMM.",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "other_neg_covs",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE IX",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "Section 1.01",
+          "Section 1.01 / 10.5"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "boolean",
+        "section_location": "ARTICLE VI-VII (Negative Covenants - Restricted Payments)"
+      },
+      "family_id": "cash_flow.dividend_blockers",
+      "id": "cash_flow.dividend_blockers.db_liquidity_blocker",
+      "level": 2,
+      "market_benchmarks": {
+        "source": "R19-A_gap_noted",
+        "status": "audited_no_data_available"
+      },
+      "name": "Minimum Liquidity / Availability Requirement",
+      "type": "concept",
+      "definition_source": "PC Term Comparison framework: tighter formulations in CMM/LMM. DLS Preferred: ABL-style liquidity conditions.",
+      "pc_ref": [
+        "framework: tighter formulations in CMM/LMM. DLS Preferred: ABL-style liquidity conditions."
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "low",
+          "definition": "Length of the initial restricted period. Range: 6 months to 24 months. 12 months is standard for private credit LMM; 18 months for more restrictive deals.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "easy",
+          "family_id": "cash_flow.dividend_blockers",
+          "id": "cash_flow.dividend_blockers.db_restricted_period.duration",
+          "level": 3,
+          "name": "Restricted Period Duration",
+          "type": "sub_component"
+        },
+        {
+          "id": "cash_flow.dividend_blockers.db_restricted_period.early_termination",
+          "name": "Early Termination Conditions",
+          "level": 3,
+          "type": "sub_component",
+          "domain_id": "cash_flow",
+          "family_id": "cash_flow.dividend_blockers",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "easy",
+          "definition": "A time-based restricted period has duration, but also trigger events and early termination conditions.",
+          "definition_source": "Review Template Row 119 (Negative Covenants – Available Amount – Starter)"
+        }
+      ],
+      "corpus_prevalence": "low",
+      "definition": "Time-based restriction preventing distributions during an initial period after closing. Per Learning Material framework: seasoning period ensures the business performs post-acquisition before allowing value extraction. More common in private credit than BSL. Per DLS Preferred framework: the first ECF sweep period begins with the first full fiscal year after closing, creating an implicit seasoning period.",
+      "dls_ref": [
+        "DLS:24:Post-Close Flex Period",
+        "DLS:50:Marketing period",
+        "DLS:84:Restricted Payments"
+      ],
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "other_neg_covs",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE IX",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "Section 1.01",
+          "Section 1.01 / 10.5"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "boolean",
+        "section_location": "ARTICLE VI-VII (Negative Covenants - Restricted Payments)"
+      },
+      "family_id": "cash_flow.dividend_blockers",
+      "id": "cash_flow.dividend_blockers.db_restricted_period",
+      "level": 2,
+      "name": "Time-Based Restricted Period",
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 45,
+          "term": "ECF Sweep – Holiday"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 70: 'First excess cash flow prepayment required for the fiscal year ended [date].' Learning Material framework: seasoning period before distributions."
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Defined period (typically 179 days) during which junior debt payments are blocked after senior default notice. Limited to one blockage period per default. Standard in subordination agreements for mezzanine and second lien debt.",
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "medium",
+          "family_id": "cash_flow.dividend_blockers",
+          "id": "cash_flow.dividend_blockers.db_subordination_blocker.payment_blockage_period",
+          "kct_ref": [
+            "cat5.3"
+          ],
+          "level": 3,
+          "name": "Payment Blockage Period",
+          "red_flags": [
+            {
+              "category": "missing_protection",
+              "flag_id": "rf_cf_011",
+              "severity": "high",
+              "text": "No payment blockage period in subordination agreement for junior debt -- junior debt payments continue during senior default periods"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 5 Item 3"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Broader standstill preventing junior lender enforcement actions during the blockage period. Complements the payment blockage by preventing acceleration, litigation, or collateral enforcement by junior creditors.",
+          "dls_ref": [
+            "DLS:96:Buyback Provisions"
+          ],
+          "domain_id": "cash_flow",
+          "extraction_difficulty": "hard",
+          "family_id": "cash_flow.dividend_blockers",
+          "id": "cash_flow.dividend_blockers.db_subordination_blocker.standstill_provisions",
+          "level": 3,
+          "name": "Standstill Provisions",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 96 (Buyback Provisions)"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Restrictions from subordination agreements that override or supplement CA provisions. Per Learning Material: 'Changes to the terms of the other debt, such as to shorten the tenor, increase principal amortization, tighten covenants or increase interest rates, may adversely affect the borrowers credit profile.' The subordination agreement is a separate document that may independently block junior debt payments during senior default periods.",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "other_neg_covs",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE IX",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "Section 1.01",
+          "Section 1.01 / 10.5"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "boolean",
+        "section_location": "ARTICLE VI-VII (Negative Covenants - Restricted Payments)"
+      },
+      "family_id": "cash_flow.dividend_blockers",
+      "id": "cash_flow.dividend_blockers.db_subordination_blocker",
+      "level": 2,
+      "name": "Subordination Agreement Restrictions",
+      "red_flags": [
+        {
+          "category": "missing_protection",
+          "flag_id": "rf_cf_011",
+          "severity": "high",
+          "text": "No payment blockage period in subordination agreement for junior debt -- junior debt payments continue during senior default periods"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "Learning Material Section (3): subordination agreement restrictions on junior debt amendments. Separate document overriding CA provisions."
+    },
+    {
+      "children": [
+        {
+          "id": "cash_flow.dividend_blockers.affiliate_transaction_fair_value_certification.certification_standard",
+          "name": "Certification Standard",
+          "definition": "The evidentiary standard required — board resolution, officer certificate, or independent fairness opinion — to certify that an affiliate transaction is on arm's-length terms and fair to the borrower.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "cash_flow",
+          "family_id": "cash_flow.dividend_blockers",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium"
+        },
+        {
+          "id": "cash_flow.dividend_blockers.affiliate_transaction_fair_value_certification.dollar_threshold",
+          "name": "Dollar Threshold Tiers",
+          "definition": "Tiered dollar thresholds triggering escalating governance — e.g., officer cert above $5M, board approval above $15M, fairness opinion above $25M — scaling oversight to transaction magnitude.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "cash_flow",
+          "family_id": "cash_flow.dividend_blockers",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "Review Template Row 42 (Asset Sale Sweep - Threshold); Review Template Row 47 (ECF Sweep – Threshold)"
+        },
+        {
+          "id": "cash_flow.dividend_blockers.affiliate_transaction_fair_value_certification.permitted_exceptions",
+          "name": "Permitted Transaction Exceptions",
+          "definition": "Transactions exempt from fair-value certification, including management fees within agreed caps, tax distributions, customary indemnification, and transactions approved in the original acquisition agreement.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "cash_flow",
+          "family_id": "cash_flow.dividend_blockers",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "DLS Preferred Row 33 (d. Alternate transaction fee); DLS Preferred Row 84 (f. Restricted Payments)"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Per KCT Cat 4 Item 1: 'Outside counsel to note potential mitigants such as the presence of an effective maintenance covenant (like a Total Net Leverage) when determining if elevation is required.' Affiliate transaction fair-value certification requires that transactions with affiliates (including sponsor management fees and intercompany transactions) be conducted at arm's length and on terms no less favorable than those that would be obtained in a comparable transaction with a non-affiliate. Per PC Term Comparison: 'Management fees should be capped in the covenant and subject to a D/EoD blocker.'",
+      "domain_id": "cash_flow",
+      "extraction_difficulty": "medium",
+      "family_id": "cash_flow.dividend_blockers",
+      "id": "cash_flow.dividend_blockers.affiliate_transaction_fair_value_certification",
+      "kct_ref": [
+        "cat4.1"
+      ],
+      "level": 2,
+      "name": "affiliate transaction fair-value certification",
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 124,
+          "term": "Negative Covenants – Transactions with Affiliates –"
+        },
+        {
+          "coverage": "full",
+          "row": 125,
+          "term": "Negative Covenants – Transactions with Affiliates – De Minimis Threshold"
+        }
+      ],
+      "type": "concept",
+      "extraction_refs": {
+        "concept_area": "other_neg_covs",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "shape_ref": null,
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE IX",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "Section 1.01",
+          "Section 1.01 / 10.5"
+        ],
+        "section_location_source": "family_siblings",
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "boolean",
+        "section_location": "ARTICLE VI-VII (Negative Covenants - Restricted Payments)"
+      },
+      "definition_source": "KCT Cat 4 Item 1: mitigants for affiliate transactions. PC Term Comparison: 'Management fees capped and subject to D/EoD blocker.'"
+    }
+  ],
+  "corpus_prevalence": "high",
+  "definition": "Conditions that must be satisfied before distributions can be made -- typically requiring no Event of Default, pro forma financial covenant compliance, and absence of specified defaults. Per Learning Material: 'Most material RP baskets should be subject to no Event of Default at the time of the RP or resulting from the RP.' Per KCT Cat 4 Item 7: absence of bankruptcy/payment default blocker for AA/builder basket usage is a risk escalation item. PC Term Comparison: 'Clients generally prefer EOD stoppers on baskets that would ordinarily have them.'",
+  "dls_ref": [
+    "DLS:81:Investments",
+    "DLS:83:Dispositions",
+    "DLS:94:Assignments"
+  ],
+  "domain_id": "cash_flow",
+  "extraction_difficulty": "medium",
+  "family_id": "cash_flow.dividend_blockers",
+  "id": "cash_flow.dividend_blockers",
+  "kct_ref": [
+    "cat4.1",
+    "cat4.7"
+  ],
+  "level": 1,
+  "market_benchmarks": {
+    "abl_non_standard_basket_prevalence": "[cat4.7] KCT cat4.7 requires prevalence/severity data for 'ABL non-standard basket prevalence' but no existing node provides this benchmark."
+  },
+  "market_data": {
+    "adoption": "98.4%",
+    "restriction_rate": "91.8%"
+  },
+  "name": "Dividend Blockers / EoD Conditions",
+  "r18_concept_ids": [
+    "neg_cov_other.dividend_blockers",
+    "neg_cov_restricted_payments.dividend_blockers"
+  ],
+  "review_ref": [
+    {
+      "coverage": "full",
+      "row": 64,
+      "term": "Negative Covenants – General"
+    },
+    {
+      "coverage": "full",
+      "row": 93,
+      "term": "Negative Covenants – Investments – Ratio Basket"
+    },
+    {
+      "coverage": "full",
+      "row": 94,
+      "term": "Negative Covenants – Investments – Permitted Acquisitions"
+    },
+    {
+      "coverage": "full",
+      "row": 97,
+      "term": "Negative Covenants – Dispositions – 75% Cash Consideration Basket"
+    },
+    {
+      "coverage": "full",
+      "row": 104,
+      "term": "Negative Covenants – Restricted Payments – General Basket"
+    },
+    {
+      "coverage": "full",
+      "row": 105,
+      "term": "Negative Covenants – Restricted Payments – Ratio Basket"
+    },
+    {
+      "coverage": "full",
+      "row": 109,
+      "term": "Negative Covenants – Restricted Payments – Management Agreement"
+    },
+    {
+      "coverage": "full",
+      "row": 110,
+      "term": "Negative Covenants – Restricted Payments – Permitted Tax Distribution"
+    },
+    {
+      "coverage": "full",
+      "row": 121,
+      "term": "Negative Covenants – Available Amount – EoD Blocker"
+    }
+  ],
+  "type": "family",
+  "definition_source": "Learning Material: 'Most material RP baskets should be subject to no Event of Default.' KCT Cat 4 Item 7. PC Term Comparison: 'Clients generally prefer EOD stoppers.'"
+}

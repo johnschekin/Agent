@@ -5,8 +5,11 @@ from pathlib import Path
 from agent.html_utils import (
     InverseMapEntry,
     normalize_html,
+    normalize_quotes,
     read_file,
+    strip_boilerplate,
     strip_html,
+    strip_zero_width,
 )
 
 
@@ -102,3 +105,101 @@ class TestReadFile:
         result = read_file(path, min_size=1000)
         assert result == ""
         path.unlink()
+
+
+class TestStripZeroWidth:
+    """Tests for zero-width character stripping (Imp 14)."""
+
+    def test_removes_zwsp(self) -> None:
+        assert strip_zero_width("Indebted\u200bness") == "Indebtedness"
+
+    def test_removes_zwnj(self) -> None:
+        assert strip_zero_width("some\u200ctext") == "sometext"
+
+    def test_removes_bom(self) -> None:
+        assert strip_zero_width("\ufeffHello") == "Hello"
+
+    def test_removes_multiple(self) -> None:
+        text = "\ufeff\u200bHello\u200c World\u200b"
+        assert strip_zero_width(text) == "Hello World"
+
+    def test_no_change_clean_text(self) -> None:
+        assert strip_zero_width("Clean text") == "Clean text"
+
+    def test_strip_html_applies_zero_width(self) -> None:
+        """strip_html pipeline should remove zero-width chars."""
+        html = "<p>Indebted\u200bness</p>"
+        result = strip_html(html)
+        assert "Indebtedness" in result
+        assert "\u200b" not in result
+
+
+class TestNormalizeQuotes:
+    """Tests for straight→smart quote normalization (Imp 13)."""
+
+    def test_basic_pair(self) -> None:
+        assert normalize_quotes('"Term"') == "\u201cTerm\u201d"
+
+    def test_multiple_pairs(self) -> None:
+        text = '"First" and "Second"'
+        result = normalize_quotes(text)
+        assert result == "\u201cFirst\u201d and \u201cSecond\u201d"
+
+    def test_preserves_smart_quotes(self) -> None:
+        text = "\u201cAlready Smart\u201d"
+        assert normalize_quotes(text) == text
+
+    def test_no_quotes(self) -> None:
+        assert normalize_quotes("No quotes here") == "No quotes here"
+
+    def test_paragraph_spanning(self) -> None:
+        """Quotes that span line breaks should still pair correctly."""
+        text = '"This term\ncontinues here"'
+        result = normalize_quotes(text)
+        assert result.startswith("\u201c")
+        assert result.endswith("\u201d")
+
+    def test_strip_html_applies_quotes(self) -> None:
+        """strip_html pipeline should normalize quotes."""
+        html = '<p>"Borrower" means the party</p>'
+        result = strip_html(html)
+        assert "\u201c" in result
+        assert "\u201d" in result
+
+
+class TestStripBoilerplate:
+    """Tests for EDGAR boilerplate removal (Imp 15)."""
+
+    def test_removes_timestamp(self) -> None:
+        text = "1/16/26, 1:44 PM\nActual content here"
+        result = strip_boilerplate(text)
+        assert "Actual content here" in result
+        assert "1:44 PM" not in result
+
+    def test_removes_sec_url(self) -> None:
+        text = "https://www.sec.gov/Archives/edgar/data/12345/doc.htm\nContent"
+        result = strip_boilerplate(text)
+        assert "Content" in result
+        assert "sec.gov" not in result
+
+    def test_removes_page_marker(self) -> None:
+        text = "Page 1 of 252\nContent"
+        result = strip_boilerplate(text)
+        assert "Content" in result
+        assert "Page 1" not in result
+
+    def test_removes_exhibit_header(self) -> None:
+        text = "EX-10.1\nContent"
+        result = strip_boilerplate(text)
+        assert "Content" in result
+        assert "EX-10" not in result
+
+    def test_preserves_inline_exhibit_reference(self) -> None:
+        """Inline references to exhibits should not be stripped."""
+        text = "as set forth in Exhibit 10.1 attached hereto"
+        result = strip_boilerplate(text)
+        assert "Exhibit 10.1" in result
+
+    def test_preserves_normal_content(self) -> None:
+        text = "The Borrower shall not create any Indebtedness."
+        assert strip_boilerplate(text) == text

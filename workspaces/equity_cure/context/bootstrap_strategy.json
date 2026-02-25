@@ -1,0 +1,256 @@
+[
+  {
+    "id": "fin_framework.equity_cure.number",
+    "name": "Number of Cures",
+    "family_id": "fin_framework.equity_cure",
+    "concept_area": "equity_cure",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Equity Cure",
+        "Cure Right",
+        "Financial Covenant"
+      ],
+      "keyword_anchors": [
+        "equity cure",
+        "cure right",
+        "Specified Equity Contribution",
+        "cure amount"
+      ],
+      "concept_specific_keywords": [
+        "Number of Cures"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.equity_cure.cap_amount",
+    "name": "Cap on Amount",
+    "family_id": "fin_framework.equity_cure",
+    "concept_area": "equity_cure",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Equity Cure",
+        "Cure Right",
+        "Financial Covenant"
+      ],
+      "keyword_anchors": [
+        "equity cure",
+        "cure right",
+        "Specified Equity Contribution",
+        "cure amount"
+      ],
+      "concept_specific_keywords": [
+        "Cap on Amount",
+        "amount necessary"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.equity_cure.netting",
+    "name": "Netting Permitted",
+    "family_id": "fin_framework.equity_cure",
+    "concept_area": "equity_cure",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Equity Cure",
+        "Cure Right",
+        "Financial Covenant"
+      ],
+      "keyword_anchors": [
+        "equity cure",
+        "cure right",
+        "Specified Equity Contribution",
+        "cure amount"
+      ],
+      "concept_specific_keywords": [
+        "Netting Permitted"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.equity_cure.time_limits",
+    "name": "Time Limits",
+    "family_id": "fin_framework.equity_cure",
+    "concept_area": "equity_cure",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Equity Cure",
+        "Cure Right",
+        "Financial Covenant"
+      ],
+      "keyword_anchors": [
+        "equity cure",
+        "cure right",
+        "Specified Equity Contribution",
+        "cure amount"
+      ],
+      "concept_specific_keywords": [
+        "Time Limits"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.equity_cure.standstill",
+    "name": "Standstill Provisions",
+    "family_id": "fin_framework.equity_cure",
+    "concept_area": "equity_cure",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Equity Cure",
+        "Cure Right",
+        "Financial Covenant"
+      ],
+      "keyword_anchors": [
+        "equity cure",
+        "cure right",
+        "Specified Equity Contribution",
+        "cure amount"
+      ],
+      "concept_specific_keywords": [
+        "Standstill Provisions"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.equity_cure.prepay_debt",
+    "name": "Must Prepay Debt",
+    "family_id": "fin_framework.equity_cure",
+    "concept_area": "equity_cure",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Equity Cure",
+        "Cure Right",
+        "Financial Covenant"
+      ],
+      "keyword_anchors": [
+        "equity cure",
+        "cure right",
+        "Specified Equity Contribution",
+        "cure amount"
+      ],
+      "concept_specific_keywords": [
+        "Must Prepay Debt"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.equity_cure.security_type",
+    "name": "Type of Security",
+    "family_id": "fin_framework.equity_cure",
+    "concept_area": "equity_cure",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Equity Cure",
+        "Cure Right",
+        "Financial Covenant"
+      ],
+      "keyword_anchors": [
+        "equity cure",
+        "cure right",
+        "Specified Equity Contribution",
+        "cure amount"
+      ],
+      "concept_specific_keywords": [
+        "Type of Security"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.equity_cure.cured_default",
+    "name": "Cured Default Provisions",
+    "family_id": "fin_framework.equity_cure",
+    "concept_area": "equity_cure",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Equity Cure",
+        "Cure Right",
+        "Financial Covenant"
+      ],
+      "keyword_anchors": [
+        "equity cure",
+        "cure right",
+        "Specified Equity Contribution",
+        "cure amount"
+      ],
+      "concept_specific_keywords": [
+        "Cured Default Provisions"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.equity_cure.specified_transaction",
+    "name": "Specified Transaction Mechanics",
+    "family_id": "fin_framework.equity_cure",
+    "concept_area": "equity_cure",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Equity Cure",
+        "Cure Right",
+        "Financial Covenant"
+      ],
+      "keyword_anchors": [
+        "equity cure",
+        "cure right",
+        "Specified Equity Contribution",
+        "cure amount"
+      ],
+      "concept_specific_keywords": [
+        "Specified Transaction Mechanics"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.equity_cure.sunset",
+    "name": "Sunset and Limitations",
+    "family_id": "fin_framework.equity_cure",
+    "concept_area": "equity_cure",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Equity Cure",
+        "Cure Right",
+        "Financial Covenant"
+      ],
+      "keyword_anchors": [
+        "equity cure",
+        "cure right",
+        "Specified Equity Contribution",
+        "cure amount"
+      ],
+      "concept_specific_keywords": [
+        "Sunset and Limitations"
+      ]
+    }
+  },
+  {
+    "id": "fin_framework.equity_cure.cross_covenant",
+    "name": "Cross-Covenant Interactions",
+    "family_id": "fin_framework.equity_cure",
+    "concept_area": "equity_cure",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Equity Cure",
+        "Cure Right",
+        "Financial Covenant"
+      ],
+      "keyword_anchors": [
+        "equity cure",
+        "cure right",
+        "Specified Equity Contribution",
+        "cure amount"
+      ],
+      "concept_specific_keywords": [
+        "Cross-Covenant Interactions"
+      ]
+    }
+  }
+]

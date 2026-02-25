@@ -241,11 +241,13 @@ class DocumentResult:
     section_texts: list[dict[str, Any]]
     section_features: list[dict[str, Any]]
     clause_features: list[dict[str, Any]]
+    articles: list[dict[str, Any]] = ()  # type: ignore[assignment]
 
     def to_dict(self) -> dict[str, Any]:
         """Convert to the dict format expected by pipeline consumers."""
         return {
             "doc": self.doc,
+            "articles": list(self.articles),
             "sections": self.sections,
             "clauses": self.clauses,
             "definitions": self.definitions,
@@ -353,6 +355,7 @@ def process_document_text(
             section_texts=[],
             section_features=[],
             clause_features=[],
+            articles=[],
         )
 
     # --- FULL NLP PIPELINE ---
@@ -372,6 +375,21 @@ def process_document_text(
             section_fallback_used = True
         else:
             section_parser_mode = "none"
+
+    # Step 6b: Build article records
+    article_records: list[dict[str, Any]] = [
+        {
+            "doc_id": doc_id,
+            "article_num": a.num,
+            "label": a.label,
+            "title": a.title,
+            "concept": a.concept,
+            "char_start": a.char_start,
+            "char_end": a.char_end,
+            "is_synthetic": a.is_synthetic,
+        }
+        for a in outline.articles
+    ]
 
     # Step 7: Parse clauses per section
     all_clauses: list[tuple[str, ClauseNode]] = []
@@ -572,4 +590,5 @@ def process_document_text(
         section_texts=section_text_records,
         section_features=section_feature_records,
         clause_features=clause_feature_records,
+        articles=article_records,
     )

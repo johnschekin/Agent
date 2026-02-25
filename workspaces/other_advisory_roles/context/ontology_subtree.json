@@ -1,0 +1,246 @@
+{
+  "id": "governance.other_advisory_roles",
+  "name": "Other Advisory Roles",
+  "domain_id": "governance",
+  "family_id": "governance.other_advisory_roles",
+  "level": 1,
+  "type": "family",
+  "corpus_prevalence": "medium",
+  "extraction_difficulty": "easy",
+  "definition": "Additional advisory or agency roles beyond the core administrative agent and lead arranger. Review Template row 7 notes: 'Confirm engagement letter scope and bank roles on the bond component; flag deal-away economics and exclusive rights.' Learning Material section on Titles/Roles discusses joint bookrunner, joint lead arranger, sole administrative agent, sole collateral agent, and additional co-agents/co-managers. The syndication framework permits appointment of additional commitment parties and arrangers within specified timeframes and allocation limits. DLS Preferred section on Fees covers the economics of each role.",
+  "children": [
+    {
+      "id": "governance.other_advisory_roles.documentation_agent",
+      "name": "Documentation Agent",
+      "domain_id": "governance",
+      "family_id": "governance.other_advisory_roles",
+      "level": 2,
+      "type": "concept",
+      "corpus_prevalence": "medium",
+      "extraction_difficulty": "easy",
+      "definition": "Entity responsible for preparing and maintaining the credit agreement documentation. Often a title role with limited substantive duties but fee entitlement.",
+      "extraction_refs": {
+        "aligned_difficulty": "easy",
+        "concept_area": "assignments",
+        "difficulty_note": "Documentation agent is typically a named title in the agency/administrative provisions section",
+        "difficulty_source": "ontology",
+        "extraction_ready": true,
+        "playbook_ref": "assignments.agent_roles",
+        "section_locations": [
+          "ARTICLE IX",
+          "ARTICLE XI",
+          "ARTICLE XIII",
+          "Section 9.01",
+          "Section 9.13"
+        ],
+        "shape_ref": "assignments.agent_roles",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.364078+00:00",
+          "term_packs": {
+            "CL_ADVISORY_ROLES": {
+              "label": "Other Advisory Roles",
+              "category": "COMMITMENT_LETTER",
+              "exactPhrases": [
+                "acting in additional capacities",
+                "buy-/sell- side advisor",
+                "staple financing provider",
+                "engagement letter scope",
+                "deal-away economics",
+                "exclusive rights",
+                "rights of first refusal",
+                "alternate transaction fees",
+                "financial advisor"
+              ],
+              "sectionHeaders": [
+                "ROLES AND RESPONSIBILITIES",
+                "ADVISORY ROLES",
+                "ENGAGEMENT",
+                "OTHER CAPACITIES",
+                "CONFLICTS OF INTEREST",
+                "ADDITIONAL ROLES"
+              ],
+              "semanticVariants": [
+                "bank advisory roles",
+                "dual capacity",
+                "multiple hats",
+                "financing and advisory",
+                "conflict management",
+                "additional services"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.55,
+                "minKeywordScore": 0.45,
+                "minConfidence": 0.6,
+                "escalationThreshold": 0.45,
+                "humanEscalationThreshold": 0.25
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            },
+            "DOC_PRECEDENT": {
+              "label": "Documentation Precedent",
+              "category": "DOCUMENTATION",
+              "exactPhrases": [
+                "[*], and can be no worse than existing target credit facilities",
+                "otherwise consistent with Doc Principles",
+                "documentation precedent shall be",
+                "documentation shall be based on",
+                "definitive documentation shall be consistent with",
+                "precedent agreement for this transaction",
+                "documentation principles set forth",
+                "in form and substance consistent with the Precedent",
+                "subject to modifications consistent with Doc Principles"
+              ],
+              "sectionHeaders": [
+                "Documentation Precedent",
+                "Precedent Agreement",
+                "Documentation Principles",
+                "Doc Principles",
+                "Documentation",
+                "Definitive Documentation",
+                "Credit Documentation"
+              ],
+              "semanticVariants": [
+                "documentation precedent for credit agreement",
+                "baseline source for covenant definitions",
+                "benchmark agreement for term comparison",
+                "precedent credit facility documentation",
+                "template agreement for definitive documents",
+                "reference documentation standards"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.6,
+                "minKeywordScore": 0.5,
+                "minConfidence": 0.7,
+                "escalationThreshold": 0.5,
+                "humanEscalationThreshold": 0.3
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "acting in additional capacities",
+              "buy-/sell- side advisor",
+              "staple financing provider",
+              "engagement letter scope",
+              "deal-away economics",
+              "exclusive rights",
+              "rights of first refusal",
+              "alternate transaction fees",
+              "financial advisor",
+              "[*], and can be no worse than existing target credit facilities",
+              "otherwise consistent with Doc Principles",
+              "documentation precedent shall be",
+              "documentation shall be based on",
+              "definitive documentation shall be consistent with",
+              "precedent agreement for this transaction",
+              "documentation principles set forth",
+              "in form and substance consistent with the Precedent",
+              "subject to modifications consistent with Doc Principles"
+            ],
+            "sectionHeaders": [
+              "ROLES AND RESPONSIBILITIES",
+              "ADVISORY ROLES",
+              "ENGAGEMENT",
+              "OTHER CAPACITIES",
+              "CONFLICTS OF INTEREST",
+              "ADDITIONAL ROLES",
+              "Documentation Precedent",
+              "Precedent Agreement",
+              "Documentation Principles",
+              "Doc Principles",
+              "Documentation",
+              "Definitive Documentation",
+              "Credit Documentation"
+            ],
+            "semanticVariants": [
+              "bank advisory roles",
+              "dual capacity",
+              "multiple hats",
+              "financing and advisory",
+              "conflict management",
+              "additional services",
+              "documentation precedent for credit agreement",
+              "baseline source for covenant definitions",
+              "benchmark agreement for term comparison",
+              "precedent credit facility documentation",
+              "template agreement for definitive documents",
+              "reference documentation standards"
+            ]
+          }
+        }
+      },
+      "definition_source": "KCT Cat 1 Item 2",
+      "neutron_field_refs": [
+        {
+          "term_type": "CL_ADVISORY_ROLES",
+          "label": "Other Advisory Roles",
+          "schema_file": "commitment-letter-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "deal_econ",
+          "mapping_confidence": 1.0,
+          "mapping_mode": "manual_override",
+          "mapped_level": 2
+        },
+        {
+          "term_type": "DOC_PRECEDENT",
+          "label": "Documentation Precedent",
+          "schema_file": "documentation-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "governance",
+          "mapping_confidence": 0.3948,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "id": "governance.other_advisory_roles.syndication_agent",
+      "name": "Syndication Agent",
+      "domain_id": "governance",
+      "family_id": "governance.other_advisory_roles",
+      "level": 2,
+      "type": "concept",
+      "corpus_prevalence": "medium",
+      "extraction_difficulty": "easy",
+      "definition": "Entity responsible for distributing or selling down the loan to the syndicate of lenders. Title may carry syndication fee entitlement but limited ongoing obligations after closing.",
+      "extraction_refs": {
+        "aligned_difficulty": "easy",
+        "concept_area": "assignments",
+        "difficulty_note": "Syndication agent is typically a named title in the agency/administrative provisions section",
+        "difficulty_source": "ontology",
+        "extraction_ready": true,
+        "playbook_ref": "assignments.agent_roles",
+        "section_locations": [
+          "ARTICLE IX",
+          "ARTICLE XI",
+          "ARTICLE XIII",
+          "Section 9.01",
+          "Section 9.13"
+        ],
+        "shape_ref": "assignments.agent_roles"
+      },
+      "definition_source": "KCT Cat 1 Item 2"
+    }
+  ],
+  "definition_source": "Review Template row 7 (other advisory roles: engagement letter scope, deal-away economics)"
+}

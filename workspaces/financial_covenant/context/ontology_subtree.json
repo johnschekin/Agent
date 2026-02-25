@@ -1,0 +1,3024 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Always applicable, continuous quarterly monitoring regardless of revolver utilization. 37.9% of covenanted deals. Standard in LMM private credit; rare in UMM/BSL.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.application.maintenance",
+          "kct_ref": [
+            "cat1.1"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "37.9%",
+            "segment_label": "LMM standard"
+          },
+          "name": "Maintenance Covenants",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "corpus_prevalence": "medium",
+                  "definition": "Percentage of revolving commitments that must be drawn to trigger testing. KCT flags if below 10% availability threshold or greater than 50% dilution.",
+                  "domain_id": "fin_framework",
+                  "extraction_difficulty": "hard",
+                  "family_id": "fin_framework.financial_covenant",
+                  "id": "fin_framework.financial_covenant.application.springing.trigger.threshold_pct",
+                  "kct_ref": [
+                    "cat1.1",
+                    "cat1.3"
+                  ],
+                  "level": 5,
+                  "market_benchmarks": {
+                    "expert_geneva": "40%",
+                    "expert_rinchem": "40%",
+                    "kct_flag_high": ">50%",
+                    "kct_flag_low": "<10%",
+                    "market_standard_value": "35-40%"
+                  },
+                  "name": "Threshold Percentage",
+                  "type": "parameter",
+                  "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 3"
+                },
+                {
+                  "corpus_prevalence": "medium",
+                  "definition": "Undrawn LCs and cash-collateralized LCs excluded from utilization calculation. Reduces effective utilization, making it easier to stay below threshold.",
+                  "domain_id": "fin_framework",
+                  "extraction_difficulty": "hard",
+                  "family_id": "fin_framework.financial_covenant",
+                  "id": "fin_framework.financial_covenant.application.springing.trigger.lc_exclusion",
+                  "kct_ref": [
+                    "cat1.1",
+                    "cat1.3"
+                  ],
+                  "level": 5,
+                  "name": "LC Exclusions",
+                  "type": "parameter",
+                  "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 3"
+                },
+                {
+                  "corpus_prevalence": "medium",
+                  "definition": "Borrowings at closing for OID/expenses excluded from trigger calculation for first 2-4 fiscal quarters. Geneva: first 4 quarters exclude closing-date draws and permitted CoC draws.",
+                  "domain_id": "fin_framework",
+                  "extraction_difficulty": "hard",
+                  "family_id": "fin_framework.financial_covenant",
+                  "id": "fin_framework.financial_covenant.application.springing.trigger.closing_carveout",
+                  "level": 5,
+                  "name": "Closing Date Carveouts",
+                  "type": "parameter",
+                  "definition_source": "Review Template Row 13 (Closing Date Refinancing); Review Template Row 15 (Revolver closing date draws); KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 2 Item 1; KCT Cat 3 Item 12; KCT Cat 3 Item 14"
+                },
+                {
+                  "corpus_prevalence": "medium",
+                  "definition": "How long utilization must exceed threshold before test springs. KCT Cat 1 Item 3 flags if longer than 5 business days consecutive is required. Some deals require sustained breach rather than point-in-time.",
+                  "domain_id": "fin_framework",
+                  "extraction_difficulty": "hard",
+                  "family_id": "fin_framework.financial_covenant",
+                  "id": "fin_framework.financial_covenant.application.springing.trigger.consecutive_days",
+                  "kct_ref": [
+                    "cat1.1",
+                    "cat1.3"
+                  ],
+                  "level": 5,
+                  "market_benchmarks": {
+                    "kct_flag": ">5 BD consecutive"
+                  },
+                  "name": "Consecutive Days Requirement",
+                  "review_ref": [
+                    {
+                      "coverage": "full",
+                      "row": 155,
+                      "term": "Financial Statements"
+                    }
+                  ],
+                  "type": "parameter",
+                  "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 3; Review Template Row 155 (Financial Statements)"
+                },
+                {
+                  "corpus_prevalence": "medium",
+                  "definition": "Whether unrestricted cash on hand can be netted against drawn revolver amounts when determining utilization for springing purposes. Reduces the effective draw amount, further insulating the borrower.",
+                  "domain_id": "fin_framework",
+                  "extraction_difficulty": "hard",
+                  "family_id": "fin_framework.financial_covenant",
+                  "id": "fin_framework.financial_covenant.application.springing.trigger.cash_netting",
+                  "kct_ref": [
+                    "cat1.1",
+                    "cat1.3"
+                  ],
+                  "level": 5,
+                  "name": "Cash Netting",
+                  "type": "parameter",
+                  "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 3"
+                }
+              ],
+              "corpus_prevalence": "high",
+              "definition": "Revolver utilization thresholds (35-40%), availability thresholds, and LC exclusions that determine when the springing covenant activates.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.financial_covenant",
+              "id": "fin_framework.financial_covenant.application.springing.trigger",
+              "kct_ref": [
+                "cat1.1",
+                "cat1.3"
+              ],
+              "level": 4,
+              "name": "Trigger Mechanisms",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Whether the springing threshold is measured against total revolving commitments, aggregate revolving exposure, or net revolving availability. Different denominators yield different trigger points for the same dollar draw.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.financial_covenant",
+              "id": "fin_framework.financial_covenant.application.springing.denominator",
+              "kct_ref": [
+                "cat1.1",
+                "cat1.3"
+              ],
+              "level": 4,
+              "name": "Springing Denominator",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "How often the springing condition is evaluated. Typically measured at the last day of each fiscal quarter, but some deals allow daily testing (more borrower-friendly as brief spikes do not trigger testing).",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.financial_covenant",
+              "id": "fin_framework.financial_covenant.application.springing.testing_frequency",
+              "level": 4,
+              "name": "Testing Frequency",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 1; KCT Cat 2 Item 4; KCT Cat 4 Item 3"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Tested only when revolving facility is drawn above a specified utilization threshold. 29.3% of covenanted deals. The primary mechanism by which cov-lite structures protect borrowers while preserving nominal lender protections.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.application.springing",
+          "kct_ref": [
+            "cat1.1",
+            "cat1.3"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "29.3%",
+            "trigger_range": "35-40%"
+          },
+          "name": "Springing Covenants",
+          "r18_concept_ids": [
+            "financial_covenant.springing_threshold"
+          ],
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 57,
+              "term": "Financial Covenant – application"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 3; Review Template Row 57 (Financial Covenant – application)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Covenant applies only to revolving facility, not term loans. Bridge structure between full maintenance and cov-lite: term loan holders have no direct covenant enforcement.",
+          "dls_ref": [
+            "DLS:6:Revolver",
+            "DLS:19:Revolver"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.application.revolver_only",
+          "kct_ref": [
+            "cat1.1"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "5.2%"
+          },
+          "name": "Revolver-Only Application",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 57,
+              "term": "Financial Covenant – application"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 6 (Revolver); DLS Preferred Row 19 (Revolver); KCT Cat 1 Item 1; Review Template Row 57 (Financial Covenant – application)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "No maintenance financial covenants on term loans. Incurrence testing only for ratio-conditioned baskets. 53.4% of covenanted deals; 64.5% of full EDGAR corpus. PC line 461: cov-lite typical where closing EBITDA is $60-80M+ range.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.application.covenant_lite",
+          "level": 3,
+          "market_benchmarks": {
+            "ebitda_threshold": "$60-80M+",
+            "pctc_bsl": "Clients will not assume revolver is fully drawn when setting the level",
+            "prevalence": "53.4% (covenanted) / 64.5% (EDGAR)"
+          },
+          "name": "Covenant-Lite Structure",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 12; KCT Cat 3 Item 15; KCT Cat 4 Item 1; KCT Cat 4 Item 8"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Identification of which specific credit facilities within the agreement are subject to ongoing financial covenant testing. In multi-tranche structures, the financial covenant may apply only to revolving facility lenders (springing covenant) while institutional term loan lenders have no maintenance covenant, creating differential protection levels across the capital structure.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.application.covenant_facilities",
+          "level": 3,
+          "name": "Covenant Facilities",
+          "source_system": "R16-A",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 3; KCT Cat 3 Item 4; KCT Cat 3 Item 6; KCT Cat 3 Item 7; KCT Cat 3 Item 8; KCT Cat 3 Item 11; KCT Cat 3 Item 13; KCT Cat 3 Item 15; KCT Cat 4 Item 1; KCT Cat 4 Item 3; KCT Cat 4 Item 7; KCT Cat 4 Item 10; KCT Cat 5 Item 1; PC Term Comparison, 2. Article 2 (Incremental Facilities)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Financial covenant applies only to pro rata tranches (revolver and Term A), excluding institutional Term B and incremental facilities. Standard in BSL transactions where CLO investors prefer covenant-lite structures while bank lenders retain covenant protection.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.application.pro_rata_only",
+          "level": 3,
+          "name": "Pro Rata Only",
+          "source_system": "R16-A",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 3; KCT Cat 3 Item 3; KCT Cat 3 Item 6; KCT Cat 3 Item 7; KCT Cat 3 Item 13; KCT Cat 4 Item 1; KCT Cat 4 Item 4; KCT Cat 4 Item 7; KCT Cat 4 Item 8; KCT Cat 4 Item 10; KCT Cat 5 Item 1"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "When, how, and to which facilities financial covenants apply. DLS Preferred row 73 preferred position: full-time testing across all facilities. Alternative: covenant-lite (revolver only), tested only when revolving loans and letters of credit exceed a threshold (30-35% of commitments). Under covenant-lite, 'Only lenders holding at least a majority of the loans and commitments under the Revolving Facility shall have the ability to amend the financial covenant and waive a breach,' and term loan EoD occurs only after revolver lenders terminate commitments and accelerate. Review Template row 57 confirms: 'Covenant applies to the revolver only and springs when utilization exceeds agreed thresholds. Term loan default should occur only if the revolver accelerates and terminates commitments.' PC Term Comparison: TTS transactions likely covenant-lite where closing EBITDA is in $60-80M+ range.",
+      "dls_ref": [
+        "DLS:73:Covenant",
+        "DLS:74:Cushion/Covenant Levels",
+        "DLS:89:Other Covenant Considerations"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.levels",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "financial_covenant.levels",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.778145+00:00",
+          "term_packs": {
+            "FIN_COV_SPRINGING_COVENANT": {
+              "label": "Financial Covenant - Application/Springing Nature",
+              "category": "FINANCIAL_COVENANTS",
+              "exactPhrases": [
+                "Covenant applies to",
+                "Term Loan facility and",
+                "Revolving Facility only",
+                "tested only if",
+                "tested solely",
+                "only when the aggregate outstanding principal amount",
+                "tested only when"
+              ],
+              "sectionHeaders": [
+                "Financial Covenant - application",
+                "Financial Covenant",
+                "ARTICLE VII",
+                "Section 7.01",
+                "Financial Maintenance Covenant"
+              ],
+              "semanticVariants": [
+                "springing covenant",
+                "covenant-lite",
+                "tested only if",
+                "no financial maintenance covenant",
+                "maintenance covenant",
+                "incurrence-based",
+                "applies to revolver only"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.65,
+                "minKeywordScore": 0.55,
+                "minConfidence": 0.78,
+                "escalationThreshold": 0.55,
+                "humanEscalationThreshold": 0.35
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 45000
+              }
+            },
+            "FIN_COV_TESTING_CONDITION": {
+              "label": "Financial Covenant - Testing Thresholds",
+              "category": "FINANCIAL_COVENANTS",
+              "exactPhrases": [
+                "excluding cash collateralized LCs",
+                "other LCs up to",
+                "revolving exposure exceeds",
+                "utilization percentage",
+                "as of the last day of any fiscal quarter",
+                "Revolving Credit Exposure exceeds",
+                "first full fiscal quarter following closing",
+                "second full fiscal quarter following closing"
+              ],
+              "sectionHeaders": [
+                "Financial Covenant - testing thresholds",
+                "Financial Covenant - first test date",
+                "Testing Condition",
+                "Section 7.01",
+                "Financial Covenant"
+              ],
+              "semanticVariants": [
+                "springing test triggered",
+                "revolving exposure exceeds",
+                "utilization percentage",
+                "testing frequency",
+                "covenant testing threshold",
+                "revolver draw trigger"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.65,
+                "minKeywordScore": 0.55,
+                "minConfidence": 0.78,
+                "escalationThreshold": 0.55,
+                "humanEscalationThreshold": 0.35
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "Covenant applies to",
+              "Term Loan facility and",
+              "Revolving Facility only",
+              "tested only if",
+              "tested solely",
+              "only when the aggregate outstanding principal amount",
+              "tested only when",
+              "excluding cash collateralized LCs",
+              "other LCs up to",
+              "revolving exposure exceeds",
+              "utilization percentage",
+              "as of the last day of any fiscal quarter",
+              "Revolving Credit Exposure exceeds",
+              "first full fiscal quarter following closing",
+              "second full fiscal quarter following closing"
+            ],
+            "sectionHeaders": [
+              "Financial Covenant - application",
+              "Financial Covenant",
+              "ARTICLE VII",
+              "Section 7.01",
+              "Financial Maintenance Covenant",
+              "Financial Covenant - testing thresholds",
+              "Financial Covenant - first test date",
+              "Testing Condition"
+            ],
+            "semanticVariants": [
+              "springing covenant",
+              "covenant-lite",
+              "tested only if",
+              "no financial maintenance covenant",
+              "maintenance covenant",
+              "incurrence-based",
+              "applies to revolver only",
+              "springing test triggered",
+              "revolving exposure exceeds",
+              "utilization percentage",
+              "testing frequency",
+              "covenant testing threshold",
+              "revolver draw trigger"
+            ]
+          }
+        }
+      },
+      "family_id": "fin_framework.financial_covenant",
+      "id": "fin_framework.financial_covenant.application",
+      "kct_ref": [
+        "cat1.1",
+        "cat1.3"
+      ],
+      "level": 2,
+      "name": "Covenant Application",
+      "negotiation_spectrum": {
+        "aggressive_position": "Revolver Only and Covenant Lite: Only tested if on the last day of a fiscal quarter revolving loans and letters of credit (excluding (i) undrawn letters of credit in an amount not to exceed $[ ] million and (ii) drawn letters of credit that are 100% cash collateralized or backstopped) are outstanding in an aggregate amount exceeding an amount equal to [30/35%] of the total amount of the commitment",
+        "dls_source_rows": [
+          {
+            "label": "Financial Covenant Type & Testing",
+            "row": 73
+          },
+          {
+            "label": "Capital Expenditures Covenant",
+            "row": 76
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Types of financial covenants tested",
+          "Quarterly vs other testing frequency",
+          "Springing covenant threshold (30-35% revolver draw)",
+          "Covenant-lite structure availability",
+          "Financial covenant applies only to revolving facility",
+          "Term loan cross-default from covenant breach",
+          "Cushion percentage to EBITDA model",
+          "Cumulative vs non-cumulative cushion",
+          "Leverage ratio step-down schedule",
+          "Source of cushion calculation (Sponsor model)",
+          "Whether CapEx covenant exists",
+          "CapEx carry-forward provisions (50% unused)",
+          "CapEx adjustment for acquired businesses",
+          "CapEx testing frequency (annual)"
+        ],
+        "market_position": "Market standard for financial covenant type & testing reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "Covenants apply to Holdings and all subsidiaries, tested on last day of each fiscal quarter; no springing mechanic",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "financial_covenant.covenant_type",
+        "financial_covenant.cushion"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 55,
+          "term": "Financial Statements – going concern"
+        },
+        {
+          "coverage": "full",
+          "row": 57,
+          "term": "Financial Covenant – application"
+        },
+        {
+          "coverage": "full",
+          "row": 58,
+          "term": "Financial Covenant – levels"
+        },
+        {
+          "coverage": "full",
+          "row": 59,
+          "term": "Financial Covenant – testing thresholds"
+        },
+        {
+          "coverage": "full",
+          "row": 63,
+          "term": "EBITDA Addbacks"
+        },
+        {
+          "coverage": "full",
+          "row": 99,
+          "term": "Negative Covenants – Dispositions – De Minimis Threshold"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 73 (full-time vs. covenant-lite mechanics); Review Template row 57 (covenant application -- revolver only, term loan EoD only after acceleration); PC Term Comparison Financial Covenant section lines 460-476",
+      "pc_ref": [
+        "Financial Covenant"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "FIN_COV_SPRINGING_COVENANT",
+          "label": "Financial Covenant - Application/Springing Nature",
+          "schema_file": "financial-covenants-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "fin_framework",
+          "mapping_confidence": 0.6193,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        },
+        {
+          "term_type": "FIN_COV_TESTING_CONDITION",
+          "label": "Financial Covenant - Testing Thresholds",
+          "schema_file": "financial-covenants-enhanced.schema.ts",
+          "field_count": 4,
+          "r1_domain": "fin_framework",
+          "mapping_confidence": 0.4956,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Total debt net of unrestricted cash divided by EBITDA. 75.4% of covenanted deals. Dominant test type. DealData median initial level 7.75x across 45 deals.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.financial_covenant",
+              "id": "fin_framework.financial_covenant.types.maximum_leverage.net_leverage",
+              "level": 4,
+              "market_benchmarks": {
+                "median_initial": "7.75x",
+                "observed_range": "1.0x-12.0x",
+                "prevalence": "75.4%"
+              },
+              "name": "Net Leverage Ratio",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 62 (Leverage Ratio Calculations); KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 8; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 4 Item 5; KCT Cat 4 Item 8; KCT Cat 4 Item 12; PC Term Comparison, 1. Key Definitions (Interest Coverage Ratio (if relevant))"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "First lien debt divided by EBITDA. 19.3% of covenanted deals. Standard in CMM/UMM private credit where senior secured debt is the relevant measure.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.financial_covenant",
+              "id": "fin_framework.financial_covenant.types.maximum_leverage.first_lien",
+              "level": 4,
+              "market_benchmarks": {
+                "expert_geneva": "9.55x FLLR",
+                "prevalence": "19.3%"
+              },
+              "name": "First Lien Leverage",
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 146,
+                  "term": "Cross-default"
+                }
+              ],
+              "type": "sub_component",
+              "definition_source": "Review Template Row 146 (Cross-default)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Total (gross) debt divided by EBITDA. 5.3% of covenanted deals. More restrictive than net leverage as no cash netting. DLS preferred includes this test.",
+              "dls_ref": [
+                "DLS:13:Leverage Ratios"
+              ],
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.financial_covenant",
+              "id": "fin_framework.financial_covenant.types.maximum_leverage.total_leverage",
+              "level": 4,
+              "market_benchmarks": {
+                "prevalence": "5.3%"
+              },
+              "name": "Total Leverage",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 13 (Leverage Ratios)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Secured debt divided by EBITDA. 3.5% of covenanted deals. Risk-based collateral focus — captures all secured obligations regardless of lien priority.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.financial_covenant",
+              "id": "fin_framework.financial_covenant.types.maximum_leverage.secured",
+              "level": 4,
+              "market_benchmarks": {
+                "prevalence": "3.5%"
+              },
+              "name": "Secured Leverage",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 3 Item 15; KCT Cat 4 Item 8; KCT Cat 4 Item 10; KCT Cat 4 Item 11; KCT Cat 4 Item 12; KCT Cat 5 Item 1"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Debt-to-EBITDA ceiling the borrower must not exceed. The dominant covenant type at 82.5% of covenanted deals. Variants differ by numerator: total net, first lien net, secured net, or total gross.",
+          "dls_ref": [
+            "DLS:41:Maximum leverage"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.types.maximum_leverage",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "82.5%"
+          },
+          "name": "Maximum Leverage Ratio",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 41 (Maximum leverage)",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:40.762689+00:00",
+              "term_packs": {
+                "FIN_COV_LEVERAGE_RATIO": {
+                  "label": "Financial Covenant - Leverage Ratio Levels",
+                  "category": "FINANCIAL_COVENANTS",
+                  "exactPhrases": [
+                    "Maximum First Lien Net Leverage Ratio",
+                    "Maximum Total Net Leverage Ratio",
+                    "shall not exceed",
+                    "shall not permit",
+                    "as of the end",
+                    "as of the last day",
+                    "FLNLR and SNLR only include debt secured by liens",
+                    "debt for borrowed money",
+                    "excludes concurrent revolver draws",
+                    "Cash netting is uncapped",
+                    "commencing with",
+                    "cash outside DACA accounts",
+                    "Consolidated First Lien Net Debt",
+                    "Consolidated EBITDA",
+                    "Total Net Leverage Ratio",
+                    "Secured Net Leverage Ratio",
+                    "First Lien Net Leverage Ratio"
+                  ],
+                  "sectionHeaders": [
+                    "Financial Covenant",
+                    "Financial Covenants",
+                    "Financial Covenant - levels",
+                    "Leverage Ratio Calculations",
+                    "ARTICLE VII - FINANCIAL COVENANT",
+                    "Section 7.01",
+                    "Maximum First Lien Leverage Ratio",
+                    "Financial Maintenance Covenant"
+                  ],
+                  "semanticVariants": [
+                    "maximum first lien net leverage ratio",
+                    "financial covenant leverage level",
+                    "leverage ratio covenant",
+                    "covenant cushion calculation",
+                    "leverage stepdown schedule",
+                    "first lien leverage cap",
+                    "maintenance leverage test"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.65,
+                    "minKeywordScore": 0.55,
+                    "minConfidence": 0.75,
+                    "escalationThreshold": 0.55,
+                    "humanEscalationThreshold": 0.35
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 45000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "Maximum First Lien Net Leverage Ratio",
+                  "Maximum Total Net Leverage Ratio",
+                  "shall not exceed",
+                  "shall not permit",
+                  "as of the end",
+                  "as of the last day",
+                  "FLNLR and SNLR only include debt secured by liens",
+                  "debt for borrowed money",
+                  "excludes concurrent revolver draws",
+                  "Cash netting is uncapped",
+                  "commencing with",
+                  "cash outside DACA accounts",
+                  "Consolidated First Lien Net Debt",
+                  "Consolidated EBITDA",
+                  "Total Net Leverage Ratio",
+                  "Secured Net Leverage Ratio",
+                  "First Lien Net Leverage Ratio"
+                ],
+                "sectionHeaders": [
+                  "Financial Covenant",
+                  "Financial Covenants",
+                  "Financial Covenant - levels",
+                  "Leverage Ratio Calculations",
+                  "ARTICLE VII - FINANCIAL COVENANT",
+                  "Section 7.01",
+                  "Maximum First Lien Leverage Ratio",
+                  "Financial Maintenance Covenant"
+                ],
+                "semanticVariants": [
+                  "maximum first lien net leverage ratio",
+                  "financial covenant leverage level",
+                  "leverage ratio covenant",
+                  "covenant cushion calculation",
+                  "leverage stepdown schedule",
+                  "first lien leverage cap",
+                  "maintenance leverage test"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "FIN_COV_LEVERAGE_RATIO",
+              "label": "Financial Covenant - Leverage Ratio Levels",
+              "schema_file": "financial-covenants-enhanced.schema.ts",
+              "field_count": 4,
+              "r1_domain": "fin_framework",
+              "mapping_confidence": 0.5074,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "EBIT or EBITDA divided by interest expense floor. Traditional coverage metric increasingly rare in modern leveraged finance. DLS preferred includes interest coverage; market is moving away.",
+          "dls_ref": [
+            "DLS:18:Interest Rates"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.types.minimum_interest_coverage",
+          "level": 3,
+          "market_benchmarks": {
+            "dls_preferred": "included"
+          },
+          "name": "Minimum Interest Coverage",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 18 (Interest Rates)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "EBITDA divided by fixed charges (interest + scheduled principal + capex + taxes + distributions). Primary coverage metric where used. DLS preferred: included. 10.5% of covenanted deals have any coverage test.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.types.minimum_fixed_charge",
+          "level": 3,
+          "market_benchmarks": {
+            "dls_preferred": "included",
+            "prevalence": "10.5%"
+          },
+          "name": "Minimum Fixed Charge Coverage",
+          "r18_concept_ids": [
+            "financial_covenant.ratio_test.fixed_charge_coverage"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3; KCT Cat 2 Item 1; KCT Cat 2 Item 4; KCT Cat 4 Item 6"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Separate first-lien-specific leverage ceiling distinct from total leverage test. Applied where capital structure has multiple lien tiers. Tests senior secured debt only against EBITDA.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.types.maximum_first_lien",
+          "level": 3,
+          "name": "Maximum First Lien Leverage",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 41 (Maximum leverage); Review Template Row 144 (Cushions to first lien); KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 3 Item 15; KCT Cat 4 Item 4; KCT Cat 4 Item 12; Learning Material (FIRST LIEN I SECOND LIEN INTERCREDITOR AGREEMENTS); Learning Material (Business Points in 1L/2L ICAs CAP ON FIRST LIEN OBLIGATIONS)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Annual capex ceiling. DLS preferred includes this test. Rare in modern private credit — only found in heavily covenanted LMM deals. Often has carryover provisions for unused amounts.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.types.maximum_capex",
+          "level": 3,
+          "market_benchmarks": {
+            "dls_preferred": "included"
+          },
+          "name": "Maximum Capital Expenditures",
+          "r18_concept_ids": [
+            "financial_covenant.ratio_test.maximum_capex"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3; KCT Cat 2 Item 1; KCT Cat 2 Item 4; KCT Cat 3 Item 7; KCT Cat 3 Item 13; KCT Cat 4 Item 6"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Minimum cash plus available revolving commitments. 10.5% of EDGAR deals. Non-ratio covenant based on absolute dollar floor. Includes broad liquidity definition (cash + revolver availability, sometimes including ABL availability).",
+          "dls_ref": [
+            "DLS:43:Minimum ratings"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.types.minimum_liquidity",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "10.5%"
+          },
+          "name": "Minimum Liquidity",
+          "r18_concept_ids": [
+            "financial_covenant.ratio_test.minimum_liquidity"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 43 (Minimum ratings)",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:40.769671+00:00",
+              "term_packs": {
+                "FIN_COV_MINIMUM_LIQUIDITY": {
+                  "label": "Financial Covenant - Minimum Liquidity",
+                  "category": "FINANCIAL_COVENANTS",
+                  "exactPhrases": [
+                    "Minimum Liquidity",
+                    "minimum liquidity of",
+                    "Liquidity of not less than",
+                    "at all times maintain",
+                    "aggregate amount of unrestricted cash",
+                    "available commitments under the Revolving Facility",
+                    "cash plus availability",
+                    "unrestricted cash and cash equivalents"
+                  ],
+                  "sectionHeaders": [
+                    "Minimum Liquidity",
+                    "Liquidity Covenant",
+                    "Minimum Cash",
+                    "Financial Covenant",
+                    "ARTICLE VII"
+                  ],
+                  "semanticVariants": [
+                    "minimum liquidity requirement",
+                    "liquidity covenant",
+                    "minimum cash balance",
+                    "minimum availability requirement",
+                    "cash plus revolver availability",
+                    "liquidity maintenance test"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.65,
+                    "minKeywordScore": 0.55,
+                    "minConfidence": 0.78,
+                    "escalationThreshold": 0.55,
+                    "humanEscalationThreshold": 0.35
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "Minimum Liquidity",
+                  "minimum liquidity of",
+                  "Liquidity of not less than",
+                  "at all times maintain",
+                  "aggregate amount of unrestricted cash",
+                  "available commitments under the Revolving Facility",
+                  "cash plus availability",
+                  "unrestricted cash and cash equivalents"
+                ],
+                "sectionHeaders": [
+                  "Minimum Liquidity",
+                  "Liquidity Covenant",
+                  "Minimum Cash",
+                  "Financial Covenant",
+                  "ARTICLE VII"
+                ],
+                "semanticVariants": [
+                  "minimum liquidity requirement",
+                  "liquidity covenant",
+                  "minimum cash balance",
+                  "minimum availability requirement",
+                  "cash plus revolver availability",
+                  "liquidity maintenance test"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "FIN_COV_MINIMUM_LIQUIDITY",
+              "label": "Financial Covenant - Minimum Liquidity",
+              "schema_file": "financial-covenants-enhanced.schema.ts",
+              "field_count": 3,
+              "r1_domain": "fin_framework",
+              "mapping_confidence": 0.5067,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "The specific financial metrics that the borrower must satisfy. DLS Preferred row 73 lists four covenant types: (1) Total [Net] Leverage Ratio with step-downs; (2) Senior [Secured] [Net] Leverage Ratio with step-downs; (3) Fixed Charge Coverage Ratio; and (4) Maximum Capital Expenditures. PC Term Comparison: 'Should be a Total Leverage Ratio' for covenant-lite structures. The leverage covenant is the primary tool, while coverage and capex covenants provide additional oversight. Review Template row 58 notes levels are set with 'cushions to the sponsor model and step-downs.'",
+      "dls_ref": [
+        "DLS:76:Capex"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.levels",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "financial_covenant.levels"
+      },
+      "family_id": "fin_framework.financial_covenant",
+      "id": "fin_framework.financial_covenant.types",
+      "level": 2,
+      "name": "Covenant Test Types",
+      "negotiation_spectrum": {
+        "aggressive_position": "Revolver Only and Covenant Lite: Only tested if on the last day of a fiscal quarter revolving loans and letters of credit (excluding (i) undrawn letters of credit in an amount not to exceed $[ ] million and (ii) drawn letters of credit that are 100% cash collateralized or backstopped) are outstanding in an aggregate amount exceeding an amount equal to [30/35%] of the total amount of the commitment",
+        "dls_source_rows": [
+          {
+            "label": "Financial Covenant Type & Testing",
+            "row": 73
+          },
+          {
+            "label": "Cushion / Covenant Levels",
+            "row": 74
+          },
+          {
+            "label": "Capital Expenditures Covenant",
+            "row": 76
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Types of financial covenants tested",
+          "Quarterly vs other testing frequency",
+          "Springing covenant threshold (30-35% revolver draw)",
+          "Covenant-lite structure availability",
+          "Financial covenant applies only to revolving facility",
+          "Term loan cross-default from covenant breach",
+          "Cushion percentage to EBITDA model",
+          "Cumulative vs non-cumulative cushion",
+          "Leverage ratio step-down schedule",
+          "Source of cushion calculation (Sponsor model)",
+          "Whether CapEx covenant exists",
+          "CapEx carry-forward provisions (50% unused)",
+          "CapEx adjustment for acquired businesses",
+          "CapEx testing frequency (annual)"
+        ],
+        "market_position": "Market standard for financial covenant type & testing reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "Full covenant suite: Total Net Leverage, Senior Secured Net Leverage, Fixed Charge Coverage, and Maximum Capital Expenditures",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "financial_covenant.ratio_test"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 73 (four covenant types enumerated); PC Term Comparison Financial Covenant section line 472 ('Should be a Total Leverage Ratio'); Review Template row 58 (Financial Covenant levels)",
+      "pc_ref": [
+        "Financial Covenant"
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Total debt net of cash / EBITDA. 75.4% — dominant test type. Median initial level: 5.75x (full corpus); 7.75x (DealData PC).",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.financial_covenant",
+              "id": "fin_framework.financial_covenant.tests.leverage.net_leverage",
+              "level": 4,
+              "name": "Net Leverage Ratio",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 62 (Leverage Ratio Calculations); KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 8; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 4 Item 5; KCT Cat 4 Item 8; KCT Cat 4 Item 12; PC Term Comparison, 1. Key Definitions (Interest Coverage Ratio (if relevant))"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "First lien debt / EBITDA. 19.3% of covenanted deals.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.financial_covenant",
+              "id": "fin_framework.financial_covenant.tests.leverage.first_lien",
+              "level": 4,
+              "name": "First Lien Leverage",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 144 (Cushions to first lien); KCT Cat 2 Item 1; Learning Material (FIRST LIEN I SECOND LIEN INTERCREDITOR AGREEMENTS); Learning Material (Business Points in 1L/2L ICAs CAP ON FIRST LIEN OBLIGATIONS)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Total (gross) debt / EBITDA. More restrictive than net.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.financial_covenant",
+              "id": "fin_framework.financial_covenant.tests.leverage.total_leverage",
+              "level": 4,
+              "name": "Total Leverage",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 2 Item 1; KCT Cat 4 Item 1"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Secured debt / EBITDA. Risk-based collateral focus.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.financial_covenant",
+              "id": "fin_framework.financial_covenant.tests.leverage.secured",
+              "level": 4,
+              "name": "Secured Leverage",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 2 Item 1; KCT Cat 4 Item 8; KCT Cat 4 Item 12"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Debt-to-EBITDA ratio tests. 82.5% of covenanted deals.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.tests.leverage",
+          "level": 3,
+          "name": "Leverage Covenants",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 4 Item 8"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "EBITDA / fixed charges. Primary coverage metric, within the covenant tests framework of financial covenants.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.financial_covenant",
+              "id": "fin_framework.financial_covenant.tests.coverage.fccr",
+              "level": 4,
+              "name": "Fixed Charge Coverage Ratio",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 4 Item 1; PC Term Comparison, 1. Key Definitions (Interest Coverage Ratio (if relevant)); Learning Material (2) Non-Ratio Component (AKA Fixed Amount Component))"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "EBIT / interest expense. Traditional but increasingly rare.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.financial_covenant",
+              "id": "fin_framework.financial_covenant.tests.coverage.interest",
+              "level": 4,
+              "name": "Interest Coverage Ratio",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 2 Item 1; PC Term Comparison, 1. Key Definitions (Interest Coverage Ratio (if relevant))"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Cash flow adequacy tests. 10.5% of covenanted deals.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.tests.coverage",
+          "level": 3,
+          "name": "Coverage Covenants",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; PC Term Comparison, 1. Key Definitions (Interest Coverage Ratio (if relevant))"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Minimum cash, available liquidity, working capital.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.tests.liquidity",
+          "level": 3,
+          "name": "Liquidity Covenants",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 2 Item 1"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Specific financial metrics borrowers must satisfy, organized by test category. Average leverage covenant 5.62x; median 5.75x.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.levels",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "financial_covenant.levels"
+      },
+      "family_id": "fin_framework.financial_covenant",
+      "id": "fin_framework.financial_covenant.tests",
+      "level": 2,
+      "market_benchmarks": {
+        "avg_leverage": "5.62x",
+        "median_leverage": "5.75x"
+      },
+      "name": "Covenant Tests",
+      "negotiation_spectrum": {
+        "aggressive_position": "Revolver Only and Covenant Lite: Only tested if on the last day of a fiscal quarter revolving loans and letters of credit (excluding (i) undrawn letters of credit in an amount not to exceed $[ ] million and (ii) drawn letters of credit that are 100% cash collateralized or backstopped) are outstanding in an aggregate amount exceeding an amount equal to [30/35%] of the total amount of the commitment",
+        "dls_source_rows": [
+          {
+            "label": "Financial Covenant Type & Testing",
+            "row": 73
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Types of financial covenants tested",
+          "Quarterly vs other testing frequency",
+          "Springing covenant threshold (30-35% revolver draw)",
+          "Covenant-lite structure availability",
+          "Financial covenant applies only to revolving facility",
+          "Term loan cross-default from covenant breach",
+          "Cushion percentage to EBITDA model",
+          "Cumulative vs non-cumulative cushion",
+          "Leverage ratio step-down schedule",
+          "Source of cushion calculation (Sponsor model)",
+          "Whether CapEx covenant exists",
+          "CapEx carry-forward provisions (50% unused)",
+          "CapEx adjustment for acquired businesses",
+          "CapEx testing frequency (annual)"
+        ],
+        "market_position": "Market standard for financial covenant type & testing reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "Quarterly maintenance testing commencing first full fiscal quarter post-closing; no holiday on first test date",
+        "source": "R14-B"
+      },
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 73 (Covenant); Review Template Row 57 (Financial Covenant – application); KCT Cat 1"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "How cushion is defined and measured. Expressed as a percentage below the sponsor's projected EBITDA for the relevant test period. DLS Row 73: '[X]% non cumulative cushion to EBITDA from the Sponsor's model.' Non-cumulative means each quarter's cushion is independently sized.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.cushion.definition",
+          "level": 3,
+          "name": "Cushion Definition",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3; KCT Cat 2 Item 1; KCT Cat 2 Item 4; KCT Cat 3 Item 13"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Opening cushion percentage at closing. LMM deals: 25-30%. UMM/aggressive: 35%+. The cushion is only as protective as the model is conservative — aggressive EBITDA addbacks inflate the model, making the cushion look adequate when the true margin for error is thinner.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.cushion.initial_level",
+          "level": 3,
+          "market_benchmarks": {
+            "lmm": "25-30%",
+            "review_template_ref": "35%",
+            "standard_tlb": "30-35%",
+            "umm": "35%+"
+          },
+          "name": "Initial Cushion Level",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 6; KCT Cat 1 Item 7; KCT Cat 2 Item 1; KCT Cat 2 Item 4"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether and how the cushion narrows over time as step-downs tighten the covenant level. In deals with step-downs, the cushion may remain constant (level steps down tracking the model) or compress (level steps down faster than model deleveraging).",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.cushion.tightening",
+          "level": 3,
+          "name": "Cushion Tightening",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 4; KCT Cat 3 Item 12; KCT Cat 3 Item 15; KCT Cat 4 Item 1; KCT Cat 4 Item 3; KCT Cat 4 Item 5"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Cushion specific to the first lien leverage test. Typically tighter than total leverage cushion because the first lien ratio has a lower denominator (excludes junior debt).",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.cushion.first_lien_cushion",
+          "level": 3,
+          "name": "First Lien Cushion",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 144,
+              "term": "Cushions to first lien"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 144 (Cushions to first lien)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether second lien, mezzanine, or holdco facilities have baskets and incurrence ratios cushioned relative to the senior debt financial covenant. Typically 0.5-1.0x wider than first lien covenant level.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.cushion.second_lien_cushion",
+          "kct_ref": [
+            "cat4.4"
+          ],
+          "level": 3,
+          "name": "Second Lien / Subordinated Cushion",
+          "r18_concept_ids": [
+            "financial_covenant.second_lien_cushions"
+          ],
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 143,
+              "term": "Second Lien Facility"
+            },
+            {
+              "coverage": "full",
+              "row": 144,
+              "term": "Cushions to first lien"
+            },
+            {
+              "coverage": "full",
+              "row": 145,
+              "term": "Anti-layering"
+            },
+            {
+              "coverage": "full",
+              "row": 146,
+              "term": "Cross-default"
+            },
+            {
+              "coverage": "full",
+              "row": 147,
+              "term": "Mandatory Prepayments"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 4; Review Template Row 143 (Second Lien Facility); Review Template Row 144 (Cushions to first lien); Review Template Row 145 (Anti-layering); Review Template Row 146 (Cross-default); Review Template Row 147 (Mandatory Prepayments)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "The gap between the financial maintenance covenant test level and the borrower's projected leverage ratio (from the sponsor model), providing headroom for underperformance before a covenant breach occurs. DLS Preferred row 74 specifies a '[___]% non cumulative cushion to EBITDA from the Sponsor's model.' PC Term Comparison provides segment-specific guidance: 'For Cov Lite: Ranges of cushions to sponsor model: 35-40% off sponsor model. Unlike BSL Clients will not assume revolver is fully drawn when setting the level.' For full-time covenant: 'Typically at a non-cumulative cushion of [30-35]% off sponsor model.' Review Template row 58 similarly notes cushion to sponsor model. The cushion is non-cumulative, meaning each period's cushion is calculated independently against the model without reference to prior periods.",
+      "dls_ref": [
+        "DLS:74:Cushion/Covenant Levels",
+        "DLS:76:Capex"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.levels",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "financial_covenant.levels",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.730914+00:00",
+          "term_packs": {
+            "FIN_COV_CUSHION": {
+              "label": "Financial Covenant - Cushion",
+              "category": "FINANCIAL_COVENANTS",
+              "exactPhrases": [
+                "cushion to sponsor model",
+                "assuming the revolver is",
+                "drawn",
+                "35% cushion",
+                "40% cushion",
+                "30% cushion",
+                "below model EBITDA",
+                "headroom"
+              ],
+              "sectionHeaders": [
+                "Financial Covenant - levels",
+                "Financial Covenant",
+                "covenant cushion"
+              ],
+              "semanticVariants": [
+                "covenant cushion percentage",
+                "cushion to Assumed Financing EBITDA",
+                "headroom to model",
+                "buffer from closing leverage",
+                "EBITDA decline tolerance"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.65,
+                "minKeywordScore": 0.55,
+                "minConfidence": 0.78,
+                "escalationThreshold": 0.55,
+                "humanEscalationThreshold": 0.35
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "cushion to sponsor model",
+              "assuming the revolver is",
+              "drawn",
+              "35% cushion",
+              "40% cushion",
+              "30% cushion",
+              "below model EBITDA",
+              "headroom"
+            ],
+            "sectionHeaders": [
+              "Financial Covenant - levels",
+              "Financial Covenant",
+              "covenant cushion"
+            ],
+            "semanticVariants": [
+              "covenant cushion percentage",
+              "cushion to Assumed Financing EBITDA",
+              "headroom to model",
+              "buffer from closing leverage",
+              "EBITDA decline tolerance"
+            ]
+          }
+        }
+      },
+      "family_id": "fin_framework.financial_covenant",
+      "id": "fin_framework.financial_covenant.cushion",
+      "level": 2,
+      "name": "Cushion Mechanics",
+      "negotiation_spectrum": {
+        "aggressive_position": "No alternative specified",
+        "dls_source_rows": [
+          {
+            "label": "Cushion / Covenant Levels",
+            "row": 74
+          },
+          {
+            "label": "Capital Expenditures Covenant",
+            "row": 76
+          }
+        ],
+        "is_highlighted": false,
+        "key_negotiation_points": [
+          "Cushion percentage to EBITDA model",
+          "Cumulative vs non-cumulative cushion",
+          "Leverage ratio step-down schedule",
+          "Source of cushion calculation (Sponsor model)",
+          "Whether CapEx covenant exists",
+          "CapEx carry-forward provisions (50% unused)",
+          "CapEx adjustment for acquired businesses",
+          "CapEx testing frequency (annual)"
+        ],
+        "market_position": "Market standard for cushion / covenant levels reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "[ ]% non cumulative cushion to EBITDA from the Sponsor's model.",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "financial_covenant.cushion"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 58,
+          "term": "Financial Covenant – levels"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 74 (non-cumulative cushion specification); PC Term Comparison Financial Covenant section lines 463-471 (cov-lite 35-40%, full-time 30-35%, revolver assumption differences)",
+      "market_benchmarks": "PC Term Comparison: Cov-Lite 35-40% off sponsor model (revolver not assumed fully drawn); Full-Time 30-35% non-cumulative off sponsor model. DLS Preferred: [___]% non-cumulative cushion.",
+      "pc_ref": [
+        "Financial Covenant"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "FIN_COV_CUSHION",
+          "label": "Financial Covenant - Cushion",
+          "schema_file": "financial-covenants-enhanced.schema.ts",
+          "field_count": 3,
+          "r1_domain": "fin_framework",
+          "mapping_confidence": 0.5447,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "The revolving facility utilization percentage above which the maintenance covenant is tested. Standard: 35-40% of revolving commitments. Expert extractions: Geneva 40%, Rinchem 40%, Scientific Games 40%.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.springing_mechanics.threshold",
+          "kct_ref": [
+            "cat1.1",
+            "cat1.3"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "expert_geneva": "40%",
+            "expert_rinchem": "40%",
+            "market_standard_value": "35-40%"
+          },
+          "name": "Springing Threshold",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Base against which utilization is measured. Options include aggregate revolving commitments, revolving exposure, or net revolving availability. The denominator choice determines the effective trigger level.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.springing_mechanics.denominator",
+          "kct_ref": [
+            "cat1.1",
+            "cat1.3"
+          ],
+          "level": 3,
+          "name": "Springing Denominator",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether unrestricted cash on the balance sheet can offset drawn revolver amounts when determining utilization for springing purposes. If allowed, a borrower with $50M drawn on a $100M revolver but $20M cash is treated as $30M utilized.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.springing_mechanics.cash_netting",
+          "kct_ref": [
+            "cat1.1",
+            "cat1.3"
+          ],
+          "level": 3,
+          "name": "Cash Netting for Trigger",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "How LCs are counted in utilization: excluded entirely, included only if drawn, or included at face amount. Cash-collateralized LCs almost always excluded. Undrawn LCs typically excluded in borrower-favorable deals.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.springing_mechanics.lc_treatment",
+          "kct_ref": [
+            "cat1.1"
+          ],
+          "level": 3,
+          "name": "Letter of Credit Treatment",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "How often the springing condition is evaluated. Standard: last day of each fiscal quarter. Aggressive: only at quarterly reporting dates. Conservative: daily measurement period (any day above threshold triggers test).",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.springing_mechanics.testing_frequency",
+          "kct_ref": [
+            "cat1.3"
+          ],
+          "level": 3,
+          "name": "Testing Frequency",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Framework governing when and how springing covenants activate. Under covenant-lite structures, the financial maintenance covenant only springs when revolving facility utilization exceeds an agreed threshold. DLS Preferred row 73 alternative specifies the covenant is 'Only tested if on the last day of a fiscal quarter revolving loans and letters of credit (excluding (i) undrawn letters of credit in an amount not to exceed $[___] million and (ii) drawn letters of credit that are 100% cash collateralized or backstopped) are outstanding in an aggregate amount exceeding an amount equal to [30/35%] of the total amount of the commitments under the Revolving Facility then in effect.' PC Term Comparison specifies: 'Tripped when 35-40% drawn. Only exclude cash collateralized LCs and perhaps up to $x of non-cash collateralized LCs. Reject request to test usage net of cash. Standstill should apply.' KCT Category 1 item 3 identifies springing trigger issues including thresholds exceeding 40%, fixed size thresholds, cash netting of drawn amounts, capex exclusions, and repayment after period-end to avoid testing.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.levels",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "financial_covenant.levels"
+      },
+      "family_id": "fin_framework.financial_covenant",
+      "id": "fin_framework.financial_covenant.springing_mechanics",
+      "kct_ref": [
+        "cat1.1",
+        "cat1.3"
+      ],
+      "level": 2,
+      "name": "Springing Mechanics",
+      "negotiation_spectrum": {
+        "aggressive_position": "Revolver Only and Covenant Lite: Only tested if on the last day of a fiscal quarter revolving loans and letters of credit (excluding (i) undrawn letters of credit in an amount not to exceed $[ ] million and (ii) drawn letters of credit that are 100% cash collateralized or backstopped) are outstanding in an aggregate amount exceeding an amount equal to [30/35%] of the total amount of the commitment",
+        "dls_source_rows": [
+          {
+            "label": "Financial Covenant Type & Testing",
+            "row": 73
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Types of financial covenants tested",
+          "Quarterly vs other testing frequency",
+          "Springing covenant threshold (30-35% revolver draw)",
+          "Covenant-lite structure availability",
+          "Financial covenant applies only to revolving facility",
+          "Term loan cross-default from covenant breach",
+          "Cushion percentage to EBITDA model",
+          "Cumulative vs non-cumulative cushion",
+          "Leverage ratio step-down schedule",
+          "Source of cushion calculation (Sponsor model)",
+          "Whether CapEx covenant exists",
+          "CapEx carry-forward provisions (50% unused)",
+          "CapEx adjustment for acquired businesses",
+          "CapEx testing frequency (annual)"
+        ],
+        "market_position": "Market standard for financial covenant type & testing reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "No springing covenant; full maintenance testing at all times. Reject revolver-draw-based springing trigger",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "financial_covenant.springing_threshold"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 73 (springing threshold mechanics: 30/35% of commitments, LC exclusions); PC Term Comparison Financial Covenant section lines 465-468 (35-40% drawn, reject net of cash); KCT Category 1 item 3 (five springing trigger risk issues)",
+      "pc_ref": [
+        "Financial Covenant"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "When the compliance certificate must be delivered after quarter-end. Typically within 45 days for quarterly financials and 90 days for annual financials. Late delivery can itself constitute an Event of Default under information covenants.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.compliance_certificate.delivery_timing",
+          "kct_ref": [
+            "cat1.4"
+          ],
+          "level": 3,
+          "name": "Delivery Timing",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 52,
+              "term": "Financial Statements – quarterly"
+            },
+            {
+              "coverage": "full",
+              "row": 54,
+              "term": "Financial Statements – annual audits"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 4; Review Template Row 52 (Financial Statements – quarterly); Review Template Row 54 (Financial Statements – annual audits)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Level of detail required in the compliance calculation. Must include covenant ratio computation, EBITDA build-up with addbacks, net debt calculation, and statement of compliance or non-compliance.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.compliance_certificate.calculation_detail",
+          "kct_ref": [
+            "cat1.4"
+          ],
+          "level": 3,
+          "name": "Calculation Detail",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 4"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Which officers must sign (typically CFO or equivalent), the standard of certification (knowledge-based or absolute), and whether personal liability attaches to misstatements.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.compliance_certificate.officer_certification",
+          "kct_ref": [
+            "cat1.4"
+          ],
+          "level": 3,
+          "name": "Officer Certification",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 4"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether the borrower may deliver corrected compliance certificates that retroactively demonstrate compliance after initially reporting a breach. Related to deemed cure (KCT Cat 1 Item 4).",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.compliance_certificate.retroactive_correction",
+          "kct_ref": [
+            "cat1.4"
+          ],
+          "level": 3,
+          "name": "Retroactive Correction",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 4"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Quarterly officer certificate demonstrating financial covenant compliance with detailed calculations. DLS Preferred row 78 affirmative covenants clause (vii) requires delivery of 'quarterly compliance certificates and other information.' The compliance certificate is the primary document through which the administrative agent and lenders verify whether the borrower satisfies its maintenance covenant levels, attaching computation of all tested ratios (leverage, coverage, capex). Review Template row 56 notes delivery should accompany quarterly financial statements with extended windows for initial post-closing periods.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.levels",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "financial_covenant.levels",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.financial_covenant",
+      "id": "fin_framework.financial_covenant.compliance_certificate",
+      "kct_ref": [
+        "cat1.4",
+        "cat1.5"
+      ],
+      "level": 2,
+      "name": "Compliance Certificate",
+      "negotiation_spectrum": {
+        "aggressive_position": "No alternative specified",
+        "dls_source_rows": [
+          {
+            "label": "Cushion / Covenant Levels",
+            "row": 74
+          },
+          {
+            "label": "Capital Expenditures Covenant",
+            "row": 76
+          }
+        ],
+        "is_highlighted": false,
+        "key_negotiation_points": [
+          "Cushion percentage to EBITDA model",
+          "Cumulative vs non-cumulative cushion",
+          "Leverage ratio step-down schedule",
+          "Source of cushion calculation (Sponsor model)",
+          "Whether CapEx covenant exists",
+          "CapEx carry-forward provisions (50% unused)",
+          "CapEx adjustment for acquired businesses",
+          "CapEx testing frequency (annual)"
+        ],
+        "market_position": "Market standard for cushion / covenant levels reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "[ ]% non cumulative cushion to EBITDA from the Sponsor's model.",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "financial_covenant.compliance_certificate"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 52,
+          "term": "Financial Statements – quarterly"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 78 clause (vii) (quarterly compliance certificates in affirmative covenants); Review Template rows 52/56 (quarterly delivery and affirmative covenant framework)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "The measurement period for financial covenant calculations. Standard: trailing four fiscal quarters (LTM). Some deals allow annualization of partial periods near closing.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.testing_mechanics.test_period",
+          "level": 3,
+          "name": "Test Period",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 3 Item 12; KCT Cat 4 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether covenant compliance is tested on a pro forma basis giving effect to acquisitions, dispositions, and other specified transactions as if they occurred at the beginning of the test period. Standard in leveraged finance.",
+          "dls_ref": [
+            "DLS:48:Pro Forma Financial Statements"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.testing_mechanics.pro_forma_testing",
+          "level": 3,
+          "name": "Pro Forma Testing",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 50,
+              "term": "Pro Forma Calculations"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 48 (Pro Forma Financial Statements); Review Template Row 50 (Pro Forma Calculations)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "How specified transactions (acquisitions, dispositions, incurrences) affect covenant testing during the LTM period. Includes both EBITDA adjustments and debt adjustments on a pro forma basis.",
+          "dls_ref": [
+            "DLS:57:Specified Representations"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.testing_mechanics.specified_transaction_impact",
+          "level": 3,
+          "name": "Specified Transaction Impact",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 57 (Specified Representations)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Initial period post-closing (typically 2-4 quarters) during which the financial covenant is not tested or is tested at relaxed levels. Allows operational ramp-up post-acquisition. DLS preferred: first full fiscal quarter after closing. Aggressive: delayed to second or third full quarter.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.testing_mechanics.covenant_holiday",
+          "level": 3,
+          "market_benchmarks": {
+            "aggressive_value": "Second or third full FQ",
+            "dls_preferred": "First full FQ after closing",
+            "typical_value": "2-4 quarters"
+          },
+          "name": "Covenant Holiday",
+          "r18_concept_ids": [
+            "financial_covenant.holiday_period",
+            "financial_covenant.first_test_date"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 4 Item 1"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Procedural framework governing how and when financial covenants are measured, including the test period, pro forma adjustments, and interaction with specified transactions.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.levels",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "financial_covenant.levels",
+        "secondary_playbook_refs": [
+          "financial_covenant.testing_threshold"
+        ]
+      },
+      "family_id": "fin_framework.financial_covenant",
+      "id": "fin_framework.financial_covenant.testing_mechanics",
+      "level": 2,
+      "name": "Testing Mechanics",
+      "negotiation_spectrum": {
+        "aggressive_position": "Revolver Only and Covenant Lite: Only tested if on the last day of a fiscal quarter revolving loans and letters of credit (excluding (i) undrawn letters of credit in an amount not to exceed $[ ] million and (ii) drawn letters of credit that are 100% cash collateralized or backstopped) are outstanding in an aggregate amount exceeding an amount equal to [30/35%] of the total amount of the commitment",
+        "dls_source_rows": [
+          {
+            "label": "Financial Covenant Type & Testing",
+            "row": 73
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Types of financial covenants tested",
+          "Quarterly vs other testing frequency",
+          "Springing covenant threshold (30-35% revolver draw)",
+          "Covenant-lite structure availability",
+          "Financial covenant applies only to revolving facility",
+          "Term loan cross-default from covenant breach",
+          "Cushion percentage to EBITDA model",
+          "Cumulative vs non-cumulative cushion",
+          "Leverage ratio step-down schedule",
+          "Source of cushion calculation (Sponsor model)",
+          "Whether CapEx covenant exists",
+          "CapEx carry-forward provisions (50% unused)",
+          "CapEx adjustment for acquired businesses",
+          "CapEx testing frequency (annual)"
+        ],
+        "market_position": "Market standard for financial covenant type & testing reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "Tested on LTM basis as of last day of each fiscal quarter; financials must be delivered before test is measured",
+        "source": "R14-B"
+      },
+      "type": "concept",
+      "definition_source": "Review Template Row 59 (Financial Covenant – testing thresholds)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Quarterly, semi-annual, or annual adjustments on pre-set schedule. Most common structure. Typical step: 0.25x reduction per year.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.step_downs.time_based",
+          "level": 3,
+          "market_benchmarks": {
+            "typical_step": "0.25x/year"
+          },
+          "name": "Time-Based Progressions",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 4; KCT Cat 2 Item 4; KCT Cat 4 Item 3"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Triggered by EBITDA growth, debt reduction milestones, or other financial performance metrics rather than the passage of time.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.step_downs.performance_based",
+          "level": 3,
+          "name": "Performance-Based",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 4; KCT Cat 4 Item 1; KCT Cat 4 Item 4; KCT Cat 4 Item 8"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "The quantum of each step-down. Standard: 0.25x per year (e.g., 5.75x to 5.50x to 5.25x). Aggressive: 0.125x or smaller increments. Conservative: 0.50x steps.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.step_downs.annual_step_down",
+          "level": 3,
+          "market_benchmarks": {
+            "aggressive_value": "0.125x",
+            "conservative_value": "0.50x",
+            "market_standard_value": "0.25x/year"
+          },
+          "name": "Annual Step-Down Amount",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "The event or date that activates each step-down. Options include fixed calendar dates, anniversary of closing, or fiscal quarter-end dates. Some deals use EBITDA milestones as alternative triggers.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.step_downs.step_down_trigger",
+          "level": 3,
+          "name": "Step-Down Trigger",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 2 Item 1; KCT Cat 2 Item 4; KCT Cat 3 Item 8; KCT Cat 3 Item 11; KCT Cat 3 Item 12; KCT Cat 3 Item 14; KCT Cat 4 Item 5; KCT Cat 4 Item 8; KCT Cat 5 Item 1"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether covenant levels can ratchet back up after stepping down (permitted acquisition step-up) or are permanently tightened. Some deals allow temporary step-ups of 0.50-1.0x for specified acquisitions above a threshold.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.step_downs.ratchet_mechanism",
+          "level": 3,
+          "market_benchmarks": {
+            "typical_step": "0.50-1.0x for qualified acquisitions"
+          },
+          "name": "Ratchet Mechanism",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 3 Item 15; KCT Cat 4 Item 5; KCT Cat 4 Item 8"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Progressive tightening of covenant levels over time, requiring the borrower to delever post-acquisition. DLS Preferred row 73 specifies 'Total [Net] Leverage Ratio with step downs' and 'Senior [Secured] [Net] Leverage Ratio with step downs.' PC Term Comparison: for full-time covenants, 'Most likely static but may get 1-2 25bps stepdowns.' Step-downs reflect the expectation that leverage should decrease as the borrower generates cash flow and prepays debt. The presence and schedule of step-downs signals the anticipated deleveraging path agreed between the sponsor and lender group.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.levels",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "financial_covenant.levels"
+      },
+      "family_id": "fin_framework.financial_covenant",
+      "id": "fin_framework.financial_covenant.step_downs",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "54.4%"
+      },
+      "name": "Step-Down Schedules",
+      "negotiation_spectrum": {
+        "aggressive_position": "No alternative specified",
+        "dls_source_rows": [
+          {
+            "label": "Cushion / Covenant Levels",
+            "row": 74
+          }
+        ],
+        "is_highlighted": false,
+        "key_negotiation_points": [
+          "Cushion percentage to EBITDA model",
+          "Cumulative vs non-cumulative cushion",
+          "Leverage ratio step-down schedule",
+          "Source of cushion calculation (Sponsor model)",
+          "Whether CapEx covenant exists",
+          "CapEx carry-forward provisions (50% unused)",
+          "CapEx adjustment for acquired businesses",
+          "CapEx testing frequency (annual)"
+        ],
+        "market_position": "Market standard for cushion / covenant levels reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "[ ]% non cumulative cushion to EBITDA from the Sponsor's model.",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "financial_covenant.covenant_levels"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 73 (covenant types with step downs); PC Term Comparison Financial Covenant section line 473 ('Most likely static but may get 1-2 25bps stepdowns')",
+      "pc_ref": [
+        "Financial Covenant"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Opening covenant ratio level at closing or first test date. Median 7.75x across 45 DealData deals with data. Range spans from 1.0x (conservative) to 12.0x (highly leveraged). Geneva ground truth: 9.55x FLLR.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.levels.initial_level",
+          "level": 3,
+          "market_benchmarks": {
+            "expert_geneva": "9.55x",
+            "median_value": "7.75x",
+            "observed_range": "1.0x-12.0x"
+          },
+          "name": "Initial Covenant Level",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 4 Item 5; KCT Cat 4 Item 8"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Terminal covenant ratio level after all step-downs complete. Reflects expected deleveraging trajectory. Typically 0.50-1.50x tighter than initial level.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.levels.final_level",
+          "level": 3,
+          "name": "Final Covenant Level",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 2; KCT Cat 4 Item 1; KCT Cat 4 Item 3; KCT Cat 4 Item 5"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "How covenant levels vary by EBITDA segment. LMM (<$50M): tighter levels (3.0-5.0x). CMM ($50-100M): moderate (4.0-6.0x). UMM (>$100M): looser (5.0-8.0x+). BSL: typically no maintenance covenant.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.levels.levels_by_segment",
+          "level": 3,
+          "market_benchmarks": {
+            "bsl": "N/A (cov-lite)",
+            "cmm": "4.0-6.0x",
+            "lmm": "3.0-5.0x",
+            "umm": "5.0-8.0x+"
+          },
+          "name": "Covenant Levels by Market Segment",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 74 (Cushion/Covenant Levels); Review Template Row 58 (Financial Covenant – levels); KCT Cat 2 Item 4; KCT Cat 4 Item 1"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Macro trends in covenant cushion sizing. Post-2020, cushions have widened as EBITDA addbacks have expanded. The effective cushion is a function of both the stated percentage and the aggressiveness of the underlying EBITDA definition.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.levels.cushion_trends",
+          "level": 3,
+          "name": "Cushion Trends",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 6; KCT Cat 1 Item 7; KCT Cat 2 Item 4; KCT Cat 4 Item 1"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Specific numerical ratio levels that the borrower must maintain. DealData: initial median 7.75x, range 1.0x-12.0x. Levels vary significantly by market segment, deal vintage, and leverage profile.",
+      "dls_ref": [
+        "DLS:73:Covenant",
+        "DLS:74:Cushion/Covenant Levels"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.levels",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "financial_covenant.levels"
+      },
+      "family_id": "fin_framework.financial_covenant",
+      "golden_record_benchmarks": [
+        {
+          "evidence": [
+            {
+              "covenant": "Max Total Net Leverage Ratio (2.00:1.00)",
+              "deal": "arch",
+              "ratio": 2.0
+            },
+            {
+              "covenant": "Min Interest Coverage Ratio (3.50:1.00)",
+              "deal": "arch",
+              "ratio": 3.5
+            },
+            {
+              "covenant": "Min Liquidity ($100M)",
+              "deal": "arch",
+              "ratio": null
+            },
+            {
+              "covenant": "Max Consolidated Total Net Leverage Ratio (5.00→4.50:1.00)",
+              "deal": "boyd",
+              "ratio": 4.5
+            },
+            {
+              "covenant": "Min Interest Coverage Ratio (2.50:1.00)",
+              "deal": "boyd",
+              "ratio": 2.5
+            },
+            {
+              "covenant": "Max Total Leverage Ratio (7.25→6.50:1.00)",
+              "deal": "caesars",
+              "ratio": 6.5
+            },
+            {
+              "covenant": "Min Fixed Charge Coverage Ratio (1.75→2.00:1.00)",
+              "deal": "caesars",
+              "ratio": 2.0
+            },
+            {
+              "covenant": "Max First Lien Net Leverage Ratio (5.00:1.00)",
+              "deal": "lendingtree",
+              "ratio": 5.0
+            },
+            {
+              "covenant": "Max Consolidated Total Debt to Consolidated EBITDA Ratio (4.25:1.00)",
+              "deal": "national_vision",
+              "ratio": 4.25
+            },
+            {
+              "covenant": "Min Consolidated Interest Coverage Ratio (3.00:1.00)",
+              "deal": "national_vision",
+              "ratio": 3.0
+            },
+            {
+              "covenant": "Max Consolidated Leverage Ratio (with step-up to 4.50:1.00 for large acquisitions)",
+              "deal": "quidel",
+              "ratio": 4.5
+            },
+            {
+              "covenant": "Min Consolidated Interest Coverage Ratio (3.00:1.00)",
+              "deal": "quidel",
+              "ratio": 3.0
+            },
+            {
+              "covenant": "Max Consolidated Total Leverage Ratio (6.50→5.25:1.00)",
+              "deal": "red_rock",
+              "ratio": 5.25
+            },
+            {
+              "covenant": "Min Interest Coverage Ratio (2.50:1.00)",
+              "deal": "red_rock",
+              "ratio": 2.5
+            },
+            {
+              "covenant": "Max Net Leverage Ratio (5.00→4.00:1.00 step-down)",
+              "deal": "sleep_number",
+              "ratio": 4.0
+            },
+            {
+              "covenant": "Min Interest Coverage Ratio (1.50→3.00:1.00 step-up)",
+              "deal": "sleep_number",
+              "ratio": 3.0
+            }
+          ],
+          "metric": "financial_covenant_levels",
+          "n_deals": 16,
+          "source": "R16-A golden_record"
+        }
+      ],
+      "id": "fin_framework.financial_covenant.levels",
+      "level": 2,
+      "name": "Covenant Levels",
+      "negotiation_spectrum": {
+        "aggressive_position": "No alternative specified",
+        "dls_source_rows": [
+          {
+            "label": "Cushion / Covenant Levels",
+            "row": 74
+          }
+        ],
+        "is_highlighted": false,
+        "key_negotiation_points": [
+          "Cushion percentage to EBITDA model",
+          "Cumulative vs non-cumulative cushion",
+          "Leverage ratio step-down schedule",
+          "Source of cushion calculation (Sponsor model)",
+          "Whether CapEx covenant exists",
+          "CapEx carry-forward provisions (50% unused)",
+          "CapEx adjustment for acquired businesses",
+          "CapEx testing frequency (annual)"
+        ],
+        "market_position": "Market standard for cushion / covenant levels reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "[ ]% non cumulative cushion to EBITDA from the Sponsor's model.",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "financial_covenant.covenant_levels"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 73 (Covenant); DLS Preferred Row 74 (Cushion/Covenant Levels)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Debt at unrestricted subsidiaries excluded from consolidated debt for covenant testing. Allows structural subordination of obligations outside the restricted group.",
+          "dls_ref": [
+            "DLS:92:Unrestricted Subsidiaries"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.debt_exclusions.unrestricted_sub_debt",
+          "level": 3,
+          "name": "Unrestricted Subsidiary Debt",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 92 (Unrestricted Subsidiaries)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Interest rate hedges, currency hedges, and commodity hedges excluded from indebtedness for covenant calculation. Standard exclusion — hedging is risk-reducing, not leverage-increasing.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.debt_exclusions.hedging_obligations",
+          "level": 3,
+          "name": "Hedging Obligations",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 3; KCT Cat 3 Item 4; KCT Cat 4 Item 1; KCT Cat 4 Item 10"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Operating or capital lease obligations excluded from or capped in the debt calculation. Post-ASC 842 transition, many CAs include 'frozen GAAP' or 'lease exclusion' provisions to prevent new accounting rules from increasing reported debt.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.debt_exclusions.capital_leases",
+          "level": 3,
+          "name": "Capital Leases",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 14; KCT Cat 3 Item 15; Learning Material (Assets Subject to Capital Leases and Purchase Money Financing)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Earnout obligations, holdback amounts, and other contingent purchase price payments excluded from debt for covenant purposes until they become fixed and determinable.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.debt_exclusions.purchase_price_adjustments",
+          "level": 3,
+          "name": "Purchase Price Adjustments",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 3 Item 4; KCT Cat 4 Item 4; KCT Cat 4 Item 5; KCT Cat 4 Item 6; KCT Cat 4 Item 7"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Types of debt excluded from the financial covenant calculation, effectively allowing the borrower to take on non-counted debt. KCT Category 1 item 5 flags as a risk concern: 'Debt incurred under fixed baskets (such as freebie, non-guarantor debt basket, general debt basket, or acquisition debt basket) excluded or allowed to be excluded from calculating compliance with financial covenant.' This creates a wedge between the covenant leverage ratio and actual economic leverage. The exclusion mechanism can operate through the definition of Total Indebtedness (excluding certain basket debt) or through the covenant testing mechanics (excluding concurrent draws).",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.levels",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "financial_covenant.levels"
+      },
+      "family_id": "fin_framework.financial_covenant",
+      "id": "fin_framework.financial_covenant.debt_exclusions",
+      "kct_ref": [
+        "cat1.5"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "negotiated": "Scope of exclusions, dollar caps on excluded categories",
+        "prevalence": "75-90%",
+        "standard": "Excluded: capital leases (capped), purchase price adjustments, intercompany"
+      },
+      "name": "Debt Exclusions from Covenant",
+      "r18_concept_ids": [
+        "financial_covenant.debt_exclusions"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 55,
+          "term": "Financial Statements – going concern"
+        },
+        {
+          "coverage": "full",
+          "row": 59,
+          "term": "Financial Covenant – testing thresholds"
+        },
+        {
+          "coverage": "full",
+          "row": 61,
+          "term": "Financial Covenant – equity cure"
+        },
+        {
+          "coverage": "full",
+          "row": 85,
+          "term": "Negative Covenants - Liens"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "KCT Category 1 item 5 (debt exclusions from financial covenant calculation as risk flag)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Financial covenant breaches can be waived by Required Lenders (typically >50% of commitments). Unlike negative covenant waivers, financial covenant waivers generally do not require unanimous consent. Creates a negotiation dynamic where large lenders can override dissenting minority.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "easy",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.waiver_mechanics.majority_lender",
+          "level": 3,
+          "name": "Majority Lender Waiver",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 149 (Waiver); KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 3; KCT Cat 3 Item 3; KCT Cat 3 Item 6; KCT Cat 3 Item 7; KCT Cat 3 Item 13; KCT Cat 4 Item 1; KCT Cat 4 Item 11; KCT Cat 5 Item 1"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Certain covenant breaches automatically waived if subsequently cured within a specified period without formal lender action. Most aggressive form of lender-protection erosion.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "easy",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.waiver_mechanics.automatic_waiver",
+          "level": 3,
+          "name": "Automatic Waiver",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 149 (Waiver); KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 3 Item 3; KCT Cat 3 Item 5; KCT Cat 3 Item 7; KCT Cat 3 Item 15; KCT Cat 4 Item 1; KCT Cat 4 Item 4; KCT Cat 4 Item 11; KCT Cat 5 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "How equity cure and waiver mechanisms interact. Whether a successful equity cure constitutes a waiver of the underlying breach, whether waiver fees are owed after cure, and whether cure rights must be exhausted before requesting a waiver.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.waiver_mechanics.cure_interaction",
+          "level": 3,
+          "name": "Cure-Waiver Interaction",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 149 (Waiver); KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 3 Item 7; KCT Cat 3 Item 13"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Mechanisms by which covenant breaches can be waived without formal cure. Includes majority lender waivers, automatic waivers, and interaction between waivers and equity cure rights.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.levels",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "financial_covenant.levels"
+      },
+      "family_id": "fin_framework.financial_covenant",
+      "id": "fin_framework.financial_covenant.waiver_mechanics",
+      "level": 2,
+      "market_benchmarks": {
+        "fee": "12.5-25 bps waiver fee to consenting lenders",
+        "prevalence": "95%+",
+        "standard": "Required Lender consent for waiver, 5-10 business days notice"
+      },
+      "name": "Waiver Mechanics",
+      "type": "concept",
+      "definition_source": "Review Template Row 149 (Waiver); KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 1; KCT Cat 3 Item 3; KCT Cat 3 Item 5; KCT Cat 3 Item 7; KCT Cat 3 Item 13; KCT Cat 4 Item 1; KCT Cat 4 Item 4; KCT Cat 4 Item 11"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "When the first maintenance test occurs relative to closing. Delay allows operational ramp-up post-acquisition. DLS preferred: first full fiscal quarter after closing.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.holiday.first_test_date",
+          "level": 3,
+          "market_benchmarks": {
+            "aggressive_value": "Second or third full FQ",
+            "dls_preferred": "First full FQ",
+            "typical_value": "First or second full FQ"
+          },
+          "name": "First Test Date",
+          "r18_concept_ids": [
+            "financial_covenant.first_test_date"
+          ],
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 60,
+              "term": "Financial Covenant – first test date"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 60 (Financial Covenant – first test date)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Distribution of first test date practices across market segments. LMM: first full FQ (bank standard). CMM: first or second FQ. UMM: commonly second FQ with potential annualization of partial periods.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.holiday.first_test_date_market",
+          "level": 3,
+          "name": "First Test Date Market Practice",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 60,
+              "term": "Financial Covenant – first test date"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 60 (Financial Covenant – first test date)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Prevalence of covenant-lite structures across market segments and vintage years. 64.5% of EDGAR corpus. Threshold declining over time — deals that would have had maintenance covenants 5 years ago are now cov-lite.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.holiday.covenant_lite_frequency",
+          "level": 3,
+          "market_benchmarks": {
+            "edgar_prevalence": "64.5%"
+          },
+          "name": "Covenant-Lite Frequency",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 2; KCT Cat 3 Item 3; KCT Cat 3 Item 12; KCT Cat 4 Item 1; KCT Cat 4 Item 5; KCT Cat 5 Item 1"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Initial period post-closing where covenants are not tested. DLS preferred: first full fiscal quarter. Aggressive: delayed 2-3 quarters.",
+      "dls_ref": [
+        "DLS:73:Covenant"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.levels",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "financial_covenant.levels"
+      },
+      "family_id": "fin_framework.financial_covenant",
+      "id": "fin_framework.financial_covenant.holiday",
+      "level": 2,
+      "name": "Covenant Holiday",
+      "negotiation_spectrum": {
+        "aggressive_position": "Revolver Only and Covenant Lite: Only tested if on the last day of a fiscal quarter revolving loans and letters of credit (excluding (i) undrawn letters of credit in an amount not to exceed $[ ] million and (ii) drawn letters of credit that are 100% cash collateralized or backstopped) are outstanding in an aggregate amount exceeding an amount equal to [30/35%] of the total amount of the commitment",
+        "dls_source_rows": [
+          {
+            "label": "Financial Covenant Type & Testing",
+            "row": 73
+          },
+          {
+            "label": "Capital Expenditures Covenant",
+            "row": 76
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Types of financial covenants tested",
+          "Quarterly vs other testing frequency",
+          "Springing covenant threshold (30-35% revolver draw)",
+          "Covenant-lite structure availability",
+          "Financial covenant applies only to revolving facility",
+          "Term loan cross-default from covenant breach",
+          "Cushion percentage to EBITDA model",
+          "Cumulative vs non-cumulative cushion",
+          "Leverage ratio step-down schedule",
+          "Source of cushion calculation (Sponsor model)",
+          "Whether CapEx covenant exists",
+          "CapEx carry-forward provisions (50% unused)",
+          "CapEx adjustment for acquired businesses",
+          "CapEx testing frequency (annual)"
+        ],
+        "market_position": "Market standard for financial covenant type & testing reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "No covenant holiday; testing commences from first full fiscal quarter after closing date without deferral",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "financial_covenant.holiday_period"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 73 (Covenant)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Debt attributable to PIK interest excluded from funded debt for covenant testing. Allows interest capitalization without increasing measured leverage.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.noteworthy.pik_exclusion",
+          "kct_ref": [
+            "cat4.6"
+          ],
+          "level": 3,
+          "name": "PIK Interest Exclusions",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 6"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Automatic ratio increases post-acquisition with cushion maintenance (e.g., 30% cushion). Permits temporary leverage increase for qualifying acquisitions.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.noteworthy.acquisition_adjustment",
+          "level": 3,
+          "name": "Acquisition Adjustment Mechanisms",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 4 Item 1; KCT Cat 4 Item 8"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Temporary deemed ratios for specific periods (e.g., 'deemed 10x for pro forma compliance'). Allows the borrower to be treated as compliant during transition periods.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.noteworthy.deemed_compliance",
+          "kct_ref": [
+            "cat1.4"
+          ],
+          "level": 3,
+          "name": "Deemed Compliance Levels",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 52,
+              "term": "Financial Statements – quarterly"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 4; Review Template Row 52 (Financial Statements – quarterly)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Provision treating an equity cure contribution as automatically remedying the covenant breach without requiring formal lender acknowledgment, waiver, or amendment. The cure amount is added to EBITDA (or subtracted from debt) for the test period, and the financial covenant is recalculated to reflect compliance. Deemed cures streamline the process but reduce lender negotiating leverage during stress.",
+          "dls_ref": [
+            "DLS:75:Equity Cure"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.noteworthy.deemed_cure",
+          "kct_ref": [
+            "cat1.4"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "risk_flag": "KCT Cat 1 Item 4"
+          },
+          "name": "Deemed Cure",
+          "r18_concept_ids": [
+            "financial_covenant.deemed_cure"
+          ],
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 61,
+              "term": "Financial Covenant – equity cure"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 75 (Equity Cure); KCT Cat 1 Item 4; Review Template Row 61 (Financial Covenant – equity cure)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "dealdata_benchmarks": {
+        "Other Noteworthy Terms": {
+          "pc_dollar_median": "$2,000,000",
+          "pc_dollar_range": "$65,000-$2,500,000",
+          "pc_pct_range": "5.0%-75.0%",
+          "pc_ratio_median": "5.00x",
+          "pc_ratio_range": "3.90x-5.80x"
+        },
+        "Other Noteworthy Terms including fixed rate, PIK interest:": {
+          "pc_dollar_median": "$25,000,000",
+          "pc_dollar_range": "$500,000-$25,000,000",
+          "pc_pct_range": "0.2%-14.0%",
+          "pc_ratio_median": "1.75x",
+          "pc_ratio_range": "1.75x-1.75x"
+        }
+      },
+      "definition": "Deal-specific covenant modifications and unusual provisions that deviate from standard market terms, appearing in approximately 16% of leveraged credit agreements. Includes features such as anti-cash-hoarding provisions, minimum liquidity tests, consolidated fixed charge coverage ratios, and custom triggers tied to industry-specific metrics. These provisions signal heightened lender concern or borrower-specific risk factors requiring bespoke protections beyond the standard covenant framework.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.levels",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "financial_covenant.levels"
+      },
+      "family_id": "fin_framework.financial_covenant",
+      "id": "fin_framework.financial_covenant.noteworthy",
+      "level": 2,
+      "name": "Other Noteworthy Terms",
+      "type": "concept",
+      "definition_source": "Review Template Row 84 (Other); Review Template Row 156 (Other); KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 2; KCT Cat 3 Item 3; KCT Cat 3 Item 4; KCT Cat 3 Item 7; KCT Cat 3 Item 8; KCT Cat 3 Item 11; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 4 Item 1; KCT Cat 4 Item 2; KCT Cat 4 Item 3; KCT Cat 4 Item 4; KCT Cat 4 Item 5; KCT Cat 4 Item 6; KCT Cat 4 Item 7; KCT Cat 4 Item 8; KCT Cat 4 Item 10; KCT Cat 4 Item 11; KCT Cat 5 Item 1"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Cross-segment patterns for when first covenant test occurs. DLS preferred: first full FQ. UMM/BSL: second or third FQ. LMM: first FQ standard.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.market_benchmarks.first_test_date_market",
+          "level": 3,
+          "name": "First Test Date Market Practice",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 60,
+              "term": "Financial Covenant – first test date"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 60 (Financial Covenant – first test date)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "How covenant levels scale with EBITDA size. LMM (<$50M): 3.0-5.0x. CMM ($50-100M): 4.0-6.0x. UMM (>$100M): 5.0-8.0x+. BSL ($200M+): N/A (cov-lite standard).",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.market_benchmarks.levels_by_segment",
+          "level": 3,
+          "market_benchmarks": {
+            "cmm": "4.0-6.0x",
+            "lmm": "3.0-5.0x",
+            "umm": "5.0-8.0x+"
+          },
+          "name": "Covenant Levels by EBITDA Segment",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 74 (Cushion/Covenant Levels); Review Template Row 58 (Financial Covenant – levels); KCT Cat 1 Item 3; KCT Cat 2 Item 4"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Macro trends in cushion sizing. Widening trend post-2020 as EBITDA addbacks expand. Effective cushion shrinking despite nominal percentages remaining stable.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.market_benchmarks.cushion_trends",
+          "level": 3,
+          "name": "Cushion Size Trends",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 6; KCT Cat 1 Item 7; KCT Cat 2 Item 4"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Prevalence of cov-lite by segment and vintage. 64.5% overall in EDGAR corpus. Near-universal in BSL. Increasing penetration in CMM. LMM remains predominantly covenanted.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.financial_covenant",
+          "id": "fin_framework.financial_covenant.market_benchmarks.covenant_lite_frequency",
+          "level": 3,
+          "market_benchmarks": {
+            "edgar_prevalence": "64.5%"
+          },
+          "name": "Covenant-Lite Frequency",
+          "type": "sub_component"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Aggregate market data points for financial covenant calibration across market segments, vintages, and deal types.",
+      "dls_ref": [
+        "DLS:40:Market MAC",
+        "DLS:54:Clear market",
+        "DLS:61:Clear Market"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.levels",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "financial_covenant.levels",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.financial_covenant",
+      "id": "fin_framework.financial_covenant.market_benchmarks",
+      "level": 2,
+      "market_benchmarks": {
+        "bsl_springing": "Triggered at 35-40% revolver utilization",
+        "pc_leverage_cushion": "15-25% above closing leverage",
+        "prevalence": "85-95%"
+      },
+      "name": "Market Benchmarks",
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 40 (Market MAC); DLS Preferred Row 54 (Clear market); DLS Preferred Row 61 (Clear Market)"
+    },
+    {
+      "children": [
+        {
+          "id": "fin_framework.financial_covenant.drawstop_only_consequence_no_eod.trigger_mechanics",
+          "name": "Drawstop Trigger Mechanics",
+          "definition": "How financial covenant breach activates the drawstop — automatic upon delivery of non-compliant compliance certificate, or upon agent/lender declaration — and the specific facilities affected (revolver only, all undrawn).",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "fin_framework",
+          "family_id": "fin_framework.financial_covenant",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 3; KCT Cat 3 Item 5; KCT Cat 3 Item 6; KCT Cat 3 Item 13; KCT Cat 4 Item 1; KCT Cat 4 Item 4; KCT Cat 4 Item 7; KCT Cat 4 Item 11; KCT Cat 5 Item 1"
+        },
+        {
+          "id": "fin_framework.financial_covenant.drawstop_only_consequence_no_eod.cure_reinstatement",
+          "name": "Cure & Reinstatement",
+          "definition": "Mechanism for reinstating drawing capacity after a drawstop, including equity cure interaction, next-quarter compliance, or waiver — and whether partial cure restores partial drawing rights.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "fin_framework",
+          "family_id": "fin_framework.financial_covenant",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "hard",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 6; KCT Cat 3 Item 3; KCT Cat 3 Item 4; KCT Cat 3 Item 13; KCT Cat 4 Item 6"
+        },
+        {
+          "id": "fin_framework.financial_covenant.drawstop_only_consequence_no_eod.lender_risk_implications",
+          "name": "Lender Risk Implications",
+          "definition": "Risk consequences of drawstop-only versus full EoD, including inability to accelerate loans, limited workout leverage, and the borrower's ability to continue operations without lender intervention during breach.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "fin_framework",
+          "family_id": "fin_framework.financial_covenant",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 4; KCT Cat 3 Item 3; KCT Cat 3 Item 5; KCT Cat 3 Item 10; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 3 Item 14; KCT Cat 3 Item 15; KCT Cat 4 Item 1; KCT Cat 4 Item 2; KCT Cat 4 Item 3; KCT Cat 4 Item 4; KCT Cat 4 Item 6; KCT Cat 4 Item 11; KCT Cat 4 Item 12; KCT Cat 5 Item 1; KCT Cat 5 Item 2; KCT Cat 5 Item 4"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Risk concern per KCT Category 1 item 1: '(a) No financial covenants for RCFs or TLAs or (b) breach of financial covenants only applies as a condition to Borrowing and will not result in an Event of Default (i.e., breaching the financial covenant results only in a drawstop of any unfunded committed amount).' This means covenant breach merely prevents new draws rather than triggering acceleration, eliminating the primary enforcement mechanism. PC Term Comparison notes that KCT item 10 separately flags: 'The existence of a Default should prohibit any borrowing of loans -- i.e., there should be no ability to borrow any loans if a Default is continuing.' When combined with a drawstop-only covenant, the lender loses both the enforcement tool and the information forcing function.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "fin_framework",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "section_locations": [
+          "ARTICLE VII",
+          "Section 7.01"
+        ],
+        "shape_ref": null,
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE VII (Financial Covenants)"
+      },
+      "family_id": "fin_framework.financial_covenant",
+      "id": "fin_framework.financial_covenant.drawstop_only_consequence_no_eod",
+      "kct_ref": [
+        "cat1.1"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "15-25% (growing trend in sponsor deals)",
+        "standard": "Revolver draw-stop only, no event of default for financial covenant breach",
+        "trend": "Increasingly common in competitive markets"
+      },
+      "name": "Drawstop-only consequence (no EoD)",
+      "type": "concept",
+      "definition_source": "KCT Category 1 item 1 (no financial covenants or drawstop-only consequence); KCT Category 3 item 10 (Default should prohibit all borrowings)"
+    }
+  ],
+  "corpus_prevalence": "high",
+  "definition": "Financial maintenance covenants tested periodically (typically quarterly on the last day of each fiscal quarter for the trailing four-quarter period) to ensure the borrower meets minimum financial performance standards. DLS Preferred position: full-time testing of Total Net Leverage Ratio with step-downs, Senior Secured Net Leverage Ratio with step-downs, Fixed Charge Coverage Ratio, and Maximum Capital Expenditures, commencing with the first full fiscal quarter after closing. Alternative (covenant-lite) formulation: testing only if revolving loans and LCs (excluding undrawn LCs up to an agreed amount and 100% cash-collateralized LCs) exceed 30-35% of total revolving commitments. In covenant-lite, only revolving facility lenders holding a majority of revolving loans/commitments can amend or waive the financial covenant, and a breach does not constitute a term loan EoD until revolving lenders have actually terminated commitments and accelerated. PC Term Comparison: for cov-lite, cushion is 35-40% off sponsor model (unlike BSL, PC clients do not assume revolver is fully drawn when setting levels); for full-time covenant, 30-35% non-cumulative cushion off sponsor model, typically a static Total Leverage Ratio with possibly 1-2 step-downs of 25bps.",
+  "dls_ref": [
+    "DLS:47:Financial statements",
+    "DLS:76:Capex",
+    "DLS:78:Affirmative covenants",
+    "DLS:88:Other Negative Covenants"
+  ],
+  "dna_pattern_refs": [
+    "COVENANT:FINANCIAL:COVENANT_FACILITY_ONLY:SPRINGING_POST_TLA:25PCT_REVOLVER:170MM_LC_EXCLUSION:TERRORISM_SUSPENSION",
+    "COVENANT:FINANCIAL:DUAL_TEST:LEVERAGE_4.50X+ICR_3.0X:STEPPED_4.25X:WITH_ACQ_HOLIDAY_250M",
+    "COVENANT:FINANCIAL:DUAL_TEST:NET_LEVERAGE+INTEREST_COVERAGE:STEPPED_SCHEDULE:NON_MONOTONIC:ALWAYS_ON",
+    "COVENANT:FINANCIAL:FLNLR:5.0X:FLAT:SPRINGING:DEFERRED_TESTING_DATE",
+    "COVENANT:FINANCIAL:LEVERAGE:5X_TO_4.5X:STEPPED:ACQ_STEPUP_5.5X:ICR:2.5X",
+    "COVENANT:FINANCIAL:LEVERAGE:7.25X_TO_6.5X:FCCR:1.75X_TO_2X:STEPPED",
+    "COVENANT:FINANCIAL:MAINTENANCE:EACH_FQ:DUAL_TEST",
+    "COVENANT:FINANCIAL:MAINTENANCE:NO_SPRINGING_TRIGGER:ALWAYS_ON:THREE_TESTS",
+    "COVENANT:FINANCIAL:MINIMUM_LIQUIDITY_100MM:CONTINUOUS:BROAD_LIQUIDITY_DEFINITION:INCLUDES_ABL_AVAILABILITY",
+    "COVENANT:FINANCIAL:NOT_SPRINGING:COVENANT_LENDERS_ONLY",
+    "COVENANT:FINANCIAL:NOT_SPRINGING:QUARTERLY_TEST:MAINTENANCE",
+    "COVENANT:FINANCIAL:NO_SPRINGING:QUARTERLY:ALL_LENDERS",
+    "COVENANT:FINANCIAL:TESTING:ALWAYS_ON:NO_SPRINGING:QUARTERLY",
+    "COVENANT:FINANCIAL:TOTAL_NET_LEVERAGE:STEPPED:5.0X:4.5X:4.0X:WITH_QUALIFIED_ACQUISITION_ELECTION:4.5X:INTEREST_COVERAGE:2.5X:WITH_ACQUISITION_DEBT_EXCLUSION",
+    "COVENANT:NON_SPRINGING:QUARTERLY_TESTING:PRO_RATA_ONLY",
+    "COVENANT:STEPPED_LEVERAGE:6_STEP_SCHEDULE:WITH_ICR_FLOOR:PRO_RATA_ONLY",
+    "DEFINITION:SPRINGING_TRIGGER:THRESHOLD_DOLLAR:$20M:EXCLUDES_UNDRAWN_LC:EXCLUDES_CASH_COLLAT_LC"
+  ],
+  "domain_id": "fin_framework",
+  "extraction_difficulty": "hard",
+  "family_id": "fin_framework.financial_covenant",
+  "golden_record_benchmarks": [
+    {
+      "metric": "financial_covenant_structures",
+      "n_deals": 9,
+      "prevalence": {
+        "cov_lite": 1,
+        "equity_cure": 4,
+        "springing": 2,
+        "step_schedule": 4
+      },
+      "source": "R16-A golden_record"
+    }
+  ],
+  "golden_record_ids": [
+    "financial_covenant.covered_debt",
+    "financial_covenant.financial_covenant_tests",
+    "financial_covenant.levels",
+    "financial_covenant.testing_threshold"
+  ],
+  "golden_record_refs": [
+    {
+      "deal_count": 1,
+      "golden_concept_id": "financial_covenant.covered_debt",
+      "has_absence": false,
+      "parameter_count": 1,
+      "total_records": 1
+    },
+    {
+      "deal_count": 1,
+      "golden_concept_id": "financial_covenant.financial_covenant_tests",
+      "has_absence": false,
+      "parameter_count": 2,
+      "total_records": 1
+    },
+    {
+      "deal_count": 7,
+      "golden_concept_id": "financial_covenant.levels",
+      "has_absence": false,
+      "parameter_count": 13,
+      "total_records": 7
+    },
+    {
+      "deal_count": 9,
+      "golden_concept_id": "financial_covenant.testing_threshold",
+      "has_absence": true,
+      "parameter_count": 3,
+      "total_records": 9
+    }
+  ],
+  "id": "fin_framework.financial_covenant",
+  "kct_ref": [
+    "cat1.1"
+  ],
+  "kg_concept_ids": [
+    "financial_covenant.financial_covenant_tests",
+    "financial_covenant.levels",
+    "financial_covenant.testing_threshold"
+  ],
+  "level": 1,
+  "market_benchmarks": {
+    "cov_lite_springing_threshold": "30-35% of total revolving commitments",
+    "cov_lite_cushion_to_model": "35-40% off sponsor model",
+    "full_time_cushion_to_model": "30-35% non-cumulative cushion off sponsor model",
+    "dls_preferred_testing": "Quarterly, Total Net Leverage with step-downs + Senior Secured Net Leverage + FCCR + Max CapEx",
+    "pctc_cov_lite_threshold_umm": "$60-80M+ EBITDA for TTS transactions",
+    "equity_cure_frequency_dls": "No equity cure (preferred); Alternative: 2 in 4 quarters, 4-5 lifetime",
+    "cov_lite_springing_threshold_source": "DLS Preferred row 73 alternative",
+    "cov_lite_cushion_to_model_source": "PC Term Comparison section 6",
+    "full_time_cushion_to_model_source": "PC Term Comparison section 6",
+    "dls_preferred_testing_source": "DLS Preferred row 73 preferred terms",
+    "equity_cure_frequency_dls_source": "DLS Preferred row 75",
+    "_source": "DLS Preferred rows 73-75; PC Term Comparison section 6"
+  },
+  "market_data": {
+    "covenant_lite": "64.5%",
+    "maintenance_present": "35.5%"
+  },
+  "name": "Financial Covenants",
+  "negotiation_spectrum": {
+    "aggressive_position": "Revolver Only and Covenant Lite: Only tested if on the last day of a fiscal quarter revolving loans and letters of credit (excluding (i) undrawn letters of credit in an amount not to exceed $[ ] million and (ii) drawn letters of credit that are 100% cash collateralized or backstopped) are outstanding in an aggregate amount exceeding an amount equal to [30/35%] of the total amount of the commitment",
+    "dls_source_rows": [
+      {
+        "label": "Financial Covenant Type & Testing",
+        "row": 73
+      },
+      {
+        "label": "Capital Expenditures Covenant",
+        "row": 76
+      }
+    ],
+    "is_highlighted": true,
+    "key_negotiation_points": [
+      "Types of financial covenants tested",
+      "Quarterly vs other testing frequency",
+      "Springing covenant threshold (30-35% revolver draw)",
+      "Covenant-lite structure availability",
+      "Financial covenant applies only to revolving facility",
+      "Term loan cross-default from covenant breach",
+      "Cushion percentage to EBITDA model",
+      "Cumulative vs non-cumulative cushion",
+      "Leverage ratio step-down schedule",
+      "Source of cushion calculation (Sponsor model)",
+      "Whether CapEx covenant exists",
+      "CapEx carry-forward provisions (50% unused)",
+      "CapEx adjustment for acquired businesses",
+      "CapEx testing frequency (annual)"
+    ],
+    "market_position": "Market standard for financial covenant type & testing reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+    "preferred_position": "Quarterly-tested maintenance covenants: Total Net Leverage and Senior Secured Net Leverage with step-downs, plus FCCR and capex",
+    "source": "R14-B"
+  },
+  "playbook_ref": {
+    "concept_id": "financial_covenant.testing_threshold",
+    "dependency_count": 11,
+    "extraction_difficulty": "very_hard",
+    "phase": 7
+  },
+  "r18_concept_ids": [
+    "financial_covenant.covenant_levels",
+    "financial_covenant.covenant_type",
+    "financial_covenant.debt_exclusions",
+    "financial_covenant.first_test_date",
+    "financial_covenant.ratio_test"
+  ],
+  "review_ref": [
+    {
+      "coverage": "full",
+      "row": 53,
+      "term": "Financial Statements – monthly"
+    },
+    {
+      "coverage": "full",
+      "row": 54,
+      "term": "Financial Statements – annual audits"
+    },
+    {
+      "coverage": "full",
+      "row": 55,
+      "term": "Financial Statements – going concern"
+    },
+    {
+      "coverage": "full",
+      "row": 58,
+      "term": "Financial Covenant – levels"
+    },
+    {
+      "coverage": "full",
+      "row": 59,
+      "term": "Financial Covenant – testing thresholds"
+    },
+    {
+      "coverage": "full",
+      "row": 61,
+      "term": "Financial Covenant – equity cure"
+    },
+    {
+      "coverage": "full",
+      "row": 146,
+      "term": "Cross-default"
+    },
+    {
+      "coverage": "full",
+      "row": 155,
+      "term": "Financial Statements"
+    }
+  ],
+  "search_strategy_ref": {
+    "heading_pattern_count": 5,
+    "keyword_anchor_count": 17,
+    "r18_family": "financial_covenant",
+    "term_override_count": 4
+  },
+  "term_analysis_sources": [
+    "TERM_ANALYSIS_FINANCIAL_COVENANT_APPLICATION.md",
+    "TERM_ANALYSIS_FINANCIAL_COVENANT_TESTS.md",
+    "TERM_ANALYSIS_FINANCIAL_COVENANT_OTHER_NOTEWORTHY_TERMS.md",
+    "CROSS_ANALYSIS_FINANCIAL_COVENANT_SOPHISTICATION.md"
+  ],
+  "type": "family",
+  "definition_source": "DLS Preferred row 73 (covenant testing mechanics, covenant-lite alternative); DLS Preferred row 74 (cushion levels); PC Term Comparison section 6 (Financial Covenant: cov-lite at 35-40% cushion, full-time at 30-35% cushion); Review Template rows 57-61 (Financial Covenant application, levels, testing thresholds, first test date, equity cure)",
+  "pc_ref": [
+    "Section 6"
+  ]
+}

@@ -1,0 +1,1617 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Capitalized lease obligations under ASC 842 (formerly ASC 840). 88.3% prevalence in total debt definitions. Key negotiation: whether operating leases reclassified under ASC 842 are included or carved out ('frozen GAAP' treatment). Most aggressive deals freeze the definition at pre-ASC 842 standards.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.leverage",
+              "id": "fin_framework.leverage.total_debt.core_components.cap_leases",
+              "level": 4,
+              "market_data": {
+                "prevalence": "88.3%"
+              },
+              "name": "Capital/Finance Leases",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 3 Item 4; KCT Cat 3 Item 11; KCT Cat 3 Item 15; KCT Cat 4 Item 5; Learning Material (Assets Subject to Capital Leases and Purchase Money Financing)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "All obligations for borrowed money including term loans, revolving credit borrowings, and any other funded debt. 86.7% prevalence. The broadest category -- captures the credit facility itself and any other borrowings.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.leverage",
+              "id": "fin_framework.leverage.total_debt.core_components.borrowed_money",
+              "level": 4,
+              "market_data": {
+                "prevalence": "86.7%"
+              },
+              "name": "Debt for Borrowed Money",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 2; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 4; KCT Cat 3 Item 3; KCT Cat 3 Item 4; KCT Cat 3 Item 10; KCT Cat 3 Item 11; KCT Cat 3 Item 12; KCT Cat 3 Item 14; KCT Cat 3 Item 15; KCT Cat 4 Item 2; KCT Cat 4 Item 4; KCT Cat 4 Item 6; KCT Cat 4 Item 7; KCT Cat 4 Item 10; KCT Cat 4 Item 11"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Debt evidenced by bonds, notes, debentures, or similar instruments. 80.0% prevalence. Captures high-yield bonds, mezzanine notes, seller notes, and other capital markets debt instruments.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.leverage",
+              "id": "fin_framework.leverage.total_debt.core_components.bonds_notes",
+              "level": 4,
+              "market_data": {
+                "prevalence": "80.0%"
+              },
+              "name": "Bonds/Notes/Instruments",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 2; KCT Cat 2 Item 1; KCT Cat 3 Item 15; KCT Cat 4 Item 4"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Outstanding letter of credit exposure included in the total debt numerator for leverage ratio calculations. Covers drawn and undrawn amounts of commercial and standby letters of credit issued under the credit facility, with the treatment of undrawn LCs (included or excluded) being a negotiation point that affects reported leverage levels.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.leverage",
+              "id": "fin_framework.leverage.total_debt.core_components.lc_obligations",
+              "level": 4,
+              "market_data": {
+                "prevalence": "76.7%"
+              },
+              "name": "Letter of Credit Obligations",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 4; KCT Cat 3 Item 7; KCT Cat 3 Item 11; KCT Cat 3 Item 15; KCT Cat 4 Item 1; KCT Cat 4 Item 5; KCT Cat 4 Item 7; KCT Cat 4 Item 8; KCT Cat 4 Item 10; KCT Cat 5 Item 1"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "The four universally included debt categories: capital/finance leases, debt for borrowed money, bonds/notes/instruments, and letter of credit obligations. Present in 76-88% of total debt definitions across the corpus.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.total_debt.core_components",
+          "level": 3,
+          "name": "Core Components (Big Four)",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 1; KCT Cat 2 Item 4; KCT Cat 3 Item 4; KCT Cat 3 Item 11; KCT Cat 4 Item 10"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "70% include; timing triggers vary: 'due and payable' (26%), 'balance sheet' (19%), '5 BD overdue' (7%).",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.leverage",
+              "id": "fin_framework.leverage.total_debt.secondary_components.earnouts",
+              "level": 4,
+              "name": "Earnouts",
+              "type": "sub_component",
+              "definition_source": "Review Template Row 117; KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Obligations incurred to finance the acquisition of property or equipment, secured by the acquired assets. 55% prevalence. Often subject to a dollar cap that also serves as the permitted indebtedness basket for this category.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.leverage",
+              "id": "fin_framework.leverage.total_debt.secondary_components.purchase_money",
+              "level": 4,
+              "market_data": {
+                "prevalence": "55%"
+              },
+              "name": "Purchase Money Debt",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 4; KCT Cat 3 Item 11; KCT Cat 3 Item 13; KCT Cat 3 Item 15; KCT Cat 4 Item 3; KCT Cat 4 Item 5; KCT Cat 4 Item 8; KCT Cat 4 Item 12; Learning Material (Assets Subject to Capital Leases and Purchase Money Financing)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Obligations from acquisitions, including seller notes and holdback amounts. 45% prevalence. Key issue: whether contingent consideration (e.g., milestone payments) is included or only fixed obligations.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.leverage",
+              "id": "fin_framework.leverage.total_debt.secondary_components.deferred_purchase",
+              "level": 4,
+              "market_data": {
+                "prevalence": "45%"
+              },
+              "name": "Deferred Purchase Price",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 6; KCT Cat 2 Item 1; KCT Cat 3 Item 4; KCT Cat 4 Item 5; KCT Cat 4 Item 6"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Contingent obligations and guarantees of third-party debt. 36.7% prevalence. Typically included only if the underlying obligation would itself constitute Indebtedness. Unfunded guarantees may be excluded.",
+              "dls_ref": [
+                "DLS:66:Guarantees"
+              ],
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.leverage",
+              "id": "fin_framework.leverage.total_debt.secondary_components.guarantees",
+              "level": 4,
+              "market_data": {
+                "prevalence": "36.7%"
+              },
+              "name": "Guarantee Obligations",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 66 (Guarantees)"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "27% include, 18% explicitly exclude -- the 'hedge paradox' remains unresolved.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.leverage",
+              "id": "fin_framework.leverage.total_debt.secondary_components.hedge_obligations",
+              "level": 4,
+              "name": "Hedge/Swap Obligations",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 2 Item 1; KCT Cat 3 Item 4"
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Synthetic leases, A/R securitization facilities, sale-leaseback obligations, and factoring programs. Inclusion has increased post-Enron and post-ASC 842. Bank position: include all financing arrangements regardless of GAAP classification.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.leverage",
+              "id": "fin_framework.leverage.total_debt.secondary_components.off_balance_sheet",
+              "level": 4,
+              "name": "Off-Balance Sheet Liabilities",
+              "r18_concept_ids": [
+                "financial_definitions.consolidated_total_debt"
+              ],
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3; KCT Cat 2 Item 2; KCT Cat 4 Item 10"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Debt categories included in 27-70% of total debt definitions. Inclusion is negotiated and varies materially by deal. These components often represent the swing factor in total leverage calculations.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.total_debt.secondary_components",
+          "level": 3,
+          "name": "Secondary Components",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 1; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 4 Item 1; KCT Cat 4 Item 11"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Hedge obligations, intercompany, trade payables, undrawn LCs, receivables financing.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.total_debt.exclusions",
+          "level": 3,
+          "name": "Standard Exclusions",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 10"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "dealdata_benchmarks": {
+        "Consolidated Total Debt Show components: Note cap on netting if any or if no ...": {
+          "pc_dollar_median": "$10,000,000",
+          "pc_dollar_range": "$479,167-$20,000,000",
+          "pc_pct_range": "50.0%-50.0%"
+        }
+      },
+      "definition": "Comprehensive measure of all debt obligations used as the numerator in total leverage ratio calculations. DLS Preferred row 13 defines Total Indebtedness as: (i) borrowed money or represented by notes, bonds, debentures or similar instruments; (ii) purchase money indebtedness; (iii) deferred purchase price, earnouts and similar payment obligations to the extent considered liabilities under GAAP; (iv) the principal portion of capital leases; (v) all unreimbursed amounts under letters of credit, bankers' acceptances or similar instruments; (vi) all obligations secured by a lien on any asset; and (vii) guarantees of the foregoing. Net of unrestricted cash and cash equivalents subject to a cap and DACA requirements. PC Term Comparison notes clients 'still include borrowed money, cap leases, purchase money, evidenced by notes, unreimbursed LCs, earnouts if [due and payable/past due/past due by 5/30 or more days] and disqualified stock where appropriate.' Other than in aggressive UMM/BSL transactions, earnouts should always be debt for the negative covenant.",
+      "dls_ref": [
+        "DLS:4:Funded Debt at Closing"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.leverage_ratio_calcs",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE X",
+          "Section 1.01",
+          "Section 1.01; 10.08(a)",
+          "Section 1.1"
+        ],
+        "shape_ref": "financial_definitions.leverage_ratio_calcs"
+      },
+      "family_id": "fin_framework.leverage",
+      "id": "fin_framework.leverage.total_debt",
+      "level": 2,
+      "market_data": {
+        "avg_components": "5-7",
+        "defined": "~100%"
+      },
+      "name": "Consolidated Total Debt",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to debt for borrowed money capital lease obligations/purchase money debt and obligations evidenced by bonds, debentures notes and similar instruments No cap on cash netting No requirement to keep the unrestricted cash in deposit account subject to a control agreement Limited to liens on Collateral only Ratio of EBITDA to Consolidated Fixed Charges without deductions from EBITDA Cash interest only",
+        "dls_rows": [
+          4
+        ],
+        "dls_source_rows": [
+          {
+            "label": "Leverage Ratios",
+            "row": 13
+          }
+        ],
+        "dls_terms": [
+          "Funded Debt at Closing"
+        ],
+        "is_highlighted": false,
+        "key_negotiation_points": [
+          "Scope of Total Indebtedness definition",
+          "Cash netting cap and control agreement requirement",
+          "Control agreement for unrestricted cash",
+          "Types of leverage ratios defined",
+          "Fixed charge coverage ratio formula"
+        ],
+        "market_position": "Market standard for leverage ratios reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "\"Total Indebtedness\" means the outstanding principal amount of indebtedness for (i) borrowed money or represented by notes, bonds, debentures or similar instruments, (ii) purchase money indebtedness, (iii) deferred purchase price, \"earnouts\" and similar payment obligations to the extent such obligations are considered liabilities under GAAP, (iv) the principal portion of capital leases of Holdings",
+        "sources": [
+          "R14-A",
+          "R14-B"
+        ]
+      },
+      "r18_concept_ids": [
+        "financial_definitions.consolidated_total_debt"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 13 (complete Total Indebtedness definition with 7 components); PC Term Comparison Indebtedness section lines 146-156 (client inclusion list and earnout treatment by segment)",
+      "pc_ref": [
+        "Indebtedness"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Most common: debt secured by liens ranking pari passu with term loans.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.first_lien.pari_passu",
+          "kct_ref": [
+            "cat2.1"
+          ],
+          "level": 3,
+          "name": "Pari Passu Standard",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Broader: includes super-priority and priming liens (40.6% mention senior).",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.first_lien.pari_or_senior",
+          "level": 3,
+          "name": "Pari-or-Senior Approach",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 1; KCT Cat 4 Item 4; KCT Cat 4 Item 10; KCT Cat 5 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "53.1% require same-collateral coverage; broader asset approach in 16%.",
+          "dls_ref": [
+            "DLS:52:Collateral"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.first_lien.collateral_scope",
+          "level": 3,
+          "name": "Collateral Specificity",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 52 (Collateral)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether lien-subordinated debt or payment-subordinated debt is excluded from first lien debt. Key distinction: second lien debt secured by the same collateral but subordinated via intercreditor agreement should be excluded. Some definitions also exclude debt that is contractually subordinated in right of payment even if secured by first priority liens.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.first_lien.subordination_exclusion",
+          "kct_ref": [
+            "cat4.4"
+          ],
+          "level": 3,
+          "name": "Subordination Exclusion",
+          "r18_concept_ids": [
+            "financial_definitions.consolidated_first_lien_debt"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 4"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Indebtedness secured by liens ranking pari passu with or senior to the credit facility liens, used as the numerator in the first lien net leverage ratio -- the most common incurrence test for incremental capacity. DLS Preferred row 13 defines Total Senior Indebtedness as 'Total Indebtedness other than to the extent contractually subordinated in right of payment.' The first lien ratio is typically Total Senior Secured Net Leverage = Total Secured Indebtedness / EBITDA. PC Term Comparison directs: 'For 1L and Secured Leverage should include all debt secured by a lien and not limited to a lien on Collateral' -- meaning any secured debt counts, not just debt secured by the same collateral pool. This prevents gaming through securing additional debt with non-collateral assets while reporting low first-lien leverage.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.leverage_ratio_calcs",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE X",
+          "Section 1.01",
+          "Section 1.01; 10.08(a)",
+          "Section 1.1"
+        ],
+        "shape_ref": "financial_definitions.leverage_ratio_calcs"
+      },
+      "family_id": "fin_framework.leverage",
+      "id": "fin_framework.leverage.first_lien",
+      "level": 2,
+      "market_data": {
+        "defined": "52.5%",
+        "undefined": "47.5%"
+      },
+      "name": "Consolidated First Lien Debt",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to debt for borrowed money capital lease obligations/purchase money debt and obligations evidenced by bonds, debentures notes and similar instruments No cap on cash netting No requirement to keep the unrestricted cash in deposit account subject to a control agreement Limited to liens on Collateral only Ratio of EBITDA to Consolidated Fixed Charges without deductions from EBITDA Cash interest only",
+        "dls_source_rows": [
+          {
+            "label": "Leverage Ratios",
+            "row": 13
+          }
+        ],
+        "is_highlighted": false,
+        "key_negotiation_points": [
+          "Scope of Total Indebtedness definition",
+          "Cash netting cap and control agreement requirement",
+          "Control agreement for unrestricted cash",
+          "Types of leverage ratios defined",
+          "Fixed charge coverage ratio formula"
+        ],
+        "market_position": "Market standard for leverage ratios reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "\"Total Indebtedness\" means the outstanding principal amount of indebtedness for (i) borrowed money or represented by notes, bonds, debentures or similar instruments, (ii) purchase money indebtedness, (iii) deferred purchase price, \"earnouts\" and similar payment obligations to the extent such obligations are considered liabilities under GAAP, (iv) the principal portion of capital leases of Holdings",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "financial_definitions.consolidated_first_lien_debt"
+      ],
+      "term_analysis_sources": [
+        "TERM_ANALYSIS_FINANCIAL_FIRST_LIEN_DEBT.md"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 13 (Total Senior Indebtedness and Total Senior Secured Net Leverage Ratio definitions); PC Term Comparison Indebtedness section line 151 ('For 1L and Secured Leverage should include all debt secured by a lien and not limited to a lien on Collateral')",
+      "pc_ref": [
+        "Indebtedness"
+      ]
+    },
+    {
+      "corpus_prevalence": "high",
+      "definition": "All debt obligations secured by liens on any assets, used as the numerator in the secured net leverage ratio. DLS Preferred row 13 defines Total Secured Indebtedness as 'the Total Indebtedness that is secured on any properties or assets of Holdings or any of its subsidiaries.' This is the middle ground between total leverage (all debt) and first lien leverage (pari/senior liens only). PC Term Comparison emphasizes that for both first lien and secured leverage, the definition should include 'all debt secured by a lien and not limited to a lien on Collateral' and directs discussion of 'cap on cash netting' and 'whether DACAs apply and if so limit netting to DACA cash.'",
+      "dls_ref": [
+        "DLS:4:Funded Debt at Closing",
+        "DLS:85:Restricted Debt Prepayments"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.leverage_ratio_calcs",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE X",
+          "Section 1.01",
+          "Section 1.01; 10.08(a)",
+          "Section 1.1"
+        ],
+        "shape_ref": "financial_definitions.leverage_ratio_calcs"
+      },
+      "family_id": "fin_framework.leverage",
+      "id": "fin_framework.leverage.secured_debt",
+      "kct_ref": [
+        "cat3.1"
+      ],
+      "level": 2,
+      "market_data": {
+        "any_assets": "30%",
+        "collateral_specific": "56.7%",
+        "defined": "49.2%"
+      },
+      "name": "Consolidated Secured Debt",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to debt for borrowed money capital lease obligations/purchase money debt and obligations evidenced by bonds, debentures notes and similar instruments No cap on cash netting No requirement to keep the unrestricted cash in deposit account subject to a control agreement Limited to liens on Collateral only Ratio of EBITDA to Consolidated Fixed Charges without deductions from EBITDA Cash interest only",
+        "dls_rows": [
+          4
+        ],
+        "dls_source_rows": [
+          {
+            "label": "Leverage Ratios",
+            "row": 13
+          }
+        ],
+        "dls_terms": [
+          "Funded Debt at Closing"
+        ],
+        "is_highlighted": false,
+        "key_negotiation_points": [
+          "Scope of Total Indebtedness definition",
+          "Cash netting cap and control agreement requirement",
+          "Control agreement for unrestricted cash",
+          "Types of leverage ratios defined",
+          "Fixed charge coverage ratio formula"
+        ],
+        "market_position": "Market standard for leverage ratios reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "\"Total Indebtedness\" means the outstanding principal amount of indebtedness for (i) borrowed money or represented by notes, bonds, debentures or similar instruments, (ii) purchase money indebtedness, (iii) deferred purchase price, \"earnouts\" and similar payment obligations to the extent such obligations are considered liabilities under GAAP, (iv) the principal portion of capital leases of Holdings",
+        "sources": [
+          "R14-A",
+          "R14-B"
+        ]
+      },
+      "r18_concept_ids": [
+        "financial_definitions.consolidated_secured_debt"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 61,
+          "term": "Financial Covenant – equity cure"
+        },
+        {
+          "coverage": "full",
+          "row": 62,
+          "term": "Leverage Ratio Calculations"
+        },
+        {
+          "coverage": "full",
+          "row": 63,
+          "term": "EBITDA Addbacks"
+        }
+      ],
+      "term_analysis_sources": [
+        "TERM_ANALYSIS_FINANCIAL_SECURED_DEBT.md"
+      ],
+      "type": "concept",
+      "children": [
+        {
+          "id": "fin_framework.leverage.secured_debt.included_obligations",
+          "name": "Included Obligation Types",
+          "definition": "Which obligations count as Consolidated Secured Debt — debt for borrowed money, capital lease obligations, purchase money debt, and debt evidenced by notes — versus excluded items like contingent obligations.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "fin_framework",
+          "family_id": "fin_framework.leverage",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 3; KCT Cat 3 Item 14; KCT Cat 4 Item 1; KCT Cat 4 Item 11; KCT Cat 4 Item 12"
+        },
+        {
+          "id": "fin_framework.leverage.secured_debt.collateral_scope",
+          "name": "Collateral Scope Limitation",
+          "definition": "Whether secured debt is limited to debt secured by liens on Collateral (as defined) or extends to any assets of the borrower group, with 56.7% of deals using collateral-specific and 30% using any-assets definitions.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "fin_framework",
+          "family_id": "fin_framework.leverage",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 4; KCT Cat 3 Item 4; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 3 Item 15; KCT Cat 4 Item 3; KCT Cat 4 Item 4; KCT Cat 4 Item 5; KCT Cat 4 Item 10; KCT Cat 4 Item 11; KCT Cat 4 Item 12; KCT Cat 5 Item 1; KCT Cat 5 Item 2"
+        },
+        {
+          "id": "fin_framework.leverage.secured_debt.cash_netting",
+          "name": "Cash Netting Mechanics",
+          "definition": "Rules for netting unrestricted cash against gross secured debt to compute net secured leverage, including whether cash must be in deposit accounts subject to control agreements and any cap on nettable cash.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "fin_framework",
+          "family_id": "fin_framework.leverage",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 6; KCT Cat 1 Item 8; KCT Cat 2 Item 1; KCT Cat 2 Item 4; KCT Cat 3 Item 4; KCT Cat 3 Item 12; KCT Cat 3 Item 14; KCT Cat 3 Item 15; KCT Cat 4 Item 2; KCT Cat 4 Item 3; KCT Cat 4 Item 4; KCT Cat 4 Item 5; KCT Cat 4 Item 6; KCT Cat 4 Item 11; KCT Cat 4 Item 12; KCT Cat 5 Item 1"
+        },
+        {
+          "id": "fin_framework.leverage.secured_debt.ratio_computation",
+          "name": "Ratio Computation Method",
+          "definition": "The formula for Consolidated Secured Debt to Consolidated EBITDA ratio, including treatment of revolving facility drawings, letters of credit, and whether the ratio uses total secured debt or first lien only.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "fin_framework",
+          "family_id": "fin_framework.leverage",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 6; KCT Cat 1 Item 7; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 4; KCT Cat 3 Item 3; KCT Cat 3 Item 4; KCT Cat 3 Item 14; KCT Cat 3 Item 15; KCT Cat 4 Item 5; KCT Cat 4 Item 8; KCT Cat 4 Item 12"
+        }
+      ],
+      "definition_source": "DLS Preferred row 13 (Total Secured Indebtedness definition); PC Term Comparison Indebtedness section lines 151-154 (secured leverage scope and cash netting discussion points)",
+      "pc_ref": [
+        "Indebtedness"
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "EBITDA-based: 'greater of $7.5M and 50% of EBITDA'. Combination structures.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.leverage",
+              "id": "fin_framework.leverage.cash_netting.cap_levels.dynamic",
+              "level": 4,
+              "name": "Dynamic Caps",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            },
+            {
+              "id": "fin_framework.leverage.cash_netting.cap_levels.fixed",
+              "name": "Fixed Dollar Caps",
+              "level": 4,
+              "type": "sub_component",
+              "domain_id": "fin_framework",
+              "family_id": "fin_framework.leverage",
+              "corpus_prevalence": "high",
+              "extraction_difficulty": "hard",
+              "definition": "Cash netting cap levels include fixed dollar caps and dynamic EBITDA-based caps.",
+              "definition_source": "KCT Cat 1 Item 3; KCT Cat 1 Item 8; KCT Cat 2 Item 1"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "$5M, $10M, $20M, uncapped. Clear negotiation anchors.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.cash_netting.cap_levels",
+          "level": 3,
+          "name": "Cap Levels",
+          "type": "sub_component"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "60-90 days post-closing typical. 81% have no grace; 17% have 60-90 days.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.leverage",
+              "id": "fin_framework.leverage.cash_netting.daca.grace_period",
+              "level": 4,
+              "name": "Grace Period",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3; KCT Cat 2 Item 2"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "DACA required only if netting exceeds threshold -- sophisticated structure.",
+              "domain_id": "fin_framework",
+              "extraction_difficulty": "hard",
+              "family_id": "fin_framework.leverage",
+              "id": "fin_framework.leverage.cash_netting.daca.springing",
+              "level": 4,
+              "name": "Springing DACA",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Deposit Account Control Agreements required in 68.9% of deals -- trend from 40% (2018) to 69% (2024).",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.cash_netting.daca",
+          "level": 3,
+          "name": "DACA Requirements",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 11"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Restricted cash (23% exclude), foreign accounts, escrow, trust funds, LC collateral.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.cash_netting.exclusions",
+          "level": 3,
+          "name": "Cash Exclusions",
+          "type": "sub_component",
+          "definition_source": "PC Term Comparison, 2. Article 2 (Excess Cash Flow Sweep)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Rules for which cash and cash equivalents may be netted against gross debt. Beyond basic unrestricted cash: whether short-term investments (money market, T-bills), restricted cash in DACA accounts, cash in foreign subsidiaries, and marketable securities qualify for netting. Aggressive: net all cash including restricted and foreign. Conservative: only unrestricted cash in domestic DACA-controlled accounts.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.cash_netting.debt_netting_rules",
+          "level": 3,
+          "name": "Debt Netting Rules",
+          "r18_concept_ids": [
+            "financial_definitions.cash_netting"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 6; KCT Cat 1 Item 8; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 3 Item 3; KCT Cat 3 Item 14; KCT Cat 3 Item 15; KCT Cat 4 Item 2; KCT Cat 4 Item 3; KCT Cat 4 Item 5; KCT Cat 4 Item 11; KCT Cat 5 Item 4"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "dealdata_benchmarks": {
+        "Cash Netting provisions (note if DACA required for credit)": {
+          "pc_dollar_median": "$8,000,000",
+          "pc_dollar_range": "$1,000,000-$35,000,000",
+          "pc_pct_range": "10.0%-50.0%"
+        }
+      },
+      "definition": "Mechanism allowing the borrower to subtract unrestricted cash and cash equivalents from gross indebtedness when computing net leverage ratios. DLS Preferred row 13 specifies: 'less unrestricted cash and cash equivalents in an aggregate amount not to exceed $[___]; provided such unrestricted Cash and cash equivalents are held in deposit accounts subject to control agreements in favor of the Administrative Agent.' Alternative formulations include: no cap on cash netting and no requirement for deposit account control agreements (DACAs). PC Term Comparison directs: 'Discuss cap on cash netting' and 'Discuss whether DACAs apply and if so limit netting to DACA cash.' Also flags: 'Flag for Clients if Borrower permitted to net proceeds of issuance from incurrence test.' Review Template row 31 (netting) notes: 'Do not net funded amounts except to replace balance sheet cash used for prior permitted acquisitions.'",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.leverage_ratio_calcs",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE X",
+          "Section 1.01",
+          "Section 1.01; 10.08(a)",
+          "Section 1.1"
+        ],
+        "shape_ref": "financial_definitions.leverage_ratio_calcs"
+      },
+      "family_id": "fin_framework.leverage",
+      "id": "fin_framework.leverage.cash_netting",
+      "level": 2,
+      "market_data": {
+        "daca_required": "68.9%",
+        "market_cap": "$10M",
+        "prevalence": "98.4%"
+      },
+      "name": "Cash Netting Provisions",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to debt for borrowed money capital lease obligations/purchase money debt and obligations evidenced by bonds, debentures notes and similar instruments No cap on cash netting No requirement to keep the unrestricted cash in deposit account subject to a control agreement Limited to liens on Collateral only Ratio of EBITDA to Consolidated Fixed Charges without deductions from EBITDA Cash interest only",
+        "dls_source_rows": [
+          {
+            "label": "Leverage Ratios",
+            "row": 13
+          }
+        ],
+        "is_highlighted": false,
+        "key_negotiation_points": [
+          "Scope of Total Indebtedness definition",
+          "Cash netting cap and control agreement requirement",
+          "Control agreement for unrestricted cash",
+          "Types of leverage ratios defined",
+          "Fixed charge coverage ratio formula"
+        ],
+        "market_position": "Market standard for leverage ratios reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "\"Total Indebtedness\" means the outstanding principal amount of indebtedness for (i) borrowed money or represented by notes, bonds, debentures or similar instruments, (ii) purchase money indebtedness, (iii) deferred purchase price, \"earnouts\" and similar payment obligations to the extent such obligations are considered liabilities under GAAP, (iv) the principal portion of capital leases of Holdings",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "financial_definitions.cash_netting"
+      ],
+      "term_analysis_sources": [
+        "TERM_ANALYSIS_FINANCIAL_CASH_NETTING.md"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 13 (cash netting with cap and DACA requirement); PC Term Comparison Indebtedness section lines 152-154 (cap and DACA discussion); Review Template row 31 (do not net funded amounts)",
+      "pc_ref": [
+        "Indebtedness"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "TTM vs L4Q distinctions, internal financials flexibility, bifurcated maintenance/incurrence.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.noteworthy_provisions.period_defs",
+          "level": 3,
+          "name": "Period Definitions",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Provision permitting the borrower or its board to make financial determinations, EBITDA adjustments, or compliance calculations in 'good faith,' establishing a subjective standard of review that limits lender ability to challenge management's financial projections. Shifts the burden from objective verification to a more deferential reasonableness standard.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.noteworthy_provisions.good_faith",
+          "level": 3,
+          "name": "Good Faith Reliance",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 1 Item 6; KCT Cat 1 Item 7; KCT Cat 1 Item 8; KCT Cat 2 Item 1; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 2; KCT Cat 3 Item 3; KCT Cat 3 Item 4; KCT Cat 3 Item 6; KCT Cat 3 Item 8; KCT Cat 3 Item 11; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 4 Item 1; KCT Cat 4 Item 2; KCT Cat 4 Item 10; KCT Cat 4 Item 12; KCT Cat 5 Item 1; KCT Cat 5 Item 2; KCT Cat 5 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Unfunded commitments deemed not outstanding; commitment date testing locks in capacity.",
+          "dls_ref": [
+            "DLS:14:Delayed Draw Term Loans"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.noteworthy_provisions.delayed_draw",
+          "kct_ref": [
+            "cat2.2"
+          ],
+          "level": 3,
+          "name": "Delayed Draw Mechanics",
+          "negotiation_spectrum": {
+            "aggressive_position": "No explicit borrower position stated",
+            "dls_rows": [
+              14
+            ],
+            "dls_terms": [
+              "Delayed Draw Term Loans"
+            ],
+            "is_highlighted": true,
+            "market_position": "Market likely follows lender-preferred position (no borrower alternative documented)",
+            "preferred_position": "DDTL subject to strict conditions: limited draws, 15BD notice, identical terms to initial TL, pro forma covenant compliance",
+            "source": "R14-A"
+          },
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 161,
+              "term": "Delayed Draw Ticking Fee"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 14 (Delayed Draw Term Loans); KCT Cat 2 Item 2; Review Template Row 161 (Delayed Draw Ticking Fee)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Special adjustments deviating from standard ratio formulations.",
+      "dls_ref": [
+        "DLS:96:Buyback Provisions"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.leverage_ratio_calcs",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE X",
+          "Section 1.01",
+          "Section 1.01; 10.08(a)",
+          "Section 1.1"
+        ],
+        "shape_ref": "financial_definitions.leverage_ratio_calcs"
+      },
+      "family_id": "fin_framework.leverage",
+      "id": "fin_framework.leverage.noteworthy_provisions",
+      "level": 2,
+      "market_benchmarks": {
+        "negotiated": "Pro forma treatment, EBITDA add-back interaction",
+        "prevalence": "70-85%",
+        "standard": "Netting for unrestricted cash, exclusion of specified debt classes"
+      },
+      "name": "Noteworthy Ratio Provisions",
+      "term_analysis_sources": [
+        "TERM_ANALYSIS_FINANCIAL_RATIO_NOTEWORTHY.md"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 96 (Buyback Provisions)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Consolidated Total Debt minus Unrestricted Cash, divided by Consolidated EBITDA. The broadest leverage measure. Most commonly used for maintenance covenants and general debt baskets. TNL is the 'headline' ratio in most credit agreements.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.ratio_types.total_net_leverage",
+          "level": 3,
+          "name": "Total Net Leverage Ratio",
+          "r18_concept_ids": [
+            "financial_definitions.leverage_ratio_calculations"
+          ],
+          "type": "sub_component",
+          "definition_source": "Review Template Row 62 (Leverage Ratio Calculations); KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 5; KCT Cat 1 Item 8; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 4; KCT Cat 4 Item 1; KCT Cat 4 Item 2; KCT Cat 4 Item 7; KCT Cat 4 Item 8; KCT Cat 4 Item 11; PC Term Comparison, 1. Key Definitions (Interest Coverage Ratio (if relevant))"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Consolidated First Lien Debt minus Unrestricted Cash, divided by Consolidated EBITDA. Most common springing covenant ratio in first lien term loans. Typical covenant level: 6.0-8.0x with large cushion above closing leverage.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.ratio_types.first_lien_net_leverage",
+          "kct_ref": [
+            "cat2.1"
+          ],
+          "level": 3,
+          "name": "First Lien Net Leverage Ratio",
+          "r18_concept_ids": [
+            "financial_definitions.leverage_ratio_calculations"
+          ],
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 144,
+              "term": "Cushions to first lien"
+            },
+            {
+              "coverage": "full",
+              "row": 146,
+              "term": "Cross-default"
+            },
+            {
+              "coverage": "full",
+              "row": 147,
+              "term": "Mandatory Prepayments"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 1; Review Template Row 144 (Cushions to first lien); Review Template Row 146 (Cross-default); Review Template Row 147 (Mandatory Prepayments)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Consolidated Secured Debt minus Unrestricted Cash, divided by Consolidated EBITDA. Captures all secured debt regardless of lien priority. Used when the capital structure includes both first lien and second lien secured debt.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.ratio_types.secured_net_leverage",
+          "kct_ref": [
+            "cat2.1"
+          ],
+          "level": 3,
+          "name": "Secured Net Leverage Ratio",
+          "r18_concept_ids": [
+            "financial_definitions.leverage_ratio_calculations"
+          ],
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 62,
+              "term": "Leverage Ratio Calculations"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 1; Review Template Row 62 (Leverage Ratio Calculations)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Consolidated Total Debt divided by Consolidated EBITDA without netting unrestricted cash. The most conservative measure. Used primarily in bank-friendly documentation. Less common in modern sponsor-backed deals where net leverage is the standard.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.ratio_types.total_leverage",
+          "level": 3,
+          "name": "Total Leverage Ratio (Gross)",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 62 (Leverage Ratio Calculations); KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 8; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 3 Item 3; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 3 Item 15; KCT Cat 4 Item 1; KCT Cat 4 Item 2; KCT Cat 4 Item 4; KCT Cat 4 Item 8; KCT Cat 4 Item 11"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Senior secured debt (excluding subordinated secured debt) divided by EBITDA. Distinguishes from total secured by excluding second-lien and other subordinated secured tranches. Used in complex multi-tranche capital structures.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.ratio_types.senior_secured_leverage",
+          "kct_ref": [
+            "cat2.1"
+          ],
+          "level": 3,
+          "name": "Senior Secured Leverage Ratio",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Consolidated EBITDA divided by Consolidated Interest Expense. Measures ability to service interest payments from operating earnings. Typical covenant level: 2.0-3.0x. Often used as secondary test alongside leverage ratio, particularly in fixed charge coverage structures. Key variable: what constitutes 'interest expense' (cash only vs. total).",
+          "dls_ref": [
+            "DLS:18:Interest Rates"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.ratio_types.interest_coverage",
+          "level": 3,
+          "name": "Interest Coverage Ratio (ICR)",
+          "r18_concept_ids": [
+            "financial_definitions.leverage_ratio_calculations"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 18 (Interest Rates)"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Consolidated EBITDA divided by Fixed Charges, where Fixed Charges typically include: cash interest expense, scheduled debt payments, required capital expenditures, taxes, and sometimes restricted payments. Broader than ICR -- captures total debt service capacity. Typical covenant: 1.0-1.25x. Used for springing triggers and as secondary incurrence test prong.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.ratio_types.fixed_charge_coverage",
+          "kct_ref": [
+            "cat2.1"
+          ],
+          "level": 3,
+          "name": "Fixed Charge Coverage Ratio (FCCR)",
+          "r18_concept_ids": [
+            "financial_definitions.leverage_ratio_calculations"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 1",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:40.746298+00:00",
+              "term_packs": {
+                "FIN_COV_FIXED_CHARGE": {
+                  "label": "Financial Covenant - Fixed Charge Coverage Ratio",
+                  "category": "FINANCIAL_COVENANTS",
+                  "exactPhrases": [
+                    "Fixed Charge Coverage Ratio",
+                    "FCCR",
+                    "Fixed Charges",
+                    "minimum Fixed Charge Coverage Ratio of",
+                    "interest plus scheduled principal",
+                    "FCCR not less than",
+                    "Fixed Charge Coverage Ratio of at least"
+                  ],
+                  "sectionHeaders": [
+                    "Fixed Charge Coverage Ratio",
+                    "FCCR",
+                    "Financial Covenant",
+                    "ARTICLE VII"
+                  ],
+                  "semanticVariants": [
+                    "fixed charge coverage ratio",
+                    "minimum fixed charge",
+                    "fixed charges covenant",
+                    "debt service coverage ratio",
+                    "FCCR test",
+                    "FCCR covenant"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.65,
+                    "minKeywordScore": 0.55,
+                    "minConfidence": 0.78,
+                    "escalationThreshold": 0.55,
+                    "humanEscalationThreshold": 0.35
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                },
+                "FIN_COV_INTEREST_COVERAGE": {
+                  "label": "Financial Covenant - Interest Coverage Ratio",
+                  "category": "FINANCIAL_COVENANTS",
+                  "exactPhrases": [
+                    "Interest Coverage Ratio",
+                    "ICR",
+                    "Consolidated Interest Expense",
+                    "EBITDA to interest",
+                    "interest coverage test",
+                    "Debt for ICR purpose excludes",
+                    "minimum Interest Coverage Ratio of"
+                  ],
+                  "sectionHeaders": [
+                    "Interest Coverage Ratio",
+                    "ICR",
+                    "Financial Covenant",
+                    "Incremental Facilities",
+                    "Permitted Indebtedness"
+                  ],
+                  "semanticVariants": [
+                    "interest coverage ratio",
+                    "minimum interest coverage",
+                    "EBITDA to interest expense",
+                    "interest coverage test",
+                    "debt service coverage",
+                    "coverage ratio for incremental"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.65,
+                    "minKeywordScore": 0.55,
+                    "minConfidence": 0.78,
+                    "escalationThreshold": 0.55,
+                    "humanEscalationThreshold": 0.35
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "Fixed Charge Coverage Ratio",
+                  "FCCR",
+                  "Fixed Charges",
+                  "minimum Fixed Charge Coverage Ratio of",
+                  "interest plus scheduled principal",
+                  "FCCR not less than",
+                  "Fixed Charge Coverage Ratio of at least",
+                  "Interest Coverage Ratio",
+                  "ICR",
+                  "Consolidated Interest Expense",
+                  "EBITDA to interest",
+                  "interest coverage test",
+                  "Debt for ICR purpose excludes",
+                  "minimum Interest Coverage Ratio of"
+                ],
+                "sectionHeaders": [
+                  "Fixed Charge Coverage Ratio",
+                  "FCCR",
+                  "Financial Covenant",
+                  "ARTICLE VII",
+                  "Interest Coverage Ratio",
+                  "ICR",
+                  "Incremental Facilities",
+                  "Permitted Indebtedness"
+                ],
+                "semanticVariants": [
+                  "fixed charge coverage ratio",
+                  "minimum fixed charge",
+                  "fixed charges covenant",
+                  "debt service coverage ratio",
+                  "FCCR test",
+                  "FCCR covenant",
+                  "interest coverage ratio",
+                  "minimum interest coverage",
+                  "EBITDA to interest expense",
+                  "interest coverage test",
+                  "debt service coverage",
+                  "coverage ratio for incremental"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "FIN_COV_FIXED_CHARGE",
+              "label": "Financial Covenant - Fixed Charge Coverage Ratio",
+              "schema_file": "financial-covenants-enhanced.schema.ts",
+              "field_count": 3,
+              "r1_domain": "fin_framework",
+              "mapping_confidence": 0.4993,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            },
+            {
+              "term_type": "FIN_COV_INTEREST_COVERAGE",
+              "label": "Financial Covenant - Interest Coverage Ratio",
+              "schema_file": "financial-covenants-enhanced.schema.ts",
+              "field_count": 3,
+              "r1_domain": "fin_framework",
+              "mapping_confidence": 0.5479,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "The specific leverage and coverage ratio formulas used across the credit agreement. DLS Preferred row 13 defines four core ratios: (1) Total [Net] Leverage Ratio = Total Indebtedness / EBITDA for trailing four quarters; (2) Total Senior [Secured] [Net] Leverage Ratio = Total Secured Indebtedness / EBITDA for trailing four quarters; (3) implicitly, First Lien Net Leverage = first lien secured debt / EBITDA; and (4) Fixed Charge Coverage Ratio = (EBITDA less unfinanced capex, taxes, management fees, other RPs) / Consolidated Fixed Charges. Consolidated Fixed Charges include cash and non-cash interest, scheduled funded debt payments, earnout payments, and capitalized interest, minus interest income. PC Term Comparison adds Interest Coverage Ratio where relevant, noting it 'should include PIK interest and not just cash pay.' Alternative formulations use cash interest only.",
+      "dls_ref": [
+        "DLS:13:Leverage Ratios",
+        "DLS:41:Maximum leverage"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.leverage_ratio_calcs",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE X",
+          "Section 1.01",
+          "Section 1.01; 10.08(a)",
+          "Section 1.1"
+        ],
+        "shape_ref": "financial_definitions.leverage_ratio_calcs"
+      },
+      "family_id": "fin_framework.leverage",
+      "golden_record_benchmarks": [
+        {
+          "evidence": [
+            {
+              "deal": "arch",
+              "terms": [
+                "Total Net Leverage Ratio"
+              ]
+            },
+            {
+              "deal": "boyd",
+              "terms": [
+                "Consolidated Total Net Leverage Ratio",
+                "Consolidated First Lien Net Leverage Ratio"
+              ]
+            },
+            {
+              "deal": "caesars",
+              "terms": [
+                "Senior Secured Leverage Ratio",
+                "Total Secured Leverage Ratio"
+              ]
+            },
+            {
+              "deal": "lendingtree",
+              "terms": [
+                "Total Net Leverage Ratio"
+              ]
+            },
+            {
+              "deal": "national_vision",
+              "terms": [
+                "Consolidated Total Debt to Consolidated EBITDA Ratio",
+                "Total Leverage Test"
+              ]
+            },
+            {
+              "deal": "quidel",
+              "terms": [
+                "Consolidated Leverage Ratio",
+                "Consolidated Secured Leverage Ratio"
+              ]
+            },
+            {
+              "deal": "red_rock",
+              "terms": [
+                "Consolidated First Lien Leverage Ratio",
+                "Consolidated Total Leverage Ratio"
+              ]
+            },
+            {
+              "deal": "sleep_number",
+              "terms": [
+                "Net Leverage Ratio",
+                "Senior Secured Leverage Ratio"
+              ]
+            },
+            {
+              "deal": "viavi",
+              "terms": [
+                "First Lien Leverage Ratio",
+                "Secured Leverage Ratio",
+                "Total Leverage Ratio"
+              ]
+            }
+          ],
+          "metric": "leverage_ratio_naming_variants",
+          "n_deals": 0,
+          "n_variants": 15,
+          "source": "R16-A golden_record",
+          "unique_names": [
+            "Consolidated First Lien Leverage Ratio",
+            "Consolidated First Lien Net Leverage Ratio",
+            "Consolidated Leverage Ratio",
+            "Consolidated Secured Leverage Ratio",
+            "Consolidated Total Debt to Consolidated EBITDA Ratio",
+            "Consolidated Total Leverage Ratio",
+            "Consolidated Total Net Leverage Ratio",
+            "First Lien Leverage Ratio",
+            "Net Leverage Ratio",
+            "Secured Leverage Ratio",
+            "Senior Secured Leverage Ratio",
+            "Total Leverage Ratio",
+            "Total Leverage Test",
+            "Total Net Leverage Ratio",
+            "Total Secured Leverage Ratio"
+          ]
+        }
+      ],
+      "id": "fin_framework.leverage.ratio_types",
+      "kct_ref": [
+        "cat2.1"
+      ],
+      "level": 2,
+      "name": "Leverage Ratio Types",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to debt for borrowed money capital lease obligations/purchase money debt and obligations evidenced by bonds, debentures notes and similar instruments No cap on cash netting No requirement to keep the unrestricted cash in deposit account subject to a control agreement Limited to liens on Collateral only Ratio of EBITDA to Consolidated Fixed Charges without deductions from EBITDA Cash interest only",
+        "dls_rows": [
+          13
+        ],
+        "dls_source_rows": [
+          {
+            "label": "Leverage Ratios",
+            "row": 13
+          }
+        ],
+        "dls_terms": [
+          "Leverage Ratio Definitions"
+        ],
+        "is_highlighted": false,
+        "key_negotiation_points": [
+          "Scope of Total Indebtedness definition",
+          "Cash netting cap and control agreement requirement",
+          "Control agreement for unrestricted cash",
+          "Types of leverage ratios defined",
+          "Fixed charge coverage ratio formula"
+        ],
+        "market_position": "Market standard for leverage ratios reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "Multiple leverage metrics: Total Net, Secured Net, First Lien Net, and Fixed Charge Coverage; broad indebtedness definitions",
+        "sources": [
+          "R14-A",
+          "R14-B"
+        ]
+      },
+      "r18_concept_ids": [
+        "financial_definitions.leverage_ratio_calculations"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 58,
+          "term": "Financial Covenant – levels"
+        },
+        {
+          "coverage": "full",
+          "row": 59,
+          "term": "Financial Covenant – testing thresholds"
+        },
+        {
+          "coverage": "full",
+          "row": 62,
+          "term": "Leverage Ratio Calculations"
+        },
+        {
+          "coverage": "full",
+          "row": 63,
+          "term": "EBITDA Addbacks"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 13 (four ratio definitions with complete formulas); PC Term Comparison Interest Coverage Ratio section line 158-160 ('Should include PIK interest and not just cash pay')",
+      "pc_ref": [
+        "Interest Coverage Ratio"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Pro forma adjustment methodology applied to the balance sheet (debt numerator) in leverage ratio calculations, giving effect to proposed transactions as if they had occurred on the measurement date. Includes adding new debt to be incurred, removing debt to be repaid, and incorporating acquisition target balance sheet items, all calculated as of the last day of the test period.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.pro_forma.balance_sheet",
+          "level": 3,
+          "name": "Balance Sheet Pro Forma",
+          "r18_concept_ids": [
+            "financial_definitions.pro_forma_calculations"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 48 (Pro Forma Financial Statements); Review Template Row 50 (Pro Forma Calculations); KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 3 Item 7; KCT Cat 3 Item 14; KCT Cat 3 Item 15; KCT Cat 4 Item 1; KCT Cat 4 Item 4; KCT Cat 4 Item 5; KCT Cat 4 Item 8; KCT Cat 4 Item 11"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Pro forma adjustment methodology applied to the income statement (EBITDA denominator) in leverage ratio calculations, giving effect to acquisitions, dispositions, and operational changes as if they had occurred at the beginning of the test period. Captures annualized earnings from acquired businesses and removes earnings from disposed operations for the full four-quarter measurement window.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.pro_forma.income_statement",
+          "level": 3,
+          "name": "Income Statement Pro Forma",
+          "r18_concept_ids": [
+            "financial_definitions.pro_forma_calculations"
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 48 (Pro Forma Financial Statements); Review Template Row 50 (Pro Forma Calculations); KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 8; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 4; KCT Cat 3 Item 7; KCT Cat 3 Item 13"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "The pro forma leverage ratio as of the closing date of an acquisition, used to determine whether the acquisition satisfies leverage-based conditions. Key issues: whether computed using closing-date balance sheet (conservative) or last-delivered financials (aggressive), whether the no-worse prong applies (leverage no worse than immediately prior), and whether cost savings may be included in the denominator EBITDA.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.pro_forma.acquisition_day_one",
+          "level": 3,
+          "name": "Day-One Acquisition Leverage",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 6; KCT Cat 1 Item 7; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 4; KCT Cat 3 Item 7; KCT Cat 4 Item 1; KCT Cat 4 Item 8"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether the debt being incurred under a ratio test is itself excluded from the pro forma ratio calculation. Some agreements provide that for purposes of testing ratio debt capacity, the proposed debt is deemed not outstanding. This creates circular capacity: more debt can be incurred because it is excluded from the test that would otherwise prevent it.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.pro_forma.self_exclusion",
+          "level": 3,
+          "name": "Self-Exclusion from Ratio Testing",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 2; KCT Cat 3 Item 4; KCT Cat 3 Item 7; KCT Cat 3 Item 11; KCT Cat 3 Item 13; KCT Cat 3 Item 14; KCT Cat 3 Item 15; KCT Cat 4 Item 5; KCT Cat 4 Item 8; KCT Cat 4 Item 9; KCT Cat 4 Item 11; KCT Cat 5 Item 1"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Measurement methodology for computing leverage on a pro forma basis, adjusting ratios to reflect the impact of specified transactions as if consummated on the first day of the test period. DLS Preferred row 15 (LCT) establishes the core pro forma framework: tests can be measured at signing of definitive documentation, and future testing applies dual standards (pro forma assuming consummation and standalone excluding the transaction). Review Template row 50 notes pro formas are 'borrower-prepared' and 'internally prepared pro formas suffice for bank facilities.' DLS Preferred row 9 (Accordion) specifies that 'cash proceeds of such incremental facility then being incurred will not be netted for purposes of calculating the applicable leverage ratio,' preventing borrowers from using the very proceeds of new debt to make the ratio test look better.",
+      "dls_ref": [
+        "DLS:13:Leverage Ratios",
+        "DLS:41:Maximum leverage",
+        "DLS:48:Pro Forma Financial Statements"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.leverage_ratio_calcs",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE X",
+          "Section 1.01",
+          "Section 1.01; 10.08(a)",
+          "Section 1.1"
+        ],
+        "shape_ref": "financial_definitions.leverage_ratio_calcs"
+      },
+      "family_id": "fin_framework.leverage",
+      "id": "fin_framework.leverage.pro_forma",
+      "level": 2,
+      "name": "Pro Forma Leverage Mechanics",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to debt for borrowed money capital lease obligations/purchase money debt and obligations evidenced by bonds, debentures notes and similar instruments No cap on cash netting No requirement to keep the unrestricted cash in deposit account subject to a control agreement Limited to liens on Collateral only Ratio of EBITDA to Consolidated Fixed Charges without deductions from EBITDA Cash interest only",
+        "dls_rows": [
+          13
+        ],
+        "dls_source_rows": [
+          {
+            "label": "Leverage Ratios",
+            "row": 13
+          }
+        ],
+        "dls_terms": [
+          "Leverage Ratio Definitions"
+        ],
+        "is_highlighted": false,
+        "key_negotiation_points": [
+          "Scope of Total Indebtedness definition",
+          "Cash netting cap and control agreement requirement",
+          "Control agreement for unrestricted cash",
+          "Types of leverage ratios defined",
+          "Fixed charge coverage ratio formula"
+        ],
+        "market_position": "Market standard for leverage ratios reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "Pro forma testing required for all incurrence and covenant compliance; LTM EBITDA with permitted pro forma adjustments",
+        "sources": [
+          "R14-A",
+          "R14-B"
+        ]
+      },
+      "r18_concept_ids": [
+        "financial_definitions.pro_forma_calculations"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 50,
+          "term": "Pro Forma Calculations"
+        },
+        {
+          "coverage": "full",
+          "row": 128,
+          "term": "Limited Conditionality Transactions"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 15 (LCT pro forma mechanics); DLS Preferred row 9 (incremental pro forma: no cash netting of proceeds); Review Template row 50 (Pro Forma Calculations)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Standard 4 fiscal quarter lookback (Last Twelve Months). Most credit agreements define 'Test Period' or 'Reference Period' as the most recently completed four consecutive fiscal quarters for which financial statements have been (or were required to have been) delivered. The 'delivered vs required' distinction matters: 'required to have been delivered' prevents borrowers from delaying delivery to use stale (favorable) ratios.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.test_period.ltm_calculation",
+          "level": 3,
+          "name": "LTM Calculation Methodology",
+          "r18_concept_ids": [
+            "financial_definitions.test_period"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 1; KCT Cat 2 Item 4; KCT Cat 3 Item 4; KCT Cat 3 Item 7; KCT Cat 3 Item 13; KCT Cat 4 Item 1; KCT Cat 4 Item 2; KCT Cat 4 Item 7; KCT Cat 4 Item 10; KCT Cat 4 Item 11"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether the test period is based on financials actually delivered to lenders or financials required to have been delivered per the reporting schedule. Using 'delivered' creates a lag that can benefit borrowers during periods of declining performance. Bank position: use 'required to have been delivered' to prevent gaming through delayed delivery.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.test_period.most_recent_delivered",
+          "level": 3,
+          "name": "Most Recently Delivered Financials",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 2; KCT Cat 3 Item 3; KCT Cat 3 Item 4; KCT Cat 3 Item 7; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 3 Item 15; KCT Cat 4 Item 5; KCT Cat 4 Item 8; KCT Cat 5 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Methodology for annualizing partial-period financial data when a full four-quarter lookback is not available (e.g., first year after closing). Common approaches: straight-line annualization of available quarters, use of closing-date EBITDA as a floor, or pro forma construction from historical target financials. The annualization method can significantly impact covenant headroom in the first 12 months.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.leverage",
+          "id": "fin_framework.leverage.test_period.annualization_rules",
+          "level": 3,
+          "name": "Annualization Rules",
+          "r18_concept_ids": [
+            "financial_definitions.test_period"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 3 Item 7; KCT Cat 4 Item 1; KCT Cat 4 Item 8; KCT Cat 5 Item 4"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "The lookback period for financial calculations used in ratio testing. Standard is the trailing four fiscal quarters for which financial statements have been delivered. DLS Preferred row 73 specifies covenants are 'Tested quarterly on the last day of each fiscal quarter for which financial statements have been delivered or are required to be delivered commencing with the last day of the first [full] fiscal quarter ended after the closing date.' The test period determines which financial data anchors leverage ratios, basket sizing, and covenant compliance, and is the denominator time frame for all EBITDA-based calculations.",
+      "dls_ref": [
+        "DLS:24:Post-Close Flex Period",
+        "DLS:50:Marketing period"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_definitions",
+        "extraction_ready": true,
+        "playbook_ref": "financial_definitions.leverage_ratio_calcs",
+        "section_locations": [
+          "ARTICLE I",
+          "ARTICLE X",
+          "Section 1.01",
+          "Section 1.01; 10.08(a)",
+          "Section 1.1"
+        ],
+        "shape_ref": "financial_definitions.leverage_ratio_calcs"
+      },
+      "family_id": "fin_framework.leverage",
+      "id": "fin_framework.leverage.test_period",
+      "level": 2,
+      "name": "Test Period Mechanics",
+      "negotiation_spectrum": {
+        "aggressive_position": "Limited to debt for borrowed money capital lease obligations/purchase money debt and obligations evidenced by bonds, debentures notes and similar instruments No cap on cash netting No requirement to keep the unrestricted cash in deposit account subject to a control agreement Limited to liens on Collateral only Ratio of EBITDA to Consolidated Fixed Charges without deductions from EBITDA Cash interest only",
+        "dls_source_rows": [
+          {
+            "label": "Leverage Ratios",
+            "row": 13
+          }
+        ],
+        "is_highlighted": false,
+        "key_negotiation_points": [
+          "Scope of Total Indebtedness definition",
+          "Cash netting cap and control agreement requirement",
+          "Control agreement for unrestricted cash",
+          "Types of leverage ratios defined",
+          "Fixed charge coverage ratio formula"
+        ],
+        "market_position": "Market standard for leverage ratios reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "\"Total Indebtedness\" means the outstanding principal amount of indebtedness for (i) borrowed money or represented by notes, bonds, debentures or similar instruments, (ii) purchase money indebtedness, (iii) deferred purchase price, \"earnouts\" and similar payment obligations to the extent such obligations are considered liabilities under GAAP, (iv) the principal portion of capital leases of Holdings",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "financial_definitions.test_period"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 52,
+          "term": "Financial Statements – quarterly"
+        },
+        {
+          "coverage": "full",
+          "row": 54,
+          "term": "Financial Statements – annual audits"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 73 (test period specification: quarterly, trailing four quarters, commencing first full quarter post-closing)"
+    }
+  ],
+  "corpus_prevalence": "high",
+  "dealdata_benchmarks": {
+    "Available Amount Basket (note conditions to use including leverage condition ...": {
+      "pc_dollar_median": "$20,000,000",
+      "pc_dollar_range": "$15,000,000-$93,000,000",
+      "pc_pct_range": "50.0%-60.0%",
+      "pc_ratio_median": "4.75x",
+      "pc_ratio_range": "0.25x-7.10x"
+    },
+    "Closing EBITDA ($)": {
+      "pc_dollar_median": "$27,780,000",
+      "pc_dollar_range": "$1,116,283-$75,260,000,000"
+    },
+    "Closing leverage (TLR/SSLR/FLLR) (show all that apply)": {
+      "pc_dollar_median": "$70,000,000",
+      "pc_dollar_range": "$5,000,000-$170,000,000",
+      "pc_ratio_median": "4.87x",
+      "pc_ratio_range": "0.35x-8.85x"
+    },
+    "Noteworthy provisions in Ratio Calculations": {
+      "pc_dollar_median": "$1,997,000",
+      "pc_dollar_range": "$1,250,000-$35,000,000"
+    },
+    "Unlimited Ratio Investments (note conditions to use including leverage condit...": {
+      "pc_dollar_median": "$11,500,000",
+      "pc_dollar_range": "$11,500,000-$11,500,000",
+      "pc_ratio_median": "5.00x",
+      "pc_ratio_range": "0.50x-7.00x"
+    },
+    "Unlimited Ratio RDPs (note conditions to use including leverage condition rel...": {
+      "pc_ratio_median": "4.25x",
+      "pc_ratio_range": "0.05x-6.60x"
+    },
+    "Unlimited Ratio RPs (note conditions to use including leverage condition rela...": {
+      "pc_dollar_median": "$30,000,000",
+      "pc_dollar_range": "$10,000,000-$30,000,000",
+      "pc_ratio_median": "4.05x",
+      "pc_ratio_range": "0.05x-6.60x"
+    }
+  },
+  "definition": "Leverage ratio definitions used throughout the credit agreement for maintenance covenant testing, incurrence-based basket access, mandatory prepayment step-downs, and pricing grids. DLS Preferred defines four core ratios: (1) Total Net Leverage Ratio = Total Indebtedness / EBITDA for trailing four quarters; (2) Total Senior Secured Net Leverage Ratio = Total Secured Indebtedness / EBITDA; (3) First Lien Net Leverage Ratio (subset of secured, limited to first-priority liens); and (4) Fixed Charge Coverage Ratio = (EBITDA less unfinanced capex, taxes, management fees, other RPs) / Consolidated Fixed Charges. 'Total Indebtedness' includes borrowed money, notes/bonds/debentures, purchase money debt, deferred purchase price/earnouts (to the extent GAAP liabilities), capital lease principal, unreimbursed LCs, lien-secured obligations, and guarantees of the foregoing, less unrestricted cash and cash equivalents (subject to cap and DACA requirements). PC Term Comparison notes clients include borrowed money, capital leases, purchase money, evidenced by notes, unreimbursed LCs, earnouts (if due and payable/past due), and disqualified stock where appropriate.",
+  "dls_ref": [
+    "DLS:4:Funded Debt at Closing",
+    "DLS:13:Leverage Ratios",
+    "DLS:41:Maximum leverage",
+    "DLS:76:Capex"
+  ],
+  "domain_id": "fin_framework",
+  "extraction_difficulty": "hard",
+  "family_id": "fin_framework.leverage",
+  "id": "fin_framework.leverage",
+  "kg_concept_ids": [
+    "financial_definitions.leverage_ratio_calcs"
+  ],
+  "level": 1,
+  "name": "Leverage Ratios & Debt Definitions",
+  "negotiation_spectrum": {
+    "aggressive_position": "Limited to debt for borrowed money capital lease obligations/purchase money debt and obligations evidenced by bonds, debentures notes and similar instruments No cap on cash netting No requirement to keep the unrestricted cash in deposit account subject to a control agreement Limited to liens on Collateral only Ratio of EBITDA to Consolidated Fixed Charges without deductions from EBITDA Cash interest only",
+    "dls_rows": [
+      4,
+      13
+    ],
+    "dls_source_rows": [
+      {
+        "label": "Leverage Ratios",
+        "row": 13
+      }
+    ],
+    "dls_terms": [
+      "Funded Debt at Closing",
+      "Leverage Ratio Definitions"
+    ],
+    "is_highlighted": false,
+    "key_negotiation_points": [
+      "Scope of Total Indebtedness definition",
+      "Cash netting cap and control agreement requirement",
+      "Control agreement for unrestricted cash",
+      "Types of leverage ratios defined",
+      "Fixed charge coverage ratio formula"
+    ],
+    "market_position": "Market standard for leverage ratios reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+    "preferred_position": "\"Total Indebtedness\" means the outstanding principal amount of indebtedness for (i) borrowed money or represented by notes, bonds, debentures or similar instruments, (ii) purchase money indebtedness, (iii) deferred purchase price, \"earnouts\" and similar payment obligations to the extent such obligations are considered liabilities under GAAP, (iv) the principal portion of capital leases of Holdings",
+    "sources": [
+      "R14-A",
+      "R14-B"
+    ]
+  },
+  "r18_concept_ids": [
+    "financial_definitions.leverage_ratio_calculations"
+  ],
+  "term_analysis_sources": [
+    "TERM_ANALYSIS_FINANCIAL_FIRST_LIEN_DEBT.md",
+    "TERM_ANALYSIS_FINANCIAL_SECURED_DEBT.md",
+    "TERM_ANALYSIS_FINANCIAL_TOTAL_DEBT_COMPONENTS.md",
+    "TERM_ANALYSIS_FINANCIAL_CASH_NETTING.md",
+    "TERM_ANALYSIS_FINANCIAL_RATIO_NOTEWORTHY.md"
+  ],
+  "type": "family",
+  "definition_source": "DLS Preferred row 13 (complete leverage ratio definitions including Total Indebtedness, Total Secured Indebtedness, Total Senior Indebtedness, and Fixed Charge Coverage Ratio); PC Term Comparison Indebtedness/Leverage section (component coverage); Review Template row 62 (Leverage Ratio Calculations)",
+  "pc_ref": [
+    "Indebtedness/Leverage"
+  ]
+}

@@ -20,11 +20,6 @@
         "parent_family_id": "debt_capacity.indebtedness",
         "absorbs": ["debt_capacity.incremental.acquisition_debt", "debt_capacity.incremental.contribution_debt", "debt_capacity.incremental.subordinated_debt"],
         "note": "acquisition_debt, contribution_debt, and subordinated_debt are all baskets in the indebtedness covenant and should be children of indebtedness, not siblings."
-      },
-      {
-        "action": "remove_family",
-        "family_id": "cash_flow.carve_outs",
-        "reason": "Already covered by cash_flow.inv. The children of investments are already carve-outs to the investments covenant."
       }
     ]
   },
@@ -87,38 +82,6 @@
     "co_examine": ["interpretive provisions", "defined terms article"],
     "notes": "Always in an interpretive provision, co-located with or adjacent to the defined terms.",
     "status": "active"
-  },
-
-  "debt_capacity.incremental.acquisition_debt": {
-    "location_guidance": "Acquisition debt is always provided for in the indebtedness section of the negative covenants article. May have corresponding defined terms in the defined terms section.",
-    "primary_location": "Indebtedness section (negative covenants article)",
-    "co_examine": ["indebtedness section", "corresponding defined terms in definitions section"],
-    "notes": "Always in the indebtedness covenant. Check defined terms section for corresponding definitions. Now reparented as a child of debt_capacity.indebtedness (it is a basket in the indebtedness covenant).",
-    "status": "active",
-    "reparented_under": "debt_capacity.indebtedness"
-  },
-
-  "debt_capacity.incremental.contribution_debt": {
-    "location_guidance": "Contribution debt is always in the indebtedness covenant in the negative covenant article, similarly to acquisition debt.",
-    "primary_location": "Indebtedness section (negative covenants article)",
-    "co_examine": ["indebtedness section"],
-    "notes": "Same structural pattern as acquisition debt. Now reparented as a child of debt_capacity.indebtedness.",
-    "status": "active",
-    "reparented_under": "debt_capacity.indebtedness"
-  },
-
-  "debt_capacity.incremental.subordinated_debt": {
-    "location_guidance": "Subordinated debt is always in the indebtedness covenant in the negative covenant article, same as acquisition debt and contribution debt.",
-    "primary_location": "Indebtedness section (negative covenants article)",
-    "co_examine": ["indebtedness section"],
-    "notes": "Same structural pattern as acquisition debt and contribution debt. Now reparented as a child of debt_capacity.indebtedness.",
-    "status": "active",
-    "reparented_under": "debt_capacity.indebtedness"
-  },
-
-  "debt_capacity.incremental.structural_controls": {
-    "status": "defer_discussion",
-    "notes": "Deferred to a separate devoted discussion at the end."
   },
 
   "debt_capacity.indebtedness": {

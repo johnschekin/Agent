@@ -61,7 +61,7 @@ export default function ReviewStrategyTimelinePage() {
       {query.data && query.data.versions.length > 0 && (
         <div className="overflow-auto border border-border rounded-md">
           <table className="w-full text-xs">
-            <thead className="bg-surface-tertiary text-text-muted uppercase">
+            <thead className="bg-surface-3 text-text-muted uppercase">
               <tr>
                 <th className="px-3 py-2 text-left">Version</th>
                 <th className="px-3 py-2 text-left">Note</th>
@@ -77,7 +77,7 @@ export default function ReviewStrategyTimelinePage() {
             </thead>
             <tbody>
               {query.data.versions.map((v) => (
-                <tr key={v.version} className="border-t border-border hover:bg-surface-tertiary/40">
+                <tr key={v.version} className="border-t border-border hover:bg-surface-3/40">
                   <td className="px-3 py-2 font-mono">v{v.version.toString().padStart(3, "0")}</td>
                   <td className="px-3 py-2 max-w-[280px] truncate">{v.note || "—"}</td>
                   <td className="px-3 py-2 text-right tabular-nums">

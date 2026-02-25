@@ -1,0 +1,175 @@
+{
+  "children": [
+    {
+      "id": "debt_capacity.side_by_side_revolvers.permission_scope",
+      "name": "Permission Scope",
+      "definition": "Whether the credit agreement permits establishing incremental revolving commitments alongside existing ones. DLS Preferred Row 9: incremental available as '(i) increased commitments in respect of the Revolving Facility or (ii) an increase in the Term Facility or additional term facilities.' Alternative: 'Allow side by side revolvers (if permitted must have ROFR and/or pro rata borrowing and prepayments; MFN protection).' Distinguished from incremental term capacity by involving unfunded commitments rather than funded debt.",
+      "type": "concept",
+      "level": 2,
+      "domain_id": "debt_capacity",
+      "family_id": "debt_capacity.side_by_side_revolvers",
+      "corpus_prevalence": "low",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "shape_ref": null,
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE I",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "section_location_source": "domain_siblings",
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE II (Revolving Facility) / Intercreditor"
+      },
+      "definition_source": "DLS Preferred Row 9"
+    },
+    {
+      "id": "debt_capacity.side_by_side_revolvers.rofr",
+      "name": "Right of First Refusal (ROFR)",
+      "definition": "Right of first refusal for existing revolving lenders to participate in side-by-side revolving commitments. DLS Preferred Row 9 alternative: 'must have ROFR.' PC Term Comparison: 'Atypical in Aggressive UMM/BSLR transactions. Common in CMM and LMM transactions.' Prevents dilution of existing lender voting power in the revolving facility class. Distinguished from incremental ROFR by specifically applying to revolving commitments.",
+      "type": "concept",
+      "level": 2,
+      "domain_id": "debt_capacity",
+      "family_id": "debt_capacity.side_by_side_revolvers",
+      "corpus_prevalence": "low",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "shape_ref": null,
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE I",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "section_location_source": "domain_siblings",
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE II (Revolving Facility) / Intercreditor"
+      },
+      "definition_source": "DLS Preferred Row 9 alternative; PC Term Comparison lines 251-254",
+      "pc_ref": [
+        "lines 251-254"
+      ]
+    },
+    {
+      "id": "debt_capacity.side_by_side_revolvers.pro_rata_borrowing",
+      "name": "Pro Rata Borrowing Requirement",
+      "definition": "Requirement that borrowings under side-by-side revolving commitments be made on a pro rata basis with existing revolving commitments. DLS Preferred Row 9 alternative: 'pro rata borrowing and prepayments.' Prevents the borrower from drawing preferentially from cheaper or more flexible revolving tranches.",
+      "type": "concept",
+      "level": 2,
+      "domain_id": "debt_capacity",
+      "family_id": "debt_capacity.side_by_side_revolvers",
+      "corpus_prevalence": "low",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "shape_ref": null,
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE I",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "section_location_source": "domain_siblings",
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE II (Revolving Facility) / Intercreditor"
+      },
+      "definition_source": "DLS Preferred Row 9 alternative"
+    },
+    {
+      "id": "debt_capacity.side_by_side_revolvers.mfn_protection",
+      "name": "MFN Protection for Side-by-Side Revolver",
+      "definition": "MFN pricing protection for side-by-side revolving facilities. DLS Preferred Row 9 alternative: 'MFN protection' required. DLS Preferred Row 11 alternative notes 'No MFN on Revolver' as an incremental carveout, but side-by-side revolvers may have their own MFN requirement. Distinguished from term loan MFN by applying to revolving commitment economics.",
+      "type": "concept",
+      "level": 2,
+      "domain_id": "debt_capacity",
+      "family_id": "debt_capacity.side_by_side_revolvers",
+      "corpus_prevalence": "low",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "shape_ref": null,
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE I",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "section_location_source": "domain_siblings",
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE II (Revolving Facility) / Intercreditor"
+      },
+      "definition_source": "DLS Preferred Row 9 alternative; DLS Preferred Row 11 alternative"
+    },
+    {
+      "id": "debt_capacity.side_by_side_revolvers.structural_parity",
+      "name": "Structural Parity Requirements",
+      "definition": "Provisions ensuring the side-by-side revolving facility shares identical structural terms with the initial revolving facility, including pro rata borrowing and repayment, identical collateral and guarantee packages, and coordinated commitment increases and reductions. DLS Preferred Row 9 (alternative): 'Allow side by side revolvers (if permitted must have ROFR and/or pro rata borrowing and prepayments; MFN protection).' Structural parity prevents the side-by-side revolver from obtaining preferential treatment that would disadvantage existing revolving lenders.",
+      "type": "concept",
+      "level": 2,
+      "domain_id": "debt_capacity",
+      "family_id": "debt_capacity.side_by_side_revolvers",
+      "corpus_prevalence": "low",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "facility_structure",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "shape_ref": null,
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE I",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "section_location_source": "domain_siblings",
+        "readiness_reason": "no_playbook_concept_available",
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "section_location": "ARTICLE II (Revolving Facility) / Intercreditor"
+      },
+      "definition_source": "DLS Preferred Row 9 (alternative: side-by-side revolver conditions)"
+    }
+  ],
+  "corpus_prevalence": "low",
+  "definition": "Structural arrangement where the borrower maintains separate revolving credit facilities alongside the existing revolver. DLS Preferred Row 9 alternative: 'Allow side by side revolvers (if permitted must have ROFR and/or pro rata borrowing and prepayments; MFN protection).' The DLS preferred position includes a sublimit: 'of which not more than $[X] can be in the form of an increase to the Revolving Facility.' PC Term Comparison: existing lender ROFR is 'atypical in Aggressive UMM/BSLR transactions' but 'common in CMM and LMM transactions.'",
+  "domain_id": "debt_capacity",
+  "extraction_difficulty": "medium",
+  "family_id": "debt_capacity.side_by_side_revolvers",
+  "id": "debt_capacity.side_by_side_revolvers",
+  "level": 1,
+  "name": "Side By Side Revolvers",
+  "type": "family",
+  "definition_source": "DLS Preferred Row 9 (sublimit) and Row 9 alternative (side-by-side conditions); PC Term Comparison lines 251-254",
+  "pc_ref": [
+    "lines 251-254"
+  ]
+}

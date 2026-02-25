@@ -1,0 +1,1764 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Default prohibition on all affiliate transactions with enumerated exceptions (permitted transactions list). Most protective for lenders; forces borrower to fit within specific carveouts.",
+          "dls_ref": [
+            "DLS:88:Other Negative Covenants"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.covenant_type.negative",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "93.5%"
+          },
+          "name": "Negative Covenant Structure",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 88 (Other Negative Covenants)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "General permission for affiliate transactions subject to arm's length standard and/or board approval requirements. Less protective; burden falls on lenders to challenge transactions.",
+          "dls_ref": [
+            "DLS:78:Affirmative covenants"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.covenant_type.affirmative",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "6.5%"
+          },
+          "name": "Affirmative Covenant Structure",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 78 (Affirmative covenants)"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Whether affiliate transaction restrictions are structured as a negative covenant (default prohibition with specific exceptions, 93.5%) or affirmative covenant (general permission with specific restrictions, 6.5%). Structure determines default posture toward affiliate dealings.",
+      "dls_ref": [
+        "DLS:73:Covenant",
+        "DLS:74:Cushion/Covenant Levels",
+        "DLS:89:Other Covenant Considerations"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "assignments",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_affiliates.board_approval",
+        "section_locations": [
+          "ARTICLE 11",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "neg_cov_affiliates.board_approval"
+      },
+      "family_id": "governance.affiliate_txns",
+      "id": "governance.affiliate_txns.covenant_type",
+      "level": 2,
+      "market_benchmarks": {
+        "affirmative_value": "6.5%",
+        "negative_value": "93.5%"
+      },
+      "name": "Covenant Structure",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader carve-outs: arms-length standard with board approval for large transactions; de minimis threshold; employee compensation; tax sharing; insurance/indemnification",
+        "dls_source": "DLS row 87",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "general_standard: prohibition_with_exceptions vs arms_length",
+          "management_fees: under_agreement_only vs uncapped",
+          "management_fee_eod_condition: required vs not_required",
+          "board_approval_threshold: dollar_amount vs not_required",
+          "de_minimis_threshold: none vs fixed_dollar vs ebitda_percentage",
+          "intercompany_scope: loan_parties_only vs all_subs",
+          "employee_comp_exception: yes vs no",
+          "tax_sharing_exception: yes vs no",
+          "transaction_fees: closing_only vs future_permitted"
+        ],
+        "market_position": "",
+        "preferred_position": "General prohibition except: (i) sponsor management/monitoring fees under management agreement (no EoD), (ii) customary intercompany transactions, (iii) Transaction fees",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "neg_cov_affiliate_transactions.covenant_type"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 124,
+          "term": "Negative Covenants – Transactions with Affiliates –"
+        },
+        {
+          "coverage": "full",
+          "row": 125,
+          "term": "Negative Covenants – Transactions with Affiliates – De Minimis Threshold"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 73 (Covenant); DLS Preferred Row 74 (Cushion/Covenant Levels); DLS Preferred Row 89 (Other Covenant Considerations); Review Template Row 124 (Negative Covenants – Transactions with Affiliates –); Review Template Row 125 (Negative Covenants – Transactions with Affiliates – De Minimis Threshold)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Requirement that affiliate transaction terms be no less favorable to the borrower than obtainable in a comparable arm's-length transaction with an unaffiliated party. 19.6% as standalone test.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.general_prohibition.arms_length_test",
+          "level": 3,
+          "market_benchmarks": {
+            "standalone_prevalence": "19.6%"
+          },
+          "name": "Arms-Length Test",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Alternative standard where transactions must be on terms that a prudent person would accept, used in some deals instead of strict arm's-length comparison.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.general_prohibition.prudent_person_alt",
+          "level": 3,
+          "name": "Prudent Person Alternative",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "The baseline restriction requiring all affiliate transactions to be on terms no less favorable to the borrower than arm's-length transactions with unaffiliated parties. The foundational gating test for any transaction with affiliates. Neutron extraction context (AFFILIATE_OTHER): General affiliate transaction covenant including approval requirements, fairness standards, carve-outs, and grandfathered arrangements beyond de minimis and sponsor fees. Beyond de minimis thresholds and sponsor fees, the affiliate transactions covenant establishes the general framework for permitted transactions with affiliates.",
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "assignments",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_affiliates.board_approval",
+        "section_locations": [
+          "ARTICLE 11",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "neg_cov_affiliates.board_approval",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.179217+00:00",
+          "term_packs": {
+            "AFFILIATE_OTHER": {
+              "label": "Affiliate Transactions - Other Provisions",
+              "category": "AFFILIATE_TRANSACTIONS",
+              "exactPhrases": [
+                "transactions with Affiliates on terms no less favorable",
+                "approved by a majority of disinterested directors",
+                "fair from a financial point of view",
+                "Schedule [*] - Permitted Affiliate Transactions",
+                "existing affiliate arrangements",
+                "affiliate transaction compliance certificate",
+                "fairness opinion from an independent financial advisor",
+                "transactions pursuant to agreements in existence on the Closing Date",
+                "not materially adverse to the Lenders"
+              ],
+              "sectionHeaders": [
+                "ARTICLE VII - NEGATIVE COVENANTS",
+                "Section 7.08 - Transactions with Affiliates",
+                "Affiliate Transactions",
+                "Permitted Affiliate Transactions",
+                "Related Party Transactions",
+                "Transactions with Related Parties"
+              ],
+              "semanticVariants": [
+                "affiliate covenant restrictions",
+                "related party limitations",
+                "affiliate dealing requirements",
+                "intercompany transaction rules",
+                "affiliate compliance requirements",
+                "affiliate approval mechanics",
+                "affiliate transaction governance"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "transactions with Affiliates on terms no less favorable",
+              "approved by a majority of disinterested directors",
+              "fair from a financial point of view",
+              "Schedule [*] - Permitted Affiliate Transactions",
+              "existing affiliate arrangements",
+              "affiliate transaction compliance certificate",
+              "fairness opinion from an independent financial advisor",
+              "transactions pursuant to agreements in existence on the Closing Date",
+              "not materially adverse to the Lenders"
+            ],
+            "sectionHeaders": [
+              "ARTICLE VII - NEGATIVE COVENANTS",
+              "Section 7.08 - Transactions with Affiliates",
+              "Affiliate Transactions",
+              "Permitted Affiliate Transactions",
+              "Related Party Transactions",
+              "Transactions with Related Parties"
+            ],
+            "semanticVariants": [
+              "affiliate covenant restrictions",
+              "related party limitations",
+              "affiliate dealing requirements",
+              "intercompany transaction rules",
+              "affiliate compliance requirements",
+              "affiliate approval mechanics",
+              "affiliate transaction governance"
+            ]
+          }
+        },
+        "neutron_definition_enrichment": {
+          "source": "Neutron schema term_type_index description/backgroundExplanation",
+          "imported_at": "2026-02-17T22:46:48.401716+00:00",
+          "entries": {
+            "AFFILIATE_OTHER": {
+              "term_type": "AFFILIATE_OTHER",
+              "schema_file": "affiliate-transactions-enhanced.schema.ts",
+              "label": "Affiliate Transactions - Other Provisions",
+              "mapping_mode": "manual_override",
+              "mapping_confidence": 1.0,
+              "label_similarity": 0.0,
+              "description": "General affiliate transaction covenant including approval requirements, fairness standards, carve-outs, and grandfathered arrangements beyond de minimis and sponsor fees.",
+              "backgroundExplanation": "Beyond de minimis thresholds and sponsor fees, the affiliate transactions covenant establishes the general framework for permitted transactions with affiliates. Key elements include: (1) arm's length/fair value requirements, (2) board approval mechanics, (3) fairness opinion thresholds for material transactions, (4) grandfathering of existing arrangements, and (5) specific carve-outs for operational matters. The approval pyramid typically requires: arm's length terms for all transactions, board approval above a threshold, disinterested director approval above a higher threshold, and fairness opinion for the largest transactions. Grandfathering provisions are particularly important as they preserve pre-existing affiliate relationships but can perpetuate unfavorable arrangements. Amendment limitations on grandfathered arrangements prevent expansion of existing deals.",
+              "summary_used": "General affiliate transaction covenant including approval requirements, fairness standards, carve-outs, and grandfathered arrangements beyond de minimis and sponsor fees. Beyond de minimis thresholds and sponsor fees, the affiliate transactions covenant establishes the general framework for permitted transactions with affiliates.",
+              "ported_at": "2026-02-17T22:46:48.401716+00:00"
+            }
+          }
+        }
+      },
+      "family_id": "governance.affiliate_txns",
+      "id": "governance.affiliate_txns.general_prohibition",
+      "level": 2,
+      "name": "General Prohibition & Arms-Length Standard",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader carve-outs: arms-length standard with board approval for large transactions; de minimis threshold; employee compensation; tax sharing; insurance/indemnification",
+        "dls_source": "DLS row 87",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "general_standard: prohibition_with_exceptions vs arms_length",
+          "management_fees: under_agreement_only vs uncapped",
+          "management_fee_eod_condition: required vs not_required",
+          "board_approval_threshold: dollar_amount vs not_required",
+          "de_minimis_threshold: none vs fixed_dollar vs ebitda_percentage",
+          "intercompany_scope: loan_parties_only vs all_subs",
+          "employee_comp_exception: yes vs no",
+          "tax_sharing_exception: yes vs no",
+          "transaction_fees: closing_only vs future_permitted"
+        ],
+        "market_position": "",
+        "preferred_position": "General prohibition except: (i) sponsor management/monitoring fees under management agreement (no EoD), (ii) customary intercompany transactions, (iii) Transaction fees",
+        "source": "R14-C"
+      },
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 87 (Transactions with Affiliates); Review Template Row 124 (Transactions with Affiliates)",
+      "neutron_field_refs": [
+        {
+          "term_type": "AFFILIATE_OTHER",
+          "label": "Affiliate Transactions - Other Provisions",
+          "schema_file": "affiliate-transactions-enhanced.schema.ts",
+          "field_count": 5,
+          "r1_domain": "governance",
+          "mapping_confidence": 1.0,
+          "mapping_mode": "manual_override",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Dollar amount above which board approval is required. Typically $5M-$10M depending on deal size. Growth-adjusted in some deals (% of EBITDA).",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.affiliate_txns",
+              "id": "governance.affiliate_txns.approval_tiers.board_approval.threshold",
+              "level": 4,
+              "name": "Board Approval Threshold",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Whether approval requires independent directors (no relationship to sponsor) rather than merely disinterested directors (no stake in specific transaction).",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.affiliate_txns",
+              "id": "governance.affiliate_txns.approval_tiers.board_approval.independent_director",
+              "level": 4,
+              "name": "Independent Director Requirement",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 3 Item 12"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Provision deeming transactions approved by a majority of disinterested directors as satisfying the arm's-length standard, creating a procedural safe harbor.",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.affiliate_txns",
+              "id": "governance.affiliate_txns.approval_tiers.board_approval.deemed_safe_harbor",
+              "level": 4,
+              "name": "Board Deemed Safe Harbor",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 2"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Majority of disinterested directors must approve affiliate transactions above the board approval threshold. 'Disinterested' means directors without personal interest in the transaction. Mid-tier governance.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.approval_tiers.board_approval",
+          "level": 3,
+          "name": "Board / Disinterested Director Approval",
+          "r18_concept_ids": [
+            "neg_cov_affiliate_transactions.board_approval"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 1"
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Dollar amount above which a fairness opinion is required. Typically $25M-$50M. Some deals use EBITDA percentage instead of or in addition to fixed dollar.",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.affiliate_txns",
+              "id": "governance.affiliate_txns.approval_tiers.fairness_opinion.threshold",
+              "level": 4,
+              "name": "Fairness Opinion Threshold",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 1 Item 3"
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Requirements for the financial advisor providing the fairness opinion: nationally recognized, independent, experienced in comparable transactions.",
+              "domain_id": "governance",
+              "extraction_difficulty": "medium",
+              "family_id": "governance.affiliate_txns",
+              "id": "governance.affiliate_txns.approval_tiers.fairness_opinion.firm_qualifications",
+              "level": 4,
+              "name": "Firm Qualifications",
+              "type": "sub_component",
+              "definition_source": "KCT Cat 4 Item 1"
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Independent financial advisor opinion required for the largest affiliate transactions. Highest tier of governance. For transactions exceeding typically $25M-$50M.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "extraction_refs": {
+            "concept_area": "neg_cov_affiliates",
+            "extraction_ready": true,
+            "playbook_ref": "neg_cov_affiliates.fairness_opinion",
+            "primary_section_pattern": "X.04-19",
+            "section_locations": [
+              "10.07",
+              "5.17",
+              "6.07",
+              "7.08"
+            ],
+            "shape_ref": "neg_cov_affiliates.fairness_opinion"
+          },
+          "family_id": "governance.affiliate_txns",
+          "golden_record_benchmarks": [
+            {
+              "count": 3,
+              "median": 5000000,
+              "parameter": "board_approval_threshold:dollars",
+              "range": "5000000 - 5000000",
+              "reason": "Parameter distribution data available but no ontology benchmark",
+              "source": "R16-D golden_record",
+              "source_file": "parameter_distributions.json"
+            },
+            {
+              "count": 3,
+              "median": 30000000,
+              "parameter": "fairness_opinion_threshold:dollars",
+              "range": "30000000 - 30000000",
+              "reason": "Parameter distribution data available but no ontology benchmark",
+              "source": "R16-D golden_record",
+              "source_file": "parameter_distributions.json"
+            }
+          ],
+          "id": "governance.affiliate_txns.approval_tiers.fairness_opinion",
+          "level": 3,
+          "name": "Fairness Opinion",
+          "r18_concept_ids": [
+            "neg_cov_affiliate_transactions.fairness_opinion"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Escalating approval requirements based on affiliate transaction size: arm's-length only below de minimis, board approval above first threshold, fairness opinion above second threshold. Creates tiered governance based on magnitude.",
+      "dls_ref": [
+        "DLS:45:Due diligence"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "assignments",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_affiliates.board_approval",
+        "section_locations": [
+          "ARTICLE 11",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "neg_cov_affiliates.board_approval",
+        "secondary_playbook_refs": [
+          "neg_cov_affiliates.fairness_opinion"
+        ]
+      },
+      "family_id": "governance.affiliate_txns",
+      "golden_record_benchmarks": [
+        {
+          "benchmark_type": "prevalence",
+          "override_key": "neg_cov_affiliates.board_approval",
+          "present_count": 6,
+          "prevalence_pct": 66.7,
+          "source": "R16-B golden_record",
+          "total_deals": 9
+        },
+        {
+          "benchmark_type": "prevalence",
+          "override_key": "neg_cov_affiliates.fairness_opinion",
+          "present_count": 2,
+          "prevalence_pct": 22.2,
+          "source": "R16-B golden_record",
+          "total_deals": 9
+        }
+      ],
+      "id": "governance.affiliate_txns.approval_tiers",
+      "level": 2,
+      "name": "Approval Tiers",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader carve-outs: arms-length standard with board approval for large transactions; de minimis threshold; employee compensation; tax sharing; insurance/indemnification",
+        "dls_source": "DLS row 87",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "general_standard: prohibition_with_exceptions vs arms_length",
+          "management_fees: under_agreement_only vs uncapped",
+          "management_fee_eod_condition: required vs not_required",
+          "board_approval_threshold: dollar_amount vs not_required",
+          "de_minimis_threshold: none vs fixed_dollar vs ebitda_percentage",
+          "intercompany_scope: loan_parties_only vs all_subs",
+          "employee_comp_exception: yes vs no",
+          "tax_sharing_exception: yes vs no",
+          "transaction_fees: closing_only vs future_permitted"
+        ],
+        "market_position": "",
+        "preferred_position": "General prohibition except: (i) sponsor management/monitoring fees under management agreement (no EoD), (ii) customary intercompany transactions, (iii) Transaction fees",
+        "source": "R14-C"
+      },
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 45 (Due diligence)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "De minimis threshold structured as the greater of a fixed dollar amount and an EBITDA percentage, providing growth-adjusted flexibility.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.de_minimis.greater_of",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "63.3%"
+          },
+          "name": "Greater-Of Structure",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Fixed dollar de minimis with no growth mechanism. Becomes more restrictive as EBITDA grows, effectively tightening over time.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.de_minimis.dollar_only",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "33.3%"
+          },
+          "name": "Dollar-Only Threshold",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether the de minimis applies per individual transaction or in the aggregate for all affiliate transactions during the period. Per-transaction ($100K typical) with aggregate ($1.5M) is most restrictive at 6.7%.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.de_minimis.per_transaction",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "6.7%"
+          },
+          "name": "Per-Transaction vs. Aggregate",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Small transactions exempt from approval requirements. Median $2.65M / 7.9% EBITDA. 56.5% coverage. Transactions below this level only need to satisfy the arm's-length standard. Neutron extraction context (AFFILIATE_DE_MINIMIS): Threshold below which affiliate transactions are permitted without consent or additional requirements, typically expressed as a fixed dollar amount and/or EBITDA percentage. The de minimis threshold for affiliate transactions determines which transactions between the borrower and its affiliates can proceed without lender consent, board approval, or arm's length certification.",
+      "domain_id": "governance",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "assignments",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_affiliates.board_approval",
+        "section_locations": [
+          "ARTICLE 11",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "neg_cov_affiliates.board_approval",
+        "secondary_playbook_refs": [
+          "neg_cov_affiliates.de_minimis"
+        ],
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.179119+00:00",
+          "term_packs": {
+            "AFFILIATE_DE_MINIMIS": {
+              "label": "Affiliate Transactions - De Minimis Threshold",
+              "category": "AFFILIATE_TRANSACTIONS",
+              "exactPhrases": [
+                "transactions with Affiliates in an aggregate amount not to exceed",
+                "de minimis affiliate transactions",
+                "affiliate transactions not exceeding $[*]",
+                "permitted affiliate transactions below threshold",
+                "individually or in the aggregate does not exceed",
+                "not materially less favorable than arm's length",
+                "Greater of $[*] and [*]% LTM EBITDA",
+                "terms not materially less favorable",
+                "transactions with Affiliates involving aggregate consideration",
+                "affiliate transactions permitted without consent",
+                "de minimis threshold for affiliate transactions"
+              ],
+              "sectionHeaders": [
+                "ARTICLE VII - NEGATIVE COVENANTS",
+                "Section 7.08 - Transactions with Affiliates",
+                "Affiliate Transactions",
+                "Limitations on Transactions with Affiliates",
+                "Related Party Transactions",
+                "Transactions with Related Parties"
+              ],
+              "semanticVariants": [
+                "affiliate transaction threshold amount",
+                "related party de minimis exemption",
+                "permitted affiliate transaction cap",
+                "affiliate dealing threshold",
+                "small affiliate transaction exemption",
+                "intercompany transaction threshold",
+                "affiliate transaction basket"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "transactions with Affiliates in an aggregate amount not to exceed",
+              "de minimis affiliate transactions",
+              "affiliate transactions not exceeding $[*]",
+              "permitted affiliate transactions below threshold",
+              "individually or in the aggregate does not exceed",
+              "not materially less favorable than arm's length",
+              "Greater of $[*] and [*]% LTM EBITDA",
+              "terms not materially less favorable",
+              "transactions with Affiliates involving aggregate consideration",
+              "affiliate transactions permitted without consent",
+              "de minimis threshold for affiliate transactions"
+            ],
+            "sectionHeaders": [
+              "ARTICLE VII - NEGATIVE COVENANTS",
+              "Section 7.08 - Transactions with Affiliates",
+              "Affiliate Transactions",
+              "Limitations on Transactions with Affiliates",
+              "Related Party Transactions",
+              "Transactions with Related Parties"
+            ],
+            "semanticVariants": [
+              "affiliate transaction threshold amount",
+              "related party de minimis exemption",
+              "permitted affiliate transaction cap",
+              "affiliate dealing threshold",
+              "small affiliate transaction exemption",
+              "intercompany transaction threshold",
+              "affiliate transaction basket"
+            ]
+          }
+        },
+        "neutron_definition_enrichment": {
+          "source": "Neutron schema term_type_index description/backgroundExplanation",
+          "imported_at": "2026-02-17T22:46:48.401716+00:00",
+          "entries": {
+            "AFFILIATE_DE_MINIMIS": {
+              "term_type": "AFFILIATE_DE_MINIMIS",
+              "schema_file": "affiliate-transactions-enhanced.schema.ts",
+              "label": "Affiliate Transactions - De Minimis Threshold",
+              "mapping_mode": "manual_override",
+              "mapping_confidence": 1.0,
+              "label_similarity": 0.6,
+              "description": "Threshold below which affiliate transactions are permitted without consent or additional requirements, typically expressed as a fixed dollar amount and/or EBITDA percentage.",
+              "backgroundExplanation": "The de minimis threshold for affiliate transactions determines which transactions between the borrower and its affiliates can proceed without lender consent, board approval, or arm's length certification. Market standard is the Greater of $5-10M and 5-10% of LTM EBITDA measured annually in aggregate. The threshold exists to permit routine, operational transactions without administrative burden while preventing material value leakage to affiliates. Key negotiation points include: (1) whether the threshold is measured per-transaction or in aggregate, (2) whether there is an annual reset or cumulative cap, (3) the arm's length requirement applicability, and (4) carve-outs for ordinary course transactions. Lenders focus on preventing structuring around the threshold through multiple sub-threshold transactions and ensuring fair value requirements apply.",
+              "summary_used": "Threshold below which affiliate transactions are permitted without consent or additional requirements, typically expressed as a fixed dollar amount and/or EBITDA percentage. The de minimis threshold for affiliate transactions determines which transactions between the borrower and its affiliates can proceed without lender consent, board approval, or arm's length certification.",
+              "ported_at": "2026-02-17T22:46:48.401716+00:00"
+            }
+          }
+        }
+      },
+      "family_id": "governance.affiliate_txns",
+      "golden_record_benchmarks": [
+        {
+          "benchmark_type": "cap_range",
+          "high": "50M",
+          "low": "2.5M",
+          "override_key": "neg_cov_affiliates.de_minimis",
+          "source": "R16-B golden_record"
+        }
+      ],
+      "id": "governance.affiliate_txns.de_minimis",
+      "level": 2,
+      "market_benchmarks": "PC Term Comparison: Aggressive UMM/BSLR 5-10% of EBITDA; Otherwise 2.5-5% or none.",
+      "name": "De Minimis Threshold",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader carve-outs: arms-length standard with board approval for large transactions; de minimis threshold; employee compensation; tax sharing; insurance/indemnification",
+        "dls_source": "DLS row 87",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "general_standard: prohibition_with_exceptions vs arms_length",
+          "management_fees: under_agreement_only vs uncapped",
+          "management_fee_eod_condition: required vs not_required",
+          "board_approval_threshold: dollar_amount vs not_required",
+          "de_minimis_threshold: none vs fixed_dollar vs ebitda_percentage",
+          "intercompany_scope: loan_parties_only vs all_subs",
+          "employee_comp_exception: yes vs no",
+          "tax_sharing_exception: yes vs no",
+          "transaction_fees: closing_only vs future_permitted"
+        ],
+        "market_position": "",
+        "preferred_position": "General prohibition except: (i) sponsor management/monitoring fees under management agreement (no EoD), (ii) customary intercompany transactions, (iii) Transaction fees",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "neg_cov_affiliate_transactions.de_minimis_threshold"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 125,
+          "term": "Negative Covenants – Transactions with Affiliates – De Minimis Threshold"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "Review Template Row 125 (Negative Covenants – Transactions with Affiliates – De Minimis Threshold)",
+      "neutron_field_refs": [
+        {
+          "term_type": "AFFILIATE_DE_MINIMIS",
+          "label": "Affiliate Transactions - De Minimis Threshold",
+          "schema_file": "affiliate-transactions-enhanced.schema.ts",
+          "field_count": 5,
+          "r1_domain": "governance",
+          "mapping_confidence": 1.0,
+          "mapping_mode": "manual_override",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Maximum annual management/monitoring fee payable to the sponsor. Median $1.5M. Uncapped fees represent significant leakage risk.",
+          "dls_ref": [
+            "DLS:32:Ticking fee"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.management_agreement.annual_fee_cap",
+          "level": 3,
+          "market_benchmarks": {
+            "explicit_cap": "21.4%",
+            "median_value": "$1.5M"
+          },
+          "name": "Annual Fee Cap",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 32 (Ticking fee)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "One-time advisory fees for sponsor-sourced transactions (acquisitions, refinancings, divestitures). Median $1.3M.",
+          "dls_ref": [
+            "DLS:22:L/C Fronting Fees / L/C Fees",
+            "DLS:34:Breakup fees",
+            "DLS:51:Payment of fees"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.management_agreement.transaction_fees",
+          "level": 3,
+          "market_benchmarks": {
+            "median_value": "$1.3M",
+            "prevalence": "16.1%"
+          },
+          "name": "Transaction Fees",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 22 (L/C Fronting Fees / L/C Fees); DLS Preferred Row 34 (Breakup fees); DLS Preferred Row 51 (Payment of fees)",
+          "extraction_refs": {}
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Provision suspending or blocking management fee payments to the sponsor during the continuance of an event of default. Ensures that sponsor compensation is subordinated to debt service during periods of financial distress, preventing cash leakage to the controlling equity holder when the borrower's resources should be preserved for creditor protection.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.management_agreement.default_stopper",
+          "level": 3,
+          "market_benchmarks": {
+            "explicit_flag": "7.1%"
+          },
+          "name": "Default Stopper",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether management fees are contractually subordinated to loan obligations, meaning they are paid only after debt service is current.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.management_agreement.subordination",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "19.6%"
+          },
+          "name": "Fee Subordination",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Cap on the lump-sum termination payment payable to the sponsor upon IPO, change of control, or voluntary termination of the management agreement. Often structured as NPV of remaining annual fees.",
+          "dls_ref": [
+            "DLS:38:Termination date"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.management_agreement.termination_payment",
+          "level": 3,
+          "name": "Termination Payment Cap",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 38 (Termination date)"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether the management agreement has a fixed term or continues indefinitely. Sunset provisions ensure the sponsor's management fee extraction has a defined endpoint.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.management_agreement.sunset",
+          "level": 3,
+          "name": "Management Agreement Sunset",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 109 (Unknown); KCT Cat 2 Item 4"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Fees paid to the private equity sponsor for ongoing management, monitoring, and advisory services under a contractual arrangement. DLS Preferred row 87 permits 'the payment of financial advisory, monitoring, oversight and similar fees, expenses and indemnities to the Sponsor under the management agreement in effect on the Closing Date, so long as no default or event of default has occurred and is continuing before or thereafter.' DLS Preferred row 72 clause (i) permits the EBITDA addback for 'all management fees and reimbursement of reasonable expenses paid to Sponsor or an affiliate thereof in accordance with the management agreement, to the extent permitted by the Credit Facility.' PC Term Comparison: management fees should be 'capped in the covenant and subject to a D/EoD blocker.'",
+      "dls_ref": [
+        "DLS:53:Amendments to Acquisition Agreement",
+        "DLS:87:Transactions with Affiliates"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "assignments",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_affiliates.board_approval",
+        "section_locations": [
+          "ARTICLE 11",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "neg_cov_affiliates.board_approval",
+        "secondary_playbook_refs": [
+          "neg_cov_affiliates.sponsor_fees"
+        ],
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.179221+00:00",
+          "term_packs": {
+            "AFFILIATE_SPONSOR_FEES": {
+              "label": "Affiliate Transactions - Sponsor Fees",
+              "category": "AFFILIATE_TRANSACTIONS",
+              "exactPhrases": [
+                "management fees payable to Sponsor",
+                "advisory fees not to exceed",
+                "monitoring agreement",
+                "transaction fees payable to Sponsor",
+                "management services agreement",
+                "Sponsor Management Fee",
+                "annual management fee of $[*]",
+                "customary transaction fees",
+                "management, consulting, monitoring and advisory fees",
+                "terminate upon consummation of any Qualified IPO",
+                "no such fees shall be paid during the continuance of any Payment Default"
+              ],
+              "sectionHeaders": [
+                "ARTICLE VII - NEGATIVE COVENANTS",
+                "Section 7.08 - Transactions with Affiliates",
+                "Affiliate Transactions",
+                "Management Agreement",
+                "Sponsor Fees",
+                "Permitted Affiliate Transactions"
+              ],
+              "semanticVariants": [
+                "sponsor advisory fees",
+                "management monitoring fees",
+                "PE sponsor fees",
+                "private equity management fee",
+                "sponsor transaction compensation",
+                "portfolio company management fee",
+                "sponsor management arrangement",
+                "monitoring and oversight fees"
+              ],
+              "searchThresholds": {
+                "minSemanticScore": 0.58,
+                "minKeywordScore": 0.48,
+                "minConfidence": 0.65,
+                "escalationThreshold": 0.48,
+                "humanEscalationThreshold": 0.28
+              },
+              "searchEscalation": {
+                "strategies": [
+                  "synonym_expansion",
+                  "section_targeting",
+                  "exhaustive_scan"
+                ],
+                "maxRetries": 3,
+                "minScoreThreshold": 0.35,
+                "timeBudgetMs": 30000
+              }
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "management fees payable to Sponsor",
+              "advisory fees not to exceed",
+              "monitoring agreement",
+              "transaction fees payable to Sponsor",
+              "management services agreement",
+              "Sponsor Management Fee",
+              "annual management fee of $[*]",
+              "customary transaction fees",
+              "management, consulting, monitoring and advisory fees",
+              "terminate upon consummation of any Qualified IPO",
+              "no such fees shall be paid during the continuance of any Payment Default"
+            ],
+            "sectionHeaders": [
+              "ARTICLE VII - NEGATIVE COVENANTS",
+              "Section 7.08 - Transactions with Affiliates",
+              "Affiliate Transactions",
+              "Management Agreement",
+              "Sponsor Fees",
+              "Permitted Affiliate Transactions"
+            ],
+            "semanticVariants": [
+              "sponsor advisory fees",
+              "management monitoring fees",
+              "PE sponsor fees",
+              "private equity management fee",
+              "sponsor transaction compensation",
+              "portfolio company management fee",
+              "sponsor management arrangement",
+              "monitoring and oversight fees"
+            ]
+          }
+        }
+      },
+      "family_id": "governance.affiliate_txns",
+      "golden_record_benchmarks": [
+        {
+          "benchmark_type": "cap_range",
+          "high": "1.5M",
+          "low": "1.5M",
+          "override_key": "neg_cov_affiliates.management_fees",
+          "source": "R16-B golden_record"
+        }
+      ],
+      "id": "governance.affiliate_txns.management_agreement",
+      "level": 2,
+      "market_benchmarks": {
+        "median_annual_fee": "$1.5M",
+        "prevalence": "90.3%"
+      },
+      "name": "Sponsor Management Agreement",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader carve-outs: arms-length standard with board approval for large transactions; de minimis threshold; employee compensation; tax sharing; insurance/indemnification",
+        "dls_source": "DLS row 87",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "general_standard: prohibition_with_exceptions vs arms_length",
+          "management_fees: under_agreement_only vs uncapped",
+          "management_fee_eod_condition: required vs not_required",
+          "board_approval_threshold: dollar_amount vs not_required",
+          "de_minimis_threshold: none vs fixed_dollar vs ebitda_percentage",
+          "intercompany_scope: loan_parties_only vs all_subs",
+          "employee_comp_exception: yes vs no",
+          "tax_sharing_exception: yes vs no",
+          "transaction_fees: closing_only vs future_permitted"
+        ],
+        "market_position": "",
+        "preferred_position": "General prohibition except: (i) sponsor management/monitoring fees under management agreement (no EoD), (ii) customary intercompany transactions, (iii) Transaction fees",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "neg_cov_affiliate_transactions.sponsor_fees"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 10,
+          "term": "Termination of commitments"
+        },
+        {
+          "coverage": "full",
+          "row": 109,
+          "term": "Negative Covenants – Restricted Payments – Management Agreement"
+        },
+        {
+          "coverage": "full",
+          "row": 124,
+          "term": "Negative Covenants – Transactions with Affiliates –"
+        },
+        {
+          "coverage": "full",
+          "row": 126,
+          "term": "Negative Covenants – Transactions with Affiliates – Sponsor Management Fees"
+        },
+        {
+          "coverage": "full",
+          "row": 153,
+          "term": "MAC"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 87 (management fee permission: closing-date agreement, EoD blocker); DLS Preferred row 72 clause (i) (management fee EBITDA addback); PC Term Comparison Affiliate Transactions section line 453 (cap and EoD blocker)",
+      "pc_ref": [
+        "Affiliate Transactions"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "AFFILIATE_SPONSOR_FEES",
+          "label": "Affiliate Transactions - Sponsor Fees",
+          "schema_file": "affiliate-transactions-enhanced.schema.ts",
+          "field_count": 5,
+          "r1_domain": "governance",
+          "mapping_confidence": 1.0,
+          "mapping_mode": "manual_override",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "How tax liabilities are allocated among entities in the consolidated group. Typically permits distributions equal to taxes that would be owed if the borrower group filed separately.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.tax_sharing.distribution_mechanics",
+          "level": 3,
+          "name": "Tax Distribution Mechanics",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 110 (Unknown); KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether tax sharing agreements must be on arm's-length terms, preventing inflated tax payments that serve as disguised distributions to sponsors.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.tax_sharing.arm_length_requirement",
+          "level": 3,
+          "name": "Arm's Length Requirement",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Permitted tax distribution and sharing mechanics between the borrower group and parent/sponsor entities. Allows tax payments to flow to the tax-paying entity in a consolidated tax group without violating affiliate transaction restrictions.",
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "assignments",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_affiliates.board_approval",
+        "section_locations": [
+          "ARTICLE 11",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "neg_cov_affiliates.board_approval"
+      },
+      "family_id": "governance.affiliate_txns",
+      "golden_record_benchmarks": [
+        {
+          "benchmark_type": "prevalence",
+          "override_key": "neg_cov_affiliates.tax_sharing",
+          "present_count": 5,
+          "prevalence_pct": 55.6,
+          "source": "R16-B golden_record",
+          "total_deals": 9
+        }
+      ],
+      "id": "governance.affiliate_txns.tax_sharing",
+      "level": 2,
+      "name": "Tax Sharing Arrangements",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader carve-outs: arms-length standard with board approval for large transactions; de minimis threshold; employee compensation; tax sharing; insurance/indemnification",
+        "dls_source": "DLS row 87",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "general_standard: prohibition_with_exceptions vs arms_length",
+          "management_fees: under_agreement_only vs uncapped",
+          "management_fee_eod_condition: required vs not_required",
+          "board_approval_threshold: dollar_amount vs not_required",
+          "de_minimis_threshold: none vs fixed_dollar vs ebitda_percentage",
+          "intercompany_scope: loan_parties_only vs all_subs",
+          "employee_comp_exception: yes vs no",
+          "tax_sharing_exception: yes vs no",
+          "transaction_fees: closing_only vs future_permitted"
+        ],
+        "market_position": "",
+        "preferred_position": "General prohibition except: (i) sponsor management/monitoring fees under management agreement (no EoD), (ii) customary intercompany transactions, (iii) Transaction fees",
+        "source": "R14-C"
+      },
+      "type": "concept",
+      "definition_source": "Review Template Row 124 (Transactions with Affiliates)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Management equity incentive plans, stock option grants, and restricted stock awards. Permitted as a standard carveout from affiliate transaction restrictions.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.employee_comp.equity_incentives",
+          "level": 3,
+          "name": "Stock Option / Equity Plans",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Severance agreements and performance bonus plans for officers and employees. Subject to reasonableness standard in some deals.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.employee_comp.severance_bonuses",
+          "level": 3,
+          "name": "Severance & Bonus Arrangements",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 4 Item 7"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Permitted affiliate transactions related to employee and management compensation, including stock options, equity incentive plans, severance, and bonus arrangements. Carved out from the general prohibition.",
+      "domain_id": "governance",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "assignments",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_affiliates.board_approval",
+        "section_locations": [
+          "ARTICLE 11",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "neg_cov_affiliates.board_approval"
+      },
+      "family_id": "governance.affiliate_txns",
+      "golden_record_benchmarks": [
+        {
+          "benchmark_type": "prevalence",
+          "override_key": "neg_cov_affiliates.employment_exception",
+          "present_count": 9,
+          "prevalence_pct": 100.0,
+          "source": "R16-B golden_record",
+          "total_deals": 9
+        }
+      ],
+      "id": "governance.affiliate_txns.employee_comp",
+      "level": 2,
+      "name": "Employee Compensation Arrangements",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader carve-outs: arms-length standard with board approval for large transactions; de minimis threshold; employee compensation; tax sharing; insurance/indemnification",
+        "dls_source": "DLS row 87",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "general_standard: prohibition_with_exceptions vs arms_length",
+          "management_fees: under_agreement_only vs uncapped",
+          "management_fee_eod_condition: required vs not_required",
+          "board_approval_threshold: dollar_amount vs not_required",
+          "de_minimis_threshold: none vs fixed_dollar vs ebitda_percentage",
+          "intercompany_scope: loan_parties_only vs all_subs",
+          "employee_comp_exception: yes vs no",
+          "tax_sharing_exception: yes vs no",
+          "transaction_fees: closing_only vs future_permitted"
+        ],
+        "market_position": "",
+        "preferred_position": "General prohibition except: (i) sponsor management/monitoring fees under management agreement (no EoD), (ii) customary intercompany transactions, (iii) Transaction fees",
+        "source": "R14-C"
+      },
+      "type": "concept",
+      "definition_source": "Review Template Row 124 (Transactions with Affiliates)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Payment of directors and officers liability insurance premiums, a standard carveout from affiliate transaction restrictions necessary for corporate governance.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.insurance_indem.do_insurance",
+          "level": 3,
+          "name": "D&O Insurance",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Customary indemnification of sponsor and its representatives for actions taken in connection with the acquisition and governance of the portfolio company.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.insurance_indem.sponsor_indemnification",
+          "level": 3,
+          "name": "Sponsor Indemnification",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 13"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "D&O insurance payments, sponsor indemnification arrangements, and similar protective transactions between the borrower and its directors, officers, and controlling parties.",
+      "dls_ref": [
+        "DLS:87:Transactions with Affiliates"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "assignments",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_affiliates.board_approval",
+        "section_locations": [
+          "ARTICLE 11",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "neg_cov_affiliates.board_approval"
+      },
+      "family_id": "governance.affiliate_txns",
+      "id": "governance.affiliate_txns.insurance_indem",
+      "level": 2,
+      "name": "Insurance & Indemnification",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader carve-outs: arms-length standard with board approval for large transactions; de minimis threshold; employee compensation; tax sharing; insurance/indemnification",
+        "dls_source": "DLS row 87",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "general_standard: prohibition_with_exceptions vs arms_length",
+          "management_fees: under_agreement_only vs uncapped",
+          "management_fee_eod_condition: required vs not_required",
+          "board_approval_threshold: dollar_amount vs not_required",
+          "de_minimis_threshold: none vs fixed_dollar vs ebitda_percentage",
+          "intercompany_scope: loan_parties_only vs all_subs",
+          "employee_comp_exception: yes vs no",
+          "tax_sharing_exception: yes vs no",
+          "transaction_fees: closing_only vs future_permitted"
+        ],
+        "market_position": "",
+        "preferred_position": "General prohibition except: (i) sponsor management/monitoring fees under management agreement (no EoD), (ii) customary intercompany transactions, (iii) Transaction fees",
+        "source": "R14-C"
+      },
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 87 (Transactions with Affiliates)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Compensation and expense reimbursement for board members. Most common carveout at 32.6%. Typically capped at $500K/year.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.other_baskets.director_fees",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "32.6%",
+            "typical_cap": "$500K/year"
+          },
+          "name": "Director Fees & Expenses",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Routine business dealings on fair terms between the borrower group and affiliates in the normal course of business.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.other_baskets.ordinary_course",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "10.9%"
+          },
+          "name": "Ordinary Course Transactions",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Transactions between the borrower and its subsidiaries or among subsidiaries, permitted to the extent otherwise allowed under the credit agreement covenants.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.other_baskets.intercompany",
+          "level": 3,
+          "name": "Intercompany Transactions",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3; PC Term Comparison: 10. Other Items - Second Lien Transactions"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Transactions under agreements in existence on the closing date, grandfathering pre-existing affiliate relationships. May include renewals on substantially similar terms.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.other_baskets.existing_agreements",
+          "level": 3,
+          "name": "Existing Agreements",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Affiliate transaction basket permitting transactions between the borrower and its subsidiaries without requiring arm's-length pricing or board approval typically required for affiliate dealings. This exception recognizes that intercompany transactions within a consolidated group serve legitimate operational purposes. Distinct from the liens-covenant intercompany exception, this governs the terms and pricing of affiliate transactions rather than the creation of security interests.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.other_baskets.intercompany_exception",
+          "level": 3,
+          "name": "Intercompany Exception",
+          "source_system": "R16-B",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "A specific carveout within the Other Affiliate Baskets basket framework. Distinct from sibling Receivables in that it specifically addresses permitted covenant xref scenarios in leveraged credit agreements. Identified via corpus-wide structural analysis of credit agreement language patterns.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.other_baskets.permitted_covenant_xref",
+          "level": 3,
+          "market_benchmarks": {
+            "r17_gap_flagged": true
+          },
+          "name": "Permitted Covenant Xref",
+          "source_system": "R16-B",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Affiliate transaction basket permitting receivables facilities and factoring arrangements with affiliates, including the sale, discount, or pledge of accounts receivable. This carveout allows the borrower to monetize trade receivables through affiliate-managed special purpose vehicles. Distinct from general intercompany exceptions, this basket specifically addresses asset-backed financing structures that involve the transfer of financial assets to affiliate entities.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.other_baskets.receivables",
+          "level": 3,
+          "name": "Receivables",
+          "source_system": "R16-B",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Catch-all permitted affiliate transaction categories beyond the major baskets. Includes director fees, ordinary course transactions, employment arrangements, and intercompany transactions.",
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "assignments",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_affiliates.board_approval",
+        "section_locations": [
+          "ARTICLE 11",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "neg_cov_affiliates.board_approval"
+      },
+      "family_id": "governance.affiliate_txns",
+      "golden_record_benchmarks": [
+        {
+          "benchmark_type": "prevalence",
+          "override_key": "neg_cov_affiliates.intercompany_exception",
+          "present_count": 7,
+          "prevalence_pct": 77.8,
+          "source": "R16-B golden_record",
+          "total_deals": 9
+        },
+        {
+          "benchmark_type": "prevalence",
+          "override_key": "neg_cov_affiliates.permitted_covenant_xref",
+          "present_count": 7,
+          "prevalence_pct": 77.8,
+          "source": "R16-B golden_record",
+          "total_deals": 9
+        },
+        {
+          "benchmark_type": "prevalence",
+          "override_key": "neg_cov_affiliates.existing_agreements",
+          "present_count": 7,
+          "prevalence_pct": 77.8,
+          "source": "R16-B golden_record",
+          "total_deals": 9
+        },
+        {
+          "benchmark_type": "prevalence",
+          "override_key": "neg_cov_affiliates.receivables",
+          "present_count": 5,
+          "prevalence_pct": 55.6,
+          "source": "R16-B golden_record",
+          "total_deals": 9
+        }
+      ],
+      "id": "governance.affiliate_txns.other_baskets",
+      "level": 2,
+      "market_benchmarks": {
+        "prevalence": "74.2%"
+      },
+      "name": "Other Affiliate Baskets",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader carve-outs: arms-length standard with board approval for large transactions; de minimis threshold; employee compensation; tax sharing; insurance/indemnification",
+        "dls_source": "DLS row 87",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "general_standard: prohibition_with_exceptions vs arms_length",
+          "management_fees: under_agreement_only vs uncapped",
+          "management_fee_eod_condition: required vs not_required",
+          "board_approval_threshold: dollar_amount vs not_required",
+          "de_minimis_threshold: none vs fixed_dollar vs ebitda_percentage",
+          "intercompany_scope: loan_parties_only vs all_subs",
+          "employee_comp_exception: yes vs no",
+          "tax_sharing_exception: yes vs no",
+          "transaction_fees: closing_only vs future_permitted"
+        ],
+        "market_position": "",
+        "preferred_position": "General prohibition except: (i) sponsor management/monitoring fees under management agreement (no EoD), (ii) customary intercompany transactions, (iii) Transaction fees",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "neg_cov_affiliate_transactions.other_affiliate_txns"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 136,
+          "term": "Assignments – voting limit on Debt Fund Affiliates"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "Review Template Row 136 (Assignments – voting limit on Debt Fund Affiliates)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Maximum voting power of affiliated lenders in Required Lender determinations under the affiliate transaction covenant framework, typically matching the 49.9% cap in assignment provisions.",
+          "dls_ref": [
+            "DLS:93:Voting"
+          ],
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.affiliated_lender_restrictions.voting_cap",
+          "level": 3,
+          "name": "Voting Cap",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 134,
+              "term": "Assignments – Affiliated lenders and buybacks"
+            },
+            {
+              "coverage": "full",
+              "row": 136,
+              "term": "Assignments – voting limit on Debt Fund Affiliates"
+            }
+          ],
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 93 (Voting); Review Template Row 134 (Assignments – Affiliated lenders and buybacks); Review Template Row 136 (Assignments – voting limit on Debt Fund Affiliates)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Requirement for information barriers between the sponsor's lending arm and its private equity operations to prevent conflicts of interest and insider trading concerns.",
+          "domain_id": "governance",
+          "extraction_difficulty": "medium",
+          "family_id": "governance.affiliate_txns",
+          "id": "governance.affiliate_txns.affiliated_lender_restrictions.information_wall",
+          "level": 3,
+          "name": "Information Wall",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 6 (Unknown); KCT Cat 1 Item 2"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Voting caps and information walls for affiliate lenders as an affiliate transaction covenant issue, distinct from the assignment-side restrictions. Addresses the governance dimension of sponsor debt purchases.",
+      "dls_ref": [
+        "DLS:60:Lender Selection"
+      ],
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "assignments",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_affiliates.board_approval",
+        "section_locations": [
+          "ARTICLE 11",
+          "ARTICLE 5",
+          "ARTICLE V",
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "ARTICLE X"
+        ],
+        "shape_ref": "neg_cov_affiliates.board_approval"
+      },
+      "family_id": "governance.affiliate_txns",
+      "id": "governance.affiliate_txns.affiliated_lender_restrictions",
+      "level": 2,
+      "name": "Affiliated Lender Restrictions (NegCov)",
+      "negotiation_spectrum": {
+        "aggressive_position": "Broader carve-outs: arms-length standard with board approval for large transactions; de minimis threshold; employee compensation; tax sharing; insurance/indemnification",
+        "dls_source": "DLS row 87",
+        "dls_stance": "strong_lender",
+        "hot_button_items": [],
+        "is_highlighted": false,
+        "key_negotiation_axes": [
+          "general_standard: prohibition_with_exceptions vs arms_length",
+          "management_fees: under_agreement_only vs uncapped",
+          "management_fee_eod_condition: required vs not_required",
+          "board_approval_threshold: dollar_amount vs not_required",
+          "de_minimis_threshold: none vs fixed_dollar vs ebitda_percentage",
+          "intercompany_scope: loan_parties_only vs all_subs",
+          "employee_comp_exception: yes vs no",
+          "tax_sharing_exception: yes vs no",
+          "transaction_fees: closing_only vs future_permitted"
+        ],
+        "market_position": "",
+        "preferred_position": "General prohibition except: (i) sponsor management/monitoring fees under management agreement (no EoD), (ii) customary intercompany transactions, (iii) Transaction fees",
+        "source": "R14-C"
+      },
+      "r18_concept_ids": [
+        "neg_cov_affiliate_transactions.affiliated_lender_restrictions"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 134,
+          "term": "Assignments – Affiliated lenders and buybacks"
+        },
+        {
+          "coverage": "full",
+          "row": 136,
+          "term": "Assignments – voting limit on Debt Fund Affiliates"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 60 (Lender Selection); Review Template Row 134 (Assignments – Affiliated lenders and buybacks); Review Template Row 136 (Assignments – voting limit on Debt Fund Affiliates)"
+    },
+    {
+      "children": [
+        {
+          "id": "governance.affiliate_txns.unrestricted_subsidiary_controls.designation_criteria",
+          "name": "Designation Criteria",
+          "definition": "Conditions for designating a subsidiary as unrestricted — board resolution, no EoD, investment basket capacity, pro forma compliance — and the mechanics for re-designation back to restricted status.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.affiliate_txns",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 3"
+        },
+        {
+          "id": "governance.affiliate_txns.unrestricted_subsidiary_controls.information_rights",
+          "name": "Lender Information Rights",
+          "definition": "Ongoing reporting and disclosure obligations regarding unrestricted subsidiaries — financial statements, material transactions, asset transfers — giving lenders visibility into potential value leakage channels.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.affiliate_txns",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "Review Template Row 6 (Unknown); KCT Cat 1 Item 2"
+        },
+        {
+          "id": "governance.affiliate_txns.unrestricted_subsidiary_controls.value_transfer_limits",
+          "name": "Value Transfer Limits",
+          "definition": "Caps on the aggregate fair market value of assets, investments, and other value that may be transferred to unrestricted subsidiaries, measured against the investment basket or a standalone unrestricted subsidiary basket.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.affiliate_txns",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "hard",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "id": "governance.affiliate_txns.unrestricted_subsidiary_controls.anti_jcrew_protections",
+          "name": "Anti-J.Crew Protections",
+          "definition": "Provisions specifically designed to prevent J.Crew-style IP transfers to unrestricted subsidiaries, including asset transfer blockers, designation event clawbacks, and collateral continuation requirements post-designation.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.affiliate_txns",
+          "corpus_prevalence": "low",
+          "extraction_difficulty": "hard",
+          "definition_source": "Review Template Row 69 (Unknown); KCT Cat 1 Item 8; Learning Material: 4) J. Crew Protection in Credit Agreements; LME Provision Language, Restrictions on Material Intellectual Property or Other Asset Leakage to Unsubs (J.Crew)"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Governance over designation of subsidiaries as 'unrestricted' -- outside the credit group and not subject to negative covenants. DLS Preferred row 92 preferred position: 'No ability to designate unrestricted subsidiaries.' Alternative requires: (i) no EoD continuing or resulting; (ii) pro forma compliance with closing-date Total Net Leverage and Senior Secured Net Leverage ratios. Additional conditions: no unsub can have debt recourse to Loan Party; no unsub can own capital stock or indebtedness of the restricted group; total assets and EBITDA of all unsubs capped at agreed percentages. PC Term Comparison: 'Conditions to Designation: EOD stopper standard; Investment Capacity standard; Leverage Condition: None in Aggressive UMM/BSLR, otherwise pro forma compliance with Financial Covenant.' Also requires Envision protection limiting investment baskets usable for unsub transfers.",
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "affiliate_transactions",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_affiliates.neg_cov_aff_general",
+        "section_locations": [
+          "ARTICLE VI",
+          "ARTICLE VII",
+          "Section 7.08"
+        ]
+      },
+      "family_id": "governance.affiliate_txns",
+      "id": "governance.affiliate_txns.unrestricted_subsidiary_controls",
+      "level": 2,
+      "market_benchmarks": {
+        "key_controls": "information rights, designation criteria, value transfer limits",
+        "prevalence": "medium -- increasingly common post-J.Crew",
+        "source": "R19-C_corpus_analysis"
+      },
+      "name": "Unrestricted Subsidiary Controls",
+      "type": "concept",
+      "definition_source": "DLS Preferred row 92 (preferred: no unsubs; alternative: leverage test, recourse prohibition, asset/EBITDA caps); PC Term Comparison Unrestricted Subsidiaries section lines 334-344 (designation conditions by segment, Envision protection)",
+      "pc_ref": [
+        "Unrestricted Subsidiaries"
+      ]
+    },
+    {
+      "children": [
+        {
+          "id": "governance.affiliate_txns.hwm_ratchet.ratchet_mechanics",
+          "name": "Ratchet Mechanics",
+          "definition": "How the high-water mark operates — the threshold for affiliate transactions (e.g., management fee cap) increases automatically as EBITDA grows, locking in the highest level achieved rather than fluctuating with performance.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.affiliate_txns",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "hard",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "id": "governance.affiliate_txns.hwm_ratchet.trigger_metric",
+          "name": "Trigger Metric",
+          "definition": "The financial metric driving the ratchet — typically Consolidated EBITDA or Total Assets — and whether the high-water mark is based on trailing four quarters, most recent annual, or any single measurement period.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.affiliate_txns",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 1"
+        },
+        {
+          "id": "governance.affiliate_txns.hwm_ratchet.applicable_baskets",
+          "name": "Applicable Basket Types",
+          "definition": "Which covenant baskets utilize the HWM ratchet mechanism — affiliate transaction caps, management fee baskets, restricted payment grower baskets — and whether the ratchet applies symmetrically across all or only selected baskets.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "governance",
+          "family_id": "governance.affiliate_txns",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 1; PC Term Comparison: 1. Key Definitions - Applicable Margin:"
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "High-Water-Mark ratchet: basket sizes permanently ratchet up when growth metrics peak, never ratcheting back down when metrics decline. KCT Category 2 item 4 defines: 'works to increase grower baskets such that grower baskets are deemed to be increased to the highest amount of the grower component reached from time to time and such grower basket is not subsequently reduced as a result of any decrease in the grower component that may result from asset sales, underperformance or otherwise.' PC Term Comparison explicitly rejects both formulations: 'Greater of actual closing and hardwired leverage levels: Reject. Greater of pro forma EBITDA and highest previous reported EBITDA: Reject.' This provision creates a one-way ratchet allowing baskets to grow during good times but never shrink during downturns.",
+      "domain_id": "governance",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "affiliate_transactions",
+        "extraction_ready": true,
+        "playbook_ref": "neg_cov_affiliates.neg_cov_aff_general",
+        "section_locations": [
+          "ARTICLE VII",
+          "Section 7.08"
+        ]
+      },
+      "family_id": "governance.affiliate_txns",
+      "id": "governance.affiliate_txns.hwm_ratchet",
+      "level": 2,
+      "market_benchmarks": {
+        "mechanism": "high-water mark for basket utilization, ratchets with EBITDA growth",
+        "prevalence": "medium -- growing in UMM/BSL",
+        "source": "R19-C_corpus_analysis"
+      },
+      "name": "Hwm Ratchet",
+      "type": "concept",
+      "definition_source": "KCT Category 2 item 4 (high water marking definition and mechanism); PC Term Comparison High Water Mark section lines 377-378 (Reject both formulations)",
+      "pc_ref": [
+        "High Water Mark"
+      ]
+    }
+  ],
+  "definition": "Negative covenant restricting transactions between the borrower group and affiliated parties (including the sponsor and its portfolio companies) to ensure arm's-length terms and prevent value extraction through related-party dealings. DLS Preferred permits: (i) payment of financial advisory/monitoring/oversight fees to the sponsor under the management agreement in effect at closing, subject to no Default/EoD; (ii) customary intercompany transactions among Holdings and subsidiaries (conditions TBD); (iii) fees payable in connection with the closing transactions. PC Term Comparison: management fees should be capped in the covenant and subject to a Default/EoD blocker (or bankruptcy/payment EoD in competitive transactions). De minimis thresholds: Aggressive UMM/BSLR at 5-10% of EBITDA, otherwise 2.5-5% or none. For transactions above the de minimis threshold, certification by an independent financial advisor (not materially less favorable than arm's length or fair from a financial point of view) may be required. KCT Category 4 item 1 notes: if unlimited dividends appear permitted under Affiliate Transactions, confirm they are also permitted under the Restricted Payments covenant.",
+  "dls_ref": [
+    "DLS:46:Third-party consents / litigation",
+    "DLS:56:Solvency",
+    "DLS:63:Syndication Assistance",
+    "DLS:87:Transactions with Affiliates"
+  ],
+  "domain_id": "governance",
+  "family_id": "governance.affiliate_txns",
+  "id": "governance.affiliate_txns",
+  "level": 1,
+  "market_benchmarks": {
+    "pctc_conservative": "2.5-5% or none",
+    "pctc_umm_bsl": "5-10% of EBITDA"
+  },
+  "name": "Affiliate Transactions",
+  "review_ref": [
+    {
+      "coverage": "full",
+      "row": 124,
+      "term": "Negative Covenants – Transactions with Affiliates –"
+    },
+    {
+      "coverage": "full",
+      "row": 125,
+      "term": "Negative Covenants – Transactions with Affiliates – De Minimis Threshold"
+    }
+  ],
+  "type": "family",
+  "corpus_prevalence": "high",
+  "extraction_difficulty": "medium",
+  "definition_source": "DLS Preferred row 87 (Transactions with Affiliates); PC Term Comparison neg covs Affiliate Transactions section (management fee caps, de minimis thresholds by segment); KCT Category 4 item 1 footnote 15 (cross-check dividends against RP covenant)",
+  "pc_ref": [
+    "neg covs Affiliate Transactions"
+  ]
+}

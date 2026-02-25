@@ -10,7 +10,7 @@ const DOMAIN_DOT_COLORS: Record<string, string> = {
   deal_econ: "bg-accent-blue",
   debt_capacity: "bg-accent-green",
   cash_flow: "bg-accent-orange",
-  fin_framework: "bg-[#8F56BF]",
+  fin_framework: "bg-[#A855F7]",
   credit_protection: "bg-accent-red",
   governance: "bg-accent-teal",
 };
@@ -20,7 +20,7 @@ const TYPE_BADGE_STYLES: Record<OntologyNodeType, string> = {
   domain: "bg-accent-blue/15 text-accent-blue",
   family: "bg-accent-green/15 text-accent-green",
   concept: "bg-accent-orange/15 text-accent-orange",
-  sub_component: "bg-surface-tertiary text-text-secondary",
+  sub_component: "bg-surface-3 text-text-secondary",
   parameter: "bg-accent-red/15 text-accent-red",
 };
 
@@ -115,7 +115,7 @@ function TreeRow({
   return (
     <div
       className={cn(
-        "flex items-center gap-1 py-1 px-2 cursor-pointer hover:bg-surface-tertiary/60 transition-colors group text-xs",
+        "flex items-center gap-1 py-1 px-2 cursor-pointer hover:bg-surface-3/60 transition-colors group text-xs",
         isSelected && "bg-accent-blue/10 border-l-2 border-accent-blue",
         !isSelected && "border-l-2 border-transparent"
       )}

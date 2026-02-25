@@ -1,0 +1,1788 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Maximum number of equity cure exercises permitted over the entire life of the credit facility, typically capped at 3-5 cures. This lifetime limitation prevents the borrower from perpetually avoiding financial covenant defaults through serial equity injections, ensuring that chronic underperformance eventually triggers lender remedies rather than being masked by repeated cures.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.number.lifetime_cap",
+          "level": 3,
+          "market_benchmarks": {
+            "market_standard_value": "5",
+            "observed_range": "2-6+"
+          },
+          "name": "Lifetime Cap",
+          "r18_concept_ids": [
+            "cure_rights.equity_cure"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 2; KCT Cat 3 Item 3; KCT Cat 3 Item 4; KCT Cat 3 Item 7; KCT Cat 3 Item 8; KCT Cat 3 Item 11; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 3 Item 15; KCT Cat 4 Item 1; KCT Cat 4 Item 5; KCT Cat 4 Item 6; KCT Cat 4 Item 8; KCT Cat 5 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Rolling 4-quarter limit on cure frequency. Standard: 2 per 4Q period. Learning Material: 'up to 3 times in any 4 quarter period (typically 2 times).'.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.number.period_restriction",
+          "level": 3,
+          "market_benchmarks": {
+            "aggressive_value": "3 per 4Q",
+            "market_standard_value": "2 per 4Q"
+          },
+          "name": "Period Restriction",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 4; KCT Cat 3 Item 12; KCT Cat 4 Item 7"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "No back-to-back cures in successive quarters. Ensures at least one 'clean' quarter between cures.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.number.consecutive_prohibition",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "33.3%"
+          },
+          "name": "Consecutive Prohibition",
+          "type": "sub_component"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "At least 2 clean quarters per 4-quarter period where cure not exercised. Implicit in 2-per-4Q cap but sometimes stated explicitly as an independent requirement.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.number.clean_quarters",
+          "level": 3,
+          "name": "Minimum Clean Quarters",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 3; KCT Cat 1 Item 4"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Combined constraint: maximum cures per rolling period AND lifetime. Standard formulation: 'not more than 2 times in any 4 consecutive fiscal quarter period and not more than 5 times during the term of this Agreement.'",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.number.cure_frequency_limit",
+          "level": 3,
+          "market_benchmarks": {
+            "aggressive_value": "3/4Q + 7 lifetime",
+            "market_standard_value": "2/4Q + 5 lifetime"
+          },
+          "name": "Cure Frequency Limit",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 2; KCT Cat 2 Item 4; KCT Cat 3 Item 7; KCT Cat 3 Item 11; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 4 Item 6; KCT Cat 5 Item 1"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Quantitative limits on cure usage. DLS Preferred row 75 alternative specifies: 'No more than two equity cures in any consecutive four-quarter period, and no more than 4/5 during the life of the Credit Facility.' Learning Material section on Equity Cure notes the standard is 2 per any trailing four-quarter period with a lifetime cap. The consecutive-quarter prohibition (standard in most formulations) prevents the borrower from using cures as a permanent substitute for covenant compliance. KCT Category 1 item 2(a) flags cases where 'Equity cure provision does not require injection of new equity (cash/assets) into the restricted group after the closing date.'",
+      "dls_ref": [
+        "DLS:75:Equity Cure"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.equity_cure",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE VII",
+          "ARTICLE X",
+          "ARTICLE XI",
+          "Section 10.08"
+        ],
+        "shape_ref": "financial_covenant.equity_cure",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.equity_cure",
+      "id": "fin_framework.equity_cure.number",
+      "kct_ref": [
+        "cat1.2",
+        "cat3.1"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "avg_lifetime": "4.7",
+        "consecutive_prohibition": "33.3%",
+        "four_q_limit": "2",
+        "median_value": "5"
+      },
+      "name": "Number of Cures",
+      "negotiation_spectrum": {
+        "aggressive_position": "No more than two equity cures in any consecutive four-quarter period, and no more than 4/5 during the life of the Credit Facility. Equity cure must be cash common equity, \"qualified\" preferred equity or otherwise acceptable to the Administrative Agent. The equity cure amount shall be no greater than 100% of the amount required to cause the Borrower to be in pro forma compliance with the financial ",
+        "dls_source_rows": [
+          {
+            "label": "Equity Cure",
+            "row": 75
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Whether equity cure is permitted at all",
+          "Maximum cures per period (2 in 4Q, 4-5 lifetime)",
+          "Cap on cure amount (100% of shortfall)",
+          "Permitted cure instrument (common equity, qualified preferred)",
+          "Whether cure is excluded from EBITDA for baskets",
+          "Standstill provision during cure period",
+          "Requirement to prepay debt with cure proceeds",
+          "Time window for cure exercise"
+        ],
+        "market_position": "Market standard for equity cure reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "No Equity Cure",
+        "source": "R14-B"
+      },
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 5,
+          "term": "Disqualified Institutions"
+        },
+        {
+          "coverage": "partial",
+          "row": 6,
+          "term": "Information"
+        },
+        {
+          "coverage": "full",
+          "row": 52,
+          "term": "Financial Statements – quarterly"
+        },
+        {
+          "coverage": "full",
+          "row": 53,
+          "term": "Financial Statements – monthly"
+        },
+        {
+          "coverage": "full",
+          "row": 54,
+          "term": "Financial Statements – annual audits"
+        },
+        {
+          "coverage": "full",
+          "row": 55,
+          "term": "Financial Statements – going concern"
+        },
+        {
+          "coverage": "full",
+          "row": 61,
+          "term": "Financial Covenant – equity cure"
+        },
+        {
+          "coverage": "full",
+          "row": 63,
+          "term": "EBITDA Addbacks"
+        },
+        {
+          "coverage": "full",
+          "row": 155,
+          "term": "Financial Statements"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 75 (2 per four-quarter period, 4/5 lifetime cap); KCT Category 1 item 2 (equity cure provision risk flags)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "How the maximum cure amount is determined. Standard: minimum amount necessary to cause compliance with the financial covenant. The calculation depends on whether the cure is applied as EBITDA increase or debt reduction, as these produce different required amounts.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.cap_amount.calculation",
+          "level": 3,
+          "name": "Cure Amount Calculation",
+          "r18_concept_ids": [
+            "cure_rights.equity_cure"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 1 Item 6; KCT Cat 2 Item 1; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 15; KCT Cat 4 Item 1; KCT Cat 4 Item 5; KCT Cat 4 Item 11"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether a floor exists on cure contributions. Some deals require a minimum injection (e.g., $1M) to prevent trivial cures that technically satisfy the formulation but provide no real recapitalization.",
+          "dls_ref": [
+            "DLS:43:Minimum ratings"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.cap_amount.minimum_cure_amount",
+          "kct_ref": [
+            "cat1.2"
+          ],
+          "level": 3,
+          "name": "Minimum Cure Amount",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 43 (Minimum ratings); KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "How amounts in excess of the minimum cure are treated. Standard: disregarded for all other calculations. Aggressive: excess can be applied to Available Amount or other baskets. Iridium: 'May not be greater than amount necessary to cause compliance.'",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.cap_amount.overcure_treatment",
+          "level": 3,
+          "market_benchmarks": {
+            "aggressive_value": "flows to baskets",
+            "market_standard_value": "disregarded"
+          },
+          "name": "Overcure Treatment",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 4; KCT Cat 4 Item 1; KCT Cat 4 Item 2; KCT Cat 4 Item 7; KCT Cat 4 Item 8"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Cure amount limited to the minimum necessary for compliance. DLS Preferred row 75 specifies: 'The equity cure amount shall be no greater than 100% of the amount required to cause the Borrower to be in pro forma compliance with the financial covenant.' This prevents the borrower from over-curing and using excess proceeds for other purposes (basket building, debt repayment, or general corporate purposes) while technically characterizing the contribution as an equity cure.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.equity_cure",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE VII",
+          "ARTICLE X",
+          "ARTICLE XI",
+          "Section 10.08"
+        ],
+        "shape_ref": "financial_covenant.equity_cure",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.equity_cure",
+      "id": "fin_framework.equity_cure.cap_amount",
+      "level": 2,
+      "market_benchmarks": {
+        "amount_necessary": "94.7%",
+        "fixed_dollar_value": "5.3%"
+      },
+      "name": "Cap on Amount",
+      "negotiation_spectrum": {
+        "aggressive_position": "No more than two equity cures in any consecutive four-quarter period, and no more than 4/5 during the life of the Credit Facility. Equity cure must be cash common equity, \"qualified\" preferred equity or otherwise acceptable to the Administrative Agent. The equity cure amount shall be no greater than 100% of the amount required to cause the Borrower to be in pro forma compliance with the financial ",
+        "dls_source_rows": [
+          {
+            "label": "Equity Cure",
+            "row": 75
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Whether equity cure is permitted at all",
+          "Maximum cures per period (2 in 4Q, 4-5 lifetime)",
+          "Cap on cure amount (100% of shortfall)",
+          "Permitted cure instrument (common equity, qualified preferred)",
+          "Whether cure is excluded from EBITDA for baskets",
+          "Standstill provision during cure period",
+          "Requirement to prepay debt with cure proceeds",
+          "Time window for cure exercise"
+        ],
+        "market_position": "Market standard for equity cure reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "No Equity Cure",
+        "source": "R14-B"
+      },
+      "type": "concept",
+      "definition_source": "DLS Preferred row 75 (cure cap: no greater than 100% of amount required for pro forma compliance)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Cure increases deemed EBITDA in cure quarter only — no cash/balance sheet enhancement. Standard treatment. Cure amount added to Consolidated EBITDA solely for financial covenant compliance testing.",
+          "dls_ref": [
+            "DLS:3:Assumed Financing EBITDA",
+            "DLS:72:EBITDA"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.netting.ebitda_only",
+          "level": 3,
+          "name": "EBITDA-Only Treatment",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 3 (Assumed Financing EBITDA); DLS Preferred Row 72 (EBITDA)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Netting permitted only if proceeds actually applied to prepay debt. Creates a dual benefit: both EBITDA increase AND debt reduction.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.netting.conditional_prepay",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "3.6%"
+          },
+          "name": "Conditional with Prepayment",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 2 Item 4; KCT Cat 4 Item 3; KCT Cat 4 Item 5; KCT Cat 5 Item 2"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "How cure proceeds are applied — increase EBITDA (conservative), reduce debt (moderate), or borrower choice (aggressive). Geneva: 'May be applied to reduce Revolver borrowings rather than increase EBITDA.' Rinchem: 'Option to apply to reduce outstanding Revolver.'",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.netting.cure_application",
+          "level": 3,
+          "market_benchmarks": {
+            "aggressive_value": "Borrower option",
+            "conservative_value": "EBITDA increase only",
+            "expert_geneva": "Reduce revolver option"
+          },
+          "name": "Cure Application Method",
+          "r18_concept_ids": [
+            "cure_rights.equity_cure"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 1; KCT Cat 2 Item 4; KCT Cat 4 Item 3; KCT Cat 4 Item 5; KCT Cat 4 Item 12; KCT Cat 5 Item 1; KCT Cat 5 Item 2"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether cure can be applied to reduce outstanding debt (typically revolver borrowings) instead of increasing EBITDA. If permitted, the borrower can choose the method that produces the better ratio result.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.netting.debt_reduction_alternative",
+          "level": 3,
+          "name": "Debt Reduction Alternative",
+          "r18_concept_ids": [
+            "cure_rights.equity_cure"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 6; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 2; KCT Cat 3 Item 4; KCT Cat 3 Item 8; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 3 Item 15; KCT Cat 4 Item 5; KCT Cat 4 Item 8; KCT Cat 4 Item 12; KCT Cat 5 Item 1; KCT Cat 5 Item 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Whether equity cure proceeds count as cash (reducing debt in the leverage ratio numerator) or as EBITDA (increasing earnings in the denominator). DLS Preferred row 75 specifies: 'Equity cure contributions shall be disregarded for purposes of determining EBITDA (other than with respect to the financial covenant) pricing, baskets and incurrence tests and there shall be no pro forma net debt reduction for the fiscal quarter with respect to which such equity cure was made whether through cash netting or otherwise (except, in the case of measurement periods ending after (but not including) the fiscal quarter with respect to which such equity cure was made, to the extent such proceeds are actually applied to the prepayment of the Term Loans).' This anti-netting provision prevents cure contributions from inflating EBITDA for basket sizing or being netted against debt for other ratio tests.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.equity_cure",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE VII",
+          "ARTICLE X",
+          "ARTICLE XI",
+          "Section 10.08"
+        ],
+        "shape_ref": "financial_covenant.equity_cure",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.equity_cure",
+      "id": "fin_framework.equity_cure.netting",
+      "level": 2,
+      "market_benchmarks": {
+        "conditional_flag": "3.6%",
+        "no_netting_flag": "96.4%"
+      },
+      "name": "Netting Permitted",
+      "negotiation_spectrum": {
+        "aggressive_position": "No more than two equity cures in any consecutive four-quarter period, and no more than 4/5 during the life of the Credit Facility. Equity cure must be cash common equity, \"qualified\" preferred equity or otherwise acceptable to the Administrative Agent. The equity cure amount shall be no greater than 100% of the amount required to cause the Borrower to be in pro forma compliance with the financial ",
+        "dls_source_rows": [
+          {
+            "label": "Equity Cure",
+            "row": 75
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Whether equity cure is permitted at all",
+          "Maximum cures per period (2 in 4Q, 4-5 lifetime)",
+          "Cap on cure amount (100% of shortfall)",
+          "Permitted cure instrument (common equity, qualified preferred)",
+          "Whether cure is excluded from EBITDA for baskets",
+          "Standstill provision during cure period",
+          "Requirement to prepay debt with cure proceeds",
+          "Time window for cure exercise"
+        ],
+        "market_position": "Market standard for equity cure reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "No Equity Cure",
+        "source": "R14-B"
+      },
+      "type": "concept",
+      "definition_source": "DLS Preferred row 75 (complete anti-netting specification: disregarded for EBITDA except financial covenant, no pro forma debt reduction except actual prepayment)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Number of business days after financial statement delivery within which the cure must be effectuated. Market: 10-15 BD. Geneva: 15 BD. Rinchem: 15 BD after financials due.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.time_limits.cure_timing",
+          "level": 3,
+          "market_benchmarks": {
+            "expert_geneva": "15 BD",
+            "expert_rinchem": "15 BD",
+            "market_standard_value": "10-15 BD"
+          },
+          "name": "Cure Timing Window",
+          "r18_concept_ids": [
+            "cure_rights.equity_cure"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 3 Item 3; KCT Cat 5 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "What starts the cure clock: delivery of non-compliant financial statements, due date for financial statement delivery, or receipt of default notice. Aggressive: clock starts at statement due date (not delivery), giving more time if delivery is late.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.time_limits.trigger_event",
+          "level": 3,
+          "name": "Trigger Event",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 3 Item 2; KCT Cat 3 Item 13; KCT Cat 4 Item 7; KCT Cat 5 Item 1; KCT Cat 5 Item 3"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether the borrower is deemed compliant during the cure period (before cure is actually delivered). If yes, no EoD exists during the cure window. If no, the EoD exists but enforcement is stayed by the standstill.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.time_limits.deemed_compliance",
+          "level": 3,
+          "name": "Deemed Compliance",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 4; KCT Cat 3 Item 13; KCT Cat 4 Item 3"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Cure window: timing for making equity cure contributions. DLS Preferred row 75 specifies: 'Equity cure only permitted to be made during the period starting from the beginning of the relevant fiscal quarter for which the cure relates to the 10th business day after financial statements are required to be delivered for such fiscal quarter.' This creates a defined window between the start of the relevant quarter and 10 business days after financial statement delivery, ensuring cures are timely and connected to identified covenant breaches rather than preemptive.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.equity_cure",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE VII",
+          "ARTICLE X",
+          "ARTICLE XI",
+          "Section 10.08"
+        ],
+        "shape_ref": "financial_covenant.equity_cure",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.equity_cure",
+      "id": "fin_framework.equity_cure.time_limits",
+      "level": 2,
+      "market_benchmarks": {
+        "business_days": "89.3%",
+        "notice_10_bd": "23.2%",
+        "notice_15_bd": "7.1%"
+      },
+      "name": "Time Limits",
+      "negotiation_spectrum": {
+        "aggressive_position": "No more than two equity cures in any consecutive four-quarter period, and no more than 4/5 during the life of the Credit Facility. Equity cure must be cash common equity, \"qualified\" preferred equity or otherwise acceptable to the Administrative Agent. The equity cure amount shall be no greater than 100% of the amount required to cause the Borrower to be in pro forma compliance with the financial ",
+        "dls_source_rows": [
+          {
+            "label": "Equity Cure",
+            "row": 75
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Whether equity cure is permitted at all",
+          "Maximum cures per period (2 in 4Q, 4-5 lifetime)",
+          "Cap on cure amount (100% of shortfall)",
+          "Permitted cure instrument (common equity, qualified preferred)",
+          "Whether cure is excluded from EBITDA for baskets",
+          "Standstill provision during cure period",
+          "Requirement to prepay debt with cure proceeds",
+          "Time window for cure exercise"
+        ],
+        "market_position": "Market standard for equity cure reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "No Equity Cure",
+        "source": "R14-B"
+      },
+      "type": "concept",
+      "definition_source": "DLS Preferred row 75 (cure window: beginning of quarter through 10th business day after financial statement delivery)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "No acceleration, foreclosure, or enforcement actions during cure period. Lenders cannot exercise default remedies while the cure window is open.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.standstill.remedy",
+          "kct_ref": [
+            "cat3.1"
+          ],
+          "level": 3,
+          "name": "Remedy Standstill",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Restricts additional borrowings during distress. Prevents the borrower from further increasing leverage while already in covenant breach.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.standstill.borrowing",
+          "level": 3,
+          "market_benchmarks": {
+            "prevalence": "38.6%"
+          },
+          "name": "Borrowing Standstill",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 1; KCT Cat 4 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "How long the standstill lasts: co-terminus with the cure window (standard) or extended beyond (aggressive). Some deals provide an additional grace period after the cure deadline for administrative processing.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.standstill.standstill_provision",
+          "level": 3,
+          "name": "Standstill Duration",
+          "r18_concept_ids": [
+            "cure_rights.equity_cure"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 4 Item 7"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Suspension of lender enforcement rights during the cure period, preventing acceleration while the sponsor assembles the equity injection. DLS Preferred row 75 specifies: 'There will be a standstill provision with regard to the exercise of remedies and borrowings (including issuances of letters of credit) during the period in which any equity cure will be made after the receipt of written notice by the Administrative Agent of the Borrower's intention to use an equity cure.' PC Term Comparison: 'Standstill should apply' under covenant-lite structures. The standstill balances the lender's right to enforce against the practical reality that sponsors need time to fund the cure contribution.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.equity_cure",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE VII",
+          "ARTICLE X",
+          "ARTICLE XI",
+          "Section 10.08"
+        ],
+        "shape_ref": "financial_covenant.equity_cure",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.equity_cure",
+      "id": "fin_framework.equity_cure.standstill",
+      "kct_ref": [
+        "cat1.2",
+        "cat3.1"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "combined_value": "26.3%",
+        "remedy_only": "~63%",
+        "standstill_present": "89.5%"
+      },
+      "name": "Standstill Provisions",
+      "negotiation_spectrum": {
+        "aggressive_position": "No more than two equity cures in any consecutive four-quarter period, and no more than 4/5 during the life of the Credit Facility. Equity cure must be cash common equity, \"qualified\" preferred equity or otherwise acceptable to the Administrative Agent. The equity cure amount shall be no greater than 100% of the amount required to cause the Borrower to be in pro forma compliance with the financial ",
+        "dls_source_rows": [
+          {
+            "label": "Equity Cure",
+            "row": 75
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Whether equity cure is permitted at all",
+          "Maximum cures per period (2 in 4Q, 4-5 lifetime)",
+          "Cap on cure amount (100% of shortfall)",
+          "Permitted cure instrument (common equity, qualified preferred)",
+          "Whether cure is excluded from EBITDA for baskets",
+          "Standstill provision during cure period",
+          "Requirement to prepay debt with cure proceeds",
+          "Time window for cure exercise"
+        ],
+        "market_position": "Market standard for equity cure reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "No Equity Cure",
+        "source": "R14-B"
+      },
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 155,
+          "term": "Financial Statements"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 75 (standstill provision covering remedies and borrowings during cure period); PC Term Comparison Financial Covenant section line 468 ('Standstill should apply')",
+      "pc_ref": [
+        "Financial Covenant"
+      ]
+    },
+    {
+      "corpus_prevalence": "high",
+      "definition": "Whether cure proceeds must reduce outstanding debt or can remain as equity. DLS Preferred row 75 specifies: 'Equity Cure proceeds required to prepay debt under the Credit Facilities.' This is the bank-preferred position where cure proceeds flow through to debt reduction rather than remaining as balance sheet cash. The prepayment requirement accelerates deleveraging and prevents the borrower from retaining cure proceeds as unrestricted cash (which could then be used for restricted payments, investments, or to inflate cash netting in leverage calculations).",
+      "dls_ref": [
+        "DLS:16:Refinancing Debt",
+        "DLS:85:Restricted Debt Prepayments"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.equity_cure",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE VII",
+          "ARTICLE X",
+          "ARTICLE XI",
+          "Section 10.08"
+        ],
+        "shape_ref": "financial_covenant.equity_cure",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.equity_cure",
+      "id": "fin_framework.equity_cure.prepay_debt",
+      "level": 2,
+      "market_benchmarks": {
+        "no_prepay": "58.2%",
+        "prepay_required": "40.0%",
+        "waterfall_value": "7.3%"
+      },
+      "name": "Must Prepay Debt",
+      "negotiation_spectrum": {
+        "aggressive_position": "No more than two equity cures in any consecutive four-quarter period, and no more than 4/5 during the life of the Credit Facility. Equity cure must be cash common equity, \"qualified\" preferred equity or otherwise acceptable to the Administrative Agent. The equity cure amount shall be no greater than 100% of the amount required to cause the Borrower to be in pro forma compliance with the financial ",
+        "dls_source_rows": [
+          {
+            "label": "Equity Cure",
+            "row": 75
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Whether equity cure is permitted at all",
+          "Maximum cures per period (2 in 4Q, 4-5 lifetime)",
+          "Cap on cure amount (100% of shortfall)",
+          "Permitted cure instrument (common equity, qualified preferred)",
+          "Whether cure is excluded from EBITDA for baskets",
+          "Standstill provision during cure period",
+          "Requirement to prepay debt with cure proceeds",
+          "Time window for cure exercise"
+        ],
+        "market_position": "Market standard for equity cure reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "No Equity Cure",
+        "source": "R14-B"
+      },
+      "type": "concept",
+      "children": [
+        {
+          "id": "fin_framework.equity_cure.prepay_debt.prepayment_waterfall",
+          "name": "Prepayment Waterfall",
+          "definition": "The required application of equity cure proceeds — whether excess cure amounts above the compliance shortfall must prepay term loan principal, and the priority among facilities (TL vs. revolver vs. DDTL).",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "fin_framework",
+          "family_id": "fin_framework.equity_cure",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "hard",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 2 Item 2; KCT Cat 3 Item 13; KCT Cat 3 Item 15; KCT Cat 4 Item 1; KCT Cat 4 Item 3; KCT Cat 4 Item 5; KCT Cat 4 Item 6; KCT Cat 4 Item 10; KCT Cat 5 Item 1"
+        },
+        {
+          "id": "fin_framework.equity_cure.prepay_debt.amount_limitation",
+          "name": "Cure Amount Limitation",
+          "definition": "Cap on equity cure amount relative to the compliance shortfall — whether the cure is limited to the exact amount needed for compliance or allows over-cure with mandatory debt prepayment of the excess.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "fin_framework",
+          "family_id": "fin_framework.equity_cure",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 3 Item 15; KCT Cat 4 Item 5"
+        },
+        {
+          "id": "fin_framework.equity_cure.prepay_debt.timing_window",
+          "name": "Cure Timing Window",
+          "definition": "The period within which equity cure proceeds must be received and applied to debt prepayment, typically 10-15 business days after delivery of financial statements showing the covenant breach.",
+          "type": "sub_component",
+          "level": 3,
+          "domain_id": "fin_framework",
+          "family_id": "fin_framework.equity_cure",
+          "corpus_prevalence": "medium",
+          "extraction_difficulty": "medium",
+          "definition_source": "KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 3; KCT Cat 4 Item 1; KCT Cat 4 Item 5; KCT Cat 4 Item 11"
+        }
+      ],
+      "definition_source": "DLS Preferred row 75 ('Equity Cure proceeds required to prepay debt under the Credit Facilities')"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether cure can be made with subordinated debt instead of true equity. KCT Cat 1 Item 2(b): 'Equity cure documented as subordinated shareholder debt or third-party subordinated holdco debt.' Sub debt cure is more aggressive as it adds leverage while curing a leverage test.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.security_type.equity_vs_subordinated",
+          "kct_ref": [
+            "cat1.2"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "aggressive_value": "Subordinated shareholder debt",
+            "kct_flag": "Cat 1 Item 2(b)",
+            "market_standard_value": "Common equity only"
+          },
+          "name": "Equity vs. Subordinated Debt",
+          "r18_concept_ids": [
+            "cure_rights.equity_cure"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Specific acceptable forms: cash common equity, qualified preferred stock, convertible preferred, subordinated loans, or qualified equity contributions. Standard: cash common equity from sponsor.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.security_type.contribution_form",
+          "kct_ref": [
+            "cat1.2"
+          ],
+          "level": 3,
+          "name": "Contribution Form",
+          "r18_concept_ids": [
+            "cure_rights.equity_cure"
+          ],
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "How non-cash cure contributions are valued. If equity is contributed in-kind (e.g., assets, IP), the valuation methodology affects the cure amount credited. Standard practice requires cash contributions to avoid valuation disputes.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.security_type.valuation_impact",
+          "level": 3,
+          "name": "Valuation Impact",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 3 Item 3; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 4 Item 7"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether the cure is a mandatory obligation of the sponsor or merely a right the borrower may exercise. Standard: right, not obligation. The borrower/sponsor elects whether to inject equity or accept the default.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.security_type.sponsor_obligation",
+          "level": 3,
+          "name": "Sponsor Obligation",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 3 Item 2; KCT Cat 3 Item 4; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 4 Item 7; KCT Cat 5 Item 1; KCT Cat 5 Item 3"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Economic cost to the sponsor of exercising cure rights: dilution to existing equity, opportunity cost of capital, and potential signaling effects. Not a contractual term but a critical negotiation consideration.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "hard",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.security_type.cost_of_cure",
+          "level": 3,
+          "name": "Cost of Cure",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 2 Item 1; KCT Cat 3 Item 12; KCT Cat 3 Item 13"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Acceptable instruments for cure contributions. DLS Preferred row 75 specifies: 'Equity cure must be cash common equity, \"qualified\" preferred equity or otherwise acceptable to the Administrative Agent.' This restricts cure instruments to genuine equity that subordinates to the credit facility, excluding debt instruments disguised as equity. KCT Category 1 item 2(b) flags: 'Equity cure documented as subordinated shareholder debt or third-party subordinated holdco debt' as a risk concern, noting that if such formulation exists, review whether there are parameters for such debt (payment subordination, maturity, limitations on repayments) and whether the subordinated debt is limited by other covenants.",
+      "dls_ref": [
+        "DLS:67:Security",
+        "DLS:75:Equity Cure"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.equity_cure",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE VII",
+          "ARTICLE X",
+          "ARTICLE XI",
+          "Section 10.08"
+        ],
+        "shape_ref": "financial_covenant.equity_cure",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.equity_cure",
+      "id": "fin_framework.equity_cure.security_type",
+      "kct_ref": [
+        "cat1.2"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "cash_collateral": "31.6%",
+        "dq_excluded": "100%",
+        "equity_collateral": "94.7%",
+        "sub_debt_value": "12.3%"
+      },
+      "name": "Type of Security",
+      "negotiation_spectrum": {
+        "aggressive_position": "No more than two equity cures in any consecutive four-quarter period, and no more than 4/5 during the life of the Credit Facility. Equity cure must be cash common equity, \"qualified\" preferred equity or otherwise acceptable to the Administrative Agent. The equity cure amount shall be no greater than 100% of the amount required to cause the Borrower to be in pro forma compliance with the financial ",
+        "dls_source_rows": [
+          {
+            "label": "Equity Cure",
+            "row": 75
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Whether equity cure is permitted at all",
+          "Maximum cures per period (2 in 4Q, 4-5 lifetime)",
+          "Cap on cure amount (100% of shortfall)",
+          "Permitted cure instrument (common equity, qualified preferred)",
+          "Whether cure is excluded from EBITDA for baskets",
+          "Standstill provision during cure period",
+          "Requirement to prepay debt with cure proceeds",
+          "Time window for cure exercise"
+        ],
+        "market_position": "Market standard for equity cure reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "No Equity Cure",
+        "source": "R14-B"
+      },
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 5,
+          "term": "Disqualified Institutions"
+        },
+        {
+          "coverage": "partial",
+          "row": 6,
+          "term": "Information"
+        },
+        {
+          "coverage": "full",
+          "row": 53,
+          "term": "Financial Statements – monthly"
+        },
+        {
+          "coverage": "full",
+          "row": 61,
+          "term": "Financial Covenant – equity cure"
+        },
+        {
+          "coverage": "full",
+          "row": 63,
+          "term": "EBITDA Addbacks"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred row 75 (acceptable cure instruments: cash common equity, qualified preferred, or agent-approved); KCT Category 1 item 2(b) (subordinated debt cure risk flag with review criteria)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether a cured financial covenant breach still triggers cross-default provisions in other agreements. If the cure is retroactive, no cross-default should arise. If only prospective, the breach window may trigger cross-defaults.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.cured_default.cross_default_protection",
+          "kct_ref": [
+            "cat3.1"
+          ],
+          "level": 3,
+          "name": "Cross-Default Protection",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 1",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:40.527459+00:00",
+              "term_packs": {
+                "DEFAULT_CURE_PERIOD": {
+                  "label": "Grace / Cure Periods",
+                  "category": "DEFAULT_CURE",
+                  "exactPhrases": [
+                    "grace period",
+                    "cure period",
+                    "days after notice",
+                    "days to cure",
+                    "shall have [•] days",
+                    "within [•] Business Days",
+                    "permitted to cure",
+                    "opportunity to remedy",
+                    "continue uncured for"
+                  ],
+                  "sectionHeaders": [
+                    "Events of Default",
+                    "Grace Period",
+                    "Cure Period",
+                    "Notice and Cure"
+                  ],
+                  "semanticVariants": [
+                    "time to cure default",
+                    "grace period for late payment",
+                    "opportunity to remedy breach",
+                    "cure window for covenant violation"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.6,
+                    "minKeywordScore": 0.5,
+                    "minConfidence": 0.7,
+                    "escalationThreshold": 0.5,
+                    "humanEscalationThreshold": 0.3
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "grace period",
+                  "cure period",
+                  "days after notice",
+                  "days to cure",
+                  "shall have [•] days",
+                  "within [•] Business Days",
+                  "permitted to cure",
+                  "opportunity to remedy",
+                  "continue uncured for"
+                ],
+                "sectionHeaders": [
+                  "Events of Default",
+                  "Grace Period",
+                  "Cure Period",
+                  "Notice and Cure"
+                ],
+                "semanticVariants": [
+                  "time to cure default",
+                  "grace period for late payment",
+                  "opportunity to remedy breach",
+                  "cure window for covenant violation"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "DEFAULT_CURE_PERIOD",
+              "label": "Grace / Cure Periods",
+              "schema_file": "default-cure-enhanced.schema.ts",
+              "field_count": 4,
+              "r1_domain": "fin_framework",
+              "mapping_confidence": 0.3951,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether default interest (typically +200 bps) accrues during the cure window. Standard: no default interest during cure period. Aggressive: default interest waived retroactively upon successful cure.",
+          "dls_ref": [
+            "DLS:18:Interest Rates"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.cured_default.default_interest_waiver",
+          "kct_ref": [
+            "cat3.1"
+          ],
+          "level": 3,
+          "name": "Default Interest Waiver",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 18 (Interest Rates); KCT Cat 3 Item 1"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether a cured covenant breach still triggers mandatory prepayment obligations (e.g., ECF sweep acceleration). Some deals require catch-up prepayments even after cure.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.cured_default.mandatory_prepayment_trigger",
+          "kct_ref": [
+            "cat3.1"
+          ],
+          "level": 3,
+          "name": "Mandatory Prepayment Trigger",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 1"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether lenders who voted to waive the breach retain their voting rights for subsequent amendments. Some snooze-you-lose provisions limit amendment rights for non-consenting lenders.",
+          "dls_ref": [
+            "DLS:93:Voting"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.cured_default.voting_rights_impact",
+          "kct_ref": [
+            "cat3.1",
+            "cat3.3"
+          ],
+          "level": 3,
+          "name": "Voting Rights Impact",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 93 (Voting); KCT Cat 3 Item 1; KCT Cat 3 Item 3",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:40.532139+00:00",
+              "term_packs": {
+                "DEFAULT_CURE_RIGHTS": {
+                  "label": "Equity Cure Rights",
+                  "category": "DEFAULT_CURE",
+                  "exactPhrases": [
+                    "equity cure",
+                    "Equity Cure",
+                    "cure contribution",
+                    "equity contribution to cure",
+                    "Permitted Cure",
+                    "permitted equity contribution",
+                    "cure amount",
+                    "Cure Right",
+                    "right to cure"
+                  ],
+                  "sectionHeaders": [
+                    "Financial Covenants",
+                    "Equity Cure",
+                    "Cure Rights",
+                    "Section [•] - Equity Cure",
+                    "Events of Default"
+                  ],
+                  "semanticVariants": [
+                    "equity injection to cure financial covenant breach",
+                    "sponsor cure contribution",
+                    "equity contribution reduces default",
+                    "financial covenant cure through capital contribution"
+                  ],
+                  "searchThresholds": {
+                    "minSemanticScore": 0.6,
+                    "minKeywordScore": 0.5,
+                    "minConfidence": 0.7,
+                    "escalationThreshold": 0.5,
+                    "humanEscalationThreshold": 0.3
+                  },
+                  "searchEscalation": {
+                    "strategies": [
+                      "synonym_expansion",
+                      "section_targeting",
+                      "exhaustive_scan"
+                    ],
+                    "maxRetries": 3,
+                    "minScoreThreshold": 0.35,
+                    "timeBudgetMs": 30000
+                  }
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "equity cure",
+                  "Equity Cure",
+                  "cure contribution",
+                  "equity contribution to cure",
+                  "Permitted Cure",
+                  "permitted equity contribution",
+                  "cure amount",
+                  "Cure Right",
+                  "right to cure"
+                ],
+                "sectionHeaders": [
+                  "Financial Covenants",
+                  "Equity Cure",
+                  "Cure Rights",
+                  "Section [•] - Equity Cure",
+                  "Events of Default"
+                ],
+                "semanticVariants": [
+                  "equity injection to cure financial covenant breach",
+                  "sponsor cure contribution",
+                  "equity contribution reduces default",
+                  "financial covenant cure through capital contribution"
+                ]
+              }
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "DEFAULT_CURE_RIGHTS",
+              "label": "Equity Cure Rights",
+              "schema_file": "default-cure-enhanced.schema.ts",
+              "field_count": 4,
+              "r1_domain": "fin_framework",
+              "mapping_confidence": 0.4373,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Range of consequences for financial covenant breach: drawstop only (most aggressive, KCT Cat 1 Item 1b), revolver EoD only, or full cross-default to all facilities. The consequences determine the leverage the breach gives lenders.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.cured_default.breach_consequence",
+          "kct_ref": [
+            "cat3.1"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "drawstop_only": "Most aggressive",
+            "full_cross_default": "Standard/conservative",
+            "revolver_eod": "Moderate"
+          },
+          "name": "Covenant Breach Consequences",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether the borrower must give notice of the covenant breach before the cure window opens, and whether the administrative agent has an independent obligation to notify lenders.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.cured_default.notice_requirement",
+          "kct_ref": [
+            "cat3.1",
+            "cat3.2"
+          ],
+          "level": 3,
+          "name": "Notice Requirement",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 3 Item 1; KCT Cat 3 Item 2"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Whether previously cured defaults are treated as if they never occurred. 3% formal cured default provision; 69% absent; 27% limited notice-cure mechanics. []",
+      "dls_ref": [
+        "DLS:90:Events of Default"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.equity_cure",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE VII",
+          "ARTICLE X",
+          "ARTICLE XI",
+          "Section 10.08"
+        ],
+        "shape_ref": "financial_covenant.equity_cure"
+      },
+      "family_id": "fin_framework.equity_cure",
+      "id": "fin_framework.equity_cure.cured_default",
+      "kct_ref": [
+        "cat1.4",
+        "cat3.1"
+      ],
+      "level": 2,
+      "market_benchmarks": {
+        "absent_flag": "69%",
+        "formal_provision_flag": "3%",
+        "limited_notice_cure": "27%"
+      },
+      "name": "Cured Default Provisions",
+      "negotiation_spectrum": {
+        "aggressive_position": "No more than two equity cures in any consecutive four-quarter period, and no more than 4/5 during the life of the Credit Facility. Equity cure must be cash common equity, \"qualified\" preferred equity or otherwise acceptable to the Administrative Agent. The equity cure amount shall be no greater than 100% of the amount required to cause the Borrower to be in pro forma compliance with the financial ",
+        "dls_source_rows": [
+          {
+            "label": "Equity Cure",
+            "row": 75
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Whether equity cure is permitted at all",
+          "Maximum cures per period (2 in 4Q, 4-5 lifetime)",
+          "Cap on cure amount (100% of shortfall)",
+          "Permitted cure instrument (common equity, qualified preferred)",
+          "Whether cure is excluded from EBITDA for baskets",
+          "Standstill provision during cure period",
+          "Requirement to prepay debt with cure proceeds",
+          "Time window for cure exercise"
+        ],
+        "market_position": "Market standard for equity cure reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "No Equity Cure",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "cure_rights.cured_default_provisions"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 5,
+          "term": "Disqualified Institutions"
+        },
+        {
+          "coverage": "partial",
+          "row": 6,
+          "term": "Information"
+        },
+        {
+          "coverage": "full",
+          "row": 52,
+          "term": "Financial Statements – quarterly"
+        },
+        {
+          "coverage": "full",
+          "row": 53,
+          "term": "Financial Statements – monthly"
+        },
+        {
+          "coverage": "full",
+          "row": 54,
+          "term": "Financial Statements – annual audits"
+        },
+        {
+          "coverage": "full",
+          "row": 55,
+          "term": "Financial Statements – going concern"
+        },
+        {
+          "coverage": "full",
+          "row": 56,
+          "term": "Affirmative Covenants – other"
+        },
+        {
+          "coverage": "full",
+          "row": 57,
+          "term": "Financial Covenant – application"
+        },
+        {
+          "coverage": "full",
+          "row": 58,
+          "term": "Financial Covenant – levels"
+        },
+        {
+          "coverage": "full",
+          "row": 59,
+          "term": "Financial Covenant – testing thresholds"
+        },
+        {
+          "coverage": "full",
+          "row": 60,
+          "term": "Financial Covenant – first test date"
+        },
+        {
+          "coverage": "full",
+          "row": 62,
+          "term": "Leverage Ratio Calculations"
+        },
+        {
+          "coverage": "full",
+          "row": 63,
+          "term": "EBITDA Addbacks"
+        },
+        {
+          "coverage": "full",
+          "row": 128,
+          "term": "Limited Conditionality Transactions"
+        },
+        {
+          "coverage": "full",
+          "row": 129,
+          "term": "Events of Default"
+        },
+        {
+          "coverage": "full",
+          "row": 146,
+          "term": "Cross-default"
+        },
+        {
+          "coverage": "full",
+          "row": 155,
+          "term": "Financial Statements"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 90 (Events of Default); KCT Cat 1 Item 4; KCT Cat 3 Item 1; Review Template Row 5 (Disqualified Institutions); Review Template Row 6 (Information); Review Template Row 52 (Financial Statements – quarterly); Review Template Row 53 (Financial Statements – monthly); Review Template Row 54 (Financial Statements – annual audits); Review Template Row 55 (Financial Statements – going concern); Review Template Row 56 (Affirmative Covenants – other); Review Template Row 57 (Financial Covenant – application); Review Template Row 58 (Financial Covenant – levels); Review Template Row 59 (Financial Covenant – testing thresholds); Review Template Row 60 (Financial Covenant – first test date); Review Template Row 62 (Leverage Ratio Calculations); Review Template Row 63 (EBITDA Addbacks); Review Template Row 128 (Limited Conditionality Transactions); Review Template Row 129 (Events of Default); Review Template Row 146 (Cross-default); Review Template Row 155 (Financial Statements)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether equity cure can be combined with a permitted acquisition step-up. If both apply simultaneously, the borrower benefits from a higher covenant level AND an EBITDA/debt adjustment from the cure.",
+          "dls_ref": [
+            "DLS:15:Limited Condition Acquisition"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.specified_transaction.acquisition_cure",
+          "kct_ref": [
+            "cat1.2"
+          ],
+          "level": 3,
+          "name": "Acquisition Cure",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 15 (Limited Condition Acquisition); KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether disposition proceeds can serve as cure equity. Standard: cure must be new equity, not asset sale proceeds. Aggressive: asset disposition proceeds can be contributed back as equity cure.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.specified_transaction.disposition_cure",
+          "kct_ref": [
+            "cat1.2"
+          ],
+          "level": 3,
+          "name": "Disposition Cure",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether the cure amount is measured on a pro forma basis giving effect to specified transactions. Determines whether pending acquisitions increase or decrease the cure amount needed.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.specified_transaction.pro_forma_cure",
+          "level": 3,
+          "name": "Pro Forma Cure",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 48 (Pro Forma Financial Statements); Review Template Row 50 (Pro Forma Calculations); Review Template Row 153 (MAC); KCT Cat 2 Item 4; KCT Cat 3 Item 7; KCT Cat 3 Item 15; KCT Cat 4 Item 1"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether equity cure is available to cure breaches caused by the initial LBO leverage itself (closing-date covenant breach). Standard: cure not available for closing-date compliance, only for subsequent periods.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.specified_transaction.lbo_cure",
+          "kct_ref": [
+            "cat1.2"
+          ],
+          "level": 3,
+          "name": "LBO / Leveraged Recapitalization Cure",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "How equity cure interacts with specified transactions (acquisitions, dispositions, incurrences) that affect the financial covenant calculation during the test period.",
+      "dls_ref": [
+        "DLS:33:Alternate transaction fee",
+        "DLS:57:Specified Representations"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.equity_cure",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE VII",
+          "ARTICLE X",
+          "ARTICLE XI",
+          "Section 10.08"
+        ],
+        "shape_ref": "financial_covenant.equity_cure"
+      },
+      "family_id": "fin_framework.equity_cure",
+      "id": "fin_framework.equity_cure.specified_transaction",
+      "kct_ref": [
+        "cat1.2"
+      ],
+      "level": 2,
+      "name": "Specified Transaction Mechanics",
+      "negotiation_spectrum": {
+        "aggressive_position": "No more than two equity cures in any consecutive four-quarter period, and no more than 4/5 during the life of the Credit Facility. Equity cure must be cash common equity, \"qualified\" preferred equity or otherwise acceptable to the Administrative Agent. The equity cure amount shall be no greater than 100% of the amount required to cause the Borrower to be in pro forma compliance with the financial ",
+        "dls_source_rows": [
+          {
+            "label": "Equity Cure",
+            "row": 75
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Whether equity cure is permitted at all",
+          "Maximum cures per period (2 in 4Q, 4-5 lifetime)",
+          "Cap on cure amount (100% of shortfall)",
+          "Permitted cure instrument (common equity, qualified preferred)",
+          "Whether cure is excluded from EBITDA for baskets",
+          "Standstill provision during cure period",
+          "Requirement to prepay debt with cure proceeds",
+          "Time window for cure exercise"
+        ],
+        "market_position": "Market standard for equity cure reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "No Equity Cure",
+        "source": "R14-B"
+      },
+      "r18_concept_ids": [
+        "cure_rights.specified_transaction_mechanics"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 60,
+          "term": "Financial Covenant – first test date"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 33 (Alternate transaction fee); DLS Preferred Row 57 (Specified Representations); KCT Cat 1 Item 2; Review Template Row 60 (Financial Covenant – first test date)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether cure rights expire before facility maturity. Standard: rights continue through term. Rare: rights expire after a specified date or after a number of years.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.sunset.cure_expiration",
+          "level": 3,
+          "name": "Cure Expiration",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 3 Item 3; KCT Cat 3 Item 4; KCT Cat 3 Item 12; KCT Cat 3 Item 15; KCT Cat 4 Item 8"
+        },
+        {
+          "corpus_prevalence": "low",
+          "definition": "Whether there is a cumulative dollar cap on total cure contributions across all cure events. Separate from the per-event 'amount necessary' cap. Rarely seen but provides a hard dollar ceiling on sponsor support.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.sunset.aggregate_cap",
+          "level": 3,
+          "name": "Aggregate Dollar Cap",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 3 Item 13; KCT Cat 3 Item 15"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Provisions preventing manipulation of cure mechanics: prohibition on borrowing to fund cure, prohibition on cure equity counting toward other baskets, and requirement that cure proceeds come from outside the restricted group.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.sunset.anti_abuse",
+          "level": 3,
+          "name": "Anti-Abuse Provisions",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 2 Item 1; KCT Cat 2 Item 4; KCT Cat 3 Item 3; KCT Cat 3 Item 4; KCT Cat 3 Item 12; KCT Cat 3 Item 13; KCT Cat 4 Item 1; KCT Cat 4 Item 2; KCT Cat 4 Item 5; KCT Cat 4 Item 6; KCT Cat 4 Item 7; KCT Cat 4 Item 8; KCT Cat 5 Item 1"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Structural protections for lenders within the cure framework: cure equity must be in cash (not PIK), must come from sponsor (not recycled), must not be funded from asset sales, and cure count tracks across refinancings.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.sunset.lender_protections",
+          "level": 3,
+          "name": "Lender Protections",
+          "type": "sub_component",
+          "definition_source": "KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 2 Item 4; KCT Cat 3 Item 3; KCT Cat 3 Item 6; KCT Cat 3 Item 7; KCT Cat 3 Item 13; KCT Cat 4 Item 3; KCT Cat 4 Item 6; KCT Cat 5 Item 1"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Terminal constraints on cure rights: expiration triggers, aggregate caps, anti-abuse provisions, and lender protective mechanisms.",
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.equity_cure",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE VII",
+          "ARTICLE X",
+          "ARTICLE XI",
+          "Section 10.08"
+        ],
+        "shape_ref": "financial_covenant.equity_cure",
+        "aligned_difficulty": "very_hard",
+        "difficulty_source": "playbook",
+        "difficulty_note": "Aligned from ontology=medium vs playbook=very_hard (playbook authority for extraction complexity)"
+      },
+      "family_id": "fin_framework.equity_cure",
+      "id": "fin_framework.equity_cure.sunset",
+      "level": 2,
+      "market_benchmarks": {
+        "negotiated": "Extension provisions, no sunset in some sponsor deals",
+        "prevalence": "60-75% (of CAs with equity cure)",
+        "standard": "Equity cure right expires after 2-3 years or upon IPO"
+      },
+      "name": "Sunset and Limitations",
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 75 (Equity Cure); Review Template Row 61 (Financial Covenant – equity cure); KCT Cat 1 Item 2"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether cure equity counts toward the Available Amount builder basket. Standard: cure equity excluded from AA to prevent double-counting. Aggressive: cure equity that exceeds the cure amount can flow to AA. Phase 1 (AA): AA growth usage requires pro forma compliance with leverage ratio.",
+          "dls_ref": [
+            "DLS:86:Available Amount"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.cross_covenant.cure_and_available_amount",
+          "level": 3,
+          "name": "Cure and Available Amount",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 86 (Available Amount)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether cure equity is counted as a restricted payment or exempted. Standard: cure contributions are not themselves RPs. The cure equity flows through the balance sheet without triggering RP basket usage.",
+          "dls_ref": [
+            "DLS:84:Restricted Payments"
+          ],
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.cross_covenant.cure_and_restricted_payments",
+          "level": 3,
+          "name": "Cure and Restricted Payments",
+          "type": "sub_component",
+          "definition_source": "DLS Preferred Row 84 (Restricted Payments)"
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether an uncured covenant breach blocks ratio-conditioned baskets (via EoD blocker) during the cure window. If the borrower is deemed compliant during the cure period, EoD blockers do not apply. If not, all ratio baskets freeze.",
+          "domain_id": "fin_framework",
+          "extraction_difficulty": "medium",
+          "family_id": "fin_framework.equity_cure",
+          "id": "fin_framework.equity_cure.cross_covenant.cure_and_eod_blocker",
+          "level": 3,
+          "name": "Cure and EoD Blocker",
+          "type": "sub_component",
+          "definition_source": "Review Template Row 121; KCT Cat 1 Item 1; KCT Cat 1 Item 2; KCT Cat 1 Item 3; KCT Cat 1 Item 4; KCT Cat 1 Item 5; KCT Cat 2 Item 1; KCT Cat 2 Item 2; KCT Cat 2 Item 4; KCT Cat 3 Item 13; KCT Cat 3 Item 15; KCT Cat 4 Item 1; KCT Cat 4 Item 5; KCT Cat 4 Item 7; KCT Cat 4 Item 8"
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "How equity cure interacts with other covenant baskets and provisions. Critical for preventing double-counting of cure equity and ensuring cure does not inadvertently expand other capacity pools.",
+      "dls_ref": [
+        "DLS:73:Covenant",
+        "DLS:74:Cushion/Covenant Levels"
+      ],
+      "domain_id": "fin_framework",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "financial_covenant",
+        "extraction_ready": true,
+        "playbook_ref": "financial_covenant.equity_cure",
+        "section_locations": [
+          "ARTICLE 10",
+          "ARTICLE 5",
+          "ARTICLE VII",
+          "ARTICLE X",
+          "ARTICLE XI",
+          "Section 10.08"
+        ],
+        "shape_ref": "financial_covenant.equity_cure"
+      },
+      "family_id": "fin_framework.equity_cure",
+      "id": "fin_framework.equity_cure.cross_covenant",
+      "kct_ref": [
+        "cat1.2"
+      ],
+      "level": 2,
+      "name": "Cross-Covenant Interactions",
+      "negotiation_spectrum": {
+        "aggressive_position": "No more than two equity cures in any consecutive four-quarter period, and no more than 4/5 during the life of the Credit Facility. Equity cure must be cash common equity, \"qualified\" preferred equity or otherwise acceptable to the Administrative Agent. The equity cure amount shall be no greater than 100% of the amount required to cause the Borrower to be in pro forma compliance with the financial ",
+        "dls_source_rows": [
+          {
+            "label": "Equity Cure",
+            "row": 75
+          }
+        ],
+        "is_highlighted": true,
+        "key_negotiation_points": [
+          "Whether equity cure is permitted at all",
+          "Maximum cures per period (2 in 4Q, 4-5 lifetime)",
+          "Cap on cure amount (100% of shortfall)",
+          "Permitted cure instrument (common equity, qualified preferred)",
+          "Whether cure is excluded from EBITDA for baskets",
+          "Standstill provision during cure period",
+          "Requirement to prepay debt with cure proceeds",
+          "Time window for cure exercise"
+        ],
+        "market_position": "Market standard for equity cure reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+        "preferred_position": "No Equity Cure",
+        "source": "R14-B"
+      },
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 73 (Covenant); DLS Preferred Row 74 (Cushion/Covenant Levels); KCT Cat 1 Item 2"
+    }
+  ],
+  "corpus_prevalence": "high",
+  "definition": "Mechanism permitting the sponsor to inject qualifying equity into the borrower after the end of a fiscal quarter to retroactively satisfy a financial covenant breach for that quarter. DLS Preferred position: no equity cure. Alternative formulation with guardrails: (1) frequency limited to no more than 2 cures in any consecutive four-quarter period and 4-5 over the life of the facility; (2) must be cash common equity, qualified preferred equity, or otherwise acceptable to the Administrative Agent; (3) cure amount capped at 100% of the amount needed for pro forma compliance; (4) timing window from the beginning of the relevant fiscal quarter to the 10th business day after financial statements are required to be delivered; (5) cure equity disregarded for all purposes other than the financial covenant itself (pricing, baskets, incurrence tests); (6) no pro forma net debt reduction for the cured quarter (no cash netting of cure proceeds except for prepayments in future measurement periods); (7) standstill provision on remedies and borrowings during the cure period after written notice of intent to cure. KCT Category 1 item 2 flags: (a) cure that does not require injection of new equity/cash after closing, and (b) cure documented as subordinated shareholder debt or third-party subordinated holdco debt.",
+  "dls_ref": [
+    "DLS:39:Minimum equity",
+    "DLS:75:Equity Cure",
+    "DLS:76:Capex"
+  ],
+  "dna_pattern_refs": [
+    "ABSENCE:EQUITY_CURE:NO_CURE_RIGHT:LENDER_PROTECTIVE",
+    "CONDITION:EQUITY_CURE:EBITDA_INCREASE+DEBT_DECREASE:MAX_5:MIN_2_UNCURED:NO_BORROWING_RESTRICTION",
+    "COVENANT:EQUITY_CURE:15BD_DEADLINE:NO_START_DATE:EBITDA_INCREASE:SUBDEBT_PERMITTED:MAX_2_PER_4Q:MAX_5_TOTAL:WITH_STANDSTILL",
+    "COVENANT:EQUITY_CURE:EBITDA_INCREASE:10BD_PERIOD:2_PER_4Q:5_LIFETIME:NO_REVOLVER_RESTRICTION",
+    "COVENANT:FINANCIAL:ABSENCE:NO_EQUITY_CURE",
+    "COVENANT:FINANCIAL:EQUITY_CURE:15BD:MAX_5:2_OF_4_QUARTERS:EBITDA_ADDBACK:NO_DEBT_REDUCTION",
+    "COVENANT:FINANCIAL:NO_EQUITY_CURE",
+    "COVENANT:FINANCIAL:NO_EQUITY_CURE:CORPORATE_BORROWER"
+  ],
+  "domain_id": "fin_framework",
+  "extraction_difficulty": "medium",
+  "family_id": "fin_framework.equity_cure",
+  "golden_record_ids": [
+    "financial_covenant.equity_cure"
+  ],
+  "golden_record_refs": [
+    {
+      "deal_count": 9,
+      "golden_concept_id": "financial_covenant.equity_cure",
+      "has_absence": true,
+      "parameter_count": 7,
+      "total_records": 9
+    }
+  ],
+  "id": "fin_framework.equity_cure",
+  "kct_ref": [
+    "cat1.2"
+  ],
+  "kg_concept_ids": [
+    "financial_covenant.equity_cure"
+  ],
+  "level": 1,
+  "market_benchmarks": {
+    "dls_preferred": "No Equity Cure",
+    "market_standard": "5 lifetime / 2 per 4Q / no consecutive",
+    "prevalence": "91.9%"
+  },
+  "market_data": {
+    "market_standard": "5 lifetime / 2 per 4Q / no consecutive",
+    "prevalence": "91.9%"
+  },
+  "name": "Equity Cure",
+  "negotiation_spectrum": {
+    "aggressive_position": "No more than two equity cures in any consecutive four-quarter period, and no more than 4/5 during the life of the Credit Facility. Equity cure must be cash common equity, \"qualified\" preferred equity or otherwise acceptable to the Administrative Agent. The equity cure amount shall be no greater than 100% of the amount required to cause the Borrower to be in pro forma compliance with the financial ",
+    "dls_source_rows": [
+      {
+        "label": "Equity Cure",
+        "row": 75
+      }
+    ],
+    "is_highlighted": true,
+    "key_negotiation_points": [
+      "Whether equity cure is permitted at all",
+      "Maximum cures per period (2 in 4Q, 4-5 lifetime)",
+      "Cap on cure amount (100% of shortfall)",
+      "Permitted cure instrument (common equity, qualified preferred)",
+      "Whether cure is excluded from EBITDA for baskets",
+      "Standstill provision during cure period",
+      "Requirement to prepay debt with cure proceeds",
+      "Time window for cure exercise"
+    ],
+    "market_position": "Market standard for equity cure reflects a negotiated middle ground, with specific terms varying by deal size, leverage profile, and competitive dynamics.",
+    "preferred_position": "No Equity Cure",
+    "source": "R14-B"
+  },
+  "playbook_ref": {
+    "concept_id": "financial_covenant.equity_cure",
+    "dependency_count": 13,
+    "extraction_difficulty": "very_hard",
+    "phase": 7
+  },
+  "r18_concept_ids": [
+    "cure_rights.cured_default_provisions",
+    "cure_rights.equity_cure",
+    "financial_covenant.deemed_cure",
+    "financial_covenant.equity_cure"
+  ],
+  "review_ref": [
+    {
+      "coverage": "full",
+      "row": 55,
+      "term": "Financial Statements – going concern"
+    },
+    {
+      "coverage": "full",
+      "row": 58,
+      "term": "Financial Covenant – levels"
+    },
+    {
+      "coverage": "full",
+      "row": 61,
+      "term": "Financial Covenant – equity cure"
+    },
+    {
+      "coverage": "full",
+      "row": 137,
+      "term": "Equity Co-Invest"
+    }
+  ],
+  "term_analysis_sources": [
+    "TERM_ANALYSIS_RIGHT_TO_CURE_CAP_AMOUNT.md",
+    "TERM_ANALYSIS_RIGHT_TO_CURE_NETTING.md",
+    "TERM_ANALYSIS_RIGHT_TO_CURE_NUMBER.md",
+    "TERM_ANALYSIS_RIGHT_TO_CURE_PREPAY_DEBT.md",
+    "TERM_ANALYSIS_RIGHT_TO_CURE_STANDSTILL.md",
+    "TERM_ANALYSIS_RIGHT_TO_CURE_TIME_LIMITS.md",
+    "TERM_ANALYSIS_RIGHT_TO_CURE_TYPE_SECURITY.md",
+    "TERM_ANALYSIS_RIGHT_TO_CURE_OTHER_NOTEWORTHY.md",
+    "CROSS_ANALYSIS_DEFAULT_CURE_ECOSYSTEM.md"
+  ],
+  "type": "family",
+  "definition_source": "DLS Preferred row 75 (complete equity cure specification with 7 conditions); KCT Category 1 item 2 (equity cure risk flags); PC Term Comparison section 6 (cure permitted if equity funded during the quarter, no requirement to pay down term loan); Review Template row 61 (Equity Cure: form, frequency, cure amount, timing)",
+  "pc_ref": [
+    "Section 6"
+  ]
+}

@@ -1,0 +1,169 @@
+[
+  {
+    "id": "cash_flow.mandatory_prepayment.change_of_control",
+    "name": "Change of Control Prepayment",
+    "family_id": "cash_flow.mandatory_prepayment",
+    "concept_area": "mandatory_prepayment",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Mandatory Prepayments",
+        "Mandatory Repayments",
+        "Prepayments"
+      ],
+      "keyword_anchors": [
+        "mandatory prepayment",
+        "Excess Cash Flow",
+        "Net Cash Proceeds",
+        "Asset Sale",
+        "Debt Issuance",
+        "prepay"
+      ],
+      "concept_specific_keywords": [
+        "Change of Control Prepayment"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.events_of_default.change_of_control",
+    "name": "Change of Control as EoD",
+    "family_id": "credit_protection.events_of_default",
+    "concept_area": "events_of_default",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Events of Default",
+        "Default",
+        "Defaults and Remedies"
+      ],
+      "keyword_anchors": [
+        "Event of Default",
+        "Default",
+        "acceleration",
+        "cross-default",
+        "judgment",
+        "bankruptcy"
+      ],
+      "concept_specific_keywords": [
+        "Change of Control as EoD"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.change_of_control.trigger_definitions",
+    "name": "Trigger Definitions",
+    "family_id": "credit_protection.change_of_control",
+    "concept_area": "change_of_control",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Change of Control",
+        "Change in Control",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Change of Control",
+        "Change in Control",
+        "Permitted Holders",
+        "beneficial ownership"
+      ],
+      "concept_specific_keywords": [
+        "Trigger Definitions"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.change_of_control.permitted_holders",
+    "name": "Permitted Holders",
+    "family_id": "credit_protection.change_of_control",
+    "concept_area": "change_of_control",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Change of Control",
+        "Change in Control",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Change of Control",
+        "Change in Control",
+        "Permitted Holders",
+        "beneficial ownership"
+      ],
+      "concept_specific_keywords": [
+        "Permitted Holders"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.change_of_control.consequences",
+    "name": "Consequence Framework",
+    "family_id": "credit_protection.change_of_control",
+    "concept_area": "change_of_control",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Change of Control",
+        "Change in Control",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Change of Control",
+        "Change in Control",
+        "Permitted Holders",
+        "beneficial ownership"
+      ],
+      "concept_specific_keywords": [
+        "Consequence Framework"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.change_of_control.permitted_coc",
+    "name": "Permitted Change of Control / Portability",
+    "family_id": "credit_protection.change_of_control",
+    "concept_area": "change_of_control",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Change of Control",
+        "Change in Control",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Change of Control",
+        "Change in Control",
+        "Permitted Holders",
+        "beneficial ownership"
+      ],
+      "concept_specific_keywords": [
+        "Permitted Change of Control / Portability",
+        "Risk Item"
+      ]
+    }
+  },
+  {
+    "id": "credit_protection.change_of_control.ipo_adaptation",
+    "name": "IPO Adaptation",
+    "family_id": "credit_protection.change_of_control",
+    "concept_area": "change_of_control",
+    "playbook_ref": null,
+    "search_strategy": {
+      "heading_patterns": [
+        "Change of Control",
+        "Change in Control",
+        "Fundamental Changes"
+      ],
+      "keyword_anchors": [
+        "Change of Control",
+        "Change in Control",
+        "Permitted Holders",
+        "beneficial ownership"
+      ],
+      "concept_specific_keywords": [
+        "IPO Adaptation",
+        "Permitted Holder"
+      ]
+    }
+  }
+]

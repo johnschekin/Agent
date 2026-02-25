@@ -1,0 +1,3355 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "Bank-preferred position: all Article IV representations must be true and correct in all material respects at the time of incremental incurrence. DLS Preferred Row 11: 'Bring down of all representations and warranties.' Provides maximum lender protection but may impede time-sensitive acquisitions. Distinguished from specified-reps variant by requiring accuracy of every representation, not just a borrower-favorable subset.",
+              "dls_ref": [
+                "DLS:91:Representations and Warranties"
+              ],
+              "domain_id": "debt_capacity",
+              "extraction_difficulty": "easy",
+              "family_id": "debt_capacity.incremental.structural_controls",
+              "id": "debt_capacity.incremental.structural_controls.conditions_precedent.rep_bringdown.all_reps",
+              "level": 4,
+              "name": "All Representations",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 11 preferred_terms",
+              "extraction_refs": {
+                "concept_area": "incremental",
+                "extraction_ready": true,
+                "corpus_atlas": {
+                  "artifact": "analysis/incremental_language_atlas.json",
+                  "version": "1.0.0",
+                  "generated_at": "2026-02-17T22:31:22.512361"
+                }
+              }
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Borrower-favorable variant: only a subset of representations (organization, authority, enforceability, solvency, OFAC/FCPA, margin regs, no conflicts) must be true at incremental incurrence. DLS Preferred Row 11 alternative: 'permit new lenders to only require bring down of specified reps if in connection with a Limited Condition Acquisition.' Based on Sungard conditionality framework. Distinguished from all-reps variant by reducing closing risk for the borrower.",
+              "dls_ref": [
+                "DLS:57:Specified Representations"
+              ],
+              "domain_id": "debt_capacity",
+              "extraction_difficulty": "medium",
+              "family_id": "debt_capacity.incremental.structural_controls",
+              "id": "debt_capacity.incremental.structural_controls.conditions_precedent.rep_bringdown.specified_reps",
+              "kct_ref": [
+                "cat4.8"
+              ],
+              "level": 4,
+              "name": "Specified Representations Only",
+              "negotiation_spectrum": {
+                "aggressive_position": "No explicit borrower position stated",
+                "dls_rows": [
+                  14,
+                  15
+                ],
+                "dls_terms": [
+                  "Delayed Draw Term Loans",
+                  "Limited Condition Acquisition"
+                ],
+                "is_highlighted": true,
+                "market_position": "Market likely follows lender-preferred position (no borrower alternative documented)",
+                "preferred_position": "No specified-reps carveout; full rep bringdown required for all incremental facilities regardless of acquisition context",
+                "source": "R14-A"
+              },
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 11 alternative",
+              "extraction_refs": {
+                "concept_area": "incremental",
+                "extraction_ready": true,
+                "corpus_atlas": {
+                  "artifact": "analysis/incremental_language_atlas.json",
+                  "version": "1.0.0",
+                  "generated_at": "2026-02-17T22:31:22.512361"
+                }
+              }
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Only representations that are 'material' to lender interests must be accurate at incremental incurrence. A middle-ground between all-reps and specified-reps. Distinguished from all-reps (which requires accuracy of every representation) and specified-reps (which lists specific representations) by using a materiality qualifier as the filtering mechanism.",
+              "domain_id": "debt_capacity",
+              "extraction_difficulty": "medium",
+              "family_id": "debt_capacity.incremental.structural_controls",
+              "id": "debt_capacity.incremental.structural_controls.conditions_precedent.rep_bringdown.material_only",
+              "level": 4,
+              "name": "Material Representations Only",
+              "negotiation_spectrum": {
+                "aggressive_position": "Can be expanded to include “irrevocable” restricted payments and restricted debt prepayments for which an irrevocable notice has been sent. Some Sponsors also permitted to use this concept for any transaction regardless of conditionality not requiring financing or “irrevocable” nature of the transaction [...]",
+                "dls_rows": [
+                  15
+                ],
+                "dls_terms": [
+                  "Limited Condition Acquisition"
+                ],
+                "is_highlighted": false,
+                "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+                "preferred_position": "No materiality qualifier on rep bringdown; all reps must be accurate in all respects (not just material respects) at incurrence",
+                "source": "R14-A"
+              },
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 11 alternative (intermediate position between preferred and specified reps)",
+              "extraction_refs": {
+                "concept_area": "incremental",
+                "extraction_ready": true,
+                "corpus_atlas": {
+                  "artifact": "analysis/incremental_language_atlas.json",
+                  "version": "1.0.0",
+                  "generated_at": "2026-02-17T22:31:22.512361"
+                }
+              }
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Whether all representations must be true at incremental incurrence. Bank preferred: bring down of all reps. Aggressive: specified reps only or materially accurate. DLS Preferred Row 11: bank wants all reps. Alternative: 'only required if new incremental lenders require such condition; permit new lenders to only require bring down of specified reps if in connection with a Limited Condition Acquisition.' Distinguished from the EoD condition by testing information accuracy rather than covenant compliance.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.conditions_precedent.rep_bringdown",
+          "level": 3,
+          "name": "Representation Bring-Down",
+          "negotiation_spectrum": {
+            "aggressive_position": "Can be expanded to include “irrevocable” restricted payments and restricted debt prepayments for which an irrevocable notice has been sent. Some Sponsors also permitted to use this concept for any transaction regardless of conditionality not requiring financing or “irrevocable” nature of the transaction [...]",
+            "dls_rows": [
+              15
+            ],
+            "dls_terms": [
+              "Limited Condition Acquisition"
+            ],
+            "is_highlighted": false,
+            "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+            "preferred_position": "Full bringdown of all representations required for incremental incurrence; no limitation to specified reps or SunGard-style carveouts",
+            "source": "R14-A"
+          },
+          "type": "sub_component",
+          "value_type": "categorical",
+          "definition_source": "DLS Preferred Row 11",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "high",
+              "definition": "No Default or Event of Default of any type may exist at the time of incremental incurrence. DLS Preferred Row 11: 'No default or event of default.' The most restrictive formulation — any breach of any covenant blocks incremental incurrence. Distinguished from specified-EoD-only by requiring clean compliance across all covenants.",
+              "domain_id": "debt_capacity",
+              "extraction_difficulty": "easy",
+              "family_id": "debt_capacity.incremental.structural_controls",
+              "id": "debt_capacity.incremental.structural_controls.conditions_precedent.no_default.all_defaults",
+              "kct_ref": [
+                "cat3.10"
+              ],
+              "level": 4,
+              "name": "No Default (All Types)",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 11",
+              "extraction_refs": {
+                "concept_area": "incremental",
+                "extraction_ready": true,
+                "corpus_atlas": {
+                  "artifact": "analysis/incremental_language_atlas.json",
+                  "version": "1.0.0",
+                  "generated_at": "2026-02-17T22:31:22.512361"
+                }
+              }
+            },
+            {
+              "corpus_prevalence": "high",
+              "definition": "Only payment default and bankruptcy EoD block incremental incurrence. DLS Preferred Row 11 alternative: 'always subject to no payment or bankruptcy default or event of default unless required lenders under existing facility waive such requirement.' Distinguished from all-defaults by permitting incurrence despite covenant violations unrelated to payment or solvency.",
+              "domain_id": "debt_capacity",
+              "extraction_difficulty": "medium",
+              "family_id": "debt_capacity.incremental.structural_controls",
+              "id": "debt_capacity.incremental.structural_controls.conditions_precedent.no_default.specified_eod",
+              "kct_ref": [
+                "cat4.8"
+              ],
+              "level": 4,
+              "name": "No Specified EoD",
+              "type": "sub_component",
+              "definition_source": "DLS Preferred Row 11 alternative",
+              "extraction_refs": {
+                "concept_area": "incremental",
+                "extraction_ready": true,
+                "corpus_atlas": {
+                  "artifact": "analysis/incremental_language_atlas.json",
+                  "version": "1.0.0",
+                  "generated_at": "2026-02-17T22:31:22.512361"
+                }
+              }
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "No default or event of default condition at incremental incurrence. DLS Preferred Row 11: 'No default or event of default.' Alternative: 'only required if new incremental lenders require such condition, however, always subject to no payment or bankruptcy default or event of default unless required lenders under existing facility waive such requirement.' Distinguished from rep bringdown (which tests accuracy of information) by testing compliance status of the borrower.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "easy",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.conditions_precedent.no_default",
+          "kct_ref": [
+            "cat3.10"
+          ],
+          "level": 3,
+          "name": "No Default Condition",
+          "negotiation_spectrum": {
+            "aggressive_position": "Can be expanded to include “irrevocable” restricted payments and restricted debt prepayments for which an irrevocable notice has been sent. Some Sponsors also permitted to use this concept for any transaction regardless of conditionality not requiring financing or “irrevocable” nature of the transaction [...]",
+            "dls_rows": [
+              15
+            ],
+            "dls_terms": [
+              "Limited Condition Acquisition"
+            ],
+            "is_highlighted": false,
+            "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+            "preferred_position": "No default or event of default condition required for all incremental incurrence; no carveout for new-lender-only requirement",
+            "source": "R14-A"
+          },
+          "type": "sub_component",
+          "value_type": "boolean",
+          "definition_source": "DLS Preferred Row 11",
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:40.842059+00:00",
+              "term_packs": {
+                "INCREMENTAL_DEFAULT_BLOCKER": {
+                  "label": "Incremental Default Blocker",
+                  "category": "INCREMENTAL",
+                  "exactPhrases": [
+                    "default blocker",
+                    "no default condition",
+                    "no Event of Default",
+                    "payment or bankruptcy default"
+                  ],
+                  "sectionHeaders": [
+                    "Conditions to Incremental",
+                    "Default Blocker",
+                    "Incremental Facilities",
+                    "Incremental Commitments",
+                    "Incremental Credit Extensions",
+                    "Incremental Loans",
+                    "Incremental Term Loans",
+                    "Incremental Borrowings",
+                    "Incremental Facility",
+                    "Incremental Increases",
+                    "Incremental Loan",
+                    "Incremental Credit",
+                    "Incremental Revolving Commitments",
+                    "Incremental Term Facilities",
+                    "Incremental Term Facility",
+                    "Incremental Term Loan Commitments",
+                    "Incremental Term Loan Facility",
+                    "Incremental Loan Commitments",
+                    "Incremental Notes",
+                    "Incremental Equivalent Debt",
+                    "Incremental Extensions of Credit",
+                    "Incremental Credit Facilities",
+                    "Incremental Refinancing Facilities",
+                    "Incremental Revolving Credit Facility Increases",
+                    "Increase in Commitments",
+                    "Increase in Commitment",
+                    "Increases in Commitments",
+                    "Commitment Increase",
+                    "Commitment Increases",
+                    "Additional Commitments",
+                    "Additional Loan",
+                    "Accordion"
+                  ],
+                  "semanticVariants": [
+                    "incurrence default condition",
+                    "default restriction on incremental",
+                    "EoD blocker"
+                  ],
+                  "searchThresholds": null,
+                  "searchEscalation": null
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "payment or bankruptcy default",
+                  "default blocker",
+                  "no default condition",
+                  "no Event of Default",
+                  "Incremental Term Loan",
+                  "Incremental Commitment",
+                  "Incremental Facility",
+                  "Incremental Revolving",
+                  "Incremental Loan",
+                  "Incremental Equivalent Debt",
+                  "Incremental Lender",
+                  "Incremental Amount",
+                  "Incremental Increase",
+                  "Incremental Borrowing",
+                  "Incremental Joinder"
+                ],
+                "sectionHeaders": [
+                  "Conditions to Incremental",
+                  "Default Blocker",
+                  "Incremental Facilities",
+                  "Incremental Commitments",
+                  "Incremental Credit Extensions",
+                  "Incremental Loans",
+                  "Incremental Term Loans",
+                  "Incremental Borrowings",
+                  "Incremental Facility",
+                  "Incremental Increases",
+                  "Incremental Loan",
+                  "Incremental Credit",
+                  "Incremental Revolving Commitments",
+                  "Incremental Term Facilities",
+                  "Incremental Term Facility",
+                  "Incremental Term Loan Commitments",
+                  "Incremental Term Loan Facility",
+                  "Incremental Loan Commitments",
+                  "Incremental Notes",
+                  "Incremental Equivalent Debt",
+                  "Incremental Extensions of Credit",
+                  "Incremental Credit Facilities",
+                  "Incremental Refinancing Facilities",
+                  "Incremental Revolving Credit Facility Increases",
+                  "Increase in Commitments",
+                  "Increase in Commitment",
+                  "Increases in Commitments",
+                  "Commitment Increase",
+                  "Commitment Increases",
+                  "Additional Commitments",
+                  "Additional Loan",
+                  "Accordion"
+                ],
+                "semanticVariants": [
+                  "incurrence default condition",
+                  "default restriction on incremental",
+                  "EoD blocker"
+                ]
+              }
+            },
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "INCREMENTAL_DEFAULT_BLOCKER",
+              "label": "Incremental Default Blocker",
+              "schema_file": "incremental.schema.ts",
+              "field_count": 3,
+              "r1_domain": "debt_capacity",
+              "mapping_confidence": 0.5477,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether usage of incremental facilities is limited to specific purposes. DLS Preferred Row 10: 'Incremental Term Loans may only be used for Permitted Acquisitions.' Alternative: 'Usage not limited.' Restricting use to acquisitions prevents general-purpose leverage increase. Distinguished from the rep bringdown and no-default conditions by governing what proceeds fund rather than financial prerequisites.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.conditions_precedent.use_of_proceeds",
+          "kct_ref": [
+            "cat5.2"
+          ],
+          "level": 3,
+          "name": "Use of Proceeds Limitation",
+          "negotiation_spectrum": {
+            "aggressive_position": "Usage not limited",
+            "dls_rows": [
+              10,
+              15
+            ],
+            "dls_terms": [
+              "Incremental Use of Proceeds",
+              "Limited Condition Acquisition"
+            ],
+            "is_highlighted": true,
+            "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+            "preferred_position": "Incremental Term Loans may only be used for Permitted Acquisitions",
+            "source": "R14-A"
+          },
+          "type": "sub_component",
+          "value_type": "categorical",
+          "definition_source": "DLS Preferred Row 10",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether the borrower can elect to test incremental conditions at signing rather than closing of an acquisition. DLS Preferred Row 15: 'Borrower may elect to test any Ratios/Baskets/Conditions required to be complied with in connection with such LCA at the time of signing.' DLS alternative: 'Can be expanded to include irrevocable restricted payments and restricted debt prepayments.' Prevents a deterioration between signing and closing from blocking the financing.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "hard",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.conditions_precedent.lct_election",
+          "kct_ref": [
+            "cat3.10"
+          ],
+          "level": 3,
+          "name": "Limited Condition Transaction Election",
+          "negotiation_spectrum": {
+            "aggressive_position": "Can be expanded to include “irrevocable” restricted payments and restricted debt prepayments for which an irrevocable notice has been sent. Some Sponsors also permitted to use this concept for any transaction regardless of conditionality not requiring financing or “irrevocable” nature of the transaction [...]",
+            "dls_rows": [
+              15,
+              17
+            ],
+            "dls_terms": [
+              "Limited Condition Acquisition",
+              "Amend and Extend"
+            ],
+            "is_highlighted": false,
+            "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+            "preferred_position": "No LCT election for incremental conditions; tests at consummation, not signing. No carveout limited to payment/bankruptcy defaults",
+            "source": "R14-A"
+          },
+          "type": "sub_component",
+          "value_type": "boolean",
+          "definition_source": "DLS Preferred Row 15",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Minimum incremental commitment amount per incurrence, preventing nuisance-level draws. DLS Preferred Row 14: 'each draw shall be in a principal amount of not less than $[X].' Typical minimums range from $1M in LMM to $5M+ in UMM. Distinguished from the aggregate cap by governing individual transaction size.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "easy",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.conditions_precedent.minimum_amount",
+          "level": 3,
+          "name": "Minimum Borrowing Amount",
+          "type": "sub_component",
+          "value_type": "currency",
+          "definition_source": "DLS Preferred Row 14",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Conditions that must be satisfied before incremental facilities can be drawn. DLS Preferred Row 11 bank preferred: 'Bring down of all representations and warranties; No default or event of default.' Alternative: 'Bring down of all representations and warranties only required if new incremental lenders require such condition; no default or event of default only required if new incremental lenders require such condition, however, always subject to no payment or bankruptcy default or event of default.' Distinguished from the usage limitation (which restricts what proceeds fund) by governing the operational prerequisites for borrowing.",
+      "dls_ref": [
+        "DLS:11:Conditions to incurrence: Bring down of ",
+        "DLS:58:Other conditions"
+      ],
+      "domain_id": "debt_capacity",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "incremental",
+        "extraction_ready": true,
+        "playbook_ref": "incremental.incremental_terms",
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.12",
+          "Section 2.12(b)(iii)-(v)",
+          "Section 2.14"
+        ],
+        "shape_ref": "incremental.incremental_terms",
+        "corpus_atlas": {
+          "artifact": "analysis/incremental_language_atlas.json",
+          "version": "1.0.0",
+          "generated_at": "2026-02-17T22:31:22.512361"
+        }
+      },
+      "family_id": "debt_capacity.incremental.structural_controls",
+      "id": "debt_capacity.incremental.structural_controls.conditions_precedent",
+      "level": 2,
+      "name": "Conditions Precedent to Incurrence",
+      "negotiation_spectrum": {
+        "aggressive_position": "“All-in Yield” all-in yield (including interest rate margins, any interest rate floors, original issue discount and upfront fees (based on the lesser of a four-year average life to maturity or the remaining life to maturity), but excluding reasonable and customary arrangement, structuring and underwriting fees) applicable to any Incremental Term Loans will not be more than 0.50% higher than the corresponding all-in yield (determined on the same basis) applicable to the Term Loans and any existing Incremental Term Loans (each an “Existing Term Loan”), unless the interest rate margin with respect to each applicable Existing Term Loan is increased by an amount equal to the difference between the all-in yield with respect to such Incremental Term Loans and the all-in yield on such Existing Term Loans as applicable, minus, 0.50%; it being agreed that to the extent the all-in yield with respect to such Incremental Term Loans is greater than such all-in yield with respect to any Existing Term Loans solely as a result of a higher interest rate floor, then the interest rate margin increase shall be effectuated solely by increasing the interest rate floor on any applicable Existing Term Loans. [...]",
+        "dls_rows": [
+          11,
+          15
+        ],
+        "dls_terms": [
+          "Incremental Conditions & MFN",
+          "Limited Condition Acquisition"
+        ],
+        "is_highlighted": true,
+        "market_position": "MFN protection for life (lender) vs no MFN (borrower). Market typically has sunset (12-24 months). | ROFR required (lender) vs no ROFR. Market mixed — PC typically requires, BSL typically does not. | Strict maturity floors (lender) vs inside-maturity thresholds (borrower). Market allows limited inside-maturity amounts. | Pro rata sharing (lender) vs flexible waterfall (borrower). Market standard: mandatory prepayments pro rata; voluntary may be flexible.",
+        "preferred_position": "Full conditions precedent: rep bringdown, no default/EoD, pro forma compliance, officer's certificate, legal opinions",
+        "source": "R14-A"
+      },
+      "r18_concept_ids": [
+        "incremental.conditions_precedent"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 11"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Incremental term loans cannot mature before the latest maturity date of existing term loans. DLS Preferred Row 11: 'Maturity Date: No earlier than the maturity date of the Term Facility.' This prevents the incremental facility from effectively being senior by requiring repayment first. Distinguished from the WALM requirement by governing only the final maturity date.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.maturity.outside_maturity",
+          "kct_ref": [
+            "cat4.8"
+          ],
+          "level": 3,
+          "name": "Outside Maturity Requirement",
+          "negotiation_spectrum": {
+            "aggressive_position": "Amount increased to fund “flex” OID/Upfront fees [only applicable for deals where has pricing flex]",
+            "dls_rows": [
+              8,
+              10,
+              17
+            ],
+            "dls_terms": [
+              "Term Loan Structure",
+              "Incremental Use of Proceeds",
+              "Amend and Extend"
+            ],
+            "is_highlighted": false,
+            "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+            "preferred_position": "At least $[         ]\nAmortization: 0.25% per quarter, bullet at maturity.\n\nMaturity: [   ] years.",
+            "source": "R14-A"
+          },
+          "type": "sub_component",
+          "value_type": "boolean",
+          "definition_source": "DLS Preferred Row 11",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Minimum weighted average life to maturity (WALM) that incremental debt must satisfy, preventing front-loaded amortization that creates structural repayment priority. Per Key Credit Terms Cat 4 Item 8: 'No limitations on maturity date or weighted average life to maturity for ratio-based debt baskets' is a risk item requiring escalation. Per PC Term Comparison line 247: 'Maturity/WALM: would also apply to IED, Ratio Debt, incurred acquisition debt etc.' The WALM minimum is typically set at the remaining WALM of the existing term loan facility, ensuring incremental debt does not amortize faster than the initial debt. Without a WALM minimum, borrowers could incur incremental debt with aggressive amortization schedules that create de facto senior repayment priority.",
+              "domain_id": "debt_capacity",
+              "extraction_difficulty": "medium",
+              "family_id": "debt_capacity.incremental.structural_controls",
+              "id": "debt_capacity.incremental.structural_controls.maturity.walm_requirement.walm_min",
+              "kct_ref": [
+                "cat4.8"
+              ],
+              "level": 4,
+              "name": "WALM minimum",
+              "negotiation_spectrum": {
+                "aggressive_position": "Amount increased to fund “flex” OID/Upfront fees [only applicable for deals where has pricing flex]",
+                "dls_rows": [
+                  8
+                ],
+                "dls_terms": [
+                  "Term Loan Structure"
+                ],
+                "is_highlighted": false,
+                "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+                "preferred_position": "At least $[         ]\nAmortization: 0.25% per quarter, bullet at maturity.\n\nMaturity: [   ] years.",
+                "source": "R14-A"
+              },
+              "type": "sub_component",
+              "definition_source": "Key Credit Terms Cat 4 Item 8 (no WALM limits as risk); PC Term Comparison line 247 (WALM applies to IED/ratio/acquisition)",
+              "pc_ref": [
+                "lines 247"
+              ],
+              "extraction_refs": {
+                "concept_area": "incremental",
+                "extraction_ready": true,
+                "corpus_atlas": {
+                  "artifact": "analysis/incremental_language_atlas.json",
+                  "version": "1.0.0",
+                  "generated_at": "2026-02-17T22:31:22.512361"
+                }
+              }
+            },
+            {
+              "id": "debt_capacity.incremental.structural_controls.maturity.walm_requirement.calculation_method",
+              "name": "WALM Calculation Method",
+              "level": 4,
+              "type": "sub_component",
+              "domain_id": "debt_capacity",
+              "family_id": "debt_capacity.incremental.structural_controls",
+              "corpus_prevalence": "high",
+              "extraction_difficulty": "medium",
+              "definition": "Methodology for calculating the weighted average life to maturity of incremental debt, including: (1) whether the calculation uses the contractual maturity schedule (scheduled principal payments) or the expected maturity (including voluntary and mandatory prepayments), (2) whether the calculation gives effect to any grace periods or extension options, and (3) whether bridge loan commitments (which convert to term loans upon extended maturity) are measured at initial maturity or extended maturity. Per PC Term Comparison line 248: 'Avoid inside maturity exception other than customary bridges and escrow arrangements' — bridge exemptions affect the WALM calculation by allowing short-dated instruments that would otherwise fail the test. The calculation method can produce significantly different results depending on the assumptions used.",
+              "definition_source": "PC Term Comparison line 248 (bridge/escrow exemption from maturity)",
+              "pc_ref": [
+                "lines 248"
+              ],
+              "extraction_refs": {
+                "concept_area": "incremental",
+                "extraction_ready": true,
+                "corpus_atlas": {
+                  "artifact": "analysis/incremental_language_atlas.json",
+                  "version": "1.0.0",
+                  "generated_at": "2026-02-17T22:31:22.512361"
+                }
+              }
+            }
+          ],
+          "corpus_prevalence": "high",
+          "definition": "Incremental cannot have shorter WALM than existing facilities. DLS Preferred Row 11: 'No shorter weighted average life to maturity than the Term Facility.' Prevents front-loading amortization that would effectively make the incremental facility senior. KCT Cat 4 Item 8: 'No limitations on WALM for ratio-based debt baskets' requires escalation. Distinguished from outside maturity by capturing amortization profile.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.maturity.walm_requirement",
+          "kct_ref": [
+            "cat4.8"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "inside_maturity_basket_sizes": "[cat4.8] KCT cat4.8 requires prevalence/severity data for 'inside maturity basket sizes' but no existing node provides this benchmark.",
+            "prevalence_of_inside_maturity_restrictions": "[cat4.8] KCT cat4.8 requires prevalence/severity data for 'prevalence of inside maturity restrictions' but no existing node provides this benchmark.",
+            "typical_walm_requirements": "[cat4.8] KCT cat4.8 requires prevalence/severity data for 'typical WALM requirements' but no existing node provides this benchmark."
+          },
+          "name": "Weighted Average Life to Maturity",
+          "negotiation_spectrum": {
+            "aggressive_position": "Amount increased to fund “flex” OID/Upfront fees [only applicable for deals where has pricing flex]",
+            "dls_rows": [
+              8
+            ],
+            "dls_terms": [
+              "Term Loan Structure"
+            ],
+            "is_highlighted": false,
+            "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+            "preferred_position": "At least $[         ]\nAmortization: 0.25% per quarter, bullet at maturity.\n\nMaturity: [   ] years.",
+            "source": "R14-A"
+          },
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 37,
+              "term": "Refinancing Facilities – Inside Maturity"
+            }
+          ],
+          "type": "sub_component",
+          "value_type": "boolean",
+          "definition_source": "DLS Preferred Row 11; KCT Cat 4 Item 8",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            },
+            "corpus_exact_phrases": [
+              "weighted average life",
+              "weighted average life to maturity",
+              "no shorter than"
+            ]
+          }
+        },
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Fixed dollar cap on the aggregate amount of incremental debt permitted to mature before the existing term loan maturity date (inside-maturity incremental). Per PC Term Comparison line 249: 'Aggressive UMM/BSLR: may give a basket up to 50-100% of EBITDA.' The fixed dollar cap limits the total inside-maturity exposure, preventing the borrower from front-loading a material amount of debt repayment ahead of the existing term loans. Inside-maturity debt creates structural priority because it must be repaid first, potentially depleting cash and collateral value before the existing lenders' maturity date. The fixed dollar cap is the lender's primary control mechanism for inside-maturity risk.",
+              "domain_id": "debt_capacity",
+              "extraction_difficulty": "easy",
+              "family_id": "debt_capacity.incremental.structural_controls",
+              "id": "debt_capacity.incremental.structural_controls.maturity.inside_maturity_basket.fixed_dollar",
+              "kct_ref": [
+                "cat4.8"
+              ],
+              "level": 4,
+              "market_benchmarks": {
+                "dollar_basket_umm": {
+                  "field": "dollar_basket",
+                  "segment": "UMM",
+                  "source": "R17-A (debt_capacity)",
+                  "value": "100% of EBITDA; may include general debt basket reallocation"
+                },
+                "inside_maturity_bsl": {
+                  "field": "inside_maturity",
+                  "segment": "BSL",
+                  "source": "R17-A (debt_capacity)",
+                  "value": "Up to 50-100% of EBITDA basket"
+                },
+                "inside_maturity_cmm": {
+                  "field": "inside_maturity",
+                  "segment": "CMM",
+                  "source": "R17-A (debt_capacity)",
+                  "value": "Avoid; limited exception for bridges"
+                },
+                "inside_maturity_lmm": {
+                  "field": "inside_maturity",
+                  "segment": "LMM",
+                  "source": "R17-A (debt_capacity)",
+                  "value": "Avoid; only customary bridges and escrow"
+                },
+                "inside_maturity_umm": {
+                  "field": "inside_maturity",
+                  "segment": "UMM",
+                  "source": "R17-A (debt_capacity)",
+                  "value": "May give basket up to 50-100% of EBITDA"
+                }
+              },
+              "name": "Fixed Dollar Cap",
+              "negotiation_spectrum": {
+                "aggressive_position": "Availability at closing not to exceed $[        ] which will be used to (1) pay the acquisition costs and (2) finance ordinary course working capital needs and working capital adjustments under the Acquisition Agreement\nAvailability on the Closing Date (a) unlimited amounts to finance any OID and/or upfront fees resulting from the exercise of any market flex [only applicable for deals where has pricing flex], (b) no more than $[         ] to finance the Transactions and related fees and expenses (c) unlimited to finance any Closing Date working capital needs [subject to diligence and needs of the Borrower], and (d) unlimited to replace, backstop or cash collateralize existing letters of credit [subject to diligence and needs of the Borrower]. [...]",
+                "dls_rows": [
+                  6,
+                  8
+                ],
+                "dls_terms": [
+                  "Revolving Facility",
+                  "Term Loan Structure"
+                ],
+                "is_highlighted": false,
+                "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+                "preferred_position": "Fixed dollar threshold for debt maturing inside TL maturity; no percentage-of-EBITDA alternative for inside-maturity basket",
+                "source": "R14-A"
+              },
+              "type": "sub_component",
+              "value_type": "currency",
+              "definition_source": "PC Term Comparison line 249 (inside maturity basket: 50-100% EBITDA in Aggressive UMM/BSL)",
+              "pc_ref": [
+                "lines 249"
+              ],
+              "extraction_refs": {
+                "concept_area": "incremental",
+                "extraction_ready": true,
+                "corpus_atlas": {
+                  "artifact": "analysis/incremental_language_atlas.json",
+                  "version": "1.0.0",
+                  "generated_at": "2026-02-17T22:31:22.512361"
+                }
+              }
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "EBITDA-based percentage cap on the aggregate amount of inside-maturity incremental debt, expressed as a percentage of LTM Consolidated EBITDA. Per PC Term Comparison line 249: 'Aggressive UMM/BSLR: may give a basket up to 50-100% of EBITDA.' The EBITDA grower allows the inside-maturity basket to scale with borrower size. At 50% of EBITDA, a $100M EBITDA company could have up to $50M of inside-maturing incremental debt; at 100%, the full EBITDA amount. Per Key Credit Terms Cat 4 Item 8, missing maturity limits are a risk item — even when an inside-maturity basket exists, the EBITDA percentage determines whether the basket represents a meaningful concession or a de minimis accommodation.",
+              "dls_ref": [
+                "DLS:3:Assumed Financing EBITDA"
+              ],
+              "domain_id": "debt_capacity",
+              "extraction_difficulty": "medium",
+              "family_id": "debt_capacity.incremental.structural_controls",
+              "id": "debt_capacity.incremental.structural_controls.maturity.inside_maturity_basket.ebitda_pct",
+              "kct_ref": [
+                "cat2.4",
+                "cat4.8"
+              ],
+              "level": 4,
+              "name": "EBITDA Percentage Cap",
+              "negotiation_spectrum": {
+                "aggressive_position": "Amount increased to fund “flex” OID/Upfront fees [only applicable for deals where has pricing flex]",
+                "dls_rows": [
+                  8
+                ],
+                "dls_terms": [
+                  "Term Loan Structure"
+                ],
+                "is_highlighted": false,
+                "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+                "preferred_position": "At least $[         ]\nAmortization: 0.25% per quarter, bullet at maturity.\n\nMaturity: [   ] years.",
+                "source": "R14-A"
+              },
+              "review_ref": [
+                {
+                  "coverage": "full",
+                  "row": 29,
+                  "term": "Incremental – RCF sub-limit"
+                },
+                {
+                  "coverage": "full",
+                  "row": 78,
+                  "term": "Negative Covenants – Indebtedness – Incurred Acquisition Debt – non-guarantor cap"
+                }
+              ],
+              "type": "sub_component",
+              "value_type": "percentage",
+              "definition_source": "PC Term Comparison line 249 (50-100% EBITDA for inside maturity); Key Credit Terms Cat 4 Item 8 (maturity limits risk)",
+              "pc_ref": [
+                "lines 249"
+              ],
+              "extraction_refs": {
+                "concept_area": "incremental",
+                "extraction_ready": true,
+                "corpus_atlas": {
+                  "artifact": "analysis/incremental_language_atlas.json",
+                  "version": "1.0.0",
+                  "generated_at": "2026-02-17T22:31:22.512361"
+                }
+              }
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Exception allowing limited incremental debt to mature earlier than existing facilities. DLS Preferred Row 11 alternative: '$[X] threshold for debt that can mature inside Term Facility.' PC Term Comparison: 'Aggressive UMM/BSLR: may give a basket up to 50-100% of EBITDA.' Distinguished from the general prohibition by providing a sized exception for specific needs like bridge financing.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.maturity.inside_maturity_basket",
+          "kct_ref": [
+            "cat4.8"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "bsl": {
+              "typical": "50-100% EBITDA"
+            },
+            "cmm": {
+              "typical": "$10-25M or 25% EBITDA"
+            },
+            "lmm": {
+              "typical": "Not typically available"
+            },
+            "umm": {
+              "aggressive": "50-100% EBITDA",
+              "typical": "$25-75M or 50% EBITDA"
+            }
+          },
+          "name": "Inside Maturity Basket",
+          "negotiation_spectrum": {
+            "aggressive_position": "Amount increased to fund “flex” OID/Upfront fees [only applicable for deals where has pricing flex]",
+            "dls_rows": [
+              8
+            ],
+            "dls_terms": [
+              "Term Loan Structure"
+            ],
+            "is_highlighted": false,
+            "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+            "preferred_position": "At least $[         ]\nAmortization: 0.25% per quarter, bullet at maturity.\n\nMaturity: [   ] years.",
+            "source": "R14-A"
+          },
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 29,
+              "term": "Incremental – RCF sub-limit"
+            },
+            {
+              "coverage": "full",
+              "row": 33,
+              "term": "Incremental – inside maturity basket"
+            },
+            {
+              "coverage": "full",
+              "row": 37,
+              "term": "Refinancing Facilities – Inside Maturity"
+            },
+            {
+              "coverage": "full",
+              "row": 87,
+              "term": "Negative Covenants – Liens – Ratio Basket"
+            }
+          ],
+          "type": "sub_component",
+          "value_type": "dollar_or_ebitda_pct",
+          "definition_source": "DLS Preferred Row 11 alternative; PC Term Comparison line 249",
+          "pc_ref": [
+            "lines 249"
+          ],
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:40.860853+00:00",
+              "term_packs": {
+                "INCREMENTAL_INSIDE_MATURITY": {
+                  "label": "Incremental Inside Maturity Basket",
+                  "category": "INCREMENTAL",
+                  "exactPhrases": [
+                    "Exception to WAL/M requirements",
+                    "amounts less than the greater of $[•] and [•]% of LTM EBITDA",
+                    "customary bridge facilities",
+                    "escrowed amounts",
+                    "inside maturity"
+                  ],
+                  "sectionHeaders": [
+                    "Section [•] - Incremental Commitments",
+                    "Inside Maturity Basket",
+                    "Weighted Average Life",
+                    "Incremental Facilities",
+                    "Incremental Commitments",
+                    "Incremental Credit Extensions",
+                    "Incremental Loans",
+                    "Incremental Term Loans",
+                    "Incremental Borrowings",
+                    "Incremental Facility",
+                    "Incremental Increases",
+                    "Incremental Loan",
+                    "Incremental Credit",
+                    "Incremental Revolving Commitments",
+                    "Incremental Term Facilities",
+                    "Incremental Term Facility",
+                    "Incremental Term Loan Commitments",
+                    "Incremental Term Loan Facility",
+                    "Incremental Loan Commitments",
+                    "Incremental Notes",
+                    "Incremental Equivalent Debt",
+                    "Incremental Extensions of Credit",
+                    "Incremental Credit Facilities",
+                    "Incremental Refinancing Facilities",
+                    "Incremental Revolving Credit Facility Increases",
+                    "Increase in Commitments",
+                    "Increase in Commitment",
+                    "Increases in Commitments",
+                    "Commitment Increase",
+                    "Commitment Increases",
+                    "Additional Commitments",
+                    "Additional Loan",
+                    "Accordion"
+                  ],
+                  "semanticVariants": [
+                    "earlier maturing incremental debt capacity",
+                    "exception to maturity restrictions",
+                    "shorter WAL allowance for incrementals",
+                    "bridge facility carveout"
+                  ],
+                  "searchThresholds": null,
+                  "searchEscalation": null
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "Exception to WAL/M requirements",
+                  "amounts less than the greater of $[•] and [•]% of LTM EBITDA",
+                  "inside maturity",
+                  "customary bridge facilities",
+                  "escrowed amounts",
+                  "Incremental Term Loan",
+                  "Incremental Commitment",
+                  "Incremental Facility",
+                  "Incremental Revolving",
+                  "Incremental Loan",
+                  "Incremental Equivalent Debt",
+                  "Incremental Lender",
+                  "Incremental Amount",
+                  "Incremental Increase",
+                  "Incremental Borrowing",
+                  "Incremental Joinder"
+                ],
+                "sectionHeaders": [
+                  "Section [•] - Incremental Commitments",
+                  "Inside Maturity Basket",
+                  "Weighted Average Life",
+                  "Incremental Facilities",
+                  "Incremental Commitments",
+                  "Incremental Credit Extensions",
+                  "Incremental Loans",
+                  "Incremental Term Loans",
+                  "Incremental Borrowings",
+                  "Incremental Facility",
+                  "Incremental Increases",
+                  "Incremental Loan",
+                  "Incremental Credit",
+                  "Incremental Revolving Commitments",
+                  "Incremental Term Facilities",
+                  "Incremental Term Facility",
+                  "Incremental Term Loan Commitments",
+                  "Incremental Term Loan Facility",
+                  "Incremental Loan Commitments",
+                  "Incremental Notes",
+                  "Incremental Equivalent Debt",
+                  "Incremental Extensions of Credit",
+                  "Incremental Credit Facilities",
+                  "Incremental Refinancing Facilities",
+                  "Incremental Revolving Credit Facility Increases",
+                  "Increase in Commitments",
+                  "Increase in Commitment",
+                  "Increases in Commitments",
+                  "Commitment Increase",
+                  "Commitment Increases",
+                  "Additional Commitments",
+                  "Additional Loan",
+                  "Accordion"
+                ],
+                "semanticVariants": [
+                  "earlier maturing incremental debt capacity",
+                  "exception to maturity restrictions",
+                  "shorter WAL allowance for incrementals",
+                  "bridge facility carveout"
+                ]
+              }
+            },
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "INCREMENTAL_INSIDE_MATURITY",
+              "label": "Incremental Inside Maturity Basket",
+              "schema_file": "incremental.schema.ts",
+              "field_count": 4,
+              "r1_domain": "debt_capacity",
+              "mapping_confidence": 0.6887,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Customary bridge loans and escrow arrangements exempt from maturity limitations. PC Term Comparison: 'Avoid inside maturity exception other than customary bridges and escrow arrangements.' Bridge loans are expected to be refinanced quickly and therefore do not create the same maturity seniority concern. Distinguished from the inside maturity basket by being a qualitative exception rather than a sized basket.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.maturity.bridge_exemption",
+          "kct_ref": [
+            "cat4.8"
+          ],
+          "level": 3,
+          "name": "Bridge / Escrow Exemption",
+          "negotiation_spectrum": {
+            "aggressive_position": "Amount increased to fund “flex” OID/Upfront fees [only applicable for deals where has pricing flex]",
+            "dls_rows": [
+              8,
+              14,
+              17
+            ],
+            "dls_terms": [
+              "Term Loan Structure",
+              "Delayed Draw Term Loans",
+              "Amend and Extend"
+            ],
+            "is_highlighted": false,
+            "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+            "preferred_position": "At least $[         ]\nAmortization: 0.25% per quarter, bullet at maturity.\n\nMaturity: [   ] years.",
+            "source": "R14-A"
+          },
+          "type": "sub_component",
+          "value_type": "boolean",
+          "definition_source": "PC Term Comparison line 248",
+          "pc_ref": [
+            "lines 248"
+          ],
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether incremental revolving commitments are exempt from the outside-maturity and WALM restrictions that apply to incremental term loans. Revolvers naturally have shorter terms (typically 5 years vs 7 years for term loans) because they are designed for working capital and short-term needs rather than permanent leverage. Exempting revolvers from maturity restrictions is standard because (1) revolving commitments do not create structural repayment priority in the same way as term debt (they can be drawn and repaid repeatedly), (2) a revolver maturity inside the term loan maturity is market-standard, and (3) requiring revolvers to match term loan maturity would make them impractical for their intended purpose.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.maturity.revolver_exemption",
+          "level": 3,
+          "name": "Revolving Facility Exemption",
+          "negotiation_spectrum": {
+            "aggressive_position": "Availability at closing not to exceed $[        ] which will be used to (1) pay the acquisition costs and (2) finance ordinary course working capital needs and working capital adjustments under the Acquisition Agreement\nAvailability on the Closing Date (a) unlimited amounts to finance any OID and/or upfront fees resulting from the exercise of any market flex [only applicable for deals where has pricing flex], (b) no more than $[         ] to finance the Transactions and related fees and expenses (c) unlimited to finance any Closing Date working capital needs [subject to diligence and needs of the Borrower], and (d) unlimited to replace, backstop or cash collateralize existing letters of credit [subject to diligence and needs of the Borrower]. [...]",
+            "dls_rows": [
+              6,
+              8,
+              17
+            ],
+            "dls_terms": [
+              "Revolving Facility",
+              "Term Loan Structure",
+              "Amend and Extend"
+            ],
+            "is_highlighted": false,
+            "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+            "preferred_position": "No revolver exemption from maturity floor; revolver extensions must also mature no earlier than TL maturity date",
+            "source": "R14-A"
+          },
+          "type": "sub_component",
+          "value_type": "boolean",
+          "definition_source": "DLS Preferred Row 7 (revolving facility structure)",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Requirements governing maturity and WALM of incremental facilities. DLS Preferred Row 11: 'Maturity Date: No earlier than the maturity date of the Term Facility. Weighted Average Life to Maturity: No shorter weighted average life to maturity than the Term Facility.' Learning Material: 'a refinancing facility should not mature before initial facility because earlier maturity would effectively make the refinancing facility senior.' PC Term Comparison: 'would also apply to IED, Ratio Debt, incurred acquisition debt.'",
+      "dls_ref": [
+        "DLS:16:Refinancing Debt"
+      ],
+      "domain_id": "debt_capacity",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "incremental",
+        "extraction_ready": true,
+        "playbook_ref": "incremental.incremental_terms",
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.12",
+          "Section 2.12(b)(iii)-(v)",
+          "Section 2.14"
+        ],
+        "shape_ref": "incremental.incremental_terms",
+        "corpus_atlas": {
+          "artifact": "analysis/incremental_language_atlas.json",
+          "version": "1.0.0",
+          "generated_at": "2026-02-17T22:31:22.512361"
+        },
+        "corpus_exact_phrases": [
+          "maturity date",
+          "Latest Maturity Date",
+          "Maturity Date of the existing",
+          "no earlier than"
+        ]
+      },
+      "family_id": "debt_capacity.incremental.structural_controls",
+      "id": "debt_capacity.incremental.structural_controls.maturity",
+      "kct_ref": [
+        "cat4.8"
+      ],
+      "level": 2,
+      "name": "Maturity and WALM Restrictions",
+      "negotiation_spectrum": {
+        "aggressive_position": "Amount increased to fund “flex” OID/Upfront fees [only applicable for deals where has pricing flex]",
+        "dls_rows": [
+          8,
+          14,
+          16,
+          17
+        ],
+        "dls_terms": [
+          "Term Loan Structure",
+          "Delayed Draw Term Loans",
+          "Refinancing Debt",
+          "Amend and Extend"
+        ],
+        "is_highlighted": false,
+        "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+        "preferred_position": "Incremental maturity no earlier than existing TL; no inside-maturity basket. WAL no shorter than existing facility",
+        "source": "R14-A"
+      },
+      "r18_concept_ids": [
+        "incremental.maturity_walm"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 29,
+          "term": "Incremental – RCF sub-limit"
+        },
+        {
+          "coverage": "full",
+          "row": 32,
+          "term": "Incremental – terms"
+        },
+        {
+          "coverage": "full",
+          "row": 33,
+          "term": "Incremental – inside maturity basket"
+        },
+        {
+          "coverage": "full",
+          "row": 36,
+          "term": "Incremental Equivalent Debt"
+        },
+        {
+          "coverage": "full",
+          "row": 37,
+          "term": "Refinancing Facilities – Inside Maturity"
+        },
+        {
+          "coverage": "full",
+          "row": 77,
+          "term": "Negative Covenants – Indebtedness – Incurred Acquisition Debt – amount"
+        },
+        {
+          "coverage": "full",
+          "row": 87,
+          "term": "Negative Covenants – Liens – Ratio Basket"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 11; Learning Material line 1577; PC Term Comparison line 247",
+      "pc_ref": [
+        "lines 247"
+      ]
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Requirement that incremental term loan amortization exactly matches the initial term loan amortization schedule (typically 1% per annum for Term Loan B). Per PC Term Comparison line 250: 'Terms either same as existing or market at the time.' Same-as-initial is the most common approach because it maintains pro rata principal repayment across all term loan tranches. When amortization matches, incremental and existing lenders receive identical principal payment treatment, eliminating any advantage or disadvantage from the amortization schedule.",
+              "domain_id": "debt_capacity",
+              "extraction_difficulty": "medium",
+              "family_id": "debt_capacity.incremental.structural_controls",
+              "id": "debt_capacity.incremental.structural_controls.pricing.amortization_requirements.same_as_initial",
+              "level": 4,
+              "name": "Same as Initial Facility",
+              "negotiation_spectrum": {
+                "aggressive_position": "Usage not limited",
+                "dls_rows": [
+                  10,
+                  17
+                ],
+                "dls_terms": [
+                  "Incremental Use of Proceeds",
+                  "Amend and Extend"
+                ],
+                "is_highlighted": true,
+                "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+                "preferred_position": "Incremental Term Loans may only be used for Permitted Acquisitions",
+                "source": "R14-A"
+              },
+              "type": "sub_component",
+              "definition_source": "PC Term Comparison line 250 (terms same as existing)",
+              "pc_ref": [
+                "lines 250"
+              ],
+              "extraction_refs": {
+                "concept_area": "incremental",
+                "extraction_ready": true,
+                "corpus_atlas": {
+                  "artifact": "analysis/incremental_language_atlas.json",
+                  "version": "1.0.0",
+                  "generated_at": "2026-02-17T22:31:22.512361"
+                }
+              }
+            },
+            {
+              "corpus_prevalence": "medium",
+              "definition": "Requirement that incremental term loan amortization cannot exceed (be more aggressive than) the initial facility amortization rate, but can be lower. This asymmetric restriction protects existing lenders from incremental tranches receiving disproportionate principal repayment (which would happen if incremental amortization were higher) while allowing incremental tranches to have lower amortization (which benefits existing lenders by preserving more cash flow for their principal payments). The 'no greater' formulation is more flexible than 'same as initial' because it accommodates bullet-maturity incremental tranches (0% amortization) that are common in institutional term loan structures.",
+              "domain_id": "debt_capacity",
+              "extraction_difficulty": "medium",
+              "family_id": "debt_capacity.incremental.structural_controls",
+              "id": "debt_capacity.incremental.structural_controls.pricing.amortization_requirements.no_greater",
+              "level": 4,
+              "name": "No Greater Than Initial",
+              "negotiation_spectrum": {
+                "aggressive_position": "No explicit borrower position stated",
+                "dls_rows": [
+                  14,
+                  17
+                ],
+                "dls_terms": [
+                  "Delayed Draw Term Loans",
+                  "Amend and Extend"
+                ],
+                "is_highlighted": true,
+                "market_position": "Market likely follows lender-preferred position (no borrower alternative documented)",
+                "preferred_position": "Incremental amortization must match or exceed initial TL (0.25%/quarter); no reduced-amortization incremental tranches",
+                "source": "R14-A"
+              },
+              "type": "sub_component",
+              "definition_source": "PC Term Comparison line 250 (terms flexibility)",
+              "pc_ref": [
+                "lines 250"
+              ],
+              "extraction_refs": {
+                "concept_area": "incremental",
+                "extraction_ready": true,
+                "corpus_atlas": {
+                  "artifact": "analysis/incremental_language_atlas.json",
+                  "version": "1.0.0",
+                  "generated_at": "2026-02-17T22:31:22.512361"
+                }
+              }
+            }
+          ],
+          "corpus_prevalence": "medium",
+          "definition": "Whether incremental term loans must follow the same amortization schedule as initial term loans, preventing the borrower from offering more aggressive (lower) or more conservative (higher) amortization on incremental tranches. Typical amortization for Term Loan B: 1% per annum (0.25% quarterly). Per PC Term Comparison line 250: 'Terms either same as existing or market at the time,' suggesting amortization should match existing terms. Matching amortization ensures incremental and existing lenders share equally in principal repayment, preventing incremental lenders from receiving disproportionate principal payments (if amortization is higher) or deferring repayment at the expense of existing lenders (if lower).",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.pricing.amortization_requirements",
+          "level": 3,
+          "name": "Amortization Requirements",
+          "negotiation_spectrum": {
+            "aggressive_position": "Usage not limited",
+            "dls_rows": [
+              10
+            ],
+            "dls_terms": [
+              "Incremental Use of Proceeds"
+            ],
+            "is_highlighted": true,
+            "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+            "preferred_position": "Incremental Term Loans may only be used for Permitted Acquisitions",
+            "source": "R14-A"
+          },
+          "type": "sub_component",
+          "value_type": "percentage",
+          "definition_source": "PC Term Comparison line 250 (terms same as existing or market)",
+          "pc_ref": [
+            "lines 250"
+          ],
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether incremental facilities must include the same soft call or repricing protection as the initial facility, preventing the borrower from issuing unprotected incremental debt that can be repriced more easily than the existing facility. Per PC Term Comparison lines 264-265: 'Hard call is standard. 1Ls: typically 2/1/0.' Incremental call protection matching ensures that all term loan tranches have the same prepayment economics, preventing the borrower from selectively repricing incremental tranches (which may have been issued at a higher yield) while leaving existing tranches at their original pricing. The standard 101 soft call for 6 months prevents repricing transactions within the initial period.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "hard",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.pricing.call_protection",
+          "level": 3,
+          "name": "Call Protection Requirements",
+          "type": "sub_component",
+          "value_type": "boolean",
+          "definition_source": "PC Term Comparison lines 264-265 (hard call standard, 2/1/0 for 1L)",
+          "pc_ref": [
+            "lines 264-265"
+          ],
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether incremental facilities must match the interest rate type (floating vs. fixed) of the existing credit facility, or whether the borrower can choose the interest rate structure. Existing bank facilities are typically floating rate (SOFR + margin), while IED may be fixed rate (high-yield notes). Per PC Term Comparison line 236, MFN in Aggressive UMM/BSL applies only to 'pari term loans only (no syndication requirement; may have currency requirement)' — the currency/type restriction suggests matching is relevant for MFN comparison purposes. Interest type matching ensures the MFN All-In Yield comparison is apples-to-apples — comparing a fixed-rate instrument to a floating-rate instrument requires assumptions about the forward curve that can make the comparison meaningless.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.pricing.interest_type",
+          "level": 3,
+          "name": "Interest Rate Type Restriction",
+          "type": "sub_component",
+          "value_type": "categorical",
+          "definition_source": "PC Term Comparison line 236 (MFN pari term loans, currency requirement)",
+          "pc_ref": [
+            "lines 236"
+          ],
+          "extraction_refs": {
+            "neutron_retrieval_pack": {
+              "source": "Neutron SCHEMA_REGISTRY runtime export",
+              "imported_at": "2026-02-17T21:59:40.878251+00:00",
+              "term_packs": {
+                "INCREMENTAL_MFN": {
+                  "label": "Incremental MFN (Most Favored Nation)",
+                  "category": "INCREMENTAL",
+                  "exactPhrases": [
+                    "[•] bps [yield] / [rate]",
+                    "Only applies to [ratio-based incurrence]",
+                    "Only applies to the extent the loans mature within [•] year(s) of initial term loans",
+                    "Does not apply to Permitted Acquisitions",
+                    "Trigger of the greater of $[•] and [•]% of LTM EBITDA",
+                    "in the event that the All-in Yield for any Incremental Term Loan",
+                    "established on or prior to the six (6) month anniversary of the Effective Date",
+                    "is higher than the All-in Yield for the outstanding Initial Term B Loans",
+                    "by more than 50 basis points",
+                    "shall be increased to the extent necessary so that the All-in Yield",
+                    "equal to the All-in Yield for such Incremental Term Loans minus 50 basis points",
+                    "MFN Provision",
+                    "MFN Exception",
+                    "broadly syndicated term \"B\" loan",
+                    "incurred pursuant to the Ratio Incremental Amount",
+                    "incurred other than for purposes of consummating a Permitted Acquisition",
+                    "matures earlier than the first anniversary of the Term Facility Maturity Date"
+                  ],
+                  "sectionHeaders": [
+                    "Incremental Term Loans",
+                    "Yield Protection",
+                    "MFN Protection",
+                    "Section [•] - Incremental Commitments",
+                    "Most Favored Nation",
+                    "Incremental Facilities",
+                    "Incremental Commitments",
+                    "Incremental Credit Extensions",
+                    "Incremental Loans",
+                    "Incremental Borrowings",
+                    "Incremental Facility",
+                    "Incremental Increases",
+                    "Incremental Loan",
+                    "Incremental Credit",
+                    "Incremental Revolving Commitments",
+                    "Incremental Term Facilities",
+                    "Incremental Term Facility",
+                    "Incremental Term Loan Commitments",
+                    "Incremental Term Loan Facility",
+                    "Incremental Loan Commitments",
+                    "Incremental Notes",
+                    "Incremental Equivalent Debt",
+                    "Incremental Extensions of Credit",
+                    "Incremental Credit Facilities",
+                    "Incremental Refinancing Facilities",
+                    "Incremental Revolving Credit Facility Increases",
+                    "Increase in Commitments",
+                    "Increase in Commitment",
+                    "Increases in Commitments",
+                    "Commitment Increase",
+                    "Commitment Increases",
+                    "Additional Commitments",
+                    "Additional Loan",
+                    "Accordion"
+                  ],
+                  "semanticVariants": [
+                    "yield protection for existing lenders",
+                    "margin adjustment for new incremental",
+                    "pricing protection on incremental facilities",
+                    "all-in yield cushion",
+                    "incremental term loan pricing",
+                    "effective interest rate margin increase"
+                  ],
+                  "searchThresholds": null,
+                  "searchEscalation": null
+                }
+              },
+              "aggregate": {
+                "exactPhrases": [
+                  "Only applies to [ratio-based incurrence]",
+                  "shall be increased to the extent necessary so that the All-in Yield",
+                  "Only applies to the extent the loans mature within [•] year(s) of initial term loans",
+                  "Trigger of the greater of $[•] and [•]% of LTM EBITDA",
+                  "Does not apply to Permitted Acquisitions",
+                  "broadly syndicated term \"B\" loan",
+                  "[•] bps [yield] / [rate]",
+                  "established on or prior to the six (6) month anniversary of the Effective Date",
+                  "equal to the All-in Yield for such Incremental Term Loans minus 50 basis points",
+                  "MFN Provision",
+                  "is higher than the All-in Yield for the outstanding Initial Term B Loans",
+                  "incurred other than for purposes of consummating a Permitted Acquisition",
+                  "matures earlier than the first anniversary of the Term Facility Maturity Date",
+                  "MFN Exception",
+                  "in the event that the All-in Yield for any Incremental Term Loan",
+                  "by more than 50 basis points",
+                  "incurred pursuant to the Ratio Incremental Amount",
+                  "Incremental Term Loan",
+                  "Incremental Commitment",
+                  "Incremental Facility",
+                  "Incremental Revolving",
+                  "Incremental Loan",
+                  "Incremental Equivalent Debt",
+                  "Incremental Lender",
+                  "Incremental Amount",
+                  "Incremental Increase",
+                  "Incremental Borrowing",
+                  "Incremental Joinder"
+                ],
+                "sectionHeaders": [
+                  "Incremental Term Loans",
+                  "Yield Protection",
+                  "MFN Protection",
+                  "Section [•] - Incremental Commitments",
+                  "Most Favored Nation",
+                  "Incremental Facilities",
+                  "Incremental Commitments",
+                  "Incremental Credit Extensions",
+                  "Incremental Loans",
+                  "Incremental Borrowings",
+                  "Incremental Facility",
+                  "Incremental Increases",
+                  "Incremental Loan",
+                  "Incremental Credit",
+                  "Incremental Revolving Commitments",
+                  "Incremental Term Facilities",
+                  "Incremental Term Facility",
+                  "Incremental Term Loan Commitments",
+                  "Incremental Term Loan Facility",
+                  "Incremental Loan Commitments",
+                  "Incremental Notes",
+                  "Incremental Equivalent Debt",
+                  "Incremental Extensions of Credit",
+                  "Incremental Credit Facilities",
+                  "Incremental Refinancing Facilities",
+                  "Incremental Revolving Credit Facility Increases",
+                  "Increase in Commitments",
+                  "Increase in Commitment",
+                  "Increases in Commitments",
+                  "Commitment Increase",
+                  "Commitment Increases",
+                  "Additional Commitments",
+                  "Additional Loan",
+                  "Accordion"
+                ],
+                "semanticVariants": [
+                  "yield protection for existing lenders",
+                  "margin adjustment for new incremental",
+                  "pricing protection on incremental facilities",
+                  "all-in yield cushion",
+                  "incremental term loan pricing",
+                  "effective interest rate margin increase"
+                ]
+              }
+            },
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          },
+          "neutron_field_refs": [
+            {
+              "term_type": "INCREMENTAL_MFN",
+              "label": "Incremental MFN (Most Favored Nation)",
+              "schema_file": "incremental.schema.ts",
+              "field_count": 3,
+              "r1_domain": "debt_capacity",
+              "mapping_confidence": 0.4452,
+              "mapping_mode": "domain_scored",
+              "mapped_level": 3
+            }
+          ]
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Structural controls that restrict the borrower's ability to incur incremental debt at pricing levels or terms that would disadvantage existing lenders. Includes (1) MFN pricing protection (per PCTC line 231: '50 bps standard'), (2) amortization requirements (matching or not exceeding initial facility), (3) call protection (matching initial facility soft call), and (4) interest rate type restrictions. Per PC Term Comparison line 250: 'Terms either same as existing or market at the time with typical protections (same as BSL).' These controls prevent the borrower from offering superior economic terms on incremental tranches to attract new lenders, which would dilute the value of existing lenders' positions by establishing a market pricing reference above their contractual rate.",
+      "dls_ref": [
+        "DLS:25:Pricing Flex"
+      ],
+      "domain_id": "debt_capacity",
+      "extraction_difficulty": "hard",
+      "extraction_refs": {
+        "concept_area": "incremental",
+        "extraction_ready": true,
+        "playbook_ref": "incremental.incremental_terms",
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.12",
+          "Section 2.12(b)(iii)-(v)",
+          "Section 2.14"
+        ],
+        "shape_ref": "incremental.incremental_terms",
+        "corpus_atlas": {
+          "artifact": "analysis/incremental_language_atlas.json",
+          "version": "1.0.0",
+          "generated_at": "2026-02-17T22:31:22.512361"
+        },
+        "corpus_exact_phrases": [
+          "fungible",
+          "same Class",
+          "same tranche",
+          "consolidated with",
+          "treated as a single Class",
+          "pari passu",
+          "Applicable Rate"
+        ]
+      },
+      "family_id": "debt_capacity.incremental.structural_controls",
+      "id": "debt_capacity.incremental.structural_controls.pricing",
+      "level": 2,
+      "name": "Pricing Restrictions",
+      "negotiation_spectrum": {
+        "aggressive_position": "Usage not limited",
+        "dls_rows": [
+          10
+        ],
+        "dls_terms": [
+          "Incremental Use of Proceeds"
+        ],
+        "is_highlighted": true,
+        "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+        "preferred_position": "Incremental Term Loans may only be used for Permitted Acquisitions",
+        "source": "R14-A"
+      },
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 38,
+          "term": "Refinancing Facilities – Terms"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison lines 231, 250 (50bps MFN, terms same or market)",
+      "pc_ref": [
+        "lines 231, 250"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "high",
+          "definition": "Requirement that incremental facilities be guaranteed by the same guarantors as the initial facility. DLS Preferred Row 11: 'Guarantees: Must be guaranteed by the same guarantors of the Term Facility.' Learning Material: 'Incremental facility cannot have guarantors that the initial facility does not have.' Prevents structural seniority through broader credit support. Distinguished from the same-collateral requirement by governing entity scope rather than asset scope.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.security.same_guarantors",
+          "level": 3,
+          "name": "Same Guarantor Requirement",
+          "negotiation_spectrum": {
+            "aggressive_position": "Permit extension of the Term Facility (so long as no default or event of default is continuing) with consent of only extending lenders of such class subject to pro rata offer within the applicable class, and such new class must have terms (excluding economic terms) no less favorable to new lenders than the original class and any such new class may not require greater than pro rata payment with respect to any mandatory prepayment or voluntary prepayments other than with proceeds of refinancing debt. [variations include “market terms”] [...]",
+            "dls_rows": [
+              17
+            ],
+            "dls_terms": [
+              "Amend and Extend"
+            ],
+            "is_highlighted": false,
+            "market_position": "Lender prefers prohibition; borrower seeks permission. Market typically allows with conditions.",
+            "preferred_position": "No Amend and Extend Ability",
+            "source": "R14-A"
+          },
+          "type": "sub_component",
+          "value_type": "boolean",
+          "definition_source": "DLS Preferred Row 11; Learning Material line 1497",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Requirement that incremental facilities be secured by the same collateral as the initial facility. DLS Preferred Row 11: 'Collateral: Can only be secured by Collateral and must be pari passu with the Term Facility.' Learning Material: 'cannot have collateral that the initial facility does not have.' Prevents effective seniority through broader collateral. Distinguished from the same-guarantor requirement by governing asset scope rather than entity scope.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.security.same_collateral",
+          "level": 3,
+          "name": "Same Collateral Requirement",
+          "negotiation_spectrum": {
+            "aggressive_position": "Usage not limited",
+            "dls_rows": [
+              10
+            ],
+            "dls_terms": [
+              "Incremental Use of Proceeds"
+            ],
+            "is_highlighted": true,
+            "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+            "preferred_position": "Incremental Term Loans may only be used for Permitted Acquisitions",
+            "source": "R14-A"
+          },
+          "type": "sub_component",
+          "value_type": "boolean",
+          "definition_source": "DLS Preferred Row 11; Learning Material line 1497",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether incremental debt can be secured by assets outside the existing collateral package. PC Term Comparison: 'Incremental debt secured by non-Collateral: Typically reject even in Aggressive UMM/BSLR.' This is a bright-line protection — allowing non-collateral security would give incremental lenders a broader security package than existing lenders. Distinguished from the non-loan-party provision by governing asset scope at the loan party level.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.security.non_collateral_secured",
+          "kct_ref": [
+            "cat4.12"
+          ],
+          "level": 3,
+          "market_benchmarks": {
+            "non_collateral_secured_bsl": {
+              "field": "non_collateral_secured",
+              "segment": "BSL",
+              "source": "R17-A (debt_capacity)",
+              "value": "Typically reject"
+            },
+            "non_collateral_secured_cmm": {
+              "field": "non_collateral_secured",
+              "segment": "CMM",
+              "source": "R17-A (debt_capacity)",
+              "value": "Reject"
+            },
+            "non_collateral_secured_umm": {
+              "field": "non_collateral_secured",
+              "segment": "UMM",
+              "source": "R17-A (debt_capacity)",
+              "value": "Typically reject even in aggressive"
+            }
+          },
+          "name": "Non-Collateral Secured Capacity",
+          "type": "sub_component",
+          "value_type": "boolean",
+          "definition_source": "PC Term Comparison line 224",
+          "pc_ref": [
+            "lines 224"
+          ],
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "high",
+          "definition": "Whether incremental debt can be incurred at non-loan-party subsidiaries. PC Term Comparison: 'Non-Loan Party Incremental Capacity: Typically reject even in Aggressive UMM/BSLR.' Non-loan-party incremental debt would be structurally senior to the existing facility. Distinguished from the non-collateral-secured provision by governing which entities incur rather than what assets secure.",
+          "dls_ref": [
+            "DLS:8:Term Loan",
+            "DLS:21:Term Loan Margin",
+            "DLS:46:Third-party consents / litigation"
+          ],
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.security.non_loan_party",
+          "level": 3,
+          "market_benchmarks": {
+            "non_loan_party_capacity_bsl": {
+              "field": "non_loan_party_capacity",
+              "segment": "BSL",
+              "source": "R17-A (debt_capacity)",
+              "value": "Typically reject"
+            },
+            "non_loan_party_capacity_cmm": {
+              "field": "non_loan_party_capacity",
+              "segment": "CMM",
+              "source": "R17-A (debt_capacity)",
+              "value": "Reject"
+            },
+            "non_loan_party_capacity_umm": {
+              "field": "non_loan_party_capacity",
+              "segment": "UMM",
+              "source": "R17-A (debt_capacity)",
+              "value": "Typically reject even in aggressive"
+            }
+          },
+          "name": "Non-Loan Party Incurrence",
+          "negotiation_spectrum": {
+            "aggressive_position": "Amount increased to fund “flex” OID/Upfront fees [only applicable for deals where has pricing flex]",
+            "dls_rows": [
+              8
+            ],
+            "dls_terms": [
+              "Term Loan Structure"
+            ],
+            "is_highlighted": false,
+            "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+            "preferred_position": "At least $[         ]\nAmortization: 0.25% per quarter, bullet at maturity.\n\nMaturity: [   ] years.",
+            "source": "R14-A"
+          },
+          "type": "sub_component",
+          "value_type": "boolean",
+          "definition_source": "PC Term Comparison line 226",
+          "pc_ref": [
+            "lines 226"
+          ],
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        }
+      ],
+      "corpus_prevalence": "high",
+      "definition": "Structural control requiring that incremental facilities cannot have a broader guarantee or collateral package than the initial facility — the incremental cannot be secured by assets or guaranteed by entities not already pledged to or guaranteeing the existing credit facility. Per PC Term Comparison lines 223-224: 'Incremental debt secured by non-Collateral: Typically reject even in Aggressive UMM/BSLR' and lines 225-226: 'Non-Loan Party Incremental Capacity: Typically reject even in Aggressive UMM/BSLR.' These restrictions ensure the incremental lenders cannot obtain superior collateral coverage or guarantee scope, maintaining parity between existing and incremental lenders. Per DLS Preferred Row 80 (Liens): liens on incremental facilities are limited to 'securing indebtedness under the Credit Facilities.'",
+      "dls_ref": [
+        "DLS:67:Security"
+      ],
+      "domain_id": "debt_capacity",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "incremental",
+        "extraction_ready": true,
+        "playbook_ref": "incremental.incremental_terms",
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.12",
+          "Section 2.12(b)(iii)-(v)",
+          "Section 2.14"
+        ],
+        "shape_ref": "incremental.incremental_terms",
+        "corpus_atlas": {
+          "artifact": "analysis/incremental_language_atlas.json",
+          "version": "1.0.0",
+          "generated_at": "2026-02-17T22:31:22.512361"
+        }
+      },
+      "family_id": "debt_capacity.incremental.structural_controls",
+      "id": "debt_capacity.incremental.structural_controls.security",
+      "level": 2,
+      "name": "Security / Credit Support Requirements",
+      "r18_concept_ids": [
+        "incremental.credit_support"
+      ],
+      "type": "concept",
+      "definition_source": "PC Term Comparison lines 223-226 (reject non-collateral and non-LP incremental); DLS Preferred Row 80 (liens securing credit facilities)",
+      "pc_ref": [
+        "lines 223-226"
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether existing lenders have a right of first refusal (ROFR) to participate in incremental facility commitments before the borrower offers them to new lenders. Per PC Term Comparison lines 251-254: 'Existing Lender ROFR: Atypical in Aggressive UMM/BSLR transactions. Common in CMM and LMM transactions. Otherwise ask Clients if they want to raise as they may have precedents with sponsor with ROFR.' ROFR is a lender-protective feature that allows existing lenders to maintain their pro rata share of the credit facility and capture the economics of incremental commitments (which may include higher pricing or OID). The ROFR prevents dilution of existing lenders' positions by new entrants.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "easy",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.rofr.has_rofr",
+          "level": 3,
+          "market_benchmarks": {
+            "pctc_cmm": "and LMM transactions",
+            "pctc_lmm": "transactions",
+            "pctc_umm_bsl": "transactions"
+          },
+          "name": "ROFR Presence",
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 35,
+              "term": "Incremental – ROFR"
+            }
+          ],
+          "type": "sub_component",
+          "value_type": "boolean",
+          "definition_source": "PC Term Comparison lines 251-254 (ROFR: atypical UMM/BSL, common CMM/LMM)",
+          "pc_ref": [
+            "lines 251-254"
+          ],
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Number of business days within which existing lenders must respond to a ROFR offer for incremental facility commitments. Typical response period: 7-10 business days. A shorter period favors the borrower (less delay in executing the incremental facility); a longer period favors lenders (more time to evaluate and commit). The response period must balance the borrower's need for execution certainty (particularly for acquisition-related incremental facilities with closing deadlines) against the lenders' need for adequate evaluation time. Non-response within the period is typically treated as a declination, allowing the borrower to proceed with new lenders.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.rofr.response_period",
+          "level": 3,
+          "name": "Response Period",
+          "negotiation_spectrum": {
+            "aggressive_position": "Availability at closing not to exceed $[        ] which will be used to (1) pay the acquisition costs and (2) finance ordinary course working capital needs and working capital adjustments under the Acquisition Agreement\nAvailability on the Closing Date (a) unlimited amounts to finance any OID and/or upfront fees resulting from the exercise of any market flex [only applicable for deals where has pricing flex], (b) no more than $[         ] to finance the Transactions and related fees and expenses (c) unlimited to finance any Closing Date working capital needs [subject to diligence and needs of the Borrower], and (d) unlimited to replace, backstop or cash collateralize existing letters of credit [subject to diligence and needs of the Borrower]. [...]",
+            "dls_rows": [
+              6
+            ],
+            "dls_terms": [
+              "Revolving Facility"
+            ],
+            "is_highlighted": false,
+            "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+            "preferred_position": "ROFR on all incremental facilities with reasonable response period; existing lenders have first right to participate",
+            "source": "R14-A"
+          },
+          "type": "sub_component",
+          "value_type": "duration_business_days",
+          "definition_source": "PC Term Comparison lines 251-254 (ROFR framework)",
+          "pc_ref": [
+            "lines 251-254"
+          ],
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether incremental facilities incurred in connection with permitted acquisitions may bypass the existing-lender ROFR process to avoid timing delays that could jeopardize the acquisition closing. Acquisition-related incremental facilities often have tight closing deadlines, and the ROFR response period (7-10 business days) plus the subsequent allocation and documentation process could add 2-4 weeks to the timeline. Per PC Term Comparison lines 244-245: 'Acquisition exception: Aggressive UMM/BSLR: Even here very rare' — confirming that acquisition carveouts from ROFR are uncommon even in the most sponsor-favorable deals. When the carveout exists, the borrower can go directly to new lenders for acquisition financing without offering existing lenders a participation right.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "hard",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.rofr.acquisition_carveout",
+          "level": 3,
+          "market_benchmarks": {
+            "rofr_bsl": {
+              "field": "rofr",
+              "segment": "BSL",
+              "source": "R17-A (debt_capacity)",
+              "value": "Atypical"
+            },
+            "rofr_umm": {
+              "field": "rofr",
+              "segment": "UMM",
+              "source": "R17-A (debt_capacity)",
+              "value": "Atypical"
+            }
+          },
+          "name": "Acquisition Carveout",
+          "negotiation_spectrum": {
+            "aggressive_position": "Allow side by side revolvers (if permitted must have ROFR and/or pro rata borrowing and prepayments; MFN protection)\nInclude builder for permanent commitment reductions under the Revolving Facility\n(a) the sum (the “Free and Clear Incremental Amount”) of [...]",
+            "dls_rows": [
+              9,
+              10
+            ],
+            "dls_terms": [
+              "Accordion / Incremental Facility",
+              "Incremental Use of Proceeds"
+            ],
+            "is_highlighted": true,
+            "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+            "preferred_position": "No acquisition carveout from ROFR; existing lenders retain right of first refusal even for acquisition-driven incremental",
+            "source": "R14-A"
+          },
+          "type": "sub_component",
+          "value_type": "boolean",
+          "definition_source": "PC Term Comparison lines 244-245 (acquisition ROFR exception: very rare even in Aggressive UMM/BSL)",
+          "pc_ref": [
+            "lines 244-245"
+          ],
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether ROFR allocations for incremental facility commitments are proportional to each existing lender's share of the current credit facility (pro rata allocation), or whether the borrower can allocate among accepting lenders on a different basis. Pro rata allocation is the standard approach because it maintains the existing syndicate composition — each lender that accepts the ROFR offer receives a commitment proportional to its current share. Non-pro-rata allocation (borrower discretion) could allow the borrower to favor certain lenders, potentially concentrating the incremental commitment in friendly hands. Pro rata allocation also coordinates with the pro rata sharing provisions for prepayments (per PCTC line 256: 'Generally same/similar to BSL transactions').",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.rofr.pro_rata_allocation",
+          "level": 3,
+          "name": "Pro Rata Allocation",
+          "negotiation_spectrum": {
+            "aggressive_position": "Availability at closing not to exceed $[        ] which will be used to (1) pay the acquisition costs and (2) finance ordinary course working capital needs and working capital adjustments under the Acquisition Agreement\nAvailability on the Closing Date (a) unlimited amounts to finance any OID and/or upfront fees resulting from the exercise of any market flex [only applicable for deals where has pricing flex], (b) no more than $[         ] to finance the Transactions and related fees and expenses (c) unlimited to finance any Closing Date working capital needs [subject to diligence and needs of the Borrower], and (d) unlimited to replace, backstop or cash collateralize existing letters of credit [subject to diligence and needs of the Borrower]. [...]",
+            "dls_rows": [
+              6,
+              8,
+              9,
+              11,
+              14,
+              17
+            ],
+            "dls_terms": [
+              "Revolving Facility",
+              "Term Loan Structure",
+              "Accordion / Incremental Facility",
+              "Incremental Conditions & MFN",
+              "Delayed Draw Term Loans",
+              "Amend and Extend"
+            ],
+            "is_highlighted": false,
+            "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+            "preferred_position": "$[         ]\n\nMaturity: [   ] years",
+            "source": "R14-A"
+          },
+          "type": "sub_component",
+          "value_type": "boolean",
+          "definition_source": "PC Term Comparison line 256 (terms generally same as BSL)",
+          "pc_ref": [
+            "lines 256"
+          ],
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Right of First Refusal: existing lenders' right to participate in incremental facilities before new lenders are brought in. DLS Preferred Row 11: 'must have a ROFR on all Incremental Facilities.' PC Term Comparison: 'Atypical in Aggressive UMM/BSLR transactions. Common in CMM and LMM transactions.' Typical mechanics: must accept or decline within 7-10 business days. Prevents dilution of voting power and economics. Distinguished from assignment consent rights (which govern secondary trading) by governing primary issuance.",
+      "domain_id": "debt_capacity",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "incremental",
+        "extraction_ready": true,
+        "playbook_ref": "incremental.incremental_terms",
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.12",
+          "Section 2.12(b)(iii)-(v)",
+          "Section 2.14"
+        ],
+        "shape_ref": "incremental.incremental_terms",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.939590+00:00",
+          "term_packs": {
+            "INCREMENTAL_ROFR": {
+              "label": "Incremental ROFR",
+              "category": "INCREMENTAL",
+              "exactPhrases": [
+                "No ROFR/ROFO for existing lenders",
+                "right of first refusal",
+                "right of first offer",
+                "pro rata offer to existing lenders"
+              ],
+              "sectionHeaders": [
+                "Right of First Refusal",
+                "ROFR",
+                "Lender Rights",
+                "Incremental Facilities",
+                "Incremental Commitments",
+                "Incremental Credit Extensions",
+                "Incremental Loans",
+                "Incremental Term Loans",
+                "Incremental Borrowings",
+                "Incremental Facility",
+                "Incremental Increases",
+                "Incremental Loan",
+                "Incremental Credit",
+                "Incremental Revolving Commitments",
+                "Incremental Term Facilities",
+                "Incremental Term Facility",
+                "Incremental Term Loan Commitments",
+                "Incremental Term Loan Facility",
+                "Incremental Loan Commitments",
+                "Incremental Notes",
+                "Incremental Equivalent Debt",
+                "Incremental Extensions of Credit",
+                "Incremental Credit Facilities",
+                "Incremental Refinancing Facilities",
+                "Incremental Revolving Credit Facility Increases",
+                "Increase in Commitments",
+                "Increase in Commitment",
+                "Increases in Commitments",
+                "Commitment Increase",
+                "Commitment Increases",
+                "Additional Commitments",
+                "Additional Loan",
+                "Accordion"
+              ],
+              "semanticVariants": [
+                "lender participation right on incremental",
+                "existing lender priority",
+                "offer right for new debt"
+              ],
+              "searchThresholds": null,
+              "searchEscalation": null
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "No ROFR/ROFO for existing lenders",
+              "right of first refusal",
+              "pro rata offer to existing lenders",
+              "right of first offer",
+              "Incremental Term Loan",
+              "Incremental Commitment",
+              "Incremental Facility",
+              "Incremental Revolving",
+              "Incremental Loan",
+              "Incremental Equivalent Debt",
+              "Incremental Lender",
+              "Incremental Amount",
+              "Incremental Increase",
+              "Incremental Borrowing",
+              "Incremental Joinder"
+            ],
+            "sectionHeaders": [
+              "Right of First Refusal",
+              "ROFR",
+              "Lender Rights",
+              "Incremental Facilities",
+              "Incremental Commitments",
+              "Incremental Credit Extensions",
+              "Incremental Loans",
+              "Incremental Term Loans",
+              "Incremental Borrowings",
+              "Incremental Facility",
+              "Incremental Increases",
+              "Incremental Loan",
+              "Incremental Credit",
+              "Incremental Revolving Commitments",
+              "Incremental Term Facilities",
+              "Incremental Term Facility",
+              "Incremental Term Loan Commitments",
+              "Incremental Term Loan Facility",
+              "Incremental Loan Commitments",
+              "Incremental Notes",
+              "Incremental Equivalent Debt",
+              "Incremental Extensions of Credit",
+              "Incremental Credit Facilities",
+              "Incremental Refinancing Facilities",
+              "Incremental Revolving Credit Facility Increases",
+              "Increase in Commitments",
+              "Increase in Commitment",
+              "Increases in Commitments",
+              "Commitment Increase",
+              "Commitment Increases",
+              "Additional Commitments",
+              "Additional Loan",
+              "Accordion"
+            ],
+            "semanticVariants": [
+              "lender participation right on incremental",
+              "existing lender priority",
+              "offer right for new debt"
+            ]
+          }
+        },
+        "corpus_atlas": {
+          "artifact": "analysis/incremental_language_atlas.json",
+          "version": "1.0.0",
+          "generated_at": "2026-02-17T22:31:22.512361"
+        }
+      },
+      "family_id": "debt_capacity.incremental.structural_controls",
+      "id": "debt_capacity.incremental.structural_controls.rofr",
+      "level": 2,
+      "name": "Right of First Refusal (ROFR)",
+      "negotiation_spectrum": {
+        "aggressive_position": "“All-in Yield” all-in yield (including interest rate margins, any interest rate floors, original issue discount and upfront fees (based on the lesser of a four-year average life to maturity or the remaining life to maturity), but excluding reasonable and customary arrangement, structuring and underwriting fees) applicable to any Incremental Term Loans will not be more than 0.50% higher than the corresponding all-in yield (determined on the same basis) applicable to the Term Loans and any existing Incremental Term Loans (each an “Existing Term Loan”), unless the interest rate margin with respect to each applicable Existing Term Loan is increased by an amount equal to the difference between the all-in yield with respect to such Incremental Term Loans and the all-in yield on such Existing Term Loans as applicable, minus, 0.50%; it being agreed that to the extent the all-in yield with respect to such Incremental Term Loans is greater than such all-in yield with respect to any Existing Term Loans solely as a result of a higher interest rate floor, then the interest rate margin increase shall be effectuated solely by increasing the interest rate floor on any applicable Existing Term Loans. [...]",
+        "dls_rows": [
+          11
+        ],
+        "dls_terms": [
+          "Incremental Conditions & MFN"
+        ],
+        "is_highlighted": true,
+        "market_position": "MFN protection for life (lender) vs no MFN (borrower). Market typically has sunset (12-24 months). | ROFR required (lender) vs no ROFR. Market mixed — PC typically requires, BSL typically does not. | Strict maturity floors (lender) vs inside-maturity thresholds (borrower). Market allows limited inside-maturity amounts. | Pro rata sharing (lender) vs flexible waterfall (borrower). Market standard: mandatory prepayments pro rata; voluntary may be flexible.",
+        "preferred_position": "Mandatory ROFR on all incremental facilities; lenders must have right of first refusal before new lenders participate",
+        "source": "R14-A"
+      },
+      "r18_concept_ids": [
+        "incremental.rofr"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 35,
+          "term": "Incremental – ROFR"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 11; PC Term Comparison lines 251-254",
+      "pc_ref": [
+        "lines 251-254"
+      ],
+      "neutron_field_refs": [
+        {
+          "term_type": "INCREMENTAL_ROFR",
+          "label": "Incremental ROFR",
+          "schema_file": "incremental.schema.ts",
+          "field_count": 3,
+          "r1_domain": "debt_capacity",
+          "mapping_confidence": 0.5732,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether incremental term loans participate pro rata with existing term loans in mandatory prepayments from asset sales, excess cash flow sweeps, and other event-driven triggers. Per DLS Preferred Row 70 (Mandatory Prepayments): '100% of net cash proceeds from all non-ordinary course asset sales' and '75% of excess cash flow' (with leverage-based step-downs) — incremental term loans sharing pro rata in these sweeps ensures proportional deleveraging. When incremental does not participate pro rata, the borrower can effectively choose which tranches to deleverage through mandatory prepayments, creating an uneven amortization profile that may disadvantage one group of lenders.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.pro_rata_sharing.mandatory",
+          "level": 3,
+          "name": "Mandatory Prepayment Sharing",
+          "negotiation_spectrum": {
+            "aggressive_position": "Availability at closing not to exceed $[        ] which will be used to (1) pay the acquisition costs and (2) finance ordinary course working capital needs and working capital adjustments under the Acquisition Agreement\nAvailability on the Closing Date (a) unlimited amounts to finance any OID and/or upfront fees resulting from the exercise of any market flex [only applicable for deals where has pricing flex], (b) no more than $[         ] to finance the Transactions and related fees and expenses (c) unlimited to finance any Closing Date working capital needs [subject to diligence and needs of the Borrower], and (d) unlimited to replace, backstop or cash collateralize existing letters of credit [subject to diligence and needs of the Borrower]. [...]",
+            "dls_rows": [
+              6,
+              17
+            ],
+            "dls_terms": [
+              "Revolving Facility",
+              "Amend and Extend"
+            ],
+            "is_highlighted": false,
+            "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+            "preferred_position": "$[         ]\n\nMaturity: [   ] years",
+            "source": "R14-A"
+          },
+          "type": "sub_component",
+          "value_type": "categorical",
+          "definition_source": "DLS Preferred Row 70 (Mandatory Prepayments — 100% asset sales, 75% ECF with step-downs)",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether the borrower can direct voluntary prepayments to specific term loan tranches (borrower-directed) or must prepay all term loan tranches pro rata. Borrower-directed voluntary prepayments allow strategic prepayment — the borrower can retire higher-cost tranches first or pay down specific lenders. Per DLS Preferred Row 69 (Voluntary Prepayments): 'Term Facility: 102/101/par; hard call' — the call protection applies to voluntary prepayments, and borrower direction of voluntary prepayments interacts with the call premium (prepaying a protected tranche requires paying the premium). Pro rata voluntary prepayments treat all tranches equally, maintaining the existing ratio of outstanding amounts across tranches.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.pro_rata_sharing.voluntary",
+          "level": 3,
+          "name": "Voluntary Prepayment Sharing",
+          "negotiation_spectrum": {
+            "aggressive_position": "Availability at closing not to exceed $[        ] which will be used to (1) pay the acquisition costs and (2) finance ordinary course working capital needs and working capital adjustments under the Acquisition Agreement\nAvailability on the Closing Date (a) unlimited amounts to finance any OID and/or upfront fees resulting from the exercise of any market flex [only applicable for deals where has pricing flex], (b) no more than $[         ] to finance the Transactions and related fees and expenses (c) unlimited to finance any Closing Date working capital needs [subject to diligence and needs of the Borrower], and (d) unlimited to replace, backstop or cash collateralize existing letters of credit [subject to diligence and needs of the Borrower]. [...]",
+            "dls_rows": [
+              6,
+              9,
+              11,
+              17
+            ],
+            "dls_terms": [
+              "Revolving Facility",
+              "Accordion / Incremental Facility",
+              "Incremental Conditions & MFN",
+              "Amend and Extend"
+            ],
+            "is_highlighted": false,
+            "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+            "preferred_position": "$[         ]\n\nMaturity: [   ] years",
+            "source": "R14-A"
+          },
+          "type": "sub_component",
+          "value_type": "categorical",
+          "definition_source": "DLS Preferred Row 69 (Voluntary Prepayments — hard call 102/101/par)",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Incremental term loan position in the mandatory and voluntary prepayment application waterfall relative to existing term loans. Three options: (1) pro rata (incremental and existing receive the same proportional share of prepayments — the standard approach), (2) last-out (incremental receives prepayments only after existing term loans are fully repaid — lender-favorable for existing lenders), (3) borrower-directed (borrower chooses which tranche receives prepayments — borrower-favorable). Per DLS Preferred Row 70 (Mandatory Prepayments): the waterfall applies to the 'Term Loan Facility' as a whole, implying pro rata treatment across all term loan tranches. Per Learning Material lines 3730-3748, waterfall provisions for collateral proceeds distribution follow a similar ratable framework.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.pro_rata_sharing.waterfall_priority",
+          "level": 3,
+          "name": "Waterfall Priority",
+          "negotiation_spectrum": {
+            "aggressive_position": "Availability at closing not to exceed $[        ] which will be used to (1) pay the acquisition costs and (2) finance ordinary course working capital needs and working capital adjustments under the Acquisition Agreement\nAvailability on the Closing Date (a) unlimited amounts to finance any OID and/or upfront fees resulting from the exercise of any market flex [only applicable for deals where has pricing flex], (b) no more than $[         ] to finance the Transactions and related fees and expenses (c) unlimited to finance any Closing Date working capital needs [subject to diligence and needs of the Borrower], and (d) unlimited to replace, backstop or cash collateralize existing letters of credit [subject to diligence and needs of the Borrower]. [...]",
+            "dls_rows": [
+              6,
+              8,
+              9,
+              17
+            ],
+            "dls_terms": [
+              "Revolving Facility",
+              "Term Loan Structure",
+              "Accordion / Incremental Facility",
+              "Amend and Extend"
+            ],
+            "is_highlighted": false,
+            "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+            "preferred_position": "$[         ]\n\nMaturity: [   ] years",
+            "source": "R14-A"
+          },
+          "type": "sub_component",
+          "value_type": "categorical",
+          "definition_source": "DLS Preferred Row 70 (Mandatory Prepayments — Term Loan Facility waterfall); Learning Material lines 3730-3748 (ratable waterfall)",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Framework governing how incremental loans participate in mandatory prepayments (asset sale sweeps, ECF sweeps, event-driven prepayments) and voluntary prepayments relative to existing loans. Present in 65% of incremental provisions. Per DLS Preferred Row 70 (Mandatory Prepayments): the term loan facility receives asset sale and ECF sweeps, and 'Lenders may elect to decline any mandatory prepayments.' Pro rata sharing ensures incremental term loans receive the same proportional share of mandatory prepayments as existing term loans, preventing the existing lenders from being diluted in the prepayment waterfall. Without pro rata sharing, the borrower could direct prepayments exclusively to incremental tranches (or exclusively away from them), distorting the relative amortization profiles.",
+      "domain_id": "debt_capacity",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "incremental",
+        "extraction_ready": true,
+        "playbook_ref": "incremental.incremental_terms",
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.12",
+          "Section 2.12(b)(iii)-(v)",
+          "Section 2.14"
+        ],
+        "shape_ref": "incremental.incremental_terms",
+        "corpus_atlas": {
+          "artifact": "analysis/incremental_language_atlas.json",
+          "version": "1.0.0",
+          "generated_at": "2026-02-17T22:31:22.512361"
+        }
+      },
+      "family_id": "debt_capacity.incremental.structural_controls",
+      "id": "debt_capacity.incremental.structural_controls.pro_rata_sharing",
+      "level": 2,
+      "name": "Pro Rata Sharing / Prepayment Waterfall",
+      "negotiation_spectrum": {
+        "aggressive_position": "Availability at closing not to exceed $[        ] which will be used to (1) pay the acquisition costs and (2) finance ordinary course working capital needs and working capital adjustments under the Acquisition Agreement\nAvailability on the Closing Date (a) unlimited amounts to finance any OID and/or upfront fees resulting from the exercise of any market flex [only applicable for deals where has pricing flex], (b) no more than $[         ] to finance the Transactions and related fees and expenses (c) unlimited to finance any Closing Date working capital needs [subject to diligence and needs of the Borrower], and (d) unlimited to replace, backstop or cash collateralize existing letters of credit [subject to diligence and needs of the Borrower]. [...]",
+        "dls_rows": [
+          6,
+          9,
+          11,
+          14,
+          17
+        ],
+        "dls_terms": [
+          "Revolving Facility",
+          "Accordion / Incremental Facility",
+          "Incremental Conditions & MFN",
+          "Delayed Draw Term Loans",
+          "Amend and Extend"
+        ],
+        "is_highlighted": false,
+        "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+        "preferred_position": "$[         ]\n\nMaturity: [   ] years",
+        "source": "R14-A"
+      },
+      "r18_concept_ids": [
+        "incremental.pro_rata_sharing"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 20,
+          "term": "LCs"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 70 (Mandatory Prepayments — sweep mechanics and decline right)"
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether the credit agreement includes a specific dollar or percentage cap limiting incremental increases to the revolving facility, or whether revolver increases are subject only to the general incremental capacity limits. A specific cap is lender-protective because it establishes a maximum revolver increase regardless of available incremental capacity. Without a specific cap, the borrower could use the entire free-and-clear or ratio basket to increase the revolver, potentially creating a much larger unfunded commitment obligation for revolving lenders than they contemplated at closing. Per DLS Preferred Row 93, commitment increases require consent of affected lenders, which may effectively serve as a cap even without a numerical limit.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "easy",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.rcf_sublimit.has_cap",
+          "level": 3,
+          "name": "RCF Cap Presence",
+          "negotiation_spectrum": {
+            "aggressive_position": "Availability at closing not to exceed $[        ] which will be used to (1) pay the acquisition costs and (2) finance ordinary course working capital needs and working capital adjustments under the Acquisition Agreement\nAvailability on the Closing Date (a) unlimited amounts to finance any OID and/or upfront fees resulting from the exercise of any market flex [only applicable for deals where has pricing flex], (b) no more than $[         ] to finance the Transactions and related fees and expenses (c) unlimited to finance any Closing Date working capital needs [subject to diligence and needs of the Borrower], and (d) unlimited to replace, backstop or cash collateralize existing letters of credit [subject to diligence and needs of the Borrower]. [...]",
+            "dls_rows": [
+              6
+            ],
+            "dls_terms": [
+              "Revolving Facility"
+            ],
+            "is_highlighted": false,
+            "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+            "preferred_position": "$[         ]\n\nMaturity: [   ] years",
+            "source": "R14-A"
+          },
+          "type": "sub_component",
+          "value_type": "boolean",
+          "definition_source": "DLS Preferred Row 93 (commitment increases — affected lender consent)",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Maximum dollar amount or EBITDA percentage by which the revolving credit facility may be increased through the incremental mechanism. Average: $7.9M across deals with explicit caps. The cap may be expressed as (1) a fixed dollar amount, (2) a percentage of EBITDA, (3) a percentage of the existing revolver commitment, or (4) a 'greater of' formulation. The cap amount reflects the revolving lenders' appetite for additional unfunded exposure — smaller caps in LMM deals (where the lender group is concentrated) and potentially larger caps in UMM/BSL deals (where the syndicate is broader and individual exposure is smaller).",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.rcf_sublimit.cap_amount",
+          "level": 3,
+          "name": "RCF Cap Amount",
+          "negotiation_spectrum": {
+            "aggressive_position": "Availability at closing not to exceed $[        ] which will be used to (1) pay the acquisition costs and (2) finance ordinary course working capital needs and working capital adjustments under the Acquisition Agreement\nAvailability on the Closing Date (a) unlimited amounts to finance any OID and/or upfront fees resulting from the exercise of any market flex [only applicable for deals where has pricing flex], (b) no more than $[         ] to finance the Transactions and related fees and expenses (c) unlimited to finance any Closing Date working capital needs [subject to diligence and needs of the Borrower], and (d) unlimited to replace, backstop or cash collateralize existing letters of credit [subject to diligence and needs of the Borrower]. [...]",
+            "dls_rows": [
+              6,
+              10
+            ],
+            "dls_terms": [
+              "Revolving Facility",
+              "Incremental Use of Proceeds"
+            ],
+            "is_highlighted": false,
+            "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+            "preferred_position": "$[         ]\n\nMaturity: [   ] years",
+            "source": "R14-A"
+          },
+          "type": "sub_component",
+          "value_type": "dollar_or_ebitda_pct",
+          "definition_source": "Review Template Row 15 (Revolver closing date draws); Review Template Row 16 (Revolver – borrowing notices); Review Template Row 17 (Revolver – additional borrowers); Review Template Row 18 (Revolver currencies); Review Template Row 24 (Incremental Amount – freebie); Review Template Row 25 (Incremental Amount – prepayments); Review Template Row 26 (Incremental Amount – ratio); Review Template Row 29 (Incremental – RCF sub-limit); Review Template Row 140 (RCF Commitment Fee); Review Template Row 160 (Ticking Fee (Term/Revolver))",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether incremental increases to the revolving credit facility require consent of all lenders (sacred right / 100% vote) or only consent of Required Lenders (majority vote). Per DLS Preferred Row 93 (Voting), 'increases or extensions in such lender's commitment' require consent of 'each lender directly and adversely affected.' This affected-lender standard is narrower than 100% vote (only revolving lenders are affected, not term loan lenders) but broader than Required Lender vote (each individual affected lender must consent, not just a majority). The sacred-right treatment reflects the unique nature of revolver commitments as unfunded obligations — increasing a lender's commitment without consent forces that lender to fund additional borrowings on demand.",
+          "dls_ref": [
+            "DLS:62:Right to Appoint Additional Agents"
+          ],
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.rcf_sublimit.sacred_right",
+          "level": 3,
+          "name": "Sacred Right Status",
+          "negotiation_spectrum": {
+            "aggressive_position": "Availability at closing not to exceed $[        ] which will be used to (1) pay the acquisition costs and (2) finance ordinary course working capital needs and working capital adjustments under the Acquisition Agreement\nAvailability on the Closing Date (a) unlimited amounts to finance any OID and/or upfront fees resulting from the exercise of any market flex [only applicable for deals where has pricing flex], (b) no more than $[         ] to finance the Transactions and related fees and expenses (c) unlimited to finance any Closing Date working capital needs [subject to diligence and needs of the Borrower], and (d) unlimited to replace, backstop or cash collateralize existing letters of credit [subject to diligence and needs of the Borrower]. [...]",
+            "dls_rows": [
+              6
+            ],
+            "dls_terms": [
+              "Revolving Facility"
+            ],
+            "is_highlighted": false,
+            "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+            "preferred_position": "$[         ]\n\nMaturity: [   ] years",
+            "source": "R14-A"
+          },
+          "type": "sub_component",
+          "value_type": "boolean",
+          "definition_source": "DLS Preferred Row 93 (Voting — commitment increases require each affected lender consent)",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Cap on the aggregate amount by which the revolving credit facility may be increased through the incremental mechanism. Present in 52.9% of incremental provisions, with an average cap of $7.9M. Per DLS Preferred Row 93 (Voting), modifications to revolving commitments may require consent of each directly affected lender — making revolver increases a quasi-sacred right. Revolver increases are more sensitive than term loan increases because they affect the revolving lenders' unfunded commitment exposure (the amount they must fund upon borrower request) and their pro rata share of LC participations. The sublimit prevents the borrower from materially diluting existing revolving lenders' positions.",
+      "domain_id": "debt_capacity",
+      "extraction_difficulty": "easy",
+      "extraction_refs": {
+        "concept_area": "incremental",
+        "extraction_ready": false,
+        "playbook_ref": null,
+        "shape_ref": null,
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.12",
+          "Section 2.12(b)(iii)-(v)",
+          "Section 2.14"
+        ],
+        "specimen_patterns": [
+          "unanimity_requirement",
+          "proviso_clause"
+        ],
+        "r15a_legacy": [
+          {
+            "added_by": "R15-A",
+            "patterns": [
+              "unanimity_requirement",
+              "proviso_clause"
+            ],
+            "source": "LME Provision Language #12 sample clause"
+          }
+        ],
+        "domain_location_inferred": true,
+        "extraction_shape": "composite",
+        "readiness_reason": "no_playbook_concept_available",
+        "section_location": "ARTICLE II (Incremental Facilities) / Section 2.14-2.20",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.925752+00:00",
+          "term_packs": {
+            "INCREMENTAL_RCF_SUBLIMIT": {
+              "label": "Incremental RCF Sublimit",
+              "category": "INCREMENTAL",
+              "exactPhrases": [
+                "RCF incremental increases subject to a cap",
+                "greater of $[•] and [1]x LTM EBITDA",
+                "super senior RCF",
+                "incremental cap",
+                "sacred right"
+              ],
+              "sectionHeaders": [
+                "Super Senior",
+                "RCF Sublimit",
+                "Revolving Facility",
+                "Incremental Facilities",
+                "Incremental Commitments",
+                "Incremental Credit Extensions",
+                "Incremental Loans",
+                "Incremental Term Loans",
+                "Incremental Borrowings",
+                "Incremental Facility",
+                "Incremental Increases",
+                "Incremental Loan",
+                "Incremental Credit",
+                "Incremental Revolving Commitments",
+                "Incremental Term Facilities",
+                "Incremental Term Facility",
+                "Incremental Term Loan Commitments",
+                "Incremental Term Loan Facility",
+                "Incremental Loan Commitments",
+                "Incremental Notes",
+                "Incremental Equivalent Debt",
+                "Incremental Extensions of Credit",
+                "Incremental Credit Facilities",
+                "Incremental Refinancing Facilities",
+                "Incremental Revolving Credit Facility Increases",
+                "Increase in Commitments",
+                "Increase in Commitment",
+                "Increases in Commitments",
+                "Commitment Increase",
+                "Commitment Increases",
+                "Additional Commitments",
+                "Additional Loan",
+                "Accordion"
+              ],
+              "semanticVariants": [
+                "revolver incremental cap",
+                "super-senior upsize limit",
+                "RCF increase restrictions"
+              ],
+              "searchThresholds": null,
+              "searchEscalation": null
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "greater of $[•] and [1]x LTM EBITDA",
+              "super senior RCF",
+              "incremental cap",
+              "sacred right",
+              "RCF incremental increases subject to a cap",
+              "Incremental Term Loan",
+              "Incremental Commitment",
+              "Incremental Facility",
+              "Incremental Revolving",
+              "Incremental Loan",
+              "Incremental Equivalent Debt",
+              "Incremental Lender",
+              "Incremental Amount",
+              "Incremental Increase",
+              "Incremental Borrowing",
+              "Incremental Joinder"
+            ],
+            "sectionHeaders": [
+              "Super Senior",
+              "RCF Sublimit",
+              "Revolving Facility",
+              "Incremental Facilities",
+              "Incremental Commitments",
+              "Incremental Credit Extensions",
+              "Incremental Loans",
+              "Incremental Term Loans",
+              "Incremental Borrowings",
+              "Incremental Facility",
+              "Incremental Increases",
+              "Incremental Loan",
+              "Incremental Credit",
+              "Incremental Revolving Commitments",
+              "Incremental Term Facilities",
+              "Incremental Term Facility",
+              "Incremental Term Loan Commitments",
+              "Incremental Term Loan Facility",
+              "Incremental Loan Commitments",
+              "Incremental Notes",
+              "Incremental Equivalent Debt",
+              "Incremental Extensions of Credit",
+              "Incremental Credit Facilities",
+              "Incremental Refinancing Facilities",
+              "Incremental Revolving Credit Facility Increases",
+              "Increase in Commitments",
+              "Increase in Commitment",
+              "Increases in Commitments",
+              "Commitment Increase",
+              "Commitment Increases",
+              "Additional Commitments",
+              "Additional Loan",
+              "Accordion"
+            ],
+            "semanticVariants": [
+              "revolver incremental cap",
+              "super-senior upsize limit",
+              "RCF increase restrictions"
+            ]
+          }
+        },
+        "corpus_atlas": {
+          "artifact": "analysis/incremental_language_atlas.json",
+          "version": "1.0.0",
+          "generated_at": "2026-02-17T22:31:22.512361"
+        }
+      },
+      "family_id": "debt_capacity.incremental.structural_controls",
+      "id": "debt_capacity.incremental.structural_controls.rcf_sublimit",
+      "level": 2,
+      "name": "Revolving Credit Facility Sublimit",
+      "negotiation_spectrum": {
+        "aggressive_position": "Availability at closing not to exceed $[        ] which will be used to (1) pay the acquisition costs and (2) finance ordinary course working capital needs and working capital adjustments under the Acquisition Agreement\nAvailability on the Closing Date (a) unlimited amounts to finance any OID and/or upfront fees resulting from the exercise of any market flex [only applicable for deals where has pricing flex], (b) no more than $[         ] to finance the Transactions and related fees and expenses (c) unlimited to finance any Closing Date working capital needs [subject to diligence and needs of the Borrower], and (d) unlimited to replace, backstop or cash collateralize existing letters of credit [subject to diligence and needs of the Borrower]. [...]",
+        "dls_rows": [
+          6
+        ],
+        "dls_terms": [
+          "Revolving Facility"
+        ],
+        "is_highlighted": false,
+        "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+        "preferred_position": "$[         ]\n\nMaturity: [   ] years",
+        "source": "R14-A"
+      },
+      "r18_concept_ids": [
+        "incremental.rcf_sublimit"
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 93 (Voting — commitment increases as affected-lender consent)",
+      "neutron_field_refs": [
+        {
+          "term_type": "INCREMENTAL_RCF_SUBLIMIT",
+          "label": "Incremental RCF Sublimit",
+          "schema_file": "incremental.schema.ts",
+          "field_count": 3,
+          "r1_domain": "debt_capacity",
+          "mapping_confidence": 0.5867,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Whether the incremental ratio test is run at the date the DDTL commitment is established (establishment-date testing) or at the date each draw is made (draw-date testing). Establishment-date testing is borrower-favorable because it locks in the ratio compliance at the time the DDTL is created, allowing draws even if leverage subsequently deteriorates. Draw-date testing is lender-protective because it requires the borrower to satisfy the ratio test each time it draws, preventing draws at leverage levels above the test threshold. Per DLS Preferred Row 15 (Limited Conditions Transaction): LCT provisions allow borrowers to elect testing at the signing date rather than the closing date, which is analogous to establishment-date testing for DDTLs.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.ddtl.testing_timing",
+          "level": 3,
+          "name": "Testing at Draw vs. Establishment",
+          "negotiation_spectrum": {
+            "aggressive_position": "No explicit borrower position stated",
+            "dls_rows": [
+              14
+            ],
+            "dls_terms": [
+              "Delayed Draw Term Loans"
+            ],
+            "is_highlighted": true,
+            "market_position": "Market likely follows lender-preferred position (no borrower alternative documented)",
+            "preferred_position": "DDTL leverage tested at draw, not commitment; pro forma compliance required assuming full draw of remaining DDTL amount",
+            "source": "R14-A"
+          },
+          "type": "sub_component",
+          "value_type": "categorical",
+          "definition_source": "DLS Preferred Row 15 (LCT — signing date vs closing date testing)",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Period during which the borrower may draw on the DDTL commitment, measured from the establishment date. Typical range: 12-24 months. Per DLS Preferred Row 14 (DDTL), the availability period is a standard DDTL feature negotiated at the time of commitment. The availability period creates optionality for the borrower — the commitment to lend is firm, but the borrower decides if and when to draw. For the lender, the availability period represents a period of unfunded exposure during which a ticking fee compensates for the committed but undrawn capacity. After the availability period expires, any undrawn DDTL commitments terminate automatically.",
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.ddtl.availability_period",
+          "level": 3,
+          "name": "Availability Period",
+          "negotiation_spectrum": {
+            "aggressive_position": "No explicit borrower position stated",
+            "dls_rows": [
+              14
+            ],
+            "dls_terms": [
+              "Delayed Draw Term Loans"
+            ],
+            "is_highlighted": true,
+            "market_position": "Market likely follows lender-preferred position (no borrower alternative documented)",
+            "preferred_position": "Short availability period expiring on earlier of fixed date and full draw; undrawn amounts terminate at expiration",
+            "source": "R14-A"
+          },
+          "type": "sub_component",
+          "value_type": "duration_months",
+          "definition_source": "DLS Preferred Row 14 (DDTL structure — availability period)",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        },
+        {
+          "corpus_prevalence": "medium",
+          "definition": "Fee payable on the undrawn DDTL commitment during the availability period, compensating the lender for maintaining the committed but unused capacity. Typically set at 50% of the applicable margin (e.g., if the applicable margin is SOFR + 400bps, the ticking fee is 200bps per annum on the undrawn amount). Per DLS Preferred Row 14 (DDTL), the ticking fee is a standard economic term negotiated alongside the DDTL commitment. The 50% convention reflects a market compromise — the lender receives partial compensation for the cost of reserving capital, while the borrower pays less than the full drawn cost for capacity it has not yet used. The ticking fee begins on the establishment date and ends on the earlier of the draw date or the availability period expiration.",
+          "dls_ref": [
+            "DLS:20:Unused Line Fee",
+            "DLS:32:Ticking fee",
+            "DLS:35:Administration fee"
+          ],
+          "domain_id": "debt_capacity",
+          "extraction_difficulty": "medium",
+          "family_id": "debt_capacity.incremental.structural_controls",
+          "id": "debt_capacity.incremental.structural_controls.ddtl.ticking_fee",
+          "level": 3,
+          "name": "Ticking Fee",
+          "negotiation_spectrum": {
+            "aggressive_position": "No explicit borrower position stated",
+            "dls_rows": [
+              14
+            ],
+            "dls_terms": [
+              "Delayed Draw Term Loans"
+            ],
+            "is_highlighted": true,
+            "market_position": "Market likely follows lender-preferred position (no borrower alternative documented)",
+            "preferred_position": "Ticking fee required on undrawn DDTL commitment from closing; standard 1.00% p.a. with no step-downs",
+            "source": "R14-A"
+          },
+          "review_ref": [
+            {
+              "coverage": "full",
+              "row": 161,
+              "term": "Delayed Draw Ticking Fee"
+            }
+          ],
+          "type": "sub_component",
+          "value_type": "percentage",
+          "definition_source": "DLS Preferred Row 14 (DDTL — ticking fee as standard economic term)",
+          "extraction_refs": {
+            "concept_area": "incremental",
+            "extraction_ready": true,
+            "corpus_atlas": {
+              "artifact": "analysis/incremental_language_atlas.json",
+              "version": "1.0.0",
+              "generated_at": "2026-02-17T22:31:22.512361"
+            }
+          }
+        }
+      ],
+      "corpus_prevalence": "medium",
+      "definition": "Delayed draw term loan (DDTL) mechanics specific to incremental facilities, governing when and how incremental commitments can be structured as DDTLs rather than immediate-draw term loans. Present in 40% of incremental provisions. A DDTL provides committed capacity that the borrower can draw in one or more installments during a specified availability period, rather than drawing the full amount at closing. Per DLS Preferred Row 14 (DDTL): DDTLs are a standard facility type with specific commitment fee, availability period, and testing mechanics. DDTLs are commonly used for acquisition financing where the closing date is uncertain, or for phased capital expenditure programs where the borrower does not need the full amount immediately.",
+      "dls_ref": [
+        "DLS:10:Incremental Term Loans may only be used ",
+        "DLS:12:Incremental Equivalent Debt"
+      ],
+      "domain_id": "debt_capacity",
+      "extraction_difficulty": "medium",
+      "extraction_refs": {
+        "concept_area": "incremental",
+        "extraction_ready": true,
+        "playbook_ref": "incremental.incremental_terms",
+        "section_locations": [
+          "ARTICLE II",
+          "Section 2.12",
+          "Section 2.12(b)(iii)-(v)",
+          "Section 2.14"
+        ],
+        "shape_ref": "incremental.incremental_terms",
+        "neutron_retrieval_pack": {
+          "source": "Neutron SCHEMA_REGISTRY runtime export",
+          "imported_at": "2026-02-17T21:59:40.834114+00:00",
+          "term_packs": {
+            "INCREMENTAL_DDTL_TESTING": {
+              "label": "Incremental DDTL Testing",
+              "category": "INCREMENTAL",
+              "exactPhrases": [
+                "Ratio can be tested either at commitment establishment",
+                "with no need to deem such amounts fully drawn thereafter",
+                "or at draw date",
+                "without netting DDTL proceeds"
+              ],
+              "sectionHeaders": [
+                "Incremental DDTLs",
+                "Delayed Draw Term Loans",
+                "Incremental Facilities",
+                "Incremental Commitments",
+                "Incremental Credit Extensions",
+                "Incremental Loans",
+                "Incremental Term Loans",
+                "Incremental Borrowings",
+                "Incremental Facility",
+                "Incremental Increases",
+                "Incremental Loan",
+                "Incremental Credit",
+                "Incremental Revolving Commitments",
+                "Incremental Term Facilities",
+                "Incremental Term Facility",
+                "Incremental Term Loan Commitments",
+                "Incremental Term Loan Facility",
+                "Incremental Loan Commitments",
+                "Incremental Notes",
+                "Incremental Equivalent Debt",
+                "Incremental Extensions of Credit",
+                "Incremental Credit Facilities",
+                "Incremental Refinancing Facilities",
+                "Incremental Revolving Credit Facility Increases",
+                "Increase in Commitments",
+                "Increase in Commitment",
+                "Increases in Commitments",
+                "Commitment Increase",
+                "Commitment Increases",
+                "Additional Commitments",
+                "Additional Loan",
+                "Accordion"
+              ],
+              "semanticVariants": [
+                "DDTL ratio testing timing",
+                "delayed draw leverage test mechanics",
+                "commitment vs draw testing"
+              ],
+              "searchThresholds": null,
+              "searchEscalation": null
+            }
+          },
+          "aggregate": {
+            "exactPhrases": [
+              "without netting DDTL proceeds",
+              "or at draw date",
+              "with no need to deem such amounts fully drawn thereafter",
+              "Ratio can be tested either at commitment establishment",
+              "Incremental Term Loan",
+              "Incremental Commitment",
+              "Incremental Facility",
+              "Incremental Revolving",
+              "Incremental Loan",
+              "Incremental Equivalent Debt",
+              "Incremental Lender",
+              "Incremental Amount",
+              "Incremental Increase",
+              "Incremental Borrowing",
+              "Incremental Joinder"
+            ],
+            "sectionHeaders": [
+              "Incremental DDTLs",
+              "Delayed Draw Term Loans",
+              "Incremental Facilities",
+              "Incremental Commitments",
+              "Incremental Credit Extensions",
+              "Incremental Loans",
+              "Incremental Term Loans",
+              "Incremental Borrowings",
+              "Incremental Facility",
+              "Incremental Increases",
+              "Incremental Loan",
+              "Incremental Credit",
+              "Incremental Revolving Commitments",
+              "Incremental Term Facilities",
+              "Incremental Term Facility",
+              "Incremental Term Loan Commitments",
+              "Incremental Term Loan Facility",
+              "Incremental Loan Commitments",
+              "Incremental Notes",
+              "Incremental Equivalent Debt",
+              "Incremental Extensions of Credit",
+              "Incremental Credit Facilities",
+              "Incremental Refinancing Facilities",
+              "Incremental Revolving Credit Facility Increases",
+              "Increase in Commitments",
+              "Increase in Commitment",
+              "Increases in Commitments",
+              "Commitment Increase",
+              "Commitment Increases",
+              "Additional Commitments",
+              "Additional Loan",
+              "Accordion"
+            ],
+            "semanticVariants": [
+              "DDTL ratio testing timing",
+              "delayed draw leverage test mechanics",
+              "commitment vs draw testing"
+            ]
+          }
+        },
+        "corpus_atlas": {
+          "artifact": "analysis/incremental_language_atlas.json",
+          "version": "1.0.0",
+          "generated_at": "2026-02-17T22:31:22.512361"
+        }
+      },
+      "family_id": "debt_capacity.incremental.structural_controls",
+      "id": "debt_capacity.incremental.structural_controls.ddtl",
+      "kct_ref": [
+        "cat2.2"
+      ],
+      "level": 2,
+      "name": "Incremental DDTL Mechanics",
+      "negotiation_spectrum": {
+        "aggressive_position": "Usage not limited",
+        "dls_rows": [
+          10,
+          12,
+          14
+        ],
+        "dls_terms": [
+          "Incremental Use of Proceeds",
+          "Incremental Equivalent Debt",
+          "Delayed Draw Term Loans"
+        ],
+        "is_highlighted": true,
+        "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+        "preferred_position": "Incremental Term Loans may only be used for Permitted Acquisitions",
+        "source": "R14-A"
+      },
+      "r18_concept_ids": [
+        "incremental.ddtl_mechanics"
+      ],
+      "review_ref": [
+        {
+          "coverage": "full",
+          "row": 27,
+          "term": "Incremental DDTLs"
+        },
+        {
+          "coverage": "full",
+          "row": 28,
+          "term": "Incremental – racking and stacking"
+        },
+        {
+          "coverage": "full",
+          "row": 30,
+          "term": "Incremental – reclassification"
+        },
+        {
+          "coverage": "full",
+          "row": 33,
+          "term": "Incremental – inside maturity basket"
+        },
+        {
+          "coverage": "full",
+          "row": 35,
+          "term": "Incremental – ROFR"
+        },
+        {
+          "coverage": "full",
+          "row": 66,
+          "term": "Negative Covenants – carryforward/carryback"
+        },
+        {
+          "coverage": "full",
+          "row": 73,
+          "term": "Negative Covenants – Indebtedness – Ratio Debt – amount"
+        },
+        {
+          "coverage": "full",
+          "row": 161,
+          "term": "Delayed Draw Ticking Fee"
+        }
+      ],
+      "type": "concept",
+      "definition_source": "DLS Preferred Row 14 (DDTL structure)",
+      "neutron_field_refs": [
+        {
+          "term_type": "INCREMENTAL_DDTL_TESTING",
+          "label": "Incremental DDTL Testing",
+          "schema_file": "incremental.schema.ts",
+          "field_count": 3,
+          "r1_domain": "debt_capacity",
+          "mapping_confidence": 0.6085,
+          "mapping_mode": "domain_scored",
+          "mapped_level": 2
+        }
+      ]
+    }
+  ],
+  "corpus_prevalence": "high",
+  "dealdata_benchmarks": {
+    "Cap on Incremental Revolvers?": {
+      "pc_dollar_median": "$10,000,000",
+      "pc_dollar_range": "$2,000,000-$150,000,000",
+      "pc_pct_range": "100.0%-100.0%"
+    },
+    "ROFR on Incremental": {
+      "pc_dollar_median": "$35,000,000",
+      "pc_dollar_range": "$35,000,000-$35,000,000",
+      "pc_pct_range": "50.0%-100.0%"
+    },
+    "Terms/Conditions": {
+      "pc_ratio_median": "4.50x",
+      "pc_ratio_range": "0.25x-6.25x"
+    }
+  },
+  "definition": "Comprehensive controls governing the incurrence, form, and terms of incremental facilities. Includes: (1) conditions precedent — rep bringdown and no-default testing; (2) credit support — same guarantors and collateral; (3) maturity/WALM floors; (4) ROFR for existing lenders; (5) usage limitations; (6) non-guarantor caps. DLS Preferred Row 11: bank preferred requires bring down of all reps, no default/EoD, ROFR on all incrementals, pro rata prepayments, no earlier maturity, no shorter WALM. Learning Material: 'Incremental facility cannot have guarantors that the initial facility does not have, and cannot have collateral that the initial facility does not have. Incremental facility should not be structurally or effectively senior to initial facility.'",
+  "dls_ref": [
+    "DLS:9:Accordion",
+    "DLS:16:Refinancing Debt",
+    "DLS:17:Amend and Extend"
+  ],
+  "domain_id": "debt_capacity",
+  "extraction_difficulty": "medium",
+  "family_id": "debt_capacity.incremental.structural_controls",
+  "id": "debt_capacity.incremental.structural_controls",
+  "level": 1,
+  "name": "Structural Controls & Protections",
+  "negotiation_spectrum": {
+    "aggressive_position": "Availability at closing not to exceed $[        ] which will be used to (1) pay the acquisition costs and (2) finance ordinary course working capital needs and working capital adjustments under the Acquisition Agreement\nAvailability on the Closing Date (a) unlimited amounts to finance any OID and/or upfront fees resulting from the exercise of any market flex [only applicable for deals where has pricing flex], (b) no more than $[         ] to finance the Transactions and related fees and expenses (c) unlimited to finance any Closing Date working capital needs [subject to diligence and needs of the Borrower], and (d) unlimited to replace, backstop or cash collateralize existing letters of credit [subject to diligence and needs of the Borrower]. [...]",
+    "dls_rows": [
+      6,
+      8,
+      9,
+      14,
+      16,
+      17
+    ],
+    "dls_terms": [
+      "Revolving Facility",
+      "Term Loan Structure",
+      "Accordion / Incremental Facility",
+      "Delayed Draw Term Loans",
+      "Refinancing Debt",
+      "Amend and Extend"
+    ],
+    "is_highlighted": false,
+    "market_position": "Market landing between lender-preferred and borrower-aggressive positions; specific terms deal-dependent.",
+    "preferred_position": "Strict incremental conditions: full rep bringdown, no default, ROFR, pari passu collateral, MFN for life, inside-maturity prohibition",
+    "source": "R14-A"
+  },
+  "r18_concept_ids": [
+    "incremental.conditions_precedent",
+    "incremental.rofr",
+    "incremental.maturity_walm",
+    "incremental.credit_support",
+    "incremental.pro_rata_sharing",
+    "incremental.rcf_sublimit",
+    "incremental.ddtl_mechanics"
+  ],
+  "red_flags": [
+    {
+      "category": "below_market",
+      "concept_ids": [
+        "debt_capacity.incremental.ied",
+        "debt_capacity.incremental.structural_controls",
+        "debt_capacity.incremental.acquisition_debt",
+        "debt_capacity.incremental.acquisition_debt.assumed",
+        "debt_capacity.incremental.acquisition_debt.assumed.could_incur_test"
+      ],
+      "id": "rf_017",
+      "market_context": "DLS preferred: incremental usage limited to Permitted Acquisitions",
+      "severity": "medium",
+      "source": "DLS Preferred",
+      "source_tier": 1,
+      "text": "Incremental debt permitted for purposes beyond Permitted Acquisitions — preferred position limits to acquisition financing only"
+    },
+    {
+      "category": "missing_protection",
+      "concept_ids": [
+        "debt_capacity.incremental.ied",
+        "debt_capacity.incremental.structural_controls"
+      ],
+      "id": "rf_018",
+      "market_context": "DLS preferred: must have ROFR on all Incremental Facilities",
+      "severity": "medium",
+      "source": "DLS Preferred",
+      "source_tier": 1,
+      "text": "No ROFR on incremental facilities — existing lenders have no right to participate in new issuances"
+    },
+    {
+      "category": "structural_risk",
+      "concept_ids": [
+        "debt_capacity.incremental.ied",
+        "debt_capacity.incremental.structural_controls",
+        "debt_capacity.incremental.builders.voluntary_prepay",
+        "debt_capacity.incremental.builders.other.declined_proceeds",
+        "debt_capacity.incremental.builders.voluntary_prepay.scope"
+      ],
+      "id": "rf_019",
+      "market_context": "DLS preferred: pro rata in all mandatory and voluntary prepayments; never greater than pro rata",
+      "severity": "high",
+      "source": "DLS Preferred",
+      "source_tier": 1,
+      "text": "Incremental debt not required to share pro rata in mandatory and voluntary prepayments — may receive greater-than-pro-rata treatment"
+    },
+    {
+      "category": "below_market",
+      "concept_ids": [
+        "debt_capacity.incremental.ied",
+        "debt_capacity.incremental.structural_controls",
+        "debt_capacity.incremental.stacking_reclass.stacking.series_transactions"
+      ],
+      "id": "rf_051",
+      "market_context": "PC market: common in CMM/LMM; atypical in UMM/BSLR",
+      "severity": "low",
+      "source": "PC Term Comparison",
+      "source_tier": 1,
+      "text": "No existing lender ROFR on incremental facilities in CMM/LMM transactions — below market for direct lending"
+    },
+    {
+      "category": "missing_protection",
+      "concept_ids": [
+        "debt_capacity.incremental.structural_controls",
+        "debt_capacity.liens",
+        "debt_capacity.liens.non_collateral_liens.scope.unrestricted_sub_assets"
+      ],
+      "id": "rf_063",
+      "market_context": "J.Crew blocker is standard in PC; absence enables drop-down asset stripping",
+      "severity": "high",
+      "source": "LME Provisions",
+      "source_tier": 2,
+      "text": "No J.Crew blocker — material IP or assets can leak to unrestricted subsidiaries enabling drop-down LME"
+    },
+    {
+      "category": "documentation_gap",
+      "concept_ids": [
+        "debt_capacity.incremental.structural_controls",
+        "debt_capacity.liens",
+        "debt_capacity.liens.liens_on_excluded_property.definition_scope",
+        "debt_capacity.liens.liens_on_excluded_property.definition_scope.foreign",
+        "debt_capacity.liens.liens_on_excluded_property.definition_scope.leased_real"
+      ],
+      "id": "rf_064",
+      "market_context": "Blocker should cover both transfer and designation prongs for all material assets",
+      "severity": "medium",
+      "source": "LME Provisions",
+      "source_tier": 2,
+      "text": "J.Crew blocker has weak definition of 'Material Intellectual Property' or only covers one prong (transfer or designation, not both)"
+    },
+    {
+      "category": "missing_protection",
+      "concept_ids": [
+        "debt_capacity.incremental.structural_controls",
+        "debt_capacity.liens",
+        "debt_capacity.liens.agent_ica_authority.lien_release.automatic",
+        "debt_capacity.indebtedness.incremental_equivalent.non_guarantor.structural_seniority_risk",
+        "debt_capacity.indebtedness.non_guarantor"
+      ],
+      "id": "rf_065",
+      "market_context": "Chewy blocker should prevent automatic release; require sale to non-affiliate for bona fide business purpose",
+      "severity": "high",
+      "source": "LME Provisions",
+      "source_tier": 2,
+      "text": "No Chewy blocker — subsidiary guarantors automatically released when ceasing to be wholly owned after partial equity transfer"
+    },
+    {
+      "category": "missing_protection",
+      "concept_ids": [
+        "debt_capacity.incremental.structural_controls"
+      ],
+      "id": "rf_067",
+      "market_context": "Envision blocker limits unsub transfers to specific investment baskets with aggregate caps",
+      "severity": "medium",
+      "source": "LME Provisions",
+      "source_tier": 2,
+      "text": "No Envision blocker — no cap on investment basket usage for unrestricted subsidiary transfers"
+    },
+    {
+      "category": "missing_protection",
+      "concept_ids": [
+        "debt_capacity.incremental.subordinated_debt.intercreditor",
+        "debt_capacity.incremental.structural_controls",
+        "debt_capacity.liens.permitted_pari_passu_liens.waterfall.pro_rata"
+      ],
+      "id": "rf_070",
+      "market_context": "NYDJ blocker should protect both pro rata sharing AND waterfall order of priorities",
+      "severity": "high",
+      "source": "LME Provisions",
+      "source_tier": 2,
+      "text": "No NYDJ blocker — pro rata sharing and waterfall provisions not protected as sacred rights"
+    },
+    {
+      "category": "missing_protection",
+      "concept_ids": [
+        "debt_capacity.indebtedness.intercompany_debt",
+        "debt_capacity.incremental.structural_controls",
+        "debt_capacity.indebtedness.intercompany_debt.nlp_to_nlp.unrestricted",
+        "debt_capacity.indebtedness.intercompany_debt.lp_to_lp.unrestricted",
+        "debt_capacity.indebtedness.non_guarantor.entity_scope.foreign_subs"
+      ],
+      "id": "rf_072",
+      "market_context": "Unsubs should be prohibited from holding debt or liens recourse to restricted group at all times",
+      "severity": "high",
+      "source": "LME Provisions",
+      "source_tier": 2,
+      "text": "No restriction on unrestricted subsidiaries holding debt of the restricted group — enables double-dip/pari-plus structures"
+    },
+    {
+      "category": "missing_protection",
+      "concept_ids": [
+        "debt_capacity.incremental.structural_controls"
+      ],
+      "id": "rf_073",
+      "market_context": "Assignments to borrower should require cash consideration and pro rata offer to all lenders",
+      "severity": "medium",
+      "source": "LME Provisions",
+      "source_tier": 2,
+      "text": "No express restriction on non-pro-rata purchases or exchanges — allows selective debt retirement at favorable prices"
+    },
+    {
+      "category": "missing_protection",
+      "concept_ids": [
+        "debt_capacity.incremental.ied",
+        "debt_capacity.incremental.structural_controls",
+        "debt_capacity.incremental.mfn.exceptions.interest_type",
+        "debt_capacity.incremental.contribution_debt.structural_requirements",
+        "debt_capacity.incremental.contribution_debt.structural_requirements.subordination"
+      ],
+      "id": "rf_074",
+      "market_context": "Wesco/Incora blocker should be in sacred rights to prevent majority vote manipulation",
+      "severity": "high",
+      "source": "LME Provisions",
+      "source_tier": 2,
+      "text": "No Wesco/Incora blocker — no restriction on issuing new debt to influence voting thresholds"
+    },
+    {
+      "category": "documentation_gap",
+      "concept_ids": [
+        "debt_capacity.incremental.structural_controls"
+      ],
+      "id": "rf_075",
+      "market_context": "'Effect of' language was relied upon in Wesco/Incora to void uptier exchange",
+      "severity": "medium",
+      "source": "LME Provisions",
+      "source_tier": 2,
+      "text": "Sacred rights do not include 'effect of' language — amendments that achieve the same result without formally amending sacred rights may be permitted"
+    },
+    {
+      "category": "missing_protection",
+      "concept_ids": [
+        "debt_capacity.indebtedness.refinancing_debt",
+        "debt_capacity.incremental.structural_controls"
+      ],
+      "id": "rf_076",
+      "market_context": "Better Health blocker requires pro rata extension offers protected as a sacred right",
+      "severity": "medium",
+      "source": "LME Provisions",
+      "source_tier": 2,
+      "text": "No Better Health blocker — amend-and-extend provisions can be used for non-pro-rata LME exchanges"
+    },
+    {
+      "category": "missing_protection",
+      "concept_ids": [
+        "debt_capacity.incremental.subordinated_debt",
+        "debt_capacity.incremental.structural_controls",
+        "debt_capacity.incremental.subordinated_debt.contractual.second_lien",
+        "debt_capacity.incremental.subordinated_debt.structural"
+      ],
+      "id": "rf_077",
+      "market_context": "Omni-blocker prevents all priming financing/liability management transactions, protecting against known and unknown LME forms",
+      "severity": "medium",
+      "source": "LME Provisions",
+      "source_tier": 2,
+      "text": "No omni-blocker or general anti-LME covenant — no catch-all protection against novel LME structures"
+    },
+    {
+      "category": "missing_protection",
+      "concept_ids": [
+        "debt_capacity.incremental.structural_controls"
+      ],
+      "id": "rf_078",
+      "market_context": "Non-Serta/NYDJ blockers should be embedded in sacred rights for affected lender protection",
+      "severity": "high",
+      "source": "LME Provisions",
+      "source_tier": 2,
+      "text": "LME blockers (J.Crew, Chewy, Envision) not included as sacred rights — can be removed by Required Lender majority"
+    },
+    {
+      "category": "missing_protection",
+      "concept_ids": [
+        "debt_capacity.incremental.structural_controls",
+        "debt_capacity.liens"
+      ],
+      "id": "rf_102",
+      "market_context": "Template: J.Crew standard; Pluralsight and Envision increasingly expected in post-LME era",
+      "severity": "high",
+      "source": "Review Template",
+      "source_tier": 2,
+      "text": "No J.Crew, Pluralsight, or Envision protections embedded in negative covenants or sacred rights"
+    }
+  ],
+  "type": "family",
+  "definition_source": "DLS Preferred Row 11; Learning Material lines 1497-1511; PC Term Comparison Incremental section",
+  "market_benchmarks": {
+    "maturity_walm": "Must not mature inside existing term loans; avoid inside maturity exception except customary bridges/escrow (PCTC line 248)",
+    "inside_maturity_basket_aggressive": "50-100% of EBITDA in aggressive UMM/BSL (PCTC line 249)",
+    "rofr_lmm_cmm": "Common/standard in CMM and LMM (PCTC line 253)",
+    "rofr_umm_bsl": "Atypical in aggressive UMM/BSL (PCTC line 252)",
+    "terms": "Same as existing or market at time with typical protections (PCTC line 250)",
+    "bank_preferred": "No inside maturity exception; ROFR required; pro rata in all prepayments (DLS Row 9)",
+    "_source": "PC Term Comparison lines 247-256; DLS Preferred Row 9"
+  },
+  "pc_ref": [
+    "Incremental"
+  ],
+  "extraction_refs": {
+    "concept_area": "incremental",
+    "extraction_ready": true,
+    "corpus_atlas": {
+      "artifact": "analysis/incremental_language_atlas.json",
+      "version": "1.0.0",
+      "generated_at": "2026-02-17T22:31:22.512361"
+    },
+    "corpus_exact_phrases": [
+      "Administrative Agent",
+      "consent of",
+      "no Default",
+      "no Event of Default",
+      "pari passu",
+      "identical terms",
+      "same terms",
+      "fungible",
+      "maturity date",
+      "weighted average life",
+      "amortization",
+      "Incremental Joinder",
+      "Incremental Amendment"
+    ]
+  }
+}

@@ -37,6 +37,9 @@ Thumbs.db
 node_modules/
 .next/
 
+# Environment secrets
+.env
+
 # Temp
 *.tmp
 *.bak

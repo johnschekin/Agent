@@ -1,0 +1,2779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent — Family Links Redesign Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  /* Surfaces — wider lightness steps than before */
+  --canvas: #0A0D10;
+  --surface-1: #12161B;
+  --surface-2: #1A1F27;
+  --surface-3: #232932;
+  --surface-4: #2C333D;
+  --overlay: #2A3040;
+
+  /* Text */
+  --text-primary: #E8ECF0;
+  --text-secondary: #8893A2;
+  --text-muted: #5A6577;
+  --text-inverse: #0A0D10;
+
+  /* Accents — calibrated for WCAG AA on dark */
+  --blue-500: #3B82F6;
+  --blue-400: #60A5FA;
+  --blue-600: #2563EB;
+  --blue-glow: rgba(59, 130, 246, 0.15);
+  --green-500: #22C55E;
+  --green-400: #4ADE80;
+  --green-glow: rgba(34, 197, 94, 0.15);
+  --red-500: #EF4444;
+  --red-400: #F87171;
+  --red-glow: rgba(239, 68, 68, 0.15);
+  --amber-500: #F59E0B;
+  --amber-400: #FBBF24;
+  --amber-glow: rgba(245, 158, 11, 0.15);
+  --purple-500: #A855F7;
+  --purple-400: #C084FC;
+  --purple-glow: rgba(168, 85, 247, 0.15);
+  --cyan-500: #06B6D4;
+  --cyan-400: #22D3EE;
+  --teal-500: #14B8A6;
+
+  /* Borders */
+  --border: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(255, 255, 255, 0.10);
+  --border-active: rgba(255, 255, 255, 0.14);
+
+  /* Shadows */
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.04);
+  --shadow-raised: 0 4px 12px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.06);
+  --shadow-overlay: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06);
+  --shadow-glow-blue: 0 0 20px rgba(59, 130, 246, 0.15);
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+
+  /* Type */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+
+  /* Sizing */
+  --rail-width: 56px;
+  --flyout-width: 240px;
+  --family-sidebar: 220px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background: var(--canvas);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+::selection { background: rgba(59, 130, 246, 0.3); }
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--surface-4); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ═══════════════════════════════════════════════════════════
+   LAYOUT SHELL
+   ═══════════════════════════════════════════════════════════ */
+.app {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── Icon Rail ── */
+.icon-rail {
+  width: var(--rail-width);
+  flex-shrink: 0;
+  background: var(--surface-1);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 0;
+  z-index: 50;
+  position: relative;
+}
+
+.rail-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--blue-500), var(--purple-500));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  color: white;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-glow-blue);
+}
+
+.rail-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+.rail-item {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all 0.15s ease;
+  position: relative;
+  font-size: 18px;
+}
+
+.rail-item:hover {
+  background: var(--surface-3);
+  color: var(--text-secondary);
+}
+
+.rail-item.active {
+  background: var(--blue-glow);
+  color: var(--blue-400);
+  box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.2);
+}
+
+.rail-item .badge-dot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--red-500);
+}
+
+.rail-separator {
+  width: 24px;
+  height: 1px;
+  background: var(--border);
+  margin: 4px 0;
+}
+
+.rail-bottom {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+/* ── Flyout Panel ── */
+.flyout {
+  width: 0;
+  overflow: hidden;
+  background: var(--surface-1);
+  border-right: 1px solid var(--border);
+  transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 45;
+  flex-shrink: 0;
+}
+
+.flyout.open {
+  width: var(--flyout-width);
+}
+
+.flyout-inner {
+  width: var(--flyout-width);
+  padding: 16px 0;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.flyout-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  padding: 8px 16px 6px;
+}
+
+.flyout-link {
+  display: block;
+  padding: 7px 16px 7px 20px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.1s ease;
+  cursor: pointer;
+  border-left: 2px solid transparent;
+}
+
+.flyout-link:hover {
+  color: var(--text-primary);
+  background: var(--surface-2);
+}
+
+.flyout-link.active {
+  color: var(--blue-400);
+  background: var(--blue-glow);
+  border-left-color: var(--blue-500);
+}
+
+/* ── Main Content ── */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PAGE HEADER (Links)
+   ═══════════════════════════════════════════════════════════ */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-1);
+  flex-shrink: 0;
+}
+
+.page-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.page-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.page-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Tabs ── */
+.tab-bar {
+  display: flex;
+  gap: 0;
+  padding: 0 24px;
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.tab {
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s ease;
+  position: relative;
+  user-select: none;
+}
+
+.tab:hover { color: var(--text-secondary); }
+
+.tab.active {
+  color: var(--blue-400);
+  border-bottom-color: var(--blue-500);
+}
+
+.tab .tab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 0 5px;
+  margin-left: 6px;
+  background: var(--surface-4);
+  color: var(--text-secondary);
+}
+
+.tab.active .tab-badge {
+  background: var(--blue-glow);
+  color: var(--blue-400);
+}
+
+.tab .tab-badge.alert {
+  background: var(--red-glow);
+  color: var(--red-400);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BUTTONS
+   ═══════════════════════════════════════════════════════════ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: var(--font-sans);
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--blue-500);
+  color: white;
+  box-shadow: 0 1px 3px rgba(59, 130, 246, 0.3);
+}
+.btn-primary:hover {
+  background: var(--blue-600);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-hover);
+}
+.btn-secondary:hover {
+  background: var(--surface-3);
+  color: var(--text-primary);
+  border-color: var(--border-active);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+.btn-ghost:hover {
+  background: var(--surface-3);
+  color: var(--text-primary);
+}
+
+.btn-danger {
+  background: var(--red-glow);
+  color: var(--red-400);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+.btn-danger:hover {
+  background: rgba(239, 68, 68, 0.2);
+}
+
+.btn-sm { padding: 4px 10px; font-size: 11px; }
+.btn-icon {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-icon:hover {
+  background: var(--surface-3);
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BADGES
+   ═══════════════════════════════════════════════════════════ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.badge-default { background: var(--surface-3); color: var(--text-secondary); }
+.badge-blue { background: var(--blue-glow); color: var(--blue-400); }
+.badge-green { background: var(--green-glow); color: var(--green-400); }
+.badge-red { background: var(--red-glow); color: var(--red-400); }
+.badge-amber { background: var(--amber-glow); color: var(--amber-400); }
+.badge-purple { background: var(--purple-glow); color: var(--purple-400); }
+
+.badge-dot-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   KPI METRIC TILES
+   ═══════════════════════════════════════════════════════════ */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-1);
+  flex-shrink: 0;
+}
+
+.kpi-tile {
+  background: var(--surface-2);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.kpi-tile::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.kpi-tile.kpi-blue::before { background: var(--blue-500); }
+.kpi-tile.kpi-green::before { background: var(--green-500); }
+.kpi-tile.kpi-amber::before { background: var(--amber-500); }
+.kpi-tile.kpi-red::before { background: var(--red-500); }
+.kpi-tile.kpi-purple::before { background: var(--purple-500); }
+
+.kpi-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.kpi-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.kpi-value {
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.kpi-trend {
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.kpi-trend.up { color: var(--green-400); }
+.kpi-trend.down { color: var(--red-400); }
+
+.kpi-sparkline {
+  margin-top: 8px;
+  height: 24px;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.kpi-sparkline .bar {
+  flex: 1;
+  border-radius: 1px;
+  min-height: 2px;
+  transition: height 0.3s ease;
+}
+
+.kpi-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REVIEW TAB — 3-PANE LAYOUT
+   ═══════════════════════════════════════════════════════════ */
+.review-layout {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ── Family Sidebar ── */
+.family-sidebar {
+  width: var(--family-sidebar);
+  flex-shrink: 0;
+  background: var(--surface-1);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.family-search {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.family-search input {
+  width: 100%;
+  padding: 6px 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-primary);
+  font-size: 12px;
+  font-family: var(--font-sans);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.family-search input:focus {
+  border-color: var(--blue-500);
+  box-shadow: 0 0 0 2px var(--blue-glow);
+}
+
+.family-search input::placeholder { color: var(--text-muted); }
+
+.family-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 0;
+}
+
+.family-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  border-left: 2px solid transparent;
+}
+
+.family-item:hover { background: var(--surface-2); }
+
+.family-item.active {
+  background: var(--blue-glow);
+  border-left-color: var(--blue-500);
+}
+
+.family-item-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.family-item.active .family-item-name { color: var(--blue-400); }
+
+.family-item-stats {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.family-item-count {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+}
+
+.family-item-pending {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 0 4px;
+  background: var(--amber-glow);
+  color: var(--amber-400);
+}
+
+/* ── Link Table ── */
+.link-table-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-1);
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  background: var(--surface-3);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.1s ease;
+  border: 1px solid transparent;
+}
+
+.filter-chip:hover { border-color: var(--border-hover); }
+.filter-chip.active {
+  background: var(--blue-glow);
+  color: var(--blue-400);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+.link-table-wrap {
+  flex: 1;
+  overflow: auto;
+}
+
+.link-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.link-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.link-table th {
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+}
+
+.link-table th:hover { color: var(--text-secondary); }
+
+.link-table th .sort-icon {
+  font-size: 9px;
+  margin-left: 3px;
+  opacity: 0.4;
+}
+
+.link-table th .sort-icon.active { opacity: 1; color: var(--blue-400); }
+
+.link-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.link-table tr {
+  transition: background 0.1s ease;
+  border-left: 2px solid transparent;
+}
+
+.link-table tbody tr:hover { background: var(--surface-2); }
+
+.link-table tbody tr.selected {
+  background: var(--blue-glow);
+  border-left-color: var(--blue-500);
+}
+
+.link-table tbody tr.focused {
+  background: rgba(59, 130, 246, 0.08);
+  border-left-color: var(--blue-400);
+  box-shadow: inset 0 1px 0 var(--blue-glow), inset 0 -1px 0 var(--blue-glow);
+}
+
+.doc-id {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--blue-400);
+  cursor: pointer;
+}
+
+.doc-id:hover { text-decoration: underline; }
+
+.heading-text {
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-primary);
+}
+
+.confidence-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.confidence-bar-track {
+  width: 48px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--surface-4);
+  overflow: hidden;
+}
+
+.confidence-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.confidence-val {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  min-width: 28px;
+}
+
+/* ── Reader Pane ── */
+.reader-pane {
+  width: 420px;
+  flex-shrink: 0;
+  background: var(--surface-1);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.reader-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+.reader-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.reader-breadcrumbs .crumb { color: var(--text-secondary); }
+.reader-breadcrumbs .sep { color: var(--text-muted); opacity: 0.5; }
+
+.reader-family-badges {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.reader-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.reader-text {
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.reader-text .highlight-match {
+  background: var(--green-glow);
+  color: var(--green-400);
+  border-radius: 2px;
+  padding: 0 2px;
+}
+
+.reader-text .highlight-exclude {
+  background: var(--red-glow);
+  color: var(--red-400);
+  border-radius: 2px;
+  padding: 0 2px;
+  text-decoration: line-through;
+  text-decoration-color: rgba(239, 68, 68, 0.4);
+}
+
+.reader-text .defined-term {
+  border-bottom: 1px dotted var(--blue-400);
+  color: var(--text-primary);
+  cursor: help;
+}
+
+.reader-text .dna-phrase {
+  border-bottom: 1px solid var(--purple-400);
+  color: var(--text-primary);
+}
+
+.why-matched-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.why-matched-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.factor-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 0;
+}
+
+.factor-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  min-width: 130px;
+}
+
+.factor-bar-track {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--surface-4);
+  overflow: hidden;
+}
+
+.factor-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.factor-score {
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  min-width: 30px;
+  text-align: right;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   KEYBOARD HELP BAR
+   ═══════════════════════════════════════════════════════════ */
+.keyboard-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 20px;
+  background: var(--surface-2);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.keyboard-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.keyboard-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.kbd-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  background: var(--surface-4);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-hover);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.3);
+}
+
+.kbd-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-left: 2px;
+}
+
+.session-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.progress-bar-track {
+  width: 120px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--surface-4);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--blue-500);
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TRIAGE MODE
+   ═══════════════════════════════════════════════════════════ */
+.triage-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--canvas);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.triage-overlay.visible {
+  display: flex;
+  animation: triageFadeIn 0.2s ease;
+}
+
+@keyframes triageFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.triage-top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px;
+}
+
+.triage-top-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.triage-counter {
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+}
+
+.triage-card {
+  width: 700px;
+  max-height: calc(100vh - 200px);
+  background: var(--surface-1);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-overlay);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.triage-card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.triage-card-breadcrumbs {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.triage-card-breadcrumbs .crumb { color: var(--text-secondary); font-weight: 500; }
+.triage-card-breadcrumbs .sep { color: var(--text-muted); opacity: 0.4; margin: 0 4px; }
+
+.triage-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.triage-card-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.triage-section-text {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+}
+
+.triage-card-footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+.triage-proposal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.triage-proposal-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.triage-proposal-family {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.triage-factors {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.triage-factor {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.triage-factor-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.triage-factor-bar {
+  height: 3px;
+  border-radius: 1.5px;
+  background: var(--surface-4);
+  overflow: hidden;
+}
+
+.triage-factor-bar-fill {
+  height: 100%;
+  border-radius: 1.5px;
+}
+
+.triage-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 8px 0;
+}
+
+.triage-action {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 20px;
+  border-radius: var(--radius-lg);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: none;
+  font-family: var(--font-sans);
+}
+
+.triage-action-reject {
+  background: var(--red-glow);
+  color: var(--red-400);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+.triage-action-reject:hover { background: rgba(239, 68, 68, 0.2); }
+
+.triage-action-defer {
+  background: var(--surface-3);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+.triage-action-defer:hover { background: var(--surface-4); }
+
+.triage-action-approve {
+  background: var(--green-glow);
+  color: var(--green-400);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+.triage-action-approve:hover { background: rgba(34, 197, 94, 0.2); }
+
+.triage-progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.triage-progress-track {
+  flex: 1;
+  height: 3px;
+  border-radius: 1.5px;
+  background: var(--surface-3);
+  overflow: hidden;
+}
+
+.triage-progress-fill {
+  height: 100%;
+  border-radius: 1.5px;
+  background: var(--blue-500);
+  transition: width 0.3s ease;
+}
+
+.triage-progress-text {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  min-width: 160px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   QUERY TAB
+   ═══════════════════════════════════════════════════════════ */
+.query-layout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  display: none;
+}
+
+.query-layout.visible { display: flex; }
+
+.dsl-bar-wrapper {
+  padding: 16px 20px 0;
+  flex-shrink: 0;
+}
+
+.dsl-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.dsl-bar:focus-within {
+  border-color: var(--blue-500);
+  box-shadow: 0 0 0 3px var(--blue-glow);
+}
+
+.dsl-prefix {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.dsl-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 13px;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+  caret-color: var(--blue-400);
+}
+
+.dsl-input::placeholder { color: var(--text-muted); }
+
+.dsl-count {
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--blue-400);
+  background: var(--blue-glow);
+  padding: 3px 10px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.ast-builder {
+  margin: 12px 20px;
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+  box-shadow: var(--shadow-card);
+  flex-shrink: 0;
+}
+
+.ast-group {
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--border-hover);
+  padding: 10px;
+  position: relative;
+}
+
+.ast-group-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.ast-op-toggle {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.1s;
+  border: none;
+  font-family: var(--font-sans);
+}
+
+.ast-op-and { background: var(--blue-glow); color: var(--blue-400); }
+.ast-op-or { background: var(--purple-glow); color: var(--purple-400); }
+
+.ast-children {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.ast-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--surface-3);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  transition: all 0.1s;
+  cursor: default;
+}
+
+.ast-chip:hover { border-color: var(--border-hover); }
+
+.ast-chip.negated {
+  background: var(--red-glow);
+  color: var(--red-400);
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.ast-chip.negated::before {
+  content: 'NOT';
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-right: 2px;
+  opacity: 0.7;
+}
+
+.ast-chip-remove {
+  font-size: 14px;
+  color: var(--text-muted);
+  cursor: pointer;
+  margin-left: 2px;
+  line-height: 1;
+}
+
+.ast-chip-remove:hover { color: var(--red-400); }
+
+.ast-connector {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  padding: 0 2px;
+}
+
+.ast-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 8px;
+  border-radius: var(--radius-md);
+  font-size: 11px;
+  color: var(--text-muted);
+  border: 1px dashed var(--border);
+  cursor: pointer;
+  transition: all 0.15s;
+  background: transparent;
+  font-family: var(--font-sans);
+}
+
+.ast-add:hover {
+  border-color: var(--blue-500);
+  color: var(--blue-400);
+  background: var(--blue-glow);
+}
+
+.query-actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  background: var(--surface-1);
+  flex-shrink: 0;
+}
+
+/* ── Preview Candidates ── */
+.preview-section {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 20px 20px;
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  position: sticky;
+  top: 0;
+  background: var(--canvas);
+  z-index: 2;
+}
+
+.preview-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.tier-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TRAFFIC-LIGHT AST
+   ═══════════════════════════════════════════════════════════ */
+.tl-ast {
+  padding: 16px;
+  background: var(--surface-2);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.tl-node {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.tl-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.tl-indicator.pass { background: var(--green-500); box-shadow: 0 0 6px var(--green-glow); }
+.tl-indicator.fail { background: var(--red-500); box-shadow: 0 0 6px var(--red-glow); }
+.tl-indicator.neutral { background: var(--surface-4); }
+
+.tl-content {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.tl-content .tl-op {
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+.tl-children {
+  padding-left: 18px;
+  border-left: 1px solid var(--border);
+  margin-left: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   COMMAND PALETTE
+   ═══════════════════════════════════════════════════════════ */
+.command-palette-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 20vh;
+}
+
+.command-palette-overlay.visible { display: flex; }
+
+.command-palette {
+  width: 520px;
+  background: var(--surface-1);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-overlay);
+  overflow: hidden;
+  animation: paletteSlideIn 0.15s ease;
+}
+
+@keyframes paletteSlideIn {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.palette-input-wrap {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  gap: 10px;
+}
+
+.palette-icon {
+  color: var(--text-muted);
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.palette-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+}
+
+.palette-input::placeholder { color: var(--text-muted); }
+
+.palette-results {
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 6px;
+}
+
+.palette-result {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.palette-result:hover, .palette-result.focused { background: var(--surface-3); }
+
+.palette-result-icon {
+  font-size: 14px;
+  color: var(--text-muted);
+  width: 20px;
+  text-align: center;
+}
+
+.palette-result-text {
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.palette-result-hint {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.palette-footer {
+  padding: 8px 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BATCH ACTION BAR (floating)
+   ═══════════════════════════════════════════════════════════ */
+.batch-bar {
+  position: fixed;
+  bottom: 56px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: var(--surface-2);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-overlay);
+  z-index: 60;
+  animation: batchBarIn 0.2s ease;
+}
+
+.batch-bar.visible { display: flex; }
+
+@keyframes batchBarIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(8px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.batch-count {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--blue-400);
+}
+
+.batch-sep {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DASHBOARD TAB (Matrix)
+   ═══════════════════════════════════════════════════════════ */
+.dashboard-layout {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: none;
+}
+
+.dashboard-layout.visible { display: block; }
+
+.matrix-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 12px;
+}
+
+.matrix-table th {
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+}
+
+.matrix-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.matrix-family-name {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.coverage-cell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.coverage-mini-bar {
+  width: 60px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--surface-4);
+  overflow: hidden;
+}
+
+.coverage-mini-fill {
+  height: 100%;
+  border-radius: 2px;
+}
+
+.staleness-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.staleness-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.staleness-fresh { background: var(--green-500); }
+.staleness-stale { background: var(--amber-500); }
+.staleness-old { background: var(--red-500); }
+
+/* ═══════════════════════════════════════════════════════════
+   ANIMATIONS & UTILITIES
+   ═══════════════════════════════════════════════════════════ */
+.fade-in {
+  animation: fadeIn 0.15s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hidden { display: none !important; }
+
+.mono { font-family: var(--font-mono); }
+.tabular { font-variant-numeric: tabular-nums; }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════ */
+@media (max-width: 1200px) {
+  .reader-pane { width: 340px; }
+  .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ════════════════════════════════════════════════
+       ICON RAIL
+       ════════════════════════════════════════════════ -->
+  <nav class="icon-rail">
+    <div class="rail-logo">A</div>
+
+    <div class="rail-group">
+      <div class="rail-item" data-module="corpus" title="Corpus">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      </div>
+      <div class="rail-item" data-module="documents" title="Documents">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </div>
+      <div class="rail-item active" data-module="linking" title="Family Links">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        <span class="badge-dot"></span>
+      </div>
+    </div>
+
+    <div class="rail-separator"></div>
+
+    <div class="rail-group">
+      <div class="rail-item" data-module="analysis" title="Analysis">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      </div>
+      <div class="rail-item" data-module="discovery" title="Discovery">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+      <div class="rail-item" data-module="strategies" title="Strategies">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+      </div>
+    </div>
+
+    <div class="rail-bottom">
+      <div class="rail-separator"></div>
+      <div class="rail-item" data-module="system" title="System">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════════════════
+       FLYOUT NAV
+       ════════════════════════════════════════════════ -->
+  <aside class="flyout" id="flyout">
+    <div class="flyout-inner" id="flyout-inner"></div>
+  </aside>
+
+  <!-- ════════════════════════════════════════════════
+       MAIN CONTENT
+       ════════════════════════════════════════════════ -->
+  <div class="main-content">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="page-header-left">
+        <div>
+          <div class="page-title">Family Links</div>
+          <div class="page-subtitle">Section-to-Ontology Linking System</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-ghost btn-sm" title="Ctrl+Z" onclick="alert('Undo last action')">↶ Undo</button>
+        <button class="btn btn-ghost btn-sm" title="Ctrl+Shift+Z">↷ Redo</button>
+        <button class="btn btn-secondary btn-sm" onclick="togglePalette()">⌘K</button>
+        <button class="btn btn-primary btn-sm" onclick="toggleTriage()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          Focus Mode
+        </button>
+      </div>
+    </div>
+
+    <!-- Tab Bar -->
+    <div class="tab-bar">
+      <div class="tab active" data-tab="review">Review <span class="tab-badge">147</span></div>
+      <div class="tab" data-tab="coverage">Coverage <span class="tab-badge">312</span></div>
+      <div class="tab" data-tab="query">Query &amp; Link</div>
+      <div class="tab" data-tab="conflicts">Conflicts <span class="tab-badge alert">8</span></div>
+      <div class="tab" data-tab="rules">Rules</div>
+      <div class="tab" data-tab="dashboard">Dashboard</div>
+    </div>
+
+    <!-- KPI Row -->
+    <div class="kpi-grid" id="kpi-grid">
+      <div class="kpi-tile kpi-blue">
+        <div class="kpi-label">Total Links</div>
+        <div class="kpi-value-row">
+          <div class="kpi-value">14,832</div>
+          <div class="kpi-trend up">▲ 3.2%</div>
+        </div>
+        <div class="kpi-sparkline" id="sparkline-links"></div>
+        <div class="kpi-sub">across 23 families</div>
+      </div>
+      <div class="kpi-tile kpi-green">
+        <div class="kpi-label">Coverage</div>
+        <div class="kpi-value-row">
+          <div class="kpi-value">87.4%</div>
+          <div class="kpi-trend up">▲ 1.8%</div>
+        </div>
+        <div class="kpi-sparkline" id="sparkline-coverage"></div>
+        <div class="kpi-sub">2,879 / 3,298 docs</div>
+      </div>
+      <div class="kpi-tile kpi-amber">
+        <div class="kpi-label">Pending Review</div>
+        <div class="kpi-value-row">
+          <div class="kpi-value">147</div>
+          <div class="kpi-trend down">▼ 42</div>
+        </div>
+        <div class="kpi-sparkline" id="sparkline-pending"></div>
+        <div class="kpi-sub">0.5 - 0.8 confidence</div>
+      </div>
+      <div class="kpi-tile kpi-red">
+        <div class="kpi-label">Conflicts</div>
+        <div class="kpi-value-row">
+          <div class="kpi-value">8</div>
+        </div>
+        <div class="kpi-sub">3 exclusive, 5 warn</div>
+      </div>
+      <div class="kpi-tile kpi-purple">
+        <div class="kpi-label">Drift Alerts</div>
+        <div class="kpi-value-row">
+          <div class="kpi-value">2</div>
+        </div>
+        <div class="kpi-sub">liens, restricted_payments</div>
+      </div>
+    </div>
+
+    <!-- ════════ REVIEW TAB ════════ -->
+    <div class="review-layout" id="tab-review">
+
+      <!-- Family Sidebar -->
+      <div class="family-sidebar">
+        <div class="family-search">
+          <input type="text" placeholder="Filter families…">
+        </div>
+        <div class="family-list">
+          <div class="family-item active">
+            <span class="family-item-name">Indebtedness</span>
+            <div class="family-item-stats">
+              <span class="family-item-count">2,841</span>
+              <span class="family-item-pending">12</span>
+            </div>
+          </div>
+          <div class="family-item">
+            <span class="family-item-name">Liens</span>
+            <div class="family-item-stats">
+              <span class="family-item-count">2,650</span>
+              <span class="family-item-pending">34</span>
+            </div>
+          </div>
+          <div class="family-item">
+            <span class="family-item-name">Restricted Payments</span>
+            <div class="family-item-stats">
+              <span class="family-item-count">2,312</span>
+              <span class="family-item-pending">8</span>
+            </div>
+          </div>
+          <div class="family-item">
+            <span class="family-item-name">Investments</span>
+            <div class="family-item-stats">
+              <span class="family-item-count">2,198</span>
+              <span class="family-item-pending">21</span>
+            </div>
+          </div>
+          <div class="family-item">
+            <span class="family-item-name">Fundamental Changes</span>
+            <div class="family-item-stats">
+              <span class="family-item-count">1,987</span>
+              <span class="family-item-pending">5</span>
+            </div>
+          </div>
+          <div class="family-item">
+            <span class="family-item-name">Asset Sales</span>
+            <div class="family-item-stats">
+              <span class="family-item-count">1,843</span>
+              <span class="family-item-pending">15</span>
+            </div>
+          </div>
+          <div class="family-item">
+            <span class="family-item-name">Affiliate Transactions</span>
+            <div class="family-item-stats">
+              <span class="family-item-count">1,756</span>
+              <span class="family-item-pending">3</span>
+            </div>
+          </div>
+          <div class="family-item">
+            <span class="family-item-name">Dividend Restrictions</span>
+            <div class="family-item-stats">
+              <span class="family-item-count">1,623</span>
+              <span class="family-item-pending">9</span>
+            </div>
+          </div>
+          <div class="family-item">
+            <span class="family-item-name">Financial Covenants</span>
+            <div class="family-item-stats">
+              <span class="family-item-count">1,410</span>
+              <span class="family-item-pending">17</span>
+            </div>
+          </div>
+          <div class="family-item">
+            <span class="family-item-name">Events of Default</span>
+            <div class="family-item-stats">
+              <span class="family-item-count">1,298</span>
+              <span class="family-item-pending">6</span>
+            </div>
+          </div>
+          <div class="family-item">
+            <span class="family-item-name">Conditions Precedent</span>
+            <div class="family-item-stats">
+              <span class="family-item-count">1,150</span>
+              <span class="family-item-pending">2</span>
+            </div>
+          </div>
+          <div class="family-item">
+            <span class="family-item-name">Guarantees</span>
+            <div class="family-item-stats">
+              <span class="family-item-count">980</span>
+              <span class="family-item-pending">11</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Link Table -->
+      <div class="link-table-pane">
+        <div class="table-toolbar">
+          <div class="toolbar-left">
+            <div class="filter-chip active">All</div>
+            <div class="filter-chip">Active</div>
+            <div class="filter-chip">Pending <span style="margin-left:3px;font-size:10px;color:var(--amber-400)">12</span></div>
+            <div class="filter-chip">Unlinked</div>
+          </div>
+          <div class="toolbar-right">
+            <div style="font-size:11px;color:var(--text-muted);font-variant-numeric:tabular-nums;">2,841 links</div>
+            <button class="btn-icon" title="Export">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="link-table-wrap">
+          <table class="link-table">
+            <thead>
+              <tr>
+                <th style="width:32px;padding:8px 6px;"><input type="checkbox" style="accent-color:var(--blue-500);"></th>
+                <th>Document <span class="sort-icon">△</span></th>
+                <th>Section <span class="sort-icon">△</span></th>
+                <th>Heading <span class="sort-icon">△</span></th>
+                <th>Confidence <span class="sort-icon active">▼</span></th>
+                <th>Status <span class="sort-icon">△</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="focused">
+                <td style="padding:8px 6px;"><input type="checkbox" style="accent-color:var(--blue-500);"></td>
+                <td><span class="doc-id">0001193125-23-1847</span></td>
+                <td style="font-variant-numeric:tabular-nums;color:var(--text-secondary);">7.01</td>
+                <td><span class="heading-text">Limitation on Indebtedness</span></td>
+                <td>
+                  <div class="confidence-bar">
+                    <div class="confidence-bar-track"><div class="confidence-bar-fill" style="width:92%;background:var(--green-500);"></div></div>
+                    <span class="confidence-val" style="color:var(--green-400);">0.92</span>
+                  </div>
+                </td>
+                <td><span class="badge badge-green">active</span></td>
+              </tr>
+              <tr>
+                <td style="padding:8px 6px;"><input type="checkbox" style="accent-color:var(--blue-500);"></td>
+                <td><span class="doc-id">0001193125-23-2156</span></td>
+                <td style="font-variant-numeric:tabular-nums;color:var(--text-secondary);">7.03</td>
+                <td><span class="heading-text">Incurrence of Indebtedness</span></td>
+                <td>
+                  <div class="confidence-bar">
+                    <div class="confidence-bar-track"><div class="confidence-bar-fill" style="width:88%;background:var(--green-500);"></div></div>
+                    <span class="confidence-val" style="color:var(--green-400);">0.88</span>
+                  </div>
+                </td>
+                <td><span class="badge badge-green">active</span></td>
+              </tr>
+              <tr>
+                <td style="padding:8px 6px;"><input type="checkbox" style="accent-color:var(--blue-500);"></td>
+                <td><span class="doc-id">0001564590-22-0384</span></td>
+                <td style="font-variant-numeric:tabular-nums;color:var(--text-secondary);">6.01</td>
+                <td><span class="heading-text">Debt</span></td>
+                <td>
+                  <div class="confidence-bar">
+                    <div class="confidence-bar-track"><div class="confidence-bar-fill" style="width:85%;background:var(--green-500);"></div></div>
+                    <span class="confidence-val" style="color:var(--green-400);">0.85</span>
+                  </div>
+                </td>
+                <td><span class="badge badge-green">active</span></td>
+              </tr>
+              <tr>
+                <td style="padding:8px 6px;"><input type="checkbox" style="accent-color:var(--blue-500);"></td>
+                <td><span class="doc-id">0001193125-24-0092</span></td>
+                <td style="font-variant-numeric:tabular-nums;color:var(--text-secondary);">7.01</td>
+                <td><span class="heading-text">Limitation on Borrowed Money</span></td>
+                <td>
+                  <div class="confidence-bar">
+                    <div class="confidence-bar-track"><div class="confidence-bar-fill" style="width:71%;background:var(--amber-500);"></div></div>
+                    <span class="confidence-val" style="color:var(--amber-400);">0.71</span>
+                  </div>
+                </td>
+                <td><span class="badge badge-amber">pending</span></td>
+              </tr>
+              <tr>
+                <td style="padding:8px 6px;"><input type="checkbox" style="accent-color:var(--blue-500);"></td>
+                <td><span class="doc-id">0001564590-23-1782</span></td>
+                <td style="font-variant-numeric:tabular-nums;color:var(--text-secondary);">8.02</td>
+                <td><span class="heading-text">Financial Indebtedness</span></td>
+                <td>
+                  <div class="confidence-bar">
+                    <div class="confidence-bar-track"><div class="confidence-bar-fill" style="width:65%;background:var(--amber-500);"></div></div>
+                    <span class="confidence-val" style="color:var(--amber-400);">0.65</span>
+                  </div>
+                </td>
+                <td><span class="badge badge-amber">pending</span></td>
+              </tr>
+              <tr>
+                <td style="padding:8px 6px;"><input type="checkbox" style="accent-color:var(--blue-500);"></td>
+                <td><span class="doc-id">0001193125-22-3901</span></td>
+                <td style="font-variant-numeric:tabular-nums;color:var(--text-secondary);">7.05</td>
+                <td><span class="heading-text">Indebtedness and Disqualified Stock</span></td>
+                <td>
+                  <div class="confidence-bar">
+                    <div class="confidence-bar-track"><div class="confidence-bar-fill" style="width:54%;background:var(--amber-500);"></div></div>
+                    <span class="confidence-val" style="color:var(--amber-400);">0.54</span>
+                  </div>
+                </td>
+                <td><span class="badge badge-amber">pending</span></td>
+              </tr>
+              <tr>
+                <td style="padding:8px 6px;"><input type="checkbox" style="accent-color:var(--blue-500);"></td>
+                <td><span class="doc-id">0001564590-24-0117</span></td>
+                <td style="font-variant-numeric:tabular-nums;color:var(--text-secondary);">6.08</td>
+                <td><span class="heading-text">Advances and Capitalized Leases</span></td>
+                <td>
+                  <div class="confidence-bar">
+                    <div class="confidence-bar-track"><div class="confidence-bar-fill" style="width:51%;background:var(--amber-500);"></div></div>
+                    <span class="confidence-val" style="color:var(--amber-400);">0.51</span>
+                  </div>
+                </td>
+                <td><span class="badge badge-amber">pending</span></td>
+              </tr>
+              <tr>
+                <td style="padding:8px 6px;"><input type="checkbox" style="accent-color:var(--blue-500);"></td>
+                <td><span class="doc-id">0001193125-23-4501</span></td>
+                <td style="font-variant-numeric:tabular-nums;color:var(--text-secondary);">7.01</td>
+                <td><span class="heading-text">Limitation on Indebtedness</span></td>
+                <td>
+                  <div class="confidence-bar">
+                    <div class="confidence-bar-track"><div class="confidence-bar-fill" style="width:95%;background:var(--green-500);"></div></div>
+                    <span class="confidence-val" style="color:var(--green-400);">0.95</span>
+                  </div>
+                </td>
+                <td><span class="badge badge-green">active</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Reader Pane -->
+      <div class="reader-pane">
+        <div class="reader-header">
+          <div class="reader-breadcrumbs">
+            <span class="crumb">Article VII</span>
+            <span class="sep">›</span>
+            <span class="crumb">Section 7.01</span>
+            <span class="sep">›</span>
+            <span class="crumb" style="color:var(--text-primary);">Limitation on Indebtedness</span>
+          </div>
+          <div class="reader-family-badges">
+            <span class="badge badge-blue">Indebtedness</span>
+            <span class="badge badge-default">debt_capacity</span>
+          </div>
+        </div>
+
+        <div class="reader-body">
+          <div class="reader-text"><span class="highlight-match">Limitation on Indebtedness</span>.
+
+The Borrower will not, and will not permit any Subsidiary to, directly or indirectly, create, incur, assume or suffer to exist any <span class="defined-term">Indebtedness</span>, except:
+
+(a) <span class="defined-term">Indebtedness</span> under the <span class="defined-term">Loan Documents</span>;
+
+(b) <span class="defined-term">Indebtedness</span> outstanding on the date hereof and listed on Schedule 7.01(b), and any <span class="dna-phrase">Permitted Refinancing</span> thereof;
+
+(c) <span class="defined-term">Indebtedness</span> of the Borrower and its Subsidiaries incurred to finance the acquisition, construction or improvement of any fixed or capital assets, including <span class="dna-phrase">Capital Lease Obligations</span> and any <span class="defined-term">Indebtedness</span> assumed in connection with the acquisition of any such assets or secured by a <span class="highlight-exclude">Lien</span> on any such assets prior to the acquisition thereof;
+
+(d) <span class="defined-term">Indebtedness</span> of the Borrower owing to any Subsidiary and of any Subsidiary owing to the Borrower or any other Subsidiary;</div>
+
+          <div class="why-matched-section">
+            <div class="why-matched-title">Confidence Breakdown</div>
+            <div class="factor-row">
+              <span class="factor-label">Heading Match</span>
+              <div class="factor-bar-track"><div class="factor-bar-fill" style="width:100%;background:var(--green-500);"></div></div>
+              <span class="factor-score" style="color:var(--green-400);">1.00</span>
+            </div>
+            <div class="factor-row">
+              <span class="factor-label">Article Match</span>
+              <div class="factor-bar-track"><div class="factor-bar-fill" style="width:100%;background:var(--green-500);"></div></div>
+              <span class="factor-score" style="color:var(--green-400);">1.00</span>
+            </div>
+            <div class="factor-row">
+              <span class="factor-label">Clause Signal</span>
+              <div class="factor-bar-track"><div class="factor-bar-fill" style="width:80%;background:var(--green-500);"></div></div>
+              <span class="factor-score" style="color:var(--green-400);">0.80</span>
+            </div>
+            <div class="factor-row">
+              <span class="factor-label">Template Consistency</span>
+              <div class="factor-bar-track"><div class="factor-bar-fill" style="width:90%;background:var(--green-500);"></div></div>
+              <span class="factor-score" style="color:var(--green-400);">0.90</span>
+            </div>
+            <div class="factor-row">
+              <span class="factor-label">Defined Terms</span>
+              <div class="factor-bar-track"><div class="factor-bar-fill" style="width:85%;background:var(--green-500);"></div></div>
+              <span class="factor-score" style="color:var(--green-400);">0.85</span>
+            </div>
+            <div class="factor-row">
+              <span class="factor-label">Structural Prior</span>
+              <div class="factor-bar-track"><div class="factor-bar-fill" style="width:95%;background:var(--green-500);"></div></div>
+              <span class="factor-score" style="color:var(--green-400);">0.95</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ════════ QUERY TAB ════════ -->
+    <div class="query-layout" id="tab-query">
+      <div class="dsl-bar-wrapper">
+        <div class="dsl-bar">
+          <span class="dsl-prefix">/</span>
+          <input class="dsl-input" type="text" value='heading: (Indebtedness | "Limitation on Indebtedness") & !Lien & !Pledge' placeholder="Type DSL query… (heading:, clause:, article:)">
+          <span class="dsl-count">~2,841 matches</span>
+        </div>
+      </div>
+
+      <div class="ast-builder">
+        <div class="ast-group">
+          <div class="ast-group-header">
+            <button class="ast-op-toggle ast-op-and">AND</button>
+            <span style="font-size:10px;color:var(--text-muted);">heading</span>
+          </div>
+          <div class="ast-children">
+            <div class="ast-group" style="border-color: var(--purple-glow);">
+              <div class="ast-group-header">
+                <button class="ast-op-toggle ast-op-or">OR</button>
+              </div>
+              <div class="ast-children">
+                <div class="ast-chip">Indebtedness <span class="ast-chip-remove">×</span></div>
+                <div class="ast-chip">Limitation on Indebtedness <span class="ast-chip-remove">×</span></div>
+                <button class="ast-add">+ term</button>
+              </div>
+            </div>
+            <span class="ast-connector">AND</span>
+            <div class="ast-chip negated">Lien <span class="ast-chip-remove">×</span></div>
+            <span class="ast-connector">AND</span>
+            <div class="ast-chip negated">Pledge <span class="ast-chip-remove">×</span></div>
+            <button class="ast-add">+ filter</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="query-actions-bar">
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-primary">Preview Matches</button>
+          <button class="btn btn-secondary">Save as Rule</button>
+          <button class="btn btn-secondary">Canary Apply (10)</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:11px;color:var(--text-muted);">Query cost: <strong style="color:var(--green-400);">12</strong></span>
+          <span style="font-size:11px;color:var(--text-muted);">•</span>
+          <span style="font-size:11px;color:var(--text-muted);">Est. time: &lt;1s</span>
+        </div>
+      </div>
+
+      <div class="preview-section">
+        <div class="preview-header">
+          <div class="preview-title">Preview Candidates</div>
+          <div class="tier-tabs">
+            <div class="filter-chip active">All <span style="margin-left:3px;opacity:0.6;">2,841</span></div>
+            <div class="filter-chip"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green-500);margin-right:4px;"></span>High 2,694</div>
+            <div class="filter-chip"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--amber-500);margin-right:4px;"></span>Medium 135</div>
+            <div class="filter-chip"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--red-500);margin-right:4px;"></span>Low 12</div>
+          </div>
+        </div>
+
+        <!-- Traffic Light AST -->
+        <div class="tl-ast" style="margin-bottom:16px;">
+          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);margin-bottom:10px;">Rule Evaluation — 0001193125-23-1847</div>
+          <div class="tl-node">
+            <div class="tl-indicator pass"></div>
+            <div class="tl-content"><span class="tl-op">AND</span> — all conditions met</div>
+          </div>
+          <div class="tl-children">
+            <div class="tl-node">
+              <div class="tl-indicator pass"></div>
+              <div class="tl-content"><span class="tl-op">OR</span> — heading match</div>
+            </div>
+            <div class="tl-children" style="margin-left:22px;">
+              <div class="tl-node">
+                <div class="tl-indicator pass"></div>
+                <div class="tl-content">"Limitation on Indebtedness" — <span style="color:var(--green-400)">exact match</span></div>
+              </div>
+              <div class="tl-node">
+                <div class="tl-indicator neutral"></div>
+                <div class="tl-content">"Indebtedness" — <span style="color:var(--text-muted)">skipped (OR satisfied)</span></div>
+              </div>
+            </div>
+            <div class="tl-node">
+              <div class="tl-indicator pass"></div>
+              <div class="tl-content"><span class="tl-op">NOT</span> "Lien" — <span style="color:var(--green-400)">not present in heading</span></div>
+            </div>
+            <div class="tl-node">
+              <div class="tl-indicator pass"></div>
+              <div class="tl-content"><span class="tl-op">NOT</span> "Pledge" — <span style="color:var(--green-400)">not present in heading</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════ DASHBOARD TAB ════════ -->
+    <div class="dashboard-layout" id="tab-dashboard">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <h3 style="font-size:16px;font-weight:600;">Cross-Family Status Matrix</h3>
+        <button class="btn btn-primary">Run All Rules</button>
+      </div>
+
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th>Family</th>
+            <th>Links</th>
+            <th>Coverage</th>
+            <th>Pending</th>
+            <th>Rule Status</th>
+            <th>Last Run</th>
+            <th>Drift</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="matrix-family-name">Indebtedness</span></td>
+            <td class="tabular">2,841</td>
+            <td>
+              <div class="coverage-cell">
+                <div class="coverage-mini-bar"><div class="coverage-mini-fill" style="width:92%;background:var(--green-500);"></div></div>
+                <span class="tabular" style="font-size:11px;color:var(--green-400);">92%</span>
+              </div>
+            </td>
+            <td><span class="badge badge-amber">12</span></td>
+            <td><span class="badge badge-green">prod v3</span></td>
+            <td>
+              <div class="staleness-indicator">
+                <span class="staleness-dot staleness-fresh"></span>
+                2h ago
+              </div>
+            </td>
+            <td><span class="badge badge-default">clean</span></td>
+          </tr>
+          <tr>
+            <td><span class="matrix-family-name">Liens</span></td>
+            <td class="tabular">2,650</td>
+            <td>
+              <div class="coverage-cell">
+                <div class="coverage-mini-bar"><div class="coverage-mini-fill" style="width:87%;background:var(--green-500);"></div></div>
+                <span class="tabular" style="font-size:11px;color:var(--green-400);">87%</span>
+              </div>
+            </td>
+            <td><span class="badge badge-amber">34</span></td>
+            <td><span class="badge badge-green">prod v5</span></td>
+            <td>
+              <div class="staleness-indicator">
+                <span class="staleness-dot staleness-stale"></span>
+                3d ago
+              </div>
+            </td>
+            <td><span class="badge badge-red">drift</span></td>
+          </tr>
+          <tr>
+            <td><span class="matrix-family-name">Restricted Payments</span></td>
+            <td class="tabular">2,312</td>
+            <td>
+              <div class="coverage-cell">
+                <div class="coverage-mini-bar"><div class="coverage-mini-fill" style="width:78%;background:var(--amber-500);"></div></div>
+                <span class="tabular" style="font-size:11px;color:var(--amber-400);">78%</span>
+              </div>
+            </td>
+            <td><span class="badge badge-amber">8</span></td>
+            <td><span class="badge badge-blue">candidate v2</span></td>
+            <td>
+              <div class="staleness-indicator">
+                <span class="staleness-dot staleness-fresh"></span>
+                5h ago
+              </div>
+            </td>
+            <td><span class="badge badge-red">drift</span></td>
+          </tr>
+          <tr>
+            <td><span class="matrix-family-name">Investments</span></td>
+            <td class="tabular">2,198</td>
+            <td>
+              <div class="coverage-cell">
+                <div class="coverage-mini-bar"><div class="coverage-mini-fill" style="width:84%;background:var(--green-500);"></div></div>
+                <span class="tabular" style="font-size:11px;color:var(--green-400);">84%</span>
+              </div>
+            </td>
+            <td><span class="badge badge-amber">21</span></td>
+            <td><span class="badge badge-green">prod v2</span></td>
+            <td>
+              <div class="staleness-indicator">
+                <span class="staleness-dot staleness-fresh"></span>
+                1d ago
+              </div>
+            </td>
+            <td><span class="badge badge-default">clean</span></td>
+          </tr>
+          <tr>
+            <td><span class="matrix-family-name">Fundamental Changes</span></td>
+            <td class="tabular">1,987</td>
+            <td>
+              <div class="coverage-cell">
+                <div class="coverage-mini-bar"><div class="coverage-mini-fill" style="width:91%;background:var(--green-500);"></div></div>
+                <span class="tabular" style="font-size:11px;color:var(--green-400);">91%</span>
+              </div>
+            </td>
+            <td><span class="badge badge-default">5</span></td>
+            <td><span class="badge badge-green">prod v4</span></td>
+            <td>
+              <div class="staleness-indicator">
+                <span class="staleness-dot staleness-fresh"></span>
+                8h ago
+              </div>
+            </td>
+            <td><span class="badge badge-default">clean</span></td>
+          </tr>
+          <tr>
+            <td><span class="matrix-family-name">Asset Sales</span></td>
+            <td class="tabular">1,843</td>
+            <td>
+              <div class="coverage-cell">
+                <div class="coverage-mini-bar"><div class="coverage-mini-fill" style="width:68%;background:var(--amber-500);"></div></div>
+                <span class="tabular" style="font-size:11px;color:var(--amber-400);">68%</span>
+              </div>
+            </td>
+            <td><span class="badge badge-amber">15</span></td>
+            <td><span class="badge badge-purple">draft v1</span></td>
+            <td>
+              <div class="staleness-indicator">
+                <span class="staleness-dot staleness-old"></span>
+                7d ago
+              </div>
+            </td>
+            <td><span class="badge badge-default">—</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Keyboard Help Bar -->
+    <div class="keyboard-bar" id="keyboard-bar">
+      <div class="keyboard-bar-left">
+        <div class="kbd-group"><kbd>j</kbd><kbd>k</kbd><span class="kbd-label">navigate</span></div>
+        <div class="kbd-group"><kbd>u</kbd><span class="kbd-label">unlink</span></div>
+        <div class="kbd-group"><kbd>b</kbd><span class="kbd-label">bookmark</span></div>
+        <div class="kbd-group"><kbd>Space</kbd><span class="kbd-label">reader</span></div>
+        <div class="kbd-group"><kbd>⇧</kbd><kbd>Space</kbd><span class="kbd-label">approve+next</span></div>
+        <div class="kbd-group"><kbd>f</kbd><span class="kbd-label">fold</span></div>
+        <div class="kbd-group"><kbd>d</kbd><span class="kbd-label">redline</span></div>
+      </div>
+      <div class="keyboard-bar-right">
+        <div class="session-progress">
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" style="width:5.2%;"></div>
+          </div>
+          <span class="progress-text">147 / 2,841 reviewed</span>
+        </div>
+        <span style="font-size:11px;color:var(--text-muted);">12 unlinked · 3 bookmarked</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     TRIAGE MODE OVERLAY
+     ════════════════════════════════════════════════ -->
+<div class="triage-overlay" id="triage-overlay">
+  <div class="triage-top-bar">
+    <div class="triage-top-left">
+      <span class="badge badge-blue">Indebtedness</span>
+      <span class="triage-counter">148 / 2,841</span>
+      <span class="badge badge-amber">0.71 pending</span>
+    </div>
+    <button class="btn btn-ghost btn-sm" onclick="toggleTriage()" style="color:var(--text-muted);">
+      <kbd style="margin-right:4px;">Esc</kbd> Exit
+    </button>
+  </div>
+
+  <div class="triage-card">
+    <div class="triage-card-header">
+      <div class="triage-card-breadcrumbs">
+        <span class="crumb">Article VII</span><span class="sep">›</span>
+        <span class="crumb">Section 7.01</span><span class="sep">›</span>
+        <span class="crumb" style="color:var(--text-primary);">(a)</span>
+      </div>
+      <div class="triage-card-meta">
+        <span class="doc-id" style="font-size:11px;">0001193125-24-0092</span>
+        <span class="badge badge-blue" style="font-size:10px;">🔗 14 identical</span>
+      </div>
+    </div>
+
+    <div class="triage-card-body">
+      <div class="triage-section-text">The Borrower will not, and will not permit any Subsidiary to, directly or indirectly, create, incur, assume or suffer to exist any <span class="highlight-match" style="font-weight:600;">Limitation on Borrowed Money</span>, except:
+
+(a) <span class="defined-term">Indebtedness</span> under the <span class="defined-term">Loan Documents</span> in an aggregate principal amount not exceeding the <span class="defined-term">Commitments</span>;
+
+(b) <span class="defined-term">Indebtedness</span> outstanding on the <span class="defined-term">Closing Date</span> and listed on Schedule 7.01(b), and any <span class="dna-phrase">Permitted Refinancing</span> thereof;
+
+(c) <span class="defined-term">Indebtedness</span> in respect of <span class="dna-phrase">Capital Lease Obligations</span>, mortgage financings, purchase money obligations or other <span class="defined-term">Indebtedness</span> incurred to finance the acquisition, construction, repair or improvement of fixed or capital assets…</div>
+    </div>
+
+    <div class="triage-card-footer">
+      <div class="triage-proposal">
+        <div>
+          <div class="triage-proposal-label">Proposed family</div>
+          <div class="triage-proposal-family">debt_capacity.indebtedness</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="triage-proposal-label">Confidence</div>
+          <div style="font-size:18px;font-weight:700;color:var(--amber-400);">0.71</div>
+        </div>
+      </div>
+
+      <div class="triage-factors">
+        <div class="triage-factor">
+          <span class="triage-factor-label">Heading</span>
+          <div class="triage-factor-bar"><div class="triage-factor-bar-fill" style="width:70%;background:var(--amber-500);"></div></div>
+        </div>
+        <div class="triage-factor">
+          <span class="triage-factor-label">Article</span>
+          <div class="triage-factor-bar"><div class="triage-factor-bar-fill" style="width:100%;background:var(--green-500);"></div></div>
+        </div>
+        <div class="triage-factor">
+          <span class="triage-factor-label">Clause</span>
+          <div class="triage-factor-bar"><div class="triage-factor-bar-fill" style="width:65%;background:var(--amber-500);"></div></div>
+        </div>
+        <div class="triage-factor">
+          <span class="triage-factor-label">Template</span>
+          <div class="triage-factor-bar"><div class="triage-factor-bar-fill" style="width:50%;background:var(--amber-500);"></div></div>
+        </div>
+        <div class="triage-factor">
+          <span class="triage-factor-label">Terms</span>
+          <div class="triage-factor-bar"><div class="triage-factor-bar-fill" style="width:80%;background:var(--green-500);"></div></div>
+        </div>
+        <div class="triage-factor">
+          <span class="triage-factor-label">Structure</span>
+          <div class="triage-factor-bar"><div class="triage-factor-bar-fill" style="width:60%;background:var(--amber-500);"></div></div>
+        </div>
+      </div>
+
+      <div class="triage-actions">
+        <button class="triage-action triage-action-reject">
+          <kbd style="background:rgba(239,68,68,0.2);border-color:rgba(239,68,68,0.3);color:var(--red-400);">⌫</kbd>
+          Reject
+        </button>
+        <button class="triage-action triage-action-defer">
+          <kbd>d</kbd>
+          Defer
+        </button>
+        <button class="triage-action triage-action-approve">
+          <kbd style="background:rgba(34,197,94,0.2);border-color:rgba(34,197,94,0.3);color:var(--green-400);">Space</kbd>
+          Approve
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="triage-progress-bar">
+    <div class="triage-progress-track">
+      <div class="triage-progress-fill" style="width:5.2%;"></div>
+    </div>
+    <span class="triage-progress-text">148 / 2,841 — 12 rejected · 3 deferred</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     COMMAND PALETTE
+     ════════════════════════════════════════════════ -->
+<div class="command-palette-overlay" id="palette-overlay">
+  <div class="command-palette">
+    <div class="palette-input-wrap">
+      <span class="palette-icon">⌘</span>
+      <input class="palette-input" type="text" placeholder="Type a command…" id="palette-input">
+    </div>
+    <div class="palette-results">
+      <div class="palette-result focused">
+        <span class="palette-result-icon">▶</span>
+        <span class="palette-result-text">Preview current query</span>
+        <span class="palette-result-hint">Enter</span>
+      </div>
+      <div class="palette-result">
+        <span class="palette-result-icon">✓</span>
+        <span class="palette-result-text">Apply high-tier links</span>
+        <span class="palette-result-hint"></span>
+      </div>
+      <div class="palette-result">
+        <span class="palette-result-icon">✕</span>
+        <span class="palette-result-text">Unlink selected rows</span>
+        <span class="palette-result-hint">⇧U</span>
+      </div>
+      <div class="palette-result">
+        <span class="palette-result-icon">⇄</span>
+        <span class="palette-result-text">Compare rules side-by-side</span>
+        <span class="palette-result-hint"></span>
+      </div>
+      <div class="palette-result">
+        <span class="palette-result-icon">↑</span>
+        <span class="palette-result-text">Promote rule to production</span>
+        <span class="palette-result-hint"></span>
+      </div>
+      <div class="palette-result">
+        <span class="palette-result-icon">→</span>
+        <span class="palette-result-text">Jump to family: Liens</span>
+        <span class="palette-result-hint"></span>
+      </div>
+      <div class="palette-result">
+        <span class="palette-result-icon">⟳</span>
+        <span class="palette-result-text">Run all production rules</span>
+        <span class="palette-result-hint"></span>
+      </div>
+      <div class="palette-result">
+        <span class="palette-result-icon">↓</span>
+        <span class="palette-result-text">Export current view as CSV</span>
+        <span class="palette-result-hint"></span>
+      </div>
+    </div>
+    <div class="palette-footer">
+      <span><kbd style="font-size:9px;">↑↓</kbd> navigate</span>
+      <span><kbd style="font-size:9px;">↵</kbd> execute</span>
+      <span><kbd style="font-size:9px;">esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     BATCH ACTION BAR
+     ════════════════════════════════════════════════ -->
+<div class="batch-bar" id="batch-bar">
+  <span class="batch-count">3 selected</span>
+  <div class="batch-sep"></div>
+  <button class="btn btn-sm btn-ghost">Unlink</button>
+  <button class="btn btn-sm btn-ghost">Relink</button>
+  <button class="btn btn-sm btn-ghost">Bookmark</button>
+  <div class="batch-sep"></div>
+  <button class="btn btn-sm btn-ghost" style="color:var(--text-muted);">Clear</button>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// INTERACTIVITY
+// ═══════════════════════════════════════════════════════════
+
+// Flyout navigation data
+const MODULES = {
+  corpus: { title: 'CORPUS', links: ['Overview', 'Explorer', 'Search', 'Corpus Query', 'Scatter'] },
+  documents: { title: 'DOCUMENTS', links: ['Reader'] },
+  linking: { title: 'LINKING', links: ['Family Links'] },
+  analysis: { title: 'ANALYSIS', links: ['Statistics', 'Definitions', 'Quality', 'Edge Cases'] },
+  discovery: { title: 'DISCOVERY', links: ['Pattern Testing', 'DNA Discovery', 'Heading Discovery', 'Coverage Analysis', 'Clause Deep Dive'] },
+  strategies: { title: 'STRATEGIES', links: ['Strategy Manager', 'Strategy Results'] },
+  system: { title: 'SYSTEM', links: ['Jobs', 'Settings'] },
+};
+
+let openModule = null;
+
+// Icon rail click handlers
+document.querySelectorAll('.rail-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const mod = item.dataset.module;
+    if (openModule === mod) {
+      document.getElementById('flyout').classList.remove('open');
+      openModule = null;
+      return;
+    }
+    openModule = mod;
+    const data = MODULES[mod];
+    if (!data) return;
+    const inner = document.getElementById('flyout-inner');
+    inner.innerHTML = `<div class="flyout-title">${data.title}</div>` +
+      data.links.map((l, i) => `<a class="flyout-link ${mod === 'linking' && i === 0 ? 'active' : ''}">${l}</a>`).join('');
+    document.getElementById('flyout').classList.add('open');
+
+    // Active states
+    document.querySelectorAll('.rail-item').forEach(r => r.classList.remove('active'));
+    item.classList.add('active');
+  });
+});
+
+// Tab switching
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+
+    const tabName = tab.dataset.tab;
+    // Hide all tab contents
+    document.getElementById('tab-review').style.display = 'none';
+    document.getElementById('tab-query').classList.remove('visible');
+    document.getElementById('tab-dashboard').classList.remove('visible');
+
+    // Show selected
+    if (tabName === 'review') {
+      document.getElementById('tab-review').style.display = 'flex';
+    } else if (tabName === 'query') {
+      document.getElementById('tab-query').classList.add('visible');
+    } else if (tabName === 'dashboard') {
+      document.getElementById('tab-dashboard').classList.add('visible');
+    }
+  });
+});
+
+// Triage mode toggle
+function toggleTriage() {
+  const overlay = document.getElementById('triage-overlay');
+  overlay.classList.toggle('visible');
+}
+
+// Command palette
+function togglePalette() {
+  const overlay = document.getElementById('palette-overlay');
+  overlay.classList.toggle('visible');
+  if (overlay.classList.contains('visible')) {
+    document.getElementById('palette-input').focus();
+  }
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+  // Cmd+K → palette
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    togglePalette();
+  }
+  // Escape → close overlays
+  if (e.key === 'Escape') {
+    document.getElementById('triage-overlay').classList.remove('visible');
+    document.getElementById('palette-overlay').classList.remove('visible');
+  }
+  // Cmd+F → triage
+  if ((e.metaKey || e.ctrlKey) && !e.shiftKey && e.key === 'f') {
+    // only if not in input
+    if (document.activeElement.tagName !== 'INPUT') {
+      e.preventDefault();
+      toggleTriage();
+    }
+  }
+});
+
+// Close palette on backdrop click
+document.getElementById('palette-overlay').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('palette-overlay')) {
+    togglePalette();
+  }
+});
+
+// Sparklines
+function renderSparkline(containerId, values, color) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const max = Math.max(...values);
+  values.forEach(v => {
+    const bar = document.createElement('div');
+    bar.className = 'bar';
+    bar.style.height = Math.max(2, (v / max) * 24) + 'px';
+    bar.style.background = color;
+    bar.style.opacity = 0.6 + (v / max) * 0.4;
+    container.appendChild(bar);
+  });
+}
+
+renderSparkline('sparkline-links', [12100, 12400, 13200, 13800, 14100, 14500, 14832], 'var(--blue-500)');
+renderSparkline('sparkline-coverage', [78, 80, 82, 84, 85, 86, 87.4], 'var(--green-500)');
+renderSparkline('sparkline-pending', [320, 280, 240, 210, 190, 165, 147], 'var(--amber-500)');
+
+// Simulate batch bar on checkbox
+let selectedCount = 0;
+document.querySelectorAll('.link-table input[type="checkbox"]').forEach(cb => {
+  cb.addEventListener('change', () => {
+    selectedCount += cb.checked ? 1 : -1;
+    const bar = document.getElementById('batch-bar');
+    if (selectedCount > 0) {
+      bar.classList.add('visible');
+      bar.querySelector('.batch-count').textContent = selectedCount + ' selected';
+    } else {
+      bar.classList.remove('visible');
+    }
+  });
+});
+</script>
+
+</body>
+</html>
