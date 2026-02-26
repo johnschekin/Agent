@@ -25,7 +25,6 @@ const TAB_ITEMS: (CommandPaletteTarget & { shortcut?: string })[] = [
   { type: "tab", id: "conflicts", label: "Conflicts", shortcut: "4" },
   { type: "tab", id: "rules", label: "Rules", shortcut: "5" },
   { type: "tab", id: "dashboard", label: "Dashboard", shortcut: "6" },
-  { type: "tab", id: "children", label: "Child Links", shortcut: "7" },
 ];
 
 const ACTION_ITEMS: CommandPaletteTarget[] = [
@@ -203,7 +202,7 @@ export function CommandPalette({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Search tabs, families, rules, actions..."
+            placeholder="Search tabs, scopes, rules, actions..."
             className="flex-1 bg-transparent text-base text-text-primary placeholder:text-text-muted focus:outline-none"
             data-testid="command-palette-input"
           />
@@ -241,7 +240,7 @@ export function CommandPalette({
                     variant={TYPE_BADGE_VARIANT[item.type] ?? "default"}
                     className="text-[10px] flex-shrink-0"
                   >
-                    {item.type}
+                    {item.type === "family" ? "scope" : item.type}
                   </Badge>
                   <span className="text-sm truncate flex-1">{item.label}</span>
                   {shortcut && (

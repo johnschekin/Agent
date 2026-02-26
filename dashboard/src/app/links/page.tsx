@@ -19,6 +19,7 @@ import {
   useBatchBookmarkMutation,
   useUndoMutation,
   useRedoMutation,
+  useLinkRuns,
   useCreateSessionMutation,
   useUpdateCursorMutation,
   useAddReviewMarkMutation,
@@ -43,12 +44,13 @@ import {
   useLinkRules,
   useLinkRule,
   useSemanticCandidates,
+  useReaderSection,
+  useReaderDefinitions,
   usePublishRuleMutation,
   useArchiveRuleMutation,
   useDriftAlerts,
   useAnalyticsDashboard,
   useStarterKit,
-  useNodeLinks,
   useCloneRuleMutation,
   useDeleteRuleMutation,
   useVintageHeatmap,
@@ -63,6 +65,7 @@ import type {
   CoverageGap,
   ConflictGroup,
   PreviewCandidate,
+  OntologyTreeNode,
 } from "@/lib/types";
 import { isFilterGroup } from "@/lib/types";
 import { KpiCard, KpiCardGrid } from "@/components/ui/KpiCard";
@@ -93,15 +96,14 @@ import { BatchRunDashboard } from "@/components/links/BatchRunDashboard";
 import { VintageHeatmap } from "@/components/links/VintageHeatmap";
 import { DriftDiffView } from "@/components/links/DriftDiffView";
 import { ExportImportDialog } from "@/components/links/ExportImportDialog";
-import { ChildLinkReview } from "@/components/links/ChildLinkReview";
-import { ChildLinkQueue } from "@/components/links/ChildLinkQueue";
 import { tokenizeDsl, DSL_TOKEN_CLASSES } from "@/lib/rule-dsl-highlight";
 import { DslCheatSheet } from "@/components/links/DslCheatSheet";
 import { DataTable } from "@/components/tables/DataTable";
+import { OntologyTree } from "@/components/ontology/OntologyTree";
 
 // ── Tab definitions ────────────────────────────────────────────────────────
 
-type TabId = "review" | "coverage" | "query" | "conflicts" | "rules" | "dashboard" | "children";
+type TabId = "review" | "query" | "rules" | "dashboard" | "coverage" | "conflicts";
 
 interface TabDef {
   id: TabId;
@@ -110,12 +112,11 @@ interface TabDef {
 
 const TABS: TabDef[] = [
   { id: "review", label: "Review" },
-  { id: "coverage", label: "Coverage" },
   { id: "query", label: "Query" },
-  { id: "conflicts", label: "Conflicts" },
   { id: "rules", label: "Rules" },
   { id: "dashboard", label: "Dashboard" },
-  { id: "children", label: "Child Links" },
+  { id: "coverage", label: "Coverage" },
+  { id: "conflicts", label: "Conflicts" },
 ];
 
 // ── Confidence tier filter values ──────────────────────────────────────────
@@ -161,12 +162,75 @@ function LinksPageFallback() {
   );
 }
 
+function canonicalFamilyToken(value?: string | null): string {
+  const raw = String(value ?? "").trim().toLowerCase();
+  if (!raw) return "";
+  const stripped = raw
+    .replace(/^fam[-_.]/, "")
+    .replace(/[^a-z0-9]+/g, ".")
+    .replace(/\.+/g, ".")
+    .replace(/^\./, "")
+    .replace(/\.$/, "");
+  if (!stripped) return "";
+  const parts = stripped.split(".").filter(Boolean);
+  return parts.length > 0 ? parts[parts.length - 1] : stripped;
+}
+
+function formatSectionWithClause(
+  sectionNumber: string,
+  clausePath?: string | null,
+  clauseLabel?: string | null,
+): string {
+  const section = String(sectionNumber || "").trim();
+  const rawPath = String(clausePath || "").trim();
+  if (rawPath) {
+    // Convert canonical clause path (e.g., "a.iii.A") into display form "(a)(iii)(A)".
+    // Keep fallback behavior for path strings that already include bracket labels.
+    if (rawPath.includes("(") || rawPath.includes("[")) {
+      return `${section}${rawPath}`;
+    }
+    const pathText = rawPath
+      .split(".")
+      .filter(Boolean)
+      .map((part) => part.replace(/_dup\d+$/i, ""))
+      .filter(Boolean)
+      .map((part) => `(${part})`)
+      .join("");
+    if (pathText) {
+      return `${section}${pathText}`;
+    }
+  }
+
+  const rawLabel = String(clauseLabel || "").trim();
+  if (!rawLabel) return section;
+  if (rawLabel.startsWith("(") || rawLabel.startsWith("[") || rawLabel.startsWith(".")) {
+    return `${section}${rawLabel}`;
+  }
+  return `${section}.${rawLabel}`;
+}
+
+function collectAstMatchValues(node: unknown, values: Set<string>): void {
+  if (!node || typeof node !== "object") return;
+  const raw = node as Record<string, unknown>;
+  const value = raw.value;
+  if (typeof value === "string" && value.trim()) {
+    values.add(value.trim());
+  }
+  const children = raw.children;
+  if (Array.isArray(children)) {
+    for (const child of children) {
+      collectAstMatchValues(child, values);
+    }
+  }
+}
+
 function LinksPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   // Tab state
-  const activeTab = (searchParams.get("tab") as TabId) || "review";
+  const rawTab = searchParams.get("tab");
+  const activeTab = (TABS.some((tab) => tab.id === rawTab) ? rawTab : "review") as TabId;
   const setActiveTab = useCallback(
     (tab: TabId) => {
       const params = new URLSearchParams(searchParams.toString());
@@ -181,6 +245,8 @@ function LinksPageInner() {
 
   // Filter state
   const [familyFilter, setFamilyFilter] = useState<string | undefined>();
+  const [ontologySearch, setOntologySearch] = useState("");
+  const [selectedTreeNodeId, setSelectedTreeNodeId] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<LinkStatus | "all">("all");
   const [tierFilter, setTierFilter] = useState<ConfidenceTier | "all">("all");
   const [sortBy, setSortBy] = useState<"created_at" | "confidence">("created_at");
@@ -188,8 +254,8 @@ function LinksPageInner() {
   const [page, setPage] = useState(1);
 
   const openRuleInQuery = useCallback(
-    (ruleId: string, familyId?: string) => {
-      if (familyId) setFamilyFilter(familyId);
+    (ruleId: string, scopeId?: string) => {
+      if (scopeId) setFamilyFilter(scopeId);
       const params = new URLSearchParams(searchParams.toString());
       params.set("tab", "query");
       params.set("loadRuleId", ruleId);
@@ -216,7 +282,6 @@ function LinksPageInner() {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [triageActive, setTriageActive] = useState(false);
   const [exportDialogOpen, setExportDialogOpen] = useState(false);
-  const [childTabParentLinkId, setChildTabParentLinkId] = useState<string | null>(null);
   const [rulesCompareRequestId, setRulesCompareRequestId] = useState(0);
   const [cohortFilter, setCohortFilter] = useState<{ templateFamily: string; vintageYear: number } | null>(null);
   const [claimedLinkIds, setClaimedLinkIds] = useState<Set<string> | null>(null);
@@ -290,6 +355,89 @@ function LinksPageInner() {
     }
     return [...linkFamilies, ...ontologyExtras];
   }, [summary, ontologyTreeQuery.data]);
+
+  const ontologyNodeById = useMemo(() => {
+    const map = new Map<string, OntologyTreeNode>();
+    const stack: OntologyTreeNode[] = [...(ontologyTreeQuery.data?.roots ?? [])];
+    while (stack.length > 0) {
+      const node = stack.pop()!;
+      map.set(node.id, node);
+      for (const child of node.children ?? []) {
+        stack.push(child);
+      }
+    }
+    return map;
+  }, [ontologyTreeQuery.data]);
+
+  const ontologyParentById = useMemo(() => {
+    const map = new Map<string, string>();
+    const walk = (nodes: OntologyTreeNode[], parentId: string | null) => {
+      for (const node of nodes) {
+        if (parentId) map.set(node.id, parentId);
+        walk(node.children ?? [], node.id);
+      }
+    };
+    walk(ontologyTreeQuery.data?.roots ?? [], null);
+    return map;
+  }, [ontologyTreeQuery.data]);
+
+  const selectedOntologyNode = selectedTreeNodeId
+    ? ontologyNodeById.get(selectedTreeNodeId) ?? null
+    : null;
+
+  const selectedScopeNode = useMemo(() => {
+    if (selectedOntologyNode) return selectedOntologyNode;
+    if (familyFilter) return ontologyNodeById.get(familyFilter) ?? null;
+    return null;
+  }, [selectedOntologyNode, familyFilter, ontologyNodeById]);
+
+  const selectedScopeSummary = useMemo(
+    () => (familyFilter ? allFamilies.find((f) => f.family_id === familyFilter) ?? null : null),
+    [allFamilies, familyFilter],
+  );
+
+  const queryParentFamilyId = useMemo(() => {
+    if (selectedTreeNodeId) {
+      const selected = ontologyNodeById.get(selectedTreeNodeId);
+      if (selected?.type === "family") return undefined;
+      let cursor = ontologyParentById.get(selectedTreeNodeId) ?? null;
+      while (cursor) {
+        const ancestor = ontologyNodeById.get(cursor);
+        if (ancestor?.type === "family") return ancestor.id;
+        cursor = ontologyParentById.get(cursor) ?? null;
+      }
+      return undefined;
+    }
+    if (familyFilter && familyFilter.includes(".")) {
+      const parts = familyFilter.split(".");
+      if (parts.length > 1) return parts.slice(0, -1).join(".");
+    }
+    return undefined;
+  }, [selectedTreeNodeId, ontologyParentById, ontologyNodeById, familyFilter]);
+
+  useEffect(() => {
+    if (!familyFilter) return;
+    if (!selectedTreeNodeId) {
+      if (ontologyNodeById.has(familyFilter)) setSelectedTreeNodeId(familyFilter);
+      return;
+    }
+    const selected = ontologyNodeById.get(selectedTreeNodeId);
+    const selectedScopeId = selected?.id;
+    if (selectedScopeId !== familyFilter && ontologyNodeById.has(familyFilter)) {
+      setSelectedTreeNodeId(familyFilter);
+    }
+  }, [familyFilter, selectedTreeNodeId, ontologyNodeById]);
+
+  const handleOntologySelect = useCallback(
+    (nodeId: string) => {
+      setSelectedTreeNodeId(nodeId);
+      const node = ontologyNodeById.get(nodeId);
+      if (!node) return;
+      setFamilyFilter(node.id);
+      setPage(1);
+    },
+    [ontologyNodeById],
+  );
 
   const focusedLink = displayedLinks[focusedIdx] ?? null;
 
@@ -705,10 +853,7 @@ function LinksPageInner() {
 
         case "c":
           e.preventDefault();
-          if (link) {
-            setChildTabParentLinkId(link.link_id);
-            setActiveTab("children");
-          }
+          setActiveTab("query");
           break;
 
         case "f":
@@ -807,9 +952,9 @@ function LinksPageInner() {
       {!focusMode && (
         <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-surface-1">
           <div>
-            <h1 className="text-xl font-semibold text-text-primary">Family Links</h1>
+            <h1 className="text-xl font-semibold text-text-primary">Ontology Links</h1>
             <p className="text-sm text-text-secondary mt-0.5">
-              Section-to-ontology family linking and review
+              Section and clause linking to ontology scopes and review
             </p>
           </div>
           <div className="flex items-center gap-3">
@@ -909,129 +1054,181 @@ function LinksPageInner() {
       </div>
 
       {/* Tab content */}
-      <div className="flex-1 overflow-hidden flex flex-col">
-        {activeTab !== "review" && (
-          <div className="flex items-center gap-3 px-4 py-2.5 border-b border-border bg-surface-1 flex-shrink-0">
-            <label className="text-xs font-semibold text-text-muted uppercase tracking-wider">
-              Family
-            </label>
-            <select
-              value={familyFilter ?? ""}
-              onChange={(e) => {
-                setFamilyFilter(e.target.value || undefined);
-                setPage(1);
-              }}
-              className="bg-surface-2 border border-border rounded px-2 py-1.5 text-sm text-text-primary"
-              data-testid="family-selector"
-            >
-              <option value="">All Families</option>
-              {allFamilies.map((fam) => (
-                <option key={fam.family_id} value={fam.family_id}>
-                  {fam.family_name}{fam.count > 0 ? ` (${fam.count})` : ""}
-                </option>
-              ))}
-            </select>
-            {familyFilter && (() => {
-              const sel = allFamilies.find((f) => f.family_id === familyFilter);
-              return sel ? (
-                <Badge variant="blue">{sel.family_name}{sel.count > 0 ? ` · ${sel.count} links` : ""}</Badge>
-              ) : null;
-            })()}
+      <div className="flex-1 overflow-hidden flex">
+        <aside className="w-72 flex-shrink-0 border-r border-border bg-surface-1 flex flex-col">
+          <div className="px-4 py-3 border-b border-border space-y-2">
+            <div className="flex items-center justify-between">
+              <p className="text-xs font-semibold text-text-muted uppercase tracking-wider">Ontology</p>
+              {(familyFilter || selectedTreeNodeId) && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFamilyFilter(undefined);
+                    setSelectedTreeNodeId(null);
+                    setPage(1);
+                  }}
+                  className="text-[11px] text-accent-blue hover:underline"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+            <input
+              value={ontologySearch}
+              onChange={(e) => setOntologySearch(e.target.value)}
+              placeholder="Search ontology nodes..."
+              className="w-full bg-surface-2 border border-border rounded px-2.5 py-1.5 text-xs text-text-primary placeholder:text-text-muted"
+              data-testid="ontology-search"
+            />
+            {selectedOntologyNode ? (
+              <div className="space-y-1">
+                <p className="text-xs text-text-primary font-medium truncate">{selectedOntologyNode.name}</p>
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  {selectedScopeNode ? (
+                    <>
+                      <Badge variant="blue">
+                        {selectedScopeNode.name}
+                        {selectedScopeSummary && selectedScopeSummary.count > 0
+                          ? ` · ${selectedScopeSummary.count}`
+                          : ""}
+                      </Badge>
+                      <Badge variant="default" className="text-[10px]">
+                        {selectedScopeNode.type.replace(/_/g, " ")}
+                      </Badge>
+                    </>
+                  ) : (
+                    <Badge variant="default">Unscoped</Badge>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <p className="text-xs text-text-muted">
+                Select a node to scope review, query, rules, and dashboard data.
+              </p>
+            )}
+          </div>
+
+          <OntologyTree
+            roots={ontologyTreeQuery.data?.roots ?? []}
+            selectedId={selectedTreeNodeId}
+            onSelectNode={handleOntologySelect}
+            searchQuery={ontologySearch}
+          />
+        </aside>
+
+        <div className="flex-1 overflow-hidden flex flex-col">
+          <div className="flex items-center gap-2 px-4 py-2 border-b border-border bg-surface-1 text-xs">
+            {selectedScopeNode ? (
+              <Badge variant="blue">
+                {selectedScopeNode.name}
+                {selectedScopeSummary && selectedScopeSummary.count > 0
+                  ? ` · ${selectedScopeSummary.count} links`
+                  : ""}
+              </Badge>
+            ) : (
+              <Badge variant="default">All Ontology Scopes</Badge>
+            )}
             {!familyFilter && activeTab === "query" && (
-              <span className="text-xs text-text-muted italic">
-                Select a family to enable Preview
+              <span className="text-text-muted italic">
+                Select an ontology node to enable Preview
               </span>
             )}
           </div>
-        )}
-        <div className="flex-1 overflow-hidden">
-        {activeTab === "review" ? (
-          <ReviewTabContent
-            links={displayedLinks}
-            totalLinks={claimedLinkIds ? displayedLinks.length : totalLinks}
-            summary={summary ?? null}
-            page={page}
-            onPageChange={setPage}
-            familyFilter={familyFilter}
-            onFamilyFilter={(family) => {
-              setFamilyFilter(family);
-              setPage(1);
-            }}
-            statusFilter={statusFilter}
-            onStatusFilter={(status) => {
-              setStatusFilter(status);
-              setPage(1);
-            }}
-            tierFilter={tierFilter}
-            onTierCycle={() => {
-              setTierFilter((prev) => {
-                const idx = TIER_CYCLE.indexOf(prev);
-                return TIER_CYCLE[(idx + 1) % TIER_CYCLE.length];
-              });
-              setPage(1);
-            }}
-            sortBy={sortBy}
-            sortDir={sortDir}
-            onToggleConfidenceSort={toggleConfidenceSort}
-            focusedIdx={focusedIdx}
-            onFocusedIdxChange={setFocusedIdx}
-            selectedIds={selectedIds}
-            onSelectedIdsChange={setSelectedIds}
-            lastSelectedIdx={lastSelectedIdx}
-            onLastSelectedIdxChange={setLastSelectedIdx}
-            readerOpen={readerOpen}
-            detachedReader={detachedReader}
-            onDetach={() => setDetachedReader(true)}
-            onReattach={() => setDetachedReader(false)}
-            focusMode={focusMode}
-            folded={folded}
-            redlineActive={redlineActive}
-            focusedLink={focusedLink}
-            noteInputLinkId={noteInputLinkId}
-            noteText={noteText}
-            noteInputRef={noteInputRef}
-            onNoteTextChange={setNoteText}
-            onNoteSubmit={submitNote}
-            onNoteCancel={() => setNoteInputLinkId(null)}
-            reassignLinkId={reassignLinkId}
-            onReassignClose={() => setReassignLinkId(null)}
-            cohortFilter={cohortFilter}
-            onClearCohortFilter={() => {
-              setCohortFilter(null);
-              setPage(1);
-            }}
-            loading={linksQuery.isLoading}
-          />
-        ) : activeTab === "query" ? (
-          <QueryTabContent familyFilter={familyFilter} loadRuleId={loadRuleId} />
-        ) : activeTab === "coverage" ? (
-          <CoverageTabContent familyFilter={familyFilter} />
-        ) : activeTab === "conflicts" ? (
-          <ConflictsTabContent familyFilter={familyFilter} />
-        ) : activeTab === "rules" ? (
-          <RulesTabContent
-            familyFilter={familyFilter}
-            compareRequestId={rulesCompareRequestId}
-            onViewDrift={() => setActiveTab("dashboard")}
-            onOpenInQuery={openRuleInQuery}
-          />
-        ) : activeTab === "dashboard" ? (
-          <DashboardTabContent
-            familyFilter={familyFilter}
-            onOpenExport={() => setExportDialogOpen(true)}
-            onHeatmapCellClick={(templateFamily, vintageYear) => {
-              setCohortFilter({ templateFamily, vintageYear });
-              setActiveTab("review");
-              setPage(1);
-            }}
-          />
-        ) : activeTab === "children" ? (
-          <ChildrenTabContent
-            familyFilter={familyFilter}
-            selectedParentLinkId={childTabParentLinkId}
-            onParentLinkChange={setChildTabParentLinkId}
-          />
-        ) : null}
+
+          <div className="flex-1 overflow-hidden">
+            {activeTab === "review" ? (
+              <ReviewTabContent
+                links={displayedLinks}
+                totalLinks={claimedLinkIds ? displayedLinks.length : totalLinks}
+                summary={summary ?? null}
+                page={page}
+                onPageChange={setPage}
+                familyFilter={familyFilter}
+                onFamilyFilter={(family) => {
+                  setFamilyFilter(family);
+                  setPage(1);
+                }}
+                statusFilter={statusFilter}
+                onStatusFilter={(status) => {
+                  setStatusFilter(status);
+                  setPage(1);
+                }}
+                tierFilter={tierFilter}
+                onTierCycle={() => {
+                  setTierFilter((prev) => {
+                    const idx = TIER_CYCLE.indexOf(prev);
+                    return TIER_CYCLE[(idx + 1) % TIER_CYCLE.length];
+                  });
+                  setPage(1);
+                }}
+                sortBy={sortBy}
+                sortDir={sortDir}
+                onToggleConfidenceSort={toggleConfidenceSort}
+                focusedIdx={focusedIdx}
+                onFocusedIdxChange={setFocusedIdx}
+                selectedIds={selectedIds}
+                onSelectedIdsChange={setSelectedIds}
+                lastSelectedIdx={lastSelectedIdx}
+                onLastSelectedIdxChange={setLastSelectedIdx}
+                readerOpen={readerOpen}
+                detachedReader={detachedReader}
+                onDetach={() => setDetachedReader(true)}
+                onReattach={() => setDetachedReader(false)}
+                focusMode={focusMode}
+                folded={folded}
+                redlineActive={redlineActive}
+                focusedLink={focusedLink}
+                noteInputLinkId={noteInputLinkId}
+                noteText={noteText}
+                noteInputRef={noteInputRef}
+                onNoteTextChange={setNoteText}
+                onNoteSubmit={submitNote}
+                onNoteCancel={() => setNoteInputLinkId(null)}
+                reassignLinkId={reassignLinkId}
+                onReassignClose={() => setReassignLinkId(null)}
+                cohortFilter={cohortFilter}
+                onClearCohortFilter={() => {
+                  setCohortFilter(null);
+                  setPage(1);
+                }}
+                loading={linksQuery.isLoading}
+                showFamilySidebar={false}
+              />
+            ) : activeTab === "query" ? (
+              <QueryTabContent
+                familyFilter={familyFilter}
+                parentFamilyId={queryParentFamilyId}
+                selectedNodeId={selectedTreeNodeId}
+                selectedNodeType={selectedOntologyNode?.type ?? null}
+                loadRuleId={loadRuleId}
+                onFamilySelect={(nextFamilyId) => {
+                  setFamilyFilter(nextFamilyId);
+                  setPage(1);
+                }}
+              />
+            ) : activeTab === "coverage" ? (
+              <CoverageTabContent familyFilter={familyFilter} />
+            ) : activeTab === "conflicts" ? (
+              <ConflictsTabContent familyFilter={familyFilter} />
+            ) : activeTab === "rules" ? (
+              <RulesTabContent
+                familyFilter={familyFilter}
+                compareRequestId={rulesCompareRequestId}
+                onViewDrift={() => setActiveTab("dashboard")}
+                onOpenInQuery={openRuleInQuery}
+              />
+            ) : activeTab === "dashboard" ? (
+              <DashboardTabContent
+                familyFilter={familyFilter}
+                onOpenExport={() => setExportDialogOpen(true)}
+                onHeatmapCellClick={(templateFamily, vintageYear) => {
+                  setCohortFilter({ templateFamily, vintageYear });
+                  setActiveTab("review");
+                  setPage(1);
+                }}
+              />
+            ) : null}
+          </div>
         </div>
       </div>
 
@@ -1160,6 +1357,7 @@ interface ReviewTabContentProps {
   cohortFilter: { templateFamily: string; vintageYear: number } | null;
   onClearCohortFilter: () => void;
   loading: boolean;
+  showFamilySidebar?: boolean;
 }
 
 function ReviewTabContent({
@@ -1202,6 +1400,7 @@ function ReviewTabContent({
   cohortFilter,
   onClearCohortFilter,
   loading,
+  showFamilySidebar = true,
 }: ReviewTabContentProps) {
   const totalPages = Math.ceil(totalLinks / 50);
 
@@ -1294,8 +1493,8 @@ function ReviewTabContent({
 
   return (
     <div className="flex h-full">
-      {/* Left: Family sidebar */}
-      {!focusMode && (
+      {/* Left: Scope sidebar */}
+      {showFamilySidebar && !focusMode && (
         <div className="w-52 flex-shrink-0 bg-surface-1 border-r border-border overflow-y-auto">
           {/* KPI tiles */}
           {summary && (
@@ -1308,7 +1507,7 @@ function ReviewTabContent({
             </div>
           )}
 
-          {/* Family list */}
+          {/* Scope list */}
           <div className="p-2">
             <button
               onClick={() => onFamilyFilter(undefined)}
@@ -1319,7 +1518,7 @@ function ReviewTabContent({
                   : "text-text-secondary hover:text-text-primary hover:bg-surface-3"
               )}
             >
-              All Families
+              All Scopes
               {summary && (
                 <span className="float-right tabular-nums text-text-muted">
                   {summary.total}
@@ -1407,7 +1606,7 @@ function ReviewTabContent({
                   <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Doc</th>
                   <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Section</th>
                   <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Heading</th>
-                  <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Family</th>
+                  <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Scope</th>
                   <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">
                     <button
                       type="button"
@@ -1622,7 +1821,21 @@ function ReviewTabContent({
 
 // ── Query tab content ───────────────────────────────────────────────────────
 
-function QueryTabContent({ familyFilter, loadRuleId }: { familyFilter?: string; loadRuleId?: string }) {
+function QueryTabContent({
+  familyFilter,
+  parentFamilyId,
+  selectedNodeId,
+  selectedNodeType,
+  loadRuleId,
+  onFamilySelect,
+}: {
+  familyFilter?: string;
+  parentFamilyId?: string;
+  selectedNodeId?: string | null;
+  selectedNodeType?: string | null;
+  loadRuleId?: string;
+  onFamilySelect?: (familyId: string) => void;
+}) {
   const [dslText, setDslText] = useState("");
   const [currentAst, setCurrentAst] = useState<FilterExpressionNode | null>(null);
   const [currentTextFields, setCurrentTextFields] = useState<Record<string, unknown> | null>(null);
@@ -1644,14 +1857,67 @@ function QueryTabContent({ familyFilter, loadRuleId }: { familyFilter?: string; 
   const [astBuilderOpen, setAstBuilderOpen] = useState(false);
   const [scratchpadOpen, setScratchpadOpen] = useState(false);
   const [applyError, setApplyError] = useState<string | null>(null);
+  const [scopeMode, setScopeMode] = useState<"corpus" | "inherited">("corpus");
   const [resultGranularity, setResultGranularity] = useState<"section" | "clause">("section");
   const [resultSearch, setResultSearch] = useState("");
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [queryReaderOpen, setQueryReaderOpen] = useState(false);
+  const [queryDetachedReader, setQueryDetachedReader] = useState(false);
+  const [selectedCandidateRowId, setSelectedCandidateRowId] = useState<string | null>(null);
+  const [focusedCandidate, setFocusedCandidate] = useState<PreviewCandidate | null>(null);
+
+  const getPreviewCandidateRowId = useCallback((candidate: PreviewCandidate) => {
+    const clauseRef = candidate.clause_id || candidate.clause_path || candidate.clause_label || "section";
+    return `${candidate.doc_id}::${candidate.section_number}::${clauseRef}::${candidate.existing_link_id ?? "new"}`;
+  }, []);
 
   const PREVIEW_PAGE_SIZE = 10000;
 
   // Derive validated DSL text for API calls (only when validation passes)
   const validDslText = validationResult && validationResult.errors.length === 0 ? dslText.trim() : "";
+
+  const { data: publishedRulesData } = useLinkRules({ status: "published" });
+  const parentPublishedRule = useMemo(() => {
+    if (!parentFamilyId) return null;
+    const targetToken = canonicalFamilyToken(parentFamilyId);
+    const candidates = (publishedRulesData?.rules ?? []).filter((rule) => {
+      if (rule.status !== "published") return false;
+      if (rule.family_id === parentFamilyId) return true;
+      if (!targetToken) return false;
+      const ruleToken = canonicalFamilyToken(rule.family_id || rule.family_name);
+      return ruleToken === targetToken;
+    });
+    if (candidates.length === 0) return null;
+    return [...candidates].sort((a, b) => {
+      const av = Number(a.version ?? 0);
+      const bv = Number(b.version ?? 0);
+      if (av !== bv) return bv - av;
+      return String(b.updated_at ?? b.created_at).localeCompare(String(a.updated_at ?? a.created_at));
+    })[0];
+  }, [publishedRulesData?.rules, parentFamilyId]);
+  const resolvedParentFamilyId = parentPublishedRule?.family_id ?? parentFamilyId;
+  const inheritedAvailable = !!resolvedParentFamilyId && !!parentPublishedRule;
+  const { data: parentRunsData } = useLinkRuns({ familyId: resolvedParentFamilyId, limit: 50 });
+  const parentRunId = useMemo(
+    () => parentRunsData?.runs.find((run) => run.status === "completed")?.run_id ?? null,
+    [parentRunsData?.runs],
+  );
+  const effectiveScopeMode: "corpus" | "inherited" =
+    scopeMode === "inherited" && inheritedAvailable ? "inherited" : "corpus";
+  const previewScope = useMemo(
+    () => ({
+      scopeMode: effectiveScopeMode,
+      parentFamilyId: effectiveScopeMode === "inherited" ? (resolvedParentFamilyId ?? null) : null,
+      parentRuleId: effectiveScopeMode === "inherited" ? (parentPublishedRule?.rule_id ?? null) : null,
+      parentRunId: effectiveScopeMode === "inherited" ? parentRunId : null,
+    }),
+    [effectiveScopeMode, resolvedParentFamilyId, parentPublishedRule?.rule_id, parentRunId],
+  );
+  const scopeContextRef = useRef<string>("");
+  const scopeTouchedRef = useRef(false);
+  const isChildNodeSelected = !!selectedNodeType && selectedNodeType !== "family";
+  const ontologyNodeIdForPersistence = selectedNodeId ?? familyFilter ?? null;
+  const scopeContextKey = `${familyFilter ?? ""}|${parentFamilyId ?? ""}|${selectedNodeId ?? ""}|${selectedNodeType ?? ""}`;
 
   const validateMut = useValidateDslMutation();
   const queryCountResult = useQueryCountWithMeta(
@@ -1659,6 +1925,11 @@ function QueryTabContent({ familyFilter, loadRuleId }: { familyFilter?: string; 
     currentAst as unknown as Record<string, unknown> | null,
     currentMetaFilters,
     validDslText || undefined,
+    {
+      scopeMode: previewScope.scopeMode,
+      parentFamilyId: previewScope.parentFamilyId,
+      parentRunId: previewScope.parentRunId,
+    },
   );
   const createPreviewMut = useCreatePreviewFromAstMutation();
   const { data: candidatesData } = usePreviewCandidates(previewId, {
@@ -1673,11 +1944,48 @@ function QueryTabContent({ familyFilter, loadRuleId }: { familyFilter?: string; 
   const saveRuleMut = useSaveAsRuleMutation();
   const [loadRuleDropdownOpen, setLoadRuleDropdownOpen] = useState(false);
   const { data: availableRulesData } = useLinkRules({ familyId: familyFilter });
+  const { data: allRulesData } = useLinkRules();
   const availableRules = availableRulesData?.rules ?? [];
+  const allRules = allRulesData?.rules ?? [];
+  const fallbackRules = useMemo(() => {
+    if (!familyFilter || availableRules.length > 0) return [];
+    const target = canonicalFamilyToken(familyFilter);
+    if (!target) return [];
+    return allRules.filter((rule) => {
+      const ruleToken = canonicalFamilyToken(rule.family_id || rule.family_name);
+      return ruleToken === target;
+    });
+  }, [familyFilter, availableRules, allRules]);
+  const loadableRules = useMemo(
+    () =>
+      [...(familyFilter ? (availableRules.length > 0 ? availableRules : fallbackRules) : availableRules)].sort((a, b) => {
+        if (a.family_id !== b.family_id) return a.family_id.localeCompare(b.family_id);
+        const av = Number(a.version ?? 0);
+        const bv = Number(b.version ?? 0);
+        if (av !== bv) return bv - av;
+        return String(b.updated_at ?? b.created_at).localeCompare(String(a.updated_at ?? a.created_at));
+      }),
+    [familyFilter, availableRules, fallbackRules],
+  );
 
   // Load rule from URL param (set by Rules tab "Open in Query")
   const { data: loadedRuleData } = useLinkRule(loadRuleId ?? null);
   const loadedRuleIdRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (scopeContextRef.current === scopeContextKey) return;
+    scopeContextRef.current = scopeContextKey;
+    scopeTouchedRef.current = false;
+  }, [scopeContextKey]);
+
+  useEffect(() => {
+    if (scopeTouchedRef.current) return;
+    if (isChildNodeSelected && inheritedAvailable) {
+      setScopeMode("inherited");
+    } else {
+      setScopeMode("corpus");
+    }
+  }, [isChildNodeSelected, inheritedAvailable, scopeContextKey]);
+
   useEffect(() => {
     if (loadedRuleData && loadRuleId && loadRuleId !== loadedRuleIdRef.current) {
       loadedRuleIdRef.current = loadRuleId;
@@ -1687,6 +1995,13 @@ function QueryTabContent({ familyFilter, loadRuleId }: { familyFilter?: string; 
         setPreviewId(null);
         setApplyError(null);
       }
+      if (loadedRuleData.scope_mode === "inherited" && inheritedAvailable) {
+        scopeTouchedRef.current = true;
+        setScopeMode("inherited");
+      } else {
+        scopeTouchedRef.current = true;
+        setScopeMode("corpus");
+      }
       // Clean loadRuleId from URL to prevent re-triggering on navigation
       if (typeof window !== "undefined") {
         const params = new URLSearchParams(window.location.search);
@@ -1695,7 +2010,7 @@ function QueryTabContent({ familyFilter, loadRuleId }: { familyFilter?: string; 
         window.history.replaceState(null, "", `/links?${params.toString()}`);
       }
     }
-  }, [loadedRuleData, loadRuleId]);
+  }, [loadedRuleData, loadRuleId, inheritedAvailable]);
 
   // Debounced validation
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -1746,6 +2061,15 @@ function QueryTabContent({ familyFilter, loadRuleId }: { familyFilter?: string; 
   }, []);
 
   const hasAnyFilter = !!(validDslText || currentAst || (currentTextFields && Object.keys(currentTextFields).length > 0) || (currentMetaFilters && Object.keys(currentMetaFilters).length > 0));
+  const clauseHighlightTerms = useMemo(() => {
+    const values = new Set<string>();
+    const clauseNode =
+      currentTextFields && typeof currentTextFields === "object"
+        ? (currentTextFields as Record<string, unknown>).clause
+        : null;
+    collectAstMatchValues(clauseNode, values);
+    return Array.from(values).filter((term) => term.length >= 2).sort((a, b) => b.length - a.length);
+  }, [currentTextFields]);
 
   const handleCreatePreview = useCallback(() => {
     if (!familyFilter || !hasAnyFilter) return;
@@ -1761,6 +2085,8 @@ function QueryTabContent({ familyFilter, loadRuleId }: { familyFilter?: string; 
         textFields: currentTextFields ?? undefined,
         filterDsl: validDslText || undefined,
         resultGranularity,
+        ontologyNodeId: ontologyNodeIdForPersistence,
+        scope: previewScope,
       },
       {
         onSuccess: (data) => {
@@ -1775,7 +2101,7 @@ function QueryTabContent({ familyFilter, loadRuleId }: { familyFilter?: string; 
         },
       },
     );
-  }, [familyFilter, currentAst, currentMetaFilters, currentTextFields, hasAnyFilter, createPreviewMut, validDslText, resultGranularity]);
+  }, [familyFilter, currentAst, currentMetaFilters, currentTextFields, hasAnyFilter, createPreviewMut, validDslText, resultGranularity, ontologyNodeIdForPersistence, previewScope]);
 
   const candidates = candidatesData?.items ?? [];
   const totalResults = candidatesData?.total ?? candidates.length;
@@ -1788,6 +2114,10 @@ function QueryTabContent({ familyFilter, loadRuleId }: { familyFilter?: string; 
   useEffect(() => {
     setPreviewCursor(null);
     setCursorHistory([]);
+    setSelectedCandidateRowId(null);
+    setFocusedCandidate(null);
+    setQueryReaderOpen(false);
+    setQueryDetachedReader(false);
   }, [previewId, previewTierFilter]);
 
   // Client-side filtering on loaded results
@@ -1798,7 +2128,9 @@ function QueryTabContent({ familyFilter, loadRuleId }: { familyFilter?: string; 
       c.doc_id.toLowerCase().includes(q) ||
       c.borrower.toLowerCase().includes(q) ||
       c.heading.toLowerCase().includes(q) ||
-      c.section_number.includes(q)
+      c.section_number.includes(q) ||
+      String(c.clause_path ?? "").toLowerCase().includes(q) ||
+      String(c.clause_label ?? "").toLowerCase().includes(q)
     );
   }, [candidates, resultSearch]);
 
@@ -1824,6 +2156,148 @@ function QueryTabContent({ familyFilter, loadRuleId }: { familyFilter?: string; 
     rejected: candidates.filter((c) => c.verdict === "rejected").length,
     deferred: candidates.filter((c) => c.verdict === "deferred").length,
   }), [candidates]);
+
+  useEffect(() => {
+    if (!selectedCandidateRowId || !focusedCandidate) return;
+    const nextFocused = candidates.find((candidate) => getPreviewCandidateRowId(candidate) === selectedCandidateRowId);
+    if (nextFocused && nextFocused !== focusedCandidate) {
+      setFocusedCandidate(nextFocused);
+    }
+  }, [candidates, selectedCandidateRowId, focusedCandidate, getPreviewCandidateRowId]);
+
+  const focusedPreviewLink = useMemo<FamilyLink | null>(() => {
+    if (!focusedCandidate) return null;
+    const timestamp = new Date().toISOString();
+    const familyId = String(familyFilter ?? "").trim() || "preview";
+    const familyName = familyId || "Preview";
+    return {
+      link_id: focusedCandidate.existing_link_id ?? "",
+      doc_id: focusedCandidate.doc_id,
+      borrower: focusedCandidate.borrower || focusedCandidate.doc_id,
+      section_number: focusedCandidate.section_number,
+      ontology_node_id: ontologyNodeIdForPersistence,
+      clause_id: focusedCandidate.clause_id ?? null,
+      clause_char_start: focusedCandidate.clause_char_start ?? null,
+      clause_char_end: focusedCandidate.clause_char_end ?? null,
+      clause_text: focusedCandidate.clause_text ?? null,
+      heading: focusedCandidate.heading,
+      family_id: familyId,
+      family_name: familyName,
+      confidence: focusedCandidate.confidence,
+      confidence_tier: focusedCandidate.confidence_tier,
+      confidence_breakdown: null,
+      link_role: "primary_covenant",
+      status: "pending_review",
+      rule_id: null,
+      run_id: previewId,
+      created_at: timestamp,
+      updated_at: timestamp,
+      reviewed_at: null,
+      reviewed_by: null,
+      note: null,
+      section_text_hash: null,
+    } satisfies FamilyLink;
+  }, [focusedCandidate, familyFilter, ontologyNodeIdForPersistence, previewId]);
+
+  const focusedPreviewLinkId =
+    focusedPreviewLink?.link_id && focusedPreviewLink.link_id.length > 0
+      ? focusedPreviewLink.link_id
+      : null;
+  const { data: contextData } = useContextStrip(focusedPreviewLinkId);
+  const { data: comparablesData } = useComparables(focusedPreviewLinkId);
+  const { data: readerSectionData } = useReaderSection(
+    focusedPreviewLinkId ? null : focusedCandidate?.doc_id ?? null,
+    focusedPreviewLinkId ? null : focusedCandidate?.section_number ?? null,
+  );
+  const { data: readerDefinitionsData } = useReaderDefinitions(
+    focusedPreviewLinkId ? null : focusedCandidate?.doc_id ?? null,
+  );
+
+  const sectionFamilies = useMemo(() => {
+    if (!focusedPreviewLink) return [];
+    const familiesFromContext = Array.isArray(contextData?.section_families)
+      ? contextData.section_families
+      : [];
+    if (familiesFromContext.length > 0) {
+      return familiesFromContext.map((family) => ({
+        family_id: family.family_id,
+        family_name: family.family_name,
+        is_current: !!family.is_current || family.family_id === focusedPreviewLink.family_id,
+      }));
+    }
+    return [
+      {
+        family_id: focusedPreviewLink.family_id,
+        family_name: focusedPreviewLink.family_name,
+        is_current: true,
+      },
+    ];
+  }, [contextData, focusedPreviewLink]);
+
+  const definitions = useMemo(() => {
+    if (contextData?.definitions?.length) {
+      return contextData.definitions.map((d) => ({
+        term: d.term,
+        definition_text: d.definition_text,
+        char_start: 0,
+        char_end: 0,
+      }));
+    }
+    if (readerDefinitionsData?.definitions?.length) {
+      return readerDefinitionsData.definitions.map((d) => ({
+        term: d.term,
+        definition_text: d.definition_text,
+        char_start: d.char_start,
+        char_end: d.char_end,
+      }));
+    }
+    return [];
+  }, [contextData, readerDefinitionsData]);
+
+  const sectionText = useMemo(() => {
+    if (typeof contextData?.section_text === "string" && contextData.section_text.length > 0) {
+      return contextData.section_text;
+    }
+    if (typeof readerSectionData?.text === "string" && readerSectionData.text.length > 0) {
+      return readerSectionData.text;
+    }
+    return null;
+  }, [contextData, readerSectionData]);
+
+  const queryFocusRange = useMemo(() => {
+    if (!focusedCandidate) return null;
+    const clauseStart = focusedCandidate.clause_char_start;
+    const clauseEnd = focusedCandidate.clause_char_end;
+    const sectionStart = readerSectionData?.section_char_start;
+    if (
+      clauseStart === null ||
+      clauseStart === undefined ||
+      clauseEnd === null ||
+      clauseEnd === undefined ||
+      sectionStart === null ||
+      sectionStart === undefined
+    ) {
+      return null;
+    }
+    const relStart = Number(clauseStart) - Number(sectionStart);
+    const relEnd = Number(clauseEnd) - Number(sectionStart);
+    if (!Number.isFinite(relStart) || !Number.isFinite(relEnd) || relEnd <= relStart) {
+      return null;
+    }
+    return {
+      start: Math.max(0, Math.floor(relStart)),
+      end: Math.max(0, Math.floor(relEnd)),
+    };
+  }, [
+    focusedCandidate,
+    readerSectionData?.section_char_start,
+  ]);
+
+  const handleCandidateRowClick = useCallback((candidate: PreviewCandidate) => {
+    setFocusedCandidate(candidate);
+    setSelectedCandidateRowId(getPreviewCandidateRowId(candidate));
+    setQueryReaderOpen(true);
+  }, [getPreviewCandidateRowId]);
 
   // Cursor-based pagination mapped to page numbers
   const handlePageChange = useCallback((targetPage: number) => {
@@ -1861,9 +2335,14 @@ function QueryTabContent({ familyFilter, loadRuleId }: { familyFilter?: string; 
       accessorKey: "section_number",
       header: "Section",
       enableSorting: true,
-      cell: ({ getValue }: { getValue: () => unknown }) => (
-        <span className="tabular-nums">{String(getValue())}</span>
-      ),
+      cell: ({ row }: { row: { original: PreviewCandidate } }) => {
+        const c = row.original;
+        const display =
+          resultGranularity === "clause"
+            ? formatSectionWithClause(c.section_number, c.clause_path, c.clause_label)
+            : c.section_number;
+        return <span className="tabular-nums">{display}</span>;
+      },
     },
     {
       accessorKey: "heading",
@@ -1911,12 +2390,13 @@ function QueryTabContent({ familyFilter, loadRuleId }: { familyFilter?: string; 
           <div className="flex items-center gap-1">
             <button
               type="button"
-              onClick={() =>
+              onClick={(e) => {
+                e.stopPropagation();
                 updateVerdictsMut.mutate({
                   previewId: previewId!,
                   verdicts: [{ doc_id: c.doc_id, section_number: c.section_number, verdict: "accepted" }],
-                })
-              }
+                });
+              }}
               className={cn(
                 "px-1.5 py-0.5 rounded text-xs transition-colors",
                 c.verdict === "accepted" ? "bg-glow-green text-accent-green" : "text-text-muted hover:text-accent-green",
@@ -1927,12 +2407,13 @@ function QueryTabContent({ familyFilter, loadRuleId }: { familyFilter?: string; 
             </button>
             <button
               type="button"
-              onClick={() =>
+              onClick={(e) => {
+                e.stopPropagation();
                 updateVerdictsMut.mutate({
                   previewId: previewId!,
                   verdicts: [{ doc_id: c.doc_id, section_number: c.section_number, verdict: "rejected" }],
-                })
-              }
+                });
+              }}
               className={cn(
                 "px-1.5 py-0.5 rounded text-xs transition-colors",
                 c.verdict === "rejected" ? "bg-glow-red text-accent-red" : "text-text-muted hover:text-accent-red",
@@ -1943,12 +2424,13 @@ function QueryTabContent({ familyFilter, loadRuleId }: { familyFilter?: string; 
             </button>
             <button
               type="button"
-              onClick={() =>
+              onClick={(e) => {
+                e.stopPropagation();
                 updateVerdictsMut.mutate({
                   previewId: previewId!,
                   verdicts: [{ doc_id: c.doc_id, section_number: c.section_number, verdict: "deferred" }],
-                })
-              }
+                });
+              }}
               className={cn(
                 "px-1.5 py-0.5 rounded text-xs transition-colors",
                 c.verdict === "deferred" ? "bg-glow-amber text-accent-orange" : "text-text-muted hover:text-accent-orange",
@@ -1961,7 +2443,7 @@ function QueryTabContent({ familyFilter, loadRuleId }: { familyFilter?: string; 
         );
       },
     },
-  ], [previewId, updateVerdictsMut]);
+  ], [previewId, updateVerdictsMut, resultGranularity]);
 
   return (
     <div className="h-full flex flex-col overflow-hidden" data-testid="query-tab">
@@ -1977,6 +2459,53 @@ function QueryTabContent({ familyFilter, loadRuleId }: { familyFilter?: string; 
           queryCost={queryCountResult.data?.query_cost ?? validationResult?.query_cost}
           className="flex-1 min-w-0"
         />
+        <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-0.5 rounded-lg bg-surface-2 p-0.5">
+            <button
+              type="button"
+              onClick={() => {
+                scopeTouchedRef.current = true;
+                setScopeMode("corpus");
+              }}
+              className={cn(
+                "px-2 py-1 text-xs rounded-md transition-colors",
+                effectiveScopeMode === "corpus"
+                  ? "bg-surface-0 text-text-primary shadow-sm"
+                  : "text-text-muted hover:text-text-secondary",
+              )}
+              data-testid="query-scope-corpus"
+            >
+              Corpus
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                scopeTouchedRef.current = true;
+                setScopeMode("inherited");
+              }}
+              disabled={!inheritedAvailable}
+              className={cn(
+                "px-2 py-1 text-xs rounded-md transition-colors disabled:opacity-40",
+                effectiveScopeMode === "inherited"
+                  ? "bg-surface-0 text-text-primary shadow-sm"
+                  : "text-text-muted hover:text-text-secondary",
+              )}
+              data-testid="query-scope-inherited"
+              title={
+                inheritedAvailable
+                  ? "Scope to parent node results"
+                  : "No published parent rule found"
+              }
+            >
+              Inherited
+            </button>
+          </div>
+          {effectiveScopeMode === "inherited" && previewScope.parentFamilyId && (
+            <Badge variant="blue" className="text-[10px]">
+              from {previewScope.parentFamilyId}
+            </Badge>
+          )}
+        </div>
         <button
           type="button"
           onClick={handleCreatePreview}
@@ -2054,24 +2583,38 @@ function QueryTabContent({ familyFilter, loadRuleId }: { familyFilter?: string; 
           </button>
           {loadRuleDropdownOpen && (
             <div className="absolute top-full left-0 mt-1 z-30 w-80 max-h-48 overflow-auto bg-surface-1 border border-border rounded-lg shadow-xl">
-              {!familyFilter ? (
-                <div className="p-3 text-xs text-text-muted">Select a family first</div>
-              ) : availableRules.length === 0 ? (
-                <div className="p-3 text-xs text-text-muted">No rules for this family</div>
+              {loadableRules.length === 0 ? (
+                <div className="p-3 text-xs text-text-muted">
+                  {familyFilter ? "No rules for this scope" : "No rules available"}
+                </div>
               ) : (
-                availableRules.map((r) => (
+                loadableRules.map((r) => (
                   <button
                     key={r.rule_id}
                     type="button"
                     onClick={() => {
                       const ruleDsl = r.filter_dsl || r.heading_filter_dsl;
                       if (ruleDsl) setDslText(ruleDsl);
+                      const nextScope = (r.ontology_node_id || r.family_id || "").trim();
+                      if (nextScope && nextScope !== familyFilter) {
+                        onFamilySelect?.(nextScope);
+                      }
+                      if (r.scope_mode === "inherited" && inheritedAvailable) {
+                        scopeTouchedRef.current = true;
+                        setScopeMode("inherited");
+                      } else {
+                        scopeTouchedRef.current = true;
+                        setScopeMode("corpus");
+                      }
                       setLoadRuleDropdownOpen(false);
                     }}
                     className="w-full text-left px-3 py-2 hover:bg-surface-2 border-b border-border/30 last:border-0"
                   >
                     <div className="flex items-center gap-2">
                       <span className="text-xs text-text-primary">{r.name || r.rule_id}</span>
+                      {!familyFilter && (
+                        <Badge variant="default">{r.ontology_node_id || r.family_name || r.family_id}</Badge>
+                      )}
                       <Badge variant={r.status === "published" ? "green" : r.status === "draft" ? "orange" : "default"}>
                         {r.status}
                       </Badge>
@@ -2146,107 +2689,145 @@ function QueryTabContent({ familyFilter, loadRuleId }: { familyFilter?: string; 
             </div>
           </div>
 
-          {/* DataTable fills remaining space */}
-          <div className="flex-1 overflow-hidden">
-            <DataTable<PreviewCandidate>
-              columns={queryColumns}
-              data={sortedCandidates}
-              sorting={sorting}
-              onSortingChange={setSorting}
-              getRowId={(row) => `${row.doc_id}-${row.section_number}`}
-              emptyMessage="No matching candidates"
-            />
-          </div>
+          <div className="flex-1 flex overflow-hidden">
+            <div className={cn("flex-1 flex flex-col overflow-hidden", queryReaderOpen && "w-1/2")}>
+              {/* DataTable fills remaining space */}
+              <div className="flex-1 overflow-hidden">
+                <DataTable<PreviewCandidate>
+                  columns={queryColumns}
+                  data={sortedCandidates}
+                  sorting={sorting}
+                  onSortingChange={setSorting}
+                  onRowClick={handleCandidateRowClick}
+                  selectedRowId={selectedCandidateRowId ?? undefined}
+                  focusedRowId={selectedCandidateRowId ?? undefined}
+                  getRowId={getPreviewCandidateRowId}
+                  emptyMessage="No matching candidates"
+                />
+              </div>
 
-          {/* Footer: pagination + action buttons */}
-          <div className="flex items-center justify-between px-4 py-2 border-t border-border bg-surface-1 flex-shrink-0">
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => {
-                  if (!previewId || !candidatesData) return;
-                  setApplyError(null);
-                  const hash = previewCandidateHash || candidatesData.candidate_set_hash || "";
-                  applyMut.mutate(
-                    { previewId, candidateSetHash: hash },
-                    {
-                      onError: (err) => {
-                        const msg = err?.message ?? "Unknown error";
-                        if (msg.includes("409") || msg.toLowerCase().includes("expired") || msg.toLowerCase().includes("hash")) {
-                          setApplyError("Preview expired or hash mismatch. Please re-create the preview.");
-                        } else {
-                          setApplyError(msg);
-                        }
-                      },
-                    },
-                  );
-                }}
-                disabled={applyMut.isPending}
-                className="px-3 py-1.5 bg-accent-green text-white text-sm rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
-                data-testid="query-apply-btn"
-              >
-                {applyMut.isPending ? "Applying..." : "Apply"}
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  if (!previewId) return;
-                  canaryMut.mutate({ previewId, limit: 10 });
-                }}
-                disabled={canaryMut.isPending}
-                className="px-3 py-1.5 bg-surface-2 text-text-secondary text-sm rounded-lg hover:text-text-primary transition-colors disabled:opacity-50"
-                data-testid="query-canary-btn"
-              >
-                Canary Apply
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  if (!familyFilter || !validDslText) return;
-                  saveRuleMut.mutate({
-                    family_id: familyFilter,
-                    filter_dsl: validDslText,
-                    result_granularity: resultGranularity,
-                    heading_filter_ast: currentAst as unknown as Record<string, unknown>,
-                  });
-                }}
-                disabled={saveRuleMut.isPending || !familyFilter || !validDslText}
-                className="px-3 py-1.5 bg-surface-2 text-text-secondary text-sm rounded-lg hover:text-text-primary transition-colors disabled:opacity-50"
-                data-testid="query-save-rule-btn"
-              >
-                Save as Rule
-              </button>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-text-muted tabular-nums">
-                {totalResults.toLocaleString()} total rows
-              </span>
-              {totalPages > 1 && (
-                <div className="flex items-center gap-1">
+              {/* Footer: pagination + action buttons */}
+              <div className="flex items-center justify-between px-4 py-2 border-t border-border bg-surface-1 flex-shrink-0">
+                <div className="flex items-center gap-2">
                   <button
                     type="button"
-                    className="btn-ghost"
-                    disabled={!hasPrev}
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    aria-label="Previous page"
+                    onClick={() => {
+                      if (!previewId || !candidatesData) return;
+                      setApplyError(null);
+                      const hash = previewCandidateHash || candidatesData.candidate_set_hash || "";
+                      applyMut.mutate(
+                        { previewId, candidateSetHash: hash },
+                        {
+                          onError: (err) => {
+                            const msg = err?.message ?? "Unknown error";
+                            if (msg.includes("409") || msg.toLowerCase().includes("expired") || msg.toLowerCase().includes("hash")) {
+                              setApplyError("Preview expired or hash mismatch. Please re-create the preview.");
+                            } else {
+                              setApplyError(msg);
+                            }
+                          },
+                        },
+                      );
+                    }}
+                    disabled={applyMut.isPending}
+                    className="px-3 py-1.5 bg-accent-green text-white text-sm rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
+                    data-testid="query-apply-btn"
                   >
-                    Prev
+                    {applyMut.isPending ? "Applying..." : "Apply"}
                   </button>
-                  <span className="text-xs text-text-secondary tabular-nums px-1">
-                    {currentPage + 1} / {totalPages}
-                  </span>
                   <button
                     type="button"
-                    className="btn-ghost"
-                    disabled={!hasNext}
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    aria-label="Next page"
+                    onClick={() => {
+                      if (!previewId) return;
+                      canaryMut.mutate({ previewId, limit: 10 });
+                    }}
+                    disabled={canaryMut.isPending}
+                    className="px-3 py-1.5 bg-surface-2 text-text-secondary text-sm rounded-lg hover:text-text-primary transition-colors disabled:opacity-50"
+                    data-testid="query-canary-btn"
                   >
-                    Next
+                    Canary Apply
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!familyFilter || !validDslText) return;
+                      saveRuleMut.mutate({
+                        family_id: familyFilter,
+                        ontology_node_id: ontologyNodeIdForPersistence ?? undefined,
+                        filter_dsl: validDslText,
+                        result_granularity: resultGranularity,
+                        heading_filter_ast: currentAst as unknown as Record<string, unknown>,
+                        scope_mode: previewScope.scopeMode,
+                        parent_family_id: previewScope.parentFamilyId,
+                        parent_rule_id: previewScope.parentRuleId,
+                        parent_run_id: previewScope.parentRunId,
+                      });
+                    }}
+                    disabled={saveRuleMut.isPending || !familyFilter || !validDslText}
+                    className="px-3 py-1.5 bg-surface-2 text-text-secondary text-sm rounded-lg hover:text-text-primary transition-colors disabled:opacity-50"
+                    data-testid="query-save-rule-btn"
+                  >
+                    Save as Rule
                   </button>
                 </div>
-              )}
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-text-muted tabular-nums">
+                    {totalResults.toLocaleString()} total rows
+                  </span>
+                  {totalPages > 1 && (
+                    <div className="flex items-center gap-1">
+                      <button
+                        type="button"
+                        className="btn-ghost"
+                        disabled={!hasPrev}
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        aria-label="Previous page"
+                      >
+                        Prev
+                      </button>
+                      <span className="text-xs text-text-secondary tabular-nums px-1">
+                        {currentPage + 1} / {totalPages}
+                      </span>
+                      <button
+                        type="button"
+                        className="btn-ghost"
+                        disabled={!hasNext}
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        aria-label="Next page"
+                      >
+                        Next
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
+
+            {queryReaderOpen && (
+              <div className="w-1/2 border-l border-border overflow-hidden">
+                <DetachableReader
+                  detached={queryDetachedReader}
+                  onDetach={() => setQueryDetachedReader(true)}
+                  onReattach={() => setQueryDetachedReader(false)}
+                  currentLinkId={focusedPreviewLinkId}
+                >
+                <ReviewPane
+                  link={focusedPreviewLink}
+                  sectionText={sectionText}
+                  sectionFamilies={sectionFamilies}
+                  definitions={definitions}
+                  comparables={comparablesData?.comparables ?? []}
+                  folded={false}
+                  redlineActive={false}
+                  templateFamily={focusedPreviewLink?.family_id ?? null}
+                  highlightMode="query"
+                  queryHighlightTerms={clauseHighlightTerms}
+                  queryFocusRange={queryFocusRange}
+                  queryFocusText={focusedCandidate?.clause_text ?? null}
+                />
+              </DetachableReader>
+            </div>
+            )}
           </div>
         </div>
       ) : (
@@ -2296,8 +2877,9 @@ function CoverageTabContent({ familyFilter }: { familyFilter?: string }) {
   const ruleIdByFamily = useMemo(() => {
     const mapping = new Map<string, string>();
     for (const rule of rulesData?.rules ?? []) {
-      if (!mapping.has(rule.family_id)) {
-        mapping.set(rule.family_id, rule.rule_id);
+      const scopeId = String(rule.ontology_node_id || rule.family_id || "").trim();
+      if (scopeId && !mapping.has(scopeId)) {
+        mapping.set(scopeId, rule.rule_id);
       }
     }
     return mapping;
@@ -2319,7 +2901,7 @@ function CoverageTabContent({ familyFilter }: { familyFilter?: string }) {
             color="red"
           />
           <KpiCard
-            title="Gap by Family"
+            title="Gap by Scope"
             value={Object.keys(coverageData?.gap_by_family ?? {}).length}
             color="orange"
           />
@@ -2710,6 +3292,7 @@ function RulesTabContent({
       (r) =>
         r.rule_id.toLowerCase().includes(q) ||
         r.family_name.toLowerCase().includes(q) ||
+        String(r.ontology_node_id ?? "").toLowerCase().includes(q) ||
         (r.filter_dsl || r.heading_filter_dsl).toLowerCase().includes(q),
     );
   }, [rules, search]);
@@ -2837,7 +3420,7 @@ function RulesTabContent({
             <thead className="sticky top-0 z-10 bg-surface-2">
               <tr>
                 <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Rule</th>
-                <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Family</th>
+                <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Scope</th>
                 <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">DSL</th>
                 <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Status</th>
                 <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">v</th>
@@ -2878,7 +3461,7 @@ function RulesTabContent({
                         </div>
                       </td>
                       <td className="px-3 py-2">
-                        <Badge variant="blue">{rule.family_name}</Badge>
+                        <Badge variant="blue">{rule.ontology_node_id || rule.family_name || rule.family_id}</Badge>
                       </td>
                       <td className="px-3 py-2 max-w-48">
                         <code className="text-xs" data-testid={`rule-dsl-${rule.rule_id}`}>
@@ -3000,7 +3583,7 @@ function RulesTabContent({
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation();
-                              onOpenInQuery?.(rule.rule_id, rule.family_id);
+                              onOpenInQuery?.(rule.rule_id, rule.ontology_node_id || rule.family_id);
                             }}
                             className="text-xs text-text-muted hover:text-accent-blue"
                             data-testid={`rule-open-query-${rule.rule_id}`}
@@ -3028,7 +3611,7 @@ function RulesTabContent({
                 <div className="flex items-center gap-2">
                   <span className="text-xs font-semibold text-text-primary">{rule.name || rule.rule_id}</span>
                   <span className="text-[10px] font-mono text-text-muted" title={rule.rule_id}>{rule.rule_id.slice(0, 8)}</span>
-                  <Badge variant="blue">{rule.family_name}</Badge>
+                  <Badge variant="blue">{rule.ontology_node_id || rule.family_name || rule.family_id}</Badge>
                   <Badge variant={rule.status === "published" ? "green" : rule.status === "draft" ? "orange" : "default"}>
                     {rule.status}
                   </Badge>
@@ -3098,7 +3681,7 @@ function RulesTabContent({
                       </button>
                       <button
                         type="button"
-                        onClick={() => onOpenInQuery?.(rule.rule_id, rule.family_id)}
+                        onClick={() => onOpenInQuery?.(rule.rule_id, rule.ontology_node_id || rule.family_id)}
                         className="text-[10px] text-accent-blue hover:underline"
                       >
                         Open in Query
@@ -3369,7 +3952,7 @@ function DashboardTabContent({
 
       {/* Main content */}
       <div className="flex-1 p-4 space-y-4">
-        <BatchRunDashboard />
+        <BatchRunDashboard scopeFilter={familyFilter} />
 
         {/* Two-column layout: Heatmap + Drift */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -3388,104 +3971,6 @@ function DashboardTabContent({
           </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-// ── Children tab content ───────────────────────────────────────────────────
-
-function ChildrenTabContent({
-  familyFilter,
-  selectedParentLinkId: selectedParentLinkIdProp,
-  onParentLinkChange,
-}: {
-  familyFilter?: string;
-  selectedParentLinkId?: string | null;
-  onParentLinkChange?: (linkId: string | null) => void;
-}) {
-  const [selectedParentLinkId, setSelectedParentLinkId] = useState<string | null>(selectedParentLinkIdProp ?? null);
-
-  const { data: linksData } = useLinks({
-    familyId: familyFilter,
-    status: "active",
-    pageSize: 50,
-  });
-
-  const parentLinks = linksData?.links ?? [];
-
-  useEffect(() => {
-    if (selectedParentLinkIdProp === undefined) return;
-    setSelectedParentLinkId(selectedParentLinkIdProp);
-  }, [selectedParentLinkIdProp]);
-
-  useEffect(() => {
-    if (!selectedParentLinkId) return;
-    const exists = parentLinks.some((link) => link.link_id === selectedParentLinkId);
-    if (!exists) {
-      setSelectedParentLinkId(null);
-      onParentLinkChange?.(null);
-    }
-  }, [selectedParentLinkId, parentLinks, onParentLinkChange]);
-
-  return (
-    <div className="h-full flex flex-col overflow-hidden" data-testid="children-tab">
-      {/* Parent link selector */}
-      <div className="px-4 py-3 border-b border-border bg-surface-1">
-        <div className="flex items-center gap-2">
-          <label className="text-xs font-semibold text-text-muted uppercase tracking-wider">
-            Parent Link:
-          </label>
-          <select
-            value={selectedParentLinkId ?? ""}
-            onChange={(e) => {
-              const next = e.target.value || null;
-              setSelectedParentLinkId(next);
-              onParentLinkChange?.(next);
-            }}
-            className="bg-surface-2 border border-border rounded px-2 py-1.5 text-sm text-text-primary max-w-md"
-            data-testid="parent-link-selector"
-          >
-            <option value="">Select a parent link...</option>
-            {parentLinks.map((link) => (
-              <option key={link.link_id} value={link.link_id}>
-                {link.heading} ({link.family_name}) — {link.doc_id}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      {/* Content */}
-      {selectedParentLinkId ? (
-        <div className="flex-1 flex overflow-hidden">
-          {/* Existing child links */}
-          <div className="flex-1 overflow-auto p-4">
-            <ChildLinkReview
-              parentLinkId={selectedParentLinkId}
-              familyId={familyFilter ?? ""}
-            />
-          </div>
-
-          {/* Candidates queue */}
-          <div className="w-96 flex-shrink-0 border-l border-border overflow-auto p-4">
-            <ChildLinkQueue
-              parentLinkId={selectedParentLinkId}
-              familyId={familyFilter ?? ""}
-            />
-          </div>
-        </div>
-      ) : (
-        <div className="flex-1 flex items-center justify-center">
-          <div className="text-center">
-            <p className="text-lg font-semibold text-text-primary mb-1">
-              Child Link Lifecycle
-            </p>
-            <p className="text-sm text-text-muted">
-              Select a parent link to begin child linking
-            </p>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

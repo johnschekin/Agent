@@ -1,18 +1,36 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { cn } from "@/lib/cn";
 import { Badge } from "@/components/ui/Badge";
 import { KpiCard, KpiCardGrid } from "@/components/ui/KpiCard";
 import {
   useAnalyticsDashboard,
   useLinkRuns,
+  useLinkRules,
   useDriftAlerts,
   useSubmitLinkJobMutation,
 } from "@/lib/queries";
 
 interface BatchRunDashboardProps {
   className?: string;
+  scopeFilter?: string;
+}
+
+const EMPTY_PLACEHOLDER = "—";
+
+function canonicalFamilyToken(value?: string | null): string {
+  const raw = String(value ?? "").trim().toLowerCase();
+  if (!raw) return "";
+  const stripped = raw
+    .replace(/^fam[-_.]/, "")
+    .replace(/[^a-z0-9]+/g, ".")
+    .replace(/\.+/g, ".")
+    .replace(/^\./, "")
+    .replace(/\.$/, "");
+  if (!stripped) return "";
+  const parts = stripped.split(".").filter(Boolean);
+  return parts.length > 0 ? parts[parts.length - 1] : stripped;
 }
 
 function timeAgo(dateStr: string): string {
@@ -28,82 +46,223 @@ function timeAgo(dateStr: string): string {
   return `${diffD}d ago`;
 }
 
-export function BatchRunDashboard({ className }: BatchRunDashboardProps) {
-  const { data: analytics, isLoading: analyticsLoading } = useAnalyticsDashboard();
-  const { data: runsData } = useLinkRuns();
+export function BatchRunDashboard({ className, scopeFilter }: BatchRunDashboardProps) {
+  const { data: analytics, isLoading: analyticsLoading } = useAnalyticsDashboard(scopeFilter);
+  const { data: runsData } = useLinkRuns({ familyId: scopeFilter });
+  const { data: rulesData } = useLinkRules({ status: "published", familyId: scopeFilter });
   const { data: alertsData } = useDriftAlerts();
   const submitJobMut = useSubmitLinkJobMutation();
+  const [submittingScopeId, setSubmittingScopeId] = useState<string | null>(null);
 
   const runs = runsData?.runs ?? [];
-  const alerts = alertsData?.alerts ?? [];
+  const rules = rulesData?.rules ?? [];
+  const alerts = useMemo(() => {
+    const all = alertsData?.alerts ?? [];
+    const requestedScope = String(scopeFilter ?? "").trim();
+    if (!requestedScope) return all;
+    const requestedToken = canonicalFamilyToken(requestedScope);
+    return all.filter((alert) => {
+      const alertScope = String(alert.family_id ?? "").trim();
+      if (!alertScope) return false;
+      if (alertScope === requestedScope) return true;
+      if (alertScope.startsWith(`${requestedScope}.`)) return true;
+      if (!requestedToken) return false;
+      return canonicalFamilyToken(alertScope) === requestedToken;
+    });
+  }, [alertsData?.alerts, scopeFilter]);
   const unacknowledgedAlerts = alerts.filter((a) => !a.resolved);
 
   // Compute coverage % from links_by_status: accepted / total
   const coverageDisplay = useMemo(() => {
     const totalLinks = analytics?.total_links ?? 0;
-    if (totalLinks === 0) return "\u2014";
+    if (totalLinks === 0) return EMPTY_PLACEHOLDER;
     const accepted =
       analytics?.links_by_status?.find((s) => s.status === "accepted")?.count ?? 0;
     const pct = (accepted / totalLinks) * 100;
     return `${pct.toFixed(1)}%`;
   }, [analytics]);
 
-  // Build a lookup: family_id -> most recent run for that family
-  const latestRunByFamily = useMemo(() => {
+  const getScopeIdFromRun = (run: (typeof runs)[number]): string => {
+    const scopeId = String(run.scope_id ?? run.ontology_node_id ?? run.family_id ?? "").trim();
+    return scopeId || String(run.family_id ?? "").trim() || "unassigned";
+  };
+
+  const getScopeIdFromRule = (rule: (typeof rules)[number]): string => {
+    const scopeId = String(rule.ontology_node_id ?? rule.family_id ?? "").trim();
+    return scopeId || String(rule.family_id ?? "").trim() || "unassigned";
+  };
+
+  // Build a lookup: scope_id -> most recent run for that scope
+  const latestRunByScope = useMemo(() => {
     const map = new Map<string, (typeof runs)[number]>();
     for (const run of runs) {
-      const existing = map.get(run.family_id);
+      const scopeId = getScopeIdFromRun(run);
+      const existing = map.get(scopeId);
       if (!existing || new Date(run.started_at) > new Date(existing.started_at)) {
-        map.set(run.family_id, run);
+        map.set(scopeId, run);
       }
     }
     return map;
   }, [runs]);
 
-  // Build a lookup: family_id -> pending count from links_by_status per-family (approximate)
+  // Build a lookup: scope_id -> pending run count.
   // Since analytics.links_by_status is global, we derive pending count from runs data
-  const pendingByFamily = useMemo(() => {
+  const pendingByScope = useMemo(() => {
     const map = new Map<string, number>();
     for (const run of runs) {
       if (run.status === "running") {
-        map.set(run.family_id, (map.get(run.family_id) ?? 0) + 1);
+        const scopeId = getScopeIdFromRun(run);
+        map.set(scopeId, (map.get(scopeId) ?? 0) + 1);
       }
     }
     return map;
   }, [runs]);
 
-  // Coverage by family: links_created / corpus_doc_count from the latest run
-  const coverageByFamily = useMemo(() => {
+  // Coverage by scope: links_created / corpus_doc_count from the latest run
+  const coverageByScope = useMemo(() => {
     const map = new Map<string, number | null>();
-    latestRunByFamily.forEach((run, fid) => {
+    latestRunByScope.forEach((run, scopeId) => {
       if (run.corpus_doc_count > 0 && run.status === "completed") {
-        map.set(fid, (run.links_created / run.corpus_doc_count) * 100);
+        map.set(scopeId, (run.links_created / run.corpus_doc_count) * 100);
       } else {
-        map.set(fid, null);
+        map.set(scopeId, null);
       }
     });
     return map;
-  }, [latestRunByFamily]);
+  }, [latestRunByScope]);
 
   const matrixFamilies = useMemo(() => {
-    const fromAnalytics = analytics?.links_by_family ?? [];
-    if (fromAnalytics.length > 0) {
-      return fromAnalytics.map((family) => ({
-        family_id: family.family_id,
-        count: family.count,
-      }));
+    const rows = new Map<
+      string,
+      {
+        scope_id: string;
+        family_id: string;
+        ontology_node_id?: string | null;
+        count: number;
+      }
+    >();
+    const upsert = (row: {
+      scope_id: string;
+      family_id: string;
+      ontology_node_id?: string | null;
+      count: number;
+    }) => {
+      const scopeId = String(row.scope_id ?? "").trim();
+      if (!scopeId) return;
+      const existing = rows.get(scopeId);
+      if (!existing) {
+        rows.set(scopeId, row);
+        return;
+      }
+      rows.set(scopeId, {
+        scope_id: scopeId,
+        family_id: existing.family_id || row.family_id,
+        ontology_node_id: existing.ontology_node_id ?? row.ontology_node_id ?? null,
+        count: Math.max(existing.count, row.count),
+      });
+    };
+
+    for (const family of analytics?.links_by_family ?? []) {
+      const scopeId = String(family.scope_id ?? family.family_id ?? "").trim();
+      const baseFamily = String(family.base_family_id ?? family.family_id ?? scopeId).trim();
+      upsert({
+        scope_id: scopeId || baseFamily || "unassigned",
+        family_id: baseFamily || scopeId || "unassigned",
+        ontology_node_id:
+          family.ontology_node_id === null || family.ontology_node_id === undefined
+            ? null
+            : String(family.ontology_node_id),
+        count: Number(family.count ?? 0),
+      });
     }
-    const fromRuns = Array.from(latestRunByFamily.entries()).map(([familyId, run]) => ({
-      family_id: familyId,
-      count: Number(run.links_created ?? 0),
-    }));
-    if (fromRuns.length > 0) return fromRuns;
-    const fromAlerts = Array.from(
-      new Set(alerts.filter((a) => !a.resolved).map((a) => a.family_id)),
-    ).map((familyId) => ({ family_id: familyId, count: 0 }));
-    if (fromAlerts.length > 0) return fromAlerts;
-    return [{ family_id: "unassigned", count: 0 }];
-  }, [analytics, latestRunByFamily, alerts]);
+
+    for (const [scopeId, run] of Array.from(latestRunByScope.entries())) {
+      const baseFamily = String(run.base_family_id ?? run.family_id ?? scopeId).trim();
+      upsert({
+        scope_id: scopeId,
+        family_id: baseFamily || scopeId,
+        ontology_node_id:
+          run.ontology_node_id === null || run.ontology_node_id === undefined
+            ? null
+            : String(run.ontology_node_id),
+        count: Number(run.links_created ?? 0),
+      });
+    }
+
+    for (const rule of rules) {
+      const scopeId = getScopeIdFromRule(rule);
+      const familyId = String(rule.family_id ?? scopeId).trim();
+      upsert({
+        scope_id: scopeId,
+        family_id: familyId || scopeId,
+        ontology_node_id:
+          rule.ontology_node_id === null || rule.ontology_node_id === undefined
+            ? null
+            : String(rule.ontology_node_id),
+        count: 0,
+      });
+    }
+
+    for (const alert of alerts.filter((a) => !a.resolved)) {
+      const familyId = String(alert.family_id ?? "").trim();
+      if (!familyId) continue;
+      upsert({
+        scope_id: familyId,
+        family_id: familyId,
+        ontology_node_id: null,
+        count: 0,
+      });
+    }
+
+    if (rows.size === 0) {
+      return [{ scope_id: "unassigned", family_id: "unassigned", count: 0 }];
+    }
+    return Array.from(rows.values()).sort(
+      (a, b) => b.count - a.count || a.scope_id.localeCompare(b.scope_id),
+    );
+  }, [analytics, latestRunByScope, rules, alerts]);
+
+  const publishedRuleScopeIds = useMemo(() => {
+    const ids = new Set<string>();
+    for (const rule of rules) {
+      const scopeId = getScopeIdFromRule(rule);
+      if (scopeId) ids.add(scopeId);
+      const familyId = String(rule.family_id ?? "").trim();
+      if (familyId) ids.add(familyId);
+    }
+    return ids;
+  }, [rules]);
+
+  const publishedRuleTokenCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const scopeId of Array.from(publishedRuleScopeIds)) {
+      const token = canonicalFamilyToken(scopeId);
+      if (!token) continue;
+      counts.set(token, (counts.get(token) ?? 0) + 1);
+    }
+    return counts;
+  }, [publishedRuleScopeIds]);
+
+  const getRunEligibility = (scopeId: string, baseFamilyId?: string) => {
+    if (publishedRuleScopeIds.has(scopeId)) {
+      return { canRun: true, reason: "" };
+    }
+    if (baseFamilyId && publishedRuleScopeIds.has(baseFamilyId)) {
+      return { canRun: true, reason: "" };
+    }
+    const token = canonicalFamilyToken(scopeId || baseFamilyId);
+    if (!token) {
+      return { canRun: false, reason: "No published rule for this scope" };
+    }
+    const tokenMatches = publishedRuleTokenCounts.get(token) ?? 0;
+    if (tokenMatches === 1) {
+      return { canRun: true, reason: "" };
+    }
+    if (tokenMatches > 1) {
+      return { canRun: false, reason: "Ambiguous scope alias: multiple published scopes match this token" };
+    }
+    return { canRun: false, reason: "No published rule for this scope" };
+  };
 
   // Most recent run overall for staleness indicator
   const mostRecentRun = useMemo(() => {
@@ -141,22 +300,26 @@ export function BatchRunDashboard({ className }: BatchRunDashboardProps) {
         />
       </KpiCardGrid>
 
-      {/* Family matrix */}
+      {/* Scope matrix */}
       <div>
         <div className="flex items-center justify-between mb-2">
           <h4 className="text-xs font-semibold text-text-muted uppercase tracking-wider">
-            Family Matrix
+            Ontology Scope Matrix
           </h4>
           <button
             type="button"
-            onClick={() =>
-              submitJobMut.mutate({ job_type: "batch_run", params: {} })
-            }
+            onClick={() => {
+              setSubmittingScopeId(null);
+              submitJobMut.mutate({
+                job_type: "batch_run",
+                params: scopeFilter ? { family_id: scopeFilter } : {},
+              });
+            }}
             disabled={submitJobMut.isPending}
             className="px-3 py-1.5 bg-accent-blue text-white text-xs rounded-lg hover:opacity-90 disabled:opacity-50"
             data-testid="run-all-rules-btn"
           >
-            {submitJobMut.isPending ? "Submitting..." : "Run All Rules"}
+            {submitJobMut.isPending ? "Submitting..." : scopeFilter ? "Run Scope Rules" : "Run All Rules"}
           </button>
         </div>
 
@@ -183,7 +346,7 @@ export function BatchRunDashboard({ className }: BatchRunDashboardProps) {
               <thead>
                 <tr>
                   <th className="px-3 py-2 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">
-                    Family
+                    Scope
                   </th>
                   <th className="px-3 py-2 text-right text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">
                     Links
@@ -203,38 +366,57 @@ export function BatchRunDashboard({ className }: BatchRunDashboardProps) {
                   <th className="px-3 py-2 text-right text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">
                     Drift
                   </th>
+                  <th className="px-3 py-2 text-right text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">
+                    Run
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {matrixFamilies.map((fam) => {
-                  const familyAlerts = alerts.filter((a) => a.family_id === fam.family_id && !a.resolved);
-                  const latestRun = latestRunByFamily.get(fam.family_id);
-                  const coverage = coverageByFamily.get(fam.family_id);
-                  const pending = pendingByFamily.get(fam.family_id) ?? 0;
+                  const familyAlerts = alerts.filter(
+                    (a) =>
+                      !a.resolved &&
+                      (
+                        a.family_id === fam.scope_id
+                        || a.family_id === fam.family_id
+                      ),
+                  );
+                  const latestRun = latestRunByScope.get(fam.scope_id);
+                  const coverage = coverageByScope.get(fam.scope_id);
+                  const pending = pendingByScope.get(fam.scope_id) ?? 0;
+                  const runEligibility = getRunEligibility(fam.scope_id, fam.family_id);
+                  const isSubmittingRow = submitJobMut.isPending && submittingScopeId === fam.scope_id;
                   return (
                     <tr
-                      key={fam.family_id}
+                      key={fam.scope_id}
                       className="border-b border-border/30 hover:bg-surface-2/50"
-                      data-testid={`matrix-family-${fam.family_id}`}
+                      data-testid={`matrix-family-${fam.scope_id}`}
                     >
-                      <td className="px-3 py-2 text-sm text-text-primary">{fam.family_id}</td>
+                      <td className="px-3 py-2 text-sm text-text-primary">
+                        <div>{fam.scope_id}</div>
+                        {fam.family_id !== fam.scope_id ? (
+                          <div className="text-[10px] text-text-muted">
+                            base: {fam.family_id}
+                          </div>
+                        ) : null}
+                      </td>
                       <td className="px-3 py-2 text-sm text-text-primary text-right tabular-nums">
                         {fam.count}
                       </td>
                       <td
                         className="px-3 py-2 text-sm text-text-primary text-right tabular-nums"
-                        data-testid={`matrix-coverage-${fam.family_id}`}
+                        data-testid={`matrix-coverage-${fam.scope_id}`}
                       >
-                        {coverage != null ? `${coverage.toFixed(1)}%` : "\u2014"}
+                        {coverage != null ? `${coverage.toFixed(1)}%` : EMPTY_PLACEHOLDER}
                       </td>
                       <td
                         className="px-3 py-2 text-sm text-right tabular-nums"
-                        data-testid={`matrix-pending-${fam.family_id}`}
+                        data-testid={`matrix-pending-${fam.scope_id}`}
                       >
                         {pending > 0 ? (
                           <Badge variant="orange">{pending} running</Badge>
                         ) : (
-                          <span className="text-text-muted">\u2014</span>
+                          <span className="text-text-muted">{EMPTY_PLACEHOLDER}</span>
                         )}
                       </td>
                       <td className="px-3 py-2 text-right">
@@ -251,18 +433,36 @@ export function BatchRunDashboard({ className }: BatchRunDashboardProps) {
                             {latestRun.status}
                           </Badge>
                         ) : (
-                          <span className="text-xs text-text-muted">\u2014</span>
+                          <span className="text-xs text-text-muted">{EMPTY_PLACEHOLDER}</span>
                         )}
                       </td>
                       <td className="px-3 py-2 text-xs text-text-muted text-right tabular-nums">
-                        {latestRun ? timeAgo(latestRun.started_at) : "\u2014"}
+                        {latestRun ? timeAgo(latestRun.started_at) : EMPTY_PLACEHOLDER}
                       </td>
                       <td className="px-3 py-2 text-right">
                         {familyAlerts.length > 0 ? (
                           <Badge variant="red">{familyAlerts.length} alerts</Badge>
                         ) : (
-                          <span className="text-xs text-text-muted">\u2014</span>
+                          <span className="text-xs text-text-muted">{EMPTY_PLACEHOLDER}</span>
                         )}
+                      </td>
+                      <td className="px-3 py-2 text-right">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSubmittingScopeId(fam.scope_id);
+                            submitJobMut.mutate(
+                              { job_type: "batch_run", params: { family_id: fam.scope_id } },
+                              { onSettled: () => setSubmittingScopeId(null) },
+                            );
+                          }}
+                          disabled={submitJobMut.isPending || !runEligibility.canRun}
+                          title={runEligibility.canRun ? `Run published rules for ${fam.scope_id}` : runEligibility.reason}
+                          className="px-2 py-1 bg-surface-2 text-text-secondary text-xs rounded-md hover:text-text-primary transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                          data-testid={`run-family-${fam.scope_id}`}
+                        >
+                          {isSubmittingRow ? "Submitting..." : "Run"}
+                        </button>
                       </td>
                     </tr>
                   );
@@ -290,7 +490,7 @@ export function BatchRunDashboard({ className }: BatchRunDashboardProps) {
                   <Badge variant={run.status === "completed" ? "green" : run.status === "running" ? "blue" : "red"}>
                     {run.status}
                   </Badge>
-                  <span className="text-xs text-text-primary">{run.family_id}</span>
+                  <span className="text-xs text-text-primary">{getScopeIdFromRun(run)}</span>
                   <span className="text-xs text-text-muted">{run.run_type}</span>
                 </div>
                 <span className="text-xs text-text-muted tabular-nums">

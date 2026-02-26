@@ -7,8 +7,8 @@
  *
  * Verified testids used in this file:
  *   page.tsx:      tab-{id}, link-row-{id}, dashboard-export-btn, dashboard-tab,
- *                  rules-tab, rule-row-{id}, rule-pins-{id}, children-tab,
- *                  coverage-tab, conflicts-tab, query-tab, conflict-row-{id},
+ *                  rules-tab, rule-row-{id}, rule-pins-{id}, coverage-tab,
+ *                  conflicts-tab, query-tab, conflict-row-{id},
  *                  resolve-btn-{id}
  *   CommandPalette: command-palette, command-palette-input, command-palette-results
  *   TriageMode:    triage-mode, triage-exit, triage-approve, triage-card
@@ -36,9 +36,8 @@ test.describe("Full Integration", () => {
       { id: "review", testid: "tab-review" },
       { id: "rules", testid: "tab-rules" },
       { id: "dashboard", testid: "tab-dashboard" },
-      { id: "children", testid: "tab-children" },
-      { id: "coverage", testid: "tab-coverage" },
       { id: "query", testid: "tab-query" },
+      { id: "coverage", testid: "tab-coverage" },
       { id: "conflicts", testid: "tab-conflicts" },
     ];
     for (const tab of tabs) {
@@ -206,14 +205,5 @@ test.describe("Full Integration", () => {
       // Page should still be in a valid review state
       await expect(page.locator('[data-testid="tab-review"]')).toHaveClass(/text-accent-blue/);
     }
-  });
-
-  test("Children tab renders with parent selector", async ({ page }) => {
-    await page.goto(`${FRONTEND_BASE}/links?tab=children`);
-    await page.waitForLoadState("networkidle");
-    const childrenTab = page.locator('[data-testid="children-tab"]');
-    await expect(childrenTab).toBeVisible({ timeout: 5_000 });
-    // Parent link selector should be present
-    await expect(page.locator('[data-testid="parent-link-selector"]')).toBeVisible();
   });
 });

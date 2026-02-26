@@ -1,6 +1,6 @@
 /**
  * Phase 3 E2E: Review tab — ReassignDialog, ContextStrip, ComparablesPanel,
- * link_role badges, tab rendering, child links stub.
+ * link_role badges and tab rendering.
  */
 import { test, expect } from "../fixtures/links-page";
 
@@ -251,7 +251,7 @@ test.describe("Review Tab Domain Features", () => {
     expect(badgeText!.trim().length).toBeGreaterThan(0);
   });
 
-  test("All 7 tabs render without error", async ({ linksPage: page }) => {
+  test("All tabs render without error", async ({ linksPage: page }) => {
     const tabNames = [
       "Review",
       "Coverage",
@@ -259,7 +259,6 @@ test.describe("Review Tab Domain Features", () => {
       "Conflicts",
       "Rules",
       "Dashboard",
-      "Child Links",
     ];
 
     for (const tabName of tabNames) {
@@ -287,30 +286,6 @@ test.describe("Review Tab Domain Features", () => {
     const reviewTab = page.locator("button, [role='tab']").filter({ hasText: /^Review$/i });
     await reviewTab.first().click();
     await expect(page.locator("h1")).toContainText("Family Links");
-  });
-
-  test("Child Links tab shows stub placeholder", async ({
-    linksPage: page,
-  }) => {
-    // Navigate to Child Links tab
-    const childLinksTab = page.locator("button, [role='tab']").filter({ hasText: /Child Links/i });
-    await expect(childLinksTab.first()).toBeVisible();
-
-    await childLinksTab.first().click();
-    await page.waitForTimeout(300);
-
-    // Should show a Phase 5 placeholder with actual text
-    const placeholder = page.locator("text=Phase 5").or(
-      page.locator("text=Coming")
-    );
-    await expect(placeholder.first()).toBeVisible();
-
-    // Should also show the tab label
-    const tabLabel = page.locator("text=Child Links");
-    await expect(tabLabel.first()).toBeVisible();
-
-    // URL should have ?tab=children
-    expect(page.url()).toContain("tab=children");
   });
 
   test("Reassign suggestions API returns capped top-5 list", async ({

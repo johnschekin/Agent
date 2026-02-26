@@ -10,6 +10,7 @@ Usage:
 from __future__ import annotations
 
 import asyncio
+import contextlib
 import ipaddress
 import json
 import math
@@ -22,15 +23,20 @@ from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Literal
+from urllib.parse import urlparse
 
 import orjson
-from fastapi import Body, FastAPI, HTTPException, Query, Request
+from fastapi import Body, FastAPI, HTTPException, Query, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import ORJSONResponse
 from pydantic import BaseModel, Field
 from starlette.responses import StreamingResponse
 
 # Add Agent src to path so we can import agent modules
+_project_root = Path(__file__).resolve().parents[2]
+if str(_project_root) not in sys.path:
+    sys.path.insert(0, str(_project_root))
+
 _agent_src = Path(__file__).resolve().parents[2] / "src"
 if str(_agent_src) not in sys.path:
     sys.path.insert(0, str(_agent_src))
@@ -413,6 +419,10 @@ async def lifespan(app: FastAPI):  # noqa: ARG001
     try:
         _links_db_path.parent.mkdir(parents=True, exist_ok=True)
         _link_store = LinkStore(_links_db_path, create_if_missing=True)
+        if _ontology_nodes:
+            mapped = _bootstrap_legacy_family_aliases(_link_store)
+            if mapped:
+                print(f"[dashboard] Legacy scope aliases refreshed: {mapped}")
         _link_store.run_cleanup()
         print(f"[dashboard] Link store loaded: {_links_db_path}")
     except Exception as e:
@@ -483,27 +493,6 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "http://localhost:3002",
-        "http://localhost:3100",
-        "http://localhost:5173",
-        "http://localhost:5174",
-        "http://127.0.0.1:3000",
-        "http://127.0.0.1:3001",
-        "http://127.0.0.1:3002",
-        "http://127.0.0.1:3100",
-        "http://127.0.0.1:5173",
-        "http://127.0.0.1:5174",
-    ],
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allow_headers=["*"],
-)
-
 # ---------------------------------------------------------------------------
 # Links API Auth / Access Control
 # ---------------------------------------------------------------------------
@@ -538,6 +527,28 @@ def _request_host(request: Request) -> str | None:
     return request.client.host
 
 
+def _request_origin_hosts(request: Request) -> list[str]:
+    hosts: list[str] = []
+    for header_name in ("origin", "referer"):
+        value = str(request.headers.get(header_name, "")).strip()
+        if not value:
+            continue
+        with contextlib.suppress(Exception):
+            parsed = urlparse(value)
+            if parsed.hostname:
+                hosts.append(str(parsed.hostname))
+    host_header = str(request.headers.get("host", "")).strip()
+    if host_header:
+        hosts.append(host_header.split(":", 1)[0].strip())
+    return [host for host in hosts if host]
+
+
+def _is_local_request(request: Request) -> bool:
+    if _is_loopback_host(_request_host(request)):
+        return True
+    return any(_is_loopback_host(host) for host in _request_origin_hosts(request))
+
+
 def _extract_request_token(request: Request) -> str | None:
     """Extract bearer/API token from request headers."""
     auth_header = request.headers.get("Authorization", "").strip()
@@ -550,8 +561,7 @@ def _extract_request_token(request: Request) -> str | None:
 def _require_links_access(request: Request, *, write: bool) -> None:
     """Enforce auth for /api/links and /api/jobs routes."""
     token = _extract_request_token(request)
-    host = _request_host(request)
-    is_loopback = _is_loopback_host(host)
+    is_local = _is_local_request(request)
 
     allowed_tokens = {_LINKS_API_TOKEN}
     if _LINKS_ADMIN_TOKEN:
@@ -561,7 +571,7 @@ def _require_links_access(request: Request, *, write: bool) -> None:
         if (
             presented_token == _DEFAULT_LINKS_API_TOKEN
             and not _LINKS_API_TOKEN_FROM_ENV
-            and not is_loopback
+            and not is_local
         ):
             raise HTTPException(
                 status_code=403,
@@ -570,7 +580,7 @@ def _require_links_access(request: Request, *, write: bool) -> None:
         if (
             presented_token == _LINKS_ADMIN_TOKEN
             and not _LINKS_ADMIN_TOKEN_FROM_ENV
-            and not is_loopback
+            and not is_local
         ):
             raise HTTPException(
                 status_code=403,
@@ -591,7 +601,7 @@ def _require_links_access(request: Request, *, write: bool) -> None:
         _enforce_default_token_scope(token)
         return
 
-    if not is_loopback:
+    if not is_local:
         raise HTTPException(status_code=401, detail="Links API token required")
 
 
@@ -602,7 +612,7 @@ def _require_links_admin(request: Request) -> None:
         raise HTTPException(status_code=403, detail="Admin token required for direct-write endpoint")
     if (
         not os.environ.get("LINKS_ADMIN_TOKEN")
-        and not _is_loopback_host(_request_host(request))
+        and not _is_local_request(request)
     ):
         raise HTTPException(
             status_code=403,
@@ -614,7 +624,7 @@ def _require_test_endpoint_access(request: Request) -> None:
     """Lock down /api/links/_test/* endpoints."""
     if not _LINKS_TEST_MODE:
         raise HTTPException(status_code=403, detail="Test mode not enabled")
-    if not _is_loopback_host(_request_host(request)):
+    if not _is_local_request(request):
         raise HTTPException(status_code=403, detail="Test endpoints are loopback-only")
     token = _extract_request_token(request)
     if not token or token != _LINKS_TEST_ENDPOINT_TOKEN:
@@ -626,17 +636,127 @@ async def _links_api_auth_middleware(request: Request, call_next: Any):
     """Apply auth checks to links/jobs surfaces before handler execution."""
     path = request.url.path
     method = request.method.upper()
+    cors_headers = _cors_headers_for_request(request)
 
-    if method != "OPTIONS" and (path.startswith("/api/links") or path.startswith("/api/jobs")):
+    # Handle preflight deterministically for all API routes, including error paths.
+    if method == "OPTIONS" and path.startswith("/api/"):
+        if cors_headers:
+            return Response(status_code=204, headers=cors_headers)
+        return Response(status_code=204)
+
+    if path.startswith("/api/links") or path.startswith("/api/jobs"):
         # Dedicated helper enforces stricter controls for test-only endpoints.
         if path.startswith("/api/links/_test"):
-            return await call_next(request)
+            response = await call_next(request)
+            for key, value in cors_headers.items():
+                if key not in response.headers:
+                    response.headers[key] = value
+            return response
         try:
             _require_links_access(request, write=method not in {"GET", "HEAD"})
         except HTTPException as exc:
-            return ORJSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
+            return ORJSONResponse(
+                status_code=exc.status_code,
+                content={"detail": exc.detail},
+                headers=cors_headers,
+            )
 
-    return await call_next(request)
+    try:
+        response = await call_next(request)
+    except Exception:
+        # Keep CORS headers on unhandled backend errors so browser can read details.
+        return ORJSONResponse(
+            status_code=500,
+            content={"detail": "Internal Server Error"},
+            headers=cors_headers,
+        )
+
+    for key, value in cors_headers.items():
+        if key not in response.headers:
+            response.headers[key] = value
+    return response
+
+
+_CORS_ALLOW_ORIGINS = [
+    "http://localhost",
+    "https://localhost",
+    "http://localhost:3000",
+    "https://localhost:3000",
+    "http://localhost:3001",
+    "https://localhost:3001",
+    "http://localhost:3002",
+    "https://localhost:3002",
+    "http://localhost:3100",
+    "https://localhost:3100",
+    "http://localhost:5173",
+    "https://localhost:5173",
+    "http://localhost:5174",
+    "https://localhost:5174",
+    "http://127.0.0.1",
+    "https://127.0.0.1",
+    "http://127.0.0.1:3000",
+    "https://127.0.0.1:3000",
+    "http://127.0.0.1:3001",
+    "https://127.0.0.1:3001",
+    "http://127.0.0.1:3002",
+    "https://127.0.0.1:3002",
+    "http://127.0.0.1:3100",
+    "https://127.0.0.1:3100",
+    "http://127.0.0.1:5173",
+    "https://127.0.0.1:5173",
+    "http://127.0.0.1:5174",
+    "https://127.0.0.1:5174",
+    "http://[::1]",
+    "https://[::1]",
+    "http://[::1]:3000",
+    "https://[::1]:3000",
+    "http://[::1]:3001",
+    "https://[::1]:3001",
+    "http://[::1]:3002",
+    "https://[::1]:3002",
+    "http://[::1]:3100",
+    "https://[::1]:3100",
+    "http://[::1]:5173",
+    "https://[::1]:5173",
+    "http://[::1]:5174",
+    "https://[::1]:5174",
+]
+_CORS_ALLOW_ORIGIN_REGEX = r"^https?://(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$"
+
+
+def _is_allowed_cors_origin(origin: str | None) -> bool:
+    value = str(origin or "").strip().rstrip("/")
+    if not value:
+        return False
+    if value in _CORS_ALLOW_ORIGINS:
+        return True
+    return re.match(_CORS_ALLOW_ORIGIN_REGEX, value) is not None
+
+
+def _cors_headers_for_request(request: Request) -> dict[str, str]:
+    origin = str(request.headers.get("origin", "")).strip()
+    if not (origin and (_is_allowed_cors_origin(origin) or _is_local_request(request))):
+        return {}
+
+    requested_headers = str(request.headers.get("access-control-request-headers", "")).strip()
+    allow_headers = requested_headers or "Authorization, Content-Type, X-Links-Token"
+    return {
+        "Access-Control-Allow-Origin": origin,
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": allow_headers,
+        "Vary": "Origin, Access-Control-Request-Method, Access-Control-Request-Headers",
+    }
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=_CORS_ALLOW_ORIGINS,
+    allow_origin_regex=_CORS_ALLOW_ORIGIN_REGEX,
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allow_headers=["*"],
+)
 
 
 # ---------------------------------------------------------------------------
@@ -646,7 +766,7 @@ def _seed_rules_minimal() -> list[dict[str, Any]]:
     return [
         {
             "rule_id": "RULE-001",
-            "family_id": "FAM-indebtedness",
+            "family_id": "debt_capacity.indebtedness",
             "filter_dsl": 'heading: Indebtedness | "Limitation on Indebtedness" | Debt',
             "heading_filter_ast": {
                 "type": "group",
@@ -697,7 +817,7 @@ def _seed_links_minimal() -> list[dict[str, Any]]:
     return [
         {
             "link_id": "LINK-001",
-            "family_id": "FAM-indebtedness",
+            "family_id": "debt_capacity.indebtedness",
             "doc_id": "DOC-001",
             "section_number": "7.01",
             "heading": "Indebtedness",
@@ -707,7 +827,7 @@ def _seed_links_minimal() -> list[dict[str, Any]]:
         },
         {
             "link_id": "LINK-002",
-            "family_id": "FAM-indebtedness",
+            "family_id": "debt_capacity.indebtedness",
             "doc_id": "DOC-002",
             "section_number": "7.01",
             "heading": "Limitation on Indebtedness",
@@ -757,7 +877,7 @@ def _seed_links_minimal() -> list[dict[str, Any]]:
         },
         {
             "link_id": "LINK-007",
-            "family_id": "FAM-indebtedness",
+            "family_id": "debt_capacity.indebtedness",
             "doc_id": "DOC-005",
             "section_number": "7.01",
             "heading": "Debt Limitations",
@@ -767,7 +887,7 @@ def _seed_links_minimal() -> list[dict[str, Any]]:
         },
         {
             "link_id": "LINK-008",
-            "family_id": "FAM-investments",
+            "family_id": "cash_flow.inv",
             "doc_id": "DOC-001",
             "section_number": "7.04",
             "heading": "Investments",
@@ -816,7 +936,7 @@ def _build_named_seed_dataset(dataset: str) -> dict[str, Any]:
                 "version": 1,
             }
             for idx, fam, title in [
-                (4, "FAM-investments", "Investments"),
+                (4, "cash_flow.inv", "Investments"),
                 (5, "FAM-mergers", "Fundamental Changes"),
                 (6, "FAM-asset-sales", "Asset Sales"),
                 (7, "FAM-affiliate-transactions", "Affiliate Transactions"),
@@ -835,7 +955,7 @@ def _build_named_seed_dataset(dataset: str) -> dict[str, Any]:
         conflict_links = [
             {
                 "link_id": "LINK-C001",
-                "family_id": "FAM-indebtedness",
+                "family_id": "debt_capacity.indebtedness",
                 "doc_id": "DOC-020",
                 "section_number": "7.03",
                 "heading": "Shared Covenant",
@@ -858,10 +978,10 @@ def _build_named_seed_dataset(dataset: str) -> dict[str, Any]:
 
     if key == "review":
         families = [
-            "FAM-indebtedness",
+            "debt_capacity.indebtedness",
             "FAM-liens",
             "FAM-dividends",
-            "FAM-investments",
+            "cash_flow.inv",
             "FAM-mergers",
         ]
         tiers = ["high", "medium", "low"]
@@ -884,10 +1004,10 @@ def _build_named_seed_dataset(dataset: str) -> dict[str, Any]:
 
     if key == "coverage":
         families = [
-            "FAM-indebtedness",
+            "debt_capacity.indebtedness",
             "FAM-liens",
             "FAM-dividends",
-            "FAM-investments",
+            "cash_flow.inv",
             "FAM-mergers",
             "FAM-asset-sales",
             "FAM-affiliate-transactions",
@@ -916,7 +1036,7 @@ def _build_named_seed_dataset(dataset: str) -> dict[str, Any]:
         for link in [*minimal_links, *conflicts, *review]:
             all_links[link["link_id"]] = link
         jobs = [
-            {"job_id": "JOB-001", "job_type": "preview", "params": {"family_id": "FAM-indebtedness"}},
+            {"job_id": "JOB-001", "job_type": "preview", "params": {"family_id": "debt_capacity.indebtedness"}},
             {"job_id": "JOB-002", "job_type": "apply", "params": {"preview_id": "PREVIEW-001"}},
             {"job_id": "JOB-003", "job_type": "export", "params": {"format": "csv"}},
         ]
@@ -3132,9 +3252,14 @@ class ManualLinkCreateRequest(BaseModel):
 
 class LinkPreviewRequest(BaseModel):
     family_id: str = Field(default="", max_length=255)
+    ontology_node_id: str | None = Field(default=None, max_length=255)
     heading_filter_ast: dict[str, Any] | None = None
     filter_dsl: str | None = Field(default=None, max_length=5000)
     result_granularity: str = Field(default="section", pattern=r"^(section|clause)$")
+    scope_mode: str = Field(default="corpus", pattern=r"^(corpus|inherited)$")
+    parent_family_id: str | None = Field(default=None, max_length=255)
+    parent_rule_id: str | None = Field(default=None, max_length=255)
+    parent_run_id: str | None = Field(default=None, max_length=255)
     text_fields: dict[str, Any] | None = None
     meta_filters: dict[str, Any] | None = None
     rule_id: str | None = Field(default=None, max_length=255)
@@ -3250,6 +3375,39 @@ def _resolve_doc_ids_for_meta_filters(meta_filters: dict[str, MetaFilter]) -> li
     except Exception:
         return None
     return [str(r[0]) for r in rows if r and r[0] is not None]
+
+
+def _resolve_inherited_scope_sections(
+    store: LinkStore,
+    *,
+    parent_run_id: str | None,
+    parent_family_id: str | None,
+) -> list[tuple[str, str]]:
+    """Resolve section-level scope for inherited query/rule execution."""
+    if parent_run_id:
+        rows = store._conn.execute(
+            "SELECT doc_id, section_number FROM family_links "
+            "WHERE run_id = ? AND status <> 'unlinked'",
+            [parent_run_id],
+        ).fetchall()
+        scoped = [(str(r[0]), str(r[1])) for r in rows if r and r[0] is not None and r[1] is not None]
+        if scoped:
+            return scoped
+    if parent_family_id:
+        scope_ids = store.resolve_scope_aliases(parent_family_id)
+        if not scope_ids:
+            scope_ids = [str(parent_family_id).strip()]
+        placeholders = ", ".join("?" for _ in scope_ids)
+        rows = store._conn.execute(
+            "SELECT doc_id, section_number FROM family_links "
+            f"WHERE {store._scope_sql_expr()} IN ({placeholders}) "
+            "AND status <> 'unlinked'",
+            scope_ids,
+        ).fetchall()
+        scoped = [(str(r[0]), str(r[1])) for r in rows if r and r[0] is not None and r[1] is not None]
+        if scoped:
+            return scoped
+    return []
 
 
 def _match_value_against_text(value: str, text: str) -> bool:
@@ -4623,11 +4781,20 @@ async def reader_section_detail(doc_id: str, section_number: str):
         raise HTTPException(status_code=404, detail=f"Document not found: {doc_id}")
 
     # Find section metadata (direct SQL for O(1) lookup)
-    rows = corpus.query(
-        "SELECT section_number, heading, article_num, word_count "
-        "FROM sections WHERE doc_id = ? AND section_number = ?",
-        [doc_id, section_number],
-    )
+    has_offsets = True
+    try:
+        rows = corpus.query(
+            "SELECT section_number, heading, article_num, word_count, char_start, char_end "
+            "FROM sections WHERE doc_id = ? AND section_number = ?",
+            [doc_id, section_number],
+        )
+    except Exception:
+        has_offsets = False
+        rows = corpus.query(
+            "SELECT section_number, heading, article_num, word_count "
+            "FROM sections WHERE doc_id = ? AND section_number = ?",
+            [doc_id, section_number],
+        )
     if not rows:
         raise HTTPException(
             status_code=404,
@@ -4646,6 +4813,8 @@ async def reader_section_detail(doc_id: str, section_number: str):
         "heading": str(row[1]),
         "article_num": int(row[2]),
         "word_count": int(row[3]),
+        "section_char_start": int(row[4]) if has_offsets and row[4] is not None else None,
+        "section_char_end": int(row[5]) if has_offsets and row[5] is not None else None,
         "text": text,
         "clauses": [
             {
@@ -5752,11 +5921,253 @@ def _family_name_from_id(family_id: str) -> str:
         return ""
     return (
         family_id.replace("FAM-", "")
+        .replace(".", " ")
         .replace("_", " ")
         .replace("-", " ")
         .strip()
         .title()
     )
+
+
+def _canonical_family_token(value: Any) -> str:
+    raw = str(value or "").strip().lower()
+    if not raw:
+        return ""
+    raw = re.sub(r"^fam[-_.]", "", raw)
+    raw = re.sub(r"[^a-z0-9]+", ".", raw)
+    raw = re.sub(r"\.+", ".", raw).strip(".")
+    if not raw:
+        return ""
+    parts = [part for part in raw.split(".") if part]
+    return parts[-1] if parts else raw
+
+
+def _ontology_family_candidates_for_token(token: str) -> set[str]:
+    token_norm = str(token or "").strip()
+    if not token_norm:
+        return set()
+    candidates: set[str] = set()
+    for node_id, node in _ontology_nodes.items():
+        if str(node.get("type") or "").strip().lower() != "family":
+            continue
+        if _canonical_family_token(node_id) == token_norm:
+            candidates.add(str(node_id))
+        family_hint = str(node.get("family_id") or "").strip()
+        if family_hint and _canonical_family_token(family_hint) == token_norm:
+            candidates.add(family_hint)
+    return candidates
+
+
+def _bootstrap_legacy_family_aliases(store: LinkStore) -> int:
+    token_to_family_ids: dict[str, set[str]] = {}
+    for node_id, node in _ontology_nodes.items():
+        if str(node.get("type") or "").strip().lower() != "family":
+            continue
+        token = _canonical_family_token(node_id)
+        if not token:
+            continue
+        token_to_family_ids.setdefault(token, set()).add(str(node_id))
+
+    upserted = 0
+    for token, family_ids in token_to_family_ids.items():
+        if len(family_ids) != 1:
+            continue
+        target_scope = next(iter(family_ids))
+        legacy_alias = f"FAM-{token}"
+        with contextlib.suppress(Exception):
+            store.upsert_family_alias(legacy_alias, target_scope, source="ontology_bootstrap")
+            upserted += 1
+    return upserted
+
+
+def _canonicalize_scope_id(
+    store: LinkStore | None,
+    family_or_scope_id: Any,
+    *,
+    persist_alias: bool = True,
+) -> str:
+    raw = str(family_or_scope_id or "").strip()
+    if not raw:
+        return ""
+
+    canonical = str(store.get_canonical_scope_id(raw) if store is not None else raw).strip() or raw
+    if canonical and not canonical.lower().startswith("fam-"):
+        return canonical
+
+    token = _canonical_family_token(canonical or raw)
+    if not token:
+        return canonical or raw
+
+    candidates: set[str] = set()
+    if store is not None and persist_alias:
+        with contextlib.suppress(Exception):
+            for alias in store.resolve_scope_aliases(raw):
+                alias_canonical = str(store.get_canonical_scope_id(alias) or alias).strip()
+                if alias_canonical and not alias_canonical.lower().startswith("fam-"):
+                    candidates.add(alias_canonical)
+    candidates.update(_ontology_family_candidates_for_token(token))
+
+    preferred = sorted(
+        candidate
+        for candidate in candidates
+        if candidate and "." in candidate and not candidate.lower().startswith("fam-")
+    )
+    if len(preferred) == 1:
+        target = preferred[0]
+    elif len(candidates) == 1:
+        target = next(iter(candidates))
+    else:
+        target = canonical or raw
+
+    if store is not None and persist_alias and target and target != raw:
+        with contextlib.suppress(Exception):
+            store.upsert_family_alias(raw, target, source="server_token_map")
+        if canonical and canonical != raw and canonical != target:
+            with contextlib.suppress(Exception):
+                store.upsert_family_alias(canonical, target, source="server_token_map")
+
+    return target or raw
+
+
+def _scope_name_from_id(scope_id: str) -> str:
+    value = str(scope_id or "").strip()
+    if not value:
+        return ""
+    node = _ontology_nodes.get(value)
+    if isinstance(node, dict):
+        name = str(node.get("name") or "").strip()
+        if name:
+            return name
+    token = _canonical_family_token(value)
+    if token:
+        family_candidates = _ontology_family_candidates_for_token(token)
+        if len(family_candidates) == 1:
+            only_id = next(iter(family_candidates))
+            only_node = _ontology_nodes.get(only_id)
+            if isinstance(only_node, dict):
+                only_name = str(only_node.get("name") or "").strip()
+                if only_name:
+                    return only_name
+    return _family_name_from_id(value)
+
+
+def _rule_scope_id(rule: dict[str, Any]) -> str:
+    ontology_node_id = str(rule.get("ontology_node_id") or "").strip()
+    if ontology_node_id:
+        return ontology_node_id
+    return str(rule.get("family_id") or "").strip()
+
+
+def _rule_tokens(rule: dict[str, Any]) -> set[str]:
+    tokens: set[str] = set()
+    for value in (
+        rule.get("ontology_node_id"),
+        rule.get("family_id"),
+        rule.get("family_name"),
+    ):
+        token = _canonical_family_token(value)
+        if token:
+            tokens.add(token)
+    return tokens
+
+
+def _resolve_run_scope(
+    store: LinkStore,
+    run: dict[str, Any],
+    rule_cache: dict[str, dict[str, Any] | None],
+) -> tuple[str, str | None]:
+    base_family_id = str(run.get("family_id") or "").strip()
+    rule_id = str(run.get("rule_id") or "").strip()
+    ontology_node_id: str | None = None
+    if rule_id:
+        if rule_id not in rule_cache:
+            rule_cache[rule_id] = store.get_rule(rule_id)
+        rule = rule_cache.get(rule_id)
+        if rule:
+            candidate = str(rule.get("ontology_node_id") or "").strip()
+            if candidate:
+                ontology_node_id = candidate
+    scope_id = ontology_node_id or base_family_id
+    canonical_scope = _canonicalize_scope_id(store, scope_id)
+    canonical_ontology = (
+        _canonicalize_scope_id(store, ontology_node_id) if ontology_node_id else None
+    )
+    return canonical_scope, canonical_ontology
+
+
+def _resolve_published_rules_for_requested_family(
+    store: LinkStore,
+    requested_family_id: str | None,
+) -> tuple[list[dict[str, Any]], str | None]:
+    """Resolve published rules for an optionally requested family ID.
+
+    Supports compatibility between ontology and legacy namespaces via
+    canonical token matching, while guarding against ambiguous matches.
+    """
+    published_rules = store.get_rules(status="published")
+    if not requested_family_id:
+        return published_rules, None
+
+    requested_raw = str(requested_family_id).strip()
+    resolved_scope = _canonicalize_scope_id(store, requested_raw)
+    scope_aliases = {
+        _canonicalize_scope_id(store, alias)
+        for alias in store.resolve_scope_aliases(requested_raw)
+        if alias
+    }
+    scope_aliases.add(requested_raw)
+    if resolved_scope:
+        scope_aliases.add(resolved_scope)
+    if scope_aliases:
+        scope_rules = [
+            rule
+            for rule in published_rules
+            if (
+                _canonicalize_scope_id(store, _rule_scope_id(rule)) in scope_aliases
+                or str(_rule_scope_id(rule) or "").strip() in scope_aliases
+            )
+        ]
+        if scope_rules:
+            return scope_rules, resolved_scope
+
+    target_token = _canonical_family_token(requested_family_id)
+    if not target_token:
+        return [], resolved_scope
+
+    token_rules = [
+        rule
+        for rule in published_rules
+        if target_token in _rule_tokens(rule)
+    ]
+    if not token_rules:
+        return [], resolved_scope
+
+    matched_scope_ids = sorted(
+        {
+            _canonicalize_scope_id(store, _rule_scope_id(rule))
+            for rule in token_rules
+            if _rule_scope_id(rule)
+        }
+    )
+    matched_family_ids = sorted(
+        {
+            str(rule.get("family_id") or "").strip()
+            for rule in token_rules
+            if str(rule.get("family_id") or "").strip()
+        }
+    )
+    if len(matched_scope_ids) > 1:
+        raise HTTPException(
+            status_code=409,
+            detail={
+                "message": "Ambiguous family_id alias matches multiple published families",
+                "requested_family_id": requested_family_id,
+                "matched_family_ids": matched_family_ids,
+                "matched_scope_ids": matched_scope_ids,
+            },
+        )
+    resolved_scope_id = matched_scope_ids[0] if matched_scope_ids else resolved_scope
+    return token_rules, resolved_scope_id
 
 
 def _parse_json_object(value: Any) -> dict[str, Any]:
@@ -5774,10 +6185,18 @@ def _parse_json_object(value: Any) -> dict[str, Any]:
 
 def _link_row_to_api(row: dict[str, Any]) -> dict[str, Any]:
     confidence_breakdown = _parse_json_object(row.get("confidence_breakdown"))
-    family_id = str(row.get("family_id", ""))
+    store = _link_store
+    raw_family_id = str(row.get("family_id", ""))
+    canonical_family_id = _canonicalize_scope_id(store, raw_family_id)
+    raw_scope_id = str(row.get("ontology_node_id") or raw_family_id or "")
+    scope_id = _canonicalize_scope_id(store, raw_scope_id)
+    display_scope_id = scope_id or canonical_family_id or raw_scope_id or raw_family_id
     payload = dict(row)
-    payload["family_id"] = family_id
-    payload["family_name"] = str(row.get("family_name") or _family_name_from_id(family_id))
+    payload["family_id"] = display_scope_id
+    payload["base_family_id"] = canonical_family_id or None
+    payload["ontology_node_id"] = display_scope_id
+    payload["scope_id"] = display_scope_id
+    payload["family_name"] = _scope_name_from_id(display_scope_id)
     payload["borrower"] = str(row.get("borrower") or row.get("doc_id") or "")
     payload["link_role"] = str(row.get("link_role") or "primary_covenant")
     payload["status"] = str(row.get("status") or "active")
@@ -5804,6 +6223,7 @@ async def list_links(
 ):
     """List links with filtering, pagination, and sorting."""
     store = _get_link_store()
+    resolved_scope = _canonicalize_scope_id(store, family_id) if family_id else None
     offset = (page - 1) * page_size
     doc_ids: list[str] | None = None
     if template_family or vintage_year is not None:
@@ -5821,13 +6241,13 @@ async def list_links(
         doc_ids = [str(row[0]) for row in doc_rows if row and row[0]]
 
     links_raw = store.get_links(
-        family_id=family_id, doc_id=doc_id, status=status,
+        family_id=resolved_scope or family_id, doc_id=doc_id, status=status,
         confidence_tier=confidence_tier, limit=page_size, offset=offset,
         doc_ids=doc_ids, sort_by=sort_by, sort_dir=sort_dir,
     )
     links = [_link_row_to_api(row) for row in links_raw]
     total = store.count_links(
-        family_id=family_id,
+        family_id=resolved_scope or family_id,
         doc_id=doc_id,
         status=status,
         confidence_tier=confidence_tier,
@@ -5847,7 +6267,7 @@ async def list_links(
 async def links_summary():
     """Aggregate summary for links page KPIs and family sidebar."""
     store = _get_link_store()
-    rows = [_link_row_to_api(row) for row in store.get_links(limit=100000, offset=0)]
+    rows = store.get_links(limit=100000, offset=0)
 
     by_family_counter: dict[str, dict[str, Any]] = {}
     by_status_counter: dict[str, int] = {}
@@ -5855,30 +6275,44 @@ async def links_summary():
     unique_docs: set[str] = set()
     pending_review = 0
     unlinked = 0
+    canonical_scope_cache: dict[str, str] = {}
+    scope_name_cache: dict[str, str] = {}
 
     for row in rows:
-        fam = str(row.get("family_id", ""))
+        raw_scope = str(row.get("ontology_node_id") or row.get("family_id") or "").strip()
+        if raw_scope in canonical_scope_cache:
+            fam = canonical_scope_cache[raw_scope]
+        else:
+            fam = _canonicalize_scope_id(store, raw_scope, persist_alias=False) or raw_scope
+            canonical_scope_cache[raw_scope] = fam
+        if not fam:
+            fam = "unknown"
+        if fam not in scope_name_cache:
+            scope_name_cache[fam] = _scope_name_from_id(fam)
         fam_row = by_family_counter.setdefault(
             fam,
             {
                 "family_id": fam,
-                "family_name": str(row.get("family_name") or _family_name_from_id(fam)),
+                "family_name": scope_name_cache[fam],
                 "count": 0,
                 "pending": 0,
             },
         )
         fam_row["count"] += 1
-        if row.get("status") == "pending_review":
+        status_value = str(row.get("status") or "active")
+        if status_value == "pending_review":
             fam_row["pending"] += 1
             pending_review += 1
-        if row.get("status") == "unlinked":
+        if status_value == "unlinked":
             unlinked += 1
 
-        status_key = str(row.get("status", "active"))
+        status_key = status_value
         by_status_counter[status_key] = by_status_counter.get(status_key, 0) + 1
-        tier_key = str(row.get("confidence_tier", "low"))
+        tier_key = str(row.get("confidence_tier") or "low")
         by_tier_counter[tier_key] = by_tier_counter.get(tier_key, 0) + 1
-        unique_docs.add(str(row.get("doc_id", "")))
+        doc_id = str(row.get("doc_id") or "").strip()
+        if doc_id:
+            unique_docs.add(doc_id)
 
     try:
         drift_alerts = len(store.get_drift_alerts(acknowledged=False))
@@ -6167,12 +6601,28 @@ async def list_link_families():
         GROUP BY family_id
         ORDER BY total DESC
     """).fetchall()
-    families = []
+    families_by_scope: dict[str, dict[str, Any]] = {}
     for r in rows:
-        families.append({
-            "family_id": r[0], "total": r[1], "active": r[2],
-            "pending_review": r[3], "unlinked": r[4],
-        })
+        scope_id = _canonicalize_scope_id(store, r[0]) or str(r[0] or "")
+        row = families_by_scope.setdefault(
+            scope_id,
+            {
+                "family_id": scope_id,
+                "family_name": _scope_name_from_id(scope_id),
+                "total": 0,
+                "active": 0,
+                "pending_review": 0,
+                "unlinked": 0,
+            },
+        )
+        row["total"] += int(r[1] or 0)
+        row["active"] += int(r[2] or 0)
+        row["pending_review"] += int(r[3] or 0)
+        row["unlinked"] += int(r[4] or 0)
+    families = sorted(
+        families_by_scope.values(),
+        key=lambda row: (-int(row.get("total", 0)), str(row.get("family_id", ""))),
+    )
     return {"families": families}
 
 
@@ -6200,7 +6650,8 @@ async def links_dashboard():
 async def links_coverage(family_id: str | None = Query(None)):
     """Coverage gaps with prioritization and diagnostics."""
     store = _get_link_store()
-    family_gap_rows = store.get_coverage_gaps(family_id=family_id)
+    resolved_scope = _canonicalize_scope_id(store, family_id) if family_id else None
+    family_gap_rows = store.get_coverage_gaps(family_id=resolved_scope or family_id)
     corpus = None
     try:
         corpus = _get_corpus()
@@ -6210,7 +6661,7 @@ async def links_coverage(family_id: str | None = Query(None)):
     gaps: list[dict[str, Any]] = []
     gap_by_family: dict[str, int] = {}
     for fam_row in family_gap_rows:
-        fam_id = str(fam_row.get("family_id", ""))
+        fam_id = _canonicalize_scope_id(store, fam_row.get("family_id"))
         fam_gaps = fam_row.get("gaps", [])
         if not isinstance(fam_gaps, list):
             fam_gaps = []
@@ -6278,11 +6729,23 @@ async def create_preview(
     """Create a link preview (sync for small queries, async for >500)."""
     _require_links_admin(request)
     store = _get_link_store()
-    family_id = body.family_id
+    raw_family_id = str(body.family_id or "").strip()
+    family_id = _canonicalize_scope_id(store, raw_family_id) or raw_family_id
+    ontology_node_id = (body.ontology_node_id or "").strip() or family_id
     heading_ast = body.heading_filter_ast
     filter_dsl_text = (body.filter_dsl or "").strip()
     meta_filters = _normalize_meta_filters_payload(body.meta_filters)
     doc_ids = _resolve_doc_ids_for_meta_filters(meta_filters)
+    scope_mode = str(body.scope_mode or "corpus").strip().lower()
+    if scope_mode not in {"corpus", "inherited"}:
+        scope_mode = "corpus"
+    parent_family_id = (body.parent_family_id or "").strip() or None
+    parent_rule_id = (body.parent_rule_id or "").strip() or None
+    parent_run_id = (body.parent_run_id or "").strip() or None
+    if ontology_node_id:
+        ontology_node_id = _canonicalize_scope_id(store, ontology_node_id)
+    if parent_family_id:
+        parent_family_id = _canonicalize_scope_id(store, parent_family_id)
     rule_id = body.rule_id
     threshold = body.async_threshold
     parsed_heading_expr = None
@@ -6308,6 +6771,32 @@ async def create_preview(
         rule = store.get_rule(rule_id)
         if rule is not None:
             heading_ast = _normalize_heading_filter_ast_payload(rule.get("heading_filter_ast"))
+            if not ontology_node_id:
+                ontology_node_id = _canonicalize_scope_id(
+                    store,
+                    str(rule.get("ontology_node_id") or rule.get("family_id") or "").strip(),
+                )
+            if not family_id:
+                family_id = _canonicalize_scope_id(
+                    store,
+                    str(rule.get("ontology_node_id") or rule.get("family_id") or "").strip(),
+                )
+            if not parent_family_id:
+                candidate_parent_family = str(rule.get("parent_family_id") or "").strip()
+                if candidate_parent_family:
+                    parent_family_id = _canonicalize_scope_id(store, candidate_parent_family)
+            if not parent_rule_id:
+                candidate_parent_rule = str(rule.get("parent_rule_id") or "").strip()
+                if candidate_parent_rule:
+                    parent_rule_id = candidate_parent_rule
+            if not parent_run_id:
+                candidate_parent_run = str(rule.get("parent_run_id") or "").strip()
+                if candidate_parent_run:
+                    parent_run_id = candidate_parent_run
+            if scope_mode == "corpus":
+                rule_scope_mode = str(rule.get("scope_mode") or "").strip().lower()
+                if rule_scope_mode == "inherited":
+                    scope_mode = "inherited"
             # Also use rule's filter_dsl if available
             if not filter_dsl_text and rule.get("filter_dsl"):
                 filter_dsl_text = str(rule["filter_dsl"])
@@ -6322,6 +6811,11 @@ async def create_preview(
         except (ValueError, KeyError, TypeError) as exc:
             raise HTTPException(status_code=422, detail=f"Invalid heading_filter_ast: {exc}") from exc
 
+    if parent_family_id:
+        parent_family_id = _canonicalize_scope_id(store, parent_family_id)
+    if ontology_node_id:
+        ontology_node_id = _canonicalize_scope_id(store, ontology_node_id)
+
     # Search corpus sections (not existing links) when a heading filter is given
     import hashlib as _hashlib
 
@@ -6330,8 +6824,9 @@ async def create_preview(
 
     # Build WHERE clauses from all text fields
     where_parts: list[str] = []
-    params: list[str] = []
+    params: list[Any] = []
     need_article_join = False
+    clause_expr: Any = None
 
     # Prefer multi-field SQL from parsed DSL
     if dsl_text_fields:
@@ -6340,6 +6835,7 @@ async def create_preview(
             where_parts.append(multi_where)
             params.extend(multi_params)
             need_article_join = any("JOIN articles" in j for j in multi_joins)
+        clause_expr = dsl_text_fields.get("clause")
     else:
         # Legacy path: heading_filter_ast only
         if parsed_heading_expr is not None:
@@ -6381,10 +6877,54 @@ async def create_preview(
             except (ValueError, KeyError, TypeError):
                 pass
 
+        # clause: legacy support against clause header text
+        raw_clause_ast = extra_text_fields.get("clause")
+        if raw_clause_ast is not None and isinstance(raw_clause_ast, dict):
+            try:
+                clause_expr = filter_expr_from_json(raw_clause_ast)
+                clause_sql, clause_params = build_filter_sql(
+                    clause_expr, "c.header_text", wrap_wildcards=True,
+                )
+                where_parts.append(
+                    "EXISTS (SELECT 1 FROM clauses c "
+                    "WHERE c.doc_id = s.doc_id "
+                    "AND c.section_number = s.section_number "
+                    f"AND {clause_sql})",
+                )
+                params.extend(clause_params)
+            except (ValueError, KeyError, TypeError):
+                pass
+
+    scoped_section_keys: list[str] = []
+    if scope_mode == "inherited":
+        scoped_sections = _resolve_inherited_scope_sections(
+            store,
+            parent_run_id=parent_run_id,
+            parent_family_id=parent_family_id,
+        )
+        if scoped_sections:
+            scoped_section_keys = sorted({f"{doc_id}::{section_number}" for doc_id, section_number in scoped_sections})
+            scoped_doc_ids = sorted({doc_id for doc_id, _ in scoped_sections})
+            if doc_ids is None:
+                doc_ids = scoped_doc_ids
+            else:
+                allowed = set(scoped_doc_ids)
+                doc_ids = [doc_id for doc_id in doc_ids if doc_id in allowed]
+        else:
+            doc_ids = []
+
     if doc_ids is not None:
-        placeholders = ", ".join("?" for _ in doc_ids)
-        where_parts.append(f"s.doc_id IN ({placeholders})")
-        params.extend(doc_ids)
+        if not doc_ids:
+            where_parts.append("1=0")
+        else:
+            placeholders = ", ".join("?" for _ in doc_ids)
+            where_parts.append(f"s.doc_id IN ({placeholders})")
+            params.extend(doc_ids)
+
+    if scoped_section_keys:
+        placeholders = ", ".join("?" for _ in scoped_section_keys)
+        where_parts.append(f"(s.doc_id || '::' || s.section_number) IN ({placeholders})")
+        params.extend(scoped_section_keys)
 
     if where_parts:
         where_clause = " AND ".join(where_parts)
@@ -6392,14 +6932,78 @@ async def create_preview(
             " JOIN articles a ON a.doc_id = s.doc_id AND a.article_num = s.article_num"
             if need_article_join else ""
         )
+        clause_detail_join = ""
+        clause_detail_select = (
+            "'' AS clause_id, '' AS clause_path, '' AS clause_label, "
+            "NULL AS clause_char_start, NULL AS clause_char_end, '' AS clause_text"
+        )
+        clause_detail_params: list[Any] = []
+        if body.result_granularity == "clause":
+            if clause_expr is not None:
+                clause_text_sql, clause_text_params = build_filter_sql(
+                    clause_expr, "cm.clause_text", wrap_wildcards=True,
+                )
+                clause_header_sql, clause_header_params = build_filter_sql(
+                    clause_expr, "cm.header_text", wrap_wildcards=True,
+                )
+                clause_detail_join = (
+                    " LEFT JOIN LATERAL ("
+                    "SELECT ranked.clause_id, ranked.clause_path, ranked.label, "
+                    "ranked.span_start, ranked.span_end, ranked.clause_text "
+                    "FROM ("
+                    "SELECT cm.clause_id, cm.clause_id AS clause_path, cm.label, "
+                    "cm.span_start, cm.span_end, cm.clause_text, cm.depth, cm.is_structural, "
+                    f"({clause_text_sql}) AS text_hit, "
+                    f"({clause_header_sql}) AS header_hit "
+                    "FROM clauses cm "
+                    "WHERE cm.doc_id = s.doc_id "
+                    "AND cm.section_number = s.section_number "
+                    ") ranked "
+                    "WHERE ranked.text_hit OR ranked.header_hit "
+                    "ORDER BY ranked.text_hit DESC, ranked.header_hit DESC, "
+                    "ranked.depth DESC, ranked.is_structural DESC, "
+                    "ranked.span_start ASC, ranked.clause_id ASC "
+                    "LIMIT 1"
+                    ") clause_match ON TRUE"
+                )
+                clause_detail_params = [*clause_text_params, *clause_header_params]
+            else:
+                clause_detail_join = (
+                    " LEFT JOIN LATERAL ("
+                    "SELECT cm.clause_id, cm.clause_id AS clause_path, cm.label, "
+                    "cm.span_start, cm.span_end, cm.clause_text "
+                    "FROM clauses cm "
+                    "WHERE cm.doc_id = s.doc_id "
+                    "AND cm.section_number = s.section_number "
+                    "ORDER BY cm.is_structural DESC, cm.depth DESC, cm.span_start ASC LIMIT 1"
+                    ") clause_match ON TRUE"
+                )
+            clause_detail_select = (
+                "COALESCE(clause_match.clause_id, '') AS clause_id, "
+                "COALESCE(clause_match.clause_path, '') AS clause_path, "
+                "COALESCE(clause_match.label, '') AS clause_label, "
+                "clause_match.span_start AS clause_char_start, "
+                "clause_match.span_end AS clause_char_end, "
+                "COALESCE(clause_match.clause_text, '') AS clause_text"
+            )
         rows = corpus.query(
-            f"SELECT s.doc_id, s.section_number, s.heading "
-            f"FROM sections s{article_join} WHERE {where_clause} "
+            f"SELECT s.doc_id, s.section_number, s.heading, {clause_detail_select} "
+            f"FROM sections s{article_join}{clause_detail_join} WHERE {where_clause} "
             f"ORDER BY s.doc_id, s.section_number LIMIT ?",
-            [*params, str(threshold)],
+            [*clause_detail_params, *params, str(threshold)],
         )
         candidates = [
-            {"doc_id": str(r[0]), "section_number": str(r[1]), "heading": str(r[2] or "")}
+            {
+                "doc_id": str(r[0]),
+                "section_number": str(r[1]),
+                "heading": str(r[2] or ""),
+                "clause_id": str(r[3] or ""),
+                "clause_path": str(r[4] or ""),
+                "clause_label": str(r[5] or ""),
+                "clause_char_start": int(r[6]) if r[6] is not None else None,
+                "clause_char_end": int(r[7]) if r[7] is not None else None,
+                "clause_text": str(r[8] or ""),
+            }
             for r in rows
         ]
     else:
@@ -6420,10 +7024,16 @@ async def create_preview(
     store.save_preview({
         "preview_id": preview_id,
         "family_id": family_id,
+        "ontology_node_id": ontology_node_id or family_id,
         "rule_id": rule_id or "",
         "params_json": {
             "heading_filter_ast": heading_ast,
             "meta_filters": {k: meta_filter_to_json(v) for k, v in meta_filters.items()},
+            "scope_mode": scope_mode,
+            "ontology_node_id": ontology_node_id or family_id,
+            "parent_family_id": parent_family_id,
+            "parent_rule_id": parent_rule_id,
+            "parent_run_id": parent_run_id,
         },
         "candidate_count": len(candidates),
         "candidate_set_hash": candidate_set_hash,
@@ -6434,6 +7044,12 @@ async def create_preview(
             "doc_id": c.get("doc_id", ""),
             "section_number": c.get("section_number", ""),
             "heading": c.get("heading", ""),
+            "clause_id": c.get("clause_id", ""),
+            "clause_path": c.get("clause_path", ""),
+            "clause_label": c.get("clause_label", ""),
+            "clause_char_start": c.get("clause_char_start"),
+            "clause_char_end": c.get("clause_char_end"),
+            "clause_text": c.get("clause_text", ""),
             "confidence": c.get("confidence", 0.5),
             "confidence_tier": "medium",
             "user_verdict": "pending",
@@ -6444,10 +7060,15 @@ async def create_preview(
     return {
         "preview_id": preview_id,
         "family_id": family_id,
+        "ontology_node_id": ontology_node_id or family_id,
         "rule_id": rule_id,
         "candidate_count": len(candidates),
         "candidate_set_hash": candidate_set_hash,
         "by_confidence_tier": by_tier,
+        "scope_mode": scope_mode,
+        "parent_family_id": parent_family_id,
+        "parent_rule_id": parent_rule_id,
+        "parent_run_id": parent_run_id,
         "async": False,
     }
 
@@ -6545,6 +7166,9 @@ async def query_count(
     heading_filter_ast: str | None = Query(None),
     filter_dsl: str | None = Query(None),
     meta_filters: str | None = Query(None),
+    scope_mode: str | None = Query(None),
+    parent_family_id: str | None = Query(None),
+    parent_run_id: str | None = Query(None),
 ):
     """Lightweight count for live match estimation.
 
@@ -6554,6 +7178,26 @@ async def query_count(
     store = _get_link_store()
     parsed_meta_filters = _normalize_meta_filters_payload(meta_filters)
     doc_ids = _resolve_doc_ids_for_meta_filters(parsed_meta_filters)
+    normalized_scope_mode = str(scope_mode or "corpus").strip().lower()
+    if normalized_scope_mode not in {"corpus", "inherited"}:
+        normalized_scope_mode = "corpus"
+    inherited_section_keys: list[str] = []
+    if normalized_scope_mode == "inherited":
+        inherited_sections = _resolve_inherited_scope_sections(
+            store,
+            parent_run_id=(parent_run_id or "").strip() or None,
+            parent_family_id=(parent_family_id or "").strip() or None,
+        )
+        if inherited_sections:
+            inherited_section_keys = sorted({f"{doc_id}::{section_number}" for doc_id, section_number in inherited_sections})
+            inherited_doc_ids = sorted({doc_id for doc_id, _ in inherited_sections})
+            if doc_ids is None:
+                doc_ids = inherited_doc_ids
+            else:
+                allowed = set(inherited_doc_ids)
+                doc_ids = [doc_id for doc_id in doc_ids if doc_id in allowed]
+        else:
+            doc_ids = []
 
     filter_dsl_text = (filter_dsl or "").strip()
     query_cost = 0
@@ -6573,9 +7217,16 @@ async def query_count(
         join_clause = " ".join(multi_joins)
         where_clause = multi_where if multi_where != "1=1" else "1=1"
         if doc_ids is not None:
-            placeholders = ", ".join("?" for _ in doc_ids)
-            where_clause += f" AND s.doc_id IN ({placeholders})"
-            multi_params.extend(doc_ids)
+            if not doc_ids:
+                where_clause += " AND 1=0"
+            else:
+                placeholders = ", ".join("?" for _ in doc_ids)
+                where_clause += f" AND s.doc_id IN ({placeholders})"
+                multi_params.extend(doc_ids)
+        if inherited_section_keys:
+            placeholders = ", ".join("?" for _ in inherited_section_keys)
+            where_clause += f" AND (s.doc_id || '::' || s.section_number) IN ({placeholders})"
+            multi_params.extend(inherited_section_keys)
         sql = f"SELECT COUNT(*) FROM sections s {join_clause} WHERE {where_clause}"
         count = corpus._conn.execute(sql, multi_params).fetchone()[0]
         return {"count": count, "query_cost": query_cost}
@@ -6711,6 +7362,167 @@ async def update_candidate_verdicts(
     return {"updated": updated}
 
 
+def _upsert_links_from_preview_candidates(
+    store: LinkStore,
+    *,
+    preview: dict[str, Any],
+    accepted: list[dict[str, Any]],
+    source: str,
+) -> tuple[str, int, int]:
+    """Create or update links from accepted preview candidates.
+
+    Returns (run_id, created_count, updated_count).
+    """
+    run_id = str(uuid.uuid4())
+    links_to_create: list[dict[str, Any]] = []
+    updated_count = 0
+    preview_params = _parse_json_object(preview.get("params_json"))
+    raw_ontology_node_id = str(
+        preview.get("ontology_node_id")
+        or preview_params.get("ontology_node_id")
+        or preview.get("family_id")
+        or ""
+    ).strip()
+    ontology_node_id = _canonicalize_scope_id(store, raw_ontology_node_id) or None
+    raw_family_scope = str(preview.get("family_id", "") or "").strip()
+    family_scope = _canonicalize_scope_id(store, raw_family_scope) or raw_family_scope
+    link_scope_id = ontology_node_id or family_scope
+    scope_aliases = store.resolve_scope_aliases(link_scope_id) if link_scope_id else []
+    if link_scope_id and not scope_aliases:
+        scope_aliases = [link_scope_id]
+
+    corpus: Any | None = None
+    clause_cache: dict[tuple[str, str, str], tuple[int | None, int | None, str | None]] = {}
+
+    def _resolve_clause_details(
+        doc_id: str,
+        section_number: str,
+        clause_id: str | None,
+    ) -> tuple[int | None, int | None, str | None]:
+        cid = str(clause_id or "").strip()
+        if not cid:
+            return (None, None, None)
+        key = (doc_id, section_number, cid)
+        cached = clause_cache.get(key)
+        if cached is not None:
+            return cached
+
+        nonlocal corpus
+        if corpus is None:
+            with contextlib.suppress(Exception):
+                corpus = _get_corpus()
+        if corpus is None:
+            clause_cache[key] = (None, None, None)
+            return clause_cache[key]
+
+        row = None
+        with contextlib.suppress(Exception):
+            rows = corpus.query(
+                "SELECT span_start, span_end, clause_text FROM clauses "
+                "WHERE doc_id = ? AND section_number = ? AND clause_id = ? LIMIT 1",
+                [doc_id, section_number, cid],
+            )
+            row = rows[0] if rows else None
+        if row is None:
+            clause_cache[key] = (None, None, None)
+        else:
+            clause_cache[key] = (
+                int(row[0]) if row[0] is not None else None,
+                int(row[1]) if row[1] is not None else None,
+                str(row[2]) if row[2] is not None else None,
+            )
+        return clause_cache[key]
+
+    for candidate in accepted:
+        family_id = family_scope or link_scope_id or raw_family_scope
+        doc_id = str(candidate.get("doc_id", "") or "")
+        section_number = str(candidate.get("section_number", "") or "")
+        clause_id = str(candidate.get("clause_id", "") or "").strip() or None
+        clause_char_start = candidate.get("clause_char_start")
+        clause_char_end = candidate.get("clause_char_end")
+        clause_text = str(candidate.get("clause_text") or "").strip() or None
+        if clause_id and (
+            clause_char_start is None
+            or clause_char_end is None
+            or clause_text is None
+        ):
+            resolved_start, resolved_end, resolved_text = _resolve_clause_details(
+                doc_id,
+                section_number,
+                clause_id,
+            )
+            if clause_char_start is None:
+                clause_char_start = resolved_start
+            if clause_char_end is None:
+                clause_char_end = resolved_end
+            if clause_text is None:
+                clause_text = resolved_text
+
+        payload = {
+            "family_id": family_id,
+            "ontology_node_id": ontology_node_id,
+            "doc_id": doc_id,
+            "section_number": section_number,
+            "heading": candidate.get("heading", ""),
+            "clause_id": clause_id,
+            "clause_char_start": clause_char_start,
+            "clause_char_end": clause_char_end,
+            "clause_text": clause_text,
+            "confidence": candidate.get("confidence", 0.0),
+            "confidence_tier": candidate.get("confidence_tier", "low"),
+            "source": source,
+            "status": "active",
+            "rule_id": preview.get("rule_id"),
+        }
+
+        if scope_aliases:
+            placeholders = ", ".join("?" for _ in scope_aliases)
+            existing = store._conn.execute(  # noqa: SLF001
+                "SELECT link_id FROM family_links "
+                "WHERE COALESCE(NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), ''), '') "
+                f"IN ({placeholders}) AND doc_id = ? AND section_number = ? "
+                "LIMIT 1",
+                [*scope_aliases, doc_id, section_number],
+            ).fetchone()
+        else:
+            existing = store._conn.execute(  # noqa: SLF001
+                "SELECT link_id FROM family_links "
+                "WHERE family_id = ? AND doc_id = ? AND section_number = ? "
+                "LIMIT 1",
+                [family_id, doc_id, section_number],
+            ).fetchone()
+        if existing:
+            store._conn.execute(  # noqa: SLF001
+                "UPDATE family_links SET "
+                "ontology_node_id = ?, heading = ?, rule_id = ?, run_id = ?, source = ?, "
+                "clause_id = ?, clause_char_start = ?, clause_char_end = ?, clause_text = ?, "
+                "confidence = ?, confidence_tier = ?, status = 'active', "
+                "unlinked_at = NULL, unlinked_reason = NULL, unlinked_note = NULL "
+                "WHERE link_id = ?",
+                [
+                    payload["ontology_node_id"],
+                    payload["heading"],
+                    payload["rule_id"],
+                    run_id,
+                    payload["source"],
+                    payload["clause_id"],
+                    payload["clause_char_start"],
+                    payload["clause_char_end"],
+                    payload["clause_text"],
+                    payload["confidence"],
+                    payload["confidence_tier"],
+                    str(existing[0]),
+                ],
+            )
+            updated_count += 1
+            continue
+
+        links_to_create.append(payload)
+
+    created_count = store.create_links(links_to_create, run_id) if links_to_create else 0
+    return run_id, created_count, updated_count
+
+
 @app.post("/api/links/previews/{preview_id}/promote")
 async def promote_preview(request: Request, preview_id: str):
     """Promote accepted candidates to family_links."""
@@ -6719,23 +7531,22 @@ async def promote_preview(request: Request, preview_id: str):
     preview = store.get_preview(preview_id)
     if preview is None:
         raise HTTPException(status_code=404, detail="Preview not found")
-    candidates = store.get_preview_candidates(preview_id)
+    candidates = store.get_preview_candidates(preview_id, page_size=100000)
     accepted = [c for c in candidates if c.get("user_verdict") == "accepted"]
     if not accepted:
         return {"promoted": 0}
-    run_id = str(uuid.uuid4())
-    links = [{
-        "family_id": preview.get("family_id", ""),
-        "doc_id": c["doc_id"],
-        "section_number": c["section_number"],
-        "heading": c.get("heading", ""),
-        "confidence": c.get("confidence", 0.0),
-        "confidence_tier": c.get("confidence_tier", "low"),
-        "source": "preview_promote",
-        "status": "active",
-    } for c in accepted]
-    created = store.create_links(links, run_id)
-    return {"promoted": created, "run_id": run_id}
+    run_id, created_count, updated_count = _upsert_links_from_preview_candidates(
+        store,
+        preview=preview,
+        accepted=accepted,
+        source="preview_promote",
+    )
+    return {
+        "promoted": created_count + updated_count,
+        "created": created_count,
+        "updated": updated_count,
+        "run_id": run_id,
+    }
 
 
 # Legacy preview endpoint aliases (kept for compatibility with older phase2 specs)
@@ -6799,6 +7610,7 @@ async def legacy_create_preview(
 
     req = LinkPreviewRequest(
         family_id=str(body.get("family_id", "")),
+        ontology_node_id=str(body.get("ontology_node_id", "") or body.get("family_id", "")),
         heading_filter_ast=heading_filter_ast,
         meta_filters={k: meta_filter_to_json(v) for k, v in meta_filters.items()},
         rule_id=str(rule_id) if rule_id is not None else None,
@@ -6894,23 +7706,23 @@ async def legacy_apply_preview(
         except (ValueError, TypeError):
             pass
 
-    candidates = store.get_preview_candidates(preview_id)
+    candidates = store.get_preview_candidates(preview_id, page_size=100000)
     accepted = [candidate for candidate in candidates if candidate.get("user_verdict") == "accepted"]
-    links = [
-        {
-            "family_id": preview.get("family_id", ""),
-            "doc_id": candidate.get("doc_id", ""),
-            "section_number": candidate.get("section_number", ""),
-            "heading": candidate.get("heading", ""),
-            "confidence": candidate.get("confidence", 0.0),
-            "confidence_tier": candidate.get("confidence_tier", "low"),
-            "status": "active",
-            "source": "legacy_preview_apply",
-        }
-        for candidate in accepted
-    ]
-    created_count = store.create_links(links, str(uuid.uuid4())) if links else 0
-    return {"preview_id": preview_id, "status": "applied", "created": created_count}
+    if not accepted:
+        return {"preview_id": preview_id, "status": "applied", "created": 0, "updated": 0}
+    run_id, created_count, updated_count = _upsert_links_from_preview_candidates(
+        store,
+        preview=preview,
+        accepted=accepted,
+        source="legacy_preview_apply",
+    )
+    return {
+        "preview_id": preview_id,
+        "status": "applied",
+        "run_id": run_id,
+        "created": created_count,
+        "updated": updated_count,
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -7067,7 +7879,14 @@ def _serialize_heading_ast_to_dsl(ast: Any) -> str:
 
 def _rule_to_api(store: LinkStore, rule: dict[str, Any]) -> dict[str, Any]:
     payload = dict(rule)
-    family_id = str(payload.get("family_id", ""))
+    raw_family_id = str(payload.get("family_id", "")).strip()
+    family_id = _canonicalize_scope_id(store, raw_family_id) or raw_family_id
+    raw_scope_id = str(payload.get("ontology_node_id") or raw_family_id or "").strip()
+    scope_id = _canonicalize_scope_id(store, raw_scope_id) or family_id
+    raw_parent_family_id = str(payload.get("parent_family_id") or "").strip()
+    parent_family_id = (
+        _canonicalize_scope_id(store, raw_parent_family_id) if raw_parent_family_id else None
+    )
     status = str(payload.get("status", "draft") or "draft")
     if status == "prod":
         status = "published"
@@ -7092,7 +7911,14 @@ def _rule_to_api(store: LinkStore, rule: dict[str, Any]) -> dict[str, Any]:
     payload.update(
         {
             "family_id": family_id,
-            "family_name": str(payload.get("family_name") or _family_name_from_id(family_id)),
+            "base_family_id": family_id,
+            "family_name": _scope_name_from_id(scope_id or family_id),
+            "ontology_node_id": scope_id or family_id,
+            "scope_id": scope_id or family_id,
+            "parent_family_id": parent_family_id,
+            "parent_rule_id": payload.get("parent_rule_id"),
+            "parent_run_id": payload.get("parent_run_id"),
+            "scope_mode": str(payload.get("scope_mode") or "corpus"),
             "name": str(payload.get("name") or ""),
             "status": status,
             "filter_dsl": filter_dsl,
@@ -7116,7 +7942,18 @@ async def list_rules(
 ):
     """List link rules with version, status, and match stats."""
     store = _get_link_store()
-    rules = [_rule_to_api(store, rule) for rule in store.get_rules(family_id=family_id, status=status)]
+    resolved_scope = _canonicalize_scope_id(store, family_id) if family_id else None
+    rules_raw = store.get_rules(family_id=resolved_scope or family_id, status=status)
+    # Compatibility fallback: if no canonical match, try unambiguous token.
+    if family_id and not rules_raw:
+        target_token = _canonical_family_token(family_id)
+        if target_token:
+            rules_raw = [
+                rule
+                for rule in store.get_rules(status=status)
+                if target_token in _rule_tokens(rule)
+            ]
+    rules = [_rule_to_api(store, rule) for rule in rules_raw]
     return {"rules": rules, "total": len(rules)}
 
 
@@ -7132,6 +7969,10 @@ async def create_rule(
     payload["rule_id"] = str(payload.get("rule_id") or uuid.uuid4())
     payload.setdefault("status", "draft")
     payload.setdefault("family_id", str(body.get("family_id", "")))
+    payload.setdefault(
+        "ontology_node_id",
+        body.get("ontology_node_id") or str(body.get("family_id", "")),
+    )
     payload.setdefault("heading_filter_ast", body.get("heading_filter_ast") or {})
 
     # Accept filter_dsl as primary field; derive heading_filter_ast if needed
@@ -7789,43 +8630,109 @@ async def unlink_reasons():
 
 
 @app.get("/api/links/analytics")
-async def links_analytics_dashboard():
+async def links_analytics_dashboard(
+    family_id: str | None = Query(None),
+    scope_id: str | None = Query(None),
+):
     """Top-level analytics payload for the dashboard tab."""
     store = _get_link_store()
-    links = store.get_links(limit=100000)
-    runs = store.get_runs(limit=20)
-    alerts = [_normalize_drift_alert(store, row) for row in store.get_drift_alerts()]
+    requested_scope = str(scope_id or family_id or "").strip() or None
+    resolved_scope = _canonicalize_scope_id(store, requested_scope) if requested_scope else None
+    scope_aliases: set[str] = set()
+    if requested_scope:
+        scope_aliases.update(store.resolve_scope_aliases(requested_scope))
+        scope_aliases.add(requested_scope)
+    if resolved_scope:
+        scope_aliases.update(store.resolve_scope_aliases(resolved_scope))
+        scope_aliases.add(resolved_scope)
+    scope_aliases = {_canonicalize_scope_id(store, scope) for scope in scope_aliases if scope}
 
-    links_by_family_counter = Counter(str(link.get("family_id", "")) for link in links)
+    # Dashboard metrics should reflect the currently-linked population, not
+    # historical unlinked rows retained for audit history.
+    links = [
+        link
+        for link in store.get_links(
+            family_id=resolved_scope or requested_scope,
+            limit=100000,
+        )
+        if str(link.get("status", "")) != "unlinked"
+    ]
+    runs = store.get_runs(family_id=resolved_scope or requested_scope, limit=20)
+    alerts = [_normalize_drift_alert(store, row) for row in store.get_drift_alerts()]
+    if scope_aliases:
+        alerts = [
+            alert
+            for alert in alerts
+            if str(alert.get("family_id", "")).strip() in scope_aliases
+        ]
+
+    links_by_family_counter: Counter[str] = Counter()
+    base_family_by_scope: dict[str, str] = {}
+    ontology_by_scope: dict[str, str | None] = {}
+    for link in links:
+        base_family_id = _canonicalize_scope_id(store, link.get("family_id"))
+        ontology_node_id = _canonicalize_scope_id(store, link.get("ontology_node_id"))
+        raw_scope = ontology_node_id or base_family_id
+        scope_id = _canonicalize_scope_id(store, raw_scope)
+        if not scope_id:
+            continue
+        links_by_family_counter[scope_id] += 1
+        if scope_id not in base_family_by_scope:
+            base_family_by_scope[scope_id] = base_family_id or scope_id
+        if scope_id not in ontology_by_scope:
+            ontology_by_scope[scope_id] = ontology_node_id or None
     links_by_status_counter = Counter(str(link.get("status", "active")) for link in links)
     confidence_counter = Counter(str(link.get("confidence_tier", "low")) for link in links)
 
-    total_conflicts_row = store._conn.execute(  # noqa: SLF001
-        """
-        SELECT COUNT(*) FROM (
-            SELECT doc_id, section_number
-            FROM family_links
-            WHERE status = 'active'
-            GROUP BY doc_id, section_number
-            HAVING COUNT(DISTINCT family_id) > 1
-        )
-        """
-    ).fetchone()
-    total_conflicts = int(total_conflicts_row[0]) if total_conflicts_row else 0
+    if scope_aliases:
+        families_by_section: dict[tuple[str, str], set[str]] = {}
+        for link in links:
+            if str(link.get("status", "")) != "active":
+                continue
+            doc_id = str(link.get("doc_id", "")).strip()
+            section_number = str(link.get("section_number", "")).strip()
+            if not doc_id or not section_number:
+                continue
+            key = (doc_id, section_number)
+            families_by_section.setdefault(key, set()).add(
+                _canonicalize_scope_id(store, link.get("family_id"))
+            )
+        total_conflicts = sum(1 for family_ids in families_by_section.values() if len(family_ids) > 1)
+    else:
+        total_conflicts_row = store._conn.execute(  # noqa: SLF001
+            """
+            SELECT COUNT(*) FROM (
+                SELECT doc_id, section_number
+                FROM family_links
+                WHERE status = 'active'
+                GROUP BY doc_id, section_number
+                HAVING COUNT(DISTINCT family_id) > 1
+            )
+            """
+        ).fetchone()
+        total_conflicts = int(total_conflicts_row[0]) if total_conflicts_row else 0
 
-    recent_runs = [
-        {
-            "run_id": str(run.get("run_id", "")),
-            "run_type": str(run.get("run_type") or run.get("source") or "apply"),
-            "family_id": str(run.get("family_id", "")),
-            "links_created": int(run.get("links_created", 0) or 0),
-            "conflicts_detected": int(run.get("conflicts_detected", 0) or 0),
-            "started_at": run.get("started_at"),
-            "completed_at": run.get("completed_at"),
-            "status": "completed" if run.get("completed_at") else "running",
-        }
-        for run in runs
-    ]
+    run_rule_cache: dict[str, dict[str, Any] | None] = {}
+    recent_runs = []
+    for run in runs:
+        base_family_id = _canonicalize_scope_id(store, run.get("family_id"))
+        scope_id, ontology_node_id = _resolve_run_scope(store, run, run_rule_cache)
+        scope_id = _canonicalize_scope_id(store, scope_id or base_family_id)
+        recent_runs.append(
+            {
+                "run_id": str(run.get("run_id", "")),
+                "run_type": str(run.get("run_type") or run.get("source") or "apply"),
+                "family_id": base_family_id,
+                "base_family_id": base_family_id,
+                "scope_id": scope_id or base_family_id,
+                "ontology_node_id": _canonicalize_scope_id(store, ontology_node_id) if ontology_node_id else None,
+                "links_created": int(run.get("links_created", 0) or 0),
+                "conflicts_detected": int(run.get("conflicts_detected", 0) or 0),
+                "started_at": run.get("started_at"),
+                "completed_at": run.get("completed_at"),
+                "status": "completed" if run.get("completed_at") else "running",
+            }
+        )
 
     return {
         "total_links": len(links),
@@ -7833,8 +8740,17 @@ async def links_analytics_dashboard():
         "total_conflicts": total_conflicts,
         "total_drift_alerts": len([alert for alert in alerts if not alert["resolved"]]),
         "links_by_family": [
-            {"family_id": family_id, "count": count}
-            for family_id, count in links_by_family_counter.items()
+            {
+                "family_id": scope_id,
+                "scope_id": scope_id,
+                "base_family_id": base_family_by_scope.get(scope_id, scope_id),
+                "ontology_node_id": ontology_by_scope.get(scope_id),
+                "count": count,
+            }
+            for scope_id, count in sorted(
+                links_by_family_counter.items(),
+                key=lambda item: (-item[1], item[0]),
+            )
         ],
         "links_by_status": [
             {"status": status, "count": count}
@@ -7850,7 +8766,10 @@ async def links_analytics_dashboard():
 
 
 @app.get("/api/links/analytics/vintage-heatmap")
-async def vintage_heatmap(family_id: str | None = Query(None)):
+async def vintage_heatmap(
+    family_id: str | None = Query(None),
+    scope_id: str | None = Query(None),
+):
     """Coverage heatmap by (template_family, vintage_year)."""
     store = _get_link_store()
     try:
@@ -7874,7 +8793,9 @@ async def vintage_heatmap(family_id: str | None = Query(None)):
         doc_meta[doc_id] = (template, vintage_year)
         docs_by_cell.setdefault((template, vintage_year), set()).add(doc_id)
 
-    links = store.get_links(family_id=family_id, status="active", limit=100000)
+    requested_scope = str(scope_id or family_id or "").strip() or None
+    resolved_scope = _canonicalize_scope_id(store, requested_scope) if requested_scope else None
+    links = store.get_links(family_id=resolved_scope or requested_scope, status="active", limit=100000)
     linked_docs_by_cell: dict[tuple[str, int], set[str]] = {}
     link_count_by_cell: dict[tuple[str, int], int] = {}
     for link in links:
@@ -7938,10 +8859,22 @@ async def check_drift(request: Request, rule_id: str):
 def _normalize_drift_alert(store: LinkStore, alert: dict[str, Any]) -> dict[str, Any]:
     rule_id = str(alert.get("rule_id", ""))
     rule = store.get_rule(rule_id) if rule_id else None
-    family_id = str(rule.get("family_id", "")) if isinstance(rule, dict) else ""
+    family_id = (
+        _canonicalize_scope_id(store, str(rule.get("family_id", "")))
+        if isinstance(rule, dict)
+        else ""
+    )
+    ontology_node_id = (
+        _canonicalize_scope_id(store, str(rule.get("ontology_node_id", "")))
+        if isinstance(rule, dict)
+        else ""
+    )
+    scope_id = _canonicalize_scope_id(store, ontology_node_id or family_id)
     return {
         "alert_id": str(alert.get("alert_id", "")),
-        "family_id": family_id,
+        "family_id": scope_id or family_id,
+        "base_family_id": family_id or None,
+        "ontology_node_id": ontology_node_id or None,
         "rule_id": rule_id or None,
         "drift_type": "distribution_shift",
         "severity": str(alert.get("severity", "low")),
@@ -7967,11 +8900,20 @@ async def get_drift_checks():
     for row in checks_raw:
         rule_id = str(row.get("rule_id", ""))
         rule = store.get_rule(rule_id) if rule_id else None
-        family_id = str(rule.get("family_id", "")) if isinstance(rule, dict) else ""
+        family_id = (
+            _canonicalize_scope_id(store, str(rule.get("family_id", "")))
+            if isinstance(rule, dict)
+            else ""
+        )
+        scope_id = (
+            _canonicalize_scope_id(store, str(_rule_scope_id(rule) or family_id))
+            if isinstance(rule, dict)
+            else family_id
+        )
         checks.append(
             {
                 "check_id": str(row.get("check_id", "")),
-                "family_id": family_id,
+                "family_id": scope_id,
                 "run_at": row.get("checked_at"),
                 "baseline_run_id": str(row.get("baseline_id", "")),
                 "current_run_id": str(row.get("check_id", "")),
@@ -8098,7 +9040,7 @@ async def export_rule(rule_id: str):
     rule = store.get_rule(rule_id)
     if rule is None:
         raise HTTPException(status_code=404, detail=f"Rule not found: {rule_id}")
-    return rule
+    return _rule_to_api(store, rule)
 
 
 @app.post("/api/links/batch-run")
@@ -8106,16 +9048,42 @@ async def batch_run(
     request: Request,
     body: dict[str, Any] = Body(...),
 ):
-    """Run all published rules (async job)."""
+    """Run published rules against corpus and persist links."""
     _require_links_admin(request)
     store = _get_link_store()
-    job_id = str(uuid.uuid4())
-    store.submit_job({
-        "job_id": job_id,
-        "job_type": "batch_run",
-        "params": {"family_id": body.get("family_id")},
-    })
-    return {"job_id": job_id}
+    corpus = _get_corpus()
+    requested_raw = str(body.get("scope_id") or body.get("family_id") or "").strip() or None
+    requested_family_id = _canonicalize_scope_id(store, requested_raw) if requested_raw else None
+
+    from scripts.bulk_family_linker import run_bulk_linking
+
+    rules, resolved_family_id = _resolve_published_rules_for_requested_family(
+        store,
+        requested_family_id,
+    )
+    if not rules:
+        return {
+            "status": "no_rules",
+            "job_id": None,
+            "requested_family_id": requested_family_id,
+            "resolved_family_id": resolved_family_id,
+        }
+
+    result = run_bulk_linking(
+        corpus,
+        store,
+        rules,
+        family_filter=resolved_family_id,
+        dry_run=False,
+    )
+    run_id = result.get("run_id")
+    return {
+        "job_id": run_id,
+        "status": result.get("status", "completed"),
+        "result": result,
+        "requested_family_id": requested_family_id,
+        "resolved_family_id": resolved_family_id,
+    }
 
 
 @app.get("/api/links/runs")
@@ -8124,24 +9092,90 @@ async def list_link_runs(
     limit: int = Query(50, ge=1, le=500),
 ):
     store = _get_link_store()
-    runs_raw = store.get_runs(family_id=family_id, limit=limit)
-    runs = [
-        {
-            "run_id": str(run.get("run_id", "")),
-            "run_type": str(run.get("run_type") or run.get("source") or "apply"),
-            "family_id": str(run.get("family_id", "")),
-            "rule_id": run.get("rule_id"),
-            "corpus_version": str(run.get("corpus_version", "")),
-            "corpus_doc_count": int(run.get("corpus_doc_count", 0) or 0),
-            "parser_version": str(run.get("parser_version", "")),
-            "links_created": int(run.get("links_created", 0) or 0),
-            "conflicts_detected": int(run.get("conflicts_detected", 0) or 0),
-            "started_at": run.get("started_at"),
-            "completed_at": run.get("completed_at"),
-            "status": "completed" if run.get("completed_at") else "running",
-        }
-        for run in runs_raw
-    ]
+    run_rule_cache: dict[str, dict[str, Any] | None] = {}
+    requested_scope = _canonicalize_scope_id(store, family_id) if family_id else ""
+    runs_raw = store.get_runs(family_id=requested_scope or family_id, limit=limit)
+    if family_id and not runs_raw:
+        scoped_matches = []
+        for run in store.get_runs(limit=max(limit * 10, 500)):
+            scope_id, _ = _resolve_run_scope(store, run, run_rule_cache)
+            if scope_id and scope_id == requested_scope:
+                scoped_matches.append(run)
+        if scoped_matches:
+            runs_raw = scoped_matches[:limit]
+    if family_id and not runs_raw:
+        target_token = _canonical_family_token(family_id)
+        if target_token:
+            runs_raw = [
+                run
+                for run in store.get_runs(limit=max(limit * 10, 500))
+                if (
+                    _canonical_family_token(run.get("family_id")) == target_token
+                    or _canonical_family_token(
+                        _resolve_run_scope(store, run, run_rule_cache)[0]
+                    )
+                    == target_token
+                )
+            ][:limit]
+    latest_completed_started_by_scope: dict[str, datetime] = {}
+    for run in runs_raw:
+        completed_at = run.get("completed_at")
+        started_at = run.get("started_at")
+        if not completed_at or not started_at:
+            continue
+        try:
+            started_dt = datetime.fromisoformat(str(started_at))
+        except (TypeError, ValueError):
+            continue
+        scope_id, _ = _resolve_run_scope(store, run, run_rule_cache)
+        fid = _canonicalize_scope_id(store, scope_id or run.get("family_id"))
+        prev = latest_completed_started_by_scope.get(fid)
+        if prev is None or started_dt > prev:
+            latest_completed_started_by_scope[fid] = started_dt
+    runs: list[dict[str, Any]] = []
+    for run in runs_raw:
+        base_family_id = _canonicalize_scope_id(store, run.get("family_id"))
+        scope_id, ontology_node_id = _resolve_run_scope(store, run, run_rule_cache)
+        fid = _canonicalize_scope_id(store, scope_id or base_family_id)
+        display_family_id = _canonicalize_scope_id(store, base_family_id) or fid
+        display_scope_id = _canonicalize_scope_id(store, scope_id or base_family_id) or display_family_id
+        display_parent_family = _canonicalize_scope_id(store, run.get("parent_family_id")) or None
+        display_ontology_id = _canonicalize_scope_id(store, ontology_node_id) if ontology_node_id else None
+        started_dt: datetime | None = None
+        if run.get("started_at"):
+            try:
+                started_dt = datetime.fromisoformat(str(run.get("started_at")))
+            except (TypeError, ValueError):
+                started_dt = None
+        stale_running = (
+            not run.get("completed_at")
+            and bool(fid)
+            and started_dt is not None
+            and latest_completed_started_by_scope.get(fid) is not None
+            and started_dt <= latest_completed_started_by_scope[fid]
+        )
+        runs.append(
+            {
+                "run_id": str(run.get("run_id", "")),
+                "run_type": str(run.get("run_type") or run.get("source") or "apply"),
+                "family_id": display_family_id,
+                "base_family_id": display_family_id,
+                "scope_id": display_scope_id,
+                "ontology_node_id": display_ontology_id,
+                "rule_id": run.get("rule_id"),
+                "parent_family_id": display_parent_family,
+                "parent_run_id": run.get("parent_run_id"),
+                "scope_mode": str(run.get("scope_mode") or "corpus"),
+                "corpus_version": str(run.get("corpus_version", "")),
+                "corpus_doc_count": int(run.get("corpus_doc_count", 0) or 0),
+                "parser_version": str(run.get("parser_version", "")),
+                "links_created": int(run.get("links_created", 0) or 0),
+                "conflicts_detected": int(run.get("conflicts_detected", 0) or 0),
+                "started_at": run.get("started_at"),
+                "completed_at": run.get("completed_at"),
+                "status": "completed" if run.get("completed_at") or stale_running else "running",
+            }
+        )
     return {"runs": runs, "total": len(runs)}
 
 
@@ -8171,6 +9205,7 @@ async def expand_term(body: dict[str, Any] = Body(...)):
 
 
 @app.get("/api/links/rules/autocomplete")
+@app.get("/api/links/rules-autocomplete")
 async def rules_autocomplete(
     field: str = Query(...),
     prefix: str = Query(""),
@@ -8676,395 +9711,6 @@ async def bind_defined_terms(
 
 
 # ---------------------------------------------------------------------------
-# 62-70. Child-Node Linking
-# ---------------------------------------------------------------------------
-@app.post("/api/links/{link_id}/start-child-linking")
-async def start_child_linking(
-    request: Request,
-    link_id: str,
-    body: dict[str, Any] = Body(...),
-):
-    """Spawn child-linking job."""
-    _require_links_admin(request)
-    store = _get_link_store()
-    job_id = str(uuid.uuid4())
-    store.submit_job({
-        "job_id": job_id, "job_type": "child_linking",
-        "params": {"parent_link_id": link_id, "family_id": body.get("family_id", "")},
-    })
-    return {"job_id": job_id}
-
-
-@app.get("/api/links/nodes")
-async def list_node_links(
-    parent_link_id: str | None = Query(None),
-    family_id: str | None = Query(None),
-    doc_id: str | None = Query(None),
-):
-    """List child-node links."""
-    store = _get_link_store()
-    nodes_raw = store.get_node_links(
-        parent_link_id=parent_link_id, family_id=family_id, doc_id=doc_id,
-    )
-    nodes: list[dict[str, Any]] = []
-    for node in nodes_raw:
-        concept_id = str(node.get("concept_id", ""))
-        node_name = str(_ontology_nodes.get(concept_id, {}).get("name", concept_id))
-        nodes.append(
-            {
-                "node_link_id": str(node.get("node_link_id", "")),
-                "link_id": str(node.get("parent_link_id", "")),
-                "node_id": concept_id,
-                "node_name": node_name,
-                "clause_path": str(node.get("clause_id", "")),
-                "confidence": float(node.get("confidence", 0.0) or 0.0),
-                "confidence_tier": str(node.get("confidence_tier", "low")),
-                "status": str(node.get("status", "active")),
-                "created_at": node.get("created_at"),
-                "doc_id": str(node.get("doc_id", "")),
-                "section_number": str(node.get("section_number", "")),
-            }
-        )
-    return {"nodes": nodes, "node_links": nodes, "total": len(nodes)}
-
-
-@app.get("/api/links/{link_id}/node-links")
-async def list_node_links_for_parent(link_id: str):
-    return await list_node_links(parent_link_id=link_id, family_id=None, doc_id=None)
-
-
-@app.get("/api/links/nodes/{node_id}")
-async def get_node_link(node_id: str):
-    """Single node link with evidence."""
-    store = _get_link_store()
-    node = store.get_node_link(node_id)
-    if node is None:
-        raise HTTPException(status_code=404, detail=f"Node link not found: {node_id}")
-    return node
-
-
-@app.patch("/api/links/nodes/{node_id}/unlink")
-async def unlink_node(
-    request: Request,
-    node_id: str,
-    body: dict[str, Any] = Body(...),
-):
-    """Unlink a child node."""
-    _require_links_admin(request)
-    store = _get_link_store()
-    store.unlink_node(node_id, body.get("reason", "user_action"))
-    return {"unlinked": True}
-
-
-@app.get("/api/links/node-rules")
-async def list_node_rules(family_id: str | None = Query(None)):
-    """List node link rules."""
-    store = _get_link_store()
-    rules_raw = store.get_node_rules(family_id=family_id)
-    rules: list[dict[str, Any]] = []
-    for rule in rules_raw:
-        concept_id = str(rule.get("concept_id", ""))
-        rules.append(
-            {
-                "rule_id": str(rule.get("rule_id", "")),
-                "node_id": concept_id,
-                "node_name": str(_ontology_nodes.get(concept_id, {}).get("name", concept_id)),
-                "family_id": str(rule.get("parent_family_id", "")),
-                "clause_filter_ast": rule.get("clause_filter_ast") or {},
-                "status": str(rule.get("status", "draft")),
-                "version": int(rule.get("version", 1) or 1),
-            }
-        )
-    return {"rules": rules, "total": len(rules)}
-
-
-@app.post("/api/links/node-rules", status_code=201)
-async def create_node_rule(
-    request: Request,
-    body: dict[str, Any] = Body(...),
-):
-    """Create/update a node link rule."""
-    _require_links_admin(request)
-    store = _get_link_store()
-    store.save_node_rule(body)
-    return {"status": "saved"}
-
-
-@app.post("/api/links/nodes/preview")
-async def preview_child_nodes(
-    request: Request,
-    body: dict[str, Any] = Body(...),
-):
-    """Preview child-node candidates."""
-    _require_links_admin(request)
-    store = _get_link_store()
-    preview_id = str(uuid.uuid4())
-    parent_link_id = str(body.get("parent_link_id", ""))
-    family_id = str(body.get("family_id", ""))
-    concept_id = str(body.get("concept_id", ""))
-
-    parent_row = None
-    if parent_link_id:
-        parent_row = store._conn.execute(  # noqa: SLF001
-            "SELECT doc_id, section_number, heading, family_id FROM family_links WHERE link_id = ?",
-            [parent_link_id],
-        ).fetchone()
-    if parent_row is None:
-        raise HTTPException(status_code=422, detail="parent_link_id required")
-
-    parent_doc_id = str(parent_row[0] or "")
-    parent_section = str(parent_row[1] or "")
-    parent_heading = str(parent_row[2] or "")
-    if not family_id:
-        family_id = str(parent_row[3] or "")
-
-    # Heuristic candidate discovery: nearby sections in same doc.
-    section_rows = store._conn.execute(  # noqa: SLF001
-        "SELECT section_number, heading, confidence "
-        "FROM family_links WHERE doc_id = ? AND link_id != ? "
-        "ORDER BY confidence DESC, created_at DESC LIMIT 12",
-        [parent_doc_id, parent_link_id],
-    ).fetchall()
-    if not section_rows:
-        section_rows = [(parent_section, parent_heading, 0.6)]
-
-    candidates: list[dict[str, Any]] = []
-    by_tier = {"high": 0, "medium": 0, "low": 0}
-    for idx, row in enumerate(section_rows):
-        section_number = str(row[0] or parent_section)
-        heading = str(row[1] or "")
-        confidence = float(row[2] or max(0.35, 0.8 - (idx * 0.08)))
-        if confidence >= 0.8:
-            tier = "high"
-        elif confidence >= 0.55:
-            tier = "medium"
-        else:
-            tier = "low"
-        by_tier[tier] += 1
-        clause_id = f"{section_number}:{idx + 1}"
-        why_matched = [
-            {"factor": "heading", "score": confidence, "weight": 1.0, "detail": "Nearby section similarity"}
-        ]
-        candidates.append(
-            {
-                "doc_id": parent_doc_id,
-                "clause_id": clause_id,
-                "clause_text": heading,
-                "confidence": confidence,
-                "confidence_tier": tier,
-                "why_matched": why_matched,
-            }
-        )
-
-    store.save_node_preview(
-        {
-            "preview_id": preview_id,
-            "concept_id": concept_id or "child-node",
-            "parent_family_id": family_id,
-            "rule_id": body.get("rule_id"),
-            "rule_hash": str(uuid.uuid4()),
-            "candidate_count": len(candidates),
-            "by_confidence_tier": by_tier,
-            "expires_at": datetime.now(timezone.utc).isoformat(),
-        }
-    )
-    for candidate in candidates:
-        store._conn.execute(  # noqa: SLF001
-            "INSERT OR REPLACE INTO node_preview_candidates "
-            "(preview_id, doc_id, clause_id, clause_text, confidence, confidence_tier, why_matched, user_verdict) "
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-            [
-                preview_id,
-                candidate["doc_id"],
-                candidate["clause_id"],
-                candidate["clause_text"],
-                candidate["confidence"],
-                candidate["confidence_tier"],
-                json.dumps(candidate["why_matched"]),
-                "accepted",
-            ],
-        )
-    return {
-        "preview_id": preview_id,
-        "parent_link_id": parent_link_id,
-        "candidate_count": len(candidates),
-        "candidates": [
-            {
-                "clause_path": c["clause_id"],
-                "clause_label": c["clause_text"],
-                "node_id": concept_id or "child-node",
-                "node_name": str(_ontology_nodes.get(concept_id or "child-node", {}).get("name", concept_id or "child-node")),
-                "confidence": c["confidence"],
-                "confidence_tier": c["confidence_tier"],
-                "factors": c["why_matched"],
-            }
-            for c in candidates
-        ],
-    }
-
-
-@app.get("/api/links/nodes/previews/{preview_id}/candidates")
-async def get_node_preview_candidates(
-    preview_id: str,
-    page: int = Query(1, ge=1),
-    page_size: int = Query(50, ge=1, le=500),
-):
-    """Paginated child preview candidates."""
-    store = _get_link_store()
-    candidates = store.get_node_preview_candidates(preview_id, page_size=100000)
-    total = len(candidates)
-    start = (page - 1) * page_size
-    items = []
-    for row in candidates[start:start + page_size]:
-        clause_id = str(row.get("clause_id", ""))
-        factors = row.get("why_matched")
-        if isinstance(factors, str):
-            try:
-                factors = json.loads(factors)
-            except json.JSONDecodeError:
-                factors = []
-        items.append(
-            {
-                "clause_path": clause_id,
-                "clause_label": str(row.get("clause_text", "")),
-                "node_id": "child-node",
-                "node_name": "Child Clause",
-                "confidence": float(row.get("confidence", 0.0) or 0.0),
-                "confidence_tier": str(row.get("confidence_tier", "low")),
-                "factors": factors if isinstance(factors, list) else [],
-                "user_verdict": row.get("user_verdict"),
-                "doc_id": str(row.get("doc_id", "")),
-                "clause_id": clause_id,
-            }
-        )
-    return {
-        "items": items,
-        "total": total, "page": page,
-    }
-
-
-@app.patch("/api/links/nodes/previews/{preview_id}/candidates/verdict")
-async def set_node_preview_verdicts(
-    request: Request,
-    preview_id: str,
-    body: dict[str, Any] = Body(...),
-):
-    _require_links_admin(request)
-    store = _get_link_store()
-    verdicts = body.get("verdicts", [])
-    updated = 0
-    for verdict in verdicts:
-        clause_id = str(verdict.get("clause_id") or verdict.get("clause_path") or "")
-        doc_id = str(verdict.get("doc_id", ""))
-        user_verdict = str(verdict.get("verdict", ""))
-        if not clause_id:
-            continue
-        if not doc_id:
-            row = store._conn.execute(  # noqa: SLF001
-                "SELECT doc_id FROM node_preview_candidates "
-                "WHERE preview_id = ? AND clause_id = ? LIMIT 1",
-                [preview_id, clause_id],
-            ).fetchone()
-            doc_id = str(row[0]) if row and row[0] is not None else ""
-        if not doc_id:
-            continue
-        store.set_node_candidate_verdict(preview_id, doc_id, clause_id, user_verdict)
-        updated += 1
-    return {"updated": updated}
-
-
-@app.post("/api/links/nodes/apply")
-async def apply_node_preview(
-    request: Request,
-    body: dict[str, Any] = Body(...),
-):
-    """Apply child-node preview — create node links."""
-    _require_links_admin(request)
-    store = _get_link_store()
-    preview_id = str(body.get("preview_id", ""))
-    parent_link_id = str(body.get("parent_link_id", ""))
-    preview_row = store._conn.execute(  # noqa: SLF001
-        "SELECT concept_id, parent_family_id FROM node_link_previews WHERE preview_id = ?",
-        [preview_id],
-    ).fetchone()
-    if preview_row is None:
-        raise HTTPException(status_code=404, detail="Preview not found")
-    concept_id = str(body.get("concept_id") or preview_row[0] or "child-node")
-    family_id = str(body.get("family_id") or preview_row[1] or "")
-    verdicts = body.get("verdicts", [])
-    if isinstance(verdicts, list):
-        for verdict in verdicts:
-            if not isinstance(verdict, dict):
-                continue
-            clause_id = str(verdict.get("clause_id") or verdict.get("clause_path") or "")
-            doc_id = str(verdict.get("doc_id", ""))
-            user_verdict = str(verdict.get("verdict", ""))
-            if not clause_id:
-                continue
-            if not doc_id:
-                doc_row = store._conn.execute(  # noqa: SLF001
-                    "SELECT doc_id FROM node_preview_candidates "
-                    "WHERE preview_id = ? AND clause_id = ? LIMIT 1",
-                    [preview_id, clause_id],
-                ).fetchone()
-                doc_id = str(doc_row[0]) if doc_row and doc_row[0] is not None else ""
-            if not doc_id:
-                continue
-            store.set_node_candidate_verdict(preview_id, doc_id, clause_id, user_verdict)
-    candidates = store.get_node_preview_candidates(preview_id, page_size=100000)
-
-    links_to_create: list[dict[str, Any]] = []
-    for candidate in candidates:
-        verdict = str(candidate.get("user_verdict", ""))
-        if verdict not in {"accepted", "approve", "approved", "true_positive"}:
-            continue
-        clause_id = str(candidate.get("clause_id", ""))
-        section_number = clause_id.split(":", 1)[0] if ":" in clause_id else "1.01"
-        clause_text = str(candidate.get("clause_text", ""))
-        links_to_create.append(
-            {
-                "concept_id": concept_id,
-                "family_id": family_id,
-                "parent_link_id": parent_link_id,
-                "doc_id": str(candidate.get("doc_id", "")),
-                "section_number": section_number,
-                "clause_id": clause_id,
-                "clause_char_start": 0,
-                "clause_char_end": max(len(clause_text), 1),
-                "clause_text_hash": f"{preview_id}:{clause_id}",
-                "heading": clause_text,
-                "confidence": float(candidate.get("confidence", 0.0) or 0.0),
-                "confidence_tier": str(candidate.get("confidence_tier", "low")),
-                "status": "active",
-            }
-        )
-    created = store.create_node_links(links_to_create, str(uuid.uuid4())) if links_to_create else 0
-    return {"created": created, "job_id": str(uuid.uuid4())}
-
-
-@app.post("/api/links/{link_id}/child-link-preview")
-async def preview_child_nodes_for_link(
-    request: Request,
-    link_id: str,
-    body: dict[str, Any] = Body(...),
-):
-    payload = dict(body)
-    payload.setdefault("parent_link_id", link_id)
-    return await preview_child_nodes(request, payload)
-
-
-@app.post("/api/links/{link_id}/child-links/apply")
-async def apply_child_links_for_link(
-    request: Request,
-    link_id: str,
-    body: dict[str, Any] = Body(...),
-):
-    payload = dict(body)
-    payload.setdefault("parent_link_id", link_id)
-    return await apply_node_preview(request, payload)
-
-
-# ---------------------------------------------------------------------------
 # 71-73. Embeddings & Semantic
 # ---------------------------------------------------------------------------
 def _compute_embeddings_sync(
@@ -9086,7 +9732,8 @@ def _compute_embeddings_sync(
 
     manager = EmbeddingManager(model=model, store=store)
 
-    links = store.get_links(family_id=family_id, status="active", limit=100000)
+    resolved_scope = _canonicalize_scope_id(store, family_id) if family_id else None
+    links = store.get_links(family_id=resolved_scope or family_id, status="active", limit=100000)
     if not links:
         return {"family_id": family_id, "sections_embedded": 0, "status": "no_active_links"}
 

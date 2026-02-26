@@ -1,4 +1,10 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const EXPLICIT_API_BASE = (process.env.NEXT_PUBLIC_API_URL || "").trim();
+const IS_BROWSER = typeof window !== "undefined";
+const API_BASE_FALLBACKS = EXPLICIT_API_BASE
+  ? [EXPLICIT_API_BASE]
+  : IS_BROWSER
+    ? [""]
+    : ["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:8000"];
 const LINKS_API_TOKEN =
   process.env.NEXT_PUBLIC_LINKS_API_TOKEN || "local-dev-links-token";
 
@@ -10,15 +16,28 @@ async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
       headers.set("X-Links-Token", LINKS_API_TOKEN);
     }
   }
-  const res = await fetch(`${API_BASE}${path}`, {
-    ...init,
-    headers,
-  });
-  if (!res.ok) {
-    const text = await res.text().catch(() => "");
-    throw new Error(`API error ${res.status}: ${text}`);
+  let lastError: unknown;
+  for (const base of API_BASE_FALLBACKS) {
+    try {
+      const url = base ? `${base}${path}` : path;
+      const res = await fetch(url, {
+        ...init,
+        headers,
+      });
+      if (!res.ok) {
+        const text = await res.text().catch(() => "");
+        throw new Error(`API error ${res.status}: ${text}`);
+      }
+      return res.json() as Promise<T>;
+    } catch (error) {
+      lastError = error;
+      // Retry only transport/CORS-style failures on fallback hosts.
+      if (!(error instanceof TypeError)) {
+        throw error;
+      }
+    }
   }
-  return res.json() as Promise<T>;
+  throw lastError instanceof Error ? lastError : new Error("API request failed");
 }
 
 // --- Health ---
@@ -1133,6 +1152,18 @@ export function fetchPreviewCandidatesPage(
         doc_id: String(r.doc_id ?? ""),
         borrower: String(r.borrower ?? r.doc_id ?? ""),
         section_number: String(r.section_number ?? ""),
+        clause_id: String(r.clause_id ?? ""),
+        clause_path: String(r.clause_path ?? ""),
+        clause_label: String(r.clause_label ?? ""),
+        clause_char_start:
+          r.clause_char_start === null || r.clause_char_start === undefined
+            ? null
+            : Number(r.clause_char_start),
+        clause_char_end:
+          r.clause_char_end === null || r.clause_char_end === undefined
+            ? null
+            : Number(r.clause_char_end),
+        clause_text: String(r.clause_text ?? ""),
         heading: String(r.heading ?? ""),
         confidence: Number(r.confidence ?? 0),
         confidence_tier: String(r.confidence_tier ?? "low") as import("./types").ConfidenceTier,
@@ -1202,7 +1233,25 @@ function normalizeLinkRule(raw: Record<string, unknown>): import("./types").Link
   return {
     rule_id: String(raw.rule_id ?? ""),
     family_id: String(raw.family_id ?? ""),
+    ontology_node_id:
+      raw.ontology_node_id === null || raw.ontology_node_id === undefined
+        ? null
+        : String(raw.ontology_node_id),
     family_name: String(raw.family_name ?? raw.family_id ?? ""),
+    parent_family_id:
+      raw.parent_family_id === null || raw.parent_family_id === undefined
+        ? null
+        : String(raw.parent_family_id),
+    parent_rule_id:
+      raw.parent_rule_id === null || raw.parent_rule_id === undefined
+        ? null
+        : String(raw.parent_rule_id),
+    parent_run_id:
+      raw.parent_run_id === null || raw.parent_run_id === undefined
+        ? null
+        : String(raw.parent_run_id),
+    scope_mode:
+      String(raw.scope_mode ?? "corpus") === "inherited" ? "inherited" : "corpus",
     name: String(raw.name ?? ""),
     filter_dsl: filterDsl || headingDsl,
     result_granularity: granularity === "clause" ? "clause" : "section",
@@ -1264,12 +1313,17 @@ export function fetchLinkRule(ruleId: string) {
 
 export function createLinkRule(data: {
   family_id: string;
+  ontology_node_id?: string | null;
   filter_dsl?: string;
   result_granularity?: "section" | "clause";
   heading_filter_dsl?: string;
   heading_filter_ast?: Record<string, unknown>;
   keyword_anchors?: string[];
   dna_phrases?: string[];
+  parent_family_id?: string | null;
+  parent_rule_id?: string | null;
+  parent_run_id?: string | null;
+  scope_mode?: "corpus" | "inherited";
 }) {
   return postJson<{ rule_id: string; status: string }>("/api/links/rules", data);
 }
@@ -1429,7 +1483,7 @@ export function fetchRuleAutocomplete(
     limit: String(limit),
   });
   return fetchJson<{ field: string; suggestions: string[] }>(
-    `/api/links/rules/autocomplete?${sp}`
+    `/api/links/rules-autocomplete?${sp}`
   );
 }
 
@@ -1600,8 +1654,11 @@ export function redoLastAction() {
 
 // ── Runs ───────────────────────────────────────────────────────────────────
 
-export function fetchLinkRuns() {
-  return fetchJson<import("./types").LinkRunListResponse>("/api/links/runs");
+export function fetchLinkRuns(params: { familyId?: string; limit?: number } = {}) {
+  const sp = new URLSearchParams();
+  if (params.familyId) sp.set("family_id", params.familyId);
+  if (params.limit !== undefined) sp.set("limit", String(params.limit));
+  return fetchJson<import("./types").LinkRunListResponse>(`/api/links/runs?${sp}`);
 }
 
 // ── Link Jobs ──────────────────────────────────────────────────────────────
@@ -1612,18 +1669,22 @@ export function fetchLinkJobs() {
 
 export function fetchLinkJobStatus(jobId: string) {
   return fetchJson<import("./types").LinkJob>(
-    `/api/jobs/${encodeURIComponent(jobId)}/status`
+    `/api/links/jobs/${encodeURIComponent(jobId)}`
   );
 }
 
 export function cancelLinkJob(jobId: string) {
-  return postJson<{ cancelled: boolean }>(
-    `/api/jobs/${encodeURIComponent(jobId)}/cancel`,
-    {}
+  return deleteJson<{ cancelled: boolean }>(
+    `/api/links/jobs/${encodeURIComponent(jobId)}`
   );
 }
 
 export function submitLinkJob(data: { job_type: string; params: Record<string, unknown> }) {
+  if (data.job_type === "batch_run") {
+    return postJson<import("./types").LinkJobSubmitResponse>("/api/links/batch-run", {
+      family_id: data.params?.family_id,
+    });
+  }
   return postJson<import("./types").LinkJobSubmitResponse>("/api/jobs/submit", data);
 }
 
@@ -1646,8 +1707,13 @@ export function fetchDriftChecks() {
   return fetchJson<import("./types").DriftChecksResponse>("/api/links/drift/checks");
 }
 
-export function fetchAnalyticsDashboard() {
-  return fetchJson<import("./types").AnalyticsDashboard>("/api/links/analytics");
+export function fetchAnalyticsDashboard(scopeId?: string) {
+  const sp = new URLSearchParams();
+  if (scopeId) sp.set("family_id", scopeId);
+  const suffix = sp.toString();
+  return fetchJson<import("./types").AnalyticsDashboard>(
+    suffix ? `/api/links/analytics?${suffix}` : "/api/links/analytics"
+  );
 }
 
 // ── Calibrations ───────────────────────────────────────────────────────────
@@ -1684,90 +1750,6 @@ export function fetchCounterfactual(data: {
   return postJson<import("./types").CounterfactualResponse>(
     "/api/links/coverage/counterfactual",
     data
-  );
-}
-
-// ── Child-node linking ─────────────────────────────────────────────────────
-
-export function fetchNodeLinks(linkId: string) {
-  return fetchJson<Record<string, unknown>>(
-    `/api/links/${encodeURIComponent(linkId)}/node-links`
-  ).then((raw) => {
-    const rows = Array.isArray(raw.node_links)
-      ? raw.node_links
-      : Array.isArray(raw.nodes)
-      ? raw.nodes
-      : [];
-    const node_links = rows
-      .filter((value): value is Record<string, unknown> => !!value && typeof value === "object")
-      .map((row) => ({
-        node_link_id: String(row.node_link_id ?? ""),
-        link_id: String(row.link_id ?? row.parent_link_id ?? ""),
-        node_id: String(row.node_id ?? row.concept_id ?? ""),
-        node_name: String(row.node_name ?? row.node_id ?? row.concept_id ?? ""),
-        clause_path: String(row.clause_path ?? row.clause_id ?? ""),
-        confidence: Number(row.confidence ?? 0),
-        confidence_tier: (String(row.confidence_tier ?? "low") as import("./types").ConfidenceTier),
-        status: (String(row.status ?? "active") as import("./types").LinkStatus),
-        created_at: String(row.created_at ?? ""),
-      }));
-    return {
-      total: Number(raw.total ?? node_links.length),
-      node_links,
-    } satisfies import("./types").NodeLinksResponse;
-  });
-}
-
-export function fetchNodeLinkRules(familyId?: string) {
-  const sp = new URLSearchParams();
-  if (familyId) sp.set("family_id", familyId);
-  return fetchJson<import("./types").NodeLinkRulesResponse>(`/api/links/node-rules?${sp}`);
-}
-
-export function createChildLinkPreview(linkId: string, familyId?: string) {
-  return postJson<Record<string, unknown>>(
-    `/api/links/${encodeURIComponent(linkId)}/child-link-preview`,
-    { family_id: familyId, parent_link_id: linkId }
-  ).then((raw) => {
-    const candidates = Array.isArray(raw.candidates)
-      ? raw.candidates
-          .filter((value): value is Record<string, unknown> => !!value && typeof value === "object")
-          .map((entry) => ({
-            clause_path: String(entry.clause_path ?? entry.clause_id ?? ""),
-            clause_label: String(entry.clause_label ?? entry.clause_text ?? ""),
-            node_id: String(entry.node_id ?? ""),
-            node_name: String(entry.node_name ?? entry.node_id ?? ""),
-            confidence: Number(entry.confidence ?? 0),
-            confidence_tier: (String(entry.confidence_tier ?? "low") as import("./types").ConfidenceTier),
-            factors: Array.isArray(entry.factors)
-              ? (entry.factors as import("./types").WhyMatchedFactor[])
-              : [],
-          }))
-      : [];
-    return {
-      preview_id: String(raw.preview_id ?? ""),
-      link_id: String(raw.link_id ?? raw.parent_link_id ?? linkId),
-      candidate_count: Number(raw.candidate_count ?? candidates.length),
-      candidates,
-    } satisfies import("./types").ChildLinkPreviewResponse;
-  });
-}
-
-export function applyChildLinks(
-  linkId: string,
-  previewId: string,
-  verdicts?: { clause_id: string; doc_id: string; verdict: "accepted" | "rejected" }[],
-) {
-  return postJson<{ job_id: string }>(
-    `/api/links/${encodeURIComponent(linkId)}/child-links/apply`,
-    { preview_id: previewId, verdicts: verdicts ?? [] }
-  );
-}
-
-export function unlinkNodeLink(nodeLinkId: string, reason = "user_action") {
-  return patchJson<{ unlinked: boolean }>(
-    `/api/links/nodes/${encodeURIComponent(nodeLinkId)}/unlink`,
-    { reason },
   );
 }
 
@@ -1864,6 +1846,11 @@ export function fetchQueryCount(
   metaFilters?: Record<string, unknown>,
   signal?: AbortSignal,
   filterDsl?: string,
+  scope?: {
+    scopeMode?: "corpus" | "inherited";
+    parentFamilyId?: string | null;
+    parentRunId?: string | null;
+  },
 ) {
   const sp = new URLSearchParams();
   if (familyId) sp.set("family_id", familyId);
@@ -1875,6 +1862,9 @@ export function fetchQueryCount(
   if (metaFilters && Object.keys(metaFilters).length > 0) {
     sp.set("meta_filters", JSON.stringify(metaFilters));
   }
+  if (scope?.scopeMode) sp.set("scope_mode", scope.scopeMode);
+  if (scope?.parentFamilyId) sp.set("parent_family_id", scope.parentFamilyId);
+  if (scope?.parentRunId) sp.set("parent_run_id", scope.parentRunId);
   return fetchJson<{ count: number; query_cost: number }>(
     `/api/links/query/count?${sp}`,
     { signal }
@@ -1908,14 +1898,26 @@ export function createPreviewFromAst(
   textFields?: Record<string, unknown>,
   filterDsl?: string,
   resultGranularity?: "section" | "clause",
+  ontologyNodeId?: string | null,
+  scope?: {
+    scopeMode?: "corpus" | "inherited";
+    parentFamilyId?: string | null;
+    parentRuleId?: string | null;
+    parentRunId?: string | null;
+  },
 ) {
   return postJson<import("./types").LinkPreviewResponse>(
     "/api/links/query/preview",
     {
       family_id: familyId,
+      ontology_node_id: ontologyNodeId ?? undefined,
       heading_filter_ast: ast,
       filter_dsl: filterDsl,
       result_granularity: resultGranularity ?? "section",
+      scope_mode: scope?.scopeMode ?? "corpus",
+      parent_family_id: scope?.parentFamilyId ?? undefined,
+      parent_rule_id: scope?.parentRuleId ?? undefined,
+      parent_run_id: scope?.parentRunId ?? undefined,
       text_fields: textFields ?? {},
       meta_filters: metaFilters ?? {},
     }

@@ -30,7 +30,7 @@ test.describe("Links Smoke Tests", () => {
     expect(await errorOverlay.count()).toBe(0);
   });
 
-  test("All 7 tabs are clickable without error", async ({ page }) => {
+  test("All tabs are clickable without error", async ({ page }) => {
     await page.goto(`${FRONTEND_BASE}/links`);
     await page.waitForLoadState("networkidle");
 
@@ -41,7 +41,6 @@ test.describe("Links Smoke Tests", () => {
       "Conflicts",
       "Rules",
       "Dashboard",
-      "Child Links",
     ];
 
     for (const tabName of tabNames) {

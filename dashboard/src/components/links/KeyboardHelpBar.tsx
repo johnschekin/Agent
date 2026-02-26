@@ -11,7 +11,7 @@ interface KeyboardHelpBarProps {
 const REVIEW_SHORTCUTS = [
   { key: "j/k", action: "Navigate" },
   { key: "Space", action: "Reader" },
-  { key: "c", action: "Child Links" },
+  { key: "c", action: "Query" },
   { key: "u", action: "Unlink" },
   { key: "r", action: "Relink" },
   { key: "b", action: "Bookmark" },
@@ -34,12 +34,6 @@ const RULES_SHORTCUTS = [
   { key: "a", action: "Archive" },
 ];
 
-const CHILDREN_SHORTCUTS = [
-  { key: "g", action: "Generate" },
-  { key: "Space", action: "Approve" },
-  { key: "Cmd+K", action: "Palette" },
-];
-
 const DASHBOARD_SHORTCUTS = [
   { key: "\u2318K", action: "Palette" },
 ];
@@ -57,9 +51,6 @@ export function KeyboardHelpBar({ activeTab, className }: KeyboardHelpBarProps) 
         break;
       case "rules":
         tabShortcuts = RULES_SHORTCUTS;
-        break;
-      case "children":
-        tabShortcuts = CHILDREN_SHORTCUTS;
         break;
       case "query":
         tabShortcuts = [{ key: "/", action: "Focus DSL" }, { key: "Esc", action: "Close" }];

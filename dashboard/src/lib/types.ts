@@ -668,6 +668,8 @@ export interface ReaderSectionDetail {
   heading: string;
   article_num: number;
   word_count: number;
+  section_char_start?: number | null;
+  section_char_end?: number | null;
   text: string;
   clauses: ReaderClause[];
 }
@@ -1072,6 +1074,12 @@ export interface FamilyLink {
   doc_id: string;
   borrower: string;
   section_number: string;
+  scope_id?: string;
+  ontology_node_id?: string | null;
+  clause_id?: string | null;
+  clause_char_start?: number | null;
+  clause_char_end?: number | null;
+  clause_text?: string | null;
   heading: string;
   family_id: string;
   family_name: string;
@@ -1166,6 +1174,12 @@ export interface PreviewCandidate {
   doc_id: string;
   borrower: string;
   section_number: string;
+  clause_id?: string;
+  clause_path?: string;
+  clause_label?: string;
+  clause_char_start?: number | null;
+  clause_char_end?: number | null;
+  clause_text?: string;
   heading: string;
   confidence: number;
   confidence_tier: ConfidenceTier;
@@ -1178,6 +1192,7 @@ export interface PreviewCandidate {
 export interface LinkPreviewResponse {
   preview_id: string;
   family_id: string;
+  ontology_node_id?: string | null;
   rule_id: string | null;
   candidate_count: number;
   by_confidence_tier: { high: number; medium: number; low: number };
@@ -1214,7 +1229,12 @@ export interface LinkApplyResponse {
 export interface LinkRule {
   rule_id: string;
   family_id: string;
+  ontology_node_id?: string | null;
   family_name: string;
+  parent_family_id?: string | null;
+  parent_rule_id?: string | null;
+  parent_run_id?: string | null;
+  scope_mode?: "corpus" | "inherited";
   name: string;
   filter_dsl: string;                                     // NEW: full multi-field DSL
   result_granularity: "section" | "clause";               // NEW
@@ -1294,7 +1314,13 @@ export interface LinkRun {
   run_id: string;
   run_type: "full" | "canary" | "apply";
   family_id: string;
+  base_family_id?: string;
+  scope_id?: string;
+  ontology_node_id?: string | null;
   rule_id: string | null;
+  parent_family_id?: string | null;
+  parent_run_id?: string | null;
+  scope_mode?: "corpus" | "inherited";
   corpus_version: string;
   corpus_doc_count: number;
   parser_version: string;
@@ -1505,6 +1531,9 @@ export interface BatchRunSummary {
   run_id: string;
   run_type: string;
   family_id: string;
+  base_family_id?: string;
+  scope_id?: string;
+  ontology_node_id?: string | null;
   links_created: number;
   conflicts_detected: number;
   started_at: string;
@@ -1517,7 +1546,13 @@ export interface AnalyticsDashboard {
   total_runs: number;
   total_conflicts: number;
   total_drift_alerts: number;
-  links_by_family: { family_id: string; count: number }[];
+  links_by_family: {
+    family_id: string;
+    scope_id?: string;
+    base_family_id?: string;
+    ontology_node_id?: string | null;
+    count: number;
+  }[];
   links_by_status: { status: string; count: number }[];
   confidence_distribution: { tier: string; count: number }[];
   recent_runs: BatchRunSummary[];
@@ -1630,57 +1665,6 @@ export interface CounterfactualResponse {
   new_hits: number;
   false_positives: number;
   total_matched: number;
-}
-
-// ── Child-node linking ──────────────────────────────────────────────────
-
-export interface NodeLink {
-  node_link_id: string;
-  link_id: string;
-  node_id: string;
-  node_name: string;
-  clause_path: string;
-  confidence: number;
-  confidence_tier: ConfidenceTier;
-  status: LinkStatus;
-  created_at: string;
-}
-
-export interface NodeLinksResponse {
-  total: number;
-  node_links: NodeLink[];
-}
-
-export interface NodeLinkRule {
-  rule_id: string;
-  node_id: string;
-  node_name: string;
-  family_id: string;
-  clause_filter_ast: Record<string, unknown>;
-  status: "draft" | "published" | "archived";
-  version: number;
-}
-
-export interface NodeLinkRulesResponse {
-  total: number;
-  rules: NodeLinkRule[];
-}
-
-export interface ChildLinkCandidate {
-  clause_path: string;
-  clause_label: string;
-  node_id: string;
-  node_name: string;
-  confidence: number;
-  confidence_tier: ConfidenceTier;
-  factors: WhyMatchedFactor[];
-}
-
-export interface ChildLinkPreviewResponse {
-  preview_id: string;
-  link_id: string;
-  candidate_count: number;
-  candidates: ChildLinkCandidate[];
 }
 
 // ── Embeddings ──────────────────────────────────────────────────────────

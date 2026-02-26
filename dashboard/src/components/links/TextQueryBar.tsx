@@ -59,6 +59,7 @@ export function TextQueryBar({
   disabled,
   className,
 }: TextQueryBarProps) {
+  const rootRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const highlightRef = useRef<HTMLDivElement>(null);
   const [autocompleteOpen, setAutocompleteOpen] = useState(false);
@@ -249,6 +250,26 @@ export function TextQueryBar({
     };
   }, []);
 
+  // Close autocomplete when clicking/tapping outside the DSL input area.
+  useEffect(() => {
+    if (!autocompleteOpen) return;
+
+    const handleOutside = (event: MouseEvent | TouchEvent) => {
+      const target = event.target as Node | null;
+      if (!target) return;
+      if (rootRef.current && !rootRef.current.contains(target)) {
+        setAutocompleteOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutside);
+    document.addEventListener("touchstart", handleOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleOutside);
+      document.removeEventListener("touchstart", handleOutside);
+    };
+  }, [autocompleteOpen]);
+
   // Public method for parent to focus the input (called by / keyboard shortcut)
   const focusInput = useCallback(() => {
     inputRef.current?.focus();
@@ -256,7 +277,7 @@ export function TextQueryBar({
 
   // Attach focusInput to the DOM element so parent can call it
   useEffect(() => {
-    const el = inputRef.current?.closest("[data-testid='text-query-bar']");
+    const el = rootRef.current;
     if (el) {
       (el as HTMLElement & { focusInput?: () => void }).focusInput = focusInput;
     }
@@ -266,7 +287,7 @@ export function TextQueryBar({
   const highlightTokens = tokenizeDsl(dsl);
 
   return (
-    <div className={cn("relative", className)} data-testid="text-query-bar">
+    <div ref={rootRef} className={cn("relative", className)} data-testid="text-query-bar">
       {/* Input container with highlight overlay */}
       <div className="relative flex items-center">
         {/* Syntax highlight overlay — invisible to pointer events */}
@@ -295,7 +316,7 @@ export function TextQueryBar({
           placeholder={
             familyId
               ? `heading:... article:... template:... @macro`
-              : "Select a family first"
+              : "Select an ontology node first"
           }
           className={cn(
             "w-full bg-surface-2 border border-border rounded-lg px-4 py-2.5 font-mono text-sm placeholder:text-text-muted focus:outline-none focus:ring-1 focus:ring-accent-blue disabled:opacity-50 pr-24",

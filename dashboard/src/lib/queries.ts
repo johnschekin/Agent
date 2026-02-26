@@ -631,11 +631,6 @@ import {
   fetchCalibrations,
   fetchCrossrefPeek,
   fetchCounterfactual,
-  fetchNodeLinks,
-  fetchNodeLinkRules,
-  createChildLinkPreview,
-  applyChildLinks,
-  unlinkNodeLink,
   fetchEmbeddingsStats,
   computeEmbeddings,
   fetchFamilyCentroids,
@@ -1205,10 +1200,10 @@ export function useRedoMutation() {
 
 // ── Runs ───────────────────────────────────────────────────────────────────
 
-export function useLinkRuns() {
+export function useLinkRuns(params: { familyId?: string; limit?: number } = {}) {
   return useQuery({
-    queryKey: ["links", "runs"],
-    queryFn: fetchLinkRuns,
+    queryKey: ["links", "runs", params.familyId, params.limit],
+    queryFn: () => fetchLinkRuns(params),
     staleTime: 30_000,
   });
 }
@@ -1249,6 +1244,11 @@ export function useSubmitLinkJobMutation() {
   return useMutation({
     mutationFn: submitLinkJob,
     onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["links"] });
+      qc.invalidateQueries({ queryKey: ["links", "runs"] });
+      qc.invalidateQueries({ queryKey: ["links", "analytics"] });
+      qc.invalidateQueries({ queryKey: ["links", "summary"] });
+      qc.invalidateQueries({ queryKey: ["links", "families"] });
       qc.invalidateQueries({ queryKey: ["links", "jobs"] });
     },
   });
@@ -1281,10 +1281,10 @@ export function useDriftChecks() {
   });
 }
 
-export function useAnalyticsDashboard() {
+export function useAnalyticsDashboard(scopeId?: string) {
   return useQuery({
-    queryKey: ["links", "analytics"],
-    queryFn: fetchAnalyticsDashboard,
+    queryKey: ["links", "analytics", scopeId],
+    queryFn: () => fetchAnalyticsDashboard(scopeId),
     staleTime: 30_000,
   });
 }
@@ -1315,61 +1315,6 @@ export function useCrossrefPeek(sectionRef: string | null) {
 export function useCounterfactualMutation() {
   return useMutation({
     mutationFn: fetchCounterfactual,
-  });
-}
-
-// ── Child-node linking ─────────────────────────────────────────────────────
-
-export function useNodeLinks(linkId: string | null) {
-  return useQuery({
-    queryKey: ["links", "node-links", linkId],
-    queryFn: () => fetchNodeLinks(linkId!),
-    enabled: !!linkId,
-    staleTime: 30_000,
-  });
-}
-
-export function useNodeLinkRules(familyId?: string) {
-  return useQuery({
-    queryKey: ["links", "node-rules", familyId],
-    queryFn: () => fetchNodeLinkRules(familyId),
-    staleTime: 60_000,
-  });
-}
-
-export function useCreateChildLinkPreviewMutation() {
-  return useMutation({
-    mutationFn: ({ linkId, familyId }: { linkId: string; familyId?: string }) =>
-      createChildLinkPreview(linkId, familyId),
-  });
-}
-
-export function useApplyChildLinksMutation() {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: ({
-      linkId,
-      previewId,
-      verdicts,
-    }: {
-      linkId: string;
-      previewId: string;
-      verdicts?: { clause_id: string; doc_id: string; verdict: "accepted" | "rejected" }[];
-    }) => applyChildLinks(linkId, previewId, verdicts),
-    onSuccess: (_d, v) => {
-      qc.invalidateQueries({ queryKey: ["links", "node-links", v.linkId] });
-    },
-  });
-}
-
-export function useUnlinkNodeLinkMutation() {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: ({ nodeLinkId, reason }: { nodeLinkId: string; reason?: string }) =>
-      unlinkNodeLink(nodeLinkId, reason),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["links", "node-links"] });
-    },
   });
 }
 
@@ -1488,10 +1433,15 @@ export function useQueryCountWithMeta(
   headingAst?: Record<string, unknown> | null,
   metaFilters?: Record<string, unknown> | null,
   filterDsl?: string,
+  scope?: {
+    scopeMode?: "corpus" | "inherited";
+    parentFamilyId?: string | null;
+    parentRunId?: string | null;
+  },
 ) {
   const hasFilter = !!filterDsl || !!headingAst || (!!metaFilters && Object.keys(metaFilters).length > 0);
   return useQuery({
-    queryKey: ["links", "query-count", familyId, headingAst, metaFilters, filterDsl],
+    queryKey: ["links", "query-count", familyId, headingAst, metaFilters, filterDsl, scope?.scopeMode, scope?.parentFamilyId, scope?.parentRunId],
     queryFn: ({ signal }) =>
       fetchQueryCount(
         familyId,
@@ -1499,6 +1449,7 @@ export function useQueryCountWithMeta(
         metaFilters ?? undefined,
         signal,
         filterDsl,
+        scope,
       ),
     enabled: hasFilter,
     staleTime: 10_000,
@@ -1589,6 +1540,8 @@ export function useCreatePreviewFromAstMutation() {
       textFields,
       filterDsl,
       resultGranularity,
+      ontologyNodeId,
+      scope,
     }: {
       familyId: string;
       ast: Record<string, unknown>;
@@ -1596,7 +1549,24 @@ export function useCreatePreviewFromAstMutation() {
       textFields?: Record<string, unknown>;
       filterDsl?: string;
       resultGranularity?: "section" | "clause";
-    }) => createPreviewFromAst(familyId, ast, metaFilters, textFields, filterDsl, resultGranularity),
+      ontologyNodeId?: string | null;
+      scope?: {
+        scopeMode?: "corpus" | "inherited";
+        parentFamilyId?: string | null;
+        parentRuleId?: string | null;
+        parentRunId?: string | null;
+      };
+    }) =>
+      createPreviewFromAst(
+        familyId,
+        ast,
+        metaFilters,
+        textFields,
+        filterDsl,
+        resultGranularity,
+        ontologyNodeId,
+        scope,
+      ),
   });
 }
 

@@ -259,7 +259,6 @@ class LinkWorker:
             "canary": self._handle_canary,
             "batch_run": self._handle_batch_run,
             "embeddings_compute": self._handle_embeddings_compute,
-            "child_linking": self._handle_child_linking,
             "check_drift": self._handle_check_drift,
             "export": self._handle_export,
         }
@@ -292,6 +291,8 @@ class LinkWorker:
                 return {"error": f"Rule not found: {rule_id}"}
             heading_ast_raw = heading_ast_raw or rule.get("heading_filter_ast")
             family_id = family_id or rule.get("family_id", "")
+        resolved_scope = self._store.get_canonical_scope_id(family_id) if family_id else None
+        family_id = resolved_scope or family_id
 
         if heading_ast_raw is None:
             return {"error": "No heading_filter_ast provided"}
@@ -331,6 +332,7 @@ class LinkWorker:
         self._store.save_preview({
             "preview_id": preview_id,
             "family_id": family_id,
+            "ontology_node_id": family_id,
             "rule_id": rule_id or "",
             "query_ast": _json_dumps(heading_ast_raw),
             "candidate_count": len(candidates),
@@ -401,8 +403,8 @@ class LinkWorker:
 
         self._store.update_job_progress(job_id, 20.0, "Loading candidates")
 
-        # Load accepted candidates
-        candidates = self._store.get_preview_candidates(preview_id)
+        # Load accepted candidates (full preview set).
+        candidates = self._store.get_preview_candidates(preview_id, page_size=100000)
         accepted = [
             c for c in candidates
             if c.get("user_verdict") == "accepted"
@@ -415,25 +417,142 @@ class LinkWorker:
             job_id, 50.0, f"Creating {len(accepted)} links",
         )
 
-        # Create links
+        # Create/update links
         import uuid
         run_id = str(uuid.uuid4())
+        preview_params: dict[str, Any] = {}
+        raw_preview_params = preview.get("params_json")
+        if isinstance(raw_preview_params, str):
+            with contextlib.suppress(Exception):
+                parsed_preview_params = _json_loads(raw_preview_params)
+                if isinstance(parsed_preview_params, dict):
+                    preview_params = parsed_preview_params
+        elif isinstance(raw_preview_params, dict):
+            preview_params = dict(raw_preview_params)
+        ontology_node_id = str(
+            preview.get("ontology_node_id")
+            or preview_params.get("ontology_node_id")
+            or preview.get("family_id")
+            or ""
+        ).strip() or None
 
         links_to_create = []
+        links_updated = 0
+        clause_details_cache: dict[
+            tuple[str, str, str],
+            tuple[int | None, int | None, str | None],
+        ] = {}
+
+        def _resolve_clause_details(
+            doc_id: str,
+            section_number: str,
+            clause_id: str | None,
+        ) -> tuple[int | None, int | None, str | None]:
+            cid = str(clause_id or "").strip()
+            if not cid:
+                return (None, None, None)
+            key = (doc_id, section_number, cid)
+            if key in clause_details_cache:
+                return clause_details_cache[key]
+            details: tuple[int | None, int | None, str | None] = (None, None, None)
+            if self._corpus is not None:
+                row = self._corpus._conn.execute(  # noqa: SLF001
+                    "SELECT span_start, span_end, clause_text FROM clauses "
+                    "WHERE doc_id = ? AND section_number = ? AND clause_id = ? LIMIT 1",
+                    [doc_id, section_number, cid],
+                ).fetchone()
+                if row is not None:
+                    details = (
+                        int(row[0]) if row[0] is not None else None,
+                        int(row[1]) if row[1] is not None else None,
+                        str(row[2]) if row[2] is not None else None,
+                    )
+            clause_details_cache[key] = details
+            return details
+
         for cand in accepted:
-            links_to_create.append({
+            doc_id = str(cand.get("doc_id", ""))
+            section_number = str(cand.get("section_number", ""))
+            clause_id = str(cand.get("clause_id", "") or "").strip() or None
+            clause_char_start = cand.get("clause_char_start")
+            clause_char_end = cand.get("clause_char_end")
+            clause_text = str(cand.get("clause_text") or "").strip() or None
+            if clause_id and (
+                clause_char_start is None
+                or clause_char_end is None
+                or clause_text is None
+            ):
+                resolved_start, resolved_end, resolved_text = _resolve_clause_details(
+                    doc_id,
+                    section_number,
+                    clause_id,
+                )
+                if clause_char_start is None:
+                    clause_char_start = resolved_start
+                if clause_char_end is None:
+                    clause_char_end = resolved_end
+                if clause_text is None:
+                    clause_text = resolved_text
+
+            link_payload = {
                 "family_id": preview.get("family_id", ""),
-                "doc_id": cand["doc_id"],
-                "section_number": cand["section_number"],
+                "ontology_node_id": ontology_node_id,
+                "doc_id": doc_id,
+                "section_number": section_number,
                 "heading": cand.get("heading", ""),
                 "rule_id": preview.get("rule_id"),
                 "source": "preview_apply",
                 "confidence": cand.get("confidence", 0.0),
                 "confidence_tier": cand.get("confidence_tier", "low"),
                 "status": "active",
+                "clause_id": clause_id,
+                "clause_char_start": clause_char_start,
+                "clause_char_end": clause_char_end,
+                "clause_text": clause_text,
+            }
+
+            existing = self._store._conn.execute(  # noqa: SLF001
+                "SELECT link_id FROM family_links "
+                "WHERE family_id = ? AND doc_id = ? AND section_number = ? "
+                "LIMIT 1",
+                [
+                    link_payload["family_id"],
+                    link_payload["doc_id"],
+                    link_payload["section_number"],
+                ],
+            ).fetchone()
+            if existing:
+                self._store._conn.execute(  # noqa: SLF001
+                    "UPDATE family_links SET "
+                    "ontology_node_id = ?, heading = ?, rule_id = ?, run_id = ?, source = ?, "
+                    "clause_id = ?, clause_char_start = ?, clause_char_end = ?, clause_text = ?, "
+                    "confidence = ?, confidence_tier = ?, status = 'active', "
+                    "unlinked_at = NULL, unlinked_reason = NULL, unlinked_note = NULL "
+                    "WHERE link_id = ?",
+                    [
+                        link_payload["ontology_node_id"],
+                        link_payload["heading"],
+                        link_payload["rule_id"],
+                        run_id,
+                        link_payload["source"],
+                        link_payload["clause_id"],
+                        link_payload["clause_char_start"],
+                        link_payload["clause_char_end"],
+                        link_payload["clause_text"],
+                        link_payload["confidence"],
+                        link_payload["confidence_tier"],
+                        str(existing[0]),
+                    ],
+                )
+                links_updated += 1
+                continue
+
+            links_to_create.append({
+                **link_payload,
             })
 
-        created = self._store.create_links(links_to_create, run_id)
+        created_new = self._store.create_links(links_to_create, run_id)
+        created = created_new + links_updated
 
         # Save run metadata
         self._store.create_run({
@@ -452,6 +571,7 @@ class LinkWorker:
         return {
             "run_id": run_id,
             "links_created": created,
+            "links_updated": links_updated,
             "preview_id": preview_id,
         }
 
@@ -466,12 +586,13 @@ class LinkWorker:
 
         canary_n = params.get("canary_n", 10)
         family_id = params.get("family_id")
+        resolved_scope = self._store.get_canonical_scope_id(family_id) if family_id else None
 
         if self._corpus is None:
             return {"error": "Corpus not available for canary run"}
 
         rules = self._store.get_rules(
-            family_id=family_id, status="published",
+            family_id=resolved_scope or family_id, status="published",
         )
         if not rules:
             return {"error": "No published rules found"}
@@ -482,7 +603,7 @@ class LinkWorker:
             self._corpus,
             self._store,
             rules,
-            family_filter=family_id,
+            family_filter=resolved_scope or family_id,
             canary_n=canary_n,
             dry_run=False,
         )
@@ -503,6 +624,7 @@ class LinkWorker:
             return {"error": "No published rules found"}
 
         family_id = params.get("family_id")
+        resolved_scope = self._store.get_canonical_scope_id(family_id) if family_id else None
 
         self._store.update_job_progress(
             job_id, 5.0, f"Batch run: {len(rules)} rules",
@@ -512,7 +634,7 @@ class LinkWorker:
             self._corpus,
             self._store,
             rules,
-            family_filter=family_id,
+            family_filter=resolved_scope or family_id,
             dry_run=False,
         )
 
@@ -530,28 +652,20 @@ class LinkWorker:
         from agent.embeddings import VoyageEmbeddingModel, EmbeddingManager
 
         family_id = params.get("family_id")
-        self._store.update_job_progress(job_id, 5.0, "Initializing Voyage model")
-
-        # Instantiate the Voyage model (reads VOYAGE_API_KEY from env)
-        try:
-            model = VoyageEmbeddingModel()
-        except ValueError as e:
-            return {"error": str(e), "status": "failed"}
-
-        manager = EmbeddingManager(model=model, store=self._store)
-
+        resolved_scope = self._store.get_canonical_scope_id(family_id) if family_id else None
         self._store.update_job_progress(job_id, 10.0, "Loading active links")
 
         # Get sections that need embedding
         links = self._store.get_links(
-            family_id=family_id, status="active", limit=100000,
+            family_id=resolved_scope or family_id, status="active", limit=100000,
         )
 
         if not links:
             return {
                 "family_id": family_id,
+                "sections_prepared": 0,
                 "sections_embedded": 0,
-                "status": "no_active_links",
+                "status": "sections_ready",
             }
 
         # Collect section texts from corpus
@@ -574,11 +688,28 @@ class LinkWorker:
         if not sections:
             return {
                 "family_id": family_id,
+                "sections_prepared": 0,
                 "sections_embedded": 0,
                 "skipped": skipped,
-                "status": "no_section_text",
+                "status": "sections_ready",
             }
 
+        # Keep local/dev workflows usable without external embedding credentials:
+        # when model init fails, return prepared sections for later embedding.
+        self._store.update_job_progress(job_id, 15.0, "Initializing Voyage model")
+        try:
+            model = VoyageEmbeddingModel()
+        except ValueError:
+            self._store.update_job_progress(job_id, 100.0, "Sections prepared")
+            return {
+                "family_id": family_id,
+                "sections_prepared": len(sections),
+                "sections_embedded": 0,
+                "skipped": skipped,
+                "status": "sections_ready",
+            }
+
+        manager = EmbeddingManager(model=model, store=self._store)
         self._store.update_job_progress(
             job_id, 20.0, f"Embedding {len(sections)} sections via Voyage",
         )
@@ -606,13 +737,13 @@ class LinkWorker:
         self._store.update_job_progress(job_id, 92.0, "Computing centroids")
 
         centroid_families: list[str] = []
-        if family_id:
-            centroid_families = [family_id]
+        if resolved_scope or family_id:
+            centroid_families = [resolved_scope or family_id]
         else:
             # Collect unique family_ids from the links
             seen: set[str] = set()
             for link in links:
-                fid = link.get("family_id", "")
+                fid = str(link.get("ontology_node_id") or link.get("family_id", ""))
                 if fid and fid not in seen:
                     seen.add(fid)
                     centroid_families.append(fid)
@@ -621,7 +752,7 @@ class LinkWorker:
         for fid in centroid_families:
             fam_links = [
                 {"doc_id": l["doc_id"], "section_number": l["section_number"]}
-                for l in links if l.get("family_id") == fid
+                for l in links if (l.get("ontology_node_id") or l.get("family_id")) == fid
             ]
             centroid = manager.compute_centroid(fid, fam_links)
             if centroid is not None:
@@ -631,60 +762,13 @@ class LinkWorker:
 
         return {
             "family_id": family_id,
+            "sections_prepared": len(sections),
             "sections_embedded": total_stored,
             "skipped": skipped,
             "centroids_computed": centroids_computed,
             "model": model.model_version(),
             "dimensions": model.dimensions(),
             "status": "completed",
-        }
-
-    def _handle_child_linking(
-        self, job_id: str, params: dict[str, Any],
-    ) -> dict[str, Any]:
-        """Spawn child-linking preview scoped to a parent section."""
-        parent_link_id = params.get("parent_link_id", "")
-
-        # Get the parent link
-        parent = None
-        parent_row = self._store._conn.execute(
-            "SELECT * FROM family_links WHERE link_id = ?",
-            [parent_link_id],
-        ).fetchone()
-        if parent_row:
-            cols = [d[0] for d in self._store._conn.description]
-            parent = dict(zip(cols, parent_row, strict=True))
-
-        if parent is None:
-            return {"error": f"Parent link not found: {parent_link_id}"}
-
-        self._store.update_job_progress(job_id, 20.0, "Scanning child nodes")
-
-        # Get clause-level nodes for the parent section
-        children: list[dict[str, Any]] = []
-        if self._corpus:
-            clauses = self._corpus.get_clauses(
-                parent["doc_id"], parent["section_number"],
-            )
-            for clause in clauses:
-                children.append({
-                    "doc_id": parent["doc_id"],
-                    "section_number": parent["section_number"],
-                    "clause_id": clause.clause_id,
-                    "label": clause.label,
-                    "depth": clause.depth,
-                    "span_start": clause.span_start,
-                    "span_end": clause.span_end,
-                })
-
-        self._store.update_job_progress(
-            job_id, 80.0, f"Found {len(children)} child nodes",
-        )
-
-        return {
-            "parent_link_id": parent_link_id,
-            "child_nodes_found": len(children),
-            "children": children,
         }
 
     def _handle_check_drift(
@@ -747,12 +831,13 @@ class LinkWorker:
         """Export links data as CSV/JSONL."""
         export_format = params.get("format", "csv")
         family_id = params.get("family_id")
+        resolved_scope = self._store.get_canonical_scope_id(family_id) if family_id else None
         status = params.get("status")
 
         self._store.update_job_progress(job_id, 10.0, "Fetching links")
 
         links = self._store.get_links(
-            family_id=family_id,
+            family_id=resolved_scope or family_id,
             status=status,
             limit=1000000,
         )

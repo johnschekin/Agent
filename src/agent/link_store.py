@@ -19,6 +19,7 @@ from __future__ import annotations
 import contextlib
 import importlib
 import json
+import re
 import uuid
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
@@ -78,7 +79,20 @@ def _opt_json(d: dict[str, Any], key: str) -> str | None:
     return _json_dumps(val) if val else None
 
 
-SCHEMA_VERSION = "1.0.0"
+def _canonical_family_token(value: Any) -> str:
+    raw = str(value or "").strip().lower()
+    if not raw:
+        return ""
+    raw = re.sub(r"^fam[-_.]", "", raw)
+    raw = re.sub(r"[^a-z0-9]+", ".", raw)
+    raw = re.sub(r"\.+", ".", raw).strip(".")
+    if not raw:
+        return ""
+    parts = [part for part in raw.split(".") if part]
+    return parts[-1] if parts else raw
+
+
+SCHEMA_VERSION = "1.1.0"
 
 
 # ---------------------------------------------------------------------------
@@ -96,6 +110,11 @@ CREATE TABLE IF NOT EXISTS _schema_version (
 CREATE TABLE IF NOT EXISTS family_link_rules (
     rule_id VARCHAR PRIMARY KEY,
     family_id VARCHAR NOT NULL,
+    ontology_node_id VARCHAR,
+    parent_family_id VARCHAR,
+    parent_rule_id VARCHAR,
+    parent_run_id VARCHAR,
+    scope_mode VARCHAR NOT NULL DEFAULT 'corpus',
     name VARCHAR NOT NULL DEFAULT '',
     description VARCHAR NOT NULL DEFAULT '',
     version INTEGER NOT NULL DEFAULT 1,
@@ -116,10 +135,22 @@ CREATE TABLE IF NOT EXISTS family_link_rules (
     updated_at TIMESTAMP DEFAULT current_timestamp
 );
 
+-- ─── FAMILY SCOPE ALIASES ────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS family_scope_aliases (
+    legacy_family_id VARCHAR PRIMARY KEY,
+    canonical_ontology_node_id VARCHAR NOT NULL,
+    source VARCHAR NOT NULL DEFAULT 'inferred',
+    created_at TIMESTAMP DEFAULT current_timestamp,
+    updated_at TIMESTAMP DEFAULT current_timestamp
+);
+CREATE INDEX IF NOT EXISTS idx_family_scope_aliases_canonical
+    ON family_scope_aliases(canonical_ontology_node_id);
+
 -- ─── FAMILY LINKS ─────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS family_links (
     link_id VARCHAR PRIMARY KEY,
     family_id VARCHAR NOT NULL,
+    ontology_node_id VARCHAR,
     doc_id VARCHAR NOT NULL,
     section_number VARCHAR NOT NULL,
     heading VARCHAR NOT NULL DEFAULT '',
@@ -136,6 +167,7 @@ CREATE TABLE IF NOT EXISTS family_links (
     clause_id VARCHAR,
     clause_char_start INTEGER,
     clause_char_end INTEGER,
+    clause_text VARCHAR,
     link_role VARCHAR NOT NULL DEFAULT 'primary_covenant',
     confidence DOUBLE NOT NULL DEFAULT 1.0,
     confidence_tier VARCHAR NOT NULL DEFAULT 'high',
@@ -209,6 +241,9 @@ CREATE TABLE IF NOT EXISTS family_link_runs (
     run_type VARCHAR NOT NULL,
     family_id VARCHAR,
     rule_id VARCHAR,
+    parent_family_id VARCHAR,
+    parent_run_id VARCHAR,
+    scope_mode VARCHAR NOT NULL DEFAULT 'corpus',
     rule_version INTEGER,
     corpus_version VARCHAR NOT NULL,
     corpus_doc_count INTEGER NOT NULL,
@@ -228,6 +263,7 @@ CREATE INDEX IF NOT EXISTS idx_runs_family ON family_link_runs(family_id);
 CREATE TABLE IF NOT EXISTS family_link_previews (
     preview_id VARCHAR PRIMARY KEY,
     family_id VARCHAR NOT NULL,
+    ontology_node_id VARCHAR,
     rule_id VARCHAR,
     rule_hash VARCHAR NOT NULL,
     corpus_version VARCHAR NOT NULL,
@@ -265,6 +301,11 @@ CREATE TABLE IF NOT EXISTS preview_candidates (
     flags VARCHAR,
     conflict_families VARCHAR,
     clause_id VARCHAR,
+    clause_path VARCHAR,
+    clause_label VARCHAR,
+    clause_char_start INTEGER,
+    clause_char_end INTEGER,
+    clause_text VARCHAR,
     user_verdict VARCHAR,
     verdict_at TIMESTAMP,
     PRIMARY KEY (preview_id, doc_id, section_number)
@@ -461,93 +502,6 @@ CREATE TABLE IF NOT EXISTS template_baselines (
 );
 CREATE INDEX IF NOT EXISTS idx_tbl_template ON template_baselines(template_family);
 
--- ─── CHILD-NODE LINKING ──────────────────────────────────────────────
-CREATE TABLE IF NOT EXISTS node_links (
-    node_link_id VARCHAR PRIMARY KEY,
-    concept_id VARCHAR NOT NULL,
-    family_id VARCHAR NOT NULL,
-    parent_link_id VARCHAR NOT NULL,
-    doc_id VARCHAR NOT NULL,
-    section_number VARCHAR NOT NULL,
-    clause_id VARCHAR NOT NULL,
-    clause_char_start INTEGER NOT NULL,
-    clause_char_end INTEGER NOT NULL,
-    clause_text_hash VARCHAR NOT NULL,
-    heading VARCHAR NOT NULL DEFAULT '',
-    rule_id VARCHAR,
-    rule_version INTEGER,
-    run_id VARCHAR NOT NULL,
-    confidence DOUBLE NOT NULL DEFAULT 1.0,
-    confidence_tier VARCHAR NOT NULL DEFAULT 'high',
-    confidence_breakdown VARCHAR,
-    status VARCHAR NOT NULL DEFAULT 'active',
-    unlinked_at TIMESTAMP,
-    unlinked_reason VARCHAR,
-    created_at TIMESTAMP DEFAULT current_timestamp,
-    UNIQUE (concept_id, doc_id, clause_id)
-);
-CREATE INDEX IF NOT EXISTS idx_nlinks_concept ON node_links(concept_id);
-CREATE INDEX IF NOT EXISTS idx_nlinks_family ON node_links(family_id);
-CREATE INDEX IF NOT EXISTS idx_nlinks_parent ON node_links(parent_link_id);
-CREATE INDEX IF NOT EXISTS idx_nlinks_doc ON node_links(doc_id);
-
-CREATE TABLE IF NOT EXISTS node_link_rules (
-    rule_id VARCHAR PRIMARY KEY,
-    concept_id VARCHAR NOT NULL,
-    parent_family_id VARCHAR NOT NULL,
-    description VARCHAR NOT NULL DEFAULT '',
-    version INTEGER NOT NULL DEFAULT 1,
-    status VARCHAR NOT NULL DEFAULT 'draft',
-    clause_filter_ast VARCHAR NOT NULL,
-    heading_filter_ast VARCHAR,
-    required_defined_terms VARCHAR,
-    template_overrides VARCHAR,
-    created_at TIMESTAMP DEFAULT current_timestamp,
-    updated_at TIMESTAMP DEFAULT current_timestamp
-);
-CREATE INDEX IF NOT EXISTS idx_nrules_concept ON node_link_rules(concept_id);
-CREATE INDEX IF NOT EXISTS idx_nrules_family ON node_link_rules(parent_family_id);
-
-CREATE TABLE IF NOT EXISTS node_link_previews (
-    preview_id VARCHAR PRIMARY KEY,
-    concept_id VARCHAR NOT NULL,
-    parent_family_id VARCHAR NOT NULL,
-    rule_id VARCHAR,
-    rule_hash VARCHAR NOT NULL,
-    candidate_count INTEGER NOT NULL DEFAULT 0,
-    by_confidence_tier VARCHAR NOT NULL DEFAULT '{}',
-    expires_at TIMESTAMP NOT NULL,
-    applied_at TIMESTAMP,
-    created_at TIMESTAMP DEFAULT current_timestamp
-);
-
-CREATE TABLE IF NOT EXISTS node_preview_candidates (
-    preview_id VARCHAR NOT NULL,
-    doc_id VARCHAR NOT NULL,
-    clause_id VARCHAR NOT NULL,
-    clause_text VARCHAR,
-    confidence DOUBLE NOT NULL DEFAULT 0.0,
-    confidence_tier VARCHAR NOT NULL DEFAULT 'high',
-    why_matched VARCHAR,
-    user_verdict VARCHAR,
-    PRIMARY KEY (preview_id, doc_id, clause_id)
-);
-CREATE INDEX IF NOT EXISTS idx_npc_verdict ON node_preview_candidates(preview_id, user_verdict);
-
-CREATE TABLE IF NOT EXISTS node_link_evidence (
-    evidence_id VARCHAR PRIMARY KEY,
-    node_link_id VARCHAR NOT NULL,
-    evidence_type VARCHAR NOT NULL,
-    char_start INTEGER NOT NULL,
-    char_end INTEGER NOT NULL,
-    text_hash VARCHAR NOT NULL,
-    matched_pattern VARCHAR,
-    reason_code VARCHAR NOT NULL,
-    score DOUBLE NOT NULL DEFAULT 1.0,
-    metadata VARCHAR
-);
-CREATE INDEX IF NOT EXISTS idx_nle_link ON node_link_evidence(node_link_id);
-
 -- ─── EMBEDDINGS ──────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS section_embeddings (
     doc_id VARCHAR NOT NULL,
@@ -603,8 +557,9 @@ class LinkStore:
 
         self._conn: Any = _duckdb_mod.connect(str(self._db_path))
 
-        if create_if_missing:
-            self._create_schema()
+        # Always run schema setup/migrations so older DB files receive
+        # additive columns (for example `family_link_rules.name`).
+        self._create_schema()
         self._ensure_undo_state()
 
     def _create_schema(self) -> None:
@@ -616,21 +571,442 @@ class LinkStore:
                     self._conn.execute(stmt)
 
         # Migrations for existing databases
-        _migrations = [
-            "ALTER TABLE family_link_rules ADD COLUMN filter_dsl VARCHAR NOT NULL DEFAULT ''",
-            "ALTER TABLE family_link_rules ADD COLUMN result_granularity VARCHAR NOT NULL DEFAULT 'section'",
+        self._add_column_if_missing(
+            "family_link_rules",
+            "filter_dsl",
+            "ALTER TABLE family_link_rules ADD COLUMN filter_dsl VARCHAR DEFAULT ''",
+            default="",
+        )
+        self._add_column_if_missing(
+            "family_link_rules",
+            "result_granularity",
+            "ALTER TABLE family_link_rules ADD COLUMN result_granularity VARCHAR DEFAULT 'section'",
+            default="section",
+        )
+        self._add_column_if_missing(
+            "family_link_rules",
+            "locked_by",
+            "ALTER TABLE family_link_rules ADD COLUMN locked_by VARCHAR",
+        )
+        self._add_column_if_missing(
+            "family_link_rules",
+            "locked_at",
+            "ALTER TABLE family_link_rules ADD COLUMN locked_at TIMESTAMP",
+        )
+        self._add_column_if_missing(
+            "preview_candidates",
+            "clause_id",
             "ALTER TABLE preview_candidates ADD COLUMN clause_id VARCHAR",
-            "ALTER TABLE family_link_rules ADD COLUMN name VARCHAR NOT NULL DEFAULT ''",
-        ]
-        for stmt in _migrations:
-            with contextlib.suppress(Exception):
-                self._conn.execute(stmt)
+        )
+        self._add_column_if_missing(
+            "preview_candidates",
+            "clause_path",
+            "ALTER TABLE preview_candidates ADD COLUMN clause_path VARCHAR",
+        )
+        self._add_column_if_missing(
+            "preview_candidates",
+            "clause_label",
+            "ALTER TABLE preview_candidates ADD COLUMN clause_label VARCHAR",
+        )
+        self._add_column_if_missing(
+            "preview_candidates",
+            "clause_char_start",
+            "ALTER TABLE preview_candidates ADD COLUMN clause_char_start INTEGER",
+        )
+        self._add_column_if_missing(
+            "preview_candidates",
+            "clause_char_end",
+            "ALTER TABLE preview_candidates ADD COLUMN clause_char_end INTEGER",
+        )
+        self._add_column_if_missing(
+            "preview_candidates",
+            "clause_text",
+            "ALTER TABLE preview_candidates ADD COLUMN clause_text VARCHAR",
+        )
+        self._add_column_if_missing(
+            "family_link_rules",
+            "name",
+            "ALTER TABLE family_link_rules ADD COLUMN name VARCHAR DEFAULT ''",
+            default="",
+        )
+        self._add_column_if_missing(
+            "family_link_rules",
+            "ontology_node_id",
+            "ALTER TABLE family_link_rules ADD COLUMN ontology_node_id VARCHAR",
+        )
+        self._add_column_if_missing(
+            "family_link_rules",
+            "parent_family_id",
+            "ALTER TABLE family_link_rules ADD COLUMN parent_family_id VARCHAR",
+        )
+        self._add_column_if_missing(
+            "family_link_rules",
+            "parent_rule_id",
+            "ALTER TABLE family_link_rules ADD COLUMN parent_rule_id VARCHAR",
+        )
+        self._add_column_if_missing(
+            "family_link_rules",
+            "parent_run_id",
+            "ALTER TABLE family_link_rules ADD COLUMN parent_run_id VARCHAR",
+        )
+        self._add_column_if_missing(
+            "family_link_rules",
+            "scope_mode",
+            "ALTER TABLE family_link_rules ADD COLUMN scope_mode VARCHAR DEFAULT 'corpus'",
+            default="corpus",
+        )
+        self._add_column_if_missing(
+            "family_link_runs",
+            "parent_family_id",
+            "ALTER TABLE family_link_runs ADD COLUMN parent_family_id VARCHAR",
+        )
+        self._add_column_if_missing(
+            "family_link_runs",
+            "parent_run_id",
+            "ALTER TABLE family_link_runs ADD COLUMN parent_run_id VARCHAR",
+        )
+        self._add_column_if_missing(
+            "family_link_runs",
+            "scope_mode",
+            "ALTER TABLE family_link_runs ADD COLUMN scope_mode VARCHAR DEFAULT 'corpus'",
+            default="corpus",
+        )
+        self._add_column_if_missing(
+            "family_link_previews",
+            "ontology_node_id",
+            "ALTER TABLE family_link_previews ADD COLUMN ontology_node_id VARCHAR",
+        )
+        self._add_column_if_missing(
+            "family_links",
+            "ontology_node_id",
+            "ALTER TABLE family_links ADD COLUMN ontology_node_id VARCHAR",
+        )
+        self._add_column_if_missing(
+            "family_links",
+            "clause_text",
+            "ALTER TABLE family_links ADD COLUMN clause_text VARCHAR",
+        )
+
+        # Backfill additive fields for older databases.
+        with contextlib.suppress(Exception):
+            self._conn.execute(
+                "UPDATE family_link_rules SET ontology_node_id = family_id "
+                "WHERE ontology_node_id IS NULL OR TRIM(ontology_node_id) = ''",
+            )
+        with contextlib.suppress(Exception):
+            self._conn.execute(
+                "UPDATE family_link_previews SET ontology_node_id = family_id "
+                "WHERE ontology_node_id IS NULL OR TRIM(ontology_node_id) = ''",
+            )
+        with contextlib.suppress(Exception):
+            self._conn.execute(
+                "UPDATE family_links SET ontology_node_id = family_id "
+                "WHERE ontology_node_id IS NULL OR TRIM(ontology_node_id) = ''",
+            )
+        with contextlib.suppress(Exception):
+            self._refresh_family_scope_aliases()
 
         # Set schema version
         self._conn.execute(
             "INSERT OR REPLACE INTO _schema_version (table_name, version) VALUES (?, ?)",
             ["links", SCHEMA_VERSION],
         )
+
+    def _column_exists(self, table_name: str, column_name: str) -> bool:
+        """Check DuckDB metadata to avoid re-running ALTER statements."""
+        row = self._conn.execute(
+            """
+            SELECT 1
+            FROM information_schema.columns
+            WHERE table_schema = 'main'
+              AND table_name = ?
+              AND column_name = ?
+            """,
+            [table_name, column_name],
+        ).fetchone()
+        return row is not None
+
+    def _add_column_if_missing(
+        self,
+        table_name: str,
+        column_name: str,
+        ddl: str,
+        *,
+        default: Any | None = None,
+    ) -> None:
+        """Run ALTER TABLE only when the column is absent, then populate defaults."""
+        if self._column_exists(table_name, column_name):
+            return
+        self._conn.execute(ddl)
+        if default is not None:
+            self._conn.execute(
+                f"UPDATE \"{table_name}\" SET \"{column_name}\" = ? "
+                f"WHERE \"{column_name}\" IS NULL",
+                [default],
+            )
+
+    @staticmethod
+    def _scope_sql_expr(
+        *,
+        ontology_column: str = "ontology_node_id",
+        family_column: str = "family_id",
+    ) -> str:
+        return (
+            f"COALESCE(NULLIF(TRIM({ontology_column}), ''), "
+            f"NULLIF(TRIM({family_column}), ''), '')"
+        )
+
+    def upsert_family_alias(
+        self,
+        legacy_family_id: str,
+        canonical_ontology_node_id: str,
+        *,
+        source: str = "inferred",
+    ) -> None:
+        legacy = str(legacy_family_id or "").strip()
+        canonical = str(canonical_ontology_node_id or "").strip()
+        if not legacy or not canonical:
+            return
+        source_norm = str(source or "inferred").strip() or "inferred"
+        now = _now()
+        existing = self._conn.execute(
+            "SELECT created_at FROM family_scope_aliases WHERE legacy_family_id = ?",
+            [legacy],
+        ).fetchone()
+        created_at = existing[0] if existing and existing[0] is not None else now
+        self._conn.execute(
+            """
+            INSERT OR REPLACE INTO family_scope_aliases
+            (legacy_family_id, canonical_ontology_node_id, source, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?)
+            """,
+            [legacy, canonical, source_norm, created_at, now],
+        )
+
+    def get_canonical_scope_id(self, family_or_scope_id: str | None) -> str | None:
+        raw = str(family_or_scope_id or "").strip()
+        if not raw:
+            return None
+        row = self._conn.execute(
+            "SELECT canonical_ontology_node_id "
+            "FROM family_scope_aliases WHERE legacy_family_id = ?",
+            [raw],
+        ).fetchone()
+        if row and row[0] is not None and str(row[0]).strip():
+            return str(row[0]).strip()
+        return raw
+
+    def resolve_scope_aliases(self, family_or_scope_id: str | None) -> list[str]:
+        raw = str(family_or_scope_id or "").strip()
+        if not raw:
+            return []
+
+        resolved: set[str] = set()
+        queue: list[str] = [raw]
+        canonical = self.get_canonical_scope_id(raw)
+        if canonical:
+            queue.append(canonical)
+
+        while queue:
+            candidate = str(queue.pop(0)).strip()
+            if not candidate or candidate in resolved:
+                continue
+            resolved.add(candidate)
+
+            canonical_row = self._conn.execute(
+                "SELECT canonical_ontology_node_id "
+                "FROM family_scope_aliases WHERE legacy_family_id = ?",
+                [candidate],
+            ).fetchone()
+            if canonical_row and canonical_row[0] is not None:
+                canonical_value = str(canonical_row[0]).strip()
+                if canonical_value and canonical_value not in resolved:
+                    queue.append(canonical_value)
+
+            legacy_rows = self._conn.execute(
+                "SELECT legacy_family_id "
+                "FROM family_scope_aliases WHERE canonical_ontology_node_id = ?",
+                [candidate],
+            ).fetchall()
+            for row in legacy_rows:
+                legacy_value = str(row[0] or "").strip()
+                if legacy_value and legacy_value not in resolved:
+                    queue.append(legacy_value)
+
+        canonical_scope = self.get_canonical_scope_id(raw) or raw
+        canonical_token = _canonical_family_token(canonical_scope)
+        if canonical_token:
+            rows = self._conn.execute(
+                "SELECT legacy_family_id, canonical_ontology_node_id "
+                "FROM family_scope_aliases"
+            ).fetchall()
+            token_matches: set[str] = set()
+            for row in rows:
+                legacy_value = str(row[0] or "").strip()
+                canonical_value = str(row[1] or "").strip()
+                for value in (legacy_value, canonical_value):
+                    if value and _canonical_family_token(value) == canonical_token:
+                        token_matches.add(canonical_value or value)
+            if len(token_matches) == 1:
+                only_match = next(iter(token_matches))
+                if only_match and only_match not in resolved:
+                    resolved.add(only_match)
+                more_legacy_rows = self._conn.execute(
+                    "SELECT legacy_family_id FROM family_scope_aliases "
+                    "WHERE canonical_ontology_node_id = ?",
+                    [only_match],
+                ).fetchall()
+                for row in more_legacy_rows:
+                    legacy_value = str(row[0] or "").strip()
+                    if legacy_value:
+                        resolved.add(legacy_value)
+
+        # Include ontology descendants for hierarchical scope IDs.
+        # This allows domain/family scopes to transparently include concept-level
+        # links/rules/runs whose ontology_node_id is nested under the scope.
+        canonical_scope = str(canonical_scope or "").strip()
+        if canonical_scope:
+            descendant_prefix = f"{canonical_scope}.%"
+            known_scope_rows = self._conn.execute(
+                """
+                SELECT DISTINCT scope_id
+                FROM (
+                    SELECT COALESCE(NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), '')) AS scope_id
+                    FROM family_links
+                    UNION ALL
+                    SELECT COALESCE(NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), '')) AS scope_id
+                    FROM family_link_rules
+                    UNION ALL
+                    SELECT COALESCE(NULLIF(TRIM(rr.ontology_node_id), ''), NULLIF(TRIM(r.family_id), '')) AS scope_id
+                    FROM family_link_runs AS r
+                    LEFT JOIN family_link_rules AS rr ON rr.rule_id = r.rule_id
+                ) AS known_scopes
+                WHERE scope_id IS NOT NULL
+                  AND TRIM(scope_id) <> ''
+                  AND (scope_id = ? OR scope_id LIKE ?)
+                """,
+                [canonical_scope, descendant_prefix],
+            ).fetchall()
+            for row in known_scope_rows:
+                scope_value = str(row[0] or "").strip()
+                if not scope_value:
+                    continue
+                resolved.add(scope_value)
+                # Bring in any legacy aliases that map to discovered descendant scopes.
+                legacy_rows = self._conn.execute(
+                    "SELECT legacy_family_id "
+                    "FROM family_scope_aliases WHERE canonical_ontology_node_id = ?",
+                    [scope_value],
+                ).fetchall()
+                for legacy_row in legacy_rows:
+                    legacy_value = str(legacy_row[0] or "").strip()
+                    if legacy_value:
+                        resolved.add(legacy_value)
+
+        return sorted(resolved)
+
+    def _refresh_family_scope_aliases(self) -> None:
+        now = _now()
+
+        rows = self._conn.execute(
+            """
+            SELECT DISTINCT family_id,
+                   COALESCE(NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), ''))
+            FROM family_link_rules
+            WHERE family_id IS NOT NULL AND TRIM(family_id) <> ''
+            """
+        ).fetchall()
+        for row in rows:
+            legacy = str(row[0] or "").strip()
+            canonical = str(row[1] or "").strip() or legacy
+            if legacy and canonical:
+                self.upsert_family_alias(legacy, canonical, source="rules")
+
+        rows = self._conn.execute(
+            """
+            SELECT DISTINCT family_id,
+                   COALESCE(NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), ''))
+            FROM family_links
+            WHERE family_id IS NOT NULL AND TRIM(family_id) <> ''
+            """
+        ).fetchall()
+        for row in rows:
+            legacy = str(row[0] or "").strip()
+            canonical = str(row[1] or "").strip() or legacy
+            if legacy and canonical:
+                self.upsert_family_alias(legacy, canonical, source="links")
+
+        rows = self._conn.execute(
+            """
+            SELECT DISTINCT r.family_id,
+                   COALESCE(
+                       NULLIF(TRIM(rr.ontology_node_id), ''),
+                       NULLIF(TRIM(r.family_id), '')
+                   )
+            FROM family_link_runs AS r
+            LEFT JOIN family_link_rules AS rr ON rr.rule_id = r.rule_id
+            WHERE r.family_id IS NOT NULL AND TRIM(r.family_id) <> ''
+            """
+        ).fetchall()
+        for row in rows:
+            legacy = str(row[0] or "").strip()
+            canonical = str(row[1] or "").strip() or legacy
+            if legacy and canonical:
+                self.upsert_family_alias(legacy, canonical, source="runs")
+
+        token_rows = self._conn.execute(
+            "SELECT DISTINCT legacy_family_id, canonical_ontology_node_id "
+            "FROM family_scope_aliases"
+        ).fetchall()
+        all_scopes = {
+            str(row[1] or "").strip()
+            for row in token_rows
+            if row and row[1] is not None and str(row[1]).strip()
+        }
+        token_to_candidates: dict[str, set[str]] = {}
+        for scope in all_scopes:
+            token = _canonical_family_token(scope)
+            if not token:
+                continue
+            token_to_candidates.setdefault(token, set()).add(scope)
+
+        for row in token_rows:
+            legacy = str(row[0] or "").strip()
+            current_canonical = str(row[1] or "").strip()
+            if not legacy:
+                continue
+            # Only infer remaps for legacy-style IDs (e.g., FAM-*)
+            # to avoid downgrading canonical dotted namespaces.
+            if "." in legacy and not legacy.lower().startswith("fam-"):
+                continue
+            token = _canonical_family_token(legacy)
+            if not token:
+                continue
+            candidates = {
+                candidate
+                for candidate in token_to_candidates.get(token, set())
+                if candidate != legacy
+            }
+            preferred = {
+                candidate
+                for candidate in candidates
+                if "." in candidate and not candidate.lower().startswith("fam-")
+            }
+            if len(preferred) == 1:
+                target = next(iter(preferred))
+            elif len(candidates) == 1:
+                target = next(iter(candidates))
+            else:
+                continue
+            if target and target != current_canonical:
+                self._conn.execute(
+                    """
+                    UPDATE family_scope_aliases
+                    SET canonical_ontology_node_id = ?, source = ?, updated_at = ?
+                    WHERE legacy_family_id = ?
+                    """,
+                    [target, "token_inferred", now, legacy],
+                )
 
     def _ensure_undo_state(self) -> None:
         """Ensure undo_state singleton row exists."""
@@ -740,6 +1116,13 @@ class LinkStore:
             filter_dsl = dsl_from_heading_ast(payload["heading_filter_ast"])
         payload["filter_dsl"] = filter_dsl
         payload.setdefault("result_granularity", "section")
+        ontology_node_id = str(payload.get("ontology_node_id") or payload.get("family_id") or "").strip()
+        payload["ontology_node_id"] = ontology_node_id or None
+        payload["parent_family_id"] = payload.get("parent_family_id") or None
+        payload["parent_rule_id"] = payload.get("parent_rule_id") or None
+        payload["parent_run_id"] = payload.get("parent_run_id") or None
+        scope_mode = str(payload.get("scope_mode") or "corpus").strip().lower()
+        payload["scope_mode"] = scope_mode if scope_mode in {"corpus", "inherited"} else "corpus"
         for key in (
             "clause_text_filter_ast",
             "clause_header_filter_ast",
@@ -761,8 +1144,13 @@ class LinkStore:
         conditions: list[str] = []
         params: list[Any] = []
         if family_id:
-            conditions.append("family_id = ?")
-            params.append(family_id)
+            scope_ids = self.resolve_scope_aliases(family_id)
+            if not scope_ids:
+                scope_ids = [str(family_id).strip()]
+            placeholders = ", ".join("?" for _ in scope_ids)
+            scope_expr = self._scope_sql_expr()
+            conditions.append(f"{scope_expr} IN ({placeholders})")
+            params.extend(scope_ids)
         if status:
             conditions.append("status = ?")
             params.append(status)
@@ -808,11 +1196,13 @@ class LinkStore:
     def save_rule(self, rule: dict[str, Any]) -> None:
         rule_id = rule.get("rule_id") or _uuid()
         now = _now()
+        family_id = str(rule.get("family_id", "") or "").strip()
+        ontology_node_id = str(rule.get("ontology_node_id") or family_id or "").strip() or None
 
         # Auto-generate name if not provided
         name = str(rule.get("name") or "").strip()
         if not name:
-            name = self._auto_rule_name(rule.get("family_id", ""))
+            name = self._auto_rule_name(family_id)
 
         # Bidirectional sync: filter_dsl ↔ heading_filter_ast
         filter_dsl = str(rule.get("filter_dsl") or "").strip()
@@ -833,19 +1223,28 @@ class LinkStore:
         result_granularity = str(rule.get("result_granularity", "section") or "section")
         if result_granularity not in ("section", "clause"):
             result_granularity = "section"
+        scope_mode = str(rule.get("scope_mode") or "corpus").strip().lower()
+        if scope_mode not in {"corpus", "inherited"}:
+            scope_mode = "corpus"
 
         self._conn.execute("""
             INSERT OR REPLACE INTO family_link_rules
-            (rule_id, family_id, name, description, version, status, owner,
+            (rule_id, family_id, ontology_node_id, parent_family_id, parent_rule_id, parent_run_id, scope_mode,
+             name, description, version, status, owner,
              locked_by, locked_at, article_concepts, heading_filter_ast,
              filter_dsl, result_granularity,
              clause_text_filter_ast, clause_header_filter_ast,
              required_defined_terms, excluded_cue_phrases,
              template_overrides, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, [
             rule_id,
-            rule.get("family_id", ""),
+            family_id,
+            ontology_node_id,
+            rule.get("parent_family_id"),
+            rule.get("parent_rule_id"),
+            rule.get("parent_run_id"),
+            scope_mode,
             name,
             rule.get("description", ""),
             rule.get("version", 1),
@@ -865,6 +1264,8 @@ class LinkStore:
             rule.get("created_at", now),
             now,
         ])
+        if family_id and ontology_node_id:
+            self.upsert_family_alias(family_id, ontology_node_id, source="rule_write")
 
     def clone_rule(self, rule_id: str, new_rule_id: str) -> dict[str, Any]:
         original = self.get_rule(rule_id)
@@ -909,8 +1310,13 @@ class LinkStore:
         conditions: list[str] = []
         params: list[Any] = []
         if family_id:
-            conditions.append("family_id = ?")
-            params.append(family_id)
+            scope_ids = self.resolve_scope_aliases(family_id)
+            if not scope_ids:
+                scope_ids = [str(family_id).strip()]
+            placeholders = ", ".join("?" for _ in scope_ids)
+            scope_expr = self._scope_sql_expr()
+            conditions.append(f"{scope_expr} IN ({placeholders})")
+            params.extend(scope_ids)
         if doc_id:
             conditions.append("doc_id = ?")
             params.append(doc_id)
@@ -965,8 +1371,13 @@ class LinkStore:
         conditions: list[str] = []
         params: list[Any] = []
         if family_id:
-            conditions.append("family_id = ?")
-            params.append(family_id)
+            scope_ids = self.resolve_scope_aliases(family_id)
+            if not scope_ids:
+                scope_ids = [str(family_id).strip()]
+            placeholders = ", ".join("?" for _ in scope_ids)
+            scope_expr = self._scope_sql_expr()
+            conditions.append(f"{scope_expr} IN ({placeholders})")
+            params.extend(scope_ids)
         if doc_id:
             conditions.append("doc_id = ?")
             params.append(doc_id)
@@ -994,24 +1405,30 @@ class LinkStore:
 
     def create_links(self, links: list[dict[str, Any]], run_id: str) -> int:
         created = 0
+        alias_pairs: set[tuple[str, str]] = set()
         for link in links:
             link_id = link.get("link_id") or _uuid()
+            family_id = str(link.get("family_id") or "").strip()
+            ontology_node_id = str(link.get("ontology_node_id") or family_id or "").strip()
+            if family_id and ontology_node_id:
+                alias_pairs.add((family_id, ontology_node_id))
             try:
                 self._conn.execute("""
                     INSERT INTO family_links
-                    (link_id, family_id, doc_id, section_number, heading,
+                    (link_id, family_id, ontology_node_id, doc_id, section_number, heading,
                      article_num, article_concept, rule_id, rule_version,
                      rule_hash, run_id, source, section_char_start,
                      section_char_end, section_text_hash, clause_id,
-                     clause_char_start, clause_char_end, link_role,
+                     clause_char_start, clause_char_end, clause_text, link_role,
                      confidence, confidence_tier, confidence_breakdown,
                      status, corpus_version, parser_version, created_at)
                     VALUES (
-                        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-                        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+                        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, [
                     link_id,
-                    link["family_id"],
+                    family_id,
+                    ontology_node_id or None,
                     link["doc_id"],
                     link["section_number"],
                     link.get("heading", ""),
@@ -1028,6 +1445,7 @@ class LinkStore:
                     link.get("clause_id"),
                     link.get("clause_char_start"),
                     link.get("clause_char_end"),
+                    link.get("clause_text"),
                     link.get("link_role", "primary_covenant"),
                     link.get("confidence", 1.0),
                     link.get("confidence_tier", "high"),
@@ -1040,6 +1458,8 @@ class LinkStore:
                 created += 1
             except Exception:
                 pass  # Skip duplicates (UNIQUE constraint)
+        for family_id, ontology_node_id in alias_pairs:
+            self.upsert_family_alias(family_id, ontology_node_id, source="link_write")
         return created
 
     def unlink(self, link_id: str, reason: str, note: str = "") -> None:
@@ -1119,8 +1539,13 @@ class LinkStore:
         heading_ast: FilterExpression | None,
         status: str | None,
     ) -> list[str]:
-        conditions = ["family_id = ?"]
-        params: list[Any] = [family_id]
+        scope_ids = self.resolve_scope_aliases(family_id)
+        if not scope_ids:
+            scope_ids = [str(family_id).strip()]
+        placeholders = ", ".join("?" for _ in scope_ids)
+        scope_expr = self._scope_sql_expr()
+        conditions = [f"{scope_expr} IN ({placeholders})"]
+        params: list[Any] = [*scope_ids]
         if status:
             conditions.append("status = ?")
             params.append(status)
@@ -1248,16 +1673,34 @@ class LinkStore:
     # ─── Runs ─────────────────────────────────────────────────────
 
     def create_run(self, run: dict[str, Any]) -> None:
+        scope_mode = str(run.get("scope_mode") or "corpus").strip().lower()
+        if scope_mode not in {"corpus", "inherited"}:
+            scope_mode = "corpus"
+        family_id = str(run.get("family_id") or "").strip()
+        rule_id = str(run.get("rule_id") or "").strip()
+        canonical_scope = str(run.get("ontology_node_id") or "").strip()
+        if not canonical_scope and rule_id:
+            with contextlib.suppress(Exception):
+                rule = self.get_rule(rule_id)
+                if rule:
+                    canonical_scope = str(
+                        rule.get("ontology_node_id") or rule.get("family_id") or ""
+                    ).strip()
+        if not canonical_scope:
+            canonical_scope = family_id
+        if family_id and canonical_scope and family_id != "_all":
+            self.upsert_family_alias(family_id, canonical_scope, source="run")
         self._conn.execute("""
             INSERT INTO family_link_runs
-            (run_id, run_type, family_id, rule_id, rule_version,
+            (run_id, run_type, family_id, rule_id, parent_family_id, parent_run_id, scope_mode, rule_version,
              corpus_version, corpus_doc_count, parser_version,
              links_created, links_skipped_existing, links_skipped_low_confidence,
              conflicts_detected, outlier_count, preview_summary, started_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, [
-            run["run_id"], run["run_type"], run.get("family_id"),
-            run.get("rule_id"), run.get("rule_version"),
+            run["run_id"], run["run_type"], family_id or None,
+            rule_id or None, run.get("parent_family_id"),
+            run.get("parent_run_id"), scope_mode, run.get("rule_version"),
             run["corpus_version"], run["corpus_doc_count"], run["parser_version"],
             run.get("links_created", 0), run.get("links_skipped_existing", 0),
             run.get("links_skipped_low_confidence", 0),
@@ -1285,9 +1728,20 @@ class LinkStore:
 
     def get_runs(self, *, family_id: str | None = None, limit: int = 20) -> list[dict[str, Any]]:
         if family_id:
+            scope_ids = self.resolve_scope_aliases(family_id)
+            if not scope_ids:
+                scope_ids = [str(family_id).strip()]
+            placeholders = ", ".join("?" for _ in scope_ids)
+            scope_expr = self._scope_sql_expr(
+                ontology_column="rr.ontology_node_id",
+                family_column="r.family_id",
+            )
             rows = self._conn.execute(
-                "SELECT * FROM family_link_runs WHERE family_id = ? "
-                "ORDER BY started_at DESC LIMIT ?", [family_id, limit]
+                f"SELECT r.* FROM family_link_runs AS r "
+                f"LEFT JOIN family_link_rules AS rr ON rr.rule_id = r.rule_id "
+                f"WHERE {scope_expr} IN ({placeholders}) "
+                f"ORDER BY r.started_at DESC LIMIT ?",
+                [*scope_ids, limit],
             ).fetchall()
         else:
             rows = self._conn.execute(
@@ -1309,15 +1763,16 @@ class LinkStore:
     # ─── Coverage ─────────────────────────────────────────────────
 
     def family_summary(self) -> list[dict[str, Any]]:
+        scope_expr = self._scope_sql_expr()
         rows = self._conn.execute("""
-            SELECT family_id,
+            SELECT {scope_expr} AS family_id,
                    COUNT(*) as total_links,
                    SUM(CASE WHEN status = 'active' THEN 1 ELSE 0 END) as active_links,
                    SUM(CASE WHEN status = 'pending_review' THEN 1 ELSE 0 END) as pending_links,
                    SUM(CASE WHEN status = 'unlinked' THEN 1 ELSE 0 END) as unlinked_links,
                    AVG(confidence) as avg_confidence
-            FROM family_links GROUP BY family_id ORDER BY family_id
-        """).fetchall()
+            FROM family_links GROUP BY 1 ORDER BY 1
+        """.format(scope_expr=scope_expr)).fetchall()
         cols = [d[0] for d in self._conn.description]
         return [_to_dict(cols, row) for row in rows]
 
@@ -1335,16 +1790,17 @@ class LinkStore:
         params_json = preview.get("params_json")
         if params_json is None and "query_ast" in preview:
             params_json = {"query_ast": preview.get("query_ast")}
+        ontology_node_id = str(preview.get("ontology_node_id") or preview.get("family_id") or "").strip() or None
 
         self._conn.execute("""
             INSERT INTO family_link_previews
-            (preview_id, family_id, rule_id, rule_hash, corpus_version,
+            (preview_id, family_id, ontology_node_id, rule_id, rule_hash, corpus_version,
              parser_version, candidate_set_hash, candidate_count,
              new_link_count, already_linked_count, conflict_count,
              by_confidence_tier, avg_confidence, params_json, expires_at, created_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, [
-            preview["preview_id"], preview["family_id"],
+            preview["preview_id"], preview["family_id"], ontology_node_id,
             preview.get("rule_id"), str(preview.get("rule_hash") or ""),
             str(preview.get("corpus_version") or ""), str(preview.get("parser_version") or ""),
             preview["candidate_set_hash"], preview.get("candidate_count", 0),
@@ -1356,6 +1812,9 @@ class LinkStore:
             expires_at_value,
             _now(),
         ])
+        family_id = str(preview.get("family_id") or "").strip()
+        if family_id and ontology_node_id:
+            self.upsert_family_alias(family_id, ontology_node_id, source="preview")
 
     def get_preview(self, preview_id: str) -> dict[str, Any] | None:
         row = self._conn.execute(
@@ -1384,8 +1843,10 @@ class LinkStore:
                  article_concept, template_family, confidence, confidence_tier,
                  confidence_breakdown, why_matched, priority_score,
                  uncertainty_score, impact_score, drift_score,
-                 flags, conflict_families, user_verdict)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                 flags, conflict_families, clause_id, clause_path, clause_label,
+                 clause_char_start, clause_char_end, clause_text,
+                 user_verdict)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, [
                 preview_id, c["doc_id"], c["section_number"],
                 c.get("heading"), c.get("article_num"), c.get("article_concept"),
@@ -1399,6 +1860,12 @@ class LinkStore:
                 c.get("drift_score", 0.0),
                 _opt_json(c, "flags"),
                 _opt_json(c, "conflict_families"),
+                c.get("clause_id"),
+                c.get("clause_path"),
+                c.get("clause_label"),
+                c.get("clause_char_start"),
+                c.get("clause_char_end"),
+                c.get("clause_text"),
                 c.get("user_verdict"),
             ])
             count += 1
@@ -1449,9 +1916,15 @@ class LinkStore:
     def get_calibration(
         self, family_id: str, template_family: str = "_global",
     ) -> dict[str, Any] | None:
+        scope_ids = self.resolve_scope_aliases(family_id)
+        if not scope_ids:
+            scope_ids = [str(family_id).strip()]
+        placeholders = ", ".join("?" for _ in scope_ids)
         row = self._conn.execute(
-            "SELECT * FROM family_link_calibrations WHERE family_id = ? AND template_family = ?",
-            [family_id, template_family],
+            f"SELECT * FROM family_link_calibrations "
+            f"WHERE family_id IN ({placeholders}) AND template_family = ? "
+            "ORDER BY family_id LIMIT 1",
+            [*scope_ids, template_family],
         ).fetchone()
         if row is None:
             return None
@@ -1462,6 +1935,9 @@ class LinkStore:
         self, family_id: str, template_family: str,
         thresholds: dict[str, Any],
     ) -> None:
+        canonical_scope = str(self.get_canonical_scope_id(family_id) or family_id).strip()
+        if family_id and canonical_scope:
+            self.upsert_family_alias(str(family_id), canonical_scope, source="calibration")
         self._conn.execute("""
             INSERT OR REPLACE INTO family_link_calibrations
             (family_id, template_family, high_threshold, medium_threshold,
@@ -1469,7 +1945,7 @@ class LinkStore:
              queue_weights, last_calibrated_at)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, [
-            family_id, template_family,
+            canonical_scope, template_family,
             thresholds.get("high_threshold", 0.8),
             thresholds.get("medium_threshold", 0.5),
             thresholds.get("target_precision", 0.9),
@@ -2114,26 +2590,33 @@ class LinkStore:
             "SELECT DISTINCT doc_id FROM family_links ORDER BY doc_id"
         ).fetchall()
         all_docs = [str(r[0]) for r in doc_rows if r and r[0] is not None]
+        scope_expr = self._scope_sql_expr()
 
         family_conditions: list[str] = []
         family_params: list[Any] = []
         if family_id:
-            family_conditions.append("family_id = ?")
-            family_params.append(family_id)
+            scope_ids = self.resolve_scope_aliases(family_id)
+            if not scope_ids:
+                scope_ids = [str(family_id).strip()]
+            placeholders = ", ".join("?" for _ in scope_ids)
+            family_conditions.append(f"{scope_expr} IN ({placeholders})")
+            family_params.extend(scope_ids)
         family_where = " WHERE " + " AND ".join(family_conditions) if family_conditions else ""
 
         family_rows = self._conn.execute(
-            f"SELECT DISTINCT family_id FROM family_links{family_where} ORDER BY family_id",
+            f"SELECT DISTINCT {scope_expr} AS family_id FROM family_links{family_where} ORDER BY 1",
             family_params,
         ).fetchall()
         family_ids = [str(r[0]) for r in family_rows if r and r[0] is not None]
-        if family_id and family_id not in family_ids:
-            family_ids = [family_id]
+        requested_scope = self.get_canonical_scope_id(family_id) if family_id else None
+        if requested_scope and requested_scope not in family_ids:
+            family_ids = [requested_scope]
 
         results: list[dict[str, Any]] = []
         for fam in family_ids:
             linked_rows = self._conn.execute(
-                "SELECT DISTINCT doc_id FROM family_links WHERE family_id = ? ORDER BY doc_id",
+                f"SELECT DISTINCT doc_id FROM family_links "
+                f"WHERE {scope_expr} = ? ORDER BY doc_id",
                 [fam],
             ).fetchall()
             linked_docs = {str(r[0]) for r in linked_rows if r and r[0] is not None}
@@ -2191,14 +2674,14 @@ class LinkStore:
 
     def get_link_context_strip(self, link_id: str) -> dict[str, Any]:
         link_row = self._conn.execute(
-            "SELECT link_id, family_id, doc_id, section_number, heading, link_role "
+            "SELECT link_id, family_id, ontology_node_id, doc_id, section_number, heading, link_role "
             "FROM family_links WHERE link_id = ?", [link_id]
         ).fetchone()
         if not link_row:
             return {}
         terms = self.get_link_defined_terms(link_id)
         # Find related xref/definitions links for the same doc
-        doc_id = link_row[2]
+        doc_id = link_row[3]
         related = self._conn.execute(
             "SELECT link_id, family_id, section_number, heading, link_role "
             "FROM family_links WHERE doc_id = ? AND link_id != ? AND "
@@ -2206,10 +2689,12 @@ class LinkStore:
             "ORDER BY section_number",
             [doc_id, link_id],
         ).fetchall()
+        current_scope = str(link_row[2] or link_row[1] or "").strip()
         return {
             "primary": {"link_id": link_row[0], "family_id": link_row[1],
-                        "doc_id": link_row[2], "section_number": link_row[3],
-                        "heading": link_row[4], "role": link_row[5]},
+                        "ontology_node_id": link_row[2], "scope_id": current_scope,
+                        "doc_id": link_row[3], "section_number": link_row[4],
+                        "heading": link_row[5], "role": link_row[6]},
             "defined_terms": terms,
             "related_links": [
                 {"link_id": r[0], "family_id": r[1], "section_number": r[2],
@@ -2237,15 +2722,18 @@ class LinkStore:
         related = context.get("related_links", [])
         doc_id = str(primary.get("doc_id", ""))
         section_number = str(primary.get("section_number", ""))
+        scope_expr = self._scope_sql_expr()
         section_rows = self._conn.execute(
-            "SELECT DISTINCT family_id FROM family_links WHERE doc_id = ? AND section_number = ?",
+            f"SELECT DISTINCT {scope_expr} AS family_id "
+            "FROM family_links WHERE doc_id = ? AND section_number = ?",
             [doc_id, section_number],
         ).fetchall()
+        current_scope = str(primary.get("scope_id") or primary.get("family_id", ""))
         section_families = [
             {
                 "family_id": str(row[0]),
                 "family_name": str(row[0]).replace("FAM-", "").replace("-", " ").title(),
-                "is_current": str(row[0]) == str(primary.get("family_id", "")),
+                "is_current": str(row[0]) == current_scope,
             }
             for row in section_rows
             if row and row[0] is not None
@@ -2332,19 +2820,24 @@ class LinkStore:
     def find_comparables(
         self, link_id: str, *, family_id: str, template_family: str | None = None, limit: int = 5,
     ) -> list[dict[str, Any]]:
-        conditions = ["family_id = ?", "link_id != ?", "status = 'active'"]
-        params: list[Any] = [family_id, link_id]
+        scope_ids = self.resolve_scope_aliases(family_id)
+        if not scope_ids:
+            scope_ids = [str(family_id).strip()]
+        placeholders = ", ".join("?" for _ in scope_ids)
+        scope_expr = self._scope_sql_expr(ontology_column="fl.ontology_node_id", family_column="fl.family_id")
+        conditions = [f"{scope_expr} IN ({placeholders})", "fl.link_id != ?", "fl.status = 'active'"]
+        params: list[Any] = [*scope_ids, link_id]
         if template_family:
             # Try same template first
             rows = self._conn.execute("""
                 SELECT fl.*, d.template_family FROM family_links fl
                 LEFT JOIN (SELECT DISTINCT doc_id, ? as template_family) d ON fl.doc_id = d.doc_id
-                WHERE fl.family_id = ? AND fl.link_id != ? AND fl.status = 'active'
+                WHERE {scope_expr} IN ({placeholders}) AND fl.link_id != ? AND fl.status = 'active'
                 ORDER BY fl.confidence DESC LIMIT ?
-            """, [template_family, family_id, link_id, limit]).fetchall()
+            """.format(scope_expr=scope_expr, placeholders=placeholders), [template_family, *scope_ids, link_id, limit]).fetchall()
         else:
             rows = self._conn.execute(
-                "SELECT * FROM family_links WHERE " + " AND ".join(conditions) +
+                "SELECT fl.* FROM family_links fl WHERE " + " AND ".join(conditions) +
                 " ORDER BY confidence DESC LIMIT ?",
                 params + [limit],
             ).fetchall()
@@ -2376,212 +2869,6 @@ class LinkStore:
             )
         return comparables
 
-    # ─── Child-node linking ───────────────────────────────────────
-
-    def get_node_links(
-        self,
-        *,
-        concept_id: str | None = None,
-        family_id: str | None = None,
-        parent_link_id: str | None = None,
-        doc_id: str | None = None,
-        status: str | None = None,
-        limit: int = 100,
-        offset: int = 0,
-    ) -> list[dict[str, Any]]:
-        conditions: list[str] = []
-        params: list[Any] = []
-        if concept_id:
-            conditions.append("concept_id = ?")
-            params.append(concept_id)
-        if family_id:
-            conditions.append("family_id = ?")
-            params.append(family_id)
-        if parent_link_id:
-            conditions.append("parent_link_id = ?")
-            params.append(parent_link_id)
-        if doc_id:
-            conditions.append("doc_id = ?")
-            params.append(doc_id)
-        if status:
-            conditions.append("status = ?")
-            params.append(status)
-        where = " WHERE " + " AND ".join(conditions) if conditions else ""
-        params.extend([limit, offset])
-        rows = self._conn.execute(
-            f"SELECT * FROM node_links{where} ORDER BY created_at DESC LIMIT ? OFFSET ?", params
-        ).fetchall()
-        cols = [d[0] for d in self._conn.description]
-        return [_to_dict(cols, row) for row in rows]
-
-    def count_node_links(
-        self, *, concept_id: str | None = None,
-        family_id: str | None = None,
-    ) -> int:
-        conditions: list[str] = []
-        params: list[Any] = []
-        if concept_id:
-            conditions.append("concept_id = ?")
-            params.append(concept_id)
-        if family_id:
-            conditions.append("family_id = ?")
-            params.append(family_id)
-        where = " WHERE " + " AND ".join(conditions) if conditions else ""
-        row = self._conn.execute(f"SELECT COUNT(*) FROM node_links{where}", params).fetchone()
-        return int(row[0]) if row else 0
-
-    def create_node_links(self, links: list[dict[str, Any]], run_id: str) -> int:
-        created = 0
-        for link in links:
-            try:
-                self._conn.execute("""
-                    INSERT INTO node_links
-                    (node_link_id, concept_id, family_id, parent_link_id,
-                     doc_id, section_number, clause_id, clause_char_start,
-                     clause_char_end, clause_text_hash, heading,
-                     rule_id, rule_version, run_id, confidence,
-                     confidence_tier, confidence_breakdown, status, created_at)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """, [
-                    link.get("node_link_id") or _uuid(),
-                    link["concept_id"], link["family_id"], link["parent_link_id"],
-                    link["doc_id"], link["section_number"], link["clause_id"],
-                    link["clause_char_start"], link["clause_char_end"],
-                    link["clause_text_hash"], link.get("heading", ""),
-                    link.get("rule_id"), link.get("rule_version"), run_id,
-                    link.get("confidence", 1.0),
-                    link.get("confidence_tier", "high"),
-                    _opt_json(link, "confidence_breakdown"),
-                    link.get("status", "active"), _now(),
-                ])
-                created += 1
-            except Exception:
-                pass
-        return created
-
-    def unlink_node(self, node_link_id: str, reason: str) -> None:
-        self._conn.execute(
-            "UPDATE node_links SET status = 'unlinked', unlinked_at = ?, "
-            "unlinked_reason = ? WHERE node_link_id = ?",
-            [_now(), reason, node_link_id],
-        )
-
-    def get_node_link_rules(
-        self, *, concept_id: str | None = None, parent_family_id: str | None = None,
-    ) -> list[dict[str, Any]]:
-        conditions: list[str] = []
-        params: list[Any] = []
-        if concept_id:
-            conditions.append("concept_id = ?")
-            params.append(concept_id)
-        if parent_family_id:
-            conditions.append("parent_family_id = ?")
-            params.append(parent_family_id)
-        where = " WHERE " + " AND ".join(conditions) if conditions else ""
-        rows = self._conn.execute(
-            f"SELECT * FROM node_link_rules{where} ORDER BY concept_id, version DESC", params
-        ).fetchall()
-        cols = [d[0] for d in self._conn.description]
-        return [_to_dict(cols, row) for row in rows]
-
-    def save_node_link_rule(self, rule: dict[str, Any]) -> None:
-        self._conn.execute("""
-            INSERT OR REPLACE INTO node_link_rules
-            (rule_id, concept_id, parent_family_id, description, version, status,
-             clause_filter_ast, heading_filter_ast, required_defined_terms,
-             template_overrides, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, [
-            rule.get("rule_id") or _uuid(),
-            rule["concept_id"], rule["parent_family_id"],
-            rule.get("description", ""), rule.get("version", 1),
-            rule.get("status", "draft"),
-            _json_dumps(rule["clause_filter_ast"]),
-            _opt_json(rule, "heading_filter_ast"),
-            _opt_json(rule, "required_defined_terms"),
-            _opt_json(rule, "template_overrides"),
-            rule.get("created_at", _now()), _now(),
-        ])
-
-    def get_node_rules(self, *, family_id: str | None = None) -> list[dict[str, Any]]:
-        return self.get_node_link_rules(parent_family_id=family_id)
-
-    def save_node_rule(self, rule: dict[str, Any]) -> None:
-        payload = dict(rule)
-        payload.setdefault("concept_id", str(payload.get("node_id", "")))
-        payload.setdefault("parent_family_id", str(payload.get("family_id", "")))
-        payload.setdefault(
-            "clause_filter_ast",
-            payload.get("clause_filter_ast")
-            or payload.get("heading_filter_ast")
-            or {"type": "group", "operator": "or", "children": []},
-        )
-        self.save_node_link_rule(payload)
-
-    def create_node_link(self, link: dict[str, Any]) -> int:
-        payload = dict(link)
-        payload.setdefault("concept_id", str(payload.get("node_id", payload.get("concept_id", ""))))
-        payload.setdefault("family_id", str(payload.get("family_id", "")))
-        payload.setdefault("parent_link_id", str(payload.get("parent_link_id", "")))
-        payload.setdefault("doc_id", str(payload.get("doc_id", "")))
-        payload.setdefault("section_number", str(payload.get("section_number", "")))
-        payload.setdefault("clause_id", str(payload.get("clause_id", "")))
-        payload.setdefault("clause_char_start", int(payload.get("clause_char_start", 0) or 0))
-        payload.setdefault("clause_char_end", int(payload.get("clause_char_end", 0) or 0))
-        payload.setdefault(
-            "clause_text_hash",
-            str(payload.get("clause_text_hash") or payload.get("clause_id", "")),
-        )
-        payload.setdefault("heading", str(payload.get("heading", "")))
-        payload.setdefault("confidence", float(payload.get("confidence", 1.0) or 1.0))
-        payload.setdefault("confidence_tier", str(payload.get("confidence_tier", "high")))
-        payload.setdefault("status", str(payload.get("status", "active")))
-        return self.create_node_links([payload], str(payload.get("run_id") or _uuid()))
-
-    def save_node_preview(self, preview: dict[str, Any]) -> None:
-        self._conn.execute("""
-            INSERT INTO node_link_previews
-            (preview_id, concept_id, parent_family_id, rule_id, rule_hash,
-             candidate_count, by_confidence_tier, expires_at, created_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, [
-            preview["preview_id"], preview["concept_id"],
-            preview["parent_family_id"], preview.get("rule_id"),
-            preview["rule_hash"], preview.get("candidate_count", 0),
-            _json_dumps(preview.get("by_confidence_tier", {})),
-            preview["expires_at"], _now(),
-        ])
-
-    def get_node_preview_candidates(
-        self, preview_id: str, *, page_size: int = 50,
-        after_doc_id: str | None = None, verdict: str | None = None,
-    ) -> list[dict[str, Any]]:
-        conditions = ["preview_id = ?"]
-        params: list[Any] = [preview_id]
-        if verdict:
-            conditions.append("user_verdict = ?")
-            params.append(verdict)
-        if after_doc_id:
-            conditions.append("doc_id > ?")
-            params.append(after_doc_id)
-        where = " AND ".join(conditions)
-        params.append(page_size)
-        rows = self._conn.execute(
-            f"SELECT * FROM node_preview_candidates WHERE {where} "
-            "ORDER BY doc_id LIMIT ?", params,
-        ).fetchall()
-        cols = [d[0] for d in self._conn.description]
-        return [_to_dict(cols, row) for row in rows]
-
-    def set_node_candidate_verdict(
-        self, preview_id: str, doc_id: str, clause_id: str, verdict: str,
-    ) -> None:
-        self._conn.execute(
-            "UPDATE node_preview_candidates SET user_verdict = ? "
-            "WHERE preview_id = ? AND doc_id = ? AND clause_id = ?",
-            [verdict, preview_id, doc_id, clause_id],
-        )
-
     # ─── Embeddings ───────────────────────────────────────────────
 
     def get_section_embedding(
@@ -2612,10 +2899,15 @@ class LinkStore:
     def get_family_centroid(
         self, family_id: str, template_family: str, model_version: str,
     ) -> bytes | None:
+        scope_ids = self.resolve_scope_aliases(family_id)
+        if not scope_ids:
+            scope_ids = [str(family_id).strip()]
+        placeholders = ", ".join("?" for _ in scope_ids)
         row = self._conn.execute(
             "SELECT centroid_vector FROM family_centroids "
-            "WHERE family_id = ? AND template_family = ? AND model_version = ?",
-            [family_id, template_family, model_version],
+            f"WHERE family_id IN ({placeholders}) AND template_family = ? AND model_version = ? "
+            "ORDER BY family_id LIMIT 1",
+            [*scope_ids, template_family, model_version],
         ).fetchone()
         return bytes(row[0]) if row else None
 
@@ -2623,12 +2915,15 @@ class LinkStore:
         self, family_id: str, template_family: str, centroid: bytes,
         model_version: str, sample_count: int,
     ) -> None:
+        canonical_scope = str(self.get_canonical_scope_id(family_id) or family_id).strip()
+        if family_id and canonical_scope:
+            self.upsert_family_alias(str(family_id), canonical_scope, source="centroid")
         self._conn.execute("""
             INSERT OR REPLACE INTO family_centroids
             (family_id, template_family, centroid_vector, model_version,
              sample_count, last_updated_at)
             VALUES (?, ?, ?, ?, ?, ?)
-        """, [family_id, template_family, centroid, model_version, sample_count, _now()])
+        """, [canonical_scope, template_family, centroid, model_version, sample_count, _now()])
 
     def find_similar_sections(
         self, family_id: str, doc_id: str, *, top_k: int = 5,
@@ -2720,11 +3015,16 @@ class LinkStore:
 
     def unlink_reason_analytics(self, *, family_id: str | None = None) -> dict[str, Any]:
         if family_id:
+            scope_ids = self.resolve_scope_aliases(family_id)
+            if not scope_ids:
+                scope_ids = [str(family_id).strip()]
+            placeholders = ", ".join("?" for _ in scope_ids)
+            scope_expr = self._scope_sql_expr()
             rows = self._conn.execute(
                 "SELECT unlinked_reason, COUNT(*) as cnt FROM family_links "
-                "WHERE status = 'unlinked' AND family_id = ? GROUP BY unlinked_reason "
-                "ORDER BY cnt DESC",
-                [family_id],
+                f"WHERE status = 'unlinked' AND {scope_expr} IN ({placeholders}) "
+                "GROUP BY unlinked_reason ORDER BY cnt DESC",
+                scope_ids,
             ).fetchall()
         else:
             rows = self._conn.execute(

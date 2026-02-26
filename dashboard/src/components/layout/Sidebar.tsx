@@ -103,7 +103,7 @@ const NAV_MODULES: NavModule[] = [
     title: "Linking",
     icon: IconLinking,
     items: [
-      { label: "Family Links", href: "/links" },
+      { label: "Ontology Links", href: "/links" },
     ],
   },
   {

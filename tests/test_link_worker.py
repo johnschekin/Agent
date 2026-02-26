@@ -365,11 +365,11 @@ class TestGetHandler:
     """Tests for _get_handler: handler dispatch table."""
 
     def test_known_handlers(self, tmp_path: Path) -> None:
-        """All 8 registered job types should return a callable."""
+        """All registered job types should return a callable."""
         worker, _ = _make_worker(tmp_path)
         expected_types = [
             "preview", "apply", "canary", "batch_run",
-            "embeddings_compute", "child_linking", "check_drift", "export",
+            "embeddings_compute", "check_drift", "export",
         ]
         for jtype in expected_types:
             handler = worker._get_handler(jtype)
@@ -584,6 +584,49 @@ class TestHandleApply:
         assert "error" not in result
         assert result["links_created"] == 2
         assert "run_id" in result
+
+    def test_apply_persists_ontology_node_and_clause_text(self, tmp_path: Path) -> None:
+        """Apply uses preview ontology scope and carries clause text into links."""
+        worker, store = _make_worker(tmp_path)
+        preview_id = "prev_" + str(uuid.uuid4())
+        _make_preview(store, preview_id, family_id="debt_capacity.indebtedness", candidate_set_hash="hash-node")
+        store._conn.execute(
+            "UPDATE family_link_previews SET params_json = ? WHERE preview_id = ?",
+            [json.dumps({"ontology_node_id": "debt_capacity.indebtedness.general_basket"}), preview_id],
+        )
+        store.save_preview_candidates(
+            preview_id,
+            [
+                {
+                    "doc_id": "doc_onto",
+                    "section_number": "6.01",
+                    "heading": "Indebtedness",
+                    "clause_id": "a.iii",
+                    "clause_char_start": 111,
+                    "clause_char_end": 222,
+                    "clause_text": "(iii) other Indebtedness ...",
+                    "confidence": 0.91,
+                    "confidence_tier": "high",
+                    "user_verdict": "accepted",
+                }
+            ],
+        )
+
+        jid = _submit_job(store, "apply")
+        store.create_run = MagicMock()
+        result = worker._handle_apply(jid, {"preview_id": preview_id, "candidate_set_hash": "hash-node"})
+        assert "error" not in result
+        assert result["links_created"] == 1
+
+        row = store._conn.execute(
+            "SELECT ontology_node_id, clause_id, clause_text FROM family_links "
+            "WHERE family_id = 'debt_capacity.indebtedness' AND doc_id = 'doc_onto' AND section_number = '6.01' "
+            "LIMIT 1",
+        ).fetchone()
+        assert row is not None
+        assert row[0] == "debt_capacity.indebtedness.general_basket"
+        assert row[1] == "a.iii"
+        assert row[2] == "(iii) other Indebtedness ..."
 
     def test_apply_does_not_promote_pending_candidates(self, tmp_path: Path) -> None:
         """Pending candidates are excluded from apply writes."""
@@ -801,51 +844,6 @@ class TestHandleEmbeddingsCompute:
 
         assert result["sections_prepared"] == 0
         assert result["status"] == "sections_ready"
-
-
-# ─────────────────── TestHandleChildLinking ──────────────────
-
-
-class TestHandleChildLinking:
-    """Tests for _handle_child_linking handler."""
-
-    def test_child_linking_finds_clauses(self, tmp_path: Path) -> None:
-        """Returns clause-level children for a parent link."""
-        worker, store = _make_worker(tmp_path)
-        link_id = _make_link(
-            store, family_id="fam_a", doc_id="doc_0", section_number="1.0",
-        )
-
-        clauses = [
-            FakeClause("c1", "(a)", 1, 100, 200),
-            FakeClause("c2", "(b)", 1, 200, 300),
-        ]
-        worker._corpus = FakeCorpus(clauses=clauses)
-        jid = _submit_job(store, "child_linking")
-
-        result = worker._handle_child_linking(
-            jid,
-            {"parent_link_id": link_id},
-        )
-
-        assert result["parent_link_id"] == link_id
-        assert result["child_nodes_found"] == 2
-        assert len(result["children"]) == 2
-        assert result["children"][0]["clause_id"] == "c1"
-        assert result["children"][1]["label"] == "(b)"
-
-    def test_child_linking_no_parent(self, tmp_path: Path) -> None:
-        """Returns error for a missing parent link."""
-        worker, store = _make_worker(tmp_path)
-        jid = _submit_job(store, "child_linking")
-
-        result = worker._handle_child_linking(
-            jid,
-            {"parent_link_id": "nonexistent_link"},
-        )
-
-        assert "error" in result
-        assert "not found" in result["error"].lower()
 
 
 # ─────────────────── TestHandleCheckDrift ──────────────────

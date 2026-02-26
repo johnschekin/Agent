@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { cn } from "@/lib/cn";
 import { useWhyMatched, useTemplateBaselineText } from "@/lib/queries";
 import { HierarchyBreadcrumbs } from "./HierarchyBreadcrumbs";
@@ -27,6 +27,14 @@ interface ReviewPaneProps {
   redlineActive: boolean;
   /** Template family for baseline lookup */
   templateFamily: string | null;
+  /** Query tab uses clause-hit highlighting instead of heading/dna/terms */
+  highlightMode?: "review" | "query";
+  /** Clause-query terms to highlight in query mode */
+  queryHighlightTerms?: string[];
+  /** Optional clause span (section-relative) to scroll to in query mode */
+  queryFocusRange?: { start: number; end: number } | null;
+  /** Optional clause text fallback for locating the hit */
+  queryFocusText?: string | null;
   className?: string;
 }
 
@@ -45,6 +53,10 @@ export function ReviewPane({
   folded,
   redlineActive,
   templateFamily,
+  highlightMode = "review",
+  queryHighlightTerms = [],
+  queryFocusRange = null,
+  queryFocusText = null,
   className,
 }: ReviewPaneProps) {
   const { data: whyData } = useWhyMatched(link?.link_id ?? null);
@@ -98,7 +110,11 @@ export function ReviewPane({
           <div className="flex-1 p-4 overflow-auto">
             {/* Heading */}
             <h3 className="text-base font-semibold text-text-primary mb-3">
-              <span className="highlight-green-glow">{link.heading}</span>
+              {highlightMode === "query" ? (
+                link.heading
+              ) : (
+                <span className="highlight-green-glow">{link.heading}</span>
+              )}
             </h3>
 
             {/* Template redline overlay */}
@@ -126,6 +142,10 @@ export function ReviewPane({
                   heading={link.heading}
                   definitions={definitions}
                   dnaPhrases={dnaPhrases}
+                  queryMode={highlightMode === "query"}
+                  queryHighlightTerms={queryHighlightTerms}
+                  queryFocusRange={queryFocusRange}
+                  queryFocusText={queryFocusText}
                 />
                 {folded && (
                   <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-surface-1 to-transparent" />
@@ -184,9 +204,50 @@ interface SectionTextRendererProps {
   definitions: { term: string; definition_text: string; char_start: number; char_end: number }[];
   /** DNA phrases to highlight purple */
   dnaPhrases: string[];
+  /** Query mode: disable heading/dna/term highlights and focus the clause hit */
+  queryMode?: boolean;
+  queryHighlightTerms?: string[];
+  queryFocusRange?: { start: number; end: number } | null;
+  queryFocusText?: string | null;
 }
 
-function SectionTextRenderer({ text, docId, heading, definitions, dnaPhrases }: SectionTextRendererProps) {
+function SectionTextRenderer({
+  text,
+  docId,
+  heading,
+  definitions,
+  dnaPhrases,
+  queryMode = false,
+  queryHighlightTerms = [],
+  queryFocusRange = null,
+  queryFocusText = null,
+}: SectionTextRendererProps) {
+  const focusRef = useRef<HTMLSpanElement | null>(null);
+
+  useEffect(() => {
+    if (!queryMode || !focusRef.current) return;
+    focusRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [
+    queryMode,
+    text,
+    queryFocusRange?.start,
+    queryFocusRange?.end,
+    queryFocusText,
+    queryHighlightTerms.join("|"),
+  ]);
+
+  if (queryMode) {
+    return (
+      <>{renderQueryFocusedText(
+        text,
+        queryHighlightTerms,
+        queryFocusRange,
+        queryFocusText,
+        focusRef,
+      )}</>
+    );
+  }
+
   // Build a set of defined terms for highlighting
   const termSet = useMemo(() => {
     const terms = new Map<string, string>();
@@ -247,6 +308,143 @@ function renderParagraphWithCrossRefs(
 
   if (lastIndex < text.length) {
     nodes.push(...highlightTermsInText(text.slice(lastIndex), heading, termMap, dnaPhrases));
+  }
+  return nodes;
+}
+
+function normalizeRange(
+  range: { start: number; end: number } | null | undefined,
+  textLength: number,
+): { start: number; end: number } | null {
+  if (!range) return null;
+  const start = Number(range.start);
+  const end = Number(range.end);
+  if (!Number.isFinite(start) || !Number.isFinite(end)) return null;
+  const boundedStart = Math.max(0, Math.min(textLength, Math.floor(start)));
+  const boundedEnd = Math.max(boundedStart, Math.min(textLength, Math.floor(end)));
+  if (boundedEnd <= boundedStart) return null;
+  return { start: boundedStart, end: boundedEnd };
+}
+
+function findFirstTermRange(
+  text: string,
+  terms: string[],
+  windowStart = 0,
+  windowEnd = text.length,
+): { start: number; end: number } | null {
+  const boundedStart = Math.max(0, Math.min(text.length, windowStart));
+  const boundedEnd = Math.max(boundedStart, Math.min(text.length, windowEnd));
+  const haystackWindow = text.slice(boundedStart, boundedEnd).toLowerCase();
+  if (!haystackWindow) return null;
+
+  for (const raw of terms) {
+    const term = String(raw || "").trim();
+    if (!term || term.length < 2) continue;
+    const idx = haystackWindow.indexOf(term.toLowerCase());
+    if (idx >= 0) {
+      const start = boundedStart + idx;
+      return { start, end: start + term.length };
+    }
+  }
+  return null;
+}
+
+function renderQueryFocusedText(
+  text: string,
+  queryHighlightTerms: string[],
+  queryFocusRange: { start: number; end: number } | null,
+  queryFocusText: string | null,
+  focusRef: { current: HTMLSpanElement | null },
+): React.ReactNode[] {
+  if (!text) return [text];
+
+  const focusRange = normalizeRange(queryFocusRange, text.length);
+  const sortedTerms = [...queryHighlightTerms]
+    .map((term) => String(term || "").trim())
+    .filter((term) => term.length >= 2)
+    .sort((a, b) => b.length - a.length);
+
+  let highlightRange: { start: number; end: number } | null = null;
+  if (focusRange) {
+    highlightRange = findFirstTermRange(
+      text,
+      sortedTerms,
+      focusRange.start,
+      focusRange.end,
+    );
+  }
+  if (!highlightRange) {
+    highlightRange = findFirstTermRange(text, sortedTerms);
+  }
+  if (!highlightRange && queryFocusText) {
+    const needle = String(queryFocusText).trim().toLowerCase();
+    if (needle.length >= 2) {
+      const idx = text.toLowerCase().indexOf(needle);
+      if (idx >= 0) {
+        highlightRange = { start: idx, end: idx + needle.length };
+      }
+    }
+  }
+
+  const anchorPos = focusRange?.start ?? highlightRange?.start ?? null;
+  if (anchorPos === null && !highlightRange) {
+    return [text];
+  }
+
+  const boundaries = new Set<number>([0, text.length]);
+  if (anchorPos !== null) boundaries.add(anchorPos);
+  if (highlightRange) {
+    boundaries.add(highlightRange.start);
+    boundaries.add(highlightRange.end);
+  }
+  const sortedBounds = Array.from(boundaries).sort((a, b) => a - b);
+
+  const nodes: React.ReactNode[] = [];
+  let key = 0;
+  for (let i = 0; i < sortedBounds.length - 1; i++) {
+    const start = sortedBounds[i];
+    const end = sortedBounds[i + 1];
+    if (anchorPos !== null && start === anchorPos) {
+      nodes.push(
+        <span
+          key={`anchor-${key++}`}
+          ref={focusRef}
+          data-testid="query-hit-anchor"
+          className="inline-block w-0 h-0 align-baseline"
+        />,
+      );
+    }
+    if (end <= start) continue;
+    const chunk = text.slice(start, end);
+    if (
+      highlightRange &&
+      start >= highlightRange.start &&
+      end <= highlightRange.end
+    ) {
+      nodes.push(
+        <span
+          key={`hit-${key++}`}
+          className="rounded bg-amber-300/25 px-0.5 text-amber-100"
+        >
+          {chunk}
+        </span>,
+      );
+    } else {
+      nodes.push(
+        <span key={`text-${key++}`}>{chunk}</span>,
+      );
+    }
+  }
+
+  if (anchorPos === text.length) {
+    nodes.push(
+      <span
+        key={`anchor-end-${nodes.length}`}
+        ref={focusRef}
+        data-testid="query-hit-anchor"
+        className="inline-block w-0 h-0 align-baseline"
+      />,
+    );
   }
   return nodes;
 }

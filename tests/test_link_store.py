@@ -7,6 +7,7 @@ import uuid
 from pathlib import Path
 from typing import Any
 
+import duckdb
 import pytest
 
 from agent.link_store import SCHEMA_VERSION, LinkStore
@@ -35,10 +36,12 @@ def _make_link(
     link_id: str | None = None,
     status: str = "active",
     rule_id: str | None = None,
+    ontology_node_id: str | None = None,
 ) -> dict[str, Any]:
     return {
         "link_id": link_id or str(uuid.uuid4()),
         "family_id": family_id,
+        "ontology_node_id": ontology_node_id,
         "doc_id": doc_id,
         "section_number": section_number,
         "heading": heading,
@@ -61,12 +64,13 @@ def _make_link(
 def _make_run(
     run_id: str | None = None,
     family_id: str = "debt",
+    rule_id: str = "rule_debt_v1",
 ) -> dict[str, Any]:
     return {
         "run_id": run_id or str(uuid.uuid4()),
         "run_type": "bulk_link",
         "family_id": family_id,
-        "rule_id": "rule_debt_v1",
+        "rule_id": rule_id,
         "rule_version": 1,
         "corpus_version": "v1.0.0",
         "corpus_doc_count": 3298,
@@ -103,7 +107,7 @@ class TestInit:
         assert row[0] == 0
 
     def test_all_tables_created(self, store: LinkStore) -> None:
-        """Verify all 28+ tables exist."""
+        """Verify all core tables exist."""
         rows = store._conn.execute(
             "SELECT table_name FROM information_schema.tables WHERE table_schema = 'main'"
         ).fetchall()
@@ -116,13 +120,53 @@ class TestInit:
             "rule_pins", "pin_evaluations", "family_conflict_policies",
             "review_sessions", "review_marks", "rule_baselines",
             "drift_checks", "drift_alerts", "family_link_macros",
-            "template_baselines", "node_links", "node_link_rules",
-            "node_link_previews", "node_preview_candidates",
-            "node_link_evidence", "section_embeddings", "family_centroids",
+            "template_baselines", "section_embeddings", "family_centroids",
             "family_starter_kits",
         }
         for table in expected_tables:
             assert table in table_names, f"Missing table: {table}"
+
+    def test_save_rule_on_legacy_db_without_name_column(self, tmp_path: Path) -> None:
+        db_path = tmp_path / "legacy.duckdb"
+        conn = duckdb.connect(str(db_path))
+        conn.execute(
+            """
+            CREATE TABLE family_link_rules (
+                rule_id VARCHAR PRIMARY KEY,
+                family_id VARCHAR NOT NULL,
+                description VARCHAR NOT NULL DEFAULT '',
+                version INTEGER NOT NULL DEFAULT 1,
+                status VARCHAR NOT NULL DEFAULT 'draft',
+                owner VARCHAR NOT NULL DEFAULT '',
+                article_concepts VARCHAR NOT NULL,
+                heading_filter_ast VARCHAR NOT NULL,
+                clause_text_filter_ast VARCHAR,
+                clause_header_filter_ast VARCHAR,
+                required_defined_terms VARCHAR,
+                excluded_cue_phrases VARCHAR,
+                template_overrides VARCHAR,
+                created_at TIMESTAMP DEFAULT current_timestamp,
+                updated_at TIMESTAMP DEFAULT current_timestamp
+            )
+            """
+        )
+        conn.close()
+
+        # create_if_missing=False should still run additive migrations.
+        store = LinkStore(db_path, create_if_missing=False)
+        store.save_rule(
+            {
+                "rule_id": "legacy_rule",
+                "family_id": "debt",
+                "article_concepts": [],
+                "heading_filter_ast": {},
+            }
+        )
+        rule = store.get_rule("legacy_rule")
+        assert rule is not None
+        assert rule["family_id"] == "debt"
+        assert isinstance(rule["name"], str)
+        store.close()
 
 
 # ───────────────────── Rules CRUD ────────────────────────────────────
@@ -175,6 +219,22 @@ class TestRulesCrud:
         published = store.get_rules(status="published")
         assert len(published) == 1
         assert published[0]["rule_id"] == "r1"
+
+    def test_get_rules_filter_by_canonical_scope_alias(self, store: LinkStore) -> None:
+        store.save_rule({
+            "rule_id": "r_legacy",
+            "family_id": "FAM-indebtedness",
+            "ontology_node_id": "debt_capacity.indebtedness",
+            "status": "published",
+            "article_concepts": [],
+            "heading_filter_ast": {},
+        })
+        rules = store.get_rules(family_id="debt_capacity.indebtedness")
+        assert len(rules) == 1
+        assert rules[0]["rule_id"] == "r_legacy"
+        assert store.get_canonical_scope_id("FAM-indebtedness") == "debt_capacity.indebtedness"
+        aliases = set(store.resolve_scope_aliases("debt_capacity.indebtedness"))
+        assert "FAM-indebtedness" in aliases
 
     def test_clone_rule(self, store: LinkStore) -> None:
         store.save_rule({
@@ -249,6 +309,49 @@ class TestLinksCrud:
         assert len(links) == 1
         assert links[0]["heading"] == "Indebtedness"
         assert links[0]["confidence"] == 0.85
+
+    def test_create_link_persists_ontology_node_and_clause_text(self, store: LinkStore) -> None:
+        run_id = str(uuid.uuid4())
+        link = _make_link(
+            family_id="debt_capacity.indebtedness",
+            doc_id="doc_clause_1",
+            section_number="6.01",
+        )
+        link["ontology_node_id"] = "debt_capacity.indebtedness.general_basket"
+        link["clause_id"] = "a.iii"
+        link["clause_char_start"] = 100
+        link["clause_char_end"] = 180
+        link["clause_text"] = "(iii) other Indebtedness ..."
+
+        created = store.create_links([link], run_id)
+        assert created == 1
+
+        rows = store.get_links(family_id="debt_capacity.indebtedness", doc_id="doc_clause_1")
+        assert len(rows) == 1
+        assert rows[0]["ontology_node_id"] == "debt_capacity.indebtedness.general_basket"
+        assert rows[0]["clause_id"] == "a.iii"
+        assert rows[0]["clause_text"] == "(iii) other Indebtedness ..."
+
+    def test_get_links_filter_by_canonical_scope_alias(self, store: LinkStore) -> None:
+        run_id = str(uuid.uuid4())
+        created = store.create_links([
+            _make_link(
+                family_id="FAM-indebtedness",
+                ontology_node_id="debt_capacity.indebtedness",
+                doc_id="doc_scope_1",
+            ),
+            _make_link(
+                family_id="FAM-liens",
+                ontology_node_id="debt_capacity.liens",
+                doc_id="doc_scope_2",
+                section_number="7.02",
+            ),
+        ], run_id)
+        assert created == 2
+        rows = store.get_links(family_id="debt_capacity.indebtedness")
+        assert len(rows) == 1
+        assert rows[0]["doc_id"] == "doc_scope_1"
+        assert store.count_links(family_id="debt_capacity.indebtedness") == 1
 
     def test_create_multiple_links(self, store: LinkStore) -> None:
         run_id = str(uuid.uuid4())
@@ -566,6 +669,20 @@ class TestRuns:
         store.create_run(_make_run(run_id="r2", family_id="liens"))
         debt_runs = store.get_runs(family_id="debt")
         assert len(debt_runs) == 1
+
+    def test_get_runs_by_canonical_scope_alias(self, store: LinkStore) -> None:
+        store.save_rule({
+            "rule_id": "r_scope",
+            "family_id": "FAM-indebtedness",
+            "ontology_node_id": "debt_capacity.indebtedness",
+            "status": "published",
+            "article_concepts": [],
+            "heading_filter_ast": {},
+        })
+        store.create_run(_make_run(run_id="r_scope_run", family_id="FAM-indebtedness", rule_id="r_scope"))
+        runs = store.get_runs(family_id="debt_capacity.indebtedness")
+        assert len(runs) == 1
+        assert runs[0]["run_id"] == "r_scope_run"
 
 
 # ───────────────────── Coverage ──────────────────────────────────────
@@ -1243,102 +1360,6 @@ class TestComparables:
         comp_ids = {c["link_id"] for c in comps}
         assert lid_main not in comp_ids
         assert len(comps) == 2
-
-
-# ───────────────────── Child-node linking ────────────────────────────
-
-
-class TestNodeLinks:
-    def _setup_parent(self, store: LinkStore) -> str:
-        run_id = str(uuid.uuid4())
-        lid = str(uuid.uuid4())
-        store.create_links([_make_link(link_id=lid)], run_id)
-        return lid
-
-    def test_create_and_get_node_links(self, store: LinkStore) -> None:
-        parent_id = self._setup_parent(store)
-        run_id = str(uuid.uuid4())
-        created = store.create_node_links([{
-            "concept_id": "permitted_debt",
-            "family_id": "debt",
-            "parent_link_id": parent_id,
-            "doc_id": "doc_001",
-            "section_number": "7.01",
-            "clause_id": "7.01(a)",
-            "clause_char_start": 10500,
-            "clause_char_end": 11000,
-            "clause_text_hash": "abc",
-            "heading": "Indebtedness",
-        }], run_id)
-        assert created == 1
-
-        links = store.get_node_links(concept_id="permitted_debt")
-        assert len(links) == 1
-        assert links[0]["family_id"] == "debt"
-
-    def test_count_node_links(self, store: LinkStore) -> None:
-        parent_id = self._setup_parent(store)
-        run_id = str(uuid.uuid4())
-        store.create_node_links([{
-            "concept_id": "c1", "family_id": "debt",
-            "parent_link_id": parent_id, "doc_id": "d1",
-            "section_number": "7.01", "clause_id": "7.01(a)",
-            "clause_char_start": 100, "clause_char_end": 200,
-            "clause_text_hash": "h1",
-        }, {
-            "concept_id": "c1", "family_id": "debt",
-            "parent_link_id": parent_id, "doc_id": "d2",
-            "section_number": "7.01", "clause_id": "7.01(b)",
-            "clause_char_start": 300, "clause_char_end": 400,
-            "clause_text_hash": "h2",
-        }], run_id)
-        assert store.count_node_links(concept_id="c1") == 2
-
-    def test_unlink_node(self, store: LinkStore) -> None:
-        parent_id = self._setup_parent(store)
-        run_id = str(uuid.uuid4())
-        nid = str(uuid.uuid4())
-        store.create_node_links([{
-            "node_link_id": nid, "concept_id": "c1", "family_id": "debt",
-            "parent_link_id": parent_id, "doc_id": "d1",
-            "section_number": "7.01", "clause_id": "7.01(a)",
-            "clause_char_start": 100, "clause_char_end": 200,
-            "clause_text_hash": "h1",
-        }], run_id)
-        store.unlink_node(nid, "wrong_clause")
-        links = store.get_node_links(status="unlinked")
-        assert len(links) == 1
-
-    def test_node_link_rules_crud(self, store: LinkStore) -> None:
-        store.save_node_link_rule({
-            "rule_id": "nr_1",
-            "concept_id": "permitted_debt",
-            "parent_family_id": "debt",
-            "description": "Match permitted debt subclauses",
-            "clause_filter_ast": {"type": "match", "value": "permitted"},
-        })
-        rules = store.get_node_link_rules(concept_id="permitted_debt")
-        assert len(rules) == 1
-        assert rules[0]["parent_family_id"] == "debt"
-
-    def test_node_preview_candidates(self, store: LinkStore) -> None:
-        store.save_node_preview({
-            "preview_id": "np1", "concept_id": "c1",
-            "parent_family_id": "debt", "rule_hash": "h1",
-            "expires_at": "2099-12-31T23:59:59Z",
-        })
-        store._conn.execute("""
-            INSERT INTO node_preview_candidates
-            (preview_id, doc_id, clause_id, clause_text, confidence, user_verdict)
-            VALUES (?, ?, ?, ?, ?, ?)
-        """, ["np1", "d1", "7.01(a)", "Permitted indebtedness...", 0.9, None])
-
-        cands = store.get_node_preview_candidates("np1")
-        assert len(cands) == 1
-
-        store.set_node_candidate_verdict("np1", "d1", "7.01(a)", "accept")
-        cands = store.get_node_preview_candidates("np1", verdict="accept")
-        assert len(cands) == 1
 
 
 # ───────────────────── Embeddings ────────────────────────────────────

@@ -126,6 +126,8 @@ def _make_rule(
     version: int = 1,
     status: str = "published",
     rule_id: str = "rule-001",
+    ontology_node_id: str | None = None,
+    scope_mode: str = "corpus",
 ) -> dict[str, Any]:
     """Build a minimal rule dict for testing."""
     values = heading_values or ["Indebtedness"]
@@ -137,8 +139,10 @@ def _make_rule(
     return {
         "rule_id": rule_id,
         "family_id": family_id,
+        "ontology_node_id": ontology_node_id or family_id,
         "heading_filter_ast": ast,
         "article_concepts": article_concepts or [],
+        "scope_mode": scope_mode,
         "version": version,
         "status": status,
         "description": f"Test rule for {family_id}",
@@ -445,6 +449,10 @@ class TestArticleConcept:
     def test_article_mismatch(self) -> None:
         """Non-matching article concept returns False."""
         assert _article_matches_rule("EVENTS_OF_DEFAULT", ["NEGATIVE_COVENANTS"]) is False
+
+    def test_article_normalized_contains_match(self) -> None:
+        """Coarse token matching supports shorthand DSL article filters."""
+        assert _article_matches_rule("NEGATIVE_COVENANTS", ["negative"]) is True
 
     def test_article_none(self) -> None:
         """None article concept does not match when constraints exist."""
@@ -814,6 +822,89 @@ class TestRunBulkLinking:
         for c in summary["candidates"]:
             assert c["family_id"] == "debt_capacity.liens"
 
+    def test_scope_filter_matches_ontology_node_id(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        """family_filter should match ontology node scope when family IDs are shared."""
+        self._patch_scan_imports(monkeypatch)
+        corpus = self._corpus_with_matches()
+        rules = [
+            _make_rule(
+                family_id="debt_capacity.indebtedness",
+                ontology_node_id="debt_capacity.indebtedness.general_basket",
+                heading_values=["Indebtedness"],
+                rule_id="r1",
+            ),
+            _make_rule(
+                family_id="debt_capacity.indebtedness",
+                ontology_node_id="debt_capacity.indebtedness.ratio_debt",
+                heading_values=["Liens"],
+                rule_id="r2",
+            ),
+        ]
+        summary = run_bulk_linking(
+            corpus,
+            None,
+            rules,
+            dry_run=True,
+            family_filter="debt_capacity.indebtedness.general_basket",
+        )
+        assert summary["rules_evaluated"] == 1
+        assert summary["candidates"]
+        assert all(
+            c["ontology_node_id"] == "debt_capacity.indebtedness.general_basket"
+            for c in summary["candidates"]
+        )
+
+    def test_same_family_distinct_ontology_scopes_both_evaluated(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        """Rules with same family_id but different ontology scopes must both run."""
+        self._patch_scan_imports(monkeypatch)
+        corpus = self._corpus_with_matches()
+        rules = [
+            _make_rule(
+                family_id="debt_capacity.indebtedness",
+                ontology_node_id="debt_capacity.indebtedness.general_basket",
+                heading_values=["Indebtedness"],
+                rule_id="r1",
+            ),
+            _make_rule(
+                family_id="debt_capacity.indebtedness",
+                ontology_node_id="debt_capacity.indebtedness.ratio_debt",
+                heading_values=["Liens"],
+                rule_id="r2",
+            ),
+        ]
+        summary = run_bulk_linking(corpus, None, rules, dry_run=True)
+        assert summary["rules_evaluated"] == 2
+        assert summary["candidates"]
+        scopes = {c["ontology_node_id"] for c in summary["candidates"]}
+        assert "debt_capacity.indebtedness.general_basket" in scopes
+        assert "debt_capacity.indebtedness.ratio_debt" in scopes
+
+    def test_filter_dsl_article_constraint_is_enforced(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        """Rules with DSL-only article filters should restrict candidate scope."""
+        self._patch_scan_imports(monkeypatch)
+        corpus = FakeCorpus(
+            docs=["doc1", "doc2"],
+            sections_by_doc={
+                "doc1": [FakeSection("doc1", "7.01", "Indebtedness", 7, 100, 500)],
+                "doc2": [FakeSection("doc2", "7.01", "Indebtedness", 7, 100, 500)],
+            },
+            articles_by_doc={
+                "doc1": [FakeArticle("doc1", 7, "NEGATIVE_COVENANTS")],
+                "doc2": [FakeArticle("doc2", 7, "EVENTS_OF_DEFAULT")],
+            },
+        )
+        rule = _make_rule(heading_values=["Indebtedness"], article_concepts=[])
+        rule["filter_dsl"] = "article: negative heading: \"Indebtedness\""
+        summary = run_bulk_linking(corpus, None, [rule], dry_run=True)
+        doc_ids = {candidate["doc_id"] for candidate in summary["candidates"]}
+        assert doc_ids == {"doc1"}
+
     def test_no_rules_returns_summary(
         self, tmp_path: Path,
     ) -> None:
@@ -853,6 +944,129 @@ class TestRunBulkLinking:
         # Verify links were persisted
         stored_links = store.get_links(limit=1000)
         assert len(stored_links) >= 1
+        store.close()
+
+    def test_full_run_unlinks_stale_family_rows(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        """A rerun should unlink old rows not matched by the latest family rule."""
+        self._patch_scan_imports(monkeypatch)
+        corpus = self._corpus_with_matches()
+        store = _make_store(tmp_path)
+
+        # Seed a stale row from a prior broader run for the same family.
+        seeded = store.create_links(
+            [
+                {
+                    "family_id": "debt_capacity.indebtedness",
+                    "doc_id": "doc1",
+                    "section_number": "7.02",
+                    "heading": "Liens",
+                    "confidence": 0.9,
+                    "confidence_tier": "high",
+                    "status": "active",
+                    "source": "seed",
+                },
+            ],
+            run_id="seed-run",
+        )
+        assert seeded == 1
+
+        rules = [_make_rule(heading_values=["Indebtedness"])]
+        summary = run_bulk_linking(corpus, store, rules, dry_run=False)
+        assert summary["status"] == "completed"
+        assert summary["links_unlinked"] >= 1
+
+        active_rows = store.get_links(
+            family_id="debt_capacity.indebtedness",
+            status="active",
+            limit=1000,
+        )
+        assert all(
+            not (str(row.get("doc_id")) == "doc1" and str(row.get("section_number")) == "7.02")
+            for row in active_rows
+        )
+        unlinked_rows = store.get_links(
+            family_id="debt_capacity.indebtedness",
+            status="unlinked",
+            limit=1000,
+        )
+        assert any(
+            str(row.get("doc_id")) == "doc1" and str(row.get("section_number")) == "7.02"
+            for row in unlinked_rows
+        )
+        store.close()
+
+    def test_full_run_unlinks_stale_rows_within_scope_only(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        """Scoped rerun should not unlink sibling ontology scopes in same family."""
+        self._patch_scan_imports(monkeypatch)
+        corpus = FakeCorpus(
+            docs=["doc1"],
+            sections_by_doc={
+                "doc1": [FakeSection("doc1", "7.01", "Indebtedness", 7, 100, 500)],
+            },
+        )
+        store = _make_store(tmp_path)
+
+        seeded = store.create_links(
+            [
+                {
+                    "family_id": "debt_capacity.indebtedness",
+                    "ontology_node_id": "debt_capacity.indebtedness.general_basket",
+                    "doc_id": "doc1",
+                    "section_number": "7.03",
+                    "heading": "Legacy Basket Link",
+                    "confidence": 0.9,
+                    "confidence_tier": "high",
+                    "status": "active",
+                    "source": "seed",
+                },
+                {
+                    "family_id": "debt_capacity.indebtedness",
+                    "ontology_node_id": "debt_capacity.indebtedness.ratio_debt",
+                    "doc_id": "doc1",
+                    "section_number": "7.02",
+                    "heading": "Sibling Scope Link",
+                    "confidence": 0.9,
+                    "confidence_tier": "high",
+                    "status": "active",
+                    "source": "seed",
+                },
+            ],
+            run_id="seed-run",
+        )
+        assert seeded == 2
+
+        rules = [
+            _make_rule(
+                family_id="debt_capacity.indebtedness",
+                ontology_node_id="debt_capacity.indebtedness.general_basket",
+                heading_values=["Indebtedness"],
+                rule_id="r1",
+            ),
+        ]
+        summary = run_bulk_linking(
+            corpus,
+            store,
+            rules,
+            dry_run=False,
+            family_filter="debt_capacity.indebtedness.general_basket",
+        )
+        assert summary["status"] == "completed"
+        assert summary["links_unlinked"] >= 1
+
+        active_rows = store.get_links(
+            family_id="debt_capacity.indebtedness.ratio_debt",
+            status="active",
+            limit=1000,
+        )
+        assert any(
+            str(row.get("ontology_node_id")) == "debt_capacity.indebtedness.ratio_debt"
+            and str(row.get("section_number")) == "7.02"
+            for row in active_rows
+        )
         store.close()
 
     def test_cross_family_conflict_tracking(
