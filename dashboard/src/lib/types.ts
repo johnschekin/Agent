@@ -334,6 +334,25 @@ export interface EdgeCaseClauseDetailResponse {
   clauses: EdgeCaseClauseDetail[];
 }
 
+// --- Edge Case Definition Detail (drill-down) ---
+export interface EdgeCaseDefinitionDetail {
+  term: string;
+  pattern_engine: string;
+  char_start: number | null;
+  char_end: number | null;
+  definition_length: number;
+  section_number: string;
+  section_heading: string;
+  tail_snippet: string;
+}
+
+export interface EdgeCaseDefinitionDetailResponse {
+  doc_id: string;
+  category: string;
+  total_flagged: number;
+  definitions: EdgeCaseDefinitionDetail[];
+}
+
 // --- Section Frequency ---
 export interface SectionFrequency {
   section_number: string;
@@ -835,15 +854,21 @@ export interface WhyNotMatched {
 // ── Preview / Apply ─────────────────────────────────────────────────────
 
 export interface PreviewCandidate {
+  candidate_id: string;
   doc_id: string;
   borrower: string;
   section_number: string;
   clause_id?: string;
   clause_path?: string;
+  clause_key?: string;
   clause_label?: string;
   clause_char_start?: number | null;
   clause_char_end?: number | null;
   clause_text?: string;
+  defined_term?: string;
+  definition_char_start?: number | null;
+  definition_char_end?: number | null;
+  definition_text?: string;
   heading: string;
   confidence: number;
   confidence_tier: ConfidenceTier;
@@ -872,6 +897,7 @@ export interface PreviewCandidatesResponse {
   next_cursor?: {
     after_score: number;
     after_doc_id: string;
+    after_candidate_id?: string;
   } | null;
   page?: number;
   page_size?: number;
@@ -901,7 +927,7 @@ export interface LinkRule {
   scope_mode?: "corpus" | "inherited";
   name: string;
   filter_dsl: string;                                     // NEW: full multi-field DSL
-  result_granularity: "section" | "clause";               // NEW
+  result_granularity: "section" | "clause" | "defined_term"; // NEW
   heading_filter_ast: Record<string, unknown>;            // KEPT: backward compat
   heading_filter_dsl: string;                             // KEPT: backward compat
   keyword_anchors: string[];

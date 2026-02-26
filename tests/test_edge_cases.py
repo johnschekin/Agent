@@ -1,4 +1,4 @@
-"""Tests for the expanded edge case inspector (32 categories, 6 tiers)."""
+"""Tests for the expanded edge case inspector (38 categories, 6 tiers)."""
 from __future__ import annotations
 
 from typing import Any
@@ -198,7 +198,7 @@ def test_tier_registry_completeness() -> None:
 
 def test_tier_count() -> None:
     total = sum(len(c) for c in _EDGE_CASE_TIERS.values())
-    assert total == 32
+    assert total == 38
     assert len(_EDGE_CASE_TIERS) == 6
 
 
@@ -454,6 +454,44 @@ def test_single_engine_definitions() -> None:
     assert "quoted" in detail
 
 
+def test_definition_truncated_at_cap() -> None:
+    conn = _make_db()
+    _ins_doc(conn, doc_id="d1", word_count=20000, definition_count=25)
+    for i in range(5):
+        conn.execute(
+            "INSERT INTO definitions (doc_id, term, definition_text, pattern_engine) "
+            "VALUES (?, ?, ?, ?)",
+            ["d1", f"LongTerm{i}", "X" * 2000, "smart_quote"],
+        )
+    results = _run_all_queries(conn)
+    assert "definition_truncated_at_cap" in results
+
+
+def test_definition_signature_leak() -> None:
+    conn = _make_db()
+    _ins_doc(conn, doc_id="d1", word_count=20000, definition_count=12)
+    conn.execute(
+        "INSERT INTO definitions (doc_id, term, definition_text, pattern_engine) "
+        "VALUES (?, ?, ?, ?)",
+        ["d1", "Authorized Signatory Title", "signature page language", "colon"],
+    )
+    results = _run_all_queries(conn)
+    assert "definition_signature_leak" in results
+
+
+def test_definition_malformed_term() -> None:
+    conn = _make_db()
+    _ins_doc(conn, doc_id="d1", word_count=20000, definition_count=30)
+    for i in range(20):
+        conn.execute(
+            "INSERT INTO definitions (doc_id, term, definition_text, pattern_engine) "
+            "VALUES (?, ?, ?, ?)",
+            ["d1", f"Bad\\nTerm{i}", "definition body", "colon"],
+        )
+    results = _run_all_queries(conn)
+    assert "definition_malformed_term" in results
+
+
 # ---------------------------------------------------------------------------
 # New metadata categories
 # ---------------------------------------------------------------------------
@@ -597,6 +635,80 @@ def test_low_avg_clause_confidence() -> None:
     assert "low_avg_clause_confidence" in results
 
 
+def test_clause_root_label_repeat_explosion() -> None:
+    conn = _make_db()
+    _ins_doc(
+        conn, doc_id="d1", word_count=30000,
+        section_count=5, clause_count=260,
+    )
+    for i in range(205):
+        conn.execute(
+            "INSERT INTO clauses VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            [
+                "d1", "1", f"ydup{i}", "(y)", 1, "alpha",
+                i * 10, i * 10 + 5, "", "",
+                "", True, 0.95,
+            ],
+        )
+    results = _run_all_queries(conn)
+    assert "clause_root_label_repeat_explosion" in results
+
+
+def test_clause_dup_id_burst() -> None:
+    conn = _make_db()
+    _ins_doc(
+        conn, doc_id="d1", word_count=30000,
+        section_count=5, clause_count=260,
+    )
+    # 205 / 210 clause IDs include _dup => 97.6% dup ratio.
+    for i in range(205):
+        conn.execute(
+            "INSERT INTO clauses VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            [
+                "d1", "1", f"a_dup{i}", "(a)", 1, "alpha",
+                i * 10, i * 10 + 5, "", "",
+                "", True, 0.9,
+            ],
+        )
+    for i in range(5):
+        conn.execute(
+            "INSERT INTO clauses VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            [
+                "d1", "1", f"b{i}", "(b)", 1, "alpha",
+                2050 + i * 10, 2055 + i * 10, "", "",
+                "", True, 0.9,
+            ],
+        )
+    results = _run_all_queries(conn)
+    assert "clause_dup_id_burst" in results
+
+
+def test_clause_depth_reset_after_deep() -> None:
+    conn = _make_db()
+    _ins_doc(
+        conn, doc_id="d1", word_count=20000,
+        section_count=5, clause_count=20,
+    )
+    conn.execute(
+        "INSERT INTO clauses VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        ["d1", "1", "a.i.A.1", "(1)", 4, "numeric", 100, 120, "", "", "a.i.A", True, 0.9],
+    )
+    conn.execute(
+        "INSERT INTO clauses VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        ["d1", "1", "y", "(y)", 1, "alpha", 130, 145, "", "", "", True, 0.9],
+    )
+    conn.execute(
+        "INSERT INTO clauses VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        ["d1", "1", "b.i.B.2", "(2)", 4, "numeric", 200, 220, "", "", "b.i.B", True, 0.9],
+    )
+    conn.execute(
+        "INSERT INTO clauses VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        ["d1", "1", "z", "(z)", 1, "alpha", 230, 245, "", "", "", True, 0.9],
+    )
+    results = _run_all_queries(conn)
+    assert "clause_depth_reset_after_deep" in results
+
+
 # ---------------------------------------------------------------------------
 # No false positives for well-formed document
 # ---------------------------------------------------------------------------
@@ -640,6 +752,11 @@ def test_clean_document_no_edge_cases() -> None:
     critical = {
         "missing_sections", "zero_clauses",
         "zero_definitions", "very_short_document", "short_text",
+        "definition_truncated_at_cap",
+        "definition_signature_leak",
+        "clause_root_label_repeat_explosion",
+        "clause_dup_id_burst",
+        "clause_depth_reset_after_deep",
     }
     for cat in critical:
         assert cat not in results, f"Flagged as {cat}"

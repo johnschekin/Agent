@@ -11,8 +11,11 @@ ontology concepts in leveraged finance credit agreements parsed from EDGAR HTML 
 ## Commands
 
 ```bash
-# Setup
+# Setup — core library + dev tools (pytest, ruff, pyright)
 python3 -m pip install -e ".[dev]"
+
+# Server deps (not in pyproject.toml — install separately)
+python3 -m pip install fastapi uvicorn[standard] pydantic starlette
 
 # Run all tests
 python3 -m pytest
@@ -21,32 +24,16 @@ python3 -m pytest
 python3 -m pytest tests/test_strategy.py
 python3 -m pytest tests/test_strategy.py::test_merge_strategies -x
 
-# Lint and type-check
+# Lint and type-check (Python)
 ruff check src/ tests/ scripts/
 pyright src/
 
-# Rebuild corpus index — local corpus via Ray (~7 min, 3,298 docs)
-python3 scripts/build_corpus_ray_v2.py \
-  --local-corpus corpus \
-  --output corpus_index/corpus.duckdb \
-  --local --force -v
+# Type-check dashboard frontend
+cd dashboard && npx tsc --noEmit
 
-# Rebuild corpus index — from S3 via Ray (trimmed, ~15 min)
-python3 scripts/build_corpus_ray_v2.py \
-  --bucket edgar-pipeline-documents-216213517387 \
-  --output corpus_index/corpus.duckdb \
-  --local --force -v
-
-# Rebuild corpus index — from S3 full 34K docs (use --doc-prefix documents)
-python3 scripts/build_corpus_ray_v2.py \
-  --bucket edgar-pipeline-documents-216213517387 \
-  --doc-prefix documents --meta-prefix metadata \
-  --output corpus_index/corpus.duckdb \
-  --local --force -v
-
-# Rebuild corpus index — single-threaded, no Ray (slower but no Ray dependency)
-python3 scripts/build_corpus_index.py \
-  --corpus-dir corpus/documents --output corpus_index/corpus.duckdb --force -v
+# Dashboard E2E tests (Playwright — requires servers running)
+cd dashboard && npm run test:e2e        # all tests
+cd dashboard && npm run test:e2e:smoke  # smoke suite only
 ```
 
 ## Conventions
@@ -60,6 +47,7 @@ python3 scripts/build_corpus_index.py \
 - All char offsets reference normalized text (global, never section-relative)
 - Strategy versions are monotonically numbered per concept
 - CLI tools output structured JSON to stdout, human-readable messages to stderr
+- When running scripts directly (not via `python3 -m`), set `PYTHONPATH=src` or install the package
 
 ## Architecture
 
@@ -77,6 +65,12 @@ The scoring pipeline flows: **HTML → normalized text → sections → scoring 
 - `corpus.py` — DuckDB read-only interface (`CorpusIndex`). Tables: `documents`, `sections`, `clauses`, `definitions`, `section_text`, `section_features`, `clause_features`
 - `confidence.py` / `scope_parity.py` / `preemption.py` / `structural_fingerprint.py` — Feature modules used by pattern_tester's acceptance gates
 - `classifier.py` — Rule-based classifier absorbing 17 regex patterns from upstream
+- `rule_dsl.py` — Full DSL parser (Lark grammar) with proximity operators (`/s` same sentence, `/p` same paragraph, `/N` within N words), regex, `@macro` refs, field prefixes (`heading:`, `article:`, `clause:`, `section:`, `defined_term:`, `template:`, `vintage:`, etc.). Public API: `parse_dsl()`, `serialize_dsl()`, `validate_dsl()`
+- `document_processor.py` — Shared document processing pipeline for both corpus builders. Entry point: `process_document_text()` → `DocumentResult` with all 7 record lists
+- `link_confidence.py` — 7-factor composite confidence scoring (0.0–1.0): article_match (0.22), heading_exactness (0.28), clause_signal (0.13), template_consistency (0.10), defined_term_grounding (0.09), structural_prior (0.08), semantic_similarity (0.10). Tiers: High >=0.8, Medium 0.5–0.8, Low <0.5
+- `conflict_matrix.py` — Ontology-aware conflict policy matrix. Policies: `exclusive`, `warn`, `compound_covenant`, `shared_ok`, `expected_overlap`, `independent`. Built from ontology edges at server startup
+- `parsing_types.py` — Core shared types: `SpanRef`, `Ok[T]/Err[E]` Result type, `OutlineSection`, `OutlineArticle`, `RetrievalPolicy`
+- `io_utils.py` — orjson-accelerated JSON/JSONL file I/O with stdlib fallback
 
 ### CLI tools (`scripts/`)
 
@@ -93,6 +87,8 @@ Agent-callable tools with `--help` for usage. Key tools in the discovery loop:
 - `numbering_census.py` — Corpus-wide numbering format taxonomy (article format, section depth, zero-padding, anomalies)
 - `section_headers_survey.py` — Broad-range heading survey with category classification and long-tail analysis
 - `setup_workspace.py` — Creates per-family workspace directories with bootstrap strategies
+- `bulk_family_linker.py` — Bootstraps ontology family links across corpus with 7-factor confidence scoring, cross-family conflict detection, canary mode (`--canary N`), and dry-run mode
+- `link_worker.py` — Background job processor for linking system. Polls `job_queue` table in `links.duckdb`. Job types: `preview`, `apply`, `canary`, `batch_run`, `embeddings_compute`, `check_drift`, `export`. Auto-started by API server — typically not run manually
 
 ### Swarm orchestration (`swarm/`)
 
@@ -102,7 +98,7 @@ Wave scheduling and status tracking via `scripts/wave_scheduler.py`, `wave_trans
 
 ### Other directories
 
-- `data/` — Ontology (`r36a_production_ontology_v2.5.1.json`) + bootstrap strategies (checked in)
+- `data/` — `ontology/` (active: `r36a_production_ontology_v2.5.1.json`), `bootstrap/` (bootstrap strategies), `family_link_rules.json` (10 bootstrap DSL rules — `filter_dsl` is primary, `heading_filter_ast` kept for backward compat), `ontology_notes.json` (mutable sidecar for dashboard notes)
 - `corpus/` — S3-synced HTML documents (gitignored)
 - `corpus_index/` — DuckDB databases (gitignored)
 - `workspaces/` — Per-family agent working directories (gitignored)
@@ -112,42 +108,50 @@ Wave scheduling and status tracking via `scripts/wave_scheduler.py`, `wave_trans
 ## Dashboard Servers
 
 ```bash
-# Backend API (run from repo root)
-python3 -m uvicorn dashboard.api.server:app --host 0.0.0.0 --port 8000
+# Backend API (run from dashboard/ directory)
+cd dashboard && python3 -m uvicorn api.server:app --host 127.0.0.1 --port 8000
 
-# Frontend (MUST run from dashboard/ directory — running from repo root installs wrong Next.js version)
-cd dashboard && npx next dev --port 3000
+# Frontend (run from dashboard/ directory — separate shell)
+cd dashboard && NEXT_PUBLIC_API_URL=http://127.0.0.1:8000 npm run dev -- --hostname 127.0.0.1 --port 3000
+
+# Verify
+curl -s http://127.0.0.1:8000/api/health
 ```
 
-**Important:** Always start the frontend and backend as separate shell commands (separate Bash calls). Never chain them with `&&` or newlines in a single command — this causes CWD drift where the frontend starts from the wrong directory.
+**Important:**
+- Always start the frontend and backend as **separate** shell commands (separate Bash calls). Never chain them with `&&` or newlines in a single command — this causes CWD drift.
+- Frontend **must** set `NEXT_PUBLIC_API_URL=http://127.0.0.1:8000` to avoid same-origin `/api` calls hitting port 3000 instead of 8000.
+- Use `--hostname` (not `--host`) for Next.js CLI.
+- The API server auto-spawns `link_worker.py` as a subprocess on startup — no need to start it manually.
+- Server must run single-worker (`--workers 1`, the default). All endpoints are `async def`.
+- If `corpus_index/corpus.duckdb` is missing, server starts in demo mode (corpus endpoints return 503, links endpoints work).
 
 ## Corpus Build
 
 The DuckDB corpus index must be rebuilt after changes to parsing logic (`doc_parser.py`, `html_utils.py`, `section_parser.py`, `clause_parser.py`, `definitions.py`).
 
-**Preferred method** — Ray with local corpus (fastest, ~7 min for 3,298 docs):
 ```bash
+# Preferred — Ray with local corpus (fastest, ~7 min for 3,298 docs)
 python3 scripts/build_corpus_ray_v2.py \
   --local-corpus corpus \
   --output corpus_index/corpus.duckdb \
   --local --force -v
+
+# From S3 full 34K docs
+python3 scripts/build_corpus_ray_v2.py \
+  --bucket edgar-pipeline-documents-216213517387 \
+  --doc-prefix documents --meta-prefix metadata \
+  --output corpus_index/corpus.duckdb \
+  --local --force -v
+
+# Single-threaded, no Ray dependency
+python3 scripts/build_corpus_index.py \
+  --corpus-dir corpus/documents --output corpus_index/corpus.duckdb --force -v
 ```
 
 **Requirements:** `ray`, `pyarrow`, `duckdb`, and local corpus in `corpus/documents/` + `corpus/metadata/`.
 
-**Local corpus setup** (one-time, downloads 12,583 leveraged CAs from S3):
-```bash
-# The corpus/ directory mirrors S3 structure: documents/cik=NNNN/*.htm + metadata/cik=NNNN/*.meta.json
-# Use the download script or aws s3 sync
-```
-
-**Flags:**
-- `--local-corpus <dir>` — Read HTML from local filesystem instead of S3 (eliminates ~200ms/doc network latency)
-- `--local` — Use local Ray (no cluster required)
-- `--force` — Overwrite existing DuckDB without confirmation
-- `--limit N` — Process only first N docs (for testing)
-- `--one-per-cik` — Deduplicate by CIK (keep most recent filing)
-- `--doc-prefix` / `--meta-prefix` — Override S3 key or local sub-directory prefix
+**Key flags:** `--local-corpus <dir>` (local filesystem), `--local` (local Ray), `--force` (overwrite), `--limit N` (test subset), `--one-per-cik` (dedup by CIK).
 
 **Output:** `corpus_index/corpus.duckdb` (~6 GB) with tables: `documents`, `sections`, `clauses`, `definitions`, `section_text`, `section_features`, `clause_features`.
 
@@ -174,9 +178,13 @@ Interactive workflow for creating ontology family link rules via the dashboard A
 
 **Quick reference:**
 - DSL operators: `|` (OR), `&` (AND), `!` (NOT), quoted strings for multi-word (`"Restricted Payments"`)
-- API base: `http://localhost:8000/api/links`, auth: `Authorization: Bearer local-dev-links-token`
+- DSL field prefixes: `heading:`, `article:`, `clause:`, `section:`, `defined_term:` (text fields); `template:`, `vintage:`, `market:`, `doc_type:`, `admin_agent:`, `facility_size_mm:` (metadata fields)
+- DSL proximity operators: `/s` (same sentence), `/p` (same paragraph), `/N` (within N words)
+- API base: `http://127.0.0.1:8000/api/links`, auth: `Authorization: Bearer local-dev-links-token`
 - Embeddings: Voyage AI (`voyage-finance-2`, 1024-dim) — requires `VOYAGE_API_KEY` in `.env`
-- Link storage: `corpus_index/links.duckdb` (DuckDB single-writer — stop server before running direct scripts)
+- Link storage: `corpus_index/links.duckdb` (DuckDB single-writer — stop server before running direct scripts that write)
+- Family IDs: API uses `FAM-` prefix (e.g., `FAM-indebtedness`); ontology uses dotted notation (`debt_capacity.indebtedness`). Link store accepts either
+- Key `links.duckdb` tables: `family_link_rules`, `family_links`, `link_events`, `previews`, `preview_candidates`, `job_queue`, `action_log` (undo/redo), `review_sessions`, `review_marks`, `section_embeddings`, `family_centroids`, `conflict_policies`, `starter_kits`
 
 **Workflow steps:** Draft rule → Preview matches → Publish → Apply to create links → Embed linked sections → Find similar unlinked sections → Iterate.
 

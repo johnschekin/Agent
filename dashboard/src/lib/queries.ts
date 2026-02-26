@@ -16,6 +16,7 @@ import {
   fetchQualityAnomalies,
   fetchEdgeCases,
   fetchEdgeCaseClauseDetail,
+  fetchEdgeCaseDefinitionDetail,
   fetchSectionFrequency,
   fetchArticleConcepts,
   fetchCorpusQuery,
@@ -192,6 +193,15 @@ export function useEdgeCaseClauseDetail(docId: string | null, category: string |
   return useQuery({
     queryKey: ["edge-cases", "clause-detail", docId, category],
     queryFn: () => fetchEdgeCaseClauseDetail(docId!, category!),
+    enabled: !!docId && !!category,
+    staleTime: 60_000,
+  });
+}
+
+export function useEdgeCaseDefinitionDetail(docId: string | null, category: string | null) {
+  return useQuery({
+    queryKey: ["edge-cases", "definition-detail", docId, category],
+    queryFn: () => fetchEdgeCaseDefinitionDetail(docId!, category!),
     enabled: !!docId && !!category,
     staleTime: 60_000,
   });
@@ -685,6 +695,7 @@ export function usePreviewCandidates(
     confidenceTier?: import("./types").ConfidenceTier;
     afterScore?: number | null;
     afterDocId?: string | null;
+    afterCandidateId?: string | null;
   } = {},
 ) {
   return useQuery({
@@ -706,7 +717,14 @@ export function useUpdateVerdictsMutation() {
       verdicts,
     }: {
       previewId: string;
-      verdicts: { doc_id: string; section_number: string; verdict: string }[];
+      verdicts: {
+        verdict: string;
+        candidate_id?: string;
+        doc_id?: string;
+        section_number?: string;
+        clause_id?: string;
+        clause_path?: string;
+      }[];
     }) => updateCandidateVerdicts(previewId, verdicts),
     onSuccess: (_data, variables) => {
       qc.invalidateQueries({
@@ -1314,7 +1332,7 @@ export function useCreatePreviewFromAstMutation() {
       metaFilters?: Record<string, unknown>;
       textFields?: Record<string, unknown>;
       filterDsl?: string;
-      resultGranularity?: "section" | "clause";
+      resultGranularity?: "section" | "clause" | "defined_term";
       ontologyNodeId?: string | null;
       scope?: {
         scopeMode?: "corpus" | "inherited";

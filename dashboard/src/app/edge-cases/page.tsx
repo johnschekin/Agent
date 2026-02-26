@@ -8,6 +8,7 @@ import { KpiCard, KpiCardGrid } from "@/components/ui/KpiCard";
 import { LoadingState } from "@/components/ui/Spinner";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ClauseAnomalyDetail } from "@/components/edge-cases/ClauseAnomalyDetail";
+import { DefinitionAnomalyDetail } from "@/components/edge-cases/DefinitionAnomalyDetail";
 import { useEdgeCases } from "@/lib/queries";
 import { formatNumber, formatCurrencyMM } from "@/lib/formatters";
 import { cn } from "@/lib/cn";
@@ -43,7 +44,7 @@ const TIER_COLORS: Record<string, "red" | "orange" | undefined> = {
   template: undefined,
 };
 
-// --- Category labels (33 categories across 6 tiers) ---
+// --- Category labels (38 categories across 6 tiers) ---
 
 const CATEGORY_LABELS: Record<string, string> = {
   // Structural
@@ -62,12 +63,18 @@ const CATEGORY_LABELS: Record<string, string> = {
   deep_nesting_outlier: "Deep Nesting Outlier",
   low_structural_ratio: "Low Structural Ratio",
   rootless_deep_clause: "Rootless Deep Clause",
+  clause_root_label_repeat_explosion: "Root Label Repeat Explosion",
+  clause_dup_id_burst: "Clause ID Dup Burst",
+  clause_depth_reset_after_deep: "Depth Reset After Deep",
   // Definitions
   low_definitions: "Low Definitions",
   zero_definitions: "Zero Definitions",
   high_definition_count: "High Definition Count",
   duplicate_definitions: "Duplicate Definitions",
   single_engine_definitions: "Single Engine Defs",
+  definition_truncated_at_cap: "Definition Truncated At Cap",
+  definition_signature_leak: "Definition Signature Leak",
+  definition_malformed_term: "Definition Malformed Term",
   // Metadata
   extreme_facility: "Extreme Facility Size",
   missing_borrower: "Missing Borrower",
@@ -94,6 +101,15 @@ const CLAUSE_DRILL_DOWN_CATEGORIES = new Set([
   "low_avg_clause_confidence",
   "low_structural_ratio",
   "rootless_deep_clause",
+  "clause_root_label_repeat_explosion",
+  "clause_dup_id_burst",
+  "clause_depth_reset_after_deep",
+]);
+
+const DEFINITION_DRILL_DOWN_CATEGORIES = new Set([
+  "definition_truncated_at_cap",
+  "definition_signature_leak",
+  "definition_malformed_term",
 ]);
 
 // --- Edge case row ---
@@ -118,8 +134,8 @@ function EdgeCaseRow({
             onDocClick(item.doc_id, item.category);
           }}
           title={
-            CLAUSE_DRILL_DOWN_CATEGORIES.has(item.category)
-              ? `Inspect clauses in ${item.doc_id}`
+            CLAUSE_DRILL_DOWN_CATEGORIES.has(item.category) || DEFINITION_DRILL_DOWN_CATEGORIES.has(item.category)
+              ? `Inspect edge-case rows in ${item.doc_id}`
               : `Open ${item.doc_id} in Explorer`
           }
         >
@@ -192,7 +208,10 @@ export default function EdgeCasesPage() {
 
   const handleDocClick = useCallback(
     (docId: string, itemCategory: string) => {
-      if (CLAUSE_DRILL_DOWN_CATEGORIES.has(itemCategory)) {
+      if (
+        CLAUSE_DRILL_DOWN_CATEGORIES.has(itemCategory) ||
+        DEFINITION_DRILL_DOWN_CATEGORIES.has(itemCategory)
+      ) {
         setSelectedDoc({ docId, category: itemCategory });
       } else {
         router.push(`/explorer?selected=${encodeURIComponent(docId)}`);
@@ -437,13 +456,21 @@ export default function EdgeCasesPage() {
         </ChartCard>
       )}
 
-      {/* Clause anomaly drill-down panel */}
+      {/* Clause / definition anomaly drill-down panel */}
       {selectedDoc && (
-        <ClauseAnomalyDetail
-          docId={selectedDoc.docId}
-          category={selectedDoc.category}
-          onClose={() => setSelectedDoc(null)}
-        />
+        CLAUSE_DRILL_DOWN_CATEGORIES.has(selectedDoc.category) ? (
+          <ClauseAnomalyDetail
+            docId={selectedDoc.docId}
+            category={selectedDoc.category}
+            onClose={() => setSelectedDoc(null)}
+          />
+        ) : (
+          <DefinitionAnomalyDetail
+            docId={selectedDoc.docId}
+            category={selectedDoc.category}
+            onClose={() => setSelectedDoc(null)}
+          />
+        )
       )}
     </ViewContainer>
   );

@@ -714,7 +714,17 @@ class TestBuildMultiFieldSql:
         fields = {"article": FilterMatch(value="negative covenants")}
         where, params, joins = build_multi_field_sql(fields)
         assert "a.title ILIKE" in where
-        assert "CAST(s.article_num AS VARCHAR)" in where
+        assert "a.concept ILIKE" in where
+        assert "s.article_num = ?" not in where
+        assert len(params) == 2
+        assert len(joins) == 1
+        assert any("JOIN articles" in j for j in joins)
+
+    def test_article_number_token_compiles_to_article_num_predicate(self) -> None:
+        fields = {"article": FilterMatch(value="Article II")}
+        where, params, joins = build_multi_field_sql(fields)
+        assert "s.article_num = ?" in where
+        assert params[-1] == 2
         assert len(joins) == 1
         assert any("JOIN articles" in j for j in joins)
 
@@ -724,6 +734,7 @@ class TestBuildMultiFieldSql:
         assert "EXISTS" in where
         assert "clauses" in where
         assert "c.header_text ILIKE" in where
+        assert "c.clause_text ILIKE" in where
         assert joins == set()
 
     def test_defined_term_subquery(self) -> None:
@@ -731,6 +742,8 @@ class TestBuildMultiFieldSql:
         where, params, joins = build_multi_field_sql(fields)
         assert "EXISTS" in where
         assert "definitions" in where
+        assert "d.char_start >= s.char_start" in where
+        assert "d.char_end <= s.char_end" in where
         assert "d.term ILIKE" in where
 
     def test_section_filter(self) -> None:

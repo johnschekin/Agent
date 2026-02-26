@@ -591,6 +591,101 @@ def _compute_cost(expr: FilterExpression, depth: int) -> int:
 
 
 # ---------------------------------------------------------------------------
+# Article field helpers
+# ---------------------------------------------------------------------------
+
+_ROMAN_CHAR_VALUES: dict[str, int] = {
+    "I": 1,
+    "V": 5,
+    "X": 10,
+    "L": 50,
+    "C": 100,
+    "D": 500,
+    "M": 1000,
+}
+_ROMAN_NUMERAL_RE = re.compile(r"^[ivxlcdm]+$", re.IGNORECASE)
+_ARTICLE_PREFIX_RE = re.compile(r"^(?:article|art\.?)\s+", re.IGNORECASE)
+
+
+def _roman_to_int(token: str) -> int | None:
+    raw = str(token or "").strip().upper()
+    if not raw or not _ROMAN_NUMERAL_RE.match(raw):
+        return None
+
+    total = 0
+    prev = 0
+    for char in reversed(raw):
+        value = _ROMAN_CHAR_VALUES.get(char)
+        if value is None:
+            return None
+        if value < prev:
+            total -= value
+        else:
+            total += value
+            prev = value
+    return total if total > 0 else None
+
+
+def _parse_article_number_token(value: str) -> int | None:
+    """Parse article-number forms like ``2``, ``II``, ``Article II``."""
+    raw = str(value or "").strip()
+    if not raw:
+        return None
+
+    lowered = _ARTICLE_PREFIX_RE.sub("", raw.lower()).strip()
+    lowered = re.sub(r"^[^a-z0-9]+|[^a-z0-9]+$", "", lowered)
+    if not lowered:
+        return None
+    if lowered.isdigit():
+        return int(lowered)
+
+    roman_value = _roman_to_int(lowered)
+    return roman_value
+
+
+def _build_article_leaf_sql(match: FilterMatch) -> tuple[str, list[Any]]:
+    """Compile one article leaf to SQL that supports title/name and number."""
+    positive = FilterMatch(value=match.value, negate=False)
+
+    title_sql, title_params = build_filter_sql(
+        positive, "a.title", wrap_wildcards=True,
+    )
+    concept_sql, concept_params = build_filter_sql(
+        positive, "a.concept", wrap_wildcards=True,
+    )
+
+    predicates = [f"({title_sql} OR {concept_sql})"]
+    params: list[Any] = [*title_params, *concept_params]
+
+    article_num = _parse_article_number_token(match.value)
+    if article_num is not None:
+        predicates.append("s.article_num = ?")
+        params.append(article_num)
+
+    combined = " OR ".join(predicates)
+    if match.negate:
+        return (f"NOT ({combined})", params)
+    return (f"({combined})", params)
+
+
+def _build_article_filter_sql(expr: FilterExpression) -> tuple[str, list[Any]]:
+    """Compile article field AST where each term can match name or number."""
+    if isinstance(expr, FilterMatch):
+        return _build_article_leaf_sql(expr)
+    if not expr.children:
+        return ("(1=1)", [])
+
+    joiner = " AND " if expr.operator == "and" else " OR "
+    parts: list[str] = []
+    params: list[Any] = []
+    for child in expr.children:
+        child_sql, child_params = _build_article_filter_sql(child)
+        parts.append(child_sql)
+        params.extend(child_params)
+    return ("(" + joiner.join(parts) + ")", params)
+
+
+# ---------------------------------------------------------------------------
 # Multi-field SQL builder (used by DSL-driven queries)
 # ---------------------------------------------------------------------------
 
@@ -630,18 +725,13 @@ def build_multi_field_sql(
         where_parts.append(sql)
         params.extend(p)
 
-    # article: → match title OR article_num (requires JOIN articles a)
+    # article: → match article title/name and article number
+    # (requires JOIN articles a for title/concept matching)
     article_expr = text_fields.get("article")
     if article_expr is not None:
-        title_sql, title_p = build_filter_sql(
-            article_expr, "a.title", wrap_wildcards=True,
-        )
-        num_sql, num_p = build_filter_sql(
-            article_expr, "CAST(s.article_num AS VARCHAR)", wrap_wildcards=False,
-        )
-        where_parts.append(f"({title_sql} OR {num_sql})")
-        params.extend(title_p)
-        params.extend(num_p)
+        article_sql, article_params = _build_article_filter_sql(article_expr)
+        where_parts.append(article_sql)
+        params.extend(article_params)
         joins.add(
             "JOIN articles a ON a.doc_id = s.doc_id AND a.article_num = s.article_num"
         )
@@ -654,20 +744,26 @@ def build_multi_field_sql(
         params.extend(p)
 
     # clause: → EXISTS subquery against clauses table
+    # Match against either clause header text or body text so clause-mode
+    # preview and batch-run paths use the same textual scope.
     clause_expr = text_fields.get("clause")
     if clause_expr is not None:
-        inner_sql, inner_p = build_filter_sql(
+        header_sql, header_p = build_filter_sql(
             clause_expr, "c.header_text", wrap_wildcards=True,
+        )
+        body_sql, body_p = build_filter_sql(
+            clause_expr, "c.clause_text", wrap_wildcards=True,
         )
         where_parts.append(
             f"EXISTS (SELECT 1 FROM clauses c"
             f" WHERE c.doc_id = s.doc_id"
             f" AND c.section_number = s.section_number"
-            f" AND {inner_sql})"
+            f" AND (({header_sql}) OR ({body_sql})))"
         )
-        params.extend(inner_p)
+        params.extend(header_p)
+        params.extend(body_p)
 
-    # defined_term: → EXISTS subquery against definitions table
+    # defined_term: → EXISTS subquery against definitions table scoped to section span
     dt_expr = text_fields.get("defined_term")
     if dt_expr is not None:
         inner_sql, inner_p = build_filter_sql(
@@ -676,6 +772,8 @@ def build_multi_field_sql(
         where_parts.append(
             f"EXISTS (SELECT 1 FROM definitions d"
             f" WHERE d.doc_id = s.doc_id"
+            f" AND d.char_start >= s.char_start"
+            f" AND d.char_end <= s.char_end"
             f" AND {inner_sql})"
         )
         params.extend(inner_p)

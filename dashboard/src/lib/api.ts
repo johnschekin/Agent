@@ -249,6 +249,14 @@ export function fetchEdgeCaseClauseDetail(docId: string, category: string) {
   );
 }
 
+// --- Edge Case Definition Detail ---
+export function fetchEdgeCaseDefinitionDetail(docId: string, category: string) {
+  const sp = new URLSearchParams({ category });
+  return fetchJson<import("./types").EdgeCaseDefinitionDetailResponse>(
+    `/api/edge-cases/${encodeURIComponent(docId)}/definition-detail?${sp}`
+  );
+}
+
 // --- Section Frequency ---
 export interface SectionFrequencyParams {
   cohortOnly?: boolean;
@@ -966,6 +974,7 @@ export function fetchPreviewCandidatesPage(
     confidenceTier?: import("./types").ConfidenceTier;
     afterScore?: number | null;
     afterDocId?: string | null;
+    afterCandidateId?: string | null;
   }
 ) {
   const sp = new URLSearchParams();
@@ -978,6 +987,7 @@ export function fetchPreviewCandidatesPage(
   ) {
     sp.set("after_score", String(params.afterScore));
     sp.set("after_doc_id", params.afterDocId);
+    if (params.afterCandidateId) sp.set("after_candidate_id", params.afterCandidateId);
   }
   return fetchJson<Record<string, unknown>>(
     `/api/links/previews/${encodeURIComponent(previewId)}/candidates?${sp}`
@@ -986,11 +996,16 @@ export function fetchPreviewCandidatesPage(
     const items = itemsRaw.map((row) => {
       const r = row as Record<string, unknown>;
       return {
+        candidate_id: String(
+          r.candidate_id
+          ?? `${String(r.doc_id ?? "")}::${String(r.section_number ?? "")}::${String(r.clause_id ?? r.clause_path ?? "__section__")}`,
+        ),
         doc_id: String(r.doc_id ?? ""),
         borrower: String(r.borrower ?? r.doc_id ?? ""),
         section_number: String(r.section_number ?? ""),
         clause_id: String(r.clause_id ?? ""),
         clause_path: String(r.clause_path ?? ""),
+        clause_key: String(r.clause_key ?? r.clause_id ?? r.clause_path ?? "__section__"),
         clause_label: String(r.clause_label ?? ""),
         clause_char_start:
           r.clause_char_start === null || r.clause_char_start === undefined
@@ -1001,6 +1016,16 @@ export function fetchPreviewCandidatesPage(
             ? null
             : Number(r.clause_char_end),
         clause_text: String(r.clause_text ?? ""),
+        defined_term: String(r.defined_term ?? ""),
+        definition_char_start:
+          r.definition_char_start === null || r.definition_char_start === undefined
+            ? null
+            : Number(r.definition_char_start),
+        definition_char_end:
+          r.definition_char_end === null || r.definition_char_end === undefined
+            ? null
+            : Number(r.definition_char_end),
+        definition_text: String(r.definition_text ?? ""),
         heading: String(r.heading ?? ""),
         confidence: Number(r.confidence ?? 0),
         confidence_tier: String(r.confidence_tier ?? "low") as import("./types").ConfidenceTier,
@@ -1029,6 +1054,10 @@ export function fetchPreviewCandidatesPage(
         ? {
             after_score: Number(nextCursorRaw.after_score ?? 0),
             after_doc_id: String(nextCursorRaw.after_doc_id ?? ""),
+            after_candidate_id:
+              nextCursorRaw.after_candidate_id === null || nextCursorRaw.after_candidate_id === undefined
+                ? undefined
+                : String(nextCursorRaw.after_candidate_id),
           }
         : null,
       page: Number(raw.page ?? 1),
@@ -1039,7 +1068,14 @@ export function fetchPreviewCandidatesPage(
 
 export function updateCandidateVerdicts(
   previewId: string,
-  verdicts: { doc_id: string; section_number: string; verdict: string }[]
+  verdicts: {
+    verdict: string;
+    candidate_id?: string;
+    doc_id?: string;
+    section_number?: string;
+    clause_id?: string;
+    clause_path?: string;
+  }[]
 ) {
   return patchJson<{ updated: number }>(
     `/api/links/previews/${encodeURIComponent(previewId)}/candidates/verdict`,
@@ -1091,7 +1127,12 @@ function normalizeLinkRule(raw: Record<string, unknown>): import("./types").Link
       String(raw.scope_mode ?? "corpus") === "inherited" ? "inherited" : "corpus",
     name: String(raw.name ?? ""),
     filter_dsl: filterDsl || headingDsl,
-    result_granularity: granularity === "clause" ? "clause" : "section",
+    result_granularity:
+      granularity === "clause"
+        ? "clause"
+        : granularity === "defined_term"
+          ? "defined_term"
+          : "section",
     heading_filter_ast:
       raw.heading_filter_ast && typeof raw.heading_filter_ast === "object"
         ? (raw.heading_filter_ast as Record<string, unknown>)
@@ -1152,7 +1193,7 @@ export function createLinkRule(data: {
   family_id: string;
   ontology_node_id?: string | null;
   filter_dsl?: string;
-  result_granularity?: "section" | "clause";
+  result_granularity?: "section" | "clause" | "defined_term";
   heading_filter_dsl?: string;
   heading_filter_ast?: Record<string, unknown>;
   keyword_anchors?: string[];
@@ -1664,7 +1705,7 @@ export function createPreviewFromAst(
   metaFilters?: Record<string, unknown>,
   textFields?: Record<string, unknown>,
   filterDsl?: string,
-  resultGranularity?: "section" | "clause",
+  resultGranularity?: "section" | "clause" | "defined_term",
   ontologyNodeId?: string | null,
   scope?: {
     scopeMode?: "corpus" | "inherited";

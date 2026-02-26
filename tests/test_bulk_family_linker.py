@@ -56,6 +56,8 @@ class FakeArticle:
     doc_id: str
     article_num: int
     concept: str | None
+    label: str = ""
+    title: str = ""
 
 
 @dataclass
@@ -75,15 +77,26 @@ class FakeConfidenceResult:
 class FakeConn:
     """Minimal fake DuckDB connection for corpus queries."""
 
-    def __init__(self, docs: list[str]) -> None:
+    def __init__(
+        self,
+        docs: list[str],
+        *,
+        scoped_section_rows: list[tuple[str, str]] | None = None,
+    ) -> None:
         self._docs = docs
+        self._scoped_section_rows = scoped_section_rows or []
 
     def execute(self, sql: str, params: list[Any] | None = None) -> FakeConn:
         self._last_params = params or []
         self._last_sql = sql
         return self
 
-    def fetchall(self) -> list[tuple[str]]:
+    def fetchall(self) -> list[tuple[Any, ...]]:
+        if "SELECT DISTINCT s.doc_id, s.section_number" in self._last_sql:
+            return [
+                (doc_id, section_number)
+                for doc_id, section_number in self._scoped_section_rows
+            ]
         if "LIMIT" in self._last_sql and self._last_params:
             limit = int(self._last_params[-1])
             return [(d,) for d in self._docs[:limit]]
@@ -99,8 +112,9 @@ class FakeCorpus:
         sections_by_doc: dict[str, list[FakeSection]] | None = None,
         articles_by_doc: dict[str, list[FakeArticle]] | None = None,
         definitions_by_doc: dict[str, list[FakeDefinition]] | None = None,
+        scoped_section_rows: list[tuple[str, str]] | None = None,
     ) -> None:
-        self._conn = FakeConn(docs)
+        self._conn = FakeConn(docs, scoped_section_rows=scoped_section_rows)
         self._sections_by_doc = sections_by_doc or {}
         self._articles_by_doc = articles_by_doc or {}
         self._definitions_by_doc = definitions_by_doc or {}
@@ -457,6 +471,48 @@ class TestArticleConcept:
     def test_article_none(self) -> None:
         """None article concept does not match when constraints exist."""
         assert _article_matches_rule(None, ["NEGATIVE_COVENANTS"]) is False
+
+    def test_article_filter_expr_matches_article_number(self) -> None:
+        """Article DSL terms like 'Article II' should match article_num=2."""
+        from agent.query_filters import FilterMatch
+
+        expr = FilterMatch(value="Article II")
+        assert _article_matches_rule(
+            None,
+            [],
+            article_filter_expr=expr,
+            article_num=2,
+            article_title="Financial Covenants",
+            article_label="ARTICLE II",
+        ) is True
+
+    def test_article_filter_expr_matches_article_title(self) -> None:
+        """Article DSL should match by article title/name as well as concept."""
+        from agent.query_filters import FilterMatch
+
+        expr = FilterMatch(value="events of default")
+        assert _article_matches_rule(
+            "events_of_default",
+            [],
+            article_filter_expr=expr,
+            article_num=8,
+            article_title="Events of Default",
+            article_label="ARTICLE VIII",
+        ) is True
+
+    def test_article_filter_expr_negation(self) -> None:
+        """Negated article terms should invert the composite article predicate."""
+        from agent.query_filters import FilterMatch
+
+        expr = FilterMatch(value="events of default", negate=True)
+        assert _article_matches_rule(
+            "negative_covenants",
+            [],
+            article_filter_expr=expr,
+            article_num=7,
+            article_title="Negative Covenants",
+            article_label="ARTICLE VII",
+        ) is True
 
     def test_get_article_concept_found(self) -> None:
         """Gets article concept when the article exists."""
@@ -905,6 +961,96 @@ class TestRunBulkLinking:
         doc_ids = {candidate["doc_id"] for candidate in summary["candidates"]}
         assert doc_ids == {"doc1"}
 
+    def test_filter_dsl_clause_constraint_is_enforced(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        """Clause field in filter_dsl should restrict batch-run candidates."""
+        self._patch_scan_imports(monkeypatch)
+        corpus = FakeCorpus(
+            docs=["doc1", "doc2"],
+            sections_by_doc={
+                "doc1": [FakeSection("doc1", "6.01", "Indebtedness", 6, 100, 500)],
+                "doc2": [FakeSection("doc2", "6.01", "Indebtedness", 6, 100, 500)],
+            },
+            scoped_section_rows=[("doc1", "6.01")],
+        )
+        rule = _make_rule(heading_values=["Indebtedness"], article_concepts=[])
+        rule["filter_dsl"] = "heading: \"Indebtedness\" clause: \"other indebtedness\""
+        summary = run_bulk_linking(corpus, None, [rule], dry_run=True)
+        doc_ids = {candidate["doc_id"] for candidate in summary["candidates"]}
+        assert doc_ids == {"doc1"}
+
+    def test_filter_dsl_defined_term_constraint_is_enforced(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        """Defined-term field in filter_dsl should restrict batch-run candidates."""
+        self._patch_scan_imports(monkeypatch)
+        corpus = FakeCorpus(
+            docs=["doc1", "doc2"],
+            sections_by_doc={
+                "doc1": [FakeSection("doc1", "6.01", "Indebtedness", 6, 100, 500)],
+                "doc2": [FakeSection("doc2", "6.01", "Indebtedness", 6, 100, 500)],
+            },
+            scoped_section_rows=[("doc2", "6.01")],
+        )
+        rule = _make_rule(heading_values=["Indebtedness"], article_concepts=[])
+        rule["filter_dsl"] = "heading: \"Indebtedness\" defined_term: \"Available Amount\""
+        summary = run_bulk_linking(corpus, None, [rule], dry_run=True)
+        doc_ids = {candidate["doc_id"] for candidate in summary["candidates"]}
+        assert doc_ids == {"doc2"}
+
+    def test_filter_dsl_combined_article_heading_clause_all_enforced(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        """Batch-run should enforce all DSL text fields together."""
+        self._patch_scan_imports(monkeypatch)
+        corpus = FakeCorpus(
+            docs=["doc1", "doc2", "doc3"],
+            sections_by_doc={
+                "doc1": [FakeSection("doc1", "6.01", "Indebtedness", 6, 100, 500)],
+                "doc2": [FakeSection("doc2", "6.01", "Indebtedness", 6, 100, 500)],
+                "doc3": [FakeSection("doc3", "6.01", "Indebtedness", 6, 100, 500)],
+            },
+            articles_by_doc={
+                "doc1": [FakeArticle("doc1", 6, "NEGATIVE_COVENANTS")],
+                "doc2": [FakeArticle("doc2", 6, "NEGATIVE_COVENANTS")],
+                "doc3": [FakeArticle("doc3", 6, "EVENTS_OF_DEFAULT")],
+            },
+            scoped_section_rows=[("doc1", "6.01"), ("doc3", "6.01")],
+        )
+        rule = _make_rule(heading_values=["Indebtedness"], article_concepts=[])
+        rule["filter_dsl"] = (
+            "article: negative "
+            "heading: \"Indebtedness\" "
+            "clause: \"other indebtedness\""
+        )
+        summary = run_bulk_linking(corpus, None, [rule], dry_run=True)
+        doc_ids = {candidate["doc_id"] for candidate in summary["candidates"]}
+        assert doc_ids == {"doc1"}
+
+    def test_article_only_rule_works_without_heading_filter(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        """Rules with only article DSL should still produce section candidates."""
+        self._patch_scan_imports(monkeypatch)
+        corpus = FakeCorpus(
+            docs=["doc1"],
+            sections_by_doc={
+                "doc1": [
+                    FakeSection("doc1", "8.01", "Cross Default", 8, 100, 500),
+                    FakeSection("doc1", "8.02", "Acceleration", 8, 500, 900),
+                ],
+            },
+            articles_by_doc={
+                "doc1": [FakeArticle("doc1", 8, "EVENTS_OF_DEFAULT", "ARTICLE VIII", "Events of Default")],
+            },
+        )
+        rule = _make_rule(heading_values=["placeholder"], article_concepts=[])
+        rule["heading_filter_ast"] = {}
+        rule["filter_dsl"] = "article: \"events of default\""
+        summary = run_bulk_linking(corpus, None, [rule], dry_run=True)
+        assert summary["total_candidates"] == 2
+
     def test_no_rules_returns_summary(
         self, tmp_path: Path,
     ) -> None:
@@ -1145,6 +1291,33 @@ class TestRunBulkLinking:
         assert "family_id" in ev_row
         assert "evidence_type" in ev_row
         assert ev_row["evidence_type"] == "heading_match"
+        store.close()
+
+    def test_evidence_saved_with_real_store_has_text_hash(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        """Real evidence persistence should always include a non-null text_hash."""
+        self._patch_scan_imports(monkeypatch)
+        corpus = FakeCorpus(
+            docs=["doc1"],
+            sections_by_doc={
+                "doc1": [FakeSection("doc1", "7.01", "Indebtedness", 7, 100, 500)],
+            },
+        )
+        store = _make_store(tmp_path)
+        rules = [_make_rule(heading_values=["Indebtedness"])]
+
+        summary = run_bulk_linking(corpus, store, rules, dry_run=False)
+        assert summary["status"] == "completed"
+        assert summary["links_created"] >= 1
+        assert summary["evidence_saved"] >= 1
+
+        links = store.get_links(limit=10)
+        assert links
+        link_id = str(links[0]["link_id"])
+        evidence = store.get_evidence(link_id)
+        assert evidence
+        assert all(str(ev.get("text_hash") or "").strip() for ev in evidence)
         store.close()
 
     def test_tier_counts(

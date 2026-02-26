@@ -55,6 +55,24 @@ def _json_dumps(obj: Any) -> str:
     return json.dumps(obj)
 
 
+def _normalized_clause_key(clause_id: Any, clause_path: Any = None) -> str:
+    clause_id_value = str(clause_id or "").strip()
+    if clause_id_value:
+        return clause_id_value
+    clause_path_value = str(clause_path or "").strip()
+    if clause_path_value:
+        return clause_path_value
+    return "__section__"
+
+
+def _preview_candidate_id(doc_id: Any, section_number: Any, clause_key: Any) -> str:
+    return (
+        f"{str(doc_id or '').strip()}::"
+        f"{str(section_number or '').strip()}::"
+        f"{str(clause_key or '__section__').strip() or '__section__'}"
+    )
+
+
 def _log(msg: str) -> None:
     """Write log message to stderr with timestamp."""
     import datetime
@@ -317,7 +335,12 @@ class LinkWorker:
 
         preview_id = str(uuid.uuid4())
         candidate_hashes = sorted(
-            f"{c['doc_id']}::{c['section_number']}" for c in candidates
+            _preview_candidate_id(
+                c.get("doc_id", ""),
+                c.get("section_number", ""),
+                _normalized_clause_key(c.get("clause_id"), c.get("clause_path")),
+            )
+            for c in candidates
         )
         candidate_set_hash = hashlib.sha256(
             "|".join(candidate_hashes).encode(),
@@ -342,10 +365,19 @@ class LinkWorker:
         # Store candidates
         preview_candidates = []
         for c in candidates:
+            clause_key = _normalized_clause_key(c.get("clause_id"), c.get("clause_path"))
             preview_candidates.append({
+                "candidate_id": _preview_candidate_id(
+                    c.get("doc_id", ""),
+                    c.get("section_number", ""),
+                    clause_key,
+                ),
                 "doc_id": c["doc_id"],
                 "section_number": c["section_number"],
                 "heading": c.get("heading", ""),
+                "clause_id": c.get("clause_id"),
+                "clause_path": c.get("clause_path"),
+                "clause_key": clause_key,
                 "confidence": c.get("confidence", 0.0),
                 "confidence_tier": c.get("confidence_tier", "low"),
                 "user_verdict": "pending",
@@ -435,6 +467,12 @@ class LinkWorker:
             or preview.get("family_id")
             or ""
         ).strip() or None
+        family_scope = str(preview.get("family_id", "") or "").strip()
+        link_scope_id = str(ontology_node_id or family_scope or "").strip()
+        scope_aliases = self._store.resolve_scope_aliases(link_scope_id) if link_scope_id else []
+        if link_scope_id and not scope_aliases:
+            scope_aliases = [link_scope_id]
+        scope_aliases = [str(scope).strip() for scope in scope_aliases if str(scope).strip()]
 
         links_to_create = []
         links_updated = 0
@@ -474,6 +512,8 @@ class LinkWorker:
             doc_id = str(cand.get("doc_id", ""))
             section_number = str(cand.get("section_number", ""))
             clause_id = str(cand.get("clause_id", "") or "").strip() or None
+            clause_path = str(cand.get("clause_path", "") or "").strip() or None
+            clause_key = _normalized_clause_key(clause_id, clause_path)
             clause_char_start = cand.get("clause_char_start")
             clause_char_end = cand.get("clause_char_end")
             clause_text = str(cand.get("clause_text") or "").strip() or None
@@ -497,6 +537,7 @@ class LinkWorker:
             link_payload = {
                 "family_id": preview.get("family_id", ""),
                 "ontology_node_id": ontology_node_id,
+                "scope_id": link_scope_id or str(preview.get("family_id", "") or ""),
                 "doc_id": doc_id,
                 "section_number": section_number,
                 "heading": cand.get("heading", ""),
@@ -506,36 +547,57 @@ class LinkWorker:
                 "confidence_tier": cand.get("confidence_tier", "low"),
                 "status": "active",
                 "clause_id": clause_id,
+                "clause_key": clause_key,
                 "clause_char_start": clause_char_start,
                 "clause_char_end": clause_char_end,
                 "clause_text": clause_text,
             }
 
-            existing = self._store._conn.execute(  # noqa: SLF001
-                "SELECT link_id FROM family_links "
-                "WHERE family_id = ? AND doc_id = ? AND section_number = ? "
-                "LIMIT 1",
-                [
-                    link_payload["family_id"],
-                    link_payload["doc_id"],
-                    link_payload["section_number"],
-                ],
-            ).fetchone()
+            if scope_aliases:
+                placeholders = ", ".join("?" for _ in scope_aliases)
+                existing = self._store._conn.execute(  # noqa: SLF001
+                    "SELECT link_id FROM family_links "
+                    "WHERE COALESCE(NULLIF(TRIM(scope_id), ''), NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), ''), '') "
+                    f"IN ({placeholders}) AND doc_id = ? AND section_number = ? "
+                    "AND COALESCE(NULLIF(TRIM(clause_key), ''), NULLIF(TRIM(clause_id), ''), '__section__') = ? "
+                    "LIMIT 1",
+                    [
+                        *scope_aliases,
+                        link_payload["doc_id"],
+                        link_payload["section_number"],
+                        clause_key,
+                    ],
+                ).fetchone()
+            else:
+                existing = self._store._conn.execute(  # noqa: SLF001
+                    "SELECT link_id FROM family_links "
+                    "WHERE family_id = ? AND doc_id = ? AND section_number = ? "
+                    "AND COALESCE(NULLIF(TRIM(clause_key), ''), NULLIF(TRIM(clause_id), ''), '__section__') = ? "
+                    "LIMIT 1",
+                    [
+                        link_payload["family_id"],
+                        link_payload["doc_id"],
+                        link_payload["section_number"],
+                        clause_key,
+                    ],
+                ).fetchone()
             if existing:
                 self._store._conn.execute(  # noqa: SLF001
                     "UPDATE family_links SET "
-                    "ontology_node_id = ?, heading = ?, rule_id = ?, run_id = ?, source = ?, "
-                    "clause_id = ?, clause_char_start = ?, clause_char_end = ?, clause_text = ?, "
+                    "ontology_node_id = ?, scope_id = ?, heading = ?, rule_id = ?, run_id = ?, source = ?, "
+                    "clause_id = ?, clause_key = ?, clause_char_start = ?, clause_char_end = ?, clause_text = ?, "
                     "confidence = ?, confidence_tier = ?, status = 'active', "
                     "unlinked_at = NULL, unlinked_reason = NULL, unlinked_note = NULL "
                     "WHERE link_id = ?",
                     [
                         link_payload["ontology_node_id"],
+                        link_payload["scope_id"],
                         link_payload["heading"],
                         link_payload["rule_id"],
                         run_id,
                         link_payload["source"],
                         link_payload["clause_id"],
+                        link_payload["clause_key"],
                         link_payload["clause_char_start"],
                         link_payload["clause_char_end"],
                         link_payload["clause_text"],

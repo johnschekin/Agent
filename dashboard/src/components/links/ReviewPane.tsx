@@ -223,12 +223,16 @@ function SectionTextRenderer({
   queryFocusText = null,
 }: SectionTextRendererProps) {
   const focusRef = useRef<HTMLSpanElement | null>(null);
+  const hasFocusSpecifier =
+    !!queryFocusRange ||
+    queryHighlightTerms.some((term) => String(term || "").trim().length >= 2) ||
+    (typeof queryFocusText === "string" && queryFocusText.trim().length >= 2);
 
   useEffect(() => {
-    if (!queryMode || !focusRef.current) return;
+    if (!hasFocusSpecifier || !focusRef.current) return;
     focusRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
   }, [
-    queryMode,
+    hasFocusSpecifier,
     text,
     queryFocusRange?.start,
     queryFocusRange?.end,
@@ -236,7 +240,7 @@ function SectionTextRenderer({
     queryHighlightTerms.join("|"),
   ]);
 
-  if (queryMode) {
+  if (queryMode || hasFocusSpecifier) {
     return (
       <>{renderQueryFocusedText(
         text,

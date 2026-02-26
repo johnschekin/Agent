@@ -256,6 +256,37 @@ function formatSectionWithClause(
   return `${section}.${rawLabel}`;
 }
 
+function formatSectionWithDefinedTerm(
+  sectionNumber: string,
+  definedTerm?: string | null,
+): string {
+  const section = String(sectionNumber || "").trim();
+  const term = String(definedTerm || "").trim();
+  if (!term) return section;
+  return `${section} [${term}]`;
+}
+
+function parseDefinedTermFromClauseId(clauseId?: string | null): string | null {
+  const raw = String(clauseId ?? "").trim();
+  if (!raw.toLowerCase().startsWith("__def__:")) return null;
+  const payload = raw.slice("__def__:".length).trim();
+  if (!payload) return null;
+  const parts = payload.split(":");
+  if (parts.length >= 3 && /^\d+$/.test(parts[0]) && /^\d+$/.test(parts[1])) {
+    const term = parts.slice(2).join(":").trim();
+    return term || null;
+  }
+  if (
+    parts.length >= 3 &&
+    /^\d+$/.test(parts[parts.length - 2]) &&
+    /^\d+$/.test(parts[parts.length - 1])
+  ) {
+    const term = parts.slice(0, -2).join(":").trim();
+    return term || null;
+  }
+  return payload || null;
+}
+
 function collectAstMatchValues(node: unknown, values: Set<string>): void {
   if (!node || typeof node !== "object") return;
   const raw = node as Record<string, unknown>;
@@ -345,7 +376,7 @@ function LinksPageInner() {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [triageActive, setTriageActive] = useState(false);
   const [exportDialogOpen, setExportDialogOpen] = useState(false);
-  const [intelligencePanelOpen, setIntelligencePanelOpen] = useState(true);
+  const [intelligencePanelOpen, setIntelligencePanelOpen] = useState(false);
   const [rulesCompareRequestId, setRulesCompareRequestId] = useState(0);
   const [claimedLinkIds, setClaimedLinkIds] = useState<Set<string> | null>(null);
   const [resumeCursorLinkId, setResumeCursorLinkId] = useState<string | null>(null);
@@ -1552,6 +1583,10 @@ function ReviewTabContent({
   const { data: contextData } = useContextStrip(focusedLink?.link_id ?? null);
   const { data: comparablesData } = useComparables(focusedLink?.link_id ?? null);
   const { data: whyMatchedData } = useWhyMatched(focusedLink?.link_id ?? null);
+  const { data: readerSectionData } = useReaderSection(
+    focusedLink?.doc_id ?? null,
+    focusedLink?.section_number ?? null,
+  );
 
   // Build sectionFamilies from context data
   const sectionFamilies = useMemo(() => {
@@ -1609,11 +1644,54 @@ function ReviewTabContent({
   }, [contextData]);
 
   const sectionText = useMemo(() => {
-    if (!contextData || typeof contextData.section_text !== "string") {
+    if (typeof contextData?.section_text === "string" && contextData.section_text.length > 0) {
+      return contextData.section_text;
+    }
+    if (typeof readerSectionData?.text === "string" && readerSectionData.text.length > 0) {
+      return readerSectionData.text;
+    }
+    return null;
+  }, [contextData, readerSectionData]);
+
+  const reviewIsDefinedTermLink = useMemo(
+    () => String(focusedLink?.clause_id ?? "").trim().toLowerCase().startsWith("__def__:"),
+    [focusedLink?.clause_id],
+  );
+
+  const reviewFocusedTerm = useMemo(() => {
+    if (!reviewIsDefinedTermLink) return null;
+    return parseDefinedTermFromClauseId(focusedLink?.clause_id);
+  }, [reviewIsDefinedTermLink, focusedLink?.clause_id]);
+
+  const reviewFocusRange = useMemo(() => {
+    if (!reviewIsDefinedTermLink || !focusedLink) return null;
+    const clauseStart = focusedLink.clause_char_start;
+    const clauseEnd = focusedLink.clause_char_end;
+    const sectionStart = readerSectionData?.section_char_start;
+    if (
+      clauseStart === null ||
+      clauseStart === undefined ||
+      clauseEnd === null ||
+      clauseEnd === undefined ||
+      sectionStart === null ||
+      sectionStart === undefined
+    ) {
       return null;
     }
-    return contextData.section_text;
-  }, [contextData]);
+    const relStart = Number(clauseStart) - Number(sectionStart);
+    const relEnd = Number(clauseEnd) - Number(sectionStart);
+    if (!Number.isFinite(relStart) || !Number.isFinite(relEnd) || relEnd <= relStart) {
+      return null;
+    }
+    return {
+      start: Math.max(0, Math.floor(relStart)),
+      end: Math.max(0, Math.floor(relEnd)),
+    };
+  }, [
+    reviewIsDefinedTermLink,
+    focusedLink,
+    readerSectionData?.section_char_start,
+  ]);
 
   // Click-to-select with shift for range
   const handleRowClick = useCallback(
@@ -1990,6 +2068,13 @@ function ReviewTabContent({
                   folded={folded}
                   redlineActive={redlineActive}
                   templateFamily={focusedLink?.family_id ?? null}
+                  queryHighlightTerms={reviewFocusedTerm ? [reviewFocusedTerm] : []}
+                  queryFocusRange={reviewFocusRange}
+                  queryFocusText={
+                    reviewIsDefinedTermLink
+                      ? (reviewFocusedTerm ?? focusedLink?.clause_text ?? null)
+                      : null
+                  }
                 />
               </DetachableReader>
             </div>
@@ -2039,16 +2124,18 @@ function QueryTabContent({
   const [previewCursor, setPreviewCursor] = useState<{
     afterScore: number;
     afterDocId: string;
+    afterCandidateId: string;
   } | null>(null);
   const [cursorHistory, setCursorHistory] = useState<
     Array<{
       afterScore: number;
       afterDocId: string;
+      afterCandidateId: string;
     } | null>
   >([]);
   const [applyError, setApplyError] = useState<string | null>(null);
   const [scopeMode, setScopeMode] = useState<"corpus" | "inherited">("corpus");
-  const [resultGranularity, setResultGranularity] = useState<"section" | "clause">("section");
+  const [resultGranularity, setResultGranularity] = useState<"section" | "clause" | "defined_term">("section");
   const [resultSearch, setResultSearch] = useState("");
   const [sorting, setSorting] = useState<SortingState>([]);
   const [queryReaderOpen, setQueryReaderOpen] = useState(false);
@@ -2060,8 +2147,10 @@ function QueryTabContent({
   const queryColumnsRef = useRef<HTMLDivElement | null>(null);
 
   const getPreviewCandidateRowId = useCallback((candidate: PreviewCandidate) => {
-    const clauseRef = candidate.clause_id || candidate.clause_path || candidate.clause_label || "section";
-    return `${candidate.doc_id}::${candidate.section_number}::${clauseRef}::${candidate.existing_link_id ?? "new"}`;
+    const candidateId = String(candidate.candidate_id || "").trim();
+    const fallbackClause = candidate.clause_id || candidate.defined_term || candidate.clause_path || candidate.clause_label || "section";
+    const stableId = candidateId || `${candidate.doc_id}::${candidate.section_number}::${fallbackClause}`;
+    return `${stableId}::${candidate.existing_link_id ?? "new"}`;
   }, []);
 
   const PREVIEW_PAGE_SIZE = 10000;
@@ -2151,6 +2240,7 @@ function QueryTabContent({
     confidenceTier: previewTierFilter === "all" ? undefined : previewTierFilter,
     afterScore: previewCursor?.afterScore ?? null,
     afterDocId: previewCursor?.afterDocId ?? null,
+    afterCandidateId: previewCursor?.afterCandidateId ?? null,
   });
   const updateVerdictsMut = useUpdateVerdictsMutation();
   const applyMut = useApplyPreviewMutation();
@@ -2337,6 +2427,7 @@ function QueryTabContent({
       c.borrower.toLowerCase().includes(q) ||
       c.heading.toLowerCase().includes(q) ||
       c.section_number.includes(q) ||
+      String(c.defined_term ?? "").toLowerCase().includes(q) ||
       String(c.clause_path ?? "").toLowerCase().includes(q) ||
       String(c.clause_label ?? "").toLowerCase().includes(q)
     );
@@ -2474,8 +2565,8 @@ function QueryTabContent({
 
   const queryFocusRange = useMemo(() => {
     if (!focusedCandidate) return null;
-    const clauseStart = focusedCandidate.clause_char_start;
-    const clauseEnd = focusedCandidate.clause_char_end;
+    const clauseStart = focusedCandidate.definition_char_start ?? focusedCandidate.clause_char_start;
+    const clauseEnd = focusedCandidate.definition_char_end ?? focusedCandidate.clause_char_end;
     const sectionStart = readerSectionData?.section_char_start;
     if (
       clauseStart === null ||
@@ -2514,6 +2605,7 @@ function QueryTabContent({
       setPreviewCursor({
         afterScore: nextCursor.after_score,
         afterDocId: nextCursor.after_doc_id,
+        afterCandidateId: nextCursor.after_candidate_id ?? "",
       });
     } else if (targetPage < currentPage && hasPrev) {
       const prevCur = cursorHistory[cursorHistory.length - 1] ?? null;
@@ -2550,6 +2642,8 @@ function QueryTabContent({
         const display =
           resultGranularity === "clause"
             ? formatSectionWithClause(c.section_number, c.clause_path, c.clause_label)
+            : resultGranularity === "defined_term"
+              ? formatSectionWithDefinedTerm(c.section_number, c.defined_term || c.clause_path)
             : c.section_number;
         return <span className="tabular-nums">{display}</span>;
       },
@@ -2607,7 +2701,14 @@ function QueryTabContent({
                 e.stopPropagation();
                 updateVerdictsMut.mutate({
                   previewId: previewId!,
-                  verdicts: [{ doc_id: c.doc_id, section_number: c.section_number, verdict: "accepted" }],
+                  verdicts: [{
+                    candidate_id: c.candidate_id,
+                    doc_id: c.doc_id,
+                    section_number: c.section_number,
+                    clause_id: c.clause_id,
+                    clause_path: c.clause_path,
+                    verdict: "accepted",
+                  }],
                 });
               }}
               className={cn(
@@ -2624,7 +2725,14 @@ function QueryTabContent({
                 e.stopPropagation();
                 updateVerdictsMut.mutate({
                   previewId: previewId!,
-                  verdicts: [{ doc_id: c.doc_id, section_number: c.section_number, verdict: "rejected" }],
+                  verdicts: [{
+                    candidate_id: c.candidate_id,
+                    doc_id: c.doc_id,
+                    section_number: c.section_number,
+                    clause_id: c.clause_id,
+                    clause_path: c.clause_path,
+                    verdict: "rejected",
+                  }],
                 });
               }}
               className={cn(
@@ -2641,7 +2749,14 @@ function QueryTabContent({
                 e.stopPropagation();
                 updateVerdictsMut.mutate({
                   previewId: previewId!,
-                  verdicts: [{ doc_id: c.doc_id, section_number: c.section_number, verdict: "deferred" }],
+                  verdicts: [{
+                    candidate_id: c.candidate_id,
+                    doc_id: c.doc_id,
+                    section_number: c.section_number,
+                    clause_id: c.clause_id,
+                    clause_path: c.clause_path,
+                    verdict: "deferred",
+                  }],
                 });
               }}
               className={cn(
@@ -2761,6 +2876,18 @@ function QueryTabContent({
             )}
           >
             Clause
+          </button>
+          <button
+            type="button"
+            onClick={() => setResultGranularity("defined_term")}
+            className={cn(
+              "px-2 py-1 text-xs rounded-md transition-colors",
+              resultGranularity === "defined_term"
+                ? "bg-surface-0 text-text-primary shadow-sm"
+                : "text-text-muted hover:text-text-secondary",
+            )}
+          >
+            Defined Term
           </button>
         </div>
       </div>

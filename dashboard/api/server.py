@@ -22,7 +22,7 @@ from collections import Counter
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any, Literal, Mapping
 from urllib.parse import urlparse
 
 import orjson
@@ -2101,7 +2101,20 @@ async def quality_anomalies(
 # Routes: Edge Case Inspector
 # ---------------------------------------------------------------------------
 
-# Tier-based category registry (32 categories across 6 tiers)
+# Edge-case anomaly thresholds (calibrated on current corpus)
+_DEF_TRUNC_CAP = 1999
+_DEF_TRUNC_MIN_PER_DOC = 5
+_DEF_MALFORMED_MIN_PER_DOC = 20
+
+_ROOT_REPEAT_THRESHOLD = 200
+
+_DUP_BURST_MIN_STRUCTURAL = 200
+_DUP_BURST_RATIO = 0.90
+
+_DEEP_RESET_PREV_LEVEL = 4
+_DEEP_RESET_MIN_PER_SECTION = 2
+
+# Tier-based category registry (38 categories across 6 tiers)
 _EDGE_CASE_TIERS: dict[str, list[str]] = {
     "structural": [
         "missing_sections", "low_section_count", "excessive_section_count",
@@ -2111,10 +2124,14 @@ _EDGE_CASE_TIERS: dict[str, list[str]] = {
         "zero_clauses", "low_clause_density", "low_avg_clause_confidence",
         "orphan_deep_clause", "inconsistent_sibling_depth",
         "deep_nesting_outlier", "low_structural_ratio", "rootless_deep_clause",
+        "clause_root_label_repeat_explosion", "clause_dup_id_burst",
+        "clause_depth_reset_after_deep",
     ],
     "definitions": [
         "low_definitions", "zero_definitions", "high_definition_count",
         "duplicate_definitions", "single_engine_definitions",
+        "definition_truncated_at_cap", "definition_signature_leak",
+        "definition_malformed_term",
     ],
     "metadata": [
         "extreme_facility", "missing_borrower", "missing_facility_size",
@@ -2455,6 +2472,145 @@ def _build_join_category_queries(cohort_where: str) -> list[tuple[str, list[Any]
         [],
     ))
 
+    # 33. definition_truncated_at_cap
+    cols = _cols.format(
+        cat="definition_truncated_at_cap", sev="high",
+        detail="sub.trunc_count || ' definitions hit extraction cap (>= ' || "
+        f"CAST({_DEF_TRUNC_CAP} AS VARCHAR) || ' chars)'",
+    )
+    queries.append((
+        f"SELECT {cols} FROM ("
+        f"  SELECT doc_id, COUNT(*) as trunc_count"
+        f"  FROM definitions"
+        f"  WHERE LENGTH(COALESCE(definition_text, '')) >= {_DEF_TRUNC_CAP}"
+        f"    AND pattern_engine IN ('quoted', 'smart_quote', 'parenthetical')"
+        f"    AND LENGTH(TRIM(COALESCE(term, ''))) >= 3"
+        f"  GROUP BY doc_id"
+        f"  HAVING COUNT(*) >= {_DEF_TRUNC_MIN_PER_DOC}"
+        f") sub JOIN documents d ON sub.doc_id = d.doc_id"
+        f"{cohort_doc_filter}",
+        [],
+    ))
+
+    # 34. definition_signature_leak
+    cols = _cols.format(
+        cat="definition_signature_leak", sev="high",
+        detail="sub.bad_count || ' definition terms contain signature-page markers'",
+    )
+    queries.append((
+        f"SELECT {cols} FROM ("
+        f"  SELECT doc_id, COUNT(*) as bad_count"
+        f"  FROM definitions"
+        f"  WHERE regexp_matches(lower(COALESCE(term, '')), "
+        f"    '(by\\\\s*:|name\\\\s*:|title\\\\s*:|in witness whereof|signature page|authorized signatory)')"
+        f"  GROUP BY doc_id"
+        f") sub JOIN documents d ON sub.doc_id = d.doc_id"
+        f"{cohort_doc_filter}",
+        [],
+    ))
+
+    # 35. definition_malformed_term
+    cols = _cols.format(
+        cat="definition_malformed_term", sev="medium",
+        detail="sub.bad_terms || ' malformed definition terms detected'",
+    )
+    queries.append((
+        f"SELECT {cols} FROM ("
+        f"  SELECT doc_id, COUNT(*) as bad_terms"
+        f"  FROM definitions"
+        f"  WHERE regexp_matches(COALESCE(term, ''), '\\\\n')"
+        f"     OR LENGTH(TRIM(COALESCE(term, ''))) > 80"
+        f"     OR regexp_matches(lower(TRIM(COALESCE(term, ''))), "
+        f"        '^(the borrower|the lenders?|the administrative agent|the company|the issuer)\\\\b')"
+        f"  GROUP BY doc_id"
+        f"  HAVING COUNT(*) >= {_DEF_MALFORMED_MIN_PER_DOC}"
+        f") sub JOIN documents d ON sub.doc_id = d.doc_id"
+        f"{cohort_doc_filter}",
+        [],
+    ))
+
+    # 36. clause_root_label_repeat_explosion
+    cols = _cols.format(
+        cat="clause_root_label_repeat_explosion", sev="high",
+        detail="'Root label repeated up to ' || sub.worst_repeat || ' times in one section'",
+    )
+    queries.append((
+        f"SELECT {cols} FROM ("
+        f"  WITH root_counts AS ("
+        f"    SELECT doc_id, section_number, "
+        f"      lower(regexp_extract(label, '\\(([A-Za-z0-9]+)\\)', 1)) as root_lbl, "
+        f"      COUNT(*) as n "
+        f"    FROM clauses "
+        f"    WHERE is_structural = true "
+        f"      AND array_length(string_split(clause_id, '.')) = 1 "
+        f"      AND regexp_extract(label, '\\(([A-Za-z0-9]+)\\)', 1) <> '' "
+        f"    GROUP BY 1, 2, 3"
+        f"  ), sec AS ("
+        f"    SELECT doc_id, section_number, MAX(n) as max_repeat "
+        f"    FROM root_counts "
+        f"    GROUP BY 1, 2 "
+        f"    HAVING MAX(n) >= {_ROOT_REPEAT_THRESHOLD}"
+        f"  ) "
+        f"  SELECT doc_id, MAX(max_repeat) as worst_repeat "
+        f"  FROM sec GROUP BY doc_id"
+        f") sub JOIN documents d ON sub.doc_id = d.doc_id"
+        f"{cohort_doc_filter}",
+        [],
+    ))
+
+    # 37. clause_dup_id_burst
+    cols = _cols.format(
+        cat="clause_dup_id_burst", sev="high",
+        detail="'Structural clause_id _dup ratio ' || ROUND(100.0 * sub.dup_ratio, 1) || '%'",
+    )
+    queries.append((
+        f"SELECT {cols} FROM ("
+        f"  SELECT doc_id, "
+        f"    COUNT(*) as structural_count, "
+        f"    1.0 * SUM(CASE WHEN clause_id LIKE '%\\_dup%' ESCAPE '\\' THEN 1 ELSE 0 END) / COUNT(*) as dup_ratio "
+        f"  FROM clauses "
+        f"  WHERE is_structural = true "
+        f"  GROUP BY doc_id "
+        f"  HAVING COUNT(*) >= {_DUP_BURST_MIN_STRUCTURAL} "
+        f"     AND 1.0 * SUM(CASE WHEN clause_id LIKE '%\\_dup%' ESCAPE '\\' THEN 1 ELSE 0 END) / COUNT(*) > {_DUP_BURST_RATIO}"
+        f") sub JOIN documents d ON sub.doc_id = d.doc_id"
+        f"{cohort_doc_filter}",
+        [],
+    ))
+
+    # 38. clause_depth_reset_after_deep
+    cols = _cols.format(
+        cat="clause_depth_reset_after_deep", sev="high",
+        detail="'Depth resets after deep nesting in ' || sub.flagged_sections || "
+        "' sections (' || sub.total_resets || ' resets)'",
+    )
+    queries.append((
+        f"SELECT {cols} FROM ("
+        f"  WITH ordered AS ("
+        f"    SELECT doc_id, section_number, span_start, "
+        f"      array_length(string_split(clause_id, '.')) as tree_level, "
+        f"      lower(regexp_extract(label, '\\(([A-Za-z0-9]+)\\)', 1)) as label_inner, "
+        f"      lag(array_length(string_split(clause_id, '.'))) "
+        f"        OVER (PARTITION BY doc_id, section_number ORDER BY span_start) as prev_tree_level "
+        f"    FROM clauses "
+        f"    WHERE is_structural = true"
+        f"  ), sec AS ("
+        f"    SELECT doc_id, section_number, COUNT(*) as reset_count "
+        f"    FROM ordered "
+        f"    WHERE prev_tree_level >= {_DEEP_RESET_PREV_LEVEL} "
+        f"      AND tree_level = 1 "
+        f"      AND length(label_inner) = 1 "
+        f"      AND label_inner BETWEEN 'm' AND 'z' "
+        f"    GROUP BY 1, 2 "
+        f"    HAVING COUNT(*) >= {_DEEP_RESET_MIN_PER_SECTION}"
+        f"  ) "
+        f"  SELECT doc_id, COUNT(*) as flagged_sections, SUM(reset_count) as total_resets "
+        f"  FROM sec GROUP BY doc_id"
+        f") sub JOIN documents d ON sub.doc_id = d.doc_id"
+        f"{cohort_doc_filter}",
+        [],
+    ))
+
     # --- Section JOINs ---
 
     # 5. section_numbering_gap
@@ -2548,7 +2704,7 @@ async def edge_cases(
     page_size: int = Query(50, ge=1, le=200),
     cohort_only: bool = Query(False),
 ):
-    """Categorized edge case documents for inspection (32 categories, 6 tiers)."""
+    """Categorized edge case documents for inspection (38 categories, 6 tiers)."""
     corpus = _get_corpus()
 
     if category not in _EDGE_CASE_CATEGORIES:
@@ -2632,6 +2788,15 @@ _CLAUSE_ANOMALY_CATEGORIES = {
     "low_avg_clause_confidence",
     "low_structural_ratio",
     "rootless_deep_clause",
+    "clause_root_label_repeat_explosion",
+    "clause_dup_id_burst",
+    "clause_depth_reset_after_deep",
+}
+
+_DEFINITION_ANOMALY_CATEGORIES = {
+    "definition_truncated_at_cap",
+    "definition_signature_leak",
+    "definition_malformed_term",
 }
 
 
@@ -2734,6 +2899,60 @@ async def edge_case_clause_detail(
         )
         params = [doc_id]
 
+    elif category == "clause_root_label_repeat_explosion":
+        # Root-level labels repeated excessively in a section
+        sql = (
+            f"WITH repeated_roots AS ("
+            f"  SELECT section_number, lower(regexp_extract(label, '\\(([A-Za-z0-9]+)\\)', 1)) AS root_lbl "
+            f"  FROM clauses "
+            f"  WHERE doc_id = ? AND is_structural = true "
+            f"    AND array_length(string_split(clause_id, '.')) = 1 "
+            f"    AND regexp_extract(label, '\\(([A-Za-z0-9]+)\\)', 1) <> '' "
+            f"  GROUP BY section_number, root_lbl "
+            f"  HAVING COUNT(*) >= {_ROOT_REPEAT_THRESHOLD}"
+            f") "
+            f"SELECT {_clause_cols} FROM clauses c "
+            f"JOIN repeated_roots rr ON rr.section_number = c.section_number "
+            f"  AND lower(regexp_extract(c.label, '\\(([A-Za-z0-9]+)\\)', 1)) = rr.root_lbl "
+            f"WHERE c.doc_id = ? "
+            f"ORDER BY c.section_number, c.span_start"
+        )
+        params = [doc_id, doc_id]
+
+    elif category == "clause_dup_id_burst":
+        # Structural clauses whose IDs include collision suffixes (_dupN)
+        sql = (
+            f"SELECT {_clause_cols} FROM clauses c "
+            f"WHERE c.doc_id = ? AND c.is_structural = true "
+            f"  AND c.clause_id LIKE '%\\_dup%' ESCAPE '\\' "
+            f"ORDER BY c.section_number, c.span_start"
+        )
+        params = [doc_id]
+
+    elif category == "clause_depth_reset_after_deep":
+        # tree-level reset after deep path (>=4 -> 1) for late alpha labels
+        sql = (
+            f"WITH ordered AS ("
+            f"  SELECT c.section_number, c.clause_id, c.label, c.depth, c.level_type, "
+            f"    c.parent_id, c.is_structural, c.parse_confidence, c.header_text, c.span_start, c.span_end, "
+            f"    ARRAY_LENGTH(STRING_SPLIT(c.clause_id, '.')) AS tree_level, "
+            f"    lag(ARRAY_LENGTH(STRING_SPLIT(c.clause_id, '.'))) "
+            f"      OVER (PARTITION BY c.section_number ORDER BY c.span_start) AS prev_tree_level, "
+            f"    lower(regexp_extract(c.label, '\\(([A-Za-z0-9]+)\\)', 1)) AS label_inner "
+            f"  FROM clauses c "
+            f"  WHERE c.doc_id = ? AND c.is_structural = true"
+            f") "
+            f"SELECT section_number, clause_id, label, depth, level_type, parent_id, is_structural, "
+            f"  parse_confidence, header_text, span_start, span_end, tree_level "
+            f"FROM ordered "
+            f"WHERE prev_tree_level >= {_DEEP_RESET_PREV_LEVEL} "
+            f"  AND tree_level = 1 "
+            f"  AND length(label_inner) = 1 "
+            f"  AND label_inner BETWEEN 'm' AND 'z' "
+            f"ORDER BY section_number, span_start"
+        )
+        params = [doc_id]
+
     else:
         raise HTTPException(400, f"Unsupported category: {category}")
 
@@ -2775,6 +2994,93 @@ async def edge_case_clause_detail(
         "category": category,
         "total_flagged": len(clauses),
         "clauses": clauses,
+    }
+
+
+@app.get("/api/edge-cases/{doc_id}/definition-detail")
+async def edge_case_definition_detail(
+    doc_id: str,
+    category: str = Query(..., description="Definition anomaly category"),
+) -> dict[str, Any]:
+    """Per-document definition-level drill-down for definition anomaly categories."""
+    corpus = _get_corpus()
+
+    if category not in _DEFINITION_ANOMALY_CATEGORIES:
+        raise HTTPException(
+            400,
+            f"Invalid definition anomaly category: {category}. "
+            f"Must be one of: {', '.join(sorted(_DEFINITION_ANOMALY_CATEGORIES))}",
+        )
+
+    doc_rows = corpus.query(
+        "SELECT doc_id FROM documents WHERE doc_id = ?", [doc_id],
+    )
+    if not doc_rows:
+        raise HTTPException(404, f"Document not found: {doc_id}")
+
+    base_select = (
+        "d.term, d.pattern_engine, d.char_start, d.char_end, d.definition_text, "
+        "LENGTH(COALESCE(d.definition_text, '')) AS definition_length, "
+        "s.section_number, s.heading "
+    )
+    base_join = (
+        " FROM definitions d "
+        "LEFT JOIN sections s ON s.doc_id = d.doc_id "
+        "  AND d.char_start >= s.char_start "
+        "  AND d.char_start < s.char_end "
+        "WHERE d.doc_id = ? "
+    )
+    params: list[Any] = [doc_id]
+
+    if category == "definition_truncated_at_cap":
+        where_extra = (
+            f"AND LENGTH(COALESCE(d.definition_text, '')) >= {_DEF_TRUNC_CAP} "
+            "AND d.pattern_engine IN ('quoted', 'smart_quote', 'parenthetical') "
+            "AND LENGTH(TRIM(COALESCE(d.term, ''))) >= 3 "
+        )
+    elif category == "definition_signature_leak":
+        where_extra = (
+            "AND regexp_matches(lower(COALESCE(d.term, '')), "
+            "  '(by\\\\s*:|name\\\\s*:|title\\\\s*:|in witness whereof|signature page|authorized signatory)') "
+        )
+    elif category == "definition_malformed_term":
+        where_extra = (
+            "AND ("
+            "  regexp_matches(COALESCE(d.term, ''), '\\\\n') "
+            "  OR LENGTH(TRIM(COALESCE(d.term, ''))) > 80 "
+            "  OR regexp_matches(lower(TRIM(COALESCE(d.term, ''))), "
+            "       '^(the borrower|the lenders?|the administrative agent|the company|the issuer)\\\\b') "
+            ") "
+        )
+    else:
+        raise HTTPException(400, f"Unsupported category: {category}")
+
+    rows = corpus.query(
+        f"SELECT {base_select}{base_join}{where_extra}"
+        "ORDER BY COALESCE(s.section_number, ''), d.char_start",
+        params,
+    )
+
+    definitions = []
+    for row in rows:
+        definition_text = str(row[4] or "")
+        tail_snippet = definition_text[-200:] if len(definition_text) > 200 else definition_text
+        definitions.append({
+            "term": str(row[0] or ""),
+            "pattern_engine": str(row[1] or ""),
+            "char_start": int(row[2]) if row[2] is not None else None,
+            "char_end": int(row[3]) if row[3] is not None else None,
+            "definition_length": int(row[5]) if row[5] is not None else 0,
+            "section_number": str(row[6] or ""),
+            "section_heading": str(row[7] or ""),
+            "tail_snippet": tail_snippet,
+        })
+
+    return {
+        "doc_id": doc_id,
+        "category": category,
+        "total_flagged": len(definitions),
+        "definitions": definitions,
     }
 
 
@@ -3282,7 +3588,7 @@ class LinkPreviewRequest(BaseModel):
     ontology_node_id: str | None = Field(default=None, max_length=255)
     heading_filter_ast: dict[str, Any] | None = None
     filter_dsl: str | None = Field(default=None, max_length=5000)
-    result_granularity: str = Field(default="section", pattern=r"^(section|clause)$")
+    result_granularity: str = Field(default="section", pattern=r"^(section|clause|defined_term)$")
     scope_mode: str = Field(default="corpus", pattern=r"^(corpus|inherited)$")
     parent_family_id: str | None = Field(default=None, max_length=255)
     parent_rule_id: str | None = Field(default=None, max_length=255)
@@ -4947,6 +5253,40 @@ def _scope_name_from_id(scope_id: str) -> str:
     return _family_name_from_id(value)
 
 
+def _clause_key_from_row(payload: Mapping[str, Any]) -> str:
+    clause_id = str(payload.get("clause_id") or "").strip()
+    if clause_id:
+        return clause_id
+    clause_path = str(payload.get("clause_path") or "").strip()
+    if clause_path:
+        return clause_path
+    clause_key = str(payload.get("clause_key") or "").strip()
+    if clause_key:
+        return clause_key
+    defined_term = str(payload.get("defined_term") or "").strip()
+    if defined_term:
+        start = payload.get("definition_char_start")
+        end = payload.get("definition_char_end")
+        if start is None:
+            start = payload.get("clause_char_start")
+        if end is None:
+            end = payload.get("clause_char_end")
+        try:
+            if start is not None and end is not None:
+                return f"__def__:{defined_term.lower()}:{int(start)}:{int(end)}"
+        except (TypeError, ValueError):
+            pass
+        return f"__def__:{defined_term.lower()}"
+    return "__section__"
+
+
+def _preview_candidate_id_from_row(payload: Mapping[str, Any]) -> str:
+    doc_id = str(payload.get("doc_id") or "").strip()
+    section_number = str(payload.get("section_number") or "").strip()
+    clause_key = _clause_key_from_row(payload)
+    return f"{doc_id}::{section_number}::{clause_key}"
+
+
 def _ontology_descendant_ids(scope_id: str) -> set[str]:
     root = str(scope_id or "").strip()
     if not root:
@@ -5872,6 +6212,8 @@ async def create_preview(
     params: list[Any] = []
     need_article_join = False
     clause_expr: Any = None
+    defined_term_expr: Any = None
+    effective_result_granularity = str(body.result_granularity or "section").strip().lower()
 
     # Prefer multi-field SQL from parsed DSL
     if dsl_text_fields:
@@ -5881,6 +6223,7 @@ async def create_preview(
             params.extend(multi_params)
             need_article_join = any("JOIN articles" in j for j in multi_joins)
         clause_expr = dsl_text_fields.get("clause")
+        defined_term_expr = dsl_text_fields.get("defined_term")
     else:
         # Legacy path: heading_filter_ast only
         if parsed_heading_expr is not None:
@@ -5898,16 +6241,15 @@ async def create_preview(
         if raw_article_ast is not None and isinstance(raw_article_ast, dict):
             try:
                 article_expr = filter_expr_from_json(raw_article_ast)
-                title_sql, title_params = build_filter_sql(
-                    article_expr, "a.title", wrap_wildcards=True,
+                article_where, article_params, article_joins = build_multi_field_sql(
+                    {"article": article_expr},
                 )
-                num_sql, num_params = build_filter_sql(
-                    article_expr, "CAST(s.article_num AS VARCHAR)", wrap_wildcards=False,
-                )
-                where_parts.append(f"({title_sql} OR {num_sql})")
-                params.extend(title_params)
-                params.extend(num_params)
-                need_article_join = True
+                if article_where != "1=1":
+                    where_parts.append(article_where)
+                    params.extend(article_params)
+                    need_article_join = need_article_join or any(
+                        "JOIN articles" in join_sql for join_sql in article_joins
+                    )
             except (ValueError, KeyError, TypeError):
                 pass
 
@@ -5939,6 +6281,30 @@ async def create_preview(
                 params.extend(clause_params)
             except (ValueError, KeyError, TypeError):
                 pass
+
+        # defined_term: legacy support
+        raw_defined_term_ast = extra_text_fields.get("defined_term")
+        if raw_defined_term_ast is not None and isinstance(raw_defined_term_ast, dict):
+            try:
+                defined_term_expr = filter_expr_from_json(raw_defined_term_ast)
+                term_sql, term_params = build_filter_sql(
+                    defined_term_expr, "d.term", wrap_wildcards=True,
+                )
+                where_parts.append(
+                    "EXISTS (SELECT 1 FROM definitions d "
+                    "WHERE d.doc_id = s.doc_id "
+                    "AND d.char_start >= s.char_start "
+                    "AND d.char_end <= s.char_end "
+                    f"AND {term_sql})",
+                )
+                params.extend(term_params)
+            except (ValueError, KeyError, TypeError):
+                pass
+
+    if effective_result_granularity not in {"section", "clause", "defined_term"}:
+        effective_result_granularity = "section"
+    if effective_result_granularity == "section" and defined_term_expr is not None:
+        effective_result_granularity = "defined_term"
 
     scoped_section_keys: list[str] = []
     if scope_mode == "inherited":
@@ -5980,38 +6346,32 @@ async def create_preview(
         clause_detail_join = ""
         clause_detail_select = (
             "'' AS clause_id, '' AS clause_path, '' AS clause_label, "
-            "NULL AS clause_char_start, NULL AS clause_char_end, '' AS clause_text"
+            "NULL AS clause_char_start, NULL AS clause_char_end, '' AS clause_text, "
+            "'' AS defined_term, NULL AS definition_char_start, "
+            "NULL AS definition_char_end, '' AS definition_text"
         )
         clause_detail_params: list[Any] = []
-        if body.result_granularity == "clause":
+        clause_detail_order = "s.doc_id, s.section_number"
+        if effective_result_granularity == "clause":
             if clause_expr is not None:
                 clause_text_sql, clause_text_params = build_filter_sql(
-                    clause_expr, "cm.clause_text", wrap_wildcards=True,
+                    clause_expr, "clause_match.clause_text", wrap_wildcards=True,
                 )
                 clause_header_sql, clause_header_params = build_filter_sql(
-                    clause_expr, "cm.header_text", wrap_wildcards=True,
+                    clause_expr, "clause_match.header_text", wrap_wildcards=True,
                 )
                 clause_detail_join = (
-                    " LEFT JOIN LATERAL ("
-                    "SELECT ranked.clause_id, ranked.clause_path, ranked.label, "
-                    "ranked.span_start, ranked.span_end, ranked.clause_text "
-                    "FROM ("
-                    "SELECT cm.clause_id, cm.clause_id AS clause_path, cm.label, "
-                    "cm.span_start, cm.span_end, cm.clause_text, cm.depth, cm.is_structural, "
-                    f"({clause_text_sql}) AS text_hit, "
-                    f"({clause_header_sql}) AS header_hit "
-                    "FROM clauses cm "
-                    "WHERE cm.doc_id = s.doc_id "
-                    "AND cm.section_number = s.section_number "
-                    ") ranked "
-                    "WHERE ranked.text_hit OR ranked.header_hit "
-                    "ORDER BY ranked.text_hit DESC, ranked.header_hit DESC, "
-                    "ranked.depth DESC, ranked.is_structural DESC, "
-                    "ranked.span_start ASC, ranked.clause_id ASC "
-                    "LIMIT 1"
-                    ") clause_match ON TRUE"
+                    " JOIN clauses clause_match "
+                    "ON clause_match.doc_id = s.doc_id "
+                    "AND clause_match.section_number = s.section_number "
+                    f"AND (({clause_text_sql}) OR ({clause_header_sql}))"
                 )
                 clause_detail_params = [*clause_text_params, *clause_header_params]
+                clause_detail_order = (
+                    "s.doc_id, s.section_number, "
+                    "clause_match.depth DESC, clause_match.is_structural DESC, "
+                    "clause_match.span_start ASC, clause_match.clause_id ASC"
+                )
             else:
                 clause_detail_join = (
                     " LEFT JOIN LATERAL ("
@@ -6023,18 +6383,58 @@ async def create_preview(
                     "ORDER BY cm.is_structural DESC, cm.depth DESC, cm.span_start ASC LIMIT 1"
                     ") clause_match ON TRUE"
                 )
+                clause_detail_order = "s.doc_id, s.section_number, clause_match.clause_id ASC"
             clause_detail_select = (
                 "COALESCE(clause_match.clause_id, '') AS clause_id, "
                 "COALESCE(clause_match.clause_path, '') AS clause_path, "
                 "COALESCE(clause_match.label, '') AS clause_label, "
                 "clause_match.span_start AS clause_char_start, "
                 "clause_match.span_end AS clause_char_end, "
-                "COALESCE(clause_match.clause_text, '') AS clause_text"
+                "COALESCE(clause_match.clause_text, '') AS clause_text, "
+                "'' AS defined_term, NULL AS definition_char_start, "
+                "NULL AS definition_char_end, '' AS definition_text"
+            )
+        elif effective_result_granularity == "defined_term":
+            if defined_term_expr is not None:
+                term_sql, term_params = build_filter_sql(
+                    defined_term_expr, "def_match.term", wrap_wildcards=True,
+                )
+                clause_detail_join = (
+                    " JOIN definitions def_match "
+                    "ON def_match.doc_id = s.doc_id "
+                    "AND def_match.char_start >= s.char_start "
+                    "AND def_match.char_end <= s.char_end "
+                    f"AND {term_sql}"
+                )
+                clause_detail_params = [*term_params]
+            else:
+                clause_detail_join = (
+                    " JOIN definitions def_match "
+                    "ON def_match.doc_id = s.doc_id "
+                    "AND def_match.char_start >= s.char_start "
+                    "AND def_match.char_end <= s.char_end"
+                )
+            clause_detail_order = (
+                "s.doc_id, s.section_number, def_match.char_start ASC, def_match.term ASC"
+            )
+            clause_detail_select = (
+                "('__def__:' || COALESCE(CAST(def_match.char_start AS VARCHAR), '') || ':' || "
+                "COALESCE(CAST(def_match.char_end AS VARCHAR), '') || ':' || "
+                "COALESCE(def_match.term, '')) AS clause_id, "
+                "COALESCE(def_match.term, '') AS clause_path, "
+                "'defined_term' AS clause_label, "
+                "def_match.char_start AS clause_char_start, "
+                "def_match.char_end AS clause_char_end, "
+                "COALESCE(def_match.definition_text, '') AS clause_text, "
+                "COALESCE(def_match.term, '') AS defined_term, "
+                "def_match.char_start AS definition_char_start, "
+                "def_match.char_end AS definition_char_end, "
+                "COALESCE(def_match.definition_text, '') AS definition_text"
             )
         rows = corpus.query(
             f"SELECT s.doc_id, s.section_number, s.heading, {clause_detail_select} "
             f"FROM sections s{article_join}{clause_detail_join} WHERE {where_clause} "
-            f"ORDER BY s.doc_id, s.section_number LIMIT ?",
+            f"ORDER BY {clause_detail_order} LIMIT ?",
             [*clause_detail_params, *params, str(threshold)],
         )
         candidates = [
@@ -6048,6 +6448,10 @@ async def create_preview(
                 "clause_char_start": int(r[6]) if r[6] is not None else None,
                 "clause_char_end": int(r[7]) if r[7] is not None else None,
                 "clause_text": str(r[8] or ""),
+                "defined_term": str(r[9] or ""),
+                "definition_char_start": int(r[10]) if r[10] is not None else None,
+                "definition_char_end": int(r[11]) if r[11] is not None else None,
+                "definition_text": str(r[12] or ""),
             }
             for r in rows
         ]
@@ -6055,7 +6459,7 @@ async def create_preview(
         candidates = []
 
     candidate_hashes = sorted(
-        f"{c['doc_id']}::{c['section_number']}" for c in candidates
+        _preview_candidate_id_from_row(c) for c in candidates
     )
     candidate_set_hash = _hashlib.sha256(
         "|".join(candidate_hashes).encode(),
@@ -6079,13 +6483,17 @@ async def create_preview(
             "parent_family_id": parent_family_id,
             "parent_rule_id": parent_rule_id,
             "parent_run_id": parent_run_id,
+            "result_granularity": effective_result_granularity,
         },
         "candidate_count": len(candidates),
         "candidate_set_hash": candidate_set_hash,
     })
     preview_cands = []
     for c in candidates:
+        clause_key = _clause_key_from_row(c)
+        candidate_id = _preview_candidate_id_from_row(c)
         preview_cands.append({
+            "candidate_id": candidate_id,
             "doc_id": c.get("doc_id", ""),
             "section_number": c.get("section_number", ""),
             "heading": c.get("heading", ""),
@@ -6095,6 +6503,11 @@ async def create_preview(
             "clause_char_start": c.get("clause_char_start"),
             "clause_char_end": c.get("clause_char_end"),
             "clause_text": c.get("clause_text", ""),
+            "defined_term": c.get("defined_term", ""),
+            "definition_char_start": c.get("definition_char_start"),
+            "definition_char_end": c.get("definition_char_end"),
+            "definition_text": c.get("definition_text", ""),
+            "clause_key": clause_key,
             "confidence": c.get("confidence", 0.5),
             "confidence_tier": "medium",
             "user_verdict": "pending",
@@ -6304,6 +6717,7 @@ async def get_preview_candidates(
     confidence_tier: str | None = Query(None),
     after_score: float | None = Query(None),
     after_doc_id: str | None = Query(None),
+    after_candidate_id: str | None = Query(None),
 ):
     """Paginated preview candidates."""
     store = _get_link_store()
@@ -6317,6 +6731,7 @@ async def get_preview_candidates(
             page_size=page_size,
             after_score=after_score,
             after_doc_id=after_doc_id,
+            after_candidate_id=after_candidate_id,
             tier=confidence_tier,
         )
     else:
@@ -6346,15 +6761,21 @@ async def get_preview_candidates(
         last = candidates[-1]
         last_score = float(last.get("priority_score", 0.0) or 0.0)
         last_doc = str(last.get("doc_id", ""))
+        last_candidate_id = str(last.get("candidate_id", "") or "")
         probe = store.get_preview_candidates(
             preview_id,
             page_size=1,
             after_score=last_score,
             after_doc_id=last_doc,
+            after_candidate_id=last_candidate_id,
             tier=confidence_tier,
         )
         if probe:
-            next_cursor = {"after_score": last_score, "after_doc_id": last_doc}
+            next_cursor = {
+                "after_score": last_score,
+                "after_doc_id": last_doc,
+                "after_candidate_id": last_candidate_id,
+            }
 
     # Enrich candidates with borrower from corpus documents table
     doc_ids = list({str(c.get("doc_id", "")) for c in candidates if c.get("doc_id")})
@@ -6396,10 +6817,20 @@ async def update_candidate_verdicts(
     updated = 0
     for v in verdicts:
         try:
-            store._conn.execute(
-                "UPDATE preview_candidates SET user_verdict = ? "
-                "WHERE preview_id = ? AND doc_id = ? AND section_number = ?",
-                [v["verdict"], preview_id, v["doc_id"], v["section_number"]],
+            verdict = str(v.get("verdict", "pending") or "pending")
+            candidate_id = str(v.get("candidate_id", "") or "").strip() or None
+            doc_id = str(v.get("doc_id", "") or "").strip() or None
+            section_number = str(v.get("section_number", "") or "").strip() or None
+            clause_id = str(v.get("clause_id", "") or "").strip() or None
+            clause_path = str(v.get("clause_path", "") or "").strip() or None
+            store.set_candidate_verdict(
+                preview_id,
+                verdict,
+                candidate_id=candidate_id,
+                doc_id=doc_id,
+                section_number=section_number,
+                clause_id=clause_id,
+                clause_path=clause_path,
             )
             updated += 1
         except Exception:
@@ -6421,6 +6852,7 @@ def _upsert_links_from_preview_candidates(
     run_id = str(uuid.uuid4())
     links_to_create: list[dict[str, Any]] = []
     updated_count = 0
+    term_bindings_by_candidate: dict[str, list[dict[str, Any]]] = {}
     preview_params = _parse_json_object(preview.get("params_json"))
     raw_ontology_node_id = str(
         preview.get("ontology_node_id")
@@ -6435,9 +6867,36 @@ def _upsert_links_from_preview_candidates(
     scope_aliases = store.resolve_scope_aliases(link_scope_id) if link_scope_id else []
     if link_scope_id and not scope_aliases:
         scope_aliases = [link_scope_id]
+    scope_aliases = [str(scope).strip() for scope in scope_aliases if str(scope).strip()]
 
     corpus: Any | None = None
     clause_cache: dict[tuple[str, str, str], tuple[int | None, int | None, str | None]] = {}
+
+    def _extract_term_binding(candidate_row: dict[str, Any]) -> dict[str, Any] | None:
+        term = str(candidate_row.get("defined_term") or "").strip()
+        if not term:
+            return None
+        start = candidate_row.get("definition_char_start")
+        end = candidate_row.get("definition_char_end")
+        if start is None:
+            start = candidate_row.get("clause_char_start")
+        if end is None:
+            end = candidate_row.get("clause_char_end")
+        try:
+            if start is None or end is None:
+                return None
+            start_i = int(start)
+            end_i = int(end)
+        except (TypeError, ValueError):
+            return None
+        return {
+            "term": term,
+            "definition_section_path": str(candidate_row.get("section_number") or ""),
+            "definition_char_start": start_i,
+            "definition_char_end": end_i,
+            "confidence": float(candidate_row.get("confidence") or 1.0),
+            "extraction_engine": "preview_defined_term",
+        }
 
     def _resolve_clause_details(
         doc_id: str,
@@ -6483,6 +6942,8 @@ def _upsert_links_from_preview_candidates(
         doc_id = str(candidate.get("doc_id", "") or "")
         section_number = str(candidate.get("section_number", "") or "")
         clause_id = str(candidate.get("clause_id", "") or "").strip() or None
+        clause_path = str(candidate.get("clause_path", "") or "").strip() or None
+        clause_key = clause_id or clause_path or "__section__"
         clause_char_start = candidate.get("clause_char_start")
         clause_char_end = candidate.get("clause_char_end")
         clause_text = str(candidate.get("clause_text") or "").strip() or None
@@ -6506,10 +6967,12 @@ def _upsert_links_from_preview_candidates(
         payload = {
             "family_id": family_id,
             "ontology_node_id": ontology_node_id,
+            "scope_id": link_scope_id or family_id,
             "doc_id": doc_id,
             "section_number": section_number,
             "heading": candidate.get("heading", ""),
             "clause_id": clause_id,
+            "clause_key": clause_key,
             "clause_char_start": clause_char_start,
             "clause_char_end": clause_char_end,
             "clause_text": clause_text,
@@ -6524,33 +6987,37 @@ def _upsert_links_from_preview_candidates(
             placeholders = ", ".join("?" for _ in scope_aliases)
             existing = store._conn.execute(  # noqa: SLF001
                 "SELECT link_id FROM family_links "
-                "WHERE COALESCE(NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), ''), '') "
+                "WHERE COALESCE(NULLIF(TRIM(scope_id), ''), NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), ''), '') "
                 f"IN ({placeholders}) AND doc_id = ? AND section_number = ? "
+                "AND COALESCE(NULLIF(TRIM(clause_key), ''), NULLIF(TRIM(clause_id), ''), '__section__') = ? "
                 "LIMIT 1",
-                [*scope_aliases, doc_id, section_number],
+                [*scope_aliases, doc_id, section_number, clause_key],
             ).fetchone()
         else:
             existing = store._conn.execute(  # noqa: SLF001
                 "SELECT link_id FROM family_links "
                 "WHERE family_id = ? AND doc_id = ? AND section_number = ? "
+                "AND COALESCE(NULLIF(TRIM(clause_key), ''), NULLIF(TRIM(clause_id), ''), '__section__') = ? "
                 "LIMIT 1",
-                [family_id, doc_id, section_number],
+                [family_id, doc_id, section_number, clause_key],
             ).fetchone()
         if existing:
             store._conn.execute(  # noqa: SLF001
                 "UPDATE family_links SET "
-                "ontology_node_id = ?, heading = ?, rule_id = ?, run_id = ?, source = ?, "
-                "clause_id = ?, clause_char_start = ?, clause_char_end = ?, clause_text = ?, "
+                "ontology_node_id = ?, scope_id = ?, heading = ?, rule_id = ?, run_id = ?, source = ?, "
+                "clause_id = ?, clause_key = ?, clause_char_start = ?, clause_char_end = ?, clause_text = ?, "
                 "confidence = ?, confidence_tier = ?, status = 'active', "
                 "unlinked_at = NULL, unlinked_reason = NULL, unlinked_note = NULL "
                 "WHERE link_id = ?",
                 [
                     payload["ontology_node_id"],
+                    payload["scope_id"],
                     payload["heading"],
                     payload["rule_id"],
                     run_id,
                     payload["source"],
                     payload["clause_id"],
+                    payload["clause_key"],
                     payload["clause_char_start"],
                     payload["clause_char_end"],
                     payload["clause_text"],
@@ -6560,11 +7027,35 @@ def _upsert_links_from_preview_candidates(
                 ],
             )
             updated_count += 1
+            binding = _extract_term_binding(candidate)
+            if binding is not None:
+                with contextlib.suppress(Exception):
+                    store.save_link_defined_terms(str(existing[0]), [binding])
             continue
 
         links_to_create.append(payload)
+        binding = _extract_term_binding(candidate)
+        if binding is not None:
+            candidate_key = f"{doc_id}::{section_number}::{clause_key}"
+            term_bindings_by_candidate.setdefault(candidate_key, []).append(binding)
 
     created_count = store.create_links(links_to_create, run_id) if links_to_create else 0
+    if created_count > 0 and term_bindings_by_candidate:
+        created_rows = store._conn.execute(  # noqa: SLF001
+            "SELECT link_id, doc_id, section_number, "
+            "COALESCE(NULLIF(TRIM(clause_key), ''), NULLIF(TRIM(clause_id), ''), '__section__') "
+            "AS clause_key_resolved "
+            "FROM family_links WHERE run_id = ?",
+            [run_id],
+        ).fetchall()
+        for row in created_rows:
+            link_id = str(row[0] or "")
+            key = f"{str(row[1] or '')}::{str(row[2] or '')}::{str(row[3] or '__section__')}"
+            bindings = term_bindings_by_candidate.get(key)
+            if not bindings:
+                continue
+            with contextlib.suppress(Exception):
+                store.save_link_defined_terms(link_id, bindings)
     return run_id, created_count, updated_count
 
 
@@ -6670,7 +7161,7 @@ async def legacy_create_preview(
     items = [
         {
             **candidate,
-            "candidate_id": f"{candidate.get('doc_id', '')}::{candidate.get('section_number', '')}",
+            "candidate_id": _preview_candidate_id_from_row(candidate),
         }
         for candidate in candidates
     ]
@@ -6700,7 +7191,7 @@ async def legacy_get_preview_candidates(
     result["items"] = [
         {
             **candidate,
-            "candidate_id": f"{candidate.get('doc_id', '')}::{candidate.get('section_number', '')}",
+            "candidate_id": _preview_candidate_id_from_row(candidate),
         }
         for candidate in result["items"]
     ]
@@ -6716,12 +7207,25 @@ async def legacy_update_preview_candidate(
 ):
     _require_links_admin(request)
     try:
-        doc_id, section_number = candidate_id.split("::", 1)
+        parts = candidate_id.split("::", 2)
+        if len(parts) == 2:
+            doc_id, section_number = parts
+            clause_key = "__section__"
+        else:
+            doc_id, section_number, clause_key = parts
     except ValueError as exc:
         raise HTTPException(status_code=422, detail="Invalid candidate_id format") from exc
     verdict = str(body.get("user_verdict", "pending"))
     store = _get_link_store()
-    store.set_candidate_verdict(preview_id, doc_id, section_number, verdict)
+    store.set_candidate_verdict(
+        preview_id,
+        verdict,
+        candidate_id=candidate_id,
+        doc_id=doc_id,
+        section_number=section_number,
+        clause_id=clause_key if clause_key != "__section__" else None,
+        clause_path=clause_key if clause_key != "__section__" else None,
+    )
     return {"candidate_id": candidate_id, "user_verdict": verdict}
 
 

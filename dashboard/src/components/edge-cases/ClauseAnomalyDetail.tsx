@@ -37,6 +37,12 @@ const CATEGORY_EXPLANATIONS: Record<string, string> = {
     "Non-structural clauses (the parser flagged these as non-structural content within clause regions).",
   rootless_deep_clause:
     "Multi-segment clause paths (tree level > 1) with no parent link, indicating the parser failed to connect the hierarchy.",
+  clause_root_label_repeat_explosion:
+    "A root-level enumerator label repeats excessively within the same section, indicating hierarchy collapse.",
+  clause_dup_id_burst:
+    "A large share of structural clause IDs required duplicate suffixes (_dupN), indicating parser collisions.",
+  clause_depth_reset_after_deep:
+    "Clause ordering includes resets from deep nesting directly back to root-level labels in suspicious positions.",
 };
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -46,6 +52,9 @@ const CATEGORY_LABELS: Record<string, string> = {
   low_avg_clause_confidence: "Low Clause Confidence",
   low_structural_ratio: "Low Structural Ratio",
   rootless_deep_clause: "Rootless Deep Clause",
+  clause_root_label_repeat_explosion: "Root Label Repeat Explosion",
+  clause_dup_id_burst: "Clause ID Dup Burst",
+  clause_depth_reset_after_deep: "Depth Reset After Deep",
 };
 
 interface SectionGroup {

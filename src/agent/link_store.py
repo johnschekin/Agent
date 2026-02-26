@@ -92,7 +92,28 @@ def _canonical_family_token(value: Any) -> str:
     return parts[-1] if parts else raw
 
 
-SCHEMA_VERSION = "1.1.0"
+def _normalized_clause_key(
+    clause_id: Any,
+    clause_path: Any = None,
+) -> str:
+    clause_id_value = str(clause_id or "").strip()
+    if clause_id_value:
+        return clause_id_value
+    clause_path_value = str(clause_path or "").strip()
+    if clause_path_value:
+        return clause_path_value
+    return "__section__"
+
+
+def _preview_candidate_id(
+    doc_id: Any,
+    section_number: Any,
+    clause_key: Any,
+) -> str:
+    return f"{str(doc_id or '').strip()}::{str(section_number or '').strip()}::{str(clause_key or '__section__').strip() or '__section__'}"
+
+
+SCHEMA_VERSION = "1.2.0"
 
 
 # ---------------------------------------------------------------------------
@@ -151,6 +172,7 @@ CREATE TABLE IF NOT EXISTS family_links (
     link_id VARCHAR PRIMARY KEY,
     family_id VARCHAR NOT NULL,
     ontology_node_id VARCHAR,
+    scope_id VARCHAR NOT NULL DEFAULT '',
     doc_id VARCHAR NOT NULL,
     section_number VARCHAR NOT NULL,
     heading VARCHAR NOT NULL DEFAULT '',
@@ -168,6 +190,7 @@ CREATE TABLE IF NOT EXISTS family_links (
     clause_char_start INTEGER,
     clause_char_end INTEGER,
     clause_text VARCHAR,
+    clause_key VARCHAR NOT NULL DEFAULT '__section__',
     link_role VARCHAR NOT NULL DEFAULT 'primary_covenant',
     confidence DOUBLE NOT NULL DEFAULT 1.0,
     confidence_tier VARCHAR NOT NULL DEFAULT 'high',
@@ -179,14 +202,16 @@ CREATE TABLE IF NOT EXISTS family_links (
     corpus_version VARCHAR,
     parser_version VARCHAR,
     created_at TIMESTAMP DEFAULT current_timestamp,
-    UNIQUE (family_id, doc_id, section_number)
+    UNIQUE (scope_id, doc_id, section_number, clause_key)
 );
 CREATE INDEX IF NOT EXISTS idx_links_family ON family_links(family_id);
+CREATE INDEX IF NOT EXISTS idx_links_scope ON family_links(scope_id);
 CREATE INDEX IF NOT EXISTS idx_links_doc ON family_links(doc_id);
 CREATE INDEX IF NOT EXISTS idx_links_status ON family_links(status);
 CREATE INDEX IF NOT EXISTS idx_links_tier ON family_links(confidence_tier);
 CREATE INDEX IF NOT EXISTS idx_links_run ON family_links(run_id);
 CREATE INDEX IF NOT EXISTS idx_links_char ON family_links(doc_id, section_char_start);
+CREATE INDEX IF NOT EXISTS idx_links_scope_clause ON family_links(scope_id, doc_id, section_number, clause_key);
 
 -- ─── FAMILY LINK EVENTS ──────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS family_link_events (
@@ -284,6 +309,7 @@ CREATE TABLE IF NOT EXISTS family_link_previews (
 -- ─── PREVIEW CANDIDATES ──────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS preview_candidates (
     preview_id VARCHAR NOT NULL,
+    candidate_id VARCHAR NOT NULL,
     doc_id VARCHAR NOT NULL,
     section_number VARCHAR NOT NULL,
     heading VARCHAR,
@@ -306,9 +332,14 @@ CREATE TABLE IF NOT EXISTS preview_candidates (
     clause_char_start INTEGER,
     clause_char_end INTEGER,
     clause_text VARCHAR,
+    defined_term VARCHAR,
+    definition_char_start INTEGER,
+    definition_char_end INTEGER,
+    definition_text VARCHAR,
+    clause_key VARCHAR NOT NULL DEFAULT '__section__',
     user_verdict VARCHAR,
     verdict_at TIMESTAMP,
-    PRIMARY KEY (preview_id, doc_id, section_number)
+    PRIMARY KEY (preview_id, candidate_id)
 );
 CREATE INDEX IF NOT EXISTS idx_pc_priority
     ON preview_candidates(preview_id, priority_score DESC, doc_id);
@@ -624,6 +655,37 @@ class LinkStore:
             "ALTER TABLE preview_candidates ADD COLUMN clause_text VARCHAR",
         )
         self._add_column_if_missing(
+            "preview_candidates",
+            "defined_term",
+            "ALTER TABLE preview_candidates ADD COLUMN defined_term VARCHAR",
+        )
+        self._add_column_if_missing(
+            "preview_candidates",
+            "definition_char_start",
+            "ALTER TABLE preview_candidates ADD COLUMN definition_char_start INTEGER",
+        )
+        self._add_column_if_missing(
+            "preview_candidates",
+            "definition_char_end",
+            "ALTER TABLE preview_candidates ADD COLUMN definition_char_end INTEGER",
+        )
+        self._add_column_if_missing(
+            "preview_candidates",
+            "definition_text",
+            "ALTER TABLE preview_candidates ADD COLUMN definition_text VARCHAR",
+        )
+        self._add_column_if_missing(
+            "preview_candidates",
+            "clause_key",
+            "ALTER TABLE preview_candidates ADD COLUMN clause_key VARCHAR DEFAULT '__section__'",
+            default="__section__",
+        )
+        self._add_column_if_missing(
+            "preview_candidates",
+            "candidate_id",
+            "ALTER TABLE preview_candidates ADD COLUMN candidate_id VARCHAR",
+        )
+        self._add_column_if_missing(
             "family_link_rules",
             "name",
             "ALTER TABLE family_link_rules ADD COLUMN name VARCHAR DEFAULT ''",
@@ -686,6 +748,18 @@ class LinkStore:
             "clause_text",
             "ALTER TABLE family_links ADD COLUMN clause_text VARCHAR",
         )
+        self._add_column_if_missing(
+            "family_links",
+            "scope_id",
+            "ALTER TABLE family_links ADD COLUMN scope_id VARCHAR DEFAULT ''",
+            default="",
+        )
+        self._add_column_if_missing(
+            "family_links",
+            "clause_key",
+            "ALTER TABLE family_links ADD COLUMN clause_key VARCHAR DEFAULT '__section__'",
+            default="__section__",
+        )
 
         # Backfill additive fields for older databases.
         with contextlib.suppress(Exception):
@@ -703,6 +777,34 @@ class LinkStore:
                 "UPDATE family_links SET ontology_node_id = family_id "
                 "WHERE ontology_node_id IS NULL OR TRIM(ontology_node_id) = ''",
             )
+        with contextlib.suppress(Exception):
+            self._conn.execute(
+                "UPDATE family_links SET scope_id = "
+                "COALESCE(NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), ''), '') "
+                "WHERE scope_id IS NULL OR TRIM(scope_id) = ''",
+            )
+        with contextlib.suppress(Exception):
+            self._conn.execute(
+                "UPDATE family_links SET clause_key = "
+                "COALESCE(NULLIF(TRIM(clause_id), ''), '__section__') "
+                "WHERE clause_key IS NULL OR TRIM(clause_key) = ''",
+            )
+        with contextlib.suppress(Exception):
+            self._conn.execute(
+                "UPDATE preview_candidates SET clause_key = "
+                "COALESCE(NULLIF(TRIM(clause_id), ''), NULLIF(TRIM(clause_path), ''), '__section__') "
+                "WHERE clause_key IS NULL OR TRIM(clause_key) = ''",
+            )
+        with contextlib.suppress(Exception):
+            self._conn.execute(
+                "UPDATE preview_candidates SET candidate_id = "
+                "(COALESCE(doc_id, '') || '::' || COALESCE(section_number, '') || '::' || "
+                "COALESCE(NULLIF(TRIM(clause_key), ''), '__section__')) "
+                "WHERE candidate_id IS NULL OR TRIM(candidate_id) = ''",
+            )
+
+        self._migrate_preview_candidates_identity_schema()
+        self._migrate_family_links_identity_schema()
         with contextlib.suppress(Exception):
             self._refresh_family_scope_aliases()
 
@@ -745,15 +847,418 @@ class LinkStore:
                 [default],
             )
 
+    def _primary_key_columns(self, table_name: str) -> list[str]:
+        rows = self._conn.execute(
+            """
+            SELECT k.column_name
+            FROM information_schema.table_constraints tc
+            JOIN information_schema.key_column_usage k
+              ON tc.constraint_name = k.constraint_name
+             AND tc.table_schema = k.table_schema
+            WHERE tc.table_schema = 'main'
+              AND tc.table_name = ?
+              AND tc.constraint_type = 'PRIMARY KEY'
+            ORDER BY k.ordinal_position
+            """,
+            [table_name],
+        ).fetchall()
+        return [str(row[0]) for row in rows]
+
+    def _has_unique_constraint(self, table_name: str, columns: list[str]) -> bool:
+        rows = self._conn.execute(
+            """
+            SELECT tc.constraint_name, k.column_name, k.ordinal_position
+            FROM information_schema.table_constraints tc
+            JOIN information_schema.key_column_usage k
+              ON tc.constraint_name = k.constraint_name
+             AND tc.table_schema = k.table_schema
+            WHERE tc.table_schema = 'main'
+              AND tc.table_name = ?
+              AND tc.constraint_type = 'UNIQUE'
+            ORDER BY tc.constraint_name, k.ordinal_position
+            """,
+            [table_name],
+        ).fetchall()
+        grouped: dict[str, list[str]] = {}
+        for row in rows:
+            grouped.setdefault(str(row[0]), []).append(str(row[1]))
+        target = [str(col) for col in columns]
+        return any(cols == target for cols in grouped.values())
+
+    def _migrate_preview_candidates_identity_schema(self) -> None:
+        expected_pk = ["preview_id", "candidate_id"]
+        if (
+            self._column_exists("preview_candidates", "candidate_id")
+            and self._column_exists("preview_candidates", "clause_key")
+            and self._primary_key_columns("preview_candidates") == expected_pk
+        ):
+            return
+
+        self._conn.execute("BEGIN TRANSACTION")
+        try:
+            self._conn.execute("DROP TABLE IF EXISTS preview_candidates__migrating")
+            self._conn.execute(
+                """
+                CREATE TABLE preview_candidates__migrating (
+                    preview_id VARCHAR NOT NULL,
+                    candidate_id VARCHAR NOT NULL,
+                    doc_id VARCHAR NOT NULL,
+                    section_number VARCHAR NOT NULL,
+                    heading VARCHAR,
+                    article_num INTEGER,
+                    article_concept VARCHAR,
+                    template_family VARCHAR,
+                    confidence DOUBLE NOT NULL DEFAULT 0.0,
+                    confidence_tier VARCHAR NOT NULL DEFAULT 'high',
+                    confidence_breakdown VARCHAR,
+                    why_matched VARCHAR,
+                    priority_score DOUBLE NOT NULL DEFAULT 0.0,
+                    uncertainty_score DOUBLE NOT NULL DEFAULT 0.0,
+                    impact_score DOUBLE NOT NULL DEFAULT 0.0,
+                    drift_score DOUBLE NOT NULL DEFAULT 0.0,
+                    flags VARCHAR,
+                    conflict_families VARCHAR,
+                    clause_id VARCHAR,
+                    clause_path VARCHAR,
+                    clause_label VARCHAR,
+                    clause_char_start INTEGER,
+                    clause_char_end INTEGER,
+                    clause_text VARCHAR,
+                    defined_term VARCHAR,
+                    definition_char_start INTEGER,
+                    definition_char_end INTEGER,
+                    definition_text VARCHAR,
+                    clause_key VARCHAR NOT NULL DEFAULT '__section__',
+                    user_verdict VARCHAR,
+                    verdict_at TIMESTAMP,
+                    PRIMARY KEY (preview_id, candidate_id)
+                )
+                """
+            )
+            self._conn.execute(
+                """
+                INSERT INTO preview_candidates__migrating (
+                    preview_id, candidate_id, doc_id, section_number, heading, article_num,
+                    article_concept, template_family, confidence, confidence_tier,
+                    confidence_breakdown, why_matched, priority_score, uncertainty_score,
+                    impact_score, drift_score, flags, conflict_families, clause_id,
+                    clause_path, clause_label, clause_char_start, clause_char_end,
+                    clause_text, defined_term, definition_char_start, definition_char_end,
+                    definition_text, clause_key, user_verdict, verdict_at
+                )
+                WITH normalized AS (
+                    SELECT
+                        preview_id,
+                        COALESCE(
+                            NULLIF(TRIM(candidate_id), ''),
+                            COALESCE(doc_id, '') || '::' || COALESCE(section_number, '') || '::' ||
+                                COALESCE(
+                                    NULLIF(TRIM(clause_key), ''),
+                                    NULLIF(TRIM(clause_id), ''),
+                                    NULLIF(TRIM(clause_path), ''),
+                                    '__section__'
+                                )
+                        ) AS candidate_id_norm,
+                        doc_id,
+                        section_number,
+                        heading,
+                        article_num,
+                        article_concept,
+                        template_family,
+                        confidence,
+                        confidence_tier,
+                        confidence_breakdown,
+                        why_matched,
+                        priority_score,
+                        uncertainty_score,
+                        impact_score,
+                        drift_score,
+                        flags,
+                        conflict_families,
+                        clause_id,
+                        clause_path,
+                        clause_label,
+                        clause_char_start,
+                        clause_char_end,
+                        clause_text,
+                        defined_term,
+                        definition_char_start,
+                        definition_char_end,
+                        definition_text,
+                        COALESCE(
+                            NULLIF(TRIM(clause_key), ''),
+                            NULLIF(TRIM(clause_id), ''),
+                            NULLIF(TRIM(clause_path), ''),
+                            '__section__'
+                        ) AS clause_key_norm,
+                        user_verdict,
+                        verdict_at
+                    FROM preview_candidates
+                ),
+                ranked AS (
+                    SELECT
+                        *,
+                        ROW_NUMBER() OVER (
+                            PARTITION BY preview_id, candidate_id_norm
+                            ORDER BY
+                                CASE WHEN user_verdict = 'accepted' THEN 0 ELSE 1 END,
+                                COALESCE(verdict_at, current_timestamp) DESC,
+                                priority_score DESC,
+                                doc_id ASC
+                        ) AS rn
+                    FROM normalized
+                )
+                SELECT
+                    preview_id,
+                    candidate_id_norm,
+                    doc_id,
+                    section_number,
+                    heading,
+                    article_num,
+                    article_concept,
+                    template_family,
+                    confidence,
+                    confidence_tier,
+                    confidence_breakdown,
+                    why_matched,
+                    priority_score,
+                    uncertainty_score,
+                    impact_score,
+                    drift_score,
+                    flags,
+                    conflict_families,
+                    clause_id,
+                    clause_path,
+                    clause_label,
+                    clause_char_start,
+                    clause_char_end,
+                    clause_text,
+                    defined_term,
+                    definition_char_start,
+                    definition_char_end,
+                    definition_text,
+                    clause_key_norm,
+                    user_verdict,
+                    verdict_at
+                FROM ranked
+                WHERE rn = 1
+                """
+            )
+            self._conn.execute("DROP TABLE preview_candidates")
+            self._conn.execute("ALTER TABLE preview_candidates__migrating RENAME TO preview_candidates")
+            self._conn.execute(
+                "CREATE INDEX IF NOT EXISTS idx_pc_priority "
+                "ON preview_candidates(preview_id, priority_score DESC, doc_id)"
+            )
+            self._conn.execute(
+                "CREATE INDEX IF NOT EXISTS idx_pc_confidence "
+                "ON preview_candidates(preview_id, confidence DESC, doc_id)"
+            )
+            self._conn.execute(
+                "CREATE INDEX IF NOT EXISTS idx_pc_uncertainty "
+                "ON preview_candidates(preview_id, uncertainty_score DESC)"
+            )
+            self._conn.execute(
+                "CREATE INDEX IF NOT EXISTS idx_pc_verdict "
+                "ON preview_candidates(preview_id, user_verdict)"
+            )
+            self._conn.execute(
+                "CREATE INDEX IF NOT EXISTS idx_pc_tier "
+                "ON preview_candidates(preview_id, confidence_tier)"
+            )
+            self._conn.execute("COMMIT")
+        except Exception:
+            with contextlib.suppress(Exception):
+                self._conn.execute("ROLLBACK")
+            raise
+
+    def _migrate_family_links_identity_schema(self) -> None:
+        expected_unique = ["scope_id", "doc_id", "section_number", "clause_key"]
+        if (
+            self._column_exists("family_links", "scope_id")
+            and self._column_exists("family_links", "clause_key")
+            and self._has_unique_constraint("family_links", expected_unique)
+        ):
+            return
+
+        self._conn.execute("BEGIN TRANSACTION")
+        try:
+            self._conn.execute("DROP TABLE IF EXISTS family_links__migrating")
+            self._conn.execute(
+                """
+                CREATE TABLE family_links__migrating (
+                    link_id VARCHAR PRIMARY KEY,
+                    family_id VARCHAR NOT NULL,
+                    ontology_node_id VARCHAR,
+                    scope_id VARCHAR NOT NULL DEFAULT '',
+                    doc_id VARCHAR NOT NULL,
+                    section_number VARCHAR NOT NULL,
+                    heading VARCHAR NOT NULL DEFAULT '',
+                    article_num INTEGER NOT NULL DEFAULT 0,
+                    article_concept VARCHAR NOT NULL DEFAULT '',
+                    rule_id VARCHAR,
+                    rule_version INTEGER,
+                    rule_hash VARCHAR,
+                    run_id VARCHAR NOT NULL,
+                    source VARCHAR NOT NULL DEFAULT 'bulk_linker',
+                    section_char_start INTEGER,
+                    section_char_end INTEGER,
+                    section_text_hash VARCHAR,
+                    clause_id VARCHAR,
+                    clause_char_start INTEGER,
+                    clause_char_end INTEGER,
+                    clause_text VARCHAR,
+                    clause_key VARCHAR NOT NULL DEFAULT '__section__',
+                    link_role VARCHAR NOT NULL DEFAULT 'primary_covenant',
+                    confidence DOUBLE NOT NULL DEFAULT 1.0,
+                    confidence_tier VARCHAR NOT NULL DEFAULT 'high',
+                    confidence_breakdown VARCHAR,
+                    status VARCHAR NOT NULL DEFAULT 'active',
+                    unlinked_at TIMESTAMP,
+                    unlinked_reason VARCHAR,
+                    unlinked_note VARCHAR,
+                    corpus_version VARCHAR,
+                    parser_version VARCHAR,
+                    created_at TIMESTAMP DEFAULT current_timestamp,
+                    UNIQUE (scope_id, doc_id, section_number, clause_key)
+                )
+                """
+            )
+            self._conn.execute(
+                """
+                INSERT INTO family_links__migrating (
+                    link_id, family_id, ontology_node_id, scope_id, doc_id, section_number,
+                    heading, article_num, article_concept, rule_id, rule_version, rule_hash,
+                    run_id, source, section_char_start, section_char_end, section_text_hash,
+                    clause_id, clause_char_start, clause_char_end, clause_text, clause_key,
+                    link_role, confidence, confidence_tier, confidence_breakdown, status,
+                    unlinked_at, unlinked_reason, unlinked_note, corpus_version, parser_version,
+                    created_at
+                )
+                WITH normalized AS (
+                    SELECT
+                        link_id,
+                        family_id,
+                        ontology_node_id,
+                        COALESCE(
+                            NULLIF(TRIM(scope_id), ''),
+                            NULLIF(TRIM(ontology_node_id), ''),
+                            NULLIF(TRIM(family_id), ''),
+                            ''
+                        ) AS scope_id_norm,
+                        doc_id,
+                        section_number,
+                        heading,
+                        article_num,
+                        article_concept,
+                        rule_id,
+                        rule_version,
+                        rule_hash,
+                        run_id,
+                        source,
+                        section_char_start,
+                        section_char_end,
+                        section_text_hash,
+                        clause_id,
+                        clause_char_start,
+                        clause_char_end,
+                        clause_text,
+                        COALESCE(NULLIF(TRIM(clause_key), ''), NULLIF(TRIM(clause_id), ''), '__section__') AS clause_key_norm,
+                        link_role,
+                        confidence,
+                        confidence_tier,
+                        confidence_breakdown,
+                        status,
+                        unlinked_at,
+                        unlinked_reason,
+                        unlinked_note,
+                        corpus_version,
+                        parser_version,
+                        created_at
+                    FROM family_links
+                ),
+                ranked AS (
+                    SELECT
+                        *,
+                        ROW_NUMBER() OVER (
+                            PARTITION BY scope_id_norm, doc_id, section_number, clause_key_norm
+                            ORDER BY
+                                CASE WHEN status = 'active' THEN 0 ELSE 1 END,
+                                COALESCE(created_at, current_timestamp) DESC,
+                                link_id DESC
+                        ) AS rn
+                    FROM normalized
+                )
+                SELECT
+                    link_id,
+                    family_id,
+                    ontology_node_id,
+                    scope_id_norm,
+                    doc_id,
+                    section_number,
+                    heading,
+                    article_num,
+                    article_concept,
+                    rule_id,
+                    rule_version,
+                    rule_hash,
+                    run_id,
+                    source,
+                    section_char_start,
+                    section_char_end,
+                    section_text_hash,
+                    clause_id,
+                    clause_char_start,
+                    clause_char_end,
+                    clause_text,
+                    clause_key_norm,
+                    link_role,
+                    confidence,
+                    confidence_tier,
+                    confidence_breakdown,
+                    status,
+                    unlinked_at,
+                    unlinked_reason,
+                    unlinked_note,
+                    corpus_version,
+                    parser_version,
+                    created_at
+                FROM ranked
+                WHERE rn = 1
+                """
+            )
+            self._conn.execute("DROP TABLE family_links")
+            self._conn.execute("ALTER TABLE family_links__migrating RENAME TO family_links")
+            self._conn.execute("CREATE INDEX IF NOT EXISTS idx_links_family ON family_links(family_id)")
+            self._conn.execute("CREATE INDEX IF NOT EXISTS idx_links_scope ON family_links(scope_id)")
+            self._conn.execute("CREATE INDEX IF NOT EXISTS idx_links_doc ON family_links(doc_id)")
+            self._conn.execute("CREATE INDEX IF NOT EXISTS idx_links_status ON family_links(status)")
+            self._conn.execute("CREATE INDEX IF NOT EXISTS idx_links_tier ON family_links(confidence_tier)")
+            self._conn.execute("CREATE INDEX IF NOT EXISTS idx_links_run ON family_links(run_id)")
+            self._conn.execute(
+                "CREATE INDEX IF NOT EXISTS idx_links_char ON family_links(doc_id, section_char_start)"
+            )
+            self._conn.execute(
+                "CREATE INDEX IF NOT EXISTS idx_links_scope_clause "
+                "ON family_links(scope_id, doc_id, section_number, clause_key)"
+            )
+            self._conn.execute("COMMIT")
+        except Exception:
+            with contextlib.suppress(Exception):
+                self._conn.execute("ROLLBACK")
+            raise
+
     @staticmethod
     def _scope_sql_expr(
         *,
+        scope_column: str = "scope_id",
         ontology_column: str = "ontology_node_id",
         family_column: str = "family_id",
     ) -> str:
         return (
+            f"COALESCE(NULLIF(TRIM({scope_column}), ''), "
             f"COALESCE(NULLIF(TRIM({ontology_column}), ''), "
-            f"NULLIF(TRIM({family_column}), ''), '')"
+            f"NULLIF(TRIM({family_column}), ''), ''))"
         )
 
     def upsert_family_alias(
@@ -1116,6 +1621,8 @@ class LinkStore:
             filter_dsl = dsl_from_heading_ast(payload["heading_filter_ast"])
         payload["filter_dsl"] = filter_dsl
         payload.setdefault("result_granularity", "section")
+        if payload.get("result_granularity") not in {"section", "clause", "defined_term"}:
+            payload["result_granularity"] = "section"
         ontology_node_id = str(payload.get("ontology_node_id") or payload.get("family_id") or "").strip()
         payload["ontology_node_id"] = ontology_node_id or None
         payload["parent_family_id"] = payload.get("parent_family_id") or None
@@ -1148,7 +1655,11 @@ class LinkStore:
             if not scope_ids:
                 scope_ids = [str(family_id).strip()]
             placeholders = ", ".join("?" for _ in scope_ids)
-            scope_expr = self._scope_sql_expr()
+            scope_expr = self._scope_sql_expr(
+                scope_column="NULL",
+                ontology_column="ontology_node_id",
+                family_column="family_id",
+            )
             conditions.append(f"{scope_expr} IN ({placeholders})")
             params.extend(scope_ids)
         if status:
@@ -1221,7 +1732,7 @@ class LinkStore:
             filter_dsl = dsl_from_heading_ast(heading_filter_ast)
 
         result_granularity = str(rule.get("result_granularity", "section") or "section")
-        if result_granularity not in ("section", "clause"):
+        if result_granularity not in ("section", "clause", "defined_term"):
             result_granularity = "section"
         scope_mode = str(rule.get("scope_mode") or "corpus").strip().lower()
         if scope_mode not in {"corpus", "inherited"}:
@@ -1410,25 +1921,28 @@ class LinkStore:
             link_id = link.get("link_id") or _uuid()
             family_id = str(link.get("family_id") or "").strip()
             ontology_node_id = str(link.get("ontology_node_id") or family_id or "").strip()
+            scope_id = str(link.get("scope_id") or ontology_node_id or family_id or "").strip()
+            clause_key = _normalized_clause_key(link.get("clause_id"), link.get("clause_key"))
             if family_id and ontology_node_id:
                 alias_pairs.add((family_id, ontology_node_id))
             try:
                 self._conn.execute("""
                     INSERT INTO family_links
-                    (link_id, family_id, ontology_node_id, doc_id, section_number, heading,
+                    (link_id, family_id, ontology_node_id, scope_id, doc_id, section_number, heading,
                      article_num, article_concept, rule_id, rule_version,
                      rule_hash, run_id, source, section_char_start,
                      section_char_end, section_text_hash, clause_id,
-                     clause_char_start, clause_char_end, clause_text, link_role,
+                     clause_char_start, clause_char_end, clause_text, clause_key, link_role,
                      confidence, confidence_tier, confidence_breakdown,
                      status, corpus_version, parser_version, created_at)
                     VALUES (
-                        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-                        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+                        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, [
                     link_id,
                     family_id,
                     ontology_node_id or None,
+                    scope_id,
                     link["doc_id"],
                     link["section_number"],
                     link.get("heading", ""),
@@ -1446,6 +1960,7 @@ class LinkStore:
                     link.get("clause_char_start"),
                     link.get("clause_char_end"),
                     link.get("clause_text"),
+                    clause_key,
                     link.get("link_role", "primary_covenant"),
                     link.get("confidence", 1.0),
                     link.get("confidence_tier", "high"),
@@ -1733,6 +2248,7 @@ class LinkStore:
                 scope_ids = [str(family_id).strip()]
             placeholders = ", ".join("?" for _ in scope_ids)
             scope_expr = self._scope_sql_expr(
+                scope_column="NULL",
                 ontology_column="rr.ontology_node_id",
                 family_column="r.family_id",
             )
@@ -1837,18 +2353,28 @@ class LinkStore:
     def save_preview_candidates(self, preview_id: str, candidates: list[dict[str, Any]]) -> int:
         count = 0
         for c in candidates:
+            clause_key = _normalized_clause_key(c.get("clause_id"), c.get("clause_path"))
+            candidate_id = str(c.get("candidate_id") or "").strip() or _preview_candidate_id(
+                c.get("doc_id"),
+                c.get("section_number"),
+                clause_key,
+            )
             self._conn.execute("""
                 INSERT INTO preview_candidates
-                (preview_id, doc_id, section_number, heading, article_num,
+                (preview_id, candidate_id, doc_id, section_number, heading, article_num,
                  article_concept, template_family, confidence, confidence_tier,
                  confidence_breakdown, why_matched, priority_score,
                  uncertainty_score, impact_score, drift_score,
                  flags, conflict_families, clause_id, clause_path, clause_label,
-                 clause_char_start, clause_char_end, clause_text,
+                 clause_char_start, clause_char_end, clause_text, defined_term,
+                 definition_char_start, definition_char_end, definition_text, clause_key,
                  user_verdict)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, [
-                preview_id, c["doc_id"], c["section_number"],
+                preview_id,
+                candidate_id,
+                c["doc_id"],
+                c["section_number"],
                 c.get("heading"), c.get("article_num"), c.get("article_concept"),
                 c.get("template_family"),
                 c.get("confidence", 0.0), c.get("confidence_tier", "high"),
@@ -1866,6 +2392,11 @@ class LinkStore:
                 c.get("clause_char_start"),
                 c.get("clause_char_end"),
                 c.get("clause_text"),
+                c.get("defined_term"),
+                c.get("definition_char_start"),
+                c.get("definition_char_end"),
+                c.get("definition_text"),
+                clause_key,
                 c.get("user_verdict"),
             ])
             count += 1
@@ -1878,6 +2409,7 @@ class LinkStore:
         page_size: int = 50,
         after_score: float | None = None,
         after_doc_id: str | None = None,
+        after_candidate_id: str | None = None,
         verdict: str | None = None,
         tier: str | None = None,
     ) -> list[dict[str, Any]]:
@@ -1890,21 +2422,57 @@ class LinkStore:
             conditions.append("confidence_tier = ?")
             params.append(tier)
         if after_score is not None and after_doc_id is not None:
-            conditions.append("(priority_score < ? OR (priority_score = ? AND doc_id > ?))")
-            params.extend([after_score, after_score, after_doc_id])
+            cursor_candidate_id = str(after_candidate_id or "").strip()
+            if cursor_candidate_id:
+                conditions.append(
+                    "("
+                    "priority_score < ? "
+                    "OR (priority_score = ? AND (doc_id > ? OR (doc_id = ? AND candidate_id > ?)))"
+                    ")"
+                )
+                params.extend([after_score, after_score, after_doc_id, after_doc_id, cursor_candidate_id])
+            else:
+                conditions.append("(priority_score < ? OR (priority_score = ? AND doc_id > ?))")
+                params.extend([after_score, after_score, after_doc_id])
         where = " AND ".join(conditions)
         params.append(page_size)
         rows = self._conn.execute(
             f"SELECT * FROM preview_candidates WHERE {where} "
-            "ORDER BY priority_score DESC, doc_id LIMIT ?",
+            "ORDER BY priority_score DESC, doc_id, candidate_id LIMIT ?",
             params,
         ).fetchall()
         cols = [d[0] for d in self._conn.description]
         return [_to_dict(cols, row) for row in rows]
 
     def set_candidate_verdict(
-        self, preview_id: str, doc_id: str, section_number: str, verdict: str,
+        self,
+        preview_id: str,
+        verdict: str,
+        *,
+        candidate_id: str | None = None,
+        doc_id: str | None = None,
+        section_number: str | None = None,
+        clause_id: str | None = None,
+        clause_path: str | None = None,
     ) -> None:
+        candidate = str(candidate_id or "").strip()
+        if not candidate and doc_id is not None and section_number is not None:
+            clause_key = _normalized_clause_key(clause_id, clause_path)
+            candidate = _preview_candidate_id(doc_id, section_number, clause_key)
+        if candidate:
+            exists = self._conn.execute(
+                "SELECT 1 FROM preview_candidates WHERE preview_id = ? AND candidate_id = ? LIMIT 1",
+                [preview_id, candidate],
+            ).fetchone()
+            if exists is not None:
+                self._conn.execute(
+                    "UPDATE preview_candidates SET user_verdict = ?, verdict_at = ? "
+                    "WHERE preview_id = ? AND candidate_id = ?",
+                    [verdict, _now(), preview_id, candidate],
+                )
+                return
+        if doc_id is None or section_number is None:
+            return
         self._conn.execute(
             "UPDATE preview_candidates SET user_verdict = ?, verdict_at = ? "
             "WHERE preview_id = ? AND doc_id = ? AND section_number = ?",
@@ -2794,6 +3362,8 @@ class LinkStore:
         new_link_id = _uuid()
         link_dict["link_id"] = new_link_id
         link_dict["family_id"] = new_family_id
+        link_dict["ontology_node_id"] = new_family_id
+        link_dict["scope_id"] = new_family_id
         link_dict["status"] = "active"
         link_dict["run_id"] = link_dict.get("run_id", "reassign")
         self.create_links([link_dict], link_dict["run_id"])
@@ -2824,7 +3394,11 @@ class LinkStore:
         if not scope_ids:
             scope_ids = [str(family_id).strip()]
         placeholders = ", ".join("?" for _ in scope_ids)
-        scope_expr = self._scope_sql_expr(ontology_column="fl.ontology_node_id", family_column="fl.family_id")
+        scope_expr = self._scope_sql_expr(
+            scope_column="fl.scope_id",
+            ontology_column="fl.ontology_node_id",
+            family_column="fl.family_id",
+        )
         conditions = [f"{scope_expr} IN ({placeholders})", "fl.link_id != ?", "fl.status = 'active'"]
         params: list[Any] = [*scope_ids, link_id]
         if template_family:

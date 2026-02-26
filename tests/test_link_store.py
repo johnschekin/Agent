@@ -364,7 +364,7 @@ class TestLinksCrud:
         assert created == 3
 
     def test_duplicate_link_skipped(self, store: LinkStore) -> None:
-        """UNIQUE (family_id, doc_id, section_number) prevents dupes."""
+        """UNIQUE (scope_id, doc_id, section_number, clause_key) prevents dupes."""
         run_id = str(uuid.uuid4())
         link = _make_link()
         store.create_links([link], run_id)
@@ -372,6 +372,31 @@ class TestLinksCrud:
         link2 = _make_link(link_id=str(uuid.uuid4()))
         created = store.create_links([link2], run_id)
         assert created == 0
+
+    def test_allows_multiple_clause_links_same_section_scope(self, store: LinkStore) -> None:
+        run_id = str(uuid.uuid4())
+        created = store.create_links([
+            {
+                **_make_link(),
+                "doc_id": "doc_clause",
+                "section_number": "6.01",
+                "ontology_node_id": "debt_capacity.indebtedness.general_basket",
+                "clause_id": "6.01(a)(i)",
+                "clause_text": "(i) first clause",
+            },
+            {
+                **_make_link(link_id=str(uuid.uuid4())),
+                "doc_id": "doc_clause",
+                "section_number": "6.01",
+                "ontology_node_id": "debt_capacity.indebtedness.general_basket",
+                "clause_id": "6.01(a)(iii)",
+                "clause_text": "(iii) other indebtedness",
+            },
+        ], run_id)
+        assert created == 2
+        rows = store.get_links(family_id="debt_capacity.indebtedness.general_basket", doc_id="doc_clause")
+        assert len(rows) == 2
+        assert {str(row.get("clause_id")) for row in rows} == {"6.01(a)(i)", "6.01(a)(iii)"}
 
     def test_count_links(self, store: LinkStore) -> None:
         run_id = str(uuid.uuid4())
@@ -775,10 +800,44 @@ class TestPreviews:
             "doc_id": "d1", "section_number": "7.01",
             "confidence": 0.9, "priority_score": 0.8,
         }])
-        store.set_candidate_verdict("p1", "d1", "7.01", "accept")
+        store.set_candidate_verdict("p1", "accept", doc_id="d1", section_number="7.01")
         cands = store.get_preview_candidates("p1", verdict="accept")
         assert len(cands) == 1
         assert cands[0]["user_verdict"] == "accept"
+
+    def test_preview_candidates_same_section_different_clause_ids(self, store: LinkStore) -> None:
+        store.save_preview({
+            "preview_id": "p1", "family_id": "debt",
+            "rule_hash": "h", "corpus_version": "v1",
+            "parser_version": "v3", "candidate_set_hash": "c",
+            "expires_at": "2099-12-31T23:59:59Z",
+        })
+        store.save_preview_candidates("p1", [
+            {
+                "doc_id": "d1",
+                "section_number": "6.01",
+                "clause_id": "6.01(a)(i)",
+                "confidence": 0.9,
+                "priority_score": 0.8,
+            },
+            {
+                "doc_id": "d1",
+                "section_number": "6.01",
+                "clause_id": "6.01(a)(iii)",
+                "confidence": 0.91,
+                "priority_score": 0.79,
+            },
+        ])
+        rows = store.get_preview_candidates("p1", page_size=100)
+        assert len(rows) == 2
+        ids = {str(row.get("candidate_id")) for row in rows}
+        assert "d1::6.01::6.01(a)(i)" in ids
+        assert "d1::6.01::6.01(a)(iii)" in ids
+
+        store.set_candidate_verdict("p1", "accepted", candidate_id="d1::6.01::6.01(a)(iii)")
+        accepted = store.get_preview_candidates("p1", verdict="accepted", page_size=100)
+        assert len(accepted) == 1
+        assert accepted[0]["candidate_id"] == "d1::6.01::6.01(a)(iii)"
 
     def test_candidates_filter_by_tier(self, store: LinkStore) -> None:
         store.save_preview({
