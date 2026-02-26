@@ -8,7 +8,6 @@ import {
   useAnalyticsDashboard,
   useLinkRuns,
   useLinkRules,
-  useDriftAlerts,
   useSubmitLinkJobMutation,
 } from "@/lib/queries";
 
@@ -50,27 +49,11 @@ export function BatchRunDashboard({ className, scopeFilter }: BatchRunDashboardP
   const { data: analytics, isLoading: analyticsLoading } = useAnalyticsDashboard(scopeFilter);
   const { data: runsData } = useLinkRuns({ familyId: scopeFilter });
   const { data: rulesData } = useLinkRules({ status: "published", familyId: scopeFilter });
-  const { data: alertsData } = useDriftAlerts();
   const submitJobMut = useSubmitLinkJobMutation();
   const [submittingScopeId, setSubmittingScopeId] = useState<string | null>(null);
 
   const runs = runsData?.runs ?? [];
   const rules = rulesData?.rules ?? [];
-  const alerts = useMemo(() => {
-    const all = alertsData?.alerts ?? [];
-    const requestedScope = String(scopeFilter ?? "").trim();
-    if (!requestedScope) return all;
-    const requestedToken = canonicalFamilyToken(requestedScope);
-    return all.filter((alert) => {
-      const alertScope = String(alert.family_id ?? "").trim();
-      if (!alertScope) return false;
-      if (alertScope === requestedScope) return true;
-      if (alertScope.startsWith(`${requestedScope}.`)) return true;
-      if (!requestedToken) return false;
-      return canonicalFamilyToken(alertScope) === requestedToken;
-    });
-  }, [alertsData?.alerts, scopeFilter]);
-  const unacknowledgedAlerts = alerts.filter((a) => !a.resolved);
 
   // Compute coverage % from links_by_status: accepted / total
   const coverageDisplay = useMemo(() => {
@@ -203,24 +186,13 @@ export function BatchRunDashboard({ className, scopeFilter }: BatchRunDashboardP
       });
     }
 
-    for (const alert of alerts.filter((a) => !a.resolved)) {
-      const familyId = String(alert.family_id ?? "").trim();
-      if (!familyId) continue;
-      upsert({
-        scope_id: familyId,
-        family_id: familyId,
-        ontology_node_id: null,
-        count: 0,
-      });
-    }
-
     if (rows.size === 0) {
       return [{ scope_id: "unassigned", family_id: "unassigned", count: 0 }];
     }
     return Array.from(rows.values()).sort(
       (a, b) => b.count - a.count || a.scope_id.localeCompare(b.scope_id),
     );
-  }, [analytics, latestRunByScope, rules, alerts]);
+  }, [analytics, latestRunByScope, rules]);
 
   const publishedRuleScopeIds = useMemo(() => {
     const ids = new Set<string>();
@@ -293,11 +265,6 @@ export function BatchRunDashboard({ className, scopeFilter }: BatchRunDashboardP
           }
           color="orange"
         />
-        <KpiCard
-          title="Drift Alerts"
-          value={unacknowledgedAlerts.length}
-          color="red"
-        />
       </KpiCardGrid>
 
       {/* Scope matrix */}
@@ -364,23 +331,12 @@ export function BatchRunDashboard({ className, scopeFilter }: BatchRunDashboardP
                     Last Run
                   </th>
                   <th className="px-3 py-2 text-right text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">
-                    Drift
-                  </th>
-                  <th className="px-3 py-2 text-right text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">
                     Run
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {matrixFamilies.map((fam) => {
-                  const familyAlerts = alerts.filter(
-                    (a) =>
-                      !a.resolved &&
-                      (
-                        a.family_id === fam.scope_id
-                        || a.family_id === fam.family_id
-                      ),
-                  );
                   const latestRun = latestRunByScope.get(fam.scope_id);
                   const coverage = coverageByScope.get(fam.scope_id);
                   const pending = pendingByScope.get(fam.scope_id) ?? 0;
@@ -438,13 +394,6 @@ export function BatchRunDashboard({ className, scopeFilter }: BatchRunDashboardP
                       </td>
                       <td className="px-3 py-2 text-xs text-text-muted text-right tabular-nums">
                         {latestRun ? timeAgo(latestRun.started_at) : EMPTY_PLACEHOLDER}
-                      </td>
-                      <td className="px-3 py-2 text-right">
-                        {familyAlerts.length > 0 ? (
-                          <Badge variant="red">{familyAlerts.length} alerts</Badge>
-                        ) : (
-                          <span className="text-xs text-text-muted">{EMPTY_PLACEHOLDER}</span>
-                        )}
                       </td>
                       <td className="px-3 py-2 text-right">
                         <button

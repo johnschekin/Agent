@@ -12,7 +12,7 @@ const LINKS_API_TOKEN =
 async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
   const headers = new Headers(init?.headers);
   headers.set("Accept", "application/json");
-  if (path.startsWith("/api/links") || path.startsWith("/api/jobs")) {
+  if (path.startsWith("/api/links")) {
     if (!headers.has("X-Links-Token")) {
       headers.set("X-Links-Token", LINKS_API_TOKEN);
     }
@@ -475,42 +475,6 @@ export function fetchClauseSearch(params: ClauseSearchParams = {}) {
 }
 
 // ---------------------------------------------------------------------------
-// Phase 6: Jobs
-// ---------------------------------------------------------------------------
-
-export function fetchJobs(status?: string) {
-  const sp = new URLSearchParams();
-  if (status) sp.set("status", status);
-  return fetchJson<import("./types").JobListResponse>(
-    `/api/jobs?${sp}`
-  );
-}
-
-export function fetchJobStatus(jobId: string) {
-  return fetchJson<import("./types").Job>(
-    `/api/jobs/${encodeURIComponent(jobId)}/status`
-  );
-}
-
-export function submitJob(jobType: string, params: Record<string, unknown>) {
-  return fetchJson<import("./types").JobSubmitResponse>(
-    "/api/jobs/submit",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ job_type: jobType, params }),
-    }
-  );
-}
-
-export function cancelJob(jobId: string) {
-  return fetchJson<{ cancelled: boolean }>(
-    `/api/jobs/${encodeURIComponent(jobId)}/cancel`,
-    { method: "POST" }
-  );
-}
-
-// ---------------------------------------------------------------------------
 // Phase 7: Ontology Explorer
 // ---------------------------------------------------------------------------
 
@@ -619,38 +583,8 @@ export function fetchReaderSearch(docId: string, q: string, limit = 50) {
 }
 
 // ---------------------------------------------------------------------------
-// Phase 9: Strategies + Feedback
+// Phase 9: Feedback Backlog
 // ---------------------------------------------------------------------------
-
-export interface StrategyQueryParams {
-  family?: string;
-  validationStatus?: string;
-  sortBy?: string;
-  sortDir?: "asc" | "desc";
-}
-
-export function fetchStrategies(params: StrategyQueryParams = {}) {
-  const sp = new URLSearchParams();
-  if (params.family) sp.set("family", params.family);
-  if (params.validationStatus) sp.set("validation_status", params.validationStatus);
-  if (params.sortBy) sp.set("sort_by", params.sortBy);
-  if (params.sortDir) sp.set("sort_dir", params.sortDir);
-  return fetchJson<import("./types").StrategyListResponse>(
-    `/api/strategies?${sp}`
-  );
-}
-
-export function fetchStrategy(conceptId: string) {
-  return fetchJson<import("./types").StrategyDetail>(
-    `/api/strategies/${encodeURIComponent(conceptId)}`
-  );
-}
-
-export function fetchStrategyStats() {
-  return fetchJson<import("./types").StrategyStatsResponse>(
-    "/api/strategies/stats"
-  );
-}
 
 export interface FeedbackQueryParams {
   status?: string;
@@ -699,104 +633,6 @@ export function deleteFeedback(id: string) {
   return fetchJson<{ deleted: boolean }>(
     `/api/feedback/${encodeURIComponent(id)}`,
     { method: "DELETE" }
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Phase 10: Review Operations
-// ---------------------------------------------------------------------------
-
-export function fetchReviewStrategyTimeline(conceptId: string) {
-  return fetchJson<import("./types").ReviewStrategyTimelineResponse>(
-    `/api/review/strategy-timeline/${encodeURIComponent(conceptId)}`
-  );
-}
-
-export interface ReviewEvidenceParams {
-  conceptId?: string;
-  templateFamily?: string;
-  recordType?: string;
-  limit?: number;
-  offset?: number;
-}
-
-export function fetchReviewEvidence(params: ReviewEvidenceParams = {}) {
-  const sp = new URLSearchParams();
-  if (params.conceptId) sp.set("concept_id", params.conceptId);
-  if (params.templateFamily) sp.set("template_family", params.templateFamily);
-  if (params.recordType) sp.set("record_type", params.recordType);
-  if (params.limit !== undefined) sp.set("limit", String(params.limit));
-  if (params.offset !== undefined) sp.set("offset", String(params.offset));
-  return fetchJson<import("./types").ReviewEvidenceResponse>(
-    `/api/review/evidence?${sp}`
-  );
-}
-
-export interface ReviewCoverageHeatmapParams {
-  conceptId?: string;
-  topConcepts?: number;
-}
-
-export function fetchReviewCoverageHeatmap(
-  params: ReviewCoverageHeatmapParams = {}
-) {
-  const sp = new URLSearchParams();
-  if (params.conceptId) sp.set("concept_id", params.conceptId);
-  if (params.topConcepts !== undefined) {
-    sp.set("top_concepts", String(params.topConcepts));
-  }
-  return fetchJson<import("./types").ReviewCoverageHeatmapResponse>(
-    `/api/review/coverage-heatmap?${sp}`
-  );
-}
-
-export function fetchReviewJudgeHistory(conceptId: string) {
-  return fetchJson<import("./types").ReviewJudgeHistoryResponse>(
-    `/api/review/judge/${encodeURIComponent(conceptId)}/history`
-  );
-}
-
-export function fetchReviewAgentActivity(staleMinutes = 60) {
-  const sp = new URLSearchParams({ stale_minutes: String(staleMinutes) });
-  return fetchJson<import("./types").ReviewAgentActivityResponse>(
-    `/api/review/agent-activity?${sp}`
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Phase 11: ML & Learning
-// ---------------------------------------------------------------------------
-
-export interface ReviewQueueParams {
-  priority?: string;
-  conceptId?: string;
-  templateFamily?: string;
-  limit?: number;
-  offset?: number;
-}
-
-export function fetchReviewQueue(params: ReviewQueueParams = {}) {
-  const sp = new URLSearchParams();
-  if (params.priority) sp.set("priority", params.priority);
-  if (params.conceptId) sp.set("concept_id", params.conceptId);
-  if (params.templateFamily) sp.set("template_family", params.templateFamily);
-  if (params.limit !== undefined) sp.set("limit", String(params.limit));
-  if (params.offset !== undefined) sp.set("offset", String(params.offset));
-  return fetchJson<import("./types").ReviewQueueResponse>(
-    `/api/ml/review-queue?${sp}`
-  );
-}
-
-export function fetchHeadingClusters(conceptId: string) {
-  const sp = new URLSearchParams({ concept_id: conceptId });
-  return fetchJson<import("./types").HeadingClustersResponse>(
-    `/api/ml/heading-clusters?${sp}`
-  );
-}
-
-export function fetchConceptsWithEvidence() {
-  return fetchJson<import("./types").ConceptsWithEvidenceResponse>(
-    "/api/ml/concepts-with-evidence"
   );
 }
 
@@ -1361,89 +1197,6 @@ export function compareLinkRules(ruleIdA: string, ruleIdB: string) {
   return fetchJson<import("./types").RuleCompareResult>(`/api/links/rules/compare?${sp}`);
 }
 
-// ── Rule pins ──────────────────────────────────────────────────────────────
-
-export function fetchRulePins(ruleId: string) {
-  return fetchJson<Record<string, unknown>>(
-    `/api/links/rules/${encodeURIComponent(ruleId)}/pins`
-  ).then((raw) => ({
-    total: Number(raw.total ?? 0),
-    pins: Array.isArray(raw.pins)
-      ? raw.pins
-          .filter((value): value is Record<string, unknown> => !!value && typeof value === "object")
-          .map((pin) => ({
-            pin_id: String(pin.pin_id ?? ""),
-            rule_id: String(pin.rule_id ?? ruleId),
-            doc_id: String(pin.doc_id ?? ""),
-            section_number: String(pin.section_number ?? ""),
-            heading: String(pin.heading ?? ""),
-            expected_verdict:
-              String(pin.expected_verdict ?? pin.expected ?? "true_positive") === "true_negative"
-                ? "true_negative"
-                : "true_positive",
-            created_at: String(pin.created_at ?? ""),
-            note: pin.note === null || pin.note === undefined ? null : String(pin.note),
-          }))
-      : [],
-  }));
-}
-
-export function createRulePin(ruleId: string, data: {
-  doc_id: string;
-  section_number: string;
-  expected_verdict: "true_positive" | "true_negative";
-  note?: string;
-}) {
-  return postJson<{ pin_id: string }>(
-    `/api/links/rules/${encodeURIComponent(ruleId)}/pins`,
-    data
-  );
-}
-
-export function deleteRulePin(ruleId: string, pinId: string) {
-  return deleteJson<{ deleted: boolean }>(
-    `/api/links/rules/${encodeURIComponent(ruleId)}/pins/${encodeURIComponent(pinId)}`
-  );
-}
-
-export function evaluateRulePins(ruleId: string) {
-  return postJson<Record<string, unknown>>(
-    `/api/links/rules/${encodeURIComponent(ruleId)}/evaluate-pins`,
-    {}
-  ).then((raw) => {
-    const evals = Array.isArray(raw.evaluations)
-      ? raw.evaluations
-      : Array.isArray(raw.results)
-      ? raw.results
-      : [];
-    const evaluations = evals
-      .filter((value): value is Record<string, unknown> => !!value && typeof value === "object")
-      .map((entry) => ({
-        pin_id: String(entry.pin_id ?? ""),
-        rule_id: String(raw.rule_id ?? ruleId),
-        passed: Boolean(entry.passed),
-        actual_confidence: Number(entry.actual_confidence ?? 0),
-        actual_tier: (String(entry.actual_tier ?? "low") as import("./types").ConfidenceTier),
-        expected_verdict: String(
-          entry.expected_verdict ??
-            (entry.pin_type === "tn" ? "true_negative" : "true_positive")
-        ),
-        detail: String(entry.detail ?? entry.match_type ?? ""),
-      }));
-    const total = Number(raw.total_pins ?? raw.total ?? evaluations.length);
-    const passed = Number(raw.passed ?? evaluations.filter((entry) => entry.passed).length);
-    const failed = Number(raw.failed ?? Math.max(total - passed, 0));
-    return {
-      rule_id: String(raw.rule_id ?? ruleId),
-      total_pins: total,
-      passed,
-      failed,
-      pass_rate: Number(raw.pass_rate ?? (total ? passed / total : 1)),
-      evaluations,
-    } satisfies import("./types").PinEvaluationResponse;
-  });
-}
-
 // ── DSL validation ─────────────────────────────────────────────────────────
 
 export function validateDslStandalone(text: string) {
@@ -1474,7 +1227,7 @@ export function evaluateRuleText(data: {
 }
 
 export function fetchRuleAutocomplete(
-  field: "heading" | "article" | "clause" | "section" | "defined_term" | "template" | "admin_agent" | "vintage" | "market" | "doc_type" | "facility_size_mm" | "macro",
+  field: "heading" | "article" | "clause" | "section" | "defined_term" | "template" | "admin_agent" | "vintage" | "market" | "doc_type" | "facility_size_mm",
   prefix = "",
   limit = 8
 ) {
@@ -1507,27 +1260,6 @@ export function createConflictPolicy(data: {
   reason?: string;
 }) {
   return postJson<{ status: string }>("/api/links/conflict-policies", data);
-}
-
-// ── Macros ─────────────────────────────────────────────────────────────────
-
-export function fetchMacros() {
-  return fetchJson<import("./types").MacrosResponse>("/api/links/macros");
-}
-
-export function createMacro(data: {
-  name: string;
-  description: string;
-  family_id?: string;
-  ast_json: string;
-}) {
-  return postJson<{ status: string }>("/api/links/macros", data);
-}
-
-export function deleteMacro(name: string) {
-  return deleteJson<{ deleted: boolean }>(
-    `/api/links/macros/${encodeURIComponent(name)}`
-  );
 }
 
 // ── Template baselines ─────────────────────────────────────────────────────
@@ -1686,7 +1418,7 @@ export function submitLinkJob(data: { job_type: string; params: Record<string, u
       family_id: data.params?.family_id,
     });
   }
-  return postJson<import("./types").LinkJobSubmitResponse>("/api/jobs/submit", data);
+  throw new Error(`Unsupported link job_type: ${data.job_type}`);
 }
 
 // ── Export ──────────────────────────────────────────────────────────────────
@@ -1698,15 +1430,7 @@ export function exportLinks(format: string, familyId?: string) {
   });
 }
 
-// ── Drift & Analytics ──────────────────────────────────────────────────────
-
-export function fetchDriftAlerts() {
-  return fetchJson<import("./types").DriftAlertsResponse>("/api/links/drift/alerts");
-}
-
-export function fetchDriftChecks() {
-  return fetchJson<import("./types").DriftChecksResponse>("/api/links/drift/checks");
-}
+// ── Analytics ──────────────────────────────────────────────────────────────
 
 export function fetchAnalyticsDashboard(scopeId?: string) {
   const sp = new URLSearchParams();
@@ -1714,6 +1438,48 @@ export function fetchAnalyticsDashboard(scopeId?: string) {
   const suffix = sp.toString();
   return fetchJson<import("./types").AnalyticsDashboard>(
     suffix ? `/api/links/analytics?${suffix}` : "/api/links/analytics"
+  );
+}
+
+// ── Intelligence overlay ──────────────────────────────────────────────────
+
+export interface LinkIntelligenceEvidenceParams {
+  recordType?: string;
+  limit?: number;
+  offset?: number;
+}
+
+export function fetchLinkIntelligenceSignals(scopeId?: string) {
+  const sp = new URLSearchParams();
+  if (scopeId) sp.set("scope_id", scopeId);
+  const suffix = sp.toString();
+  return fetchJson<import("./types").LinkIntelligenceSignalsResponse>(
+    suffix
+      ? `/api/links/intelligence/signals?${suffix}`
+      : "/api/links/intelligence/signals"
+  );
+}
+
+export function fetchLinkIntelligenceEvidence(
+  scopeId?: string,
+  params: LinkIntelligenceEvidenceParams = {},
+) {
+  const sp = new URLSearchParams();
+  if (scopeId) sp.set("scope_id", scopeId);
+  if (params.recordType) sp.set("record_type", params.recordType);
+  if (params.limit !== undefined) sp.set("limit", String(params.limit));
+  if (params.offset !== undefined) sp.set("offset", String(params.offset));
+  return fetchJson<import("./types").LinkIntelligenceEvidenceResponse>(
+    `/api/links/intelligence/evidence?${sp}`
+  );
+}
+
+export function fetchLinkIntelligenceOps(scopeId?: string, staleMinutes = 60) {
+  const sp = new URLSearchParams();
+  if (scopeId) sp.set("scope_id", scopeId);
+  sp.set("stale_minutes", String(staleMinutes));
+  return fetchJson<import("./types").LinkIntelligenceOpsResponse>(
+    `/api/links/intelligence/ops?${sp}`
   );
 }
 
@@ -1925,15 +1691,6 @@ export function createPreviewFromAst(
   );
 }
 
-// ── Phase 5: Acknowledge drift alert ────────────────────────────────────────
-
-export function acknowledgeDriftAlert(alertId: string) {
-  return postJson<{ acknowledged: boolean }>(
-    `/api/links/drift/alerts/${encodeURIComponent(alertId)}/acknowledge`,
-    {}
-  );
-}
-
 // ── Phase 5: Import labels ──────────────────────────────────────────────────
 
 export function importLabels(file: File) {
@@ -1990,14 +1747,4 @@ export function checkPromotionGates(ruleId: string) {
     gates: { gate: string; passed: boolean; detail: string }[];
     all_passed: boolean;
   }>(`/api/links/rules/${encodeURIComponent(ruleId)}/promotion-gates`);
-}
-
-// ── Phase 5: Vintage heatmap data ───────────────────────────────────────────
-
-export function fetchVintageHeatmap(familyId?: string) {
-  const params = new URLSearchParams();
-  if (familyId) params.set("family_id", familyId);
-  return fetchJson<{
-    cells: { vintage_year: number; template_family: string; coverage_pct: number; link_count: number }[];
-  }>(`/api/links/analytics/vintage-heatmap?${params.toString()}`);
 }

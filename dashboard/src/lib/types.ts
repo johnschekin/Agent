@@ -498,33 +498,6 @@ export interface ClauseSearchResponse {
   matches: ClauseMatch[];
 }
 
-// --- Jobs ---
-export type JobStatus = "pending" | "running" | "completed" | "failed" | "cancelled";
-
-export interface Job {
-  job_id: string;
-  job_type: string;
-  status: JobStatus;
-  submitted_at: string;
-  started_at: string | null;
-  completed_at: string | null;
-  progress: number;
-  progress_message: string;
-  params: Record<string, unknown>;
-  result_summary: Record<string, unknown> | null;
-  error: string | null;
-}
-
-export interface JobListResponse {
-  total: number;
-  jobs: Job[];
-}
-
-export interface JobSubmitResponse {
-  job_id: string;
-  status: JobStatus;
-}
-
 // ---------------------------------------------------------------------------
 // Phase 7: Ontology Explorer
 // ---------------------------------------------------------------------------
@@ -703,88 +676,8 @@ export interface ReaderSearchResponse {
 }
 
 // ---------------------------------------------------------------------------
-// Phase 9: Strategy Manager + Feedback Backlog
+// Phase 9: Feedback Backlog
 // ---------------------------------------------------------------------------
-
-// --- Strategy ---
-
-export interface StrategySummary {
-  concept_id: string;
-  concept_name: string;
-  family: string;
-  validation_status: string;
-  version: number;
-  heading_pattern_count: number;
-  keyword_anchor_count: number;
-  dna_phrase_count: number;
-  heading_hit_rate: number;
-  keyword_precision: number;
-  corpus_prevalence: number;
-  cohort_coverage: number;
-  last_updated: string;
-  has_qc_issues: boolean;
-}
-
-export interface StrategyListResponse {
-  total: number;
-  families: { family: string; count: number }[];
-  validation_statuses: { status: string; count: number }[];
-  strategies: StrategySummary[];
-}
-
-export interface StrategyDetail {
-  concept_id: string;
-  concept_name: string;
-  family: string;
-  heading_patterns: string[];
-  keyword_anchors: string[];
-  keyword_anchors_section_only: string[];
-  concept_specific_keywords: string[];
-  dna_tier1: string[];
-  dna_tier2: string[];
-  defined_term_dependencies: string[];
-  concept_notes: string[];
-  fallback_escalation: string | null;
-  xref_follow: string[];
-  primary_articles: number[];
-  primary_sections: string[];
-  definitions_article: number | null;
-  heading_hit_rate: number;
-  keyword_precision: number;
-  corpus_prevalence: number;
-  cohort_coverage: number;
-  dna_phrase_count: number;
-  dropped_headings: string[];
-  false_positive_keywords: string[];
-  template_overrides: [string, string][];
-  validation_status: string;
-  version: number;
-  last_updated: string;
-  update_notes: string[];
-}
-
-export interface StrategyFamilyStats {
-  family: string;
-  strategy_count: number;
-  avg_heading_hit_rate: number;
-  avg_keyword_precision: number;
-  avg_corpus_prevalence: number;
-  avg_cohort_coverage: number;
-  total_dna_phrases: number;
-}
-
-export interface StrategyStatsResponse {
-  total_strategies: number;
-  total_families: number;
-  by_validation_status: { status: string; count: number }[];
-  by_family: StrategyFamilyStats[];
-  overall_avg_heading_hit_rate: number;
-  overall_avg_keyword_precision: number;
-  overall_avg_corpus_prevalence: number;
-  overall_avg_cohort_coverage: number;
-}
-
-// --- Feedback ---
 
 export type FeedbackType = "bug" | "improvement" | "question";
 export type FeedbackPriority = "high" | "medium" | "low";
@@ -824,235 +717,6 @@ export interface FeedbackUpdateRequest {
   status?: FeedbackStatus;
   related_concept_id?: string | null;
   description?: string;
-}
-
-// ---------------------------------------------------------------------------
-// Phase 10: Review Operations
-// ---------------------------------------------------------------------------
-
-export interface ReviewStrategyTimelineVersion {
-  version: number;
-  path: string;
-  resolved_path: string;
-  raw_path: string;
-  note: string;
-  previous_version: number | null;
-  heading_pattern_count: number;
-  keyword_anchor_count: number;
-  dna_phrase_count: number;
-  heading_hit_rate: number;
-  keyword_precision: number;
-  cohort_coverage: number;
-  judge: {
-    exists: boolean;
-    path: string;
-    precision_estimate: number;
-    weighted_precision_estimate: number;
-    n_sampled: number;
-  };
-  delta: {
-    heading_pattern_count?: number;
-    keyword_anchor_count?: number;
-    dna_phrase_count?: number;
-    heading_hit_rate?: number;
-    keyword_precision?: number;
-    cohort_coverage?: number;
-  };
-}
-
-export interface ReviewStrategyTimelineResponse {
-  concept_id: string;
-  total_versions: number;
-  versions: ReviewStrategyTimelineVersion[];
-}
-
-export interface ReviewEvidenceRow {
-  concept_id: string;
-  record_type: string;
-  doc_id: string;
-  template_family: string;
-  section_number: string;
-  heading: string;
-  clause_path: string;
-  score: number | null;
-  outlier_level: string;
-  source_tool: string;
-  created_at: string;
-  path: string;
-}
-
-export interface ReviewEvidenceResponse {
-  filters: {
-    concept_id: string;
-    template_family: string;
-    record_type: string;
-    limit: number;
-    offset: number;
-  };
-  files_scanned: number;
-  rows_scanned: number;
-  rows_matched: number;
-  rows_returned: number;
-  has_prev: boolean;
-  has_next: boolean;
-  rows: ReviewEvidenceRow[];
-}
-
-export interface ReviewCoverageCell {
-  concept_id: string;
-  template_family: string;
-  hits: number;
-  total: number;
-  hit_rate: number;
-}
-
-export interface ReviewCoverageHeatmapResponse {
-  concepts: string[];
-  templates: string[];
-  cells: ReviewCoverageCell[];
-  top_concepts: number;
-}
-
-export interface ReviewJudgeHistoryRow {
-  version: number;
-  path: string;
-  precision_estimate: number;
-  weighted_precision_estimate: number;
-  n_sampled: number;
-  correct: number;
-  partial: number;
-  wrong: number;
-  generated_at: string;
-  run_id: string;
-}
-
-export interface ReviewJudgeHistoryResponse {
-  concept_id: string;
-  history: ReviewJudgeHistoryRow[];
-}
-
-export interface ReviewAgentActivityRow {
-  family: string;
-  status: string;
-  iteration_count: number;
-  current_concept_id: string;
-  last_strategy_version: number;
-  last_coverage_hit_rate: number;
-  last_session: string;
-  last_pane: string;
-  last_start_at: string;
-  last_update: string;
-  stale: boolean;
-  checkpoint_path: string;
-}
-
-export interface ReviewAgentActivityResponse {
-  total: number;
-  stale_minutes: number;
-  stale_count: number;
-  agents: ReviewAgentActivityRow[];
-}
-
-// ---------------------------------------------------------------------------
-// Phase 11: ML & Learning
-// ---------------------------------------------------------------------------
-
-export interface ReviewQueueKpis {
-  total_queue: number;
-  high_priority: number;
-  medium_priority: number;
-  low_priority: number;
-  concepts_affected: number;
-  families_affected: number;
-}
-
-export interface ReviewQueueConfidenceComponents {
-  score: number;
-  margin: number;
-  channels: number;
-  heading: number;
-  keyword: number;
-  dna: number;
-}
-
-export interface ReviewQueueItem {
-  priority: "high" | "medium" | "low";
-  priority_score: number;
-  concept_id: string;
-  doc_id: string;
-  template_family: string;
-  section_number: string;
-  heading: string;
-  score: number | null;
-  match_type: string;
-  confidence_final: number;
-  confidence_components: ReviewQueueConfidenceComponents;
-  outlier_level: string;
-  outlier_score: number;
-  outlier_flags: string[];
-  risk_components: Record<string, number>;
-  source_tool: string;
-  strategy_version: number;
-  review_reasons: string[];
-}
-
-export interface ReviewQueueResponse {
-  kpis: ReviewQueueKpis;
-  filters: {
-    priority: string;
-    concept_id: string;
-    template_family: string;
-    limit: number;
-    offset: number;
-  };
-  total_matched: number;
-  has_prev: boolean;
-  has_next: boolean;
-  items: ReviewQueueItem[];
-  facets: {
-    concepts: { concept_id: string; count: number }[];
-    templates: { template_family: string; count: number }[];
-  };
-}
-
-export interface HeadingCluster {
-  heading_display: string;
-  heading_normalized: string;
-  doc_count: number;
-  doc_ids: string[];
-  template_families: string[];
-  avg_score: number;
-  min_score: number;
-  max_score: number;
-  match_types: string[];
-  in_strategy: boolean;
-  is_orphan: boolean;
-}
-
-export interface HeadingClusterKpis {
-  total_clusters: number;
-  known_headings: number;
-  unknown_headings: number;
-  orphan_headings: number;
-  total_hits: number;
-  unique_docs: number;
-}
-
-export interface HeadingClustersResponse {
-  concept_id: string;
-  concept_name: string;
-  strategy_heading_patterns: string[];
-  kpis: HeadingClusterKpis;
-  clusters: HeadingCluster[];
-}
-
-export interface ConceptWithEvidence {
-  concept_id: string;
-  hit_count: number;
-}
-
-export interface ConceptsWithEvidenceResponse {
-  concepts: ConceptWithEvidence[];
 }
 
 // ---------------------------------------------------------------------------
@@ -1557,6 +1221,150 @@ export interface AnalyticsDashboard {
   confidence_distribution: { tier: string; count: number }[];
   recent_runs: BatchRunSummary[];
   recent_alerts: DriftAlert[];
+}
+
+// ── Intelligence overlay ─────────────────────────────────────────────────
+
+export interface LinkIntelligenceValueCount {
+  value: string;
+  count: number;
+}
+
+export interface LinkIntelligenceStrategySignal {
+  concept_id: string;
+  concept_name: string;
+  family_id?: string | null;
+  family: string;
+  validation_status: string;
+  version: number;
+  heading_pattern_count: number;
+  keyword_anchor_count: number;
+  dna_phrase_count: number;
+  heading_hit_rate: number;
+  keyword_precision: number;
+  cohort_coverage: number;
+  corpus_prevalence: number;
+  last_updated: string;
+}
+
+export interface LinkIntelligenceSignalsResponse {
+  scope_id?: string | null;
+  scope_name: string;
+  total_strategies: number;
+  strategies: LinkIntelligenceStrategySignal[];
+  top_heading_patterns: LinkIntelligenceValueCount[];
+  top_keyword_anchors: LinkIntelligenceValueCount[];
+  top_dna_phrases: LinkIntelligenceValueCount[];
+}
+
+export interface LinkIntelligenceEvidenceRow {
+  concept_id: string;
+  record_type: string;
+  doc_id: string;
+  template_family: string;
+  section_number: string;
+  heading: string;
+  clause_path: string;
+  score: number | null;
+  outlier_level: string;
+  source_tool: string;
+  created_at: string;
+  path: string;
+}
+
+export interface LinkIntelligenceEvidenceTemplate {
+  template_family: string;
+  hits: number;
+  total: number;
+  hit_rate: number;
+}
+
+export interface LinkIntelligenceEvidenceResponse {
+  scope_id?: string | null;
+  scope_name: string;
+  filters: {
+    record_type: string;
+    limit: number;
+    offset: number;
+  };
+  summary: {
+    files_scanned: number;
+    rows_scanned: number;
+    rows_matched: number;
+    rows_returned: number;
+    scope_total: number;
+    scope_hits: number;
+    scope_hit_rate: number;
+    has_prev: boolean;
+    has_next: boolean;
+  };
+  templates: LinkIntelligenceEvidenceTemplate[];
+  rows: LinkIntelligenceEvidenceRow[];
+}
+
+export interface LinkIntelligenceOpsAgent {
+  family: string;
+  status: string;
+  iteration_count: number;
+  current_concept_id: string;
+  last_strategy_version: number;
+  last_coverage_hit_rate: number;
+  last_session: string;
+  last_pane: string;
+  last_start_at: string;
+  last_update: string;
+  stale: boolean;
+  checkpoint_path: string;
+}
+
+export interface LinkIntelligenceOpsJob {
+  job_id: string;
+  job_type: string;
+  status: string;
+  submitted_at: string | null;
+  started_at: string | null;
+  completed_at: string | null;
+  progress: number;
+  progress_message: string;
+  scope_id?: string | null;
+  error?: string | null;
+}
+
+export interface LinkIntelligenceOpsRun {
+  run_id: string;
+  run_type: string;
+  family_id: string;
+  scope_id: string;
+  ontology_node_id?: string | null;
+  links_created: number;
+  conflicts_detected: number;
+  started_at: string | null;
+  completed_at: string | null;
+  status: string;
+}
+
+export interface LinkIntelligenceOpsResponse {
+  scope_id?: string | null;
+  scope_name: string;
+  stale_minutes: number;
+  agents: {
+    total: number;
+    stale_count: number;
+    items: LinkIntelligenceOpsAgent[];
+  };
+  jobs: {
+    total: number;
+    pending: number;
+    running: number;
+    failed: number;
+    items: LinkIntelligenceOpsJob[];
+  };
+  runs: {
+    total: number;
+    running: number;
+    completed: number;
+    items: LinkIntelligenceOpsRun[];
+  };
 }
 
 // ── Calibration ─────────────────────────────────────────────────────────

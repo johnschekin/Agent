@@ -58,7 +58,7 @@ export function DslCheatSheet({ className }: { className?: string }) {
             <div className="mt-0.5 space-y-0.5">
               <div>
                 bare word &nbsp; <code>&quot;quoted phrase&quot;</code> &nbsp;
-                <code>/regex/</code> &nbsp; <code>@macro</code>
+                <code>/regex/</code>
               </div>
             </div>
           </div>

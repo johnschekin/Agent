@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import { Badge } from "@/components/ui/Badge";
 import {
-  useMacros,
   useExpandTermMutation,
   useRuleAutocompleteMutation,
 } from "@/lib/queries";
@@ -67,7 +66,6 @@ export function TextQueryBar({
   const [autocompleteIdx, setAutocompleteIdx] = useState(0);
   const autocompleteReqRef = useRef(0);
 
-  const { data: macrosData } = useMacros();
   const expandMut = useExpandTermMutation();
   const autocompleteMut = useRuleAutocompleteMutation();
 
@@ -110,18 +108,6 @@ export function TextQueryBar({
         return;
       }
 
-      // @macro trigger
-      if (lastWord.startsWith("@") && macrosData?.macros) {
-        const prefix = lastWord.slice(1).toLowerCase();
-        const matches = macrosData.macros
-          .filter((m) => m.name.toLowerCase().startsWith(prefix))
-          .map((m) => `@${m.name}`);
-        setAutocompleteItems(matches);
-        setAutocompleteIdx(0);
-        setAutocompleteOpen(matches.length > 0);
-        return;
-      }
-
       // Field triggers: any known field followed by colon
       const fieldMatch = lastWord.match(FIELD_TRIGGER_RE);
       if (fieldMatch) {
@@ -156,7 +142,7 @@ export function TextQueryBar({
         // Parent handles validation via useEffect on dsl change
       }, 300);
     },
-    [onDslChange, macrosData, autocompleteMut, showFieldSuggestions],
+    [onDslChange, autocompleteMut, showFieldSuggestions],
   );
 
   const handleKeyDown = useCallback(
@@ -315,7 +301,7 @@ export function TextQueryBar({
           disabled={disabled}
           placeholder={
             familyId
-              ? `heading:... article:... template:... @macro`
+              ? `heading:... article:... template:...`
               : "Select an ontology node first"
           }
           className={cn(

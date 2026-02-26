@@ -88,6 +88,7 @@ import { BatchRunDashboard } from "@/components/links/BatchRunDashboard";
 import { ExportImportDialog } from "@/components/links/ExportImportDialog";
 import { tokenizeDsl, DSL_TOKEN_CLASSES } from "@/lib/rule-dsl-highlight";
 import { DslCheatSheet } from "@/components/links/DslCheatSheet";
+import { OntologyIntelligencePanel } from "@/components/links/OntologyIntelligencePanel";
 import { DataTable } from "@/components/tables/DataTable";
 import { OntologyTree } from "@/components/ontology/OntologyTree";
 
@@ -344,6 +345,7 @@ function LinksPageInner() {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [triageActive, setTriageActive] = useState(false);
   const [exportDialogOpen, setExportDialogOpen] = useState(false);
+  const [intelligencePanelOpen, setIntelligencePanelOpen] = useState(true);
   const [rulesCompareRequestId, setRulesCompareRequestId] = useState(0);
   const [claimedLinkIds, setClaimedLinkIds] = useState<Set<string> | null>(null);
   const [resumeCursorLinkId, setResumeCursorLinkId] = useState<string | null>(null);
@@ -454,6 +456,8 @@ function LinksPageInner() {
     () => (familyFilter ? allFamilies.find((f) => f.family_id === familyFilter) ?? null : null),
     [allFamilies, familyFilter],
   );
+  const showIntelligencePanel = activeTab === "review" || activeTab === "query" || activeTab === "dashboard";
+  const intelligenceScopeId = familyFilter ?? selectedTreeNodeId ?? undefined;
 
   const queryParentFamilyId = useMemo(() => {
     if (selectedTreeNodeId) {
@@ -1243,90 +1247,111 @@ function LinksPageInner() {
                 Select an ontology node to enable Preview
               </span>
             )}
+            {showIntelligencePanel && (
+              <button
+                type="button"
+                onClick={() => setIntelligencePanelOpen((prev) => !prev)}
+                className={cn(
+                  "ml-auto text-[11px] px-2 py-0.5 rounded transition-colors",
+                  intelligencePanelOpen
+                    ? "bg-glow-blue text-accent-blue"
+                    : "bg-surface-2 text-text-secondary hover:text-text-primary",
+                )}
+                data-testid="toggle-intelligence-panel"
+              >
+                {intelligencePanelOpen ? "Hide Intelligence" : "Show Intelligence"}
+              </button>
+            )}
           </div>
 
-          <div className="flex-1 overflow-hidden">
-            {activeTab === "review" ? (
-              <ReviewTabContent
-                links={displayedLinks}
-                totalLinks={claimedLinkIds ? displayedLinks.length : totalLinks}
-                summary={summary ?? null}
-                page={page}
-                onPageChange={setPage}
-                familyFilter={familyFilter}
-                onFamilyFilter={(family) => {
-                  setFamilyFilter(family);
-                  setPage(1);
-                }}
-                statusFilter={statusFilter}
-                onStatusFilter={(status) => {
-                  setStatusFilter(status);
-                  setPage(1);
-                }}
-                tierFilter={tierFilter}
-                onTierCycle={() => {
-                  setTierFilter((prev) => {
-                    const idx = TIER_CYCLE.indexOf(prev);
-                    return TIER_CYCLE[(idx + 1) % TIER_CYCLE.length];
-                  });
-                  setPage(1);
-                }}
-                sortBy={sortBy}
-                sortDir={sortDir}
-                onToggleConfidenceSort={toggleConfidenceSort}
-                focusedIdx={focusedIdx}
-                onFocusedIdxChange={setFocusedIdx}
-                selectedIds={selectedIds}
-                onSelectedIdsChange={setSelectedIds}
-                lastSelectedIdx={lastSelectedIdx}
-                onLastSelectedIdxChange={setLastSelectedIdx}
-                readerOpen={readerOpen}
-                detachedReader={detachedReader}
-                onDetach={() => setDetachedReader(true)}
-                onReattach={() => setDetachedReader(false)}
-                focusMode={focusMode}
-                folded={folded}
-                redlineActive={redlineActive}
-                focusedLink={focusedLink}
-                noteInputLinkId={noteInputLinkId}
-                noteText={noteText}
-                noteInputRef={noteInputRef}
-                onNoteTextChange={setNoteText}
-                onNoteSubmit={submitNote}
-                onNoteCancel={() => setNoteInputLinkId(null)}
-                reassignLinkId={reassignLinkId}
-                onReassignClose={() => setReassignLinkId(null)}
-                loading={linksQuery.isLoading}
-                showFamilySidebar={false}
-              />
-            ) : activeTab === "query" ? (
-              <QueryTabContent
-                familyFilter={familyFilter}
-                parentFamilyId={queryParentFamilyId}
-                selectedNodeId={selectedTreeNodeId}
-                selectedNodeType={selectedOntologyNode?.type ?? null}
-                loadRuleId={loadRuleId}
-                onFamilySelect={(nextFamilyId) => {
-                  setFamilyFilter(nextFamilyId);
-                  setPage(1);
-                }}
-              />
-            ) : activeTab === "coverage" ? (
-              <CoverageTabContent familyFilter={familyFilter} />
-            ) : activeTab === "conflicts" ? (
-              <ConflictsTabContent familyFilter={familyFilter} />
-            ) : activeTab === "rules" ? (
-              <RulesTabContent
-                familyFilter={familyFilter}
-                compareRequestId={rulesCompareRequestId}
-                onOpenInQuery={openRuleInQuery}
-              />
-            ) : activeTab === "dashboard" ? (
-              <DashboardTabContent
-                familyFilter={familyFilter}
-                onOpenExport={() => setExportDialogOpen(true)}
-              />
-            ) : null}
+          <div className="flex-1 overflow-hidden flex">
+            <div className="flex-1 overflow-hidden">
+              {activeTab === "review" ? (
+                <ReviewTabContent
+                  links={displayedLinks}
+                  totalLinks={claimedLinkIds ? displayedLinks.length : totalLinks}
+                  summary={summary ?? null}
+                  page={page}
+                  onPageChange={setPage}
+                  familyFilter={familyFilter}
+                  onFamilyFilter={(family) => {
+                    setFamilyFilter(family);
+                    setPage(1);
+                  }}
+                  statusFilter={statusFilter}
+                  onStatusFilter={(status) => {
+                    setStatusFilter(status);
+                    setPage(1);
+                  }}
+                  tierFilter={tierFilter}
+                  onTierCycle={() => {
+                    setTierFilter((prev) => {
+                      const idx = TIER_CYCLE.indexOf(prev);
+                      return TIER_CYCLE[(idx + 1) % TIER_CYCLE.length];
+                    });
+                    setPage(1);
+                  }}
+                  sortBy={sortBy}
+                  sortDir={sortDir}
+                  onToggleConfidenceSort={toggleConfidenceSort}
+                  focusedIdx={focusedIdx}
+                  onFocusedIdxChange={setFocusedIdx}
+                  selectedIds={selectedIds}
+                  onSelectedIdsChange={setSelectedIds}
+                  lastSelectedIdx={lastSelectedIdx}
+                  onLastSelectedIdxChange={setLastSelectedIdx}
+                  readerOpen={readerOpen}
+                  detachedReader={detachedReader}
+                  onDetach={() => setDetachedReader(true)}
+                  onReattach={() => setDetachedReader(false)}
+                  focusMode={focusMode}
+                  folded={folded}
+                  redlineActive={redlineActive}
+                  focusedLink={focusedLink}
+                  noteInputLinkId={noteInputLinkId}
+                  noteText={noteText}
+                  noteInputRef={noteInputRef}
+                  onNoteTextChange={setNoteText}
+                  onNoteSubmit={submitNote}
+                  onNoteCancel={() => setNoteInputLinkId(null)}
+                  reassignLinkId={reassignLinkId}
+                  onReassignClose={() => setReassignLinkId(null)}
+                  loading={linksQuery.isLoading}
+                  showFamilySidebar={false}
+                />
+              ) : activeTab === "query" ? (
+                <QueryTabContent
+                  familyFilter={familyFilter}
+                  parentFamilyId={queryParentFamilyId}
+                  selectedNodeId={selectedTreeNodeId}
+                  selectedNodeType={selectedOntologyNode?.type ?? null}
+                  loadRuleId={loadRuleId}
+                  onFamilySelect={(nextFamilyId) => {
+                    setFamilyFilter(nextFamilyId);
+                    setPage(1);
+                  }}
+                />
+              ) : activeTab === "coverage" ? (
+                <CoverageTabContent familyFilter={familyFilter} />
+              ) : activeTab === "conflicts" ? (
+                <ConflictsTabContent familyFilter={familyFilter} />
+              ) : activeTab === "rules" ? (
+                <RulesTabContent
+                  familyFilter={familyFilter}
+                  compareRequestId={rulesCompareRequestId}
+                  onOpenInQuery={openRuleInQuery}
+                />
+              ) : activeTab === "dashboard" ? (
+                <DashboardTabContent
+                  familyFilter={familyFilter}
+                  onOpenExport={() => setExportDialogOpen(true)}
+                />
+              ) : null}
+            </div>
+
+            {showIntelligencePanel && intelligencePanelOpen && (
+              <OntologyIntelligencePanel scopeId={intelligenceScopeId} />
+            )}
           </div>
         </div>
       </div>
@@ -1622,7 +1647,6 @@ function ReviewTabContent({
               <SidebarKpi label="Unique docs" value={summary.unique_docs} color="green" />
               <SidebarKpi label="Pending review" value={summary.pending_review} color="orange" />
               <SidebarKpi label="Unlinked" value={summary.unlinked} color="red" />
-              <SidebarKpi label="Drift alerts" value={summary.drift_alerts} color="purple" />
             </div>
           )}
 

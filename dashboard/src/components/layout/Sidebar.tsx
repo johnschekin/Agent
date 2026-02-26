@@ -54,15 +54,6 @@ function IconDiscovery({ className }: { className?: string }) {
   );
 }
 
-function IconSystem({ className }: { className?: string }) {
-  return (
-    <svg className={className} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="10" cy="10" r="3" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M10 3v2M10 15v2M3 10h2M15 10h2M5.05 5.05l1.4 1.4M13.55 13.55l1.4 1.4M5.05 14.95l1.4-1.4M13.55 6.45l1.4-1.4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
 // ─── Navigation structure ──────────────────────────────────────────────────
 
 interface NavItem {
@@ -118,8 +109,6 @@ const NAV_MODULES: NavModule[] = [
       { label: "Quality", href: "/quality" },
       { label: "Edge Cases", href: "/edge-cases" },
       { label: "Ontology Explorer", href: "/ontology" },
-      { label: "Strategies", href: "/strategies" },
-      { label: "Strategy Results", href: "/strategies/results" },
       { label: "Feedback Backlog", href: "/feedback" },
     ],
   },
@@ -133,22 +122,6 @@ const NAV_MODULES: NavModule[] = [
       { label: "Heading Discovery", href: "/lab/headings" },
       { label: "Coverage Analysis", href: "/lab/coverage" },
       { label: "Clause Deep Dive", href: "/lab/clauses" },
-      { label: "Review Queue", href: "/ml/review" },
-      { label: "Clause Clusters", href: "/ml/clusters" },
-    ],
-  },
-  {
-    id: "system",
-    title: "System",
-    icon: IconSystem,
-    items: [
-      { label: "Review Home", href: "/review" },
-      { label: "Strategy Timeline", href: "/review/strategy" },
-      { label: "Evidence Browser", href: "/review/evidence" },
-      { label: "Coverage Heatmap", href: "/review/coverage" },
-      { label: "Judge History", href: "/review/judge" },
-      { label: "Agent Activity", href: "/review/activity" },
-      { label: "Jobs", href: "/jobs" },
     ],
   },
 ];

@@ -25,10 +25,6 @@ import {
   fetchDnaDiscovery,
   fetchCoverage,
   fetchClauseSearch,
-  fetchJobs,
-  fetchJobStatus,
-  submitJob,
-  cancelJob,
   fetchOntologyStats,
   fetchOntologyTree,
   fetchOntologyNode,
@@ -53,26 +49,11 @@ import {
   fetchReaderSection,
   fetchReaderDefinitions,
   fetchReaderSearch,
-  fetchStrategies,
-  fetchStrategy,
-  fetchStrategyStats,
   fetchFeedback,
   createFeedback,
   updateFeedback,
   deleteFeedback,
-  type StrategyQueryParams,
   type FeedbackQueryParams,
-  fetchReviewStrategyTimeline,
-  fetchReviewEvidence,
-  fetchReviewCoverageHeatmap,
-  fetchReviewJudgeHistory,
-  fetchReviewAgentActivity,
-  type ReviewEvidenceParams,
-  type ReviewCoverageHeatmapParams,
-  fetchReviewQueue,
-  fetchHeadingClusters,
-  fetchConceptsWithEvidence,
-  type ReviewQueueParams,
 } from "./api";
 
 export function useOverviewKpis(cohortOnly = true) {
@@ -281,42 +262,6 @@ export function useClauseSearch() {
 }
 
 // ---------------------------------------------------------------------------
-// Phase 6: Jobs
-// ---------------------------------------------------------------------------
-
-export function useJobs(status?: string, refetchInterval?: number) {
-  return useQuery({
-    queryKey: ["jobs", status],
-    queryFn: () => fetchJobs(status),
-    staleTime: 5_000,
-    refetchInterval: refetchInterval ?? 10_000,
-  });
-}
-
-export function useJobStatus(jobId: string | null) {
-  return useQuery({
-    queryKey: ["jobs", jobId, "status"],
-    queryFn: () => fetchJobStatus(jobId!),
-    enabled: !!jobId,
-    staleTime: 2_000,
-    refetchInterval: 3_000,
-  });
-}
-
-export function useSubmitJob() {
-  return useMutation({
-    mutationFn: ({ jobType, params }: { jobType: string; params: Record<string, unknown> }) =>
-      submitJob(jobType, params),
-  });
-}
-
-export function useCancelJob() {
-  return useMutation({
-    mutationFn: (jobId: string) => cancelJob(jobId),
-  });
-}
-
-// ---------------------------------------------------------------------------
 // Phase 7: Ontology Explorer
 // ---------------------------------------------------------------------------
 
@@ -413,34 +358,8 @@ export function useReaderSearch(docId: string | null, q: string, limit = 50) {
 }
 
 // ---------------------------------------------------------------------------
-// Phase 9: Strategies + Feedback
+// Phase 9: Feedback
 // ---------------------------------------------------------------------------
-
-export function useStrategies(params: StrategyQueryParams = {}) {
-  return useQuery({
-    queryKey: ["strategies", params],
-    queryFn: () => fetchStrategies(params),
-    staleTime: 60_000,
-    placeholderData: keepPreviousData,
-  });
-}
-
-export function useStrategy(conceptId: string | null) {
-  return useQuery({
-    queryKey: ["strategy", conceptId],
-    queryFn: () => fetchStrategy(conceptId!),
-    enabled: !!conceptId,
-    staleTime: 120_000,
-  });
-}
-
-export function useStrategyStats() {
-  return useQuery({
-    queryKey: ["strategies", "stats"],
-    queryFn: fetchStrategyStats,
-    staleTime: 60_000,
-  });
-}
 
 export function useFeedback(params: FeedbackQueryParams = {}) {
   return useQuery({
@@ -484,88 +403,6 @@ export function useDeleteFeedback() {
 }
 
 // ---------------------------------------------------------------------------
-// Phase 10: Review Operations
-// ---------------------------------------------------------------------------
-
-export function useReviewStrategyTimeline(conceptId: string | null) {
-  return useQuery({
-    queryKey: ["review", "strategy-timeline", conceptId],
-    queryFn: () => fetchReviewStrategyTimeline(conceptId!),
-    enabled: !!conceptId,
-    staleTime: 60_000,
-  });
-}
-
-export function useReviewEvidence(params: ReviewEvidenceParams = {}) {
-  return useQuery({
-    queryKey: ["review", "evidence", params],
-    queryFn: () => fetchReviewEvidence(params),
-    staleTime: 30_000,
-    placeholderData: keepPreviousData,
-  });
-}
-
-export function useReviewCoverageHeatmap(
-  params: ReviewCoverageHeatmapParams = {}
-) {
-  return useQuery({
-    queryKey: ["review", "coverage-heatmap", params],
-    queryFn: () => fetchReviewCoverageHeatmap(params),
-    staleTime: 60_000,
-    placeholderData: keepPreviousData,
-  });
-}
-
-export function useReviewJudgeHistory(conceptId: string | null) {
-  return useQuery({
-    queryKey: ["review", "judge-history", conceptId],
-    queryFn: () => fetchReviewJudgeHistory(conceptId!),
-    enabled: !!conceptId,
-    staleTime: 60_000,
-  });
-}
-
-export function useReviewAgentActivity(staleMinutes = 60) {
-  return useQuery({
-    queryKey: ["review", "agent-activity", staleMinutes],
-    queryFn: () => fetchReviewAgentActivity(staleMinutes),
-    staleTime: 15_000,
-    refetchInterval: 30_000,
-    placeholderData: keepPreviousData,
-  });
-}
-
-// ---------------------------------------------------------------------------
-// Phase 11: ML & Learning
-// ---------------------------------------------------------------------------
-
-export function useReviewQueue(params: ReviewQueueParams = {}) {
-  return useQuery({
-    queryKey: ["ml", "review-queue", params],
-    queryFn: () => fetchReviewQueue(params),
-    staleTime: 30_000,
-    placeholderData: keepPreviousData,
-  });
-}
-
-export function useHeadingClusters(conceptId: string | null) {
-  return useQuery({
-    queryKey: ["ml", "heading-clusters", conceptId],
-    queryFn: () => fetchHeadingClusters(conceptId!),
-    enabled: !!conceptId,
-    staleTime: 60_000,
-  });
-}
-
-export function useConceptsWithEvidence() {
-  return useQuery({
-    queryKey: ["ml", "concepts-with-evidence"],
-    queryFn: fetchConceptsWithEvidence,
-    staleTime: 60_000,
-  });
-}
-
-// ---------------------------------------------------------------------------
 // Phase 3: Bulk Section-to-Ontology-Family Linking
 // ---------------------------------------------------------------------------
 
@@ -599,17 +436,10 @@ import {
   deleteLinkRule,
   publishLinkRule,
   archiveLinkRule,
-  fetchRulePins,
-  createRulePin,
-  deleteRulePin,
-  evaluateRulePins,
   validateDslStandalone,
   fetchConflicts,
   fetchConflictPolicies,
   createConflictPolicy,
-  fetchMacros,
-  createMacro,
-  deleteMacro,
   fetchTemplateBaselines,
   createTemplateBaseline,
   createSession,
@@ -625,9 +455,10 @@ import {
   cancelLinkJob,
   submitLinkJob,
   exportLinks,
-  fetchDriftAlerts,
-  fetchDriftChecks,
   fetchAnalyticsDashboard,
+  fetchLinkIntelligenceSignals,
+  fetchLinkIntelligenceEvidence,
+  fetchLinkIntelligenceOps,
   fetchCalibrations,
   fetchCrossrefPeek,
   fetchCounterfactual,
@@ -649,16 +480,15 @@ import {
   createPreviewFromAst,
   evaluateRuleText,
   compareLinkRules,
-  acknowledgeDriftAlert,
   importLabels,
   cloneLinkRule,
   promoteRule,
   lockRule,
   unlockRule,
   checkPromotionGates,
-  fetchVintageHeatmap,
   type LinksQueryParams,
   type LinkRulesQueryParams,
+  type LinkIntelligenceEvidenceParams,
   type TemplateBaselinesQueryParams,
 } from "./api";
 
@@ -982,55 +812,6 @@ export function useRuleCompareMutation() {
   });
 }
 
-// ── Rule pins ──────────────────────────────────────────────────────────────
-
-export function useRulePins(ruleId: string | null) {
-  return useQuery({
-    queryKey: ["links", "rule-pins", ruleId],
-    queryFn: () => fetchRulePins(ruleId!),
-    enabled: !!ruleId,
-    staleTime: 30_000,
-  });
-}
-
-export function useCreatePinMutation() {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: ({
-      ruleId,
-      data,
-    }: {
-      ruleId: string;
-      data: {
-        doc_id: string;
-        section_number: string;
-        expected_verdict: "true_positive" | "true_negative";
-        note?: string;
-      };
-    }) => createRulePin(ruleId, data),
-    onSuccess: (_d, v) => {
-      qc.invalidateQueries({ queryKey: ["links", "rule-pins", v.ruleId] });
-    },
-  });
-}
-
-export function useDeletePinMutation() {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: ({ ruleId, pinId }: { ruleId: string; pinId: string }) =>
-      deleteRulePin(ruleId, pinId),
-    onSuccess: (_d, v) => {
-      qc.invalidateQueries({ queryKey: ["links", "rule-pins", v.ruleId] });
-    },
-  });
-}
-
-export function useEvaluatePinsMutation() {
-  return useMutation({
-    mutationFn: (ruleId: string) => evaluateRulePins(ruleId),
-  });
-}
-
 // ── DSL validation ─────────────────────────────────────────────────────────
 
 export function useValidateDslMutation() {
@@ -1064,36 +845,6 @@ export function useCreateConflictPolicyMutation() {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["links", "conflict-policies"] });
       qc.invalidateQueries({ queryKey: ["links", "conflicts"] });
-    },
-  });
-}
-
-// ── Macros ─────────────────────────────────────────────────────────────────
-
-export function useMacros() {
-  return useQuery({
-    queryKey: ["links", "macros"],
-    queryFn: fetchMacros,
-    staleTime: 60_000,
-  });
-}
-
-export function useCreateMacroMutation() {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: createMacro,
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["links", "macros"] });
-    },
-  });
-}
-
-export function useDeleteMacroMutation() {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: (name: string) => deleteMacro(name),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["links", "macros"] });
     },
   });
 }
@@ -1263,29 +1014,44 @@ export function useExportLinksMutation() {
   });
 }
 
-// ── Drift & Analytics ──────────────────────────────────────────────────────
-
-export function useDriftAlerts() {
-  return useQuery({
-    queryKey: ["links", "drift-alerts"],
-    queryFn: fetchDriftAlerts,
-    staleTime: 30_000,
-  });
-}
-
-export function useDriftChecks() {
-  return useQuery({
-    queryKey: ["links", "drift-checks"],
-    queryFn: fetchDriftChecks,
-    staleTime: 60_000,
-  });
-}
+// ── Analytics ──────────────────────────────────────────────────────────────
 
 export function useAnalyticsDashboard(scopeId?: string) {
   return useQuery({
     queryKey: ["links", "analytics", scopeId],
     queryFn: () => fetchAnalyticsDashboard(scopeId),
     staleTime: 30_000,
+  });
+}
+
+export function useLinkIntelligenceSignals(scopeId?: string) {
+  return useQuery({
+    queryKey: ["links", "intelligence", "signals", scopeId],
+    queryFn: () => fetchLinkIntelligenceSignals(scopeId),
+    staleTime: 30_000,
+    placeholderData: keepPreviousData,
+  });
+}
+
+export function useLinkIntelligenceEvidence(
+  scopeId?: string,
+  params: LinkIntelligenceEvidenceParams = {},
+) {
+  return useQuery({
+    queryKey: ["links", "intelligence", "evidence", scopeId, params],
+    queryFn: () => fetchLinkIntelligenceEvidence(scopeId, params),
+    staleTime: 20_000,
+    placeholderData: keepPreviousData,
+  });
+}
+
+export function useLinkIntelligenceOps(scopeId?: string, staleMinutes = 60) {
+  return useQuery({
+    queryKey: ["links", "intelligence", "ops", scopeId, staleMinutes],
+    queryFn: () => fetchLinkIntelligenceOps(scopeId, staleMinutes),
+    staleTime: 15_000,
+    refetchInterval: 30_000,
+    placeholderData: keepPreviousData,
   });
 }
 
@@ -1479,7 +1245,7 @@ export function useRuleAutocompleteMutation() {
       prefix,
       limit,
     }: {
-      field: "heading" | "article" | "clause" | "section" | "defined_term" | "template" | "admin_agent" | "vintage" | "market" | "doc_type" | "facility_size_mm" | "macro";
+      field: "heading" | "article" | "clause" | "section" | "defined_term" | "template" | "admin_agent" | "vintage" | "market" | "doc_type" | "facility_size_mm";
       prefix?: string;
       limit?: number;
     }) => fetchRuleAutocomplete(field, prefix ?? "", limit ?? 8),
@@ -1570,19 +1336,6 @@ export function useCreatePreviewFromAstMutation() {
   });
 }
 
-// ── Phase 5: Acknowledge drift alert ────────────────────────────────────────
-
-export function useAcknowledgeDriftAlertMutation() {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: (alertId: string) =>
-      acknowledgeDriftAlert(alertId),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["links", "drift-alerts"] });
-    },
-  });
-}
-
 // ── Phase 5: Import labels ──────────────────────────────────────────────────
 
 export function useImportLabelsMutation() {
@@ -1642,15 +1395,5 @@ export function usePromotionGates(ruleId: string | null) {
     queryFn: () => checkPromotionGates(ruleId!),
     enabled: !!ruleId,
     staleTime: 30_000,
-  });
-}
-
-// ── Phase 5: Vintage heatmap data ───────────────────────────────────────────
-
-export function useVintageHeatmap(familyId?: string) {
-  return useQuery({
-    queryKey: ["links", "vintage-heatmap", familyId],
-    queryFn: () => fetchVintageHeatmap(familyId),
-    staleTime: 60_000,
   });
 }

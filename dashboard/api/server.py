@@ -559,7 +559,7 @@ def _extract_request_token(request: Request) -> str | None:
 
 
 def _require_links_access(request: Request, *, write: bool) -> None:
-    """Enforce auth for /api/links and /api/jobs routes."""
+    """Enforce auth for /api/links routes."""
     token = _extract_request_token(request)
     is_local = _is_local_request(request)
 
@@ -631,6 +631,28 @@ def _require_test_endpoint_access(request: Request) -> None:
         raise HTTPException(status_code=403, detail="Test endpoint token required")
 
 
+_LEGACY_API_PREFIXES: tuple[str, ...] = (
+    "/api/jobs",
+    "/api/strategies",
+    "/api/review",
+    "/api/ml/review-queue",
+    "/api/ml/heading-clusters",
+    "/api/ml/concepts-with-evidence",
+)
+
+
+def _legacy_api_replacement(path: str) -> str:
+    if path.startswith("/api/jobs"):
+        return "/api/links/intelligence/ops"
+    if path.startswith("/api/strategies"):
+        return "/api/links/rules"
+    if path.startswith("/api/review"):
+        return "/api/links/intelligence/evidence"
+    if path.startswith("/api/ml/"):
+        return "/api/links/intelligence/signals"
+    return "/api/links"
+
+
 @app.middleware("http")
 async def _links_api_auth_middleware(request: Request, call_next: Any):
     """Apply auth checks to links/jobs surfaces before handler execution."""
@@ -644,7 +666,17 @@ async def _links_api_auth_middleware(request: Request, call_next: Any):
             return Response(status_code=204, headers=cors_headers)
         return Response(status_code=204)
 
-    if path.startswith("/api/links") or path.startswith("/api/jobs"):
+    if any(path.startswith(prefix) for prefix in _LEGACY_API_PREFIXES):
+        return ORJSONResponse(
+            status_code=410,
+            content={
+                "detail": "Deprecated API route. Use ontology links API endpoints.",
+                "replacement": _legacy_api_replacement(path),
+            },
+            headers=cors_headers,
+        )
+
+    if path.startswith("/api/links"):
         # Dedicated helper enforces stricter controls for test-only endpoints.
         if path.startswith("/api/links/_test"):
             response = await call_next(request)
@@ -3233,11 +3265,6 @@ class ClauseSearchRequest(BaseModel):
     cohort_only: bool = True
 
 
-class JobSubmitRequest(BaseModel):
-    job_type: str
-    params: dict[str, Any] = Field(default_factory=dict)
-
-
 class ManualLinkCreateRequest(BaseModel):
     family_id: str = Field(..., min_length=1, max_length=255)
     doc_id: str = Field(..., min_length=1, max_length=255)
@@ -4201,271 +4228,6 @@ async def clause_search(req: ClauseSearchRequest):
 
 
 # ===========================================================================
-# Phase 6: Jobs System
-# ===========================================================================
-
-# In-memory job store. In production this would use a database.
-_jobs: dict[str, dict[str, Any]] = {}
-_MAX_COMPLETED_JOBS = 200  # H1 FIX: cap completed jobs to prevent memory leak
-_MAX_ACTIVE_JOBS = 50  # M1 RT4 FIX: cap pending/running jobs to prevent resource exhaustion
-
-
-def _now_iso() -> str:
-    return datetime.now(timezone.utc).isoformat()
-
-
-def _cleanup_old_jobs() -> None:
-    """H1 FIX: Remove oldest completed/failed/cancelled jobs beyond the cap."""
-    terminal = [
-        (jid, j) for jid, j in _jobs.items()
-        if j["status"] in ("completed", "failed", "cancelled")
-    ]
-    if len(terminal) <= _MAX_COMPLETED_JOBS:
-        return
-    # Sort by completed_at ascending (oldest first)
-    terminal.sort(key=lambda x: x[1].get("completed_at") or "")
-    to_remove = len(terminal) - _MAX_COMPLETED_JOBS
-    for jid, _ in terminal[:to_remove]:
-        del _jobs[jid]
-
-
-_JOB_TYPE_MODELS: dict[str, type] = {
-    "pattern_test": PatternTestRequest,
-    "dna_discover": DnaDiscoveryRequest,
-    "heading_discover": HeadingDiscoveryRequest,
-    "coverage": CoverageRequest,
-    "clause_search": ClauseSearchRequest,
-}
-
-
-@app.post("/api/jobs/submit")
-async def submit_job(req: JobSubmitRequest):
-    """Submit a new background job."""
-    if req.job_type not in _JOB_TYPE_MODELS:
-        raise HTTPException(
-            status_code=400,
-            detail=f"job_type must be one of: {', '.join(sorted(_JOB_TYPE_MODELS))}",
-        )
-
-    # M1 RT4 FIX: Reject if too many active jobs to prevent resource exhaustion
-    active_count = sum(1 for j in _jobs.values() if j["status"] in ("pending", "running"))
-    if active_count >= _MAX_ACTIVE_JOBS:
-        raise HTTPException(status_code=429, detail="Job queue full — too many active jobs")
-
-    # H4 RT2 FIX: Validate params eagerly so the user gets an immediate 400
-    try:
-        _JOB_TYPE_MODELS[req.job_type](**req.params)
-    except Exception as e:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Invalid params for {req.job_type}: {e}",
-        ) from e
-
-    job_id = str(uuid.uuid4())[:12]
-    job: dict[str, Any] = {
-        "job_id": job_id,
-        "job_type": req.job_type,
-        "status": "pending",
-        "submitted_at": _now_iso(),
-        "started_at": None,
-        "completed_at": None,
-        "progress": 0.0,
-        "progress_message": "Queued",
-        "params": req.params,
-        "result_summary": None,
-        "error": None,
-    }
-    _jobs[job_id] = job
-
-    # Start job execution in background
-    asyncio.create_task(_run_job(job_id))
-
-    return {"job_id": job_id, "status": "pending"}
-
-
-async def _run_job(job_id: str) -> None:
-    """Execute a job asynchronously. Updates job state in _jobs dict."""
-    job = _jobs.get(job_id)
-    if not job:
-        return
-
-    # H1 RT3 FIX: Don't overwrite "cancelled" status set before task started
-    if job["status"] == "cancelled":
-        return
-
-    job["status"] = "running"
-    job["started_at"] = _now_iso()
-    job["progress_message"] = "Starting..."
-
-    try:
-        jtype = job["job_type"]
-
-        if jtype == "heading_discover":
-            req = HeadingDiscoveryRequest(**job["params"])
-            job["progress"] = 0.1
-            job["progress_message"] = "Scanning sections..."
-            result = await heading_discover(req)
-            job["result_summary"] = {
-                "total_headings": result["total_headings"],
-                "total_scanned": result["total_sections_scanned"],
-            }
-
-        elif jtype == "pattern_test":
-            req_pt = PatternTestRequest(**job["params"])
-            job["progress"] = 0.1
-            job["progress_message"] = f"Testing {req_pt.sample_size} documents..."
-            result = await pattern_test(req_pt)
-            job["result_summary"] = {
-                "hit_rate": result["hit_rate"],
-                "total_docs": result["total_docs"],
-                "hits": result["hits"],
-            }
-
-        elif jtype == "dna_discover":
-            req_dna = DnaDiscoveryRequest(**job["params"])
-            job["progress"] = 0.1
-            job["progress_message"] = "Discovering phrases..."
-            result = await dna_discover(req_dna)
-            job["result_summary"] = {
-                "positive_count": result["positive_count"],
-                "background_count": result["background_count"],
-                "total_candidates": result["total_candidates"],
-            }
-
-        elif jtype == "coverage":
-            req_cov = CoverageRequest(**job["params"])
-            job["progress"] = 0.1
-            job["progress_message"] = "Running coverage analysis..."
-            result = await coverage_analysis(req_cov)
-            job["result_summary"] = {
-                "overall_hit_rate": result["overall_hit_rate"],
-                "total_docs": result["total_docs"],
-            }
-
-        elif jtype == "clause_search":
-            req_cls = ClauseSearchRequest(**job["params"])
-            job["progress"] = 0.1
-            job["progress_message"] = "Searching clauses..."
-            result = await clause_search(req_cls)
-            job["result_summary"] = {"total": result["total"]}
-
-        else:
-            raise ValueError(f"Unknown job type: {jtype}")
-
-        # H1 RT2 FIX: Don't overwrite "cancelled" status set during an await
-        if job["status"] != "cancelled":
-            job["status"] = "completed"
-            job["progress"] = 1.0
-            job["progress_message"] = "Done"
-            job["completed_at"] = _now_iso()
-
-    except HTTPException as he:
-        # H3 FIX: Unwrap HTTPException detail for background jobs
-        # H1 RT2 FIX: Respect cancellation even on error
-        if job["status"] != "cancelled":
-            job["status"] = "failed"
-            job["error"] = str(he.detail)
-            job["completed_at"] = _now_iso()
-            job["progress_message"] = f"Failed: {he.detail}"
-    except Exception as e:
-        if job["status"] != "cancelled":
-            job["status"] = "failed"
-            job["error"] = str(e)
-            job["completed_at"] = _now_iso()
-            job["progress_message"] = f"Failed: {e}"
-    finally:
-        # H1 FIX: Cleanup old jobs after each completion
-        _cleanup_old_jobs()
-
-
-@app.get("/api/jobs")
-async def list_jobs(
-    status: str | None = Query(None),
-):
-    """List all jobs, optionally filtered by status."""
-    jobs = list(_jobs.values())
-
-    if status:
-        jobs = [j for j in jobs if j["status"] == status]
-
-    # Sort by submitted_at descending
-    jobs.sort(key=lambda j: j["submitted_at"], reverse=True)
-
-    return {"total": len(jobs), "jobs": jobs}
-
-
-@app.get("/api/jobs/{job_id}/status")
-async def get_job_status(job_id: str):
-    """Get the status of a specific job."""
-    job = _jobs.get(job_id)
-    if not job:
-        raise HTTPException(status_code=404, detail=f"Job {job_id} not found")
-    return job
-
-
-@app.post("/api/jobs/{job_id}/cancel")
-async def cancel_job(job_id: str):
-    """Cancel a pending or running job."""
-    job = _jobs.get(job_id)
-    if not job:
-        raise HTTPException(status_code=404, detail=f"Job {job_id} not found")
-
-    if job["status"] in ("pending", "running"):
-        job["status"] = "cancelled"
-        job["completed_at"] = _now_iso()
-        job["progress_message"] = "Cancelled by user"
-        return {"cancelled": True}
-
-    return {"cancelled": False}
-
-
-@app.get("/api/jobs/{job_id}/stream")
-async def job_stream(job_id: str, request: Request):
-    """SSE stream for real-time job progress updates."""
-    job = _jobs.get(job_id)
-    if not job:
-        raise HTTPException(status_code=404, detail=f"Job {job_id} not found")
-
-    # C2 FIX: Use module-level imports (orjson + StreamingResponse)
-    # M1 RT2 FIX: Wrap in try/except so stream failures send an error event
-    async def event_generator():
-        try:
-            while True:
-                if await request.is_disconnected():
-                    break
-
-                j = _jobs.get(job_id)
-                if not j:
-                    yield f"event: error\ndata: {orjson.dumps({'error': 'Job not found'}).decode()}\n\n"
-                    break
-
-                data = orjson.dumps({
-                    "status": j["status"],
-                    "progress": j["progress"],
-                    "message": j["progress_message"],
-                }).decode()
-                yield f"data: {data}\n\n"
-
-                if j["status"] in ("completed", "failed", "cancelled"):
-                    summary = orjson.dumps(j.get("result_summary") or {}).decode()
-                    yield f"event: complete\ndata: {summary}\n\n"
-                    break
-
-                await asyncio.sleep(0.5)
-        except Exception as exc:
-            yield f"event: error\ndata: {orjson.dumps({'error': str(exc)}).decode()}\n\n"
-
-    return StreamingResponse(
-        event_generator(),
-        media_type="text/event-stream",
-        headers={
-            "Cache-Control": "no-cache",
-            "X-Accel-Buffering": "no",
-        },
-    )
-
-
-# ===========================================================================
 # Phase 7: Ontology Explorer
 # ===========================================================================
 
@@ -4897,206 +4659,6 @@ async def reader_search(
 
 
 # ---------------------------------------------------------------------------
-# Routes: Strategy Manager (Phase 9)
-# ---------------------------------------------------------------------------
-
-
-def _strategy_summary(s: dict[str, Any]) -> dict[str, Any]:
-    """Extract summary fields from a normalized strategy dict."""
-    return {
-        "concept_id": s.get("concept_id", ""),
-        "concept_name": s.get("concept_name", ""),
-        "family": s.get("family", ""),
-        "validation_status": s.get("validation_status", "bootstrap"),
-        "version": s.get("version", 1),
-        "heading_pattern_count": len(s.get("heading_patterns", [])),
-        "keyword_anchor_count": len(s.get("keyword_anchors", [])),
-        "dna_phrase_count": s.get("dna_phrase_count", 0)
-        or len(s.get("dna_tier1", [])) + len(s.get("dna_tier2", [])),
-        "heading_hit_rate": s.get("heading_hit_rate", 0.0),
-        "keyword_precision": s.get("keyword_precision", 0.0),
-        "corpus_prevalence": s.get("corpus_prevalence", 0.0),
-        "cohort_coverage": s.get("cohort_coverage", 0.0),
-        "last_updated": s.get("last_updated", ""),
-        "has_qc_issues": bool(s.get("dropped_headings"))
-        or bool(s.get("false_positive_keywords")),
-    }
-
-
-def _find_latest_judge_report(concept_id: str) -> tuple[Path | None, int]:
-    """Locate the latest versioned judge report for a concept."""
-    best_path: Path | None = None
-    best_version = -1
-    pattern = re.compile(rf"^{re.escape(concept_id)}_v(\d+)\.judge\.json$")
-
-    if not _workspace_root.exists():
-        return None, -1
-
-    for family_dir in _workspace_root.iterdir():
-        if not family_dir.is_dir():
-            continue
-        strategies_dir = family_dir / "strategies"
-        if not strategies_dir.exists():
-            continue
-        for fp in strategies_dir.glob("*.judge.json"):
-            m = pattern.match(fp.name)
-            if not m:
-                continue
-            version = int(m.group(1))
-            if version > best_version:
-                best_version = version
-                best_path = fp
-    return best_path, best_version
-
-
-@app.get("/api/strategies")
-async def list_strategies(
-    family: str | None = Query(None),
-    validation_status: str | None = Query(None),
-    sort_by: str = Query("concept_name"),
-    sort_dir: str = Query("asc"),
-):
-    """List all strategies with optional filters."""
-    items = list(_strategies.values())
-
-    # Apply filters
-    if family:
-        items = [s for s in items if s.get("family") == family]
-    if validation_status:
-        items = [s for s in items if s.get("validation_status") == validation_status]
-
-    # Build summaries
-    summaries = [_strategy_summary(s) for s in items]
-
-    # Sort
-    reverse = sort_dir == "desc"
-    sort_key = sort_by if sort_by in ("concept_id", "concept_name", "family", "validation_status", "version", "heading_hit_rate", "keyword_precision", "corpus_prevalence", "cohort_coverage") else "concept_name"
-    summaries.sort(key=lambda x: x.get(sort_key, ""), reverse=reverse)
-
-    # Compute facet counts from the full (unfiltered) set
-    all_items = list(_strategies.values())
-    family_counts: dict[str, int] = {}
-    status_counts: dict[str, int] = {}
-    for s in all_items:
-        f = s.get("family", "unknown")
-        family_counts[f] = family_counts.get(f, 0) + 1
-        st = s.get("validation_status", "bootstrap")
-        status_counts[st] = status_counts.get(st, 0) + 1
-
-    return {
-        "total": len(summaries),
-        "families": [{"family": f, "count": c} for f, c in sorted(family_counts.items())],
-        "validation_statuses": [{"status": st, "count": c} for st, c in sorted(status_counts.items())],
-        "strategies": summaries,
-    }
-
-
-@app.get("/api/strategies/stats")
-async def strategy_stats():
-    """Aggregate strategy statistics by family."""
-    if not _strategies:
-        return {
-            "total_strategies": 0,
-            "total_families": 0,
-            "by_validation_status": [],
-            "by_family": [],
-            "overall_avg_heading_hit_rate": 0.0,
-            "overall_avg_keyword_precision": 0.0,
-            "overall_avg_corpus_prevalence": 0.0,
-            "overall_avg_cohort_coverage": 0.0,
-        }
-
-    all_items = list(_strategies.values())
-    n = len(all_items)
-
-    # Status counts
-    status_counts: dict[str, int] = {}
-    for s in all_items:
-        st = s.get("validation_status", "bootstrap")
-        status_counts[st] = status_counts.get(st, 0) + 1
-
-    # Per-family aggregates
-    by_family: list[dict[str, Any]] = []
-    for fam, cids in sorted(_strategy_families.items()):
-        fam_items = [_strategies[cid] for cid in cids if cid in _strategies]
-        fn = len(fam_items)
-        if fn == 0:
-            continue
-        by_family.append({
-            "family": fam,
-            "strategy_count": fn,
-            "avg_heading_hit_rate": sum(s.get("heading_hit_rate", 0.0) for s in fam_items) / fn,
-            "avg_keyword_precision": sum(s.get("keyword_precision", 0.0) for s in fam_items) / fn,
-            "avg_corpus_prevalence": sum(s.get("corpus_prevalence", 0.0) for s in fam_items) / fn,
-            "avg_cohort_coverage": sum(s.get("cohort_coverage", 0.0) for s in fam_items) / fn,
-            "total_dna_phrases": sum(
-                s.get("dna_phrase_count", 0)
-                or len(s.get("dna_tier1", [])) + len(s.get("dna_tier2", []))
-                for s in fam_items
-            ),
-        })
-
-    return {
-        "total_strategies": n,
-        "total_families": len(_strategy_families),
-        "by_validation_status": [{"status": st, "count": c} for st, c in sorted(status_counts.items())],
-        "by_family": by_family,
-        "overall_avg_heading_hit_rate": sum(s.get("heading_hit_rate", 0.0) for s in all_items) / n,
-        "overall_avg_keyword_precision": sum(s.get("keyword_precision", 0.0) for s in all_items) / n,
-        "overall_avg_corpus_prevalence": sum(s.get("corpus_prevalence", 0.0) for s in all_items) / n,
-        "overall_avg_cohort_coverage": sum(s.get("cohort_coverage", 0.0) for s in all_items) / n,
-    }
-
-
-@app.get("/api/strategies/{concept_id:path}")
-async def get_strategy(concept_id: str):
-    """Full strategy detail."""
-    s = _strategies.get(concept_id)
-    if s is None:
-        raise HTTPException(status_code=404, detail=f"Strategy not found: {concept_id}")
-    return s
-
-
-@app.get("/api/strategies/{concept_id:path}/judge/latest")
-async def get_latest_judge_report(concept_id: str):
-    """Latest llm_judge output persisted by strategy_writer for a concept."""
-    fp, version = _find_latest_judge_report(concept_id)
-    if fp is None or not fp.exists():
-        raise HTTPException(
-            status_code=404,
-            detail=f"No judge report found for strategy concept: {concept_id}",
-        )
-    try:
-        payload = orjson.loads(fp.read_bytes())
-    except Exception as exc:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Failed to parse judge report: {exc}",
-        ) from exc
-
-    if not isinstance(payload, dict):
-        raise HTTPException(status_code=500, detail="Judge report payload is not an object.")
-
-    return {
-        "concept_id": concept_id,
-        "version": version,
-        "path": str(fp),
-        "summary": {
-            "precision_estimate": payload.get("precision_estimate", 0.0),
-            "weighted_precision_estimate": payload.get("weighted_precision_estimate", 0.0),
-            "n_sampled": payload.get("n_sampled", 0),
-            "correct": payload.get("correct", 0),
-            "partial": payload.get("partial", 0),
-            "wrong": payload.get("wrong", 0),
-            "backend_used": payload.get("backend_used", []),
-            "generated_at": payload.get("generated_at", ""),
-            "run_id": payload.get("run_id", ""),
-        },
-        "report": payload,
-    }
-
-
-# ---------------------------------------------------------------------------
 # Routes: Review Operations (P2-05)
 # ---------------------------------------------------------------------------
 
@@ -5115,48 +4677,6 @@ def _iter_workspace_evidence_files() -> list[Path]:
     return files
 
 
-def _iter_workspace_strategy_files(concept_id: str) -> list[tuple[int, Path]]:
-    out: list[tuple[int, Path]] = []
-    pat = re.compile(rf"^{re.escape(concept_id)}_v(\d+)\.json$")
-    if not _workspace_root.exists():
-        return out
-    for family_dir in sorted(_workspace_root.iterdir()):
-        if not family_dir.is_dir():
-            continue
-        strategies_dir = family_dir / "strategies"
-        if not strategies_dir.exists():
-            continue
-        for fp in strategies_dir.glob("*.json"):
-            if fp.name.endswith(".raw.json") or fp.name.endswith(".resolved.json") or fp.name.endswith(".judge.json"):
-                continue
-            m = pat.match(fp.name)
-            if not m:
-                continue
-            out.append((int(m.group(1)), fp))
-    out.sort(key=lambda row: row[0])
-    return out
-
-
-def _iter_workspace_judge_files(concept_id: str) -> list[tuple[int, Path]]:
-    out: list[tuple[int, Path]] = []
-    pat = re.compile(rf"^{re.escape(concept_id)}_v(\d+)\.judge\.json$")
-    if not _workspace_root.exists():
-        return out
-    for family_dir in sorted(_workspace_root.iterdir()):
-        if not family_dir.is_dir():
-            continue
-        strategies_dir = family_dir / "strategies"
-        if not strategies_dir.exists():
-            continue
-        for fp in strategies_dir.glob("*.judge.json"):
-            m = pat.match(fp.name)
-            if not m:
-                continue
-            out.append((int(m.group(1)), fp))
-    out.sort(key=lambda row: row[0])
-    return out
-
-
 def _safe_load_json(path: Path) -> dict[str, Any]:
     try:
         payload = orjson.loads(path.read_bytes())
@@ -5164,632 +4684,8 @@ def _safe_load_json(path: Path) -> dict[str, Any]:
         return {}
     return payload if isinstance(payload, dict) else {}
 
-
-@app.get("/api/review/strategy-timeline/{concept_id:path}")
-async def review_strategy_timeline(concept_id: str):
-    files = _iter_workspace_strategy_files(concept_id)
-    if not files:
-        raise HTTPException(status_code=404, detail=f"No strategy versions found for concept: {concept_id}")
-
-    versions: list[dict[str, Any]] = []
-    previous: dict[str, Any] | None = None
-    for version, fp in files:
-        payload = _safe_load_json(fp)
-        meta = payload.get("_meta", {}) if isinstance(payload.get("_meta"), dict) else {}
-        headings = payload.get("heading_patterns", [])
-        keywords = payload.get("keyword_anchors", [])
-        dna1 = payload.get("dna_tier1", [])
-        dna2 = payload.get("dna_tier2", [])
-        judge_fp = fp.with_name(f"{concept_id}_v{version:03d}.judge.json")
-        judge_payload = _safe_load_json(judge_fp) if judge_fp.exists() else {}
-
-        row = {
-            "version": version,
-            "path": str(fp),
-            "resolved_path": str(fp.with_name(f"{concept_id}_v{version:03d}.resolved.json")),
-            "raw_path": str(fp.with_name(f"{concept_id}_v{version:03d}.raw.json")),
-            "note": str(meta.get("note", "") or ""),
-            "previous_version": meta.get("previous_version"),
-            "heading_pattern_count": len(headings) if isinstance(headings, list) else 0,
-            "keyword_anchor_count": len(keywords) if isinstance(keywords, list) else 0,
-            "dna_phrase_count": (
-                (len(dna1) if isinstance(dna1, list) else 0)
-                + (len(dna2) if isinstance(dna2, list) else 0)
-            ),
-            "heading_hit_rate": payload.get("heading_hit_rate", 0.0),
-            "keyword_precision": payload.get("keyword_precision", 0.0),
-            "cohort_coverage": payload.get("cohort_coverage", 0.0),
-            "judge": {
-                "exists": bool(judge_payload),
-                "path": str(judge_fp) if judge_fp.exists() else "",
-                "precision_estimate": judge_payload.get("precision_estimate", 0.0),
-                "weighted_precision_estimate": judge_payload.get("weighted_precision_estimate", 0.0),
-                "n_sampled": judge_payload.get("n_sampled", 0),
-            },
-        }
-        if previous is not None:
-            row["delta"] = {
-                "heading_pattern_count": row["heading_pattern_count"] - previous["heading_pattern_count"],
-                "keyword_anchor_count": row["keyword_anchor_count"] - previous["keyword_anchor_count"],
-                "dna_phrase_count": row["dna_phrase_count"] - previous["dna_phrase_count"],
-                "heading_hit_rate": round(float(row["heading_hit_rate"]) - float(previous["heading_hit_rate"]), 4),
-                "keyword_precision": round(float(row["keyword_precision"]) - float(previous["keyword_precision"]), 4),
-                "cohort_coverage": round(float(row["cohort_coverage"]) - float(previous["cohort_coverage"]), 4),
-            }
-        else:
-            row["delta"] = {}
-        versions.append(row)
-        previous = row
-
-    return {
-        "concept_id": concept_id,
-        "total_versions": len(versions),
-        "versions": versions,
-    }
-
-
-@app.get("/api/review/evidence")
-async def review_evidence(
-    concept_id: str | None = Query(None),
-    template_family: str | None = Query(None),
-    record_type: str | None = Query(None),
-    limit: int = Query(100, ge=1, le=1000),
-    offset: int = Query(0, ge=0),
-):
-    files = _iter_workspace_evidence_files()
-    rows: list[dict[str, Any]] = []
-    matched = 0
-    total_scanned = 0
-
-    rt = record_type.upper().strip() if record_type else ""
-    for fp in files:
-        for line in fp.read_text().splitlines():
-            if not line.strip():
-                continue
-            total_scanned += 1
-            try:
-                payload = json.loads(line)
-            except json.JSONDecodeError:
-                continue
-            if not isinstance(payload, dict):
-                continue
-
-            cid = str(payload.get("ontology_node_id", payload.get("concept_id", "")) or "")
-            tf = str(payload.get("template_family", "") or "")
-            rtype = str(payload.get("record_type", "HIT") or "HIT").upper()
-
-            if concept_id and cid != concept_id:
-                continue
-            if template_family and tf != template_family:
-                continue
-            if rt and rtype != rt:
-                continue
-
-            if matched < offset:
-                matched += 1
-                continue
-            if len(rows) >= limit:
-                matched += 1
-                continue
-
-            matched += 1
-            rows.append(
-                {
-                    "concept_id": cid,
-                    "record_type": rtype,
-                    "doc_id": payload.get("doc_id", ""),
-                    "template_family": tf,
-                    "section_number": payload.get("section_number", ""),
-                    "heading": payload.get("heading", ""),
-                    "clause_path": payload.get("clause_path", ""),
-                    "score": payload.get("score"),
-                    "outlier_level": (
-                        payload.get("outlier", {}).get("level", "none")
-                        if isinstance(payload.get("outlier"), dict)
-                        else "none"
-                    ),
-                    "source_tool": payload.get("source_tool", ""),
-                    "created_at": payload.get("created_at", ""),
-                    "path": str(fp),
-                }
-            )
-
-    return {
-        "filters": {
-            "concept_id": concept_id or "",
-            "template_family": template_family or "",
-            "record_type": rt or "",
-            "limit": limit,
-            "offset": offset,
-        },
-        "files_scanned": len(files),
-        "rows_scanned": total_scanned,
-        "rows_matched": matched,
-        "rows_returned": len(rows),
-        "has_prev": offset > 0,
-        "has_next": (offset + len(rows)) < matched,
-        "rows": rows,
-    }
-
-
-@app.get("/api/review/coverage-heatmap")
-async def review_coverage_heatmap(
-    concept_id: str | None = Query(None),
-    top_concepts: int = Query(50, ge=1, le=500),
-):
-    files = _iter_workspace_evidence_files()
-    counts: dict[tuple[str, str], dict[str, int]] = {}
-    concept_totals: Counter[str] = Counter()
-    template_totals: Counter[str] = Counter()
-
-    for fp in files:
-        for line in fp.read_text().splitlines():
-            if not line.strip():
-                continue
-            try:
-                payload = json.loads(line)
-            except json.JSONDecodeError:
-                continue
-            if not isinstance(payload, dict):
-                continue
-
-            cid = str(payload.get("ontology_node_id", payload.get("concept_id", "")) or "")
-            if not cid:
-                continue
-            if concept_id and cid != concept_id:
-                continue
-
-            tf = str(payload.get("template_family", "") or "unknown")
-            rt = str(payload.get("record_type", "HIT") or "HIT").upper()
-            key = (cid, tf)
-            bucket = counts.setdefault(key, {"hits": 0, "total": 0})
-            bucket["total"] += 1
-            if rt == "HIT":
-                bucket["hits"] += 1
-            concept_totals[cid] += 1
-            template_totals[tf] += 1
-
-    concepts = [cid for cid, _n in concept_totals.most_common(top_concepts)]
-    if concept_id:
-        concepts = [concept_id]
-    templates = [tf for tf, _n in template_totals.most_common()]
-
-    cells: list[dict[str, Any]] = []
-    for cid in concepts:
-        for tf in templates:
-            bucket = counts.get((cid, tf), {"hits": 0, "total": 0})
-            total = bucket["total"]
-            hits = bucket["hits"]
-            cells.append(
-                {
-                    "concept_id": cid,
-                    "template_family": tf,
-                    "hits": hits,
-                    "total": total,
-                    "hit_rate": round(hits / total, 4) if total > 0 else 0.0,
-                }
-            )
-
-    return {
-        "concepts": concepts,
-        "templates": templates,
-        "cells": cells,
-        "top_concepts": top_concepts,
-    }
-
-
-@app.get("/api/review/judge/{concept_id:path}/history")
-async def review_judge_history(concept_id: str):
-    files = _iter_workspace_judge_files(concept_id)
-    if not files:
-        raise HTTPException(status_code=404, detail=f"No judge history found for concept: {concept_id}")
-    rows: list[dict[str, Any]] = []
-    for version, fp in files:
-        payload = _safe_load_json(fp)
-        rows.append(
-            {
-                "version": version,
-                "path": str(fp),
-                "precision_estimate": payload.get("precision_estimate", 0.0),
-                "weighted_precision_estimate": payload.get("weighted_precision_estimate", 0.0),
-                "n_sampled": payload.get("n_sampled", 0),
-                "correct": payload.get("correct", 0),
-                "partial": payload.get("partial", 0),
-                "wrong": payload.get("wrong", 0),
-                "generated_at": payload.get("generated_at", ""),
-                "run_id": payload.get("run_id", ""),
-            }
-        )
-    return {"concept_id": concept_id, "history": rows}
-
-
-@app.get("/api/review/agent-activity")
-async def review_agent_activity(
-    stale_minutes: int = Query(60, ge=1, le=24 * 60),
-):
-    if not _workspace_root.exists():
-        return {"total": 0, "agents": []}
-
-    now = datetime.now(timezone.utc)
-    agents: list[dict[str, Any]] = []
-    for family_dir in sorted(_workspace_root.iterdir()):
-        if not family_dir.is_dir():
-            continue
-        checkpoint = family_dir / "checkpoint.json"
-        payload = _safe_load_json(checkpoint) if checkpoint.exists() else {}
-        status = str(payload.get("status", "missing") or "missing")
-        last_update_raw = str(payload.get("last_update", "") or "")
-        last_update_iso = last_update_raw
-        stale = False
-        if last_update_raw:
-            try:
-                dt = datetime.fromisoformat(last_update_raw.replace("Z", "+00:00"))
-            except ValueError:
-                dt = None
-            if dt is not None:
-                stale = (now - dt).total_seconds() > stale_minutes * 60
-        agents.append(
-            {
-                "family": family_dir.name,
-                "status": status,
-                "iteration_count": payload.get("iteration_count", 0),
-                "current_concept_id": payload.get("current_concept_id", ""),
-                "last_strategy_version": payload.get("last_strategy_version", 0),
-                "last_coverage_hit_rate": payload.get("last_coverage_hit_rate", 0.0),
-                "last_session": payload.get("last_session", ""),
-                "last_pane": payload.get("last_pane", ""),
-                "last_start_at": payload.get("last_start_at", ""),
-                "last_update": last_update_iso,
-                "stale": stale,
-                "checkpoint_path": str(checkpoint),
-            }
-        )
-
-    return {
-        "total": len(agents),
-        "stale_minutes": stale_minutes,
-        "stale_count": sum(1 for a in agents if a["stale"]),
-        "agents": agents,
-    }
-
-
-# ---------------------------------------------------------------------------
-# Routes: ML & Learning (Phase 11)
-# ---------------------------------------------------------------------------
-
-
-def _compute_review_priority(
-    row: dict[str, Any], has_qc_issues: bool
-) -> tuple[str, float, list[str]]:
-    """Compute review priority level, numeric score, and reason tags."""
-    outlier = row.get("outlier") or {}
-    confidence = row.get("confidence_breakdown") or {}
-    flags: list[str] = outlier.get("flags") or []
-
-    # Weighted factors (0-1 each)
-    outlier_score = float(outlier.get("score", 0))
-    confidence_final = float(confidence.get("final", 0.5))
-    confidence_gap = 1.0 - confidence_final
-    single_channel = 1.0 if "single_channel_match" in flags else 0.0
-    raw_score = float(row.get("score") or 0)
-    low_score = 1.0 - min(1.0, raw_score)
-    flag_density = min(1.0, len(flags) / 5.0) if flags else 0.0
-
-    priority_score = (
-        0.35 * outlier_score
-        + 0.25 * confidence_gap
-        + 0.20 * single_channel
-        + 0.10 * low_score
-        + 0.10 * flag_density
-    )
-
-    # Clamp
-    priority_score = max(0.0, min(1.0, priority_score))
-
-    # Reasons
-    reasons: list[str] = []
-    outlier_level = outlier.get("level", "none")
-    if outlier_level in ("high", "medium"):
-        reasons.append("high_outlier")
-    if confidence_final < 0.5:
-        reasons.append("low_confidence")
-    if single_channel > 0:
-        reasons.append("single_channel")
-    if has_qc_issues:
-        reasons.append("qc_flagged_strategy")
-
-    # Threshold
-    if priority_score >= 0.6:
-        level = "high"
-    elif priority_score >= 0.35:
-        level = "medium"
-    else:
-        level = "low"
-
-    return level, round(priority_score, 4), reasons
-
-
-def _qualifies_for_review(row: dict[str, Any], has_qc_issues: bool) -> bool:
-    """Check if a HIT evidence row belongs in the review queue."""
-    if row.get("record_type") != "HIT":
-        return False
-    outlier = row.get("outlier") or {}
-    confidence = row.get("confidence_breakdown") or {}
-    flags: list[str] = outlier.get("flags") or []
-
-    if outlier.get("level") in ("high", "medium"):
-        return True
-    if float(confidence.get("final", 1.0)) < 0.5:
-        return True
-    if "single_channel_match" in flags:
-        return True
-    if has_qc_issues:
-        return True
-    return False
-
-
-@app.get("/api/ml/review-queue")
-async def ml_review_queue(
-    priority: str | None = Query(None),
-    concept_id: str | None = Query(None),
-    template_family: str | None = Query(None),
-    limit: int = Query(200, ge=1, le=1000),
-    offset: int = Query(0, ge=0),
-):
-    """Prioritized queue of evidence items needing human review."""
-    files = _iter_workspace_evidence_files()
-    all_items: list[dict[str, Any]] = []
-    concept_counts: dict[str, int] = {}
-    template_counts: dict[str, int] = {}
-
-    # Pre-compute which concepts have QC issues
-    qc_concepts: set[str] = set()
-    for cid, strat in _strategies.items():
-        if strat.get("dropped_headings") or strat.get("false_positive_keywords"):
-            qc_concepts.add(cid)
-
-    for fp in files:
-        try:
-            for line in fp.read_text().splitlines():
-                if not line.strip():
-                    continue
-                row = orjson.loads(line)
-                cid = row.get("concept_id", "")
-                has_qc = cid in qc_concepts
-
-                if not _qualifies_for_review(row, has_qc):
-                    continue
-
-                level, score, reasons = _compute_review_priority(row, has_qc)
-
-                outlier = row.get("outlier") or {}
-                confidence = row.get("confidence_breakdown") or {}
-                components = confidence.get("components") or {}
-
-                item: dict[str, Any] = {
-                    "priority": level,
-                    "priority_score": score,
-                    "concept_id": cid,
-                    "doc_id": row.get("doc_id", ""),
-                    "template_family": row.get("template_family", ""),
-                    "section_number": row.get("section_number", ""),
-                    "heading": row.get("heading", ""),
-                    "score": row.get("score"),
-                    "match_type": row.get("match_type", ""),
-                    "confidence_final": float(confidence.get("final", 0)),
-                    "confidence_components": {
-                        "score": float(components.get("score", 0)),
-                        "margin": float(components.get("margin", 0)),
-                        "channels": float(components.get("channels", 0)),
-                        "heading": float(components.get("heading", 0)),
-                        "keyword": float(components.get("keyword", 0)),
-                        "dna": float(components.get("dna", 0)),
-                    },
-                    "outlier_level": outlier.get("level", "none"),
-                    "outlier_score": float(outlier.get("score", 0)),
-                    "outlier_flags": outlier.get("flags") or [],
-                    "risk_components": outlier.get("risk_components") or {},
-                    "source_tool": row.get("source_tool", ""),
-                    "strategy_version": row.get("strategy_version", 0),
-                    "review_reasons": reasons,
-                }
-                all_items.append(item)
-
-                # Facet counting (before priority filter)
-                concept_counts[cid] = concept_counts.get(cid, 0) + 1
-                tf = item["template_family"]
-                template_counts[tf] = template_counts.get(tf, 0) + 1
-        except Exception:
-            continue
-
-    # Sort by priority_score descending
-    all_items.sort(key=lambda x: x["priority_score"], reverse=True)
-
-    # KPIs from full unfiltered set
-    kpis = {
-        "total_queue": len(all_items),
-        "high_priority": sum(1 for i in all_items if i["priority"] == "high"),
-        "medium_priority": sum(1 for i in all_items if i["priority"] == "medium"),
-        "low_priority": sum(1 for i in all_items if i["priority"] == "low"),
-        "concepts_affected": len(concept_counts),
-        "families_affected": len(template_counts),
-    }
-
-    # Apply filters
-    filtered = all_items
-    if priority:
-        filtered = [i for i in filtered if i["priority"] == priority]
-    if concept_id:
-        filtered = [i for i in filtered if i["concept_id"] == concept_id]
-    if template_family:
-        filtered = [i for i in filtered if i["template_family"] == template_family]
-
-    total_matched = len(filtered)
-    page_items = filtered[offset : offset + limit]
-
-    # Facets (top 50)
-    facet_concepts = sorted(concept_counts.items(), key=lambda x: -x[1])[:50]
-    facet_templates = sorted(template_counts.items(), key=lambda x: -x[1])[:50]
-
-    return {
-        "kpis": kpis,
-        "filters": {
-            "priority": priority or "",
-            "concept_id": concept_id or "",
-            "template_family": template_family or "",
-            "limit": limit,
-            "offset": offset,
-        },
-        "total_matched": total_matched,
-        "has_prev": offset > 0,
-        "has_next": offset + limit < total_matched,
-        "items": page_items,
-        "facets": {
-            "concepts": [{"concept_id": c, "count": n} for c, n in facet_concepts],
-            "templates": [{"template_family": t, "count": n} for t, n in facet_templates],
-        },
-    }
-
-
-@app.get("/api/ml/heading-clusters")
-async def ml_heading_clusters(
-    concept_id: str = Query(...),
-):
-    """Group HIT evidence rows by heading text for a concept."""
-    files = _iter_workspace_evidence_files()
-
-    # Collect all HIT rows for this concept
-    clusters: dict[str, dict[str, Any]] = {}  # normalized_heading -> cluster
-    all_doc_ids: set[str] = set()
-    total_hits = 0
-
-    for fp in files:
-        try:
-            for line in fp.read_text().splitlines():
-                if not line.strip():
-                    continue
-                row = orjson.loads(line)
-                if row.get("concept_id") != concept_id:
-                    continue
-                if row.get("record_type") != "HIT":
-                    continue
-
-                total_hits += 1
-                heading_raw = row.get("heading", "") or ""
-                heading_norm = heading_raw.strip().lower()
-                if not heading_norm:
-                    heading_norm = "(no heading)"
-
-                doc_id = row.get("doc_id", "")
-                all_doc_ids.add(doc_id)
-                score_val = float(row.get("score") or 0)
-                match_type = row.get("match_type", "")
-                tf = row.get("template_family", "")
-
-                if heading_norm not in clusters:
-                    clusters[heading_norm] = {
-                        "heading_display": heading_raw.strip() or "(no heading)",
-                        "heading_normalized": heading_norm,
-                        "doc_ids": set(),
-                        "template_families": set(),
-                        "match_types": set(),
-                        "scores": [],
-                    }
-
-                c = clusters[heading_norm]
-                c["doc_ids"].add(doc_id)
-                if tf:
-                    c["template_families"].add(tf)
-                if match_type:
-                    c["match_types"].add(match_type)
-                c["scores"].append(score_val)
-        except Exception:
-            continue
-
-    # Cross-reference with strategy heading patterns
-    strat = _strategies.get(concept_id, {})
-    heading_patterns = strat.get("heading_patterns") or []
-
-    def _matches_any_pattern(heading_norm: str) -> bool:
-        for pat in heading_patterns:
-            try:
-                if re.search(pat, heading_norm, re.IGNORECASE):
-                    return True
-            except re.error:
-                # Treat as literal match if regex invalid
-                if pat.lower() in heading_norm:
-                    return True
-        return False
-
-    # Build final cluster list
-    result_clusters: list[dict[str, Any]] = []
-    for _norm, c in clusters.items():
-        scores = c["scores"]
-        doc_ids_list = sorted(c["doc_ids"])
-        in_strategy = _matches_any_pattern(c["heading_normalized"])
-        result_clusters.append({
-            "heading_display": c["heading_display"],
-            "heading_normalized": c["heading_normalized"],
-            "doc_count": len(c["doc_ids"]),
-            "doc_ids": doc_ids_list[:20],
-            "template_families": sorted(c["template_families"]),
-            "avg_score": round(sum(scores) / len(scores), 4) if scores else 0,
-            "min_score": round(min(scores), 4) if scores else 0,
-            "max_score": round(max(scores), 4) if scores else 0,
-            "match_types": sorted(c["match_types"]),
-            "in_strategy": in_strategy,
-            "is_orphan": len(c["doc_ids"]) == 1,
-        })
-
-    # Sort by doc_count descending
-    result_clusters.sort(key=lambda x: -x["doc_count"])
-
-    known = sum(1 for c in result_clusters if c["in_strategy"])
-    unknown = sum(1 for c in result_clusters if not c["in_strategy"])
-    orphans = sum(1 for c in result_clusters if c["is_orphan"])
-
-    return {
-        "concept_id": concept_id,
-        "concept_name": strat.get("concept_name", strat.get("name", concept_id)),
-        "strategy_heading_patterns": heading_patterns,
-        "kpis": {
-            "total_clusters": len(result_clusters),
-            "known_headings": known,
-            "unknown_headings": unknown,
-            "orphan_headings": orphans,
-            "total_hits": total_hits,
-            "unique_docs": len(all_doc_ids),
-        },
-        "clusters": result_clusters,
-    }
-
-
-@app.get("/api/ml/concepts-with-evidence")
-async def ml_concepts_with_evidence():
-    """List concepts that have HIT evidence rows, with counts."""
-    files = _iter_workspace_evidence_files()
-    counts: dict[str, int] = {}
-
-    for fp in files:
-        try:
-            for line in fp.read_text().splitlines():
-                if not line.strip():
-                    continue
-                row = orjson.loads(line)
-                if row.get("record_type") != "HIT":
-                    continue
-                cid = row.get("concept_id", "")
-                if cid:
-                    counts[cid] = counts.get(cid, 0) + 1
-        except Exception:
-            continue
-
-    sorted_concepts = sorted(counts.items(), key=lambda x: -x[1])
-    return {
-        "concepts": [
-            {"concept_id": cid, "hit_count": n} for cid, n in sorted_concepts
-        ],
-    }
+# Legacy /api/review/* and /api/ml/* handlers were removed in favor of
+# /api/links/intelligence/*.
 
 
 # ---------------------------------------------------------------------------
@@ -6049,6 +4945,158 @@ def _scope_name_from_id(scope_id: str) -> str:
                 if only_name:
                     return only_name
     return _family_name_from_id(value)
+
+
+def _ontology_descendant_ids(scope_id: str) -> set[str]:
+    root = str(scope_id or "").strip()
+    if not root:
+        return set()
+    if root not in _ontology_nodes:
+        return {root}
+    out: set[str] = set()
+    stack: list[str] = [root]
+    while stack:
+        current = stack.pop()
+        if not current or current in out:
+            continue
+        out.add(current)
+        node = _ontology_nodes.get(current)
+        if not isinstance(node, dict):
+            continue
+        children = node.get("children_ids")
+        if not isinstance(children, list):
+            continue
+        for child in children:
+            child_id = str(child or "").strip()
+            if child_id and child_id not in out:
+                stack.append(child_id)
+    return out
+
+
+def _resolve_scope_context(scope_id: str | None) -> dict[str, Any]:
+    requested = str(scope_id or "").strip()
+    store = _link_store
+    canonical = (
+        _canonicalize_scope_id(store, requested, persist_alias=False) if requested else ""
+    )
+    aliases: set[str] = set()
+    if requested:
+        aliases.add(requested)
+    if canonical:
+        aliases.add(canonical)
+    if store is not None and requested:
+        with contextlib.suppress(Exception):
+            aliases.update(store.resolve_scope_aliases(requested))
+    if store is not None and canonical:
+        with contextlib.suppress(Exception):
+            aliases.update(store.resolve_scope_aliases(canonical))
+    normalized_aliases: set[str] = set()
+    for alias in aliases:
+        alias_norm = str(alias or "").strip()
+        if not alias_norm:
+            continue
+        canonical_alias = _canonicalize_scope_id(
+            store,
+            alias_norm,
+            persist_alias=False,
+        )
+        normalized_aliases.add(canonical_alias or alias_norm)
+    descendants: set[str] = set()
+    for alias in normalized_aliases:
+        descendants.update(_ontology_descendant_ids(alias))
+    target_scope = canonical or requested
+    return {
+        "requested_scope": requested,
+        "canonical_scope": canonical,
+        "scope_id": target_scope,
+        "scope_name": _scope_name_from_id(target_scope or requested),
+        "aliases": normalized_aliases,
+        "descendant_ids": descendants,
+        "target_token": _canonical_family_token(target_scope or requested),
+    }
+
+
+def _scope_matches_value(value: Any, scope_ctx: dict[str, Any]) -> bool:
+    requested = str(scope_ctx.get("requested_scope") or "").strip()
+    if not requested:
+        return True
+    candidate = str(value or "").strip()
+    if not candidate:
+        return False
+    aliases: set[str] = scope_ctx.get("aliases", set()) or set()
+    descendants: set[str] = scope_ctx.get("descendant_ids", set()) or set()
+    if candidate in aliases or candidate in descendants:
+        return True
+    for alias in aliases:
+        if alias and (
+            candidate.startswith(f"{alias}.")
+            or candidate.startswith(f"{alias}_")
+            or candidate.startswith(f"{alias}-")
+        ):
+            return True
+    token = str(scope_ctx.get("target_token") or "").strip()
+    if token and _canonical_family_token(candidate) == token:
+        return True
+    return False
+
+
+def _strategy_rows_for_scope(scope_id: str | None) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    scope_ctx = _resolve_scope_context(scope_id)
+    rows: list[dict[str, Any]] = []
+    for concept_id, strategy in _strategies.items():
+        if not isinstance(strategy, dict):
+            continue
+        cid = str(strategy.get("concept_id") or concept_id).strip()
+        if not cid:
+            continue
+        family_id = str(strategy.get("family_id") or "").strip()
+        family_short = str(strategy.get("family") or "").strip()
+        if not (
+            _scope_matches_value(cid, scope_ctx)
+            or _scope_matches_value(family_id, scope_ctx)
+            or _scope_matches_value(family_short, scope_ctx)
+        ):
+            continue
+
+        headings = strategy.get("heading_patterns")
+        keywords = strategy.get("keyword_anchors")
+        dna1 = strategy.get("dna_tier1")
+        dna2 = strategy.get("dna_tier2")
+        rows.append(
+            {
+                "concept_id": cid,
+                "concept_name": str(strategy.get("concept_name") or cid),
+                "family_id": family_id or None,
+                "family": family_short,
+                "validation_status": str(strategy.get("validation_status") or "bootstrap"),
+                "version": int(strategy.get("version", 1) or 1),
+                "heading_patterns": headings if isinstance(headings, list) else [],
+                "keyword_anchors": keywords if isinstance(keywords, list) else [],
+                "dna_phrases": (
+                    (dna1 if isinstance(dna1, list) else [])
+                    + (dna2 if isinstance(dna2, list) else [])
+                ),
+                "heading_pattern_count": len(headings) if isinstance(headings, list) else 0,
+                "keyword_anchor_count": len(keywords) if isinstance(keywords, list) else 0,
+                "dna_phrase_count": (
+                    (len(dna1) if isinstance(dna1, list) else 0)
+                    + (len(dna2) if isinstance(dna2, list) else 0)
+                ),
+                "heading_hit_rate": float(strategy.get("heading_hit_rate", 0.0) or 0.0),
+                "keyword_precision": float(strategy.get("keyword_precision", 0.0) or 0.0),
+                "cohort_coverage": float(strategy.get("cohort_coverage", 0.0) or 0.0),
+                "corpus_prevalence": float(strategy.get("corpus_prevalence", 0.0) or 0.0),
+                "last_updated": str(strategy.get("last_updated") or ""),
+            }
+        )
+
+    rows.sort(
+        key=lambda row: (
+            str(row.get("family") or ""),
+            str(row.get("concept_name") or row.get("concept_id") or ""),
+        )
+    )
+    return scope_ctx, rows
 
 
 def _rule_scope_id(rule: dict[str, Any]) -> str:
@@ -6314,10 +5362,7 @@ async def links_summary():
         if doc_id:
             unique_docs.add(doc_id)
 
-    try:
-        drift_alerts = len(store.get_drift_alerts(acknowledged=False))
-    except Exception:
-        drift_alerts = 0
+    drift_alerts = 0
 
     by_family = sorted(by_family_counter.values(), key=lambda x: int(x["count"]), reverse=True)
     by_status = [
@@ -7902,12 +6947,6 @@ def _rule_to_api(store: LinkStore, rule: dict[str, Any]) -> dict[str, Any]:
         filter_dsl = dsl_from_heading_ast(heading_ast) if isinstance(heading_ast, dict) else ""
     result_granularity = str(payload.get("result_granularity") or "section")
 
-    try:
-        pins = store.get_pins(str(payload.get("rule_id", "")))
-        pin_count = len(pins)
-    except Exception:
-        pin_count = 0
-
     payload.update(
         {
             "family_id": family_id,
@@ -7924,7 +6963,7 @@ def _rule_to_api(store: LinkStore, rule: dict[str, Any]) -> dict[str, Any]:
             "filter_dsl": filter_dsl,
             "result_granularity": result_granularity,
             "heading_filter_dsl": str(payload.get("heading_filter_dsl") or heading_dsl),
-            "pin_count": int(payload.get("pin_count", pin_count) or 0),
+            "pin_count": int(payload.get("pin_count", 0) or 0),
             "last_eval_pass_rate": payload.get("last_eval_pass_rate"),
             "keyword_anchors": payload.get("keyword_anchors") or [],
             "dna_phrases": payload.get("dna_phrases") or [],
@@ -8049,7 +7088,7 @@ async def archive_rule(request: Request, rule_id: str):
 
 @app.delete("/api/links/rules/{rule_id}")
 async def delete_rule(request: Request, rule_id: str):
-    """Permanently delete a rule and its associated pins."""
+    """Permanently delete a rule."""
     _require_links_admin(request)
     store = _get_link_store()
     existing = store.get_rule(rule_id)
@@ -8191,18 +7230,6 @@ async def promote_rule(request: Request, rule_id: str):
 
     gates: list[dict[str, Any]] = []
 
-    # Pin evaluation gate
-    pins = store.get_pins(rule_id)
-    if pins:
-        pin_results = _evaluate_pins_for_rule(store, rule)
-        all_pass = all(p["passed"] for p in pin_results)
-        gates.append({
-            "gate": "pin_evaluation", "passed": all_pass,
-            "detail": f"{sum(1 for p in pin_results if p['passed'])}/{len(pin_results)} passed",
-        })
-        if not all_pass:
-            return {"promoted": False, "gates": gates, "blocked_by": "pin_evaluation"}
-
     # Regression gate (placeholder)
     gates.append({"gate": "regression", "passed": True, "detail": "No regression"})
 
@@ -8218,20 +7245,6 @@ async def get_promotion_gates(rule_id: str):
         raise HTTPException(status_code=404, detail=f"Rule not found: {rule_id}")
 
     gates: list[dict[str, Any]] = []
-    pins = store.get_pins(rule_id)
-    if pins:
-        pin_results = _evaluate_pins_for_rule(store, rule)
-        passed = all(item.get("passed", False) for item in pin_results)
-        gates.append(
-            {
-                "gate": "pin_evaluation",
-                "passed": passed,
-                "detail": f"{sum(1 for p in pin_results if p.get('passed'))}/{len(pin_results)} passed",
-            }
-        )
-    else:
-        gates.append({"gate": "pin_evaluation", "passed": True, "detail": "No pins configured"})
-
     gates.append({"gate": "regression", "passed": True, "detail": "No regression detected"})
     gates.append({"gate": "template_floor", "passed": True, "detail": "Template floors satisfied"})
     all_passed = all(bool(g.get("passed")) for g in gates)
@@ -8257,21 +7270,7 @@ async def validate_rule_dsl(
 ):
     """Parse and validate DSL text for a rule."""
     text = body.get("text", "")
-    store = _get_link_store()
-
-    # Load macros from store
-    macro_dict: dict[str, Any] | None = None
-    stored_macros = store.get_macros()
-    if stored_macros:
-        macro_dict = {}
-        for m in stored_macros:
-            try:
-                ast_data = json.loads(m.get("ast_json", "{}"))
-                macro_dict[m["name"]] = filter_expr_from_json(ast_data)
-            except (ValueError, KeyError, json.JSONDecodeError):
-                pass
-
-    result = validate_dsl(text, macro_dict)
+    result = validate_dsl(text)
     return {
         "text_fields": {
             k: filter_expr_to_json(v) if isinstance(v, (FilterMatch, FilterGroup)) else str(v)
@@ -8285,96 +7284,6 @@ async def validate_rule_dsl(
         "normalized_text": result.normalized_text,
         "query_cost": result.query_cost,
     }
-
-
-def _evaluate_pins_for_rule(
-    store: LinkStore, rule: dict[str, Any],
-) -> list[dict[str, Any]]:
-    """Evaluate a rule's heading AST against all its pins."""
-    from scripts.bulk_family_linker import heading_matches_ast
-
-    rule_id = rule.get("rule_id", "")
-    pins = store.get_pins(rule_id)
-    heading_ast = rule.get("heading_filter_ast", {})
-
-    results: list[dict[str, Any]] = []
-    for pin in pins:
-        pin_type = pin.get("pin_type", "tp")
-        heading = pin.get("heading", "")
-        matched, match_type, _matched_value = heading_matches_ast(heading, heading_ast)
-
-        passed = matched if pin_type == "tp" else not matched
-        results.append({
-            "pin_id": pin.get("pin_id", ""),
-            "pin_type": pin_type,
-            "doc_id": pin.get("doc_id", ""),
-            "section_number": pin.get("section_number", ""),
-            "heading": heading,
-            "matched": matched,
-            "match_type": match_type,
-            "passed": passed,
-        })
-    return results
-
-
-# ---------------------------------------------------------------------------
-# 28-31. Pins
-# ---------------------------------------------------------------------------
-@app.get("/api/links/rules/{rule_id}/pins")
-async def list_pins(rule_id: str):
-    """List pinned test cases for a rule."""
-    store = _get_link_store()
-    pins = store.get_pins(rule_id)
-    return {"pins": pins, "total": len(pins)}
-
-
-@app.post("/api/links/rules/{rule_id}/pins", status_code=201)
-async def create_pin(
-    request: Request,
-    rule_id: str,
-    body: dict[str, Any] = Body(...),
-):
-    """Create a TP/TN pin."""
-    _require_links_admin(request)
-    store = _get_link_store()
-    payload = dict(body)
-    payload["rule_id"] = rule_id
-    pin = store.save_pin(payload)
-    return {"status": "created", "pin_id": pin.get("pin_id")}
-
-
-@app.delete("/api/links/rules/{rule_id}/pins/{pin_id}")
-async def delete_pin(request: Request, rule_id: str, pin_id: str):
-    """Remove a pin."""
-    _require_links_admin(request)
-    store = _get_link_store()
-    store.delete_pin(pin_id)
-    return {"deleted": True}
-
-
-@app.post("/api/links/rules/{rule_id}/evaluate-pins")
-async def evaluate_pins(rule_id: str):
-    """Run rule against all pins."""
-    store = _get_link_store()
-    rule = store.get_rule(rule_id)
-    if rule is None:
-        raise HTTPException(status_code=404, detail=f"Rule not found: {rule_id}")
-    results = _evaluate_pins_for_rule(store, rule)
-    all_pass = all(r["passed"] for r in results)
-    passed = sum(1 for r in results if r["passed"])
-    failed = len(results) - passed
-    return {
-        "results": results,
-        "evaluations": results,
-        "all_passed": all_pass,
-        "total": len(results),
-        "total_pins": len(results),
-        "passed": passed,
-        "failed": failed,
-        "pass_rate": (passed / len(results)) if results else 1.0,
-        "rule_id": rule_id,
-    }
-
 
 # ---------------------------------------------------------------------------
 # 32-36. Sessions & Marks
@@ -8658,13 +7567,6 @@ async def links_analytics_dashboard(
         if str(link.get("status", "")) != "unlinked"
     ]
     runs = store.get_runs(family_id=resolved_scope or requested_scope, limit=20)
-    alerts = [_normalize_drift_alert(store, row) for row in store.get_drift_alerts()]
-    if scope_aliases:
-        alerts = [
-            alert
-            for alert in alerts
-            if str(alert.get("family_id", "")).strip() in scope_aliases
-        ]
 
     links_by_family_counter: Counter[str] = Counter()
     base_family_by_scope: dict[str, str] = {}
@@ -8738,7 +7640,7 @@ async def links_analytics_dashboard(
         "total_links": len(links),
         "total_runs": len(runs),
         "total_conflicts": total_conflicts,
-        "total_drift_alerts": len([alert for alert in alerts if not alert["resolved"]]),
+        "total_drift_alerts": 0,
         "links_by_family": [
             {
                 "family_id": scope_id,
@@ -8761,66 +7663,386 @@ async def links_analytics_dashboard(
             for tier, count in confidence_counter.items()
         ],
         "recent_runs": recent_runs,
-        "recent_alerts": alerts[:10],
+        "recent_alerts": [],
     }
 
 
-@app.get("/api/links/analytics/vintage-heatmap")
-async def vintage_heatmap(
-    family_id: str | None = Query(None),
+@app.get("/api/links/intelligence/signals")
+async def links_intelligence_signals(
     scope_id: str | None = Query(None),
+    family_id: str | None = Query(None),
+    top_n: int = Query(12, ge=1, le=50),
 ):
-    """Coverage heatmap by (template_family, vintage_year)."""
-    store = _get_link_store()
-    try:
-        corpus = _get_corpus()
-        doc_rows = corpus.query(
-            "SELECT doc_id, template_family, "
-            "CAST(EXTRACT(YEAR FROM filing_date) AS INTEGER) AS vintage_year "
-            "FROM documents WHERE filing_date IS NOT NULL"
-        )
-    except Exception:
-        return {"cells": []}
-
-    doc_meta: dict[str, tuple[str, int]] = {}
-    docs_by_cell: dict[tuple[str, int], set[str]] = {}
-    for row in doc_rows:
-        doc_id = str(row[0] or "")
-        template = str(row[1] or "unknown")
-        vintage_year = int(row[2]) if row[2] is not None else 0
-        if not doc_id or vintage_year <= 0:
-            continue
-        doc_meta[doc_id] = (template, vintage_year)
-        docs_by_cell.setdefault((template, vintage_year), set()).add(doc_id)
-
+    """Legacy strategy signal digest projected onto ontology scope selection."""
     requested_scope = str(scope_id or family_id or "").strip() or None
-    resolved_scope = _canonicalize_scope_id(store, requested_scope) if requested_scope else None
-    links = store.get_links(family_id=resolved_scope or requested_scope, status="active", limit=100000)
-    linked_docs_by_cell: dict[tuple[str, int], set[str]] = {}
-    link_count_by_cell: dict[tuple[str, int], int] = {}
-    for link in links:
-        doc_id = str(link.get("doc_id", ""))
-        meta = doc_meta.get(doc_id)
-        if meta is None:
-            continue
-        linked_docs_by_cell.setdefault(meta, set()).add(doc_id)
-        link_count_by_cell[meta] = link_count_by_cell.get(meta, 0) + 1
+    scope_ctx, strategy_rows = _strategy_rows_for_scope(requested_scope)
 
-    cells: list[dict[str, Any]] = []
-    for cell, doc_ids in docs_by_cell.items():
-        template, vintage_year = cell
-        denom = len(doc_ids)
-        linked_docs = linked_docs_by_cell.get(cell, set())
-        coverage = (len(linked_docs) / denom) if denom else 0.0
-        cells.append(
+    heading_counts: Counter[str] = Counter()
+    keyword_counts: Counter[str] = Counter()
+    dna_counts: Counter[str] = Counter()
+    for row in strategy_rows:
+        heading_counts.update(
+            str(value).strip()
+            for value in row.get("heading_patterns", [])
+            if str(value).strip()
+        )
+        keyword_counts.update(
+            str(value).strip()
+            for value in row.get("keyword_anchors", [])
+            if str(value).strip()
+        )
+        dna_counts.update(
+            str(value).strip()
+            for value in row.get("dna_phrases", [])
+            if str(value).strip()
+        )
+
+    signal_rows = []
+    for row in strategy_rows:
+        signal_rows.append(
             {
-                "template_family": template,
-                "vintage_year": vintage_year,
-                "coverage_pct": max(0.0, min(1.0, float(coverage))),
-                "link_count": int(link_count_by_cell.get(cell, 0)),
+                "concept_id": row.get("concept_id"),
+                "concept_name": row.get("concept_name"),
+                "family_id": row.get("family_id"),
+                "family": row.get("family"),
+                "validation_status": row.get("validation_status"),
+                "version": row.get("version"),
+                "heading_pattern_count": row.get("heading_pattern_count"),
+                "keyword_anchor_count": row.get("keyword_anchor_count"),
+                "dna_phrase_count": row.get("dna_phrase_count"),
+                "heading_hit_rate": row.get("heading_hit_rate"),
+                "keyword_precision": row.get("keyword_precision"),
+                "cohort_coverage": row.get("cohort_coverage"),
+                "corpus_prevalence": row.get("corpus_prevalence"),
+                "last_updated": row.get("last_updated"),
             }
         )
-    return {"cells": cells}
+
+    return {
+        "scope_id": scope_ctx.get("scope_id") or scope_ctx.get("requested_scope") or None,
+        "scope_name": scope_ctx.get("scope_name") or "",
+        "total_strategies": len(signal_rows),
+        "strategies": signal_rows,
+        "top_heading_patterns": [
+            {"value": value, "count": count}
+            for value, count in heading_counts.most_common(top_n)
+        ],
+        "top_keyword_anchors": [
+            {"value": value, "count": count}
+            for value, count in keyword_counts.most_common(top_n)
+        ],
+        "top_dna_phrases": [
+            {"value": value, "count": count}
+            for value, count in dna_counts.most_common(top_n)
+        ],
+    }
+
+
+@app.get("/api/links/intelligence/evidence")
+async def links_intelligence_evidence(
+    scope_id: str | None = Query(None),
+    family_id: str | None = Query(None),
+    record_type: str | None = Query(None),
+    limit: int = Query(50, ge=1, le=500),
+    offset: int = Query(0, ge=0),
+):
+    """Evidence-browser view scoped to ontology selection."""
+    requested_scope = str(scope_id or family_id or "").strip() or None
+    scope_ctx, strategy_rows = _strategy_rows_for_scope(requested_scope)
+    scoped_concept_ids = {
+        str(row.get("concept_id") or "").strip()
+        for row in strategy_rows
+        if str(row.get("concept_id") or "").strip()
+    }
+
+    rows: list[dict[str, Any]] = []
+    files = _iter_workspace_evidence_files()
+    total_scanned = 0
+    matched_filtered = 0
+    scope_total = 0
+    scope_hits = 0
+    template_totals: Counter[str] = Counter()
+    template_hits: Counter[str] = Counter()
+    rt_filter = str(record_type or "").strip().upper()
+
+    for fp in files:
+        with contextlib.suppress(Exception):
+            for raw_line in fp.read_text().splitlines():
+                if not raw_line.strip():
+                    continue
+                total_scanned += 1
+                with contextlib.suppress(Exception):
+                    payload = orjson.loads(raw_line)
+                    if not isinstance(payload, dict):
+                        continue
+                    cid = str(
+                        payload.get("ontology_node_id")
+                        or payload.get("concept_id")
+                        or ""
+                    ).strip()
+                    if scoped_concept_ids:
+                        if cid and cid not in scoped_concept_ids and not _scope_matches_value(
+                            cid,
+                            scope_ctx,
+                        ):
+                            continue
+                    elif not _scope_matches_value(cid, scope_ctx):
+                        continue
+
+                    scope_total += 1
+                    rtype = str(payload.get("record_type", "HIT") or "HIT").upper()
+                    if rtype == "HIT":
+                        scope_hits += 1
+                    template_family = str(payload.get("template_family", "") or "unknown")
+                    template_totals[template_family] += 1
+                    if rtype == "HIT":
+                        template_hits[template_family] += 1
+
+                    if rt_filter and rtype != rt_filter:
+                        continue
+
+                    if matched_filtered < offset:
+                        matched_filtered += 1
+                        continue
+                    if len(rows) >= limit:
+                        matched_filtered += 1
+                        continue
+
+                    matched_filtered += 1
+                    outlier = payload.get("outlier")
+                    outlier_level = (
+                        str(outlier.get("level", "none"))
+                        if isinstance(outlier, dict)
+                        else "none"
+                    )
+                    rows.append(
+                        {
+                            "concept_id": cid,
+                            "record_type": rtype,
+                            "doc_id": str(payload.get("doc_id", "") or ""),
+                            "template_family": template_family,
+                            "section_number": str(payload.get("section_number", "") or ""),
+                            "heading": str(payload.get("heading", "") or ""),
+                            "clause_path": str(payload.get("clause_path", "") or ""),
+                            "score": payload.get("score"),
+                            "outlier_level": outlier_level,
+                            "source_tool": str(payload.get("source_tool", "") or ""),
+                            "created_at": str(payload.get("created_at", "") or ""),
+                            "path": str(fp),
+                        }
+                    )
+
+    templates = [
+        {
+            "template_family": template,
+            "hits": int(template_hits.get(template, 0)),
+            "total": int(total),
+            "hit_rate": round(template_hits.get(template, 0) / total, 4) if total else 0.0,
+        }
+        for template, total in template_totals.most_common()
+    ]
+
+    return {
+        "scope_id": scope_ctx.get("scope_id") or scope_ctx.get("requested_scope") or None,
+        "scope_name": scope_ctx.get("scope_name") or "",
+        "filters": {
+            "record_type": rt_filter or "",
+            "limit": limit,
+            "offset": offset,
+        },
+        "summary": {
+            "files_scanned": len(files),
+            "rows_scanned": total_scanned,
+            "rows_matched": matched_filtered,
+            "rows_returned": len(rows),
+            "scope_total": scope_total,
+            "scope_hits": scope_hits,
+            "scope_hit_rate": round(scope_hits / scope_total, 4) if scope_total else 0.0,
+            "has_prev": offset > 0,
+            "has_next": (offset + len(rows)) < matched_filtered,
+        },
+        "templates": templates,
+        "rows": rows,
+    }
+
+
+@app.get("/api/links/intelligence/ops")
+async def links_intelligence_ops(
+    scope_id: str | None = Query(None),
+    family_id: str | None = Query(None),
+    stale_minutes: int = Query(60, ge=1, le=24 * 60),
+    run_limit: int = Query(20, ge=1, le=200),
+    job_limit: int = Query(50, ge=1, le=200),
+):
+    """Operational telemetry (agents, jobs, runs) scoped for ontology links."""
+    requested_scope = str(scope_id or family_id or "").strip() or None
+    scope_ctx, strategy_rows = _strategy_rows_for_scope(requested_scope)
+    store = _get_link_store()
+
+    related_tokens: set[str] = set()
+    for value in (
+        scope_ctx.get("target_token"),
+        scope_ctx.get("scope_id"),
+        scope_ctx.get("requested_scope"),
+    ):
+        token = _canonical_family_token(value)
+        if token:
+            related_tokens.add(token)
+    for row in strategy_rows:
+        for value in (
+            row.get("family_id"),
+            row.get("family"),
+            row.get("concept_id"),
+        ):
+            token = _canonical_family_token(value)
+            if token:
+                related_tokens.add(token)
+
+    now = datetime.now(timezone.utc)
+    agents: list[dict[str, Any]] = []
+    if _workspace_root.exists():
+        for family_dir in sorted(_workspace_root.iterdir()):
+            if not family_dir.is_dir():
+                continue
+            family_name = family_dir.name
+            family_token = _canonical_family_token(family_name)
+            if requested_scope:
+                if not _scope_matches_value(family_name, scope_ctx) and (
+                    family_token not in related_tokens
+                ):
+                    continue
+            checkpoint = family_dir / "checkpoint.json"
+            payload = _safe_load_json(checkpoint) if checkpoint.exists() else {}
+            status = str(payload.get("status", "missing") or "missing")
+            last_update_raw = str(payload.get("last_update", "") or "")
+            stale = False
+            if last_update_raw:
+                with contextlib.suppress(Exception):
+                    dt = datetime.fromisoformat(last_update_raw.replace("Z", "+00:00"))
+                    stale = (now - dt).total_seconds() > stale_minutes * 60
+            agents.append(
+                {
+                    "family": family_name,
+                    "status": status,
+                    "iteration_count": int(payload.get("iteration_count", 0) or 0),
+                    "current_concept_id": str(payload.get("current_concept_id", "") or ""),
+                    "last_strategy_version": int(payload.get("last_strategy_version", 0) or 0),
+                    "last_coverage_hit_rate": float(payload.get("last_coverage_hit_rate", 0.0) or 0.0),
+                    "last_session": str(payload.get("last_session", "") or ""),
+                    "last_pane": str(payload.get("last_pane", "") or ""),
+                    "last_start_at": str(payload.get("last_start_at", "") or ""),
+                    "last_update": last_update_raw,
+                    "stale": stale,
+                    "checkpoint_path": str(checkpoint),
+                }
+            )
+
+    rows = store._conn.execute(  # noqa: SLF001
+        "SELECT * FROM job_queue ORDER BY submitted_at DESC LIMIT ?",
+        [max(job_limit * 4, 200)],
+    ).fetchall()
+    cols = [d[0] for d in store._conn.description]  # noqa: SLF001
+    jobs: list[dict[str, Any]] = []
+    for row in rows:
+        payload = dict(zip(cols, row, strict=False))
+        params_json = payload.get("params_json")
+        params = json.loads(params_json) if isinstance(params_json, str) and params_json else {}
+        if not isinstance(params, dict):
+            params = {}
+        job_scope = str(params.get("family_id") or params.get("scope_id") or "").strip()
+        if requested_scope:
+            if not job_scope:
+                continue
+            if not _scope_matches_value(job_scope, scope_ctx):
+                job_token = _canonical_family_token(job_scope)
+                if job_token not in related_tokens:
+                    continue
+        jobs.append(
+            {
+                "job_id": str(payload.get("job_id", "")),
+                "job_type": str(payload.get("job_type", "")),
+                "status": str(payload.get("status", "pending")),
+                "submitted_at": payload.get("submitted_at"),
+                "started_at": payload.get("claimed_at"),
+                "completed_at": payload.get("completed_at"),
+                "progress": float(payload.get("progress_pct", 0.0) or 0.0),
+                "progress_message": str(payload.get("progress_message", "")),
+                "scope_id": job_scope or None,
+                "error": payload.get("error_message"),
+            }
+        )
+        if len(jobs) >= job_limit:
+            break
+
+    run_rule_cache: dict[str, dict[str, Any] | None] = {}
+    requested_run_scope = str(scope_ctx.get("scope_id") or scope_ctx.get("requested_scope") or "").strip()
+    runs_raw = store.get_runs(family_id=requested_run_scope or None, limit=run_limit)
+    if requested_run_scope and not runs_raw:
+        token = str(scope_ctx.get("target_token") or "").strip()
+        if token:
+            runs_raw = [
+                run
+                for run in store.get_runs(limit=max(run_limit * 10, 500))
+                if (
+                    _canonical_family_token(run.get("family_id")) == token
+                    or _canonical_family_token(
+                        _resolve_run_scope(store, run, run_rule_cache)[0]
+                    )
+                    == token
+                )
+            ][:run_limit]
+
+    runs: list[dict[str, Any]] = []
+    for run in runs_raw:
+        base_family_id = _canonicalize_scope_id(store, run.get("family_id"))
+        resolved_scope, ontology_node_id = _resolve_run_scope(store, run, run_rule_cache)
+        scope_val = _canonicalize_scope_id(store, resolved_scope or base_family_id)
+        runs.append(
+            {
+                "run_id": str(run.get("run_id", "")),
+                "run_type": str(run.get("run_type") or run.get("source") or "apply"),
+                "family_id": base_family_id,
+                "scope_id": scope_val or base_family_id,
+                "ontology_node_id": (
+                    _canonicalize_scope_id(store, ontology_node_id)
+                    if ontology_node_id
+                    else None
+                ),
+                "links_created": int(run.get("links_created", 0) or 0),
+                "conflicts_detected": int(run.get("conflicts_detected", 0) or 0),
+                "started_at": run.get("started_at"),
+                "completed_at": run.get("completed_at"),
+                "status": "completed" if run.get("completed_at") else "running",
+            }
+        )
+
+    job_status_counts = Counter(str(job.get("status", "pending")) for job in jobs)
+    run_status_counts = Counter(str(run.get("status", "running")) for run in runs)
+    agents.sort(key=lambda row: (not bool(row.get("stale")), str(row.get("family", ""))))
+
+    return {
+        "scope_id": scope_ctx.get("scope_id") or scope_ctx.get("requested_scope") or None,
+        "scope_name": scope_ctx.get("scope_name") or "",
+        "stale_minutes": stale_minutes,
+        "agents": {
+            "total": len(agents),
+            "stale_count": sum(1 for row in agents if row.get("stale")),
+            "items": agents,
+        },
+        "jobs": {
+            "total": len(jobs),
+            "pending": int(job_status_counts.get("pending", 0)),
+            "running": int(job_status_counts.get("running", 0)),
+            "failed": int(job_status_counts.get("failed", 0)),
+            "items": jobs,
+        },
+        "runs": {
+            "total": len(runs),
+            "running": int(run_status_counts.get("running", 0)),
+            "completed": int(run_status_counts.get("completed", 0)),
+            "items": runs,
+        },
+    }
 
 
 @app.post("/api/links/calibrate/{family_id}")
@@ -8840,99 +8062,6 @@ async def calibrate_family(
     }
     store.save_calibration(family_id, "_global", thresholds)
     return thresholds
-
-
-@app.post("/api/links/rules/{rule_id}/check-drift")
-async def check_drift(request: Request, rule_id: str):
-    """Submit a drift check job."""
-    _require_links_admin(request)
-    store = _get_link_store()
-    job_id = str(uuid.uuid4())
-    store.submit_job({
-        "job_id": job_id,
-        "job_type": "check_drift",
-        "params": {"rule_id": rule_id},
-    })
-    return {"job_id": job_id}
-
-
-def _normalize_drift_alert(store: LinkStore, alert: dict[str, Any]) -> dict[str, Any]:
-    rule_id = str(alert.get("rule_id", ""))
-    rule = store.get_rule(rule_id) if rule_id else None
-    family_id = (
-        _canonicalize_scope_id(store, str(rule.get("family_id", "")))
-        if isinstance(rule, dict)
-        else ""
-    )
-    ontology_node_id = (
-        _canonicalize_scope_id(store, str(rule.get("ontology_node_id", "")))
-        if isinstance(rule, dict)
-        else ""
-    )
-    scope_id = _canonicalize_scope_id(store, ontology_node_id or family_id)
-    return {
-        "alert_id": str(alert.get("alert_id", "")),
-        "family_id": scope_id or family_id,
-        "base_family_id": family_id or None,
-        "ontology_node_id": ontology_node_id or None,
-        "rule_id": rule_id or None,
-        "drift_type": "distribution_shift",
-        "severity": str(alert.get("severity", "low")),
-        "detail": str(alert.get("message", "")),
-        "detected_at": alert.get("created_at"),
-        "resolved": bool(alert.get("acknowledged", False)),
-    }
-
-
-@app.get("/api/links/drift/alerts")
-async def get_drift_alerts():
-    """Open drift alerts sorted by severity."""
-    store = _get_link_store()
-    alerts = [_normalize_drift_alert(store, row) for row in store.get_drift_alerts()]
-    return {"alerts": alerts, "total": len(alerts)}
-
-
-@app.get("/api/links/drift/checks")
-async def get_drift_checks():
-    store = _get_link_store()
-    checks_raw = store.get_drift_checks()
-    checks: list[dict[str, Any]] = []
-    for row in checks_raw:
-        rule_id = str(row.get("rule_id", ""))
-        rule = store.get_rule(rule_id) if rule_id else None
-        family_id = (
-            _canonicalize_scope_id(store, str(rule.get("family_id", "")))
-            if isinstance(rule, dict)
-            else ""
-        )
-        scope_id = (
-            _canonicalize_scope_id(store, str(_rule_scope_id(rule) or family_id))
-            if isinstance(rule, dict)
-            else family_id
-        )
-        checks.append(
-            {
-                "check_id": str(row.get("check_id", "")),
-                "family_id": scope_id,
-                "run_at": row.get("checked_at"),
-                "baseline_run_id": str(row.get("baseline_id", "")),
-                "current_run_id": str(row.get("check_id", "")),
-                "link_count_delta": int(round(float(row.get("max_cell_delta", 0.0) or 0.0) * 100)),
-                "confidence_delta": float(row.get("overall_hit_rate", 0.0) or 0.0) - 0.5,
-                "new_conflicts": 0,
-                "drift_detected": bool(row.get("drift_detected", False)),
-            }
-        )
-    return {"checks": checks, "total": len(checks)}
-
-
-@app.post("/api/links/drift/alerts/{alert_id}/acknowledge")
-async def acknowledge_alert(request: Request, alert_id: str):
-    """Acknowledge a drift alert."""
-    _require_links_admin(request)
-    store = _get_link_store()
-    store.acknowledge_drift_alert(alert_id)
-    return {"acknowledged": True}
 
 
 # ---------------------------------------------------------------------------
@@ -9215,13 +8344,6 @@ async def rules_autocomplete(
     field_norm = field.strip().lower()
     prefix_norm = prefix.strip()
 
-    if field_norm == "macro":
-        store = _get_link_store()
-        names = [str(m.get("name", "")) for m in store.get_macros()]
-        if prefix_norm:
-            names = [n for n in names if n.lower().startswith(prefix_norm.lower())]
-        return {"field": field_norm, "suggestions": names[:limit]}
-
     if field_norm == "article":
         names = [
             str(node.get("name", ""))
@@ -9371,7 +8493,7 @@ async def rules_autocomplete(
         status_code=422,
         detail=(
             "field must be one of: heading, article, clause, section, defined_term, "
-            "template, admin_agent, vintage, market, doc_type, facility_size_mm, macro"
+            "template, admin_agent, vintage, market, doc_type, facility_size_mm"
         ),
     )
 
@@ -9536,13 +8658,6 @@ async def counterfactual(body: dict[str, Any] = Body(...)):
         "total_matched": muted_count,
         "fps_estimate": false_positives,
     }
-
-
-@app.get("/api/links/drift/{rule_id}/diff")
-async def drift_diff(rule_id: str):
-    """Baseline vs current cohort diff."""
-    return {"rule_id": rule_id, "diff": []}
-
 
 # ---------------------------------------------------------------------------
 # 56. Queue
@@ -10166,7 +9281,7 @@ async def get_comparables(link_id: str):
 
 
 # ---------------------------------------------------------------------------
-# Extra endpoints (crossref, evaluate-text, macros, baselines, test)
+# Extra endpoints (crossref, evaluate-text, baselines, test)
 # ---------------------------------------------------------------------------
 @app.get("/api/links/crossref-peek")
 async def crossref_peek(
@@ -10239,35 +9354,6 @@ async def evaluate_text(body: EvaluateTextRequest = Body(...)):
         "match_type": "ast_eval",
         "matched_value": first_hit,
     }
-
-
-@app.get("/api/links/macros")
-async def list_macros():
-    """List all macros."""
-    store = _get_link_store()
-    return {"macros": store.get_macros(), "total": len(store.get_macros())}
-
-
-@app.post("/api/links/macros", status_code=201)
-async def create_macro(
-    request: Request,
-    body: dict[str, Any] = Body(...),
-):
-    """Create/update a macro."""
-    _require_links_admin(request)
-    store = _get_link_store()
-    store.save_macro(body)
-    return {"status": "saved"}
-
-
-@app.delete("/api/links/macros/{macro_id}")
-async def delete_macro(request: Request, macro_id: str):
-    """Delete a macro."""
-    _require_links_admin(request)
-    store = _get_link_store()
-    store.delete_macro(macro_id)
-    return {"deleted": True}
-
 
 @app.get("/api/links/template-baselines")
 async def list_template_baselines(family_id: str | None = Query(None)):
@@ -10368,18 +9454,10 @@ async def get_template_baseline_text(
 
 
 @app.post("/api/links/rules/validate-dsl")
-async def validate_dsl_with_macros(body: dict[str, Any] = Body(...)):
-    """Parse/validate DSL text with optional macro expansion (non-rule scoped)."""
-    store = _get_link_store()
-    macro_dict: dict[str, Any] = {}
-    for macro in store.get_macros():
-        try:
-            ast_data = json.loads(macro.get("ast_json", "{}"))
-            macro_dict[macro["name"]] = filter_expr_from_json(ast_data)
-        except Exception:
-            continue
+async def validate_dsl_generic(body: dict[str, Any] = Body(...)):
+    """Parse/validate DSL text (non-rule scoped)."""
     text = str(body.get("text", ""))
-    result = validate_dsl(text, macro_dict or None)
+    result = validate_dsl(text)
     return {
         "text_fields": {
             k: filter_expr_to_json(v) if isinstance(v, (FilterMatch, FilterGroup)) else str(v)
