@@ -20,11 +20,9 @@ interface CommandPaletteProps {
 
 const TAB_ITEMS: (CommandPaletteTarget & { shortcut?: string })[] = [
   { type: "tab", id: "review", label: "Review", shortcut: "1" },
-  { type: "tab", id: "coverage", label: "Coverage", shortcut: "2" },
-  { type: "tab", id: "query", label: "Query", shortcut: "3" },
-  { type: "tab", id: "conflicts", label: "Conflicts", shortcut: "4" },
-  { type: "tab", id: "rules", label: "Rules", shortcut: "5" },
-  { type: "tab", id: "dashboard", label: "Dashboard", shortcut: "6" },
+  { type: "tab", id: "query", label: "Query", shortcut: "2" },
+  { type: "tab", id: "rules", label: "Rules", shortcut: "3" },
+  { type: "tab", id: "dashboard", label: "Dashboard", shortcut: "4" },
 ];
 
 const ACTION_ITEMS: CommandPaletteTarget[] = [

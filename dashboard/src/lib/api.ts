@@ -5,6 +5,7 @@ const API_BASE_FALLBACKS = EXPLICIT_API_BASE
   : IS_BROWSER
     ? [""]
     : ["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:8000"];
+const API_BASE = API_BASE_FALLBACKS[0] ?? "";
 const LINKS_API_TOKEN =
   process.env.NEXT_PUBLIC_LINKS_API_TOKEN || "local-dev-links-token";
 

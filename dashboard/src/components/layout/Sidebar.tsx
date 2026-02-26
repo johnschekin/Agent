@@ -104,6 +104,8 @@ const NAV_MODULES: NavModule[] = [
     icon: IconLinking,
     items: [
       { label: "Ontology Links", href: "/links" },
+      { label: "Coverage", href: "/links/coverage" },
+      { label: "Conflicts", href: "/links/conflicts" },
     ],
   },
   {
@@ -185,6 +187,16 @@ export function Sidebar() {
   );
 
   const openModule = NAV_MODULES.find((m) => m.id === openModuleId);
+  const activeItemHref = openModule
+    ? openModule.items.reduce<string | null>((best, item) => {
+        const isMatch =
+          pathname === item.href ||
+          (item.href !== "/" && pathname.startsWith(item.href + "/"));
+        if (!isMatch) return best;
+        if (!best || item.href.length > best.length) return item.href;
+        return best;
+      }, null)
+    : null;
 
   return (
     <>
@@ -254,9 +266,7 @@ export function Sidebar() {
             {/* Sub-nav links */}
             <nav className="flex-1 py-2 overflow-y-auto">
               {openModule.items.map((item) => {
-                const isActive =
-                  pathname === item.href ||
-                  (item.href !== "/" && pathname.startsWith(item.href + "/"));
+                const isActive = item.href === activeItemHref;
                 return (
                   <Link
                     key={item.href}

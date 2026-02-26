@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import type { ColumnDef, SortingState } from "@tanstack/react-table";
 import { cn } from "@/lib/cn";
@@ -48,12 +48,9 @@ import {
   useReaderDefinitions,
   usePublishRuleMutation,
   useArchiveRuleMutation,
-  useDriftAlerts,
-  useAnalyticsDashboard,
   useStarterKit,
   useCloneRuleMutation,
   useDeleteRuleMutation,
-  useVintageHeatmap,
   useSubmitLinkJobMutation,
 } from "@/lib/queries";
 import type {
@@ -67,7 +64,6 @@ import type {
   PreviewCandidate,
   OntologyTreeNode,
 } from "@/lib/types";
-import { isFilterGroup } from "@/lib/types";
 import { KpiCard, KpiCardGrid } from "@/components/ui/KpiCard";
 import { SkeletonTableRows, SkeletonPanel } from "@/components/ui/Spinner";
 import { Badge } from "@/components/ui/Badge";
@@ -79,22 +75,16 @@ import { FocusModeToggle } from "@/components/links/FocusModeToggle";
 import { DetachableReader } from "@/components/links/DetachableReader";
 import { ReassignDialog } from "@/components/links/ReassignDialog";
 import { WhyMatchedPopover } from "@/components/links/WhyMatchedPopover";
-import { AstFilterBuilder } from "@/components/links/AstFilterBuilder";
 import { TextQueryBar } from "@/components/links/TextQueryBar";
-import { ScratchpadPane } from "@/components/links/ScratchpadPane";
 import { WhyNotMatchedPanel } from "@/components/links/WhyNotMatchedPanel";
 import { ConflictResolver } from "@/components/links/ConflictResolver";
 import { CompoundCovenantOverlay } from "@/components/links/CompoundCovenantOverlay";
 import { UnlinkReasonDialog } from "@/components/links/UnlinkReasonDialog";
 import { CommandPalette, type CommandPaletteTarget } from "@/components/links/CommandPalette";
 import { TriageMode } from "@/components/links/TriageMode";
-import { PinnedTestCasesPanel } from "@/components/links/PinnedTestCasesPanel";
 import { RuleCompareView } from "@/components/links/RuleCompareView";
-import { MacroManager } from "@/components/links/MacroManager";
 import { StarterKitPanel } from "@/components/links/StarterKitPanel";
 import { BatchRunDashboard } from "@/components/links/BatchRunDashboard";
-import { VintageHeatmap } from "@/components/links/VintageHeatmap";
-import { DriftDiffView } from "@/components/links/DriftDiffView";
 import { ExportImportDialog } from "@/components/links/ExportImportDialog";
 import { tokenizeDsl, DSL_TOKEN_CLASSES } from "@/lib/rule-dsl-highlight";
 import { DslCheatSheet } from "@/components/links/DslCheatSheet";
@@ -111,12 +101,19 @@ interface TabDef {
 }
 
 const TABS: TabDef[] = [
+  { id: "coverage", label: "Coverage" },
+  { id: "conflicts", label: "Conflicts" },
   { id: "review", label: "Review" },
   { id: "query", label: "Query" },
   { id: "rules", label: "Rules" },
   { id: "dashboard", label: "Dashboard" },
-  { id: "coverage", label: "Coverage" },
-  { id: "conflicts", label: "Conflicts" },
+];
+
+const PRIMARY_TABS: TabDef[] = [
+  { id: "review", label: "Review" },
+  { id: "query", label: "Query" },
+  { id: "rules", label: "Rules" },
+  { id: "dashboard", label: "Dashboard" },
 ];
 
 // ── Confidence tier filter values ──────────────────────────────────────────
@@ -131,6 +128,55 @@ const STATUS_FILTERS: { value: LinkStatus | "all"; label: string }[] = [
   { value: "pending_review", label: "Pending Review" },
   { value: "unlinked", label: "Unlinked" },
 ];
+
+type ReviewColumnId =
+  | "doc"
+  | "section"
+  | "heading"
+  | "scope"
+  | "confidence"
+  | "status"
+  | "actions";
+
+const REVIEW_COLUMN_LABELS: Record<ReviewColumnId, string> = {
+  doc: "Doc",
+  section: "Section",
+  heading: "Heading",
+  scope: "Scope",
+  confidence: "Confidence",
+  status: "Status",
+  actions: "Actions",
+};
+
+const DEFAULT_REVIEW_COLUMNS: Record<ReviewColumnId, boolean> = {
+  doc: true,
+  section: true,
+  heading: true,
+  scope: true,
+  confidence: true,
+  status: true,
+  actions: true,
+};
+
+type QueryColumnId = "borrower" | "section" | "heading" | "confidence" | "tier" | "verdict";
+
+const QUERY_COLUMN_LABELS: Record<QueryColumnId, string> = {
+  borrower: "Borrower",
+  section: "Section",
+  heading: "Heading",
+  confidence: "Confidence",
+  tier: "Tier",
+  verdict: "Verdict",
+};
+
+const DEFAULT_QUERY_COLUMNS: Record<QueryColumnId, boolean> = {
+  borrower: true,
+  section: true,
+  heading: true,
+  confidence: true,
+  tier: true,
+  verdict: true,
+};
 
 // ── Role badge variant map ─────────────────────────────────────────────────
 
@@ -227,17 +273,31 @@ function collectAstMatchValues(node: unknown, values: Set<string>): void {
 function LinksPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const pathname = usePathname();
 
   // Tab state
-  const rawTab = searchParams.get("tab");
+  const pathTab: TabId | null = pathname.endsWith("/coverage")
+    ? "coverage"
+    : pathname.endsWith("/conflicts")
+      ? "conflicts"
+      : null;
+  const rawTab = searchParams.get("tab") ?? pathTab;
   const activeTab = (TABS.some((tab) => tab.id === rawTab) ? rawTab : "review") as TabId;
   const setActiveTab = useCallback(
     (tab: TabId) => {
+      if (tab === "coverage") {
+        router.push("/links/coverage");
+        return;
+      }
+      if (tab === "conflicts") {
+        router.push("/links/conflicts");
+        return;
+      }
       const params = new URLSearchParams(searchParams.toString());
       params.set("tab", tab);
       router.push(`/links?${params.toString()}`);
     },
-    [router, searchParams]
+    [router, searchParams],
   );
 
   // Cross-tab: load a rule into the query tab
@@ -247,6 +307,8 @@ function LinksPageInner() {
   const [familyFilter, setFamilyFilter] = useState<string | undefined>();
   const [ontologySearch, setOntologySearch] = useState("");
   const [selectedTreeNodeId, setSelectedTreeNodeId] = useState<string | null>(null);
+  const [ontologyPanelOpen, setOntologyPanelOpen] = useState(true);
+  const [ontologyPanelPinned, setOntologyPanelPinned] = useState(true);
   const [statusFilter, setStatusFilter] = useState<LinkStatus | "all">("all");
   const [tierFilter, setTierFilter] = useState<ConfidenceTier | "all">("all");
   const [sortBy, setSortBy] = useState<"created_at" | "confidence">("created_at");
@@ -283,7 +345,6 @@ function LinksPageInner() {
   const [triageActive, setTriageActive] = useState(false);
   const [exportDialogOpen, setExportDialogOpen] = useState(false);
   const [rulesCompareRequestId, setRulesCompareRequestId] = useState(0);
-  const [cohortFilter, setCohortFilter] = useState<{ templateFamily: string; vintageYear: number } | null>(null);
   const [claimedLinkIds, setClaimedLinkIds] = useState<Set<string> | null>(null);
   const [resumeCursorLinkId, setResumeCursorLinkId] = useState<string | null>(null);
   const [resumePromptOpen, setResumePromptOpen] = useState(false);
@@ -306,8 +367,6 @@ function LinksPageInner() {
     familyId: familyFilter,
     status: statusFilter === "all" ? undefined : statusFilter,
     confidenceTier: tierFilter === "all" ? undefined : tierFilter,
-    templateFamily: cohortFilter?.templateFamily,
-    vintageYear: cohortFilter?.vintageYear,
     sortBy,
     sortDir,
     page,
@@ -434,10 +493,17 @@ function LinksPageInner() {
       const node = ontologyNodeById.get(nodeId);
       if (!node) return;
       setFamilyFilter(node.id);
+      if (!ontologyPanelPinned) {
+        setOntologyPanelOpen(false);
+      }
       setPage(1);
     },
-    [ontologyNodeById],
+    [ontologyNodeById, ontologyPanelPinned],
   );
+
+  useEffect(() => {
+    if (ontologyPanelPinned) setOntologyPanelOpen(true);
+  }, [ontologyPanelPinned]);
 
   const focusedLink = displayedLinks[focusedIdx] ?? null;
 
@@ -656,16 +722,6 @@ function LinksPageInner() {
         const bar = document.querySelector("[data-testid='text-query-bar']") as HTMLElement & { focusInput?: () => void } | null;
         if (bar?.focusInput) bar.focusInput();
         else bar?.querySelector("input")?.focus();
-        return;
-      }
-
-      // Query tab: Escape closes scratchpad (if no autocomplete open)
-      if (activeTab === "query" && e.key === "Escape" && target.tagName !== "INPUT") {
-        // Handled by clicking the scratchpad toggle button — dispatch click
-        const scratchpadBtn = document.querySelector("[data-testid='toggle-scratchpad']") as HTMLButtonElement | null;
-        if (scratchpadBtn?.classList.contains("bg-glow-blue")) {
-          scratchpadBtn.click();
-        }
         return;
       }
 
@@ -1036,7 +1092,7 @@ function LinksPageInner() {
 
       {/* Tab bar */}
       <div className="flex items-center gap-0 px-6 bg-surface-1 border-b border-border">
-        {TABS.map((tab) => (
+        {PRIMARY_TABS.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
@@ -1055,69 +1111,123 @@ function LinksPageInner() {
 
       {/* Tab content */}
       <div className="flex-1 overflow-hidden flex">
-        <aside className="w-72 flex-shrink-0 border-r border-border bg-surface-1 flex flex-col">
-          <div className="px-4 py-3 border-b border-border space-y-2">
-            <div className="flex items-center justify-between">
-              <p className="text-xs font-semibold text-text-muted uppercase tracking-wider">Ontology</p>
-              {(familyFilter || selectedTreeNodeId) && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setFamilyFilter(undefined);
-                    setSelectedTreeNodeId(null);
-                    setPage(1);
-                  }}
-                  className="text-[11px] text-accent-blue hover:underline"
-                >
-                  Clear
-                </button>
-              )}
-            </div>
-            <input
-              value={ontologySearch}
-              onChange={(e) => setOntologySearch(e.target.value)}
-              placeholder="Search ontology nodes..."
-              className="w-full bg-surface-2 border border-border rounded px-2.5 py-1.5 text-xs text-text-primary placeholder:text-text-muted"
-              data-testid="ontology-search"
-            />
-            {selectedOntologyNode ? (
-              <div className="space-y-1">
-                <p className="text-xs text-text-primary font-medium truncate">{selectedOntologyNode.name}</p>
-                <div className="flex items-center gap-1.5 flex-wrap">
-                  {selectedScopeNode ? (
-                    <>
-                      <Badge variant="blue">
-                        {selectedScopeNode.name}
-                        {selectedScopeSummary && selectedScopeSummary.count > 0
-                          ? ` · ${selectedScopeSummary.count}`
-                          : ""}
-                      </Badge>
-                      <Badge variant="default" className="text-[10px]">
-                        {selectedScopeNode.type.replace(/_/g, " ")}
-                      </Badge>
-                    </>
-                  ) : (
-                    <Badge variant="default">Unscoped</Badge>
+        {ontologyPanelOpen ? (
+          <aside className="w-72 flex-shrink-0 border-r border-border bg-surface-1 flex flex-col">
+            <div className="px-4 py-3 border-b border-border space-y-2">
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-xs font-semibold text-text-muted uppercase tracking-wider">Ontology</p>
+                <div className="flex items-center gap-2">
+                  {(familyFilter || selectedTreeNodeId) && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setFamilyFilter(undefined);
+                        setSelectedTreeNodeId(null);
+                        setPage(1);
+                      }}
+                      className="text-[11px] text-accent-blue hover:underline"
+                    >
+                      Clear
+                    </button>
                   )}
+                  <button
+                    type="button"
+                    onClick={() => setOntologyPanelPinned((prev) => !prev)}
+                    className={cn(
+                      "text-[11px] transition-colors",
+                      ontologyPanelPinned ? "text-accent-blue" : "text-text-muted hover:text-text-primary",
+                    )}
+                    title={ontologyPanelPinned ? "Unpin ontology panel" : "Pin ontology panel"}
+                    data-testid="ontology-panel-pin"
+                  >
+                    {ontologyPanelPinned ? "Pinned" : "Pin"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setOntologyPanelOpen(false)}
+                    className="text-[11px] text-text-muted hover:text-text-primary"
+                    title="Collapse ontology panel"
+                    data-testid="ontology-panel-collapse"
+                  >
+                    Collapse
+                  </button>
                 </div>
               </div>
-            ) : (
-              <p className="text-xs text-text-muted">
-                Select a node to scope review, query, rules, and dashboard data.
-              </p>
-            )}
-          </div>
+              <input
+                value={ontologySearch}
+                onChange={(e) => setOntologySearch(e.target.value)}
+                placeholder="Search ontology nodes..."
+                className="w-full bg-surface-2 border border-border rounded px-2.5 py-1.5 text-xs text-text-primary placeholder:text-text-muted"
+                data-testid="ontology-search"
+              />
+              {selectedOntologyNode ? (
+                <div className="space-y-1">
+                  <p className="text-xs text-text-primary font-medium truncate">{selectedOntologyNode.name}</p>
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    {selectedScopeNode ? (
+                      <>
+                        <Badge variant="blue">
+                          {selectedScopeNode.name}
+                          {selectedScopeSummary && selectedScopeSummary.count > 0
+                            ? ` · ${selectedScopeSummary.count}`
+                            : ""}
+                        </Badge>
+                        <Badge variant="default" className="text-[10px]">
+                          {selectedScopeNode.type.replace(/_/g, " ")}
+                        </Badge>
+                      </>
+                    ) : (
+                      <Badge variant="default">Unscoped</Badge>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <p className="text-xs text-text-muted">
+                  Select a node to scope review, query, rules, and dashboard data.
+                </p>
+              )}
+            </div>
 
-          <OntologyTree
-            roots={ontologyTreeQuery.data?.roots ?? []}
-            selectedId={selectedTreeNodeId}
-            onSelectNode={handleOntologySelect}
-            searchQuery={ontologySearch}
-          />
-        </aside>
+            <OntologyTree
+              roots={ontologyTreeQuery.data?.roots ?? []}
+              selectedId={selectedTreeNodeId}
+              onSelectNode={handleOntologySelect}
+              searchQuery={ontologySearch}
+            />
+          </aside>
+        ) : (
+          <aside className="w-10 flex-shrink-0 border-r border-border bg-surface-1 flex flex-col items-center py-2">
+            <button
+              type="button"
+              onClick={() => setOntologyPanelOpen(true)}
+              className="text-xs text-text-muted hover:text-text-primary px-1"
+              title="Expand ontology panel"
+              data-testid="ontology-panel-expand"
+            >
+              ▶
+            </button>
+          </aside>
+        )}
 
-        <div className="flex-1 overflow-hidden flex flex-col">
+        <div
+          className="flex-1 overflow-hidden flex flex-col"
+          onClick={() => {
+            if (!ontologyPanelPinned && ontologyPanelOpen) {
+              setOntologyPanelOpen(false);
+            }
+          }}
+        >
           <div className="flex items-center gap-2 px-4 py-2 border-b border-border bg-surface-1 text-xs">
+            {!ontologyPanelOpen && (
+              <button
+                type="button"
+                onClick={() => setOntologyPanelOpen(true)}
+                className="text-[11px] px-2 py-0.5 rounded bg-surface-2 text-text-secondary hover:text-text-primary"
+                title="Expand ontology panel"
+              >
+                Ontology
+              </button>
+            )}
             {selectedScopeNode ? (
               <Badge variant="blue">
                 {selectedScopeNode.name}
@@ -1186,11 +1296,6 @@ function LinksPageInner() {
                 onNoteCancel={() => setNoteInputLinkId(null)}
                 reassignLinkId={reassignLinkId}
                 onReassignClose={() => setReassignLinkId(null)}
-                cohortFilter={cohortFilter}
-                onClearCohortFilter={() => {
-                  setCohortFilter(null);
-                  setPage(1);
-                }}
                 loading={linksQuery.isLoading}
                 showFamilySidebar={false}
               />
@@ -1214,18 +1319,12 @@ function LinksPageInner() {
               <RulesTabContent
                 familyFilter={familyFilter}
                 compareRequestId={rulesCompareRequestId}
-                onViewDrift={() => setActiveTab("dashboard")}
                 onOpenInQuery={openRuleInQuery}
               />
             ) : activeTab === "dashboard" ? (
               <DashboardTabContent
                 familyFilter={familyFilter}
                 onOpenExport={() => setExportDialogOpen(true)}
-                onHeatmapCellClick={(templateFamily, vintageYear) => {
-                  setCohortFilter({ templateFamily, vintageYear });
-                  setActiveTab("review");
-                  setPage(1);
-                }}
               />
             ) : null}
           </div>
@@ -1354,8 +1453,6 @@ interface ReviewTabContentProps {
   onNoteCancel: () => void;
   reassignLinkId: string | null;
   onReassignClose: () => void;
-  cohortFilter: { templateFamily: string; vintageYear: number } | null;
-  onClearCohortFilter: () => void;
   loading: boolean;
   showFamilySidebar?: boolean;
 }
@@ -1397,12 +1494,34 @@ function ReviewTabContent({
   onNoteCancel,
   reassignLinkId,
   onReassignClose,
-  cohortFilter,
-  onClearCohortFilter,
   loading,
   showFamilySidebar = true,
 }: ReviewTabContentProps) {
   const totalPages = Math.ceil(totalLinks / 50);
+  const [reviewColumnsOpen, setReviewColumnsOpen] = useState(false);
+  const [reviewColumns, setReviewColumns] = useState<Record<ReviewColumnId, boolean>>(DEFAULT_REVIEW_COLUMNS);
+  const reviewColumnsRef = useRef<HTMLDivElement | null>(null);
+  const visibleReviewColumnCount = Object.values(reviewColumns).filter(Boolean).length;
+
+  useEffect(() => {
+    if (!reviewColumnsOpen) return;
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (!reviewColumnsRef.current) return;
+      if (!reviewColumnsRef.current.contains(event.target as Node)) {
+        setReviewColumnsOpen(false);
+      }
+    };
+    window.addEventListener("mousedown", handleOutsideClick);
+    return () => window.removeEventListener("mousedown", handleOutsideClick);
+  }, [reviewColumnsOpen]);
+
+  const toggleReviewColumn = useCallback((columnId: ReviewColumnId) => {
+    setReviewColumns((prev) => {
+      const currentlyVisible = Object.values(prev).filter(Boolean).length;
+      if (prev[columnId] && currentlyVisible <= 1) return prev;
+      return { ...prev, [columnId]: !prev[columnId] };
+    });
+  }, []);
 
   // Fetch context data for the focused link
   const { data: contextData } = useContextStrip(focusedLink?.link_id ?? null);
@@ -1576,23 +1695,45 @@ function ReviewTabContent({
           >
             Tier: {tierFilter === "all" ? "All" : tierFilter}
           </button>
-        </div>
-        {cohortFilter && (
-          <div className="flex items-center justify-between gap-2 px-4 py-2 border-b border-border bg-glow-blue/30">
-            <p className="text-xs text-text-secondary">
-              Cohort filter from heatmap: <span className="text-text-primary font-medium">{cohortFilter.templateFamily}</span> /{" "}
-              <span className="text-text-primary font-medium">{cohortFilter.vintageYear}</span>
-            </p>
+          <div className="ml-auto relative" ref={reviewColumnsRef}>
             <button
               type="button"
-              onClick={onClearCohortFilter}
-              className="text-xs text-accent-blue hover:underline"
+              onClick={() => setReviewColumnsOpen((prev) => !prev)}
+              className={cn(
+                "filter-chip",
+                reviewColumnsOpen && "active",
+              )}
             >
-              Clear
+              Columns
             </button>
+            {reviewColumnsOpen && (
+              <div className="absolute top-full right-0 mt-1 z-30 w-44 rounded-lg border border-border bg-surface-1 shadow-xl p-2 space-y-1">
+                {(Object.keys(REVIEW_COLUMN_LABELS) as ReviewColumnId[]).map((columnId) => {
+                  const checked = reviewColumns[columnId];
+                  const disableToggle = checked && visibleReviewColumnCount <= 1;
+                  return (
+                    <label
+                      key={columnId}
+                      className={cn(
+                        "flex items-center justify-between gap-2 px-2 py-1 rounded text-xs text-text-secondary",
+                        disableToggle ? "opacity-60" : "hover:bg-surface-2",
+                      )}
+                    >
+                      <span>{REVIEW_COLUMN_LABELS[columnId]}</span>
+                      <input
+                        type="checkbox"
+                        checked={checked}
+                        onChange={() => toggleReviewColumn(columnId)}
+                        disabled={disableToggle}
+                        className="accent-accent-blue"
+                      />
+                    </label>
+                  );
+                })}
+              </div>
+            )}
           </div>
-        )}
-
+        </div>
         {/* Table area + Reader pane */}
         <div className="flex-1 flex overflow-hidden">
           {/* Table */}
@@ -1603,33 +1744,47 @@ function ReviewTabContent({
                   <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border w-8">
                     {/* checkbox col */}
                   </th>
-                  <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Doc</th>
-                  <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Section</th>
-                  <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Heading</th>
-                  <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Scope</th>
-                  <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">
-                    <button
-                      type="button"
-                      onClick={onToggleConfidenceSort}
-                      className="inline-flex items-center gap-1 hover:text-text-primary transition-colors"
-                      title="Sort by confidence"
-                    >
-                      Confidence
-                      <span aria-hidden="true">
-                        {sortBy === "confidence" ? (sortDir === "asc" ? "▲" : "▼") : "⇅"}
-                      </span>
-                    </button>
-                  </th>
-                  <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Status</th>
-                  <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Actions</th>
+                  {reviewColumns.doc && (
+                    <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Doc</th>
+                  )}
+                  {reviewColumns.section && (
+                    <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Section</th>
+                  )}
+                  {reviewColumns.heading && (
+                    <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Heading</th>
+                  )}
+                  {reviewColumns.scope && (
+                    <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Scope</th>
+                  )}
+                  {reviewColumns.confidence && (
+                    <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">
+                      <button
+                        type="button"
+                        onClick={onToggleConfidenceSort}
+                        className="inline-flex items-center gap-1 hover:text-text-primary transition-colors"
+                        title="Sort by confidence"
+                      >
+                        Confidence
+                        <span aria-hidden="true">
+                          {sortBy === "confidence" ? (sortDir === "asc" ? "▲" : "▼") : "⇅"}
+                        </span>
+                      </button>
+                    </th>
+                  )}
+                  {reviewColumns.status && (
+                    <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Status</th>
+                  )}
+                  {reviewColumns.actions && (
+                    <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Actions</th>
+                  )}
                 </tr>
               </thead>
               <tbody>
                 {loading ? (
-                  <SkeletonTableRows rows={10} cols={8} />
+                  <SkeletonTableRows rows={10} cols={1 + visibleReviewColumnCount} />
                 ) : links.length === 0 ? (
                   <tr>
-                    <td colSpan={8} className="px-3 py-12 text-center text-text-muted text-sm">
+                    <td colSpan={1 + visibleReviewColumnCount} className="px-3 py-12 text-center text-text-muted text-sm">
                       No links found
                     </td>
                   </tr>
@@ -1671,79 +1826,92 @@ function ReviewTabContent({
                             onClick={(e) => e.stopPropagation()}
                           />
                         </td>
-                        <td className="px-3 py-2 text-sm text-text-primary font-mono text-xs">
-                          {link.doc_id}
-                        </td>
-                        <td className="px-3 py-2 text-sm text-text-primary tabular-nums">
-                          {link.section_number}
-                        </td>
-                        <td className="px-3 py-2 text-sm text-text-primary truncate max-w-48">
-                          {link.heading}
-                        </td>
-                        <td className="px-3 py-2">
-                          <div className="flex items-center gap-1.5">
-                            <Badge variant="blue">{link.family_name}</Badge>
-                            <Badge variant={ROLE_BADGE_VARIANT[link.link_role]} className="text-[10px]">
-                              {link.link_role === "primary_covenant" ? "" : link.link_role.replace(/_/g, " ")}
-                            </Badge>
-                          </div>
-                        </td>
-                        <td className="px-3 py-2">
-                          <WhyMatchedPopover
-                            factors={
-                              link.link_id === focusedLink?.link_id
-                                ? whyMatchedData?.factors ?? toWhyMatchedFactors(link.confidence_breakdown)
-                                : toWhyMatchedFactors(link.confidence_breakdown)
-                            }
-                            confidence={link.confidence}
-                            confidenceTier={link.confidence_tier}
-                            trigger={
-                              <Badge variant={tierColor as "green" | "orange" | "red"}>
-                                {(link.confidence * 100).toFixed(0)}%
+                        {reviewColumns.doc && (
+                          <td className="px-3 py-2 text-sm text-text-primary font-mono text-xs">
+                            {link.doc_id}
+                          </td>
+                        )}
+                        {reviewColumns.section && (
+                          <td className="px-3 py-2 text-sm text-text-primary tabular-nums">
+                            {link.section_number}
+                          </td>
+                        )}
+                        {reviewColumns.heading && (
+                          <td className="px-3 py-2 text-sm text-text-primary truncate max-w-48">
+                            {link.heading}
+                          </td>
+                        )}
+                        {reviewColumns.scope && (
+                          <td className="px-3 py-2">
+                            <div className="flex items-center gap-1.5">
+                              <Badge variant="blue">{link.family_name}</Badge>
+                              <Badge variant={ROLE_BADGE_VARIANT[link.link_role]} className="text-[10px]">
+                                {link.link_role === "primary_covenant" ? "" : link.link_role.replace(/_/g, " ")}
                               </Badge>
-                            }
-                          />
-                        </td>
-                        <td className="px-3 py-2">
-                          <Badge
-                            variant={
-                              link.status === "active"
-                                ? "green"
-                                : link.status === "pending_review"
-                                ? "orange"
-                                : link.status === "unlinked"
-                                ? "red"
-                                : "default"
-                            }
-                          >
-                            {link.status.replace(/_/g, " ")}
-                          </Badge>
-                        </td>
-                        <td className="px-3 py-2">
-                          {/* Inline note input */}
-                          {noteInputLinkId === link.link_id ? (
-                            <input
-                              ref={noteInputRef}
-                              value={noteText}
-                              onChange={(e) => onNoteTextChange(e.target.value)}
-                              onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                  e.preventDefault();
-                                  onNoteSubmit();
-                                } else if (e.key === "Escape") {
-                                  onNoteCancel();
-                                }
-                              }}
-                              placeholder="Type note, Enter to save"
-                              className="bg-surface-3 border border-border rounded px-2 py-1 text-xs text-text-primary w-32 focus:outline-none focus:ring-1 focus:ring-accent-blue"
-                              onClick={(e) => e.stopPropagation()}
+                            </div>
+                          </td>
+                        )}
+                        {reviewColumns.confidence && (
+                          <td className="px-3 py-2">
+                            <WhyMatchedPopover
+                              factors={
+                                link.link_id === focusedLink?.link_id
+                                  ? whyMatchedData?.factors ?? toWhyMatchedFactors(link.confidence_breakdown)
+                                  : toWhyMatchedFactors(link.confidence_breakdown)
+                              }
+                              confidence={link.confidence}
+                              confidenceTier={link.confidence_tier}
+                              trigger={
+                                <Badge variant={tierColor as "green" | "orange" | "red"}>
+                                  {(link.confidence * 100).toFixed(0)}%
+                                </Badge>
+                              }
                             />
-                          ) : (
-                            <span className="text-xs text-text-muted">
-                              {link.note ? `📌 ${link.note.slice(0, 20)}...` : ""}
-                            </span>
-                          )}
-                        </td>
+                          </td>
+                        )}
+                        {reviewColumns.status && (
+                          <td className="px-3 py-2">
+                            <Badge
+                              variant={
+                                link.status === "active"
+                                  ? "green"
+                                  : link.status === "pending_review"
+                                    ? "orange"
+                                    : link.status === "unlinked"
+                                      ? "red"
+                                      : "default"
+                              }
+                            >
+                              {link.status.replace(/_/g, " ")}
+                            </Badge>
+                          </td>
+                        )}
+                        {reviewColumns.actions && (
+                          <td className="px-3 py-2">
+                            {noteInputLinkId === link.link_id ? (
+                              <input
+                                ref={noteInputRef}
+                                value={noteText}
+                                onChange={(e) => onNoteTextChange(e.target.value)}
+                                onKeyDown={(e) => {
+                                  if (e.key === "Enter") {
+                                    e.preventDefault();
+                                    onNoteSubmit();
+                                  } else if (e.key === "Escape") {
+                                    onNoteCancel();
+                                  }
+                                }}
+                                placeholder="Type note, Enter to save"
+                                className="bg-surface-3 border border-border rounded px-2 py-1 text-xs text-text-primary w-32 focus:outline-none focus:ring-1 focus:ring-accent-blue"
+                                onClick={(e) => e.stopPropagation()}
+                              />
+                            ) : (
+                              <span className="text-xs text-text-muted">
+                                {link.note ? `📌 ${link.note.slice(0, 20)}...` : ""}
+                              </span>
+                            )}
+                          </td>
+                        )}
                       </tr>
                     );
                   })
@@ -1854,8 +2022,6 @@ function QueryTabContent({
       afterDocId: string;
     } | null>
   >([]);
-  const [astBuilderOpen, setAstBuilderOpen] = useState(false);
-  const [scratchpadOpen, setScratchpadOpen] = useState(false);
   const [applyError, setApplyError] = useState<string | null>(null);
   const [scopeMode, setScopeMode] = useState<"corpus" | "inherited">("corpus");
   const [resultGranularity, setResultGranularity] = useState<"section" | "clause">("section");
@@ -1865,6 +2031,9 @@ function QueryTabContent({
   const [queryDetachedReader, setQueryDetachedReader] = useState(false);
   const [selectedCandidateRowId, setSelectedCandidateRowId] = useState<string | null>(null);
   const [focusedCandidate, setFocusedCandidate] = useState<PreviewCandidate | null>(null);
+  const [queryColumnsOpen, setQueryColumnsOpen] = useState(false);
+  const [queryColumnsVisibility, setQueryColumnsVisibility] = useState<Record<QueryColumnId, boolean>>(DEFAULT_QUERY_COLUMNS);
+  const queryColumnsRef = useRef<HTMLDivElement | null>(null);
 
   const getPreviewCandidateRowId = useCallback((candidate: PreviewCandidate) => {
     const clauseRef = candidate.clause_id || candidate.clause_path || candidate.clause_label || "section";
@@ -1875,6 +2044,27 @@ function QueryTabContent({
 
   // Derive validated DSL text for API calls (only when validation passes)
   const validDslText = validationResult && validationResult.errors.length === 0 ? dslText.trim() : "";
+  const visibleQueryColumnCount = Object.values(queryColumnsVisibility).filter(Boolean).length;
+
+  useEffect(() => {
+    if (!queryColumnsOpen) return;
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (!queryColumnsRef.current) return;
+      if (!queryColumnsRef.current.contains(event.target as Node)) {
+        setQueryColumnsOpen(false);
+      }
+    };
+    window.addEventListener("mousedown", handleOutsideClick);
+    return () => window.removeEventListener("mousedown", handleOutsideClick);
+  }, [queryColumnsOpen]);
+
+  const toggleQueryColumn = useCallback((columnId: QueryColumnId) => {
+    setQueryColumnsVisibility((prev) => {
+      const currentlyVisible = Object.values(prev).filter(Boolean).length;
+      if (prev[columnId] && currentlyVisible <= 1) return prev;
+      return { ...prev, [columnId]: !prev[columnId] };
+    });
+  }, []);
 
   const { data: publishedRulesData } = useLinkRules({ status: "published" });
   const parentPublishedRule = useMemo(() => {
@@ -2053,12 +2243,6 @@ function QueryTabContent({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dslText]);
-
-  // Bidirectional sync: AST changes → serialize to DSL text
-  const handleAstChange = useCallback((ast: FilterExpressionNode | null) => {
-    setCurrentAst(ast);
-    if (ast) setDslText(serializeAstToDsl(ast));
-  }, []);
 
   const hasAnyFilter = !!(validDslText || currentAst || (currentTextFields && Object.keys(currentTextFields).length > 0) || (currentMetaFilters && Object.keys(currentMetaFilters).length > 0));
   const clauseHighlightTerms = useMemo(() => {
@@ -2318,6 +2502,7 @@ function QueryTabContent({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const queryColumns = useMemo<ColumnDef<PreviewCandidate, any>[]>(() => [
     {
+      id: "borrower",
       accessorKey: "borrower",
       header: "Borrower",
       enableSorting: true,
@@ -2332,6 +2517,7 @@ function QueryTabContent({
       },
     },
     {
+      id: "section",
       accessorKey: "section_number",
       header: "Section",
       enableSorting: true,
@@ -2345,6 +2531,7 @@ function QueryTabContent({
       },
     },
     {
+      id: "heading",
       accessorKey: "heading",
       header: "Heading",
       enableSorting: true,
@@ -2355,6 +2542,7 @@ function QueryTabContent({
       ),
     },
     {
+      id: "confidence",
       accessorKey: "confidence",
       header: "Confidence",
       enableSorting: true,
@@ -2368,6 +2556,7 @@ function QueryTabContent({
       },
     },
     {
+      id: "tier",
       accessorKey: "confidence_tier",
       header: "Tier",
       enableSorting: true,
@@ -2444,6 +2633,15 @@ function QueryTabContent({
       },
     },
   ], [previewId, updateVerdictsMut, resultGranularity]);
+
+  const visibleQueryColumns = useMemo(
+    () =>
+      queryColumns.filter((column) => {
+        const columnId = String(column.id ?? "") as QueryColumnId;
+        return queryColumnsVisibility[columnId] ?? true;
+      }),
+    [queryColumns, queryColumnsVisibility],
+  );
 
   return (
     <div className="h-full flex flex-col overflow-hidden" data-testid="query-tab">
@@ -2543,31 +2741,9 @@ function QueryTabContent({
         </div>
       </div>
 
-      {/* ── Collapsible tool toggles ─────────────────────────── */}
+      {/* ── Query tools ───────────────────────────────────────── */}
       <div className="flex items-center gap-3 px-4 py-1.5 border-b border-border bg-surface-1 flex-shrink-0">
         <DslCheatSheet />
-        <div className="w-px h-4 bg-border" />
-        <button
-          type="button"
-          onClick={() => setAstBuilderOpen((p) => !p)}
-          className={cn(
-            "text-xs transition-colors",
-            astBuilderOpen ? "text-accent-blue" : "text-text-muted hover:text-accent-blue",
-          )}
-        >
-          {astBuilderOpen ? "Hide AST Builder" : "AST Builder"}
-        </button>
-        <button
-          type="button"
-          onClick={() => setScratchpadOpen((p) => !p)}
-          className={cn(
-            "text-xs transition-colors",
-            scratchpadOpen ? "text-accent-blue" : "text-text-muted hover:text-accent-blue",
-          )}
-          data-testid="toggle-scratchpad"
-        >
-          {scratchpadOpen ? "Hide Scratchpad" : "Scratchpad"}
-        </button>
         <div className="w-px h-4 bg-border" />
         <div className="relative">
           <button
@@ -2636,18 +2812,6 @@ function QueryTabContent({
         )}
       </div>
 
-      {/* ── Expanded panels (collapsible) ────────────────────── */}
-      {astBuilderOpen && (
-        <div className="px-4 py-2 border-b border-border bg-surface-1/50 max-h-64 overflow-auto flex-shrink-0">
-          <AstFilterBuilder ast={currentAst} onAstChange={handleAstChange} />
-        </div>
-      )}
-      {scratchpadOpen && (
-        <div className="px-4 py-2 border-b border-border bg-surface-1/50 max-h-64 overflow-auto flex-shrink-0">
-          <ScratchpadPane ast={currentAst} heading={dslText} familyId={familyFilter} />
-        </div>
-      )}
-
       {/* ── Results area ─────────────────────────────────────── */}
       {previewId ? (
         <div className="flex-1 flex flex-col overflow-hidden">
@@ -2676,6 +2840,44 @@ function QueryTabContent({
               className="px-2 py-1 text-xs bg-surface-2 border border-border rounded-md text-text-primary placeholder:text-text-muted/60 w-48 focus:outline-none focus:ring-1 focus:ring-accent-blue"
               data-testid="result-search"
             />
+            <div className="relative" ref={queryColumnsRef}>
+              <button
+                type="button"
+                onClick={() => setQueryColumnsOpen((prev) => !prev)}
+                className={cn(
+                  "filter-chip",
+                  queryColumnsOpen && "active",
+                )}
+              >
+                Columns
+              </button>
+              {queryColumnsOpen && (
+                <div className="absolute top-full left-0 mt-1 z-30 w-44 rounded-lg border border-border bg-surface-1 shadow-xl p-2 space-y-1">
+                  {(Object.keys(QUERY_COLUMN_LABELS) as QueryColumnId[]).map((columnId) => {
+                    const checked = queryColumnsVisibility[columnId];
+                    const disableToggle = checked && visibleQueryColumnCount <= 1;
+                    return (
+                      <label
+                        key={columnId}
+                        className={cn(
+                          "flex items-center justify-between gap-2 px-2 py-1 rounded text-xs text-text-secondary",
+                          disableToggle ? "opacity-60" : "hover:bg-surface-2",
+                        )}
+                      >
+                        <span>{QUERY_COLUMN_LABELS[columnId]}</span>
+                        <input
+                          type="checkbox"
+                          checked={checked}
+                          onChange={() => toggleQueryColumn(columnId)}
+                          disabled={disableToggle}
+                          className="accent-accent-blue"
+                        />
+                      </label>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
             <div className="ml-auto flex items-center gap-3 text-xs text-text-muted">
               {(verdictCounts.accepted > 0 || verdictCounts.rejected > 0 || verdictCounts.deferred > 0) && (
                 <span className="flex items-center gap-1.5">
@@ -2694,7 +2896,7 @@ function QueryTabContent({
               {/* DataTable fills remaining space */}
               <div className="flex-1 overflow-hidden">
                 <DataTable<PreviewCandidate>
-                  columns={queryColumns}
+                  columns={visibleQueryColumns}
                   data={sortedCandidates}
                   sorting={sorting}
                   onSortingChange={setSorting}
@@ -3164,20 +3366,6 @@ function ConflictsTabContent({ familyFilter }: { familyFilter?: string }) {
   );
 }
 
-// ── AST serializer helper ───────────────────────────────────────────────────
-
-function serializeAstToDsl(node: FilterExpressionNode): string {
-  if (isFilterGroup(node)) {
-    const op = node.op === "and" ? " AND " : " OR ";
-    const children = node.children.map(serializeAstToDsl).filter(Boolean);
-    if (children.length === 0) return "";
-    if (children.length === 1) return children[0];
-    return `(${children.join(op)})`;
-  }
-  const prefix = node.negate ? "NOT " : "";
-  return `${prefix}heading:"${node.value}"`;
-}
-
 // ── Sidebar KPI tile — compact KpiCard with sparkline + trend ─────────────
 
 function SidebarKpi({
@@ -3243,18 +3431,15 @@ function toWhyMatchedFactors(
 function RulesTabContent({
   familyFilter,
   compareRequestId,
-  onViewDrift,
   onOpenInQuery,
 }: {
   familyFilter?: string;
   compareRequestId?: number;
-  onViewDrift?: () => void;
   onOpenInQuery?: (ruleId: string, familyId?: string) => void;
 }) {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | "draft" | "published" | "archived">("all");
   const [compareRuleIds, setCompareRuleIds] = useState<[string, string] | null>(null);
-  const [pinsRuleId, setPinsRuleId] = useState<string | null>(null);
   const [starterKitOpen, setStarterKitOpen] = useState(false);
   const [detailRuleId, setDetailRuleId] = useState<string | null>(null);
   const [deleteConfirmRuleId, setDeleteConfirmRuleId] = useState<string | null>(null);
@@ -3271,7 +3456,6 @@ function RulesTabContent({
   const deleteMut = useDeleteRuleMutation();
   const updateRuleMut = useUpdateRuleMutation();
   const validateDslMut = useValidateDslMutation();
-  const { data: alertsData } = useDriftAlerts();
 
   const [focusedRuleIdx, setFocusedRuleIdx] = useState(0);
   const editDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -3283,8 +3467,6 @@ function RulesTabContent({
   }, [detailRuleId]);
 
   const rules = rulesData?.rules ?? [];
-  const alerts = alertsData?.alerts ?? [];
-
   const filteredRules = useMemo(() => {
     if (!search.trim()) return rules;
     const q = search.toLowerCase();
@@ -3381,12 +3563,6 @@ function RulesTabContent({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [filteredRules, focusedRuleIdx, publishMut, archiveMut, deleteConfirmRuleId]);
 
-  const getDriftBadge = (ruleId: string) => {
-    const ruleAlerts = alerts.filter((a) => a.rule_id === ruleId && !a.resolved);
-    if (ruleAlerts.length === 0) return null;
-    return ruleAlerts[0];
-  };
-
   return (
     <div className="h-full flex overflow-hidden" data-testid="rules-tab">
       {/* Main content */}
@@ -3424,23 +3600,20 @@ function RulesTabContent({
                 <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">DSL</th>
                 <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Status</th>
                 <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">v</th>
-                <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Pins</th>
-                <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Drift</th>
                 <th className="px-3 py-2.5 text-left text-[10px] font-semibold text-text-muted uppercase tracking-wider border-b border-border">Actions</th>
               </tr>
             </thead>
             <tbody>
               {isLoading ? (
-                <SkeletonTableRows rows={8} cols={8} />
+                <SkeletonTableRows rows={8} cols={6} />
               ) : filteredRules.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="px-3 py-12 text-center text-text-muted text-sm">
+                  <td colSpan={6} className="px-3 py-12 text-center text-text-muted text-sm">
                     No rules found
                   </td>
                 </tr>
               ) : (
                 filteredRules.map((rule, ruleIdx) => {
-                  const driftAlert = getDriftBadge(rule.rule_id);
                   return (
                     <tr
                       key={rule.rule_id}
@@ -3494,31 +3667,6 @@ function RulesTabContent({
                       </td>
                       <td className="px-3 py-2 text-xs text-text-muted tabular-nums">
                         v{rule.version}
-                      </td>
-                      <td className="px-3 py-2">
-                        <button
-                          type="button"
-                          onClick={() => setPinsRuleId(rule.rule_id)}
-                          className="text-xs text-accent-blue hover:underline tabular-nums"
-                          data-testid={`rule-pins-${rule.rule_id}`}
-                        >
-                          {rule.pin_count}
-                        </button>
-                      </td>
-                      <td className="px-3 py-2">
-                        {driftAlert ? (
-                          <button
-                            type="button"
-                            onClick={() => onViewDrift?.()}
-                            className="inline-flex"
-                          >
-                            <Badge variant="red" data-testid={`rule-drift-${rule.rule_id}`}>
-                              {driftAlert.severity}
-                            </Badge>
-                          </button>
-                        ) : (
-                          <span className="text-xs text-text-muted">—</span>
-                        )}
                       </td>
                       <td className="px-3 py-2">
                         <div className="flex items-center gap-1.5">
@@ -3775,14 +3923,10 @@ function RulesTabContent({
                   )}
                 </div>
                 {/* Metadata grid */}
-                <div className="grid grid-cols-4 gap-x-4 gap-y-1 text-xs">
+                <div className="grid grid-cols-3 gap-x-4 gap-y-1 text-xs">
                   <div>
                     <span className="text-text-muted">Granularity</span>
                     <p className="text-text-primary">{rule.result_granularity}</p>
-                  </div>
-                  <div>
-                    <span className="text-text-muted">Pins</span>
-                    <p className="text-text-primary tabular-nums">{rule.pin_count}</p>
                   </div>
                   <div>
                     <span className="text-text-muted">Pass rate</span>
@@ -3847,25 +3991,12 @@ function RulesTabContent({
         )}
       </div>
 
-      {/* Macro sidebar */}
-      <div className="w-64 flex-shrink-0 border-l border-border overflow-y-auto p-3 bg-surface-1">
-        <MacroManager familyFilter={familyFilter} />
-      </div>
-
       {/* Rule compare overlay */}
       {compareRuleIds && (
         <RuleCompareView
           ruleIdA={compareRuleIds[0]}
           ruleIdB={compareRuleIds[1]}
           onClose={() => setCompareRuleIds(null)}
-        />
-      )}
-
-      {/* Pins panel */}
-      {pinsRuleId && (
-        <PinnedTestCasesPanel
-          ruleId={pinsRuleId}
-          onClose={() => setPinsRuleId(null)}
         />
       )}
 
@@ -3876,8 +4007,7 @@ function RulesTabContent({
             <h3 className="text-sm font-semibold text-text-primary mb-2">Delete Rule?</h3>
             <p className="text-xs text-text-secondary mb-4">
               This will permanently delete rule{" "}
-              <code className="font-mono text-text-primary">{deleteConfirmRuleId}</code>{" "}
-              and all its pinned test cases. This cannot be undone.
+              <code className="font-mono text-text-primary">{deleteConfirmRuleId}</code>. This cannot be undone.
             </p>
             <div className="flex justify-end gap-2">
               <button
@@ -3915,28 +4045,12 @@ function RulesTabContent({
 function DashboardTabContent({
   familyFilter,
   onOpenExport,
-  onHeatmapCellClick,
 }: {
   familyFilter?: string;
   onOpenExport: () => void;
-  onHeatmapCellClick?: (templateFamily: string, vintageYear: number) => void;
 }) {
-  const { data: alertsData } = useDriftAlerts();
-  const { data: heatmapData } = useVintageHeatmap(familyFilter);
-  const unacknowledgedAlerts = (alertsData?.alerts ?? []).filter((a) => !a.resolved);
-
   return (
     <div className="h-full flex flex-col overflow-auto" data-testid="dashboard-tab">
-      {/* Drift alert banner */}
-      {unacknowledgedAlerts.length > 0 && (
-        <div className="px-4 py-2 bg-glow-red border-b border-border flex items-center gap-2" data-testid="drift-alert-banner">
-          <Badge variant="red">{unacknowledgedAlerts.length} drift alert{unacknowledgedAlerts.length > 1 ? "s" : ""}</Badge>
-          <span className="text-xs text-text-primary">
-            {unacknowledgedAlerts[0].detail}
-          </span>
-        </div>
-      )}
-
       {/* Header with export button */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-surface-1">
         <h3 className="text-sm font-semibold text-text-primary">Analytics Dashboard</h3>
@@ -3953,23 +4067,6 @@ function DashboardTabContent({
       {/* Main content */}
       <div className="flex-1 p-4 space-y-4">
         <BatchRunDashboard scopeFilter={familyFilter} />
-
-        {/* Two-column layout: Heatmap + Drift */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <div>
-            <h4 className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
-              Vintage Coverage Heatmap
-            </h4>
-            <VintageHeatmap
-              data={heatmapData?.cells ?? []}
-              className="bg-surface-1 rounded-lg p-3 border border-border"
-              onCellClick={onHeatmapCellClick}
-            />
-          </div>
-          <div>
-            <DriftDiffView />
-          </div>
-        </div>
       </div>
     </div>
   );
