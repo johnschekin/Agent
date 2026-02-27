@@ -258,6 +258,53 @@ class TestInlineDisambiguation:
 
 
 # ===========================================================================
+# High-letter continuation handling
+# ===========================================================================
+
+
+class TestHighLetterContinuationRepair:
+    def test_x_midline_after_and_gets_nested(self) -> None:
+        """Inline high-letter continuation should nest under root alpha."""
+        text = (
+            "(a) Parent clause with continuing conditions and (x) no default exists;\n"
+            "(b) Next clause.\n"
+        )
+        nodes = parse_clauses(text)
+        node_x = next((n for n in nodes if n.label.strip().strip("()").strip() == "x"), None)
+        assert node_x is not None
+        assert node_x.parent_id == "a"
+
+    def test_x_at_line_start_with_long_body_stays_root(self) -> None:
+        """Anchored high-letter with substantive body should remain root-level."""
+        long_body = " ".join(["substantive"] * 80)
+        text = (
+            "(a) Opening clause.\n"
+            "(x) " + long_body + "\n"
+            "(y) next root clause with text.\n"
+        )
+        nodes = parse_clauses(text)
+        node_x = next((n for n in nodes if n.label.strip().strip("()").strip() == "x"), None)
+        assert node_x is not None
+        assert node_x.parent_id == ""
+
+    def test_semicolon_only_boundary_does_not_force_nesting(self) -> None:
+        """Semicolons alone should not force high-letter continuation nesting."""
+        text = (
+            "(a) alpha;\n"
+            "(b) beta;\n"
+            "(c) gamma;\n"
+            "(x) root high-letter clause.\n"
+            "(y) root high-letter sibling.\n"
+        )
+        nodes = parse_clauses(text)
+        node_x = next((n for n in nodes if n.label.strip().strip("()").strip() == "x"), None)
+        node_y = next((n for n in nodes if n.label.strip().strip("()").strip() == "y"), None)
+        assert node_x is not None and node_y is not None
+        assert node_x.parent_id == ""
+        assert node_y.parent_id == ""
+
+
+# ===========================================================================
 # Phase 2: Enhanced xref detection
 # ===========================================================================
 

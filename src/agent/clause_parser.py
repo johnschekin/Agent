@@ -78,6 +78,11 @@ _RESERVED_SECTION_RE = re.compile(
     r"(?i)\b(?:reserved|intentionally\s+omitted|intentionally\s+left\s+blank)\b",
 )
 
+_HIGH_LETTER_CONNECTOR_RE = re.compile(
+    r"(?:\band\b|\bor\b|\band/or\b|provided\s+that|subject\s+to)\s*$",
+    re.IGNORECASE,
+)
+
 # ---------------------------------------------------------------------------
 # Data types
 # ---------------------------------------------------------------------------
@@ -313,6 +318,27 @@ def _classify_ambiguous_with_lookahead(
     return _classify_ambiguous(label_inner, depth, last_sibling_at_level)
 
 
+def _looks_like_inline_high_letter_continuation(
+    text: str,
+    pos: int,
+    *,
+    is_anchored: bool,
+    primary_root_anchored: bool,
+) -> bool:
+    """Heuristic for inline x/y/z continuations near legal connectors."""
+    lookback = text[max(0, pos - 160):pos]
+    normalized = re.sub(r"\s+", " ", lookback.lower()).rstrip()
+    if not _HIGH_LETTER_CONNECTOR_RE.search(normalized):
+        return False
+
+    if not is_anchored:
+        return True
+
+    # If both the candidate and root are anchored, require additional evidence.
+    # This avoids over-forcing root-level high-letter clauses in clean lists.
+    return not primary_root_anchored
+
+
 # ---------------------------------------------------------------------------
 # Header extraction
 # ---------------------------------------------------------------------------
@@ -459,6 +485,7 @@ def _build_tree(
         depth = CANONICAL_DEPTH.get(chosen.level_type, 1)
         lk = _label_key(chosen)
         xref = _is_xref(text, chosen.position, chosen.match_end)
+        forced_parent_id = ""
 
         # Phase 6: mark inline enumerations as xref
         if chosen.position in inline_xref_positions:
@@ -467,12 +494,62 @@ def _build_tree(
         # Phase 3: compute indentation score
         indent_score = compute_indentation(chosen.position, text, line_starts)
 
+        # High-letter continuation repair for inline (x)/(y)/(z)-style markers.
+        # These often appear as continuations inside an existing root-alpha clause
+        # and should not be promoted to new root-level branches.
+        if chosen.level_type == "alpha" and chosen.ordinal >= 24:
+            primary_root_alpha: _MutableNode | None = next(
+                (
+                    n for n in nodes
+                    if n.level_type == "alpha" and n.depth == 1 and n.parent_id == ""
+                ),
+                None,
+            )
+            active_root_alpha: _MutableNode | None = None
+            for stack_depth, stack_node_id in reversed(stack):
+                if stack_depth != 1:
+                    continue
+                candidate = node_map.get(stack_node_id)
+                if candidate and candidate.level_type == "alpha" and candidate.parent_id == "":
+                    active_root_alpha = candidate
+                    break
+
+            root_alpha_seen = {
+                n.ordinal
+                for n in nodes
+                if n.level_type == "alpha" and n.depth == 1 and n.parent_id == ""
+            }
+            looks_inline = _looks_like_inline_high_letter_continuation(
+                text,
+                chosen.position,
+                is_anchored=chosen.is_anchored,
+                primary_root_anchored=bool(primary_root_alpha and primary_root_alpha.is_anchored),
+            )
+            next_pos = len(text)
+            for future in enumerators:
+                if future.position > chosen.position:
+                    next_pos = future.position
+                    break
+            body_len = max(0, next_pos - chosen.match_end)
+            anchored_long_body = chosen.is_anchored and body_len > 200
+
+            if active_root_alpha is not None and stack and stack[-1][0] >= 2:
+                forced_parent_id = active_root_alpha.id
+            elif (
+                primary_root_alpha is not None
+                and primary_root_alpha.ordinal <= 3
+                and len(root_alpha_seen) <= 5
+                and looks_inline
+                and not anchored_long_body
+            ):
+                forced_parent_id = primary_root_alpha.id
+
         # Pop stack until we find a node with depth < current depth
         while stack and stack[-1][0] >= depth:
             stack.pop()
 
         # Determine parent
-        parent_id = stack[-1][1] if stack else ""
+        parent_id = forced_parent_id or (stack[-1][1] if stack else "")
 
         node_id = _build_id(parent_id, lk)
 
