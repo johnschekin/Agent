@@ -45,6 +45,8 @@ _WEIGHT_INDENT = 0.05
 
 _HEADER_MAX_LEN = 80
 _SINGLETON_PENALTY = 0.85
+_UNANCHORED_RUN_PENALTY = 0.60
+_ROOT_HIGH_LETTER_PENALTY = 0.60
 
 # Labels whose inner text is ambiguous between alpha and roman
 _AMBIGUOUS_ROMAN = frozenset({"i", "v", "x", "l", "c", "d", "m"})
@@ -82,6 +84,7 @@ _HIGH_LETTER_CONNECTOR_RE = re.compile(
     r"(?:\band\b|\bor\b|\band/or\b|provided\s+that|subject\s+to)\s*$",
     re.IGNORECASE,
 )
+_HIGH_LETTER_PUNCT_RE = re.compile(r"(?:,|;)\s*$")
 
 # ---------------------------------------------------------------------------
 # Data types
@@ -271,6 +274,7 @@ def _classify_ambiguous_with_lookahead(
     remaining_enumerators: list[EnumeratorMatch],
     current_position: int,
     lookahead_chars: int = 5000,
+    max_candidates: int = 24,
 ) -> str:
     """Resolve ambiguous labels using local lookahead before backward fallback.
 
@@ -294,11 +298,15 @@ def _classify_ambiguous_with_lookahead(
     saw_alpha_successor = False
     saw_roman_successor = False
 
+    scanned = 0
     for candidate in remaining_enumerators:
         distance = candidate.position - current_position
         if distance <= 0:
             continue
         if distance > lookahead_chars:
+            break
+        scanned += 1
+        if scanned > max_candidates:
             break
 
         candidate_key = _label_key(candidate).lower()
@@ -324,19 +332,37 @@ def _looks_like_inline_high_letter_continuation(
     *,
     is_anchored: bool,
     primary_root_anchored: bool,
+    allow_punctuation: bool = False,
 ) -> bool:
     """Heuristic for inline x/y/z continuations near legal connectors."""
     lookback = text[max(0, pos - 160):pos]
     normalized = re.sub(r"\s+", " ", lookback.lower()).rstrip()
-    if not _HIGH_LETTER_CONNECTOR_RE.search(normalized):
+    lookback_lines = [line.strip() for line in lookback.split("\n") if line.strip()]
+    lookback_line = lookback_lines[-1] if lookback_lines else ""
+    has_recent_high_letter_marker = bool(
+        re.search(r"\(([wxyz])\)\s*[^()]{0,160}$", normalized),
+    )
+    has_word_connector = bool(_HIGH_LETTER_CONNECTOR_RE.search(normalized))
+    has_punctuation_tail = bool(
+        _HIGH_LETTER_PUNCT_RE.search(normalized),
+    )
+    has_punctuation_connector = (
+        allow_punctuation
+        and has_punctuation_tail
+        and (has_recent_high_letter_marker or len(lookback_line) >= 60)
+    )
+    if not (has_word_connector or has_punctuation_connector):
         return False
 
     if not is_anchored:
         return True
 
-    # If both the candidate and root are anchored, require additional evidence.
-    # This avoids over-forcing root-level high-letter clauses in clean lists.
-    return not primary_root_anchored
+    if not primary_root_anchored:
+        return True
+
+    # If both the candidate and root are anchored, only trust punctuation tails
+    # when explicitly enabled by sparse root-alpha context.
+    return has_word_connector or has_punctuation_connector
 
 
 # ---------------------------------------------------------------------------
@@ -513,17 +539,19 @@ def _build_tree(
                 if candidate and candidate.level_type == "alpha" and candidate.parent_id == "":
                     active_root_alpha = candidate
                     break
-
-            root_alpha_seen = {
+            root_alpha_ordinals = {
                 n.ordinal
                 for n in nodes
                 if n.level_type == "alpha" and n.depth == 1 and n.parent_id == ""
             }
+            sparse_root_alpha_context = len(root_alpha_ordinals) <= 5
+
             looks_inline = _looks_like_inline_high_letter_continuation(
                 text,
                 chosen.position,
                 is_anchored=chosen.is_anchored,
                 primary_root_anchored=bool(primary_root_alpha and primary_root_alpha.is_anchored),
+                allow_punctuation=sparse_root_alpha_context,
             )
             next_pos = len(text)
             for future in enumerators:
@@ -531,18 +559,16 @@ def _build_tree(
                     next_pos = future.position
                     break
             body_len = max(0, next_pos - chosen.match_end)
-            anchored_long_body = chosen.is_anchored and body_len > 200
+            anchored_long_body = chosen.is_anchored and body_len > 500
 
             if active_root_alpha is not None and stack and stack[-1][0] >= 2:
                 forced_parent_id = active_root_alpha.id
             elif (
                 primary_root_alpha is not None
-                and primary_root_alpha.ordinal <= 3
-                and len(root_alpha_seen) <= 5
                 and looks_inline
                 and not anchored_long_body
             ):
-                forced_parent_id = primary_root_alpha.id
+                forced_parent_id = active_root_alpha.id if active_root_alpha is not None else primary_root_alpha.id
 
         # Pop stack until we find a node with depth < current depth
         while stack and stack[-1][0] >= depth:
@@ -685,6 +711,35 @@ def _compute_confidence(
                 break
         group_gap_ok[key] = not has_gap
 
+    # Section-level density signals (used for targeted penalties).
+    anchored_ratio = (
+        sum(1 for n in nodes if n.is_anchored) / len(nodes)
+        if nodes else 0.0
+    )
+    is_dense_low_anchor_section = len(nodes) >= 120 and anchored_ratio <= 0.10
+
+    # Capture duplicate IDs created during tree build (`_dupN` suffix).
+    duplicate_ids = {
+        n.id for n in nodes if re.search(r"_dup\d+$", n.id)
+    }
+    # Detect root high-letter branches that are followed by low root-alpha
+    # ordinals shortly afterward (a common inline-reference artifact).
+    root_high_letter_with_low_reset_ids: set[str] = set()
+    root_alphas_by_pos = sorted(
+        [
+            n for n in nodes
+            if n.level_type == "alpha" and n.parent_id == "" and n.ordinal > 0
+        ],
+        key=lambda n: n.span_start,
+    )
+    for idx, node in enumerate(root_alphas_by_pos):
+        if node.ordinal < 24:
+            continue
+        for follower in root_alphas_by_pos[idx + 1: idx + 9]:
+            if follower.ordinal <= 5:
+                root_high_letter_with_low_reset_ids.add(node.id)
+                break
+
     results: list[tuple[_MutableNode, bool, bool, bool, bool, float, str]] = []
 
     for n in nodes:
@@ -707,6 +762,22 @@ def _compute_confidence(
         if not run_length_ok and not _RESERVED_SECTION_RE.search(n.header_text or ""):
             confidence *= _SINGLETON_PENALTY
 
+        # Unanchored long runs in dense text are a frequent false-structure source.
+        if is_dense_low_anchor_section and run_length_ok and not anchor_ok:
+            confidence *= _UNANCHORED_RUN_PENALTY
+
+        # Unanchored root high-letter labels (x/y/z) are frequently inline
+        # continuations lifted to root by formatting artifacts.
+        if (
+            n.level_type == "alpha"
+            and n.parent_id == ""
+            and n.ordinal >= 24
+            and not anchor_ok
+        ):
+            confidence *= _ROOT_HIGH_LETTER_PENALTY
+        if n.id in root_high_letter_with_low_reset_ids:
+            confidence *= 0.55
+
         # Threshold-based demotion
         is_structural = confidence >= 0.5
 
@@ -721,6 +792,11 @@ def _compute_confidence(
                 if _is_ghost_clause(body_text):
                     is_structural = False
                     demotion_reason = "ghost_body"
+
+        if n.id in duplicate_ids:
+            is_structural = False
+            demotion_reason = "duplicate_id_collision"
+            confidence = 0.0
 
         if not is_structural and not demotion_reason:
             if not run_length_ok:
@@ -740,6 +816,37 @@ def _compute_confidence(
             n, anchor_ok, run_length_ok, gap_ok,
             is_structural, round(confidence, 4), demotion_reason,
         ))
+
+    # Direct-parent consistency: when parent is non-structural, demote weak
+    # structural children (but keep strong anchored run nodes to avoid cascade
+    # over-suppression in long sections).
+    by_id = {node.id: idx for idx, (node, *_rest) in enumerate(results)}
+    for idx, (node, anchor_ok, run_length_ok, gap_ok, is_structural, confidence, reason) in enumerate(results):
+        if not is_structural:
+            continue
+        parent = node.parent_id
+        if not parent:
+            continue
+        parent_idx = by_id.get(parent)
+        if parent_idx is None:
+            continue
+        parent_structural = results[parent_idx][4]
+        if parent_structural:
+            continue
+        if anchor_ok and run_length_ok and confidence >= 0.75:
+            continue
+        demotion = "non_structural_ancestor"
+        if reason:
+            demotion = f"{reason}; {demotion}"
+        results[idx] = (
+            node,
+            anchor_ok,
+            run_length_ok,
+            gap_ok,
+            False,
+            confidence,
+            demotion,
+        )
 
     return results
 

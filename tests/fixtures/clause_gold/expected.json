@@ -250,9 +250,9 @@
         "depth": 1,
         "level_type": "alpha",
         "xref_suspected": false,
-        "is_structural_candidate": true,
-        "parse_confidence": 0.95,
-        "demotion_reason": ""
+        "is_structural_candidate": false,
+        "parse_confidence": 0.0,
+        "demotion_reason": "duplicate_id_collision"
       },
       {
         "id": "a_dup3",
@@ -261,9 +261,9 @@
         "depth": 1,
         "level_type": "alpha",
         "xref_suspected": false,
-        "is_structural_candidate": true,
-        "parse_confidence": 0.95,
-        "demotion_reason": ""
+        "is_structural_candidate": false,
+        "parse_confidence": 0.0,
+        "demotion_reason": "duplicate_id_collision"
       },
       {
         "id": "b",
@@ -289,7 +289,7 @@
         "level_type": "alpha",
         "xref_suspected": false,
         "is_structural_candidate": true,
-        "parse_confidence": 0.75,
+        "parse_confidence": 0.95,
         "demotion_reason": ""
       },
       {
@@ -344,18 +344,18 @@
         "level_type": "alpha",
         "xref_suspected": true,
         "is_structural_candidate": true,
-        "parse_confidence": 0.6,
+        "parse_confidence": 0.8,
         "demotion_reason": ""
       },
       {
-        "id": "x",
+        "id": "b.x",
         "label": "(x)",
-        "parent_id": "",
+        "parent_id": "b",
         "depth": 1,
         "level_type": "alpha",
         "xref_suspected": false,
         "is_structural_candidate": true,
-        "parse_confidence": 0.75,
+        "parse_confidence": 0.5525,
         "demotion_reason": ""
       },
       {
@@ -376,9 +376,9 @@
         "depth": 1,
         "level_type": "alpha",
         "xref_suspected": false,
-        "is_structural_candidate": true,
-        "parse_confidence": 0.75,
-        "demotion_reason": ""
+        "is_structural_candidate": false,
+        "parse_confidence": 0.0,
+        "demotion_reason": "duplicate_id_collision"
       },
       {
         "id": "c",
@@ -388,7 +388,7 @@
         "level_type": "alpha",
         "xref_suspected": false,
         "is_structural_candidate": true,
-        "parse_confidence": 0.75,
+        "parse_confidence": 0.95,
         "demotion_reason": ""
       }
     ]
@@ -694,20 +694,20 @@
         "depth": 1,
         "level_type": "alpha",
         "xref_suspected": true,
-        "is_structural_candidate": false,
-        "parse_confidence": 0.3,
-        "demotion_reason": "not_anchored; ordinal_gap; cross_reference"
+        "is_structural_candidate": true,
+        "parse_confidence": 0.5,
+        "demotion_reason": ""
       },
       {
-        "id": "x",
+        "id": "g.x",
         "label": "(x)",
-        "parent_id": "",
+        "parent_id": "g",
         "depth": 1,
         "level_type": "alpha",
         "xref_suspected": false,
         "is_structural_candidate": false,
-        "parse_confidence": 0.45,
-        "demotion_reason": "not_anchored; ordinal_gap"
+        "parse_confidence": 0.2975,
+        "demotion_reason": "singleton"
       },
       {
         "id": "a",
@@ -716,9 +716,9 @@
         "depth": 1,
         "level_type": "alpha",
         "xref_suspected": true,
-        "is_structural_candidate": false,
-        "parse_confidence": 0.3,
-        "demotion_reason": "not_anchored; ordinal_gap; cross_reference"
+        "is_structural_candidate": true,
+        "parse_confidence": 0.5,
+        "demotion_reason": ""
       },
       {
         "id": "f",
@@ -727,9 +727,9 @@
         "depth": 1,
         "level_type": "alpha",
         "xref_suspected": false,
-        "is_structural_candidate": false,
-        "parse_confidence": 0.45,
-        "demotion_reason": "not_anchored; ordinal_gap"
+        "is_structural_candidate": true,
+        "parse_confidence": 0.65,
+        "demotion_reason": ""
       },
       {
         "id": "g_dup2",
@@ -739,41 +739,41 @@
         "level_type": "alpha",
         "xref_suspected": false,
         "is_structural_candidate": false,
-        "parse_confidence": 0.45,
-        "demotion_reason": "not_anchored; ordinal_gap"
+        "parse_confidence": 0.0,
+        "demotion_reason": "duplicate_id_collision"
       },
       {
-        "id": "y",
+        "id": "g_dup2.y",
         "label": "(y)",
-        "parent_id": "",
+        "parent_id": "g_dup2",
         "depth": 1,
         "level_type": "alpha",
         "xref_suspected": false,
         "is_structural_candidate": false,
-        "parse_confidence": 0.45,
-        "demotion_reason": "not_anchored; ordinal_gap"
+        "parse_confidence": 0.2975,
+        "demotion_reason": "singleton"
       },
       {
-        "id": "y.1",
+        "id": "g_dup2.y.1",
         "label": "(1)",
-        "parent_id": "y",
+        "parent_id": "g_dup2.y",
         "depth": 4,
         "level_type": "numeric",
         "xref_suspected": false,
-        "is_structural_candidate": true,
+        "is_structural_candidate": false,
         "parse_confidence": 0.65,
-        "demotion_reason": ""
+        "demotion_reason": "non_structural_ancestor"
       },
       {
-        "id": "y.2",
+        "id": "g_dup2.y.2",
         "label": "(2)",
-        "parent_id": "y",
+        "parent_id": "g_dup2.y",
         "depth": 4,
         "level_type": "numeric",
         "xref_suspected": false,
-        "is_structural_candidate": true,
+        "is_structural_candidate": false,
         "parse_confidence": 0.65,
-        "demotion_reason": ""
+        "demotion_reason": "non_structural_ancestor"
       }
     ]
   },
