@@ -10,6 +10,14 @@ Covers all 6 improvement phases:
   Phase 6: Inline enumeration detection
 """
 
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+SRC = ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
+
 from agent.clause_parser import (
     ClauseNode,
     ClauseTree,

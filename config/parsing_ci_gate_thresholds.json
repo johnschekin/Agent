@@ -1,0 +1,21 @@
+{
+  "quick": {
+    "pytest_targets": [
+      "tests/test_clause_parser.py",
+      "tests/test_clause_tree_invariants.py",
+      "tests/test_clause_gold_fixtures.py"
+    ]
+  },
+  "full": {
+    "pytest_targets": [
+      "tests/test_clause_parser.py",
+      "tests/test_clause_tree_invariants.py",
+      "tests/test_clause_gold_fixtures.py"
+    ],
+    "py_compile_targets": [
+      "src/agent/clause_parser.py",
+      "src/agent/enumerator.py",
+      "src/agent/parsing_types.py"
+    ]
+  }
+}
