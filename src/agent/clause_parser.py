@@ -56,6 +56,8 @@ _XREF_CONTEXT_RE = re.compile(
     r"(?:Section|Sections|clause|clauses|Article|Articles|paragraph|paragraphs)"
     r"\s+\d+(?:\.\d+)*\s*\($"
     r"|(?:sub-?clauses?|paragraphs?)\s+\($"
+    r"|(?:pursuant\s+to|in\s+accordance\s+with|subject\s+to|defined\s+in|under)"
+    r"\s+(?:clauses?|paragraphs?|sub-?clauses?|sections?|articles?)\s*\($"
     r")",
     re.IGNORECASE,
 )

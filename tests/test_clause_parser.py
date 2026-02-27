@@ -264,6 +264,34 @@ class TestXrefDetection:
         for n in nodes:
             assert n.xref_suspected, f"Node {n.id} should be xref_suspected"
 
+    def test_pursuant_to_clause_xref(self) -> None:
+        """'pursuant to clause (i)' should be xref."""
+        text = "the Borrower may incur debt pursuant to clause (i) of this Section."
+        nodes = parse_clauses(text)
+        assert nodes
+        assert nodes[0].xref_suspected
+
+    def test_subject_to_paragraph_xref(self) -> None:
+        """'subject to paragraph (ii) above' should be xref."""
+        text = "subject to paragraph (ii) above, the Borrower may proceed."
+        nodes = parse_clauses(text)
+        assert nodes
+        assert nodes[0].xref_suspected
+
+    def test_subject_to_bare_not_xref(self) -> None:
+        """Bare 'subject to (a)' should not be treated as xref by context regex."""
+        text = "subject to (a) the following conditions shall apply."
+        nodes = parse_clauses(text)
+        assert nodes
+        assert not nodes[0].xref_suspected
+
+    def test_defined_in_clause_xref(self) -> None:
+        """'defined in clause (iii)' should be xref."""
+        text = "as defined in clause (iii) of this Agreement."
+        nodes = parse_clauses(text)
+        assert nodes
+        assert nodes[0].xref_suspected
+
 
 # ===========================================================================
 # Phase 3: 5-signal confidence scoring
