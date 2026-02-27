@@ -3,19 +3,73 @@
     "pytest_targets": [
       "tests/test_clause_parser.py",
       "tests/test_clause_tree_invariants.py",
-      "tests/test_clause_gold_fixtures.py"
+      "tests/test_clause_gold_fixtures.py",
+      "tests/test_replay_gold_fixtures.py",
+      "tests/test_parser_v2_lexer.py"
+    ],
+    "extra_commands": [
+      [
+        "python3",
+        "scripts/check_parser_v1_lock.py",
+        "--manifest",
+        "data/quality/parser_v1_lock_manifest_2026-02-27.json",
+        "--json"
+      ],
+      [
+        "python3",
+        "scripts/replay_gold_fixtures.py",
+        "--fixtures",
+        "data/fixtures/gold/v1/gates/replay_smoke_v1.jsonl",
+        "--thresholds",
+        "config/gold_replay_gate_thresholds.json",
+        "--json"
+      ]
     ]
   },
   "full": {
     "pytest_targets": [
       "tests/test_clause_parser.py",
       "tests/test_clause_tree_invariants.py",
-      "tests/test_clause_gold_fixtures.py"
+      "tests/test_clause_gold_fixtures.py",
+      "tests/test_replay_gold_fixtures.py",
+      "tests/test_parser_v2_lexer.py"
     ],
     "py_compile_targets": [
       "src/agent/clause_parser.py",
       "src/agent/enumerator.py",
-      "src/agent/parsing_types.py"
+      "src/agent/parsing_types.py",
+      "src/agent/parser_v2/types.py",
+      "src/agent/parser_v2/normalization.py",
+      "src/agent/parser_v2/lexer.py"
+    ],
+    "extra_commands": [
+      [
+        "python3",
+        "scripts/check_parser_v1_lock.py",
+        "--manifest",
+        "data/quality/parser_v1_lock_manifest_2026-02-27.json",
+        "--json"
+      ],
+      [
+        "python3",
+        "scripts/replay_gold_fixtures.py",
+        "--fixtures",
+        "data/fixtures/gold/v1/gates/replay_smoke_v1.jsonl",
+        "--thresholds",
+        "config/gold_replay_gate_thresholds.json",
+        "--json"
+      ],
+      [
+        "python3",
+        "scripts/parsing_metric_gate.py",
+        "--db",
+        "corpus_index/corpus.duckdb",
+        "--baseline",
+        "data/quality/parsing_baseline_freeze_2026-02-27.json",
+        "--thresholds",
+        "config/parsing_metric_gate_thresholds.json",
+        "--json"
+      ]
     ]
   }
 }

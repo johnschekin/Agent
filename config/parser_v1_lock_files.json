@@ -1,0 +1,29 @@
+{
+  "version": "parser-v1-lock-files-v1",
+  "description": "Parser v1 files frozen during parser_v2 migration. Hash drift requires explicit approval.",
+  "files": [
+    "src/agent/clause_parser.py",
+    "src/agent/enumerator.py",
+    "src/agent/parsing_types.py",
+    "src/agent/doc_parser.py",
+    "src/agent/definitions.py",
+    "src/agent/document_processor.py",
+    "scripts/clause_shadow_reparse_diff.py",
+    "scripts/edge_case_clause_guardrail.py",
+    "scripts/edge_case_clause_parent_guardrail.py",
+    "scripts/parsing_ci_gate.py",
+    "scripts/replay_gold_fixtures.py",
+    "tests/test_clause_parser.py",
+    "tests/test_clause_tree_invariants.py",
+    "tests/test_clause_gold_fixtures.py",
+    "tests/test_replay_gold_fixtures.py"
+  ],
+  "baseline_refs": {
+    "fixtures_smoke_manifest": "data/fixtures/gold/v1/gates/replay_smoke_v1.manifest.json",
+    "reason_codes": "data/fixtures/gold/v1/reason_codes.v1.json",
+    "parsing_ci_gate_thresholds": "config/parsing_ci_gate_thresholds.json",
+    "gold_replay_gate_thresholds": "config/gold_replay_gate_thresholds.json",
+    "clause_guardrail_baseline": "data/quality/edge_case_clause_guardrail_baseline.json",
+    "parent_guardrail_baseline": "data/quality/edge_case_clause_parent_guardrail_baseline.json"
+  }
+}

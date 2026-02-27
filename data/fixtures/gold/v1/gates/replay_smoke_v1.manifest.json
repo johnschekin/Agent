@@ -1,0 +1,42 @@
+{
+  "version": "gold-replay-smoke-v1",
+  "created_at": "2026-02-27T05:40:53+00:00",
+  "source": "data/fixtures/gold/v1/packs/v1-seed-1000-candidate/fixtures.jsonl",
+  "out": "data/fixtures/gold/v1/gates/replay_smoke_v1.jsonl",
+  "targets": {
+    "ambiguous_alpha_roman": 4,
+    "high_letter_continuation": 10,
+    "nonstruct_parent_chain": 4,
+    "xref_vs_structural": 10,
+    "true_root_high_letter": 6,
+    "defined_term_boundary": 4,
+    "linking_contract": 10,
+    "formatting_noise": 4
+  },
+  "max_text_len": 70000,
+  "counts": {
+    "fixtures": 52,
+    "by_category": {
+      "ambiguous_alpha_roman": 4,
+      "defined_term_boundary": 4,
+      "formatting_noise": 4,
+      "high_letter_continuation": 10,
+      "linking_contract": 10,
+      "nonstruct_parent_chain": 4,
+      "true_root_high_letter": 6,
+      "xref_vs_structural": 10
+    },
+    "by_split": {
+      "holdout": 2,
+      "test": 4,
+      "train": 38,
+      "val": 8
+    },
+    "by_decision": {
+      "abstain": 14,
+      "accepted": 10,
+      "review": 28
+    }
+  },
+  "notes": "Gold nodes frozen from current parser output."
+}

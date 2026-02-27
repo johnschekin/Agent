@@ -1,0 +1,133 @@
+{
+  "version": "parser-v1-lock-manifest-v1",
+  "created_at_utc": "2026-02-27T05:58:25+00:00",
+  "git": {
+    "branch": "refactor-parsing-foundation-phase1",
+    "head_sha": "68da7d85a7939daced57fa29a45f0843234a9293",
+    "status_short": "M .github/workflows/parsing-quality.yml\n M config/parsing_ci_gate_thresholds.json\n M dashboard/api/server.py\n M dashboard/src/app/edge-cases/page.tsx\n M dashboard/src/lib/api.ts\n M dashboard/src/lib/types.ts\n M dashboard/tsconfig.tsbuildinfo\n M plans/corpus_cleanup_and_strategy_plan.md\n M scripts/build_corpus_index.py\n M scripts/build_corpus_ray_v2.py\n M scripts/bulk_family_linker.py\n M scripts/check_corpus_v2.py\n M scripts/evidence_collector.py\n M scripts/export_labeled_data.py\n M scripts/link_worker.py\n M scripts/parsing_ci_gate.py\n M src/agent/clause_parser.py\n M src/agent/conflict_matrix.py\n M src/agent/definitions.py\n M src/agent/doc_parser.py\n M src/agent/document_processor.py\n M src/agent/link_store.py\n M tests/test_build_corpus_index.py\n M tests/test_bulk_family_linker.py\n M tests/test_clause_parser.py\n M tests/test_conflict_matrix.py\n M tests/test_definitions.py\n M tests/test_document_processor.py\n M tests/test_edge_cases.py\n M tests/test_evidence_collector.py\n M tests/test_export_labeled_data.py\n M tests/test_link_store.py\n M tests/test_link_worker.py\n M tests/test_section_parser.py\n M tests/test_zero_section_recovery.py\n?? .worktrees/\n?? AGENT_WAVE3_READINESS_PLAN.md\n?? artifacts/\n?? config/gold_replay_gate_thresholds.json\n?? config/parser_v1_lock_files.json\n?? config/parsing_metric_gate_thresholds.json\n?? data/fixtures/gold/v1/gates/\n?? data/quality/clause_edge_cases_batch_1.jsonl\n?? data/quality/edge_case_clause_guardrail_baseline.json\n?? data/quality/edge_case_clause_parent_guardrail_baseline.json\n?? docs/clause-parsing-implementation-reference-2026-02-26.md\n?? docs/contracts/\n?? docs/edge-case-delta-top50-2026-02-27.json\n?? docs/edge-case-execution-board-2026-02-26.md\n?? docs/edge-case-remediation-plan-2026-02-26.md\n?? docs/edge-case-root-cause-analysis-2026-02-26.md\n?? docs/operations/\n?? docs/parsing-ci-gate-setup.md\n?? docs/parsing-no-regression-framework-2026-02-26.md\n?? plans/parser_v2_comprehensive_implementation_plan_2026-02-27.md\n?? plans/parser_v2_execution_board_2026-02-27.md\n?? plans/wave3_agent_readiness_gate.json\n?? scripts/backfill_link_lineage.py\n?? scripts/build_replay_smoke_pack.py\n?? scripts/check_parser_v1_lock.py\n?? scripts/edge_case_clause_guardrail.py\n?? scripts/edge_case_clause_parent_guardrail.py\n?? scripts/extract_clause_edge_cases.py\n?? scripts/freeze_parser_v1_lock.py\n?? scripts/migrate_evidence_schema.py\n?? scripts/migrate_evidence_v2_to_v3.py\n?? scripts/parsing_metric_gate.py\n?? scripts/replay_gold_fixtures.py\n?? src/agent/ontology_contract.py\n?? tests/test_clause_shadow_reparse_diff.py\n?? tests/test_edge_case_clause_guardrail.py\n?? tests/test_edge_case_clause_parent_guardrail.py\n?? tests/test_links_api_auth.py\n?? tests/test_ontology_contract.py\n?? tests/test_replay_gold_fixtures.py"
+  },
+  "config_path": "config/parser_v1_lock_files.json",
+  "files_hashed": 15,
+  "missing_files": [],
+  "file_hashes": [
+    {
+      "path": "src/agent/clause_parser.py",
+      "size_bytes": 39634,
+      "sha256": "3abc59533d308e245654e6bbfadf8626c92fa9f60a0372aff1865bf8efb97fe0"
+    },
+    {
+      "path": "src/agent/enumerator.py",
+      "size_bytes": 19361,
+      "sha256": "6f46abe22ec9889e31c5e781636235349783734a68d19cf47f000e1f18e97203"
+    },
+    {
+      "path": "src/agent/parsing_types.py",
+      "size_bytes": 29810,
+      "sha256": "bd832b438746d44a2620eaea40a016a77dc83bec9d84573d63cb46925d7abfb3"
+    },
+    {
+      "path": "src/agent/doc_parser.py",
+      "size_bytes": 124616,
+      "sha256": "79ef30369fbe1793d344188407e8441aa62f7abd5a5ce1d8040446ccc031592a"
+    },
+    {
+      "path": "src/agent/definitions.py",
+      "size_bytes": 18584,
+      "sha256": "839132ddb1e2b1f49b9096f0dee54cd1622c67bafcc52f929027920cf5675673"
+    },
+    {
+      "path": "src/agent/document_processor.py",
+      "size_bytes": 22526,
+      "sha256": "24b6e10fc5e746fc330e35b06164e93657a925f2ede936ee0a354de8f7a8c636"
+    },
+    {
+      "path": "scripts/clause_shadow_reparse_diff.py",
+      "size_bytes": 25689,
+      "sha256": "0f2e6d8b6adf4a1fcb48d8f84376845e231a73e4b076c64b7b0aaeddabceb457"
+    },
+    {
+      "path": "scripts/edge_case_clause_guardrail.py",
+      "size_bytes": 11793,
+      "sha256": "261c97c5414dfdcba003f6db2d70d10b7d53d0d4baebdb969c2777c26b9ac325"
+    },
+    {
+      "path": "scripts/edge_case_clause_parent_guardrail.py",
+      "size_bytes": 11019,
+      "sha256": "2c7602f8021f1729756e1a33187ca4360b7de583ad4056876a0a710a1ff5ce05"
+    },
+    {
+      "path": "scripts/parsing_ci_gate.py",
+      "size_bytes": 4717,
+      "sha256": "48efedcc877d7d4f5c6cf9cef6d0f412750c3636ed9ea1b5f4bbbe3d2df63d57"
+    },
+    {
+      "path": "scripts/replay_gold_fixtures.py",
+      "size_bytes": 14386,
+      "sha256": "97bd444fb10bfa160babb1ee847ca2cf14a6704a5b2f11eca3be1cd2a32af0e9"
+    },
+    {
+      "path": "tests/test_clause_parser.py",
+      "size_bytes": 29288,
+      "sha256": "ca2f98d935b76b5dd849cdb30b43a22976ef994c0ac829c13d20adb66cb0b922"
+    },
+    {
+      "path": "tests/test_clause_tree_invariants.py",
+      "size_bytes": 4362,
+      "sha256": "53889930f6898378cbd76b533207ec294cfd9fb20d38ddec9b956db6ad271865"
+    },
+    {
+      "path": "tests/test_clause_gold_fixtures.py",
+      "size_bytes": 1821,
+      "sha256": "8c373a829a9ee52b0a6ac37163b0d187261a4f5294f69a2ea41a09bda115cadb"
+    },
+    {
+      "path": "tests/test_replay_gold_fixtures.py",
+      "size_bytes": 6688,
+      "sha256": "b135e7798d6bfa271b8c227088dadcf1737650ccc509145d3321056c06b2b2f0"
+    }
+  ],
+  "baseline_artifacts": [
+    {
+      "name": "fixtures_smoke_manifest",
+      "path": "data/fixtures/gold/v1/gates/replay_smoke_v1.manifest.json",
+      "exists": true,
+      "size_bytes": 1099,
+      "sha256": "a999efd83c0b68e4f85d7a0baf80b3f4e10a8759299f6cefcc75becf9fdfac7e"
+    },
+    {
+      "name": "reason_codes",
+      "path": "data/fixtures/gold/v1/reason_codes.v1.json",
+      "exists": true,
+      "size_bytes": 3847,
+      "sha256": "91a22a74a58145a7be9c006d703d06f26c361fdfe1c3f56821f50bfdcf3fa820"
+    },
+    {
+      "name": "parsing_ci_gate_thresholds",
+      "path": "config/parsing_ci_gate_thresholds.json",
+      "exists": true,
+      "size_bytes": 1458,
+      "sha256": "f220c48cb3b4e87d85bdb2cdc358d6feb599756e458463cb5662b74171a84aa1"
+    },
+    {
+      "name": "gold_replay_gate_thresholds",
+      "path": "config/gold_replay_gate_thresholds.json",
+      "exists": true,
+      "size_bytes": 1481,
+      "sha256": "d4af48da1598f80b53429ddccee5118627cb6ea3a3c05414778e5d396adddc2b"
+    },
+    {
+      "name": "clause_guardrail_baseline",
+      "path": "data/quality/edge_case_clause_guardrail_baseline.json",
+      "exists": true,
+      "size_bytes": 1318,
+      "sha256": "26bab60595361e67e5fb14365594cba2cfa80cce5cd1d8f6f191db0249da2e8a"
+    },
+    {
+      "name": "parent_guardrail_baseline",
+      "path": "data/quality/edge_case_clause_parent_guardrail_baseline.json",
+      "exists": true,
+      "size_bytes": 1041,
+      "sha256": "be56f1768d846c5bd6636f348dced3f05745097403f3c0f2fe3a99b091d00a67"
+    }
+  ]
+}

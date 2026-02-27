@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "description": "Decision-aware replay thresholds for corpus-backed parser gold fixtures"
+  },
+  "decision_policies": {
+    "accepted": {
+      "min_node_recall": 1.0,
+      "min_node_precision": 1.0,
+      "max_field_mismatch_ratio": 0.0,
+      "max_span_mismatch_ratio": 0.0,
+      "max_missing_nodes": 0,
+      "max_extra_nodes": 0,
+      "span_tolerance": 0,
+      "require_abstain_signal": false,
+      "abstain_confidence_threshold": 0.5
+    },
+    "review": {
+      "min_node_recall": 0.92,
+      "min_node_precision": 0.75,
+      "max_field_mismatch_ratio": 0.1,
+      "max_span_mismatch_ratio": 0.15,
+      "max_missing_nodes": 12,
+      "max_extra_nodes": 12,
+      "span_tolerance": 32,
+      "require_abstain_signal": false,
+      "abstain_confidence_threshold": 0.5
+    },
+    "abstain": {
+      "min_node_recall": 0.88,
+      "min_node_precision": 0.7,
+      "max_field_mismatch_ratio": 0.18,
+      "max_span_mismatch_ratio": 0.2,
+      "max_missing_nodes": 20,
+      "max_extra_nodes": 20,
+      "span_tolerance": 64,
+      "require_abstain_signal": true,
+      "abstain_confidence_threshold": 0.5
+    }
+  },
+  "failure_budgets": {
+    "by_decision": {
+      "accepted": 0,
+      "review": 6,
+      "abstain": 4
+    },
+    "by_category": {
+      "default": 4,
+      "overrides": {
+        "ambiguous_alpha_roman": 3,
+        "high_letter_continuation": 3,
+        "nonstruct_parent_chain": 3,
+        "xref_vs_structural": 3
+      }
+    }
+  }
+}
