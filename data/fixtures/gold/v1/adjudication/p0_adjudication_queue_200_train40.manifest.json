@@ -1,0 +1,37 @@
+{
+  "version": "gold-adjudication-queue-v1",
+  "queue_id": "p0-adjudication-train40",
+  "created_at": "2026-02-27T05:24:29+00:00",
+  "input_fixtures": "data/fixtures/gold/v1/packs/v1-seed-1000-candidate/fixtures.jsonl",
+  "output_queue": "data/fixtures/gold/v1/adjudication/p0_adjudication_queue_200_train40.jsonl",
+  "targets": {
+    "ambiguous_alpha_roman": 60,
+    "high_letter_continuation": 60,
+    "nonstruct_parent_chain": 45,
+    "xref_vs_structural": 35
+  },
+  "min_splits": {
+    "train": 40
+  },
+  "counts": {
+    "queue_size": 200,
+    "doc_count": 200,
+    "by_category": {
+      "ambiguous_alpha_roman": 60,
+      "high_letter_continuation": 60,
+      "nonstruct_parent_chain": 45,
+      "xref_vs_structural": 35
+    },
+    "by_split": {
+      "holdout": 34,
+      "test": 63,
+      "train": 40,
+      "val": 63
+    },
+    "by_decision": {
+      "abstain": 35,
+      "review": 165
+    }
+  },
+  "notes": "Deterministic selection with category targets and split-aware priority."
+}
