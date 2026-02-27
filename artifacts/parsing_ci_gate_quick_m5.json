@@ -1,0 +1,62 @@
+{
+  "ok": true,
+  "mode": "quick",
+  "config": "/Users/johnchtchekine/Projects/Agent/config/parsing_ci_gate_thresholds.json",
+  "checks": [
+    {
+      "name": "pytest -q tests/test_clause_parser.py tests/test_clause_tree_invariants.py tests/test_clause_gold_fixtures.py tests/test_replay_gold_fixtures.py tests/test_parser_v2_lexer.py tests/test_parser_v2_graph_builder.py tests/test_parser_v2_solver.py tests/test_parser_v2_adapter.py tests/test_parser_v2_dual_run.py -p no:cacheprovider",
+      "command": [
+        "pytest",
+        "-q",
+        "tests/test_clause_parser.py",
+        "tests/test_clause_tree_invariants.py",
+        "tests/test_clause_gold_fixtures.py",
+        "tests/test_replay_gold_fixtures.py",
+        "tests/test_parser_v2_lexer.py",
+        "tests/test_parser_v2_graph_builder.py",
+        "tests/test_parser_v2_solver.py",
+        "tests/test_parser_v2_adapter.py",
+        "tests/test_parser_v2_dual_run.py",
+        "-p",
+        "no:cacheprovider"
+      ],
+      "ok": true,
+      "returncode": 0,
+      "duration_s": 0.533,
+      "stdout": "........................................................................ [ 79%]\n...................                                                      [100%]\n91 passed in 0.16s\n",
+      "stderr": "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/pytest_asyncio/plugin.py:217: PytestDeprecationWarning: The configuration option \"asyncio_default_fixture_loop_scope\" is unset.\nThe event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: \"function\", \"class\", \"module\", \"package\", \"session\"\n\n  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))\n"
+    },
+    {
+      "name": "python3 scripts/check_parser_v1_lock.py --manifest data/quality/parser_v1_lock_manifest_2026-02-27.json --json",
+      "command": [
+        "python3",
+        "scripts/check_parser_v1_lock.py",
+        "--manifest",
+        "data/quality/parser_v1_lock_manifest_2026-02-27.json",
+        "--json"
+      ],
+      "ok": true,
+      "returncode": 0,
+      "duration_s": 0.028,
+      "stdout": "{\n  \"status\": \"pass\",\n  \"ok\": true,\n  \"manifest\": \"data/quality/parser_v1_lock_manifest_2026-02-27.json\",\n  \"checked_files\": 15,\n  \"failures\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "name": "python3 scripts/replay_gold_fixtures.py --fixtures data/fixtures/gold/v1/gates/replay_smoke_v1.jsonl --thresholds config/gold_replay_gate_thresholds.json --json",
+      "command": [
+        "python3",
+        "scripts/replay_gold_fixtures.py",
+        "--fixtures",
+        "data/fixtures/gold/v1/gates/replay_smoke_v1.jsonl",
+        "--thresholds",
+        "config/gold_replay_gate_thresholds.json",
+        "--json"
+      ],
+      "ok": true,
+      "returncode": 0,
+      "duration_s": 0.142,
+      "stdout": "{\n  \"status\": \"pass\",\n  \"ok\": true,\n  \"fixtures\": \"data/fixtures/gold/v1/gates/replay_smoke_v1.jsonl\",\n  \"thresholds\": \"config/gold_replay_gate_thresholds.json\",\n  \"summary\": {\n    \"fixtures_total\": 52,\n    \"fixtures_failed\": 0,\n    \"fail_by_decision\": {},\n    \"fail_by_category\": {},\n    \"pass_by_decision\": {\n      \"abstain\": 14,\n      \"accepted\": 10,\n      \"review\": 28\n    },\n    \"pass_by_category\": {\n      \"ambiguous_alpha_roman\": 4,\n      \"defined_term_boundary\": 4,\n      \"formatting_noise\": 4,\n      \"high_letter_continuation\": 10,\n      \"linking_contract\": 10,\n      \"nonstruct_parent_chain\": 4,\n      \"true_root_high_letter\": 6,\n      \"xref_vs_structural\": 10\n    }\n  },\n  \"budget_breaches\": [],\n  \"failures\": []\n}\n",
+      "stderr": ""
+    }
+  ]
+}

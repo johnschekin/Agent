@@ -103,12 +103,12 @@ Tasks:
 4. `M4-T4` Add solver-vs-v1 fixture comparison reports. — `DONE`
 
 ## M5 Adapter + Dual-Run
-Status: `PENDING`
+Status: `DONE`
 
 Tasks:
-1. `M5-T1` Implement parser_v2 output adapter to existing clause/link contract.
-2. `M5-T2` Add parser_v2 sidecar persistence.
-3. `M5-T3` Build dual-run script and comparison report.
+1. `M5-T1` Implement parser_v2 output adapter to existing clause/link contract. — `DONE`
+2. `M5-T2` Add parser_v2 sidecar persistence. — `DONE`
+3. `M5-T3` Build dual-run script and comparison report. — `DONE`
 
 ## M6 Shadow Hardening
 Status: `PENDING`
@@ -148,3 +148,4 @@ M0 commands:
 12. 2026-02-27: `M2-T4` completed (`docs/contracts/parser-v2-tokens-v1.md` + snapshot fixture `tests/fixtures/parser_v2/token_snapshot_v1.json`).
 13. 2026-02-27: `M3-T1/M3-T2/M3-T3` completed (`src/agent/parser_v2/graph_*.py` + `tests/test_parser_v2_graph_builder.py` + diagnostics snapshot fixture).
 14. 2026-02-27: `M4-T1..M4-T4` completed (`solver.py`, `solution_types.py`, `compare_v1.py`, `tests/test_parser_v2_solver.py`, solver snapshot fixture, solution/status contracts activated).
+15. 2026-02-27: `M5-T1..M5-T3` completed (`adapter.py`, `dual_run.py`, `scripts/parser_v2_dual_run.py`, adapter/dual-run tests, adapter contract doc).
