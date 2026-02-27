@@ -1,0 +1,315 @@
+{
+  "corpus_db": "corpus_index/corpus.duckdb",
+  "frozen_at_utc": "2026-02-27T00:00:00Z",
+  "guardrail_refs": [
+    {
+      "path": "data/quality/edge_case_clause_guardrail_baseline.json",
+      "sha256": "26bab60595361e67e5fb14365594cba2cfa80cce5cd1d8f6f191db0249da2e8a"
+    },
+    {
+      "path": "data/quality/edge_case_clause_parent_guardrail_baseline.json",
+      "sha256": "be56f1768d846c5bd6636f348dced3f05745097403f3c0f2fe3a99b091d00a67"
+    },
+    {
+      "path": "config/parsing_ci_gate_thresholds.json",
+      "sha256": "121b76b8a07abd93edcdbc690bd4420584ba4077521375ecf27d8c7e2715d53b"
+    }
+  ],
+  "parser_integrity": {
+    "active_detectors_total_rows": 16694,
+    "active_top_categories": [
+      {
+        "category": "structural_child_of_nonstruct_parent",
+        "count": 2798,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "clauses"
+      },
+      {
+        "category": "low_structural_ratio",
+        "count": 2783,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "clauses"
+      },
+      {
+        "category": "section_numbering_gap",
+        "count": 2476,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "structural"
+      },
+      {
+        "category": "inline_high_letter_branch",
+        "count": 2444,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "clauses"
+      },
+      {
+        "category": "low_avg_clause_confidence",
+        "count": 2134,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "clauses"
+      },
+      {
+        "category": "low_definitions",
+        "count": 1842,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "definitions"
+      },
+      {
+        "category": "clause_ordinal_spike_after_deep",
+        "count": 1288,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "clauses"
+      },
+      {
+        "category": "definition_truncated_at_cap",
+        "count": 312,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "definitions"
+      },
+      {
+        "category": "empty_section_headings",
+        "count": 269,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "structural"
+      },
+      {
+        "category": "definition_malformed_term",
+        "count": 136,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "definitions"
+      },
+      {
+        "category": "single_engine_definitions",
+        "count": 116,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "definitions"
+      },
+      {
+        "category": "definition_signature_leak",
+        "count": 36,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "definitions"
+      },
+      {
+        "category": "low_section_count",
+        "count": 34,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "structural"
+      },
+      {
+        "category": "excessive_section_count",
+        "count": 9,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "structural"
+      },
+      {
+        "category": "low_clause_density",
+        "count": 6,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "clauses"
+      },
+      {
+        "category": "high_definition_count",
+        "count": 5,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "definitions"
+      },
+      {
+        "category": "missing_sections",
+        "count": 2,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "structural"
+      },
+      {
+        "category": "zero_clauses",
+        "count": 2,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "clauses"
+      },
+      {
+        "category": "clause_depth_reset_after_deep",
+        "count": 1,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "clauses"
+      },
+      {
+        "category": "section_fallback_used",
+        "count": 1,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "structural"
+      }
+    ],
+    "all_detectors_total_rows": 17397,
+    "all_top_categories": [
+      {
+        "category": "structural_child_of_nonstruct_parent",
+        "count": 2798,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "clauses"
+      },
+      {
+        "category": "low_structural_ratio",
+        "count": 2783,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "clauses"
+      },
+      {
+        "category": "section_numbering_gap",
+        "count": 2476,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "structural"
+      },
+      {
+        "category": "inline_high_letter_branch",
+        "count": 2444,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "clauses"
+      },
+      {
+        "category": "low_avg_clause_confidence",
+        "count": 2134,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "clauses"
+      },
+      {
+        "category": "low_definitions",
+        "count": 1842,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "definitions"
+      },
+      {
+        "category": "clause_ordinal_spike_after_deep",
+        "count": 1288,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "clauses"
+      },
+      {
+        "category": "deep_nesting_outlier",
+        "count": 703,
+        "detector_status": "monitor_only",
+        "group": "parser_integrity",
+        "tier": "clauses"
+      },
+      {
+        "category": "definition_truncated_at_cap",
+        "count": 312,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "definitions"
+      },
+      {
+        "category": "empty_section_headings",
+        "count": 269,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "structural"
+      },
+      {
+        "category": "definition_malformed_term",
+        "count": 136,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "definitions"
+      },
+      {
+        "category": "single_engine_definitions",
+        "count": 116,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "definitions"
+      },
+      {
+        "category": "definition_signature_leak",
+        "count": 36,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "definitions"
+      },
+      {
+        "category": "low_section_count",
+        "count": 34,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "structural"
+      },
+      {
+        "category": "excessive_section_count",
+        "count": 9,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "structural"
+      },
+      {
+        "category": "low_clause_density",
+        "count": 6,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "clauses"
+      },
+      {
+        "category": "high_definition_count",
+        "count": 5,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "definitions"
+      },
+      {
+        "category": "missing_sections",
+        "count": 2,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "structural"
+      },
+      {
+        "category": "zero_clauses",
+        "count": 2,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "clauses"
+      },
+      {
+        "category": "clause_depth_reset_after_deep",
+        "count": 1,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "clauses"
+      },
+      {
+        "category": "section_fallback_used",
+        "count": 1,
+        "detector_status": "active",
+        "group": "parser_integrity",
+        "tier": "structural"
+      }
+    ]
+  },
+  "source_branch": "refactor-parsing-foundation-phase1",
+  "source_commit": "284ff54"
+}
