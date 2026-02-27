@@ -1,0 +1,100 @@
+{
+  "schema_version": "parser-v2-solver-snapshot-v1",
+  "description": "Deterministic solver/status snapshot for parser_v2 MVP.",
+  "section_key": "sec::snapshot",
+  "input_text": "(a) Parent clause.\n(i) Child one.\n(ii) Child two.\nsubject to clause (i) above.\n",
+  "expected": {
+    "section_parse_status": "abstain",
+    "section_reason_codes": [
+      "insufficient_context",
+      "low_margin",
+      "xref_conflict"
+    ],
+    "critical_node_abstain_ratio": 0.75,
+    "selected_node_candidates": [
+      "nc_tok_00001_0_alpha"
+    ],
+    "selected_parent_edges": [
+      "edge_root__nc_tok_00001_0_alpha"
+    ],
+    "abstained_token_ids": [
+      "tok_00002_19",
+      "tok_00003_34",
+      "tok_00004_68"
+    ],
+    "objective_score": 3.7,
+    "objective_components": {
+      "edge_score_total": 3.0,
+      "margin_abs_avg": 0.1275,
+      "node_score_total": 0.7
+    },
+    "nodes": [
+      {
+        "node_candidate_id": "nc_tok_00001_0_alpha",
+        "clause_id": "a",
+        "parent_id": "",
+        "depth": 1,
+        "level_type": "alpha",
+        "parse_status": "accepted",
+        "abstain_reason_codes": [],
+        "solver_margin": 0.3,
+        "confidence_score": 0.7
+      }
+    ],
+    "top_k_alternatives": [
+      {
+        "token_id": "tok_00001_0",
+        "rank": 1,
+        "node_candidate_id": "nc_tok_00001_0_alpha",
+        "score": 0.7,
+        "selected": true
+      },
+      {
+        "token_id": "tok_00002_19",
+        "rank": 1,
+        "node_candidate_id": "nc_tok_00002_19_alpha",
+        "score": 0.58,
+        "selected": false
+      },
+      {
+        "token_id": "tok_00002_19",
+        "rank": 2,
+        "node_candidate_id": "nc_tok_00002_19_roman",
+        "score": 0.51,
+        "selected": false
+      },
+      {
+        "token_id": "tok_00003_34",
+        "rank": 1,
+        "node_candidate_id": "nc_tok_00003_34_alpha",
+        "score": 0.58,
+        "selected": false
+      },
+      {
+        "token_id": "tok_00003_34",
+        "rank": 2,
+        "node_candidate_id": "nc_tok_00003_34_roman",
+        "score": 0.51,
+        "selected": false
+      },
+      {
+        "token_id": "tok_00004_68",
+        "rank": 1,
+        "node_candidate_id": "nc_tok_00004_68_alpha",
+        "score": 0.18,
+        "selected": false
+      },
+      {
+        "token_id": "tok_00004_68",
+        "rank": 2,
+        "node_candidate_id": "nc_tok_00004_68_roman",
+        "score": 0.11,
+        "selected": false
+      }
+    ],
+    "top1_score": 3.7,
+    "top2_score": 3.5725,
+    "margin_abs": 0.1275,
+    "margin_ratio": 0.034459
+  }
+}

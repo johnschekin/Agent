@@ -17,6 +17,8 @@ class ClauseNodeCandidate:
     node_candidate_id: str
     token_id: str
     token_index: int
+    raw_label: str
+    normalized_label: str
     level_type: CandidateType
     ordinal: int
     depth_hint: int
@@ -31,6 +33,10 @@ class ClauseNodeCandidate:
             raise ValueError("token_id cannot be empty")
         if self.token_index < 0:
             raise ValueError("token_index must be >= 0")
+        if not self.raw_label:
+            raise ValueError("raw_label cannot be empty")
+        if not self.normalized_label:
+            raise ValueError("normalized_label cannot be empty")
         if self.ordinal <= 0:
             raise ValueError("ordinal must be > 0")
         if self.depth_hint <= 0:
@@ -95,6 +101,8 @@ def candidate_graph_to_dict(graph: CandidateGraph) -> dict[str, object]:
                 "node_candidate_id": row.node_candidate_id,
                 "token_id": row.token_id,
                 "token_index": row.token_index,
+                "raw_label": row.raw_label,
+                "normalized_label": row.normalized_label,
                 "level_type": row.level_type,
                 "ordinal": row.ordinal,
                 "depth_hint": row.depth_hint,

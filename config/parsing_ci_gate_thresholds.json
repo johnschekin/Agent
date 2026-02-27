@@ -6,7 +6,8 @@
       "tests/test_clause_gold_fixtures.py",
       "tests/test_replay_gold_fixtures.py",
       "tests/test_parser_v2_lexer.py",
-      "tests/test_parser_v2_graph_builder.py"
+      "tests/test_parser_v2_graph_builder.py",
+      "tests/test_parser_v2_solver.py"
     ],
     "extra_commands": [
       [
@@ -34,7 +35,8 @@
       "tests/test_clause_gold_fixtures.py",
       "tests/test_replay_gold_fixtures.py",
       "tests/test_parser_v2_lexer.py",
-      "tests/test_parser_v2_graph_builder.py"
+      "tests/test_parser_v2_graph_builder.py",
+      "tests/test_parser_v2_solver.py"
     ],
     "py_compile_targets": [
       "src/agent/clause_parser.py",
@@ -45,7 +47,10 @@
       "src/agent/parser_v2/lexer.py",
       "src/agent/parser_v2/graph_types.py",
       "src/agent/parser_v2/graph_edges.py",
-      "src/agent/parser_v2/graph_builder.py"
+      "src/agent/parser_v2/graph_builder.py",
+      "src/agent/parser_v2/solution_types.py",
+      "src/agent/parser_v2/solver.py",
+      "src/agent/parser_v2/compare_v1.py"
     ],
     "extra_commands": [
       [

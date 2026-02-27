@@ -1,6 +1,6 @@
 # Parser V2 Parse Status Contract v1
 Date: 2026-02-27  
-Status: Draft (M0 publish)
+Status: Active (M4)
 
 ## Objective
 Define parser status and abstain reason semantics for linking workflows, review UI, and evidence exports.
@@ -31,6 +31,9 @@ Section-level required:
 1. `accepted`: eligible for auto-linking (subject to downstream policy gates).
 2. `review`: visible in review queues; not auto-linked by default.
 3. `abstain`: excluded from auto-linking; must include reason codes.
+4. Section-level `abstain` threshold (MVP): `critical_node_abstain_ratio >= 0.40`.
+5. Node-level abstain trigger (MVP): `margin_abs < 0.08` or very low score.
+6. Node-level review trigger (MVP): low-but-not-abstain margin or xref conflict signal.
 
 ## Evidence / Linking Integration
 1. Parser reason codes must be merged into link `policy_reasons`.
@@ -45,3 +48,8 @@ Section-level required:
 ## Governance
 1. Any new reason code requires contract update.
 2. Status threshold changes require calibration note + version entry.
+
+## Implementation Reference
+1. Status logic: `src/agent/parser_v2/solver.py`
+2. Status data type: `src/agent/parser_v2/solution_types.py`
+3. Status tests: `tests/test_parser_v2_solver.py`

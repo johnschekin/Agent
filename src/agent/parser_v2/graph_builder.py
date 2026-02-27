@@ -57,6 +57,8 @@ def build_node_candidates(tokens: list[LexerToken]) -> tuple[list[ClauseNodeCand
                     node_candidate_id=f"nc_{token.token_id}_{level_type}",
                     token_id=token.token_id,
                     token_index=token_index,
+                    raw_label=token.raw_label,
+                    normalized_label=token.normalized_label,
                     level_type=level_type,
                     ordinal=ordinal,
                     depth_hint=depth_hint,

@@ -5,6 +5,7 @@ from agent.parser_v2.graph_builder import (
     build_node_candidates,
     graph_diagnostics_report,
 )
+from agent.parser_v2.compare_v1 import compare_solver_vs_v1
 from agent.parser_v2.graph_types import (
     CandidateGraph,
     ClauseNodeCandidate,
@@ -14,6 +15,13 @@ from agent.parser_v2.graph_types import (
 )
 from agent.parser_v2.lexer import lex_enumerator_tokens
 from agent.parser_v2.normalization import normalize_for_parser_v2
+from agent.parser_v2.solution_types import (
+    ParseStatus,
+    SolvedClauseNode,
+    SolverSolution,
+    solution_to_dict,
+)
+from agent.parser_v2.solver import solve_candidate_graph, solve_parser_v2
 from agent.parser_v2.types import (
     CandidateType,
     LexerToken,
@@ -28,12 +36,19 @@ __all__ = [
     "GraphBuildDiagnostics",
     "LexerToken",
     "NormalizedText",
+    "ParseStatus",
     "ParentEdgeCandidate",
+    "SolvedClauseNode",
     "SourceSpan",
+    "SolverSolution",
     "build_candidate_graph",
     "build_node_candidates",
     "candidate_graph_to_dict",
+    "compare_solver_vs_v1",
     "graph_diagnostics_report",
     "lex_enumerator_tokens",
     "normalize_for_parser_v2",
+    "solution_to_dict",
+    "solve_candidate_graph",
+    "solve_parser_v2",
 ]

@@ -94,13 +94,13 @@ Tasks:
 3. `M3-T3` Add graph integrity tests and diagnostics dumps. — `DONE`
 
 ## M4 Solver + Confidence/Abstain
-Status: `PENDING`
+Status: `DONE`
 
 Tasks:
-1. `M4-T1` Build deterministic constrained solver MVP.
-2. `M4-T2` Implement confidence margin and abstain policy.
-3. `M4-T3` Add abstain reason taxonomy mapping.
-4. `M4-T4` Add solver-vs-v1 fixture comparison reports.
+1. `M4-T1` Build deterministic constrained solver MVP. — `DONE`
+2. `M4-T2` Implement confidence margin and abstain policy. — `DONE`
+3. `M4-T3` Add abstain reason taxonomy mapping. — `DONE`
+4. `M4-T4` Add solver-vs-v1 fixture comparison reports. — `DONE`
 
 ## M5 Adapter + Dual-Run
 Status: `PENDING`
@@ -147,3 +147,4 @@ M0 commands:
 11. 2026-02-27: `M2-T1/M2-T2/M2-T3` completed (`src/agent/parser_v2/*` scaffold + `tests/test_parser_v2_lexer.py`).
 12. 2026-02-27: `M2-T4` completed (`docs/contracts/parser-v2-tokens-v1.md` + snapshot fixture `tests/fixtures/parser_v2/token_snapshot_v1.json`).
 13. 2026-02-27: `M3-T1/M3-T2/M3-T3` completed (`src/agent/parser_v2/graph_*.py` + `tests/test_parser_v2_graph_builder.py` + diagnostics snapshot fixture).
+14. 2026-02-27: `M4-T1..M4-T4` completed (`solver.py`, `solution_types.py`, `compare_v1.py`, `tests/test_parser_v2_solver.py`, solver snapshot fixture, solution/status contracts activated).
