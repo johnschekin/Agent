@@ -1,5 +1,17 @@
 """Parser v2 foundations: normalization and lexer contracts."""
 
+from agent.parser_v2.graph_builder import (
+    build_candidate_graph,
+    build_node_candidates,
+    graph_diagnostics_report,
+)
+from agent.parser_v2.graph_types import (
+    CandidateGraph,
+    ClauseNodeCandidate,
+    GraphBuildDiagnostics,
+    ParentEdgeCandidate,
+    candidate_graph_to_dict,
+)
 from agent.parser_v2.lexer import lex_enumerator_tokens
 from agent.parser_v2.normalization import normalize_for_parser_v2
 from agent.parser_v2.types import (
@@ -10,10 +22,18 @@ from agent.parser_v2.types import (
 )
 
 __all__ = [
+    "CandidateGraph",
     "CandidateType",
+    "ClauseNodeCandidate",
+    "GraphBuildDiagnostics",
     "LexerToken",
     "NormalizedText",
+    "ParentEdgeCandidate",
     "SourceSpan",
+    "build_candidate_graph",
+    "build_node_candidates",
+    "candidate_graph_to_dict",
+    "graph_diagnostics_report",
     "lex_enumerator_tokens",
     "normalize_for_parser_v2",
 ]

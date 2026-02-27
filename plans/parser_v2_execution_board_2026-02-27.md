@@ -86,12 +86,12 @@ Tasks:
 4. `M2-T4` Publish token examples and invariants. — `DONE`
 
 ## M3 Candidate Graph
-Status: `PENDING`
+Status: `DONE`
 
 Tasks:
-1. `M3-T1` Implement candidate node builder.
-2. `M3-T2` Implement parent edge candidate generator.
-3. `M3-T3` Add graph integrity tests and diagnostics dumps.
+1. `M3-T1` Implement candidate node builder. — `DONE`
+2. `M3-T2` Implement parent edge candidate generator. — `DONE`
+3. `M3-T3` Add graph integrity tests and diagnostics dumps. — `DONE`
 
 ## M4 Solver + Confidence/Abstain
 Status: `PENDING`
@@ -146,3 +146,4 @@ M0 commands:
 10. 2026-02-27: `M1-T3` completed (`docs/operations/parser_v2_branch_protection_checklist_v1.md`).
 11. 2026-02-27: `M2-T1/M2-T2/M2-T3` completed (`src/agent/parser_v2/*` scaffold + `tests/test_parser_v2_lexer.py`).
 12. 2026-02-27: `M2-T4` completed (`docs/contracts/parser-v2-tokens-v1.md` + snapshot fixture `tests/fixtures/parser_v2/token_snapshot_v1.json`).
+13. 2026-02-27: `M3-T1/M3-T2/M3-T3` completed (`src/agent/parser_v2/graph_*.py` + `tests/test_parser_v2_graph_builder.py` + diagnostics snapshot fixture).

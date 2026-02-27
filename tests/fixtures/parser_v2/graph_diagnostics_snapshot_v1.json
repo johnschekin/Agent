@@ -1,0 +1,26 @@
+{
+  "schema_version": "parser-v2-graph-diagnostics-snapshot-v1",
+  "description": "Deterministic diagnostics snapshot for parser_v2 candidate graph builder.",
+  "input_text": "(a) Parent clause.\n(i) Child one.\n(ii) Child two.\nsubject to clause (i) above.\n",
+  "expected_report": {
+    "graph_stats": {
+      "ambiguous_token_count": 3,
+      "edge_candidate_count": 13,
+      "node_candidate_count": 7,
+      "non_root_edge_count": 6,
+      "root_edge_count": 7,
+      "token_count": 4
+    },
+    "pruned_edges_by_reason": {
+      "depth_transition_invalid": 12,
+      "same_token_parent": 3,
+      "span_ordering_invalid": 3
+    },
+    "ambiguous_tokens": [
+      "tok_00002_19",
+      "tok_00003_34",
+      "tok_00004_68"
+    ],
+    "construction_warnings": []
+  }
+}

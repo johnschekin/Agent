@@ -1,6 +1,6 @@
 # Parser V2 Candidate Graph Contract v1
 Date: 2026-02-27  
-Status: Draft (M0 publish)
+Status: Active (M3)
 
 ## Objective
 Define the graph representation that captures all plausible clause structures before solving.
@@ -10,6 +10,7 @@ Define the graph representation that captures all plausible clause structures be
 Required fields:
 1. `node_candidate_id`
 2. `token_id`
+3. `token_index`
 3. `type`: `alpha|roman|caps|numeric`
 4. `ordinal`
 5. `depth_hint`
@@ -34,6 +35,7 @@ Required fields:
 4. `single_type_per_token_or_abstain`
 5. `span_ordering_valid`
 6. `depth_transition_valid`
+7. `same_token_parent_invalid`
 
 ## Diagnostics Payload
 Each graph build must optionally emit:
@@ -46,7 +48,17 @@ Each graph build must optionally emit:
 1. Every `child_candidate_id` has at least one parent-or-root edge unless token is explicitly abstain-eligible.
 2. No edge references missing candidate nodes.
 3. Graph builder cannot mutate lexer tokens.
+4. Non-root valid edges must satisfy `parent.depth_hint < child.depth_hint`.
+5. Candidate IDs are stable: `nc_<token_id>_<type>`.
+6. Root edge IDs are stable: `edge_root__<child_candidate_id>`.
 
 ## Determinism Rules
 1. Candidate ID generation must be stable and deterministic.
 2. Edge generation and pruning order must be deterministic.
+3. Diagnostics payload keys are emitted in sorted order for snapshot comparability.
+
+## Snapshot Contract
+1. Graph diagnostics snapshot fixture:
+2. `tests/fixtures/parser_v2/graph_diagnostics_snapshot_v1.json`
+3. Enforced by:
+4. `tests/test_parser_v2_graph_builder.py::test_graph_diagnostics_snapshot_v1`
