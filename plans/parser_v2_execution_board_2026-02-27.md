@@ -77,13 +77,13 @@ Tasks:
 3. `M1-T3` Establish parser_v2 branch protection checklist. — `DONE`
 
 ## M2 Lexer + Token Model
-Status: `IN PROGRESS`
+Status: `DONE`
 
 Tasks:
 1. `M2-T1` Scaffold `src/agent/parser_v2/normalization.py`. — `DONE`
 2. `M2-T2` Scaffold `src/agent/parser_v2/lexer.py`. — `DONE`
 3. `M2-T3` Add token schema tests. — `DONE`
-4. `M2-T4` Publish token examples and invariants. — `PENDING`
+4. `M2-T4` Publish token examples and invariants. — `DONE`
 
 ## M3 Candidate Graph
 Status: `PENDING`
@@ -145,3 +145,4 @@ M0 commands:
 9. 2026-02-27: `M1-T2` completed (parser_v1 lock check added to quick/full gate config).
 10. 2026-02-27: `M1-T3` completed (`docs/operations/parser_v2_branch_protection_checklist_v1.md`).
 11. 2026-02-27: `M2-T1/M2-T2/M2-T3` completed (`src/agent/parser_v2/*` scaffold + `tests/test_parser_v2_lexer.py`).
+12. 2026-02-27: `M2-T4` completed (`docs/contracts/parser-v2-tokens-v1.md` + snapshot fixture `tests/fixtures/parser_v2/token_snapshot_v1.json`).

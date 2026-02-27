@@ -9,6 +9,7 @@ data/ontology/
 workspaces/*/evidence/
 workspaces/*/results/
 workspaces/*/strategies/
+.worktrees/
 
 # Python
 __pycache__/

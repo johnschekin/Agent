@@ -1,0 +1,137 @@
+{
+  "schema_version": "parser-v2-token-snapshot-v1",
+  "description": "Deterministic token contract snapshot for parser_v2 lexer.",
+  "input_text": "(a) Parent clause.\n(i) Child one.\n(ii) Child two.\nsubject to clause (i) above.\n",
+  "expected_tokens": [
+    {
+      "token_id": "tok_00001_0",
+      "raw_label": "(a)",
+      "normalized_label": "a",
+      "position_start": 0,
+      "position_end": 3,
+      "line_index": 0,
+      "column_index": 0,
+      "is_line_start": true,
+      "indentation_score": 0.0,
+      "candidate_types": [
+        "alpha"
+      ],
+      "ordinal_by_type": {
+        "alpha": 1
+      },
+      "xref_context_features": {
+        "xref_keyword_pre": false,
+        "xref_keyword_post": true,
+        "xref_preposition_pre": false
+      },
+      "layout_features": {
+        "anchored_boundary": true,
+        "line_char_count": 18,
+        "line_start_match": true
+      },
+      "source_span": {
+        "char_start": 0,
+        "char_end": 3
+      }
+    },
+    {
+      "token_id": "tok_00002_19",
+      "raw_label": "(i)",
+      "normalized_label": "i",
+      "position_start": 19,
+      "position_end": 22,
+      "line_index": 1,
+      "column_index": 0,
+      "is_line_start": true,
+      "indentation_score": 0.0,
+      "candidate_types": [
+        "alpha",
+        "roman"
+      ],
+      "ordinal_by_type": {
+        "alpha": 9,
+        "roman": 1
+      },
+      "xref_context_features": {
+        "xref_keyword_pre": true,
+        "xref_keyword_post": true,
+        "xref_preposition_pre": false
+      },
+      "layout_features": {
+        "anchored_boundary": true,
+        "line_char_count": 14,
+        "line_start_match": true
+      },
+      "source_span": {
+        "char_start": 19,
+        "char_end": 22
+      }
+    },
+    {
+      "token_id": "tok_00003_34",
+      "raw_label": "(ii)",
+      "normalized_label": "ii",
+      "position_start": 34,
+      "position_end": 38,
+      "line_index": 2,
+      "column_index": 0,
+      "is_line_start": true,
+      "indentation_score": 0.0,
+      "candidate_types": [
+        "alpha",
+        "roman"
+      ],
+      "ordinal_by_type": {
+        "alpha": 35,
+        "roman": 2
+      },
+      "xref_context_features": {
+        "xref_keyword_pre": true,
+        "xref_keyword_post": true,
+        "xref_preposition_pre": false
+      },
+      "layout_features": {
+        "anchored_boundary": true,
+        "line_char_count": 15,
+        "line_start_match": true
+      },
+      "source_span": {
+        "char_start": 34,
+        "char_end": 38
+      }
+    },
+    {
+      "token_id": "tok_00004_68",
+      "raw_label": "(i)",
+      "normalized_label": "i",
+      "position_start": 68,
+      "position_end": 71,
+      "line_index": 3,
+      "column_index": 18,
+      "is_line_start": false,
+      "indentation_score": 0.0,
+      "candidate_types": [
+        "alpha",
+        "roman"
+      ],
+      "ordinal_by_type": {
+        "alpha": 9,
+        "roman": 1
+      },
+      "xref_context_features": {
+        "xref_keyword_pre": true,
+        "xref_keyword_post": false,
+        "xref_preposition_pre": true
+      },
+      "layout_features": {
+        "anchored_boundary": true,
+        "line_char_count": 28,
+        "line_start_match": false
+      },
+      "source_span": {
+        "char_start": 68,
+        "char_end": 71
+      }
+    }
+  ]
+}

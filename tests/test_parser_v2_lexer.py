@@ -1,5 +1,6 @@
 """Tests for parser_v2 normalization and lexer scaffolding."""
 
+import json
 import sys
 from pathlib import Path
 
@@ -10,6 +11,32 @@ if str(SRC) not in sys.path:
 
 from agent.parser_v2.lexer import lex_enumerator_tokens
 from agent.parser_v2.normalization import normalize_for_parser_v2
+
+
+def _token_to_snapshot(token: object) -> dict[str, object]:
+    from agent.parser_v2.types import LexerToken
+
+    row = token
+    assert isinstance(row, LexerToken)
+    return {
+        "token_id": row.token_id,
+        "raw_label": row.raw_label,
+        "normalized_label": row.normalized_label,
+        "position_start": row.position_start,
+        "position_end": row.position_end,
+        "line_index": row.line_index,
+        "column_index": row.column_index,
+        "is_line_start": row.is_line_start,
+        "indentation_score": row.indentation_score,
+        "candidate_types": list(row.candidate_types),
+        "ordinal_by_type": dict(sorted(row.ordinal_by_type.items())),
+        "xref_context_features": dict(sorted(row.xref_context_features.items())),
+        "layout_features": dict(sorted(row.layout_features.items())),
+        "source_span": {
+            "char_start": row.source_span.char_start,
+            "char_end": row.source_span.char_end,
+        },
+    }
 
 
 class TestParserV2Normalization:
@@ -62,3 +89,11 @@ class TestParserV2Lexer:
         token = tokens[0]
         assert token.xref_context_features["xref_preposition_pre"] is True
         assert token.xref_context_features["xref_keyword_pre"] is True
+
+    def test_lexer_snapshot_contract_v1(self) -> None:
+        fixture = ROOT / "tests" / "fixtures" / "parser_v2" / "token_snapshot_v1.json"
+        payload = json.loads(fixture.read_text(encoding="utf-8"))
+        text = payload["input_text"]
+        _, tokens = lex_enumerator_tokens(text)
+        actual = [_token_to_snapshot(token) for token in tokens]
+        assert actual == payload["expected_tokens"]
