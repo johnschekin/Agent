@@ -203,6 +203,59 @@ class TestInlineDisambiguation:
         assert node_i is not None
         assert node_i.level_type == "alpha"
 
+    def test_i_as_alpha_via_lookahead_j(self) -> None:
+        """When backward context is weak, (j) lookahead should force alpha (i)."""
+        text = (
+            "(a) First.\n"
+            "(b) Second.\n"
+            "(i) Ninth as alpha.\n"
+            "(j) Tenth as alpha.\n"
+        )
+        nodes = parse_clauses(text)
+        node_i = next((n for n in nodes if n.label.strip().strip("()").strip() == "i"), None)
+        assert node_i is not None
+        assert node_i.level_type == "alpha"
+        assert node_i.depth == 1
+
+    def test_i_as_roman_via_lookahead_ii(self) -> None:
+        """(ii) lookahead should keep (i) as roman under a parent."""
+        text = (
+            "(a) Parent:\n"
+            "(i) first roman child;\n"
+            "(ii) second roman child;\n"
+        )
+        nodes = parse_clauses(text)
+        node_i = next((n for n in nodes if n.label.strip().strip("()").strip() == "i"), None)
+        assert node_i is not None
+        assert node_i.level_type == "roman"
+        assert node_i.depth == 2
+
+    def test_x_as_alpha_via_lookahead_y(self) -> None:
+        """(y) lookahead should keep ambiguous (x) in alpha run."""
+        text = (
+            "(u) item u.\n"
+            "(x) item x.\n"
+            "(y) item y.\n"
+        )
+        nodes = parse_clauses(text)
+        node_x = next((n for n in nodes if n.label.strip().strip("()").strip() == "x"), None)
+        assert node_x is not None
+        assert node_x.level_type == "alpha"
+        assert node_x.depth == 1
+
+    def test_v_as_roman_via_lookahead_vi(self) -> None:
+        """(vi) lookahead should keep ambiguous (v) in roman run."""
+        text = (
+            "(a) Parent:\n"
+            "(v) fifth roman child;\n"
+            "(vi) sixth roman child;\n"
+        )
+        nodes = parse_clauses(text)
+        node_v = next((n for n in nodes if n.label.strip().strip("()").strip() == "v"), None)
+        assert node_v is not None
+        assert node_v.level_type == "roman"
+        assert node_v.depth == 2
+
 
 # ===========================================================================
 # Phase 2: Enhanced xref detection

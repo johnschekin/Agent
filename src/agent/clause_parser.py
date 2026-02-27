@@ -21,6 +21,8 @@ from agent.enumerator import (
     EnumeratorMatch,
     compute_indentation,
     compute_line_starts,
+    next_ordinal_label,
+    ordinal_for,
     scan_enumerators,
 )
 from agent.enumerator import (
@@ -252,6 +254,60 @@ def _classify_ambiguous(
     return "roman"
 
 
+def _classify_ambiguous_with_lookahead(
+    label_inner: str,
+    depth: int,
+    last_sibling_at_level: dict[int, str],
+    remaining_enumerators: list[EnumeratorMatch],
+    current_position: int,
+    lookahead_chars: int = 5000,
+) -> str:
+    """Resolve ambiguous labels using local lookahead before backward fallback.
+
+    For a label that can be either alpha or roman (for example ``i``), look for
+    the next alpha and roman successors ahead in the current section text:
+
+    - If only the alpha successor appears in-window, classify as alpha.
+    - If only the roman successor appears in-window, classify as roman.
+    - If both (or neither) appear, fall back to backward-only cascade.
+    """
+    alpha_ord = ordinal_for("alpha", label_inner)
+    roman_ord = ordinal_for("roman", label_inner)
+    if alpha_ord <= 0 or roman_ord <= 0:
+        return _classify_ambiguous(label_inner, depth, last_sibling_at_level)
+
+    alpha_next = next_ordinal_label("alpha", alpha_ord)
+    roman_next = next_ordinal_label("roman", roman_ord)
+    if not alpha_next and not roman_next:
+        return _classify_ambiguous(label_inner, depth, last_sibling_at_level)
+
+    saw_alpha_successor = False
+    saw_roman_successor = False
+
+    for candidate in remaining_enumerators:
+        distance = candidate.position - current_position
+        if distance <= 0:
+            continue
+        if distance > lookahead_chars:
+            break
+
+        candidate_key = _label_key(candidate).lower()
+        if alpha_next and candidate.level_type == "alpha" and candidate_key == alpha_next:
+            saw_alpha_successor = True
+        if roman_next and candidate.level_type == "roman" and candidate_key == roman_next:
+            saw_roman_successor = True
+
+        if saw_alpha_successor and saw_roman_successor:
+            break
+
+    if saw_alpha_successor and not saw_roman_successor:
+        return "alpha"
+    if saw_roman_successor and not saw_alpha_successor:
+        return "roman"
+
+    return _classify_ambiguous(label_inner, depth, last_sibling_at_level)
+
+
 # ---------------------------------------------------------------------------
 # Header extraction
 # ---------------------------------------------------------------------------
@@ -373,8 +429,14 @@ def _build_tree(
                     # Single-char ambiguous (i, v, x, l, c, d, m) — use
                     # context-sensitive 4-rule cascade
                     alpha_depth = CANONICAL_DEPTH.get("alpha", 1)
-                    decision = _classify_ambiguous(
-                        lk_inner, alpha_depth, last_sibling_at_level,
+                    current_pos = alpha_em.position
+                    remaining = [e for e in enumerators if e.position > current_pos]
+                    decision = _classify_ambiguous_with_lookahead(
+                        lk_inner,
+                        alpha_depth,
+                        last_sibling_at_level,
+                        remaining,
+                        current_pos,
                     )
                     chosen = alpha_em if decision == "alpha" else roman_em
                 else:
