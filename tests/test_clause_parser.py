@@ -353,12 +353,42 @@ class TestXrefDetection:
 
 class TestConfidenceScoring:
     def test_singleton_demoted(self) -> None:
-        """A single (i) under (a) with no (ii) should be demoted as singleton."""
-        text = "(a) First clause:\n(i) only child;\n(b) Second clause:\n"
+        """Weak singleton (xref) should remain demoted after penalty."""
+        text = "pursuant to clause (i) of this Section."
         nodes = parse_clauses(text)
         singleton_nodes = [n for n in nodes if n.demotion_reason == "singleton"]
-        # The lone (i) under (a) should be singleton-demoted
         assert len(singleton_nodes) >= 1
+
+    def test_anchored_singleton_promoted(self) -> None:
+        """Anchored, non-xref singleton should survive penalty and remain structural."""
+        text = (
+            "(a) Parent section:\n"
+            "(i) sole operative child clause with substantive body text.\n"
+            "(b) Next parent section.\n"
+        )
+        nodes = parse_clauses(text)
+        node_i = next((n for n in nodes if n.label.strip().strip("()").strip() == "i"), None)
+        assert node_i is not None
+        assert node_i.is_structural_candidate
+        assert node_i.parse_confidence >= 0.5
+
+    def test_reserved_singleton_structural(self) -> None:
+        """Reserved/omitted singleton should bypass penalty and remain structural."""
+        text = "(a) Reserved.\n(b) Active clause text.\n"
+        nodes = parse_clauses(text)
+        node_a = next((n for n in nodes if n.id == "a"), None)
+        assert node_a is not None
+        assert node_a.is_structural_candidate
+        assert node_a.demotion_reason == ""
+
+    def test_unanchored_singleton_still_demoted(self) -> None:
+        """Inline singleton should remain demoted due weak confidence."""
+        text = "The parties agree that (i) this inline singleton is not structural."
+        nodes = parse_clauses(text)
+        assert nodes
+        node_i = nodes[0]
+        assert not node_i.is_structural_candidate
+        assert node_i.demotion_reason == "singleton"
 
     def test_run_of_three_high_confidence(self) -> None:
         """Run of (a), (b), (c) at line start should have high confidence."""

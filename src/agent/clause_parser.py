@@ -44,6 +44,7 @@ _WEIGHT_NOT_XREF = 0.15
 _WEIGHT_INDENT = 0.05
 
 _HEADER_MAX_LEN = 80
+_SINGLETON_PENALTY = 0.85
 
 # Labels whose inner text is ambiguous between alpha and roman
 _AMBIGUOUS_ROMAN = frozenset({"i", "v", "x", "l", "c", "d", "m"})
@@ -71,6 +72,10 @@ _XREF_LOOKAHEAD_RE = re.compile(
     r"|here(?:of|in|under|to)|there(?:of|in|under|to)"
     r")",
     re.IGNORECASE,
+)
+
+_RESERVED_SECTION_RE = re.compile(
+    r"(?i)\b(?:reserved|intentionally\s+omitted|intentionally\s+left\s+blank)\b",
 )
 
 # ---------------------------------------------------------------------------
@@ -573,7 +578,7 @@ def _compute_confidence(
 
     Improvements:
     - 5th signal: indentation_score (weighted at 0.05)
-    - Singleton hard invariant: if run_length_ok is False, immediately demote
+    - Singleton handling uses confidence penalty (0.85x), not hard-kill
     - Threshold-based demotion: is_structural = confidence >= 0.5
     - Ghost clause filtering: empty/near-empty bodies get demoted
     """
@@ -612,21 +617,6 @@ def _compute_confidence(
         gap_ok = group_gap_ok.get(key, True)
         not_xref = not n.is_xref
 
-        # Singleton hard invariant: if not run_length_ok, immediately demote
-        if not run_length_ok:
-            confidence = (
-                _WEIGHT_ANCHOR * (1.0 if anchor_ok else 0.0)
-                + _WEIGHT_RUN * 0.0
-                + _WEIGHT_GAP * (1.0 if gap_ok else 0.0)
-                + _WEIGHT_NOT_XREF * (1.0 if not_xref else 0.0)
-                + _WEIGHT_INDENT * n.indentation_score
-            )
-            results.append((
-                n, anchor_ok, False, gap_ok, False,
-                round(confidence, 4), "singleton",
-            ))
-            continue
-
         # Full 5-signal scoring
         confidence = (
             _WEIGHT_ANCHOR * (1.0 if anchor_ok else 0.0)
@@ -635,6 +625,10 @@ def _compute_confidence(
             + _WEIGHT_NOT_XREF * (1.0 if not_xref else 0.0)
             + _WEIGHT_INDENT * n.indentation_score
         )
+
+        # Singleton penalty instead of hard demotion.
+        if not run_length_ok and not _RESERVED_SECTION_RE.search(n.header_text or ""):
+            confidence *= _SINGLETON_PENALTY
 
         # Threshold-based demotion
         is_structural = confidence >= 0.5
@@ -652,15 +646,18 @@ def _compute_confidence(
                     demotion_reason = "ghost_body"
 
         if not is_structural and not demotion_reason:
-            reasons: list[str] = []
-            if not anchor_ok:
-                reasons.append("not_anchored")
-            if not gap_ok:
-                reasons.append("ordinal_gap")
-            if n.is_xref:
-                reasons.append("cross_reference")
-            if reasons:
-                demotion_reason = "; ".join(reasons)
+            if not run_length_ok:
+                demotion_reason = "singleton"
+            else:
+                reasons: list[str] = []
+                if not anchor_ok:
+                    reasons.append("not_anchored")
+                if not gap_ok:
+                    reasons.append("ordinal_gap")
+                if n.is_xref:
+                    reasons.append("cross_reference")
+                if reasons:
+                    demotion_reason = "; ".join(reasons)
 
         results.append((
             n, anchor_ok, run_length_ok, gap_ok,
