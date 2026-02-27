@@ -1,0 +1,1758 @@
+{
+  "version": "gold-fixture-splits-v1",
+  "policy": {
+    "split_unit": "doc_id",
+    "no_doc_overlap": true,
+    "required_splits": [
+      "train",
+      "val",
+      "test",
+      "holdout"
+    ],
+    "stratify_by": [
+      "category",
+      "source_type"
+    ]
+  },
+  "counts": {
+    "train": 323,
+    "val": 77,
+    "test": 64,
+    "holdout": 36
+  },
+  "doc_assignments": [
+    {
+      "doc_id": "001aec2f07ede994",
+      "split": "test"
+    },
+    {
+      "doc_id": "0028a0cfd1360ea7",
+      "split": "test"
+    },
+    {
+      "doc_id": "00d8010fa93d1a81",
+      "split": "train"
+    },
+    {
+      "doc_id": "01d2ca57bb01f137",
+      "split": "val"
+    },
+    {
+      "doc_id": "01e3c5713bc3154f",
+      "split": "val"
+    },
+    {
+      "doc_id": "021e295381145136",
+      "split": "test"
+    },
+    {
+      "doc_id": "0235113f9274f397",
+      "split": "train"
+    },
+    {
+      "doc_id": "0276348d65a90d2b",
+      "split": "val"
+    },
+    {
+      "doc_id": "02a2f2c637f7f232",
+      "split": "train"
+    },
+    {
+      "doc_id": "02b17b4cdedc0a81",
+      "split": "train"
+    },
+    {
+      "doc_id": "02c9262e733d66a5",
+      "split": "val"
+    },
+    {
+      "doc_id": "02dd1190fbb8c1c3",
+      "split": "train"
+    },
+    {
+      "doc_id": "033bd31669ab891f",
+      "split": "train"
+    },
+    {
+      "doc_id": "037f9794e83be1e3",
+      "split": "test"
+    },
+    {
+      "doc_id": "038c785a3a7024ba",
+      "split": "train"
+    },
+    {
+      "doc_id": "03a15c489ff854b9",
+      "split": "test"
+    },
+    {
+      "doc_id": "03df93d0cf9fc634",
+      "split": "train"
+    },
+    {
+      "doc_id": "03e0aa8e29c64a4b",
+      "split": "train"
+    },
+    {
+      "doc_id": "042d9a86dd0fff4e",
+      "split": "train"
+    },
+    {
+      "doc_id": "046d90d3bc45d8af",
+      "split": "train"
+    },
+    {
+      "doc_id": "04a5a24ba8349a7a",
+      "split": "test"
+    },
+    {
+      "doc_id": "04a87f4f8bde6d43",
+      "split": "train"
+    },
+    {
+      "doc_id": "0584375e25907ea0",
+      "split": "train"
+    },
+    {
+      "doc_id": "0593bac8b4df4b5a",
+      "split": "train"
+    },
+    {
+      "doc_id": "05ecb029a20ec74b",
+      "split": "val"
+    },
+    {
+      "doc_id": "0622ef10efb8a55d",
+      "split": "train"
+    },
+    {
+      "doc_id": "064d9f9db1740d4a",
+      "split": "train"
+    },
+    {
+      "doc_id": "06fcba8e0213aa48",
+      "split": "train"
+    },
+    {
+      "doc_id": "0701a1da8ad95b83",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "070c3bf228f6d294",
+      "split": "train"
+    },
+    {
+      "doc_id": "07e7141f4bf2caa9",
+      "split": "train"
+    },
+    {
+      "doc_id": "080c31a294d0847b",
+      "split": "train"
+    },
+    {
+      "doc_id": "089bd1c4db19961c",
+      "split": "train"
+    },
+    {
+      "doc_id": "0937e859c2935bef",
+      "split": "val"
+    },
+    {
+      "doc_id": "0a353d96e4080039",
+      "split": "test"
+    },
+    {
+      "doc_id": "0ad52bbc94ece283",
+      "split": "train"
+    },
+    {
+      "doc_id": "0b0990c683cc7299",
+      "split": "test"
+    },
+    {
+      "doc_id": "0b327645b4dc30f3",
+      "split": "train"
+    },
+    {
+      "doc_id": "0b3d43879b2cd6b7",
+      "split": "train"
+    },
+    {
+      "doc_id": "0ba9644918423787",
+      "split": "val"
+    },
+    {
+      "doc_id": "0be5b7e6fdd96dde",
+      "split": "train"
+    },
+    {
+      "doc_id": "0c16971e6a0d4e2a",
+      "split": "train"
+    },
+    {
+      "doc_id": "0cc69bcf04b6ad20",
+      "split": "val"
+    },
+    {
+      "doc_id": "0d308b2f37a72366",
+      "split": "train"
+    },
+    {
+      "doc_id": "0d8ed14257d39df1",
+      "split": "train"
+    },
+    {
+      "doc_id": "0e0519196c63fab9",
+      "split": "val"
+    },
+    {
+      "doc_id": "0e3833d30e9e75b4",
+      "split": "train"
+    },
+    {
+      "doc_id": "0e9d4cbe3c3461d8",
+      "split": "train"
+    },
+    {
+      "doc_id": "0ed982abbe963a54",
+      "split": "test"
+    },
+    {
+      "doc_id": "0ee8493ecc0c7659",
+      "split": "train"
+    },
+    {
+      "doc_id": "0fabf97484ff7e28",
+      "split": "train"
+    },
+    {
+      "doc_id": "106c014dcce61d02",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "10c4a940e3187623",
+      "split": "test"
+    },
+    {
+      "doc_id": "10fe2ce1a5289e4d",
+      "split": "train"
+    },
+    {
+      "doc_id": "110eb181eeb638d9",
+      "split": "train"
+    },
+    {
+      "doc_id": "111d5fea87d2c6dc",
+      "split": "train"
+    },
+    {
+      "doc_id": "114767d0ddbc423e",
+      "split": "test"
+    },
+    {
+      "doc_id": "11734318c85a4c2d",
+      "split": "train"
+    },
+    {
+      "doc_id": "119b12a34df6c107",
+      "split": "val"
+    },
+    {
+      "doc_id": "11cf9eb4edb4972a",
+      "split": "train"
+    },
+    {
+      "doc_id": "11f9602bbbaef8a3",
+      "split": "train"
+    },
+    {
+      "doc_id": "13593f16285d914e",
+      "split": "train"
+    },
+    {
+      "doc_id": "13afcdf18c930297",
+      "split": "val"
+    },
+    {
+      "doc_id": "14b2c7ac1289b166",
+      "split": "val"
+    },
+    {
+      "doc_id": "153c75e939d4cfb2",
+      "split": "train"
+    },
+    {
+      "doc_id": "15e757e6a0ee10f5",
+      "split": "train"
+    },
+    {
+      "doc_id": "1618b6051e78a875",
+      "split": "train"
+    },
+    {
+      "doc_id": "16ef4945fb73b7b9",
+      "split": "train"
+    },
+    {
+      "doc_id": "1752f2b82bc0c831",
+      "split": "test"
+    },
+    {
+      "doc_id": "17585e158962d4d1",
+      "split": "test"
+    },
+    {
+      "doc_id": "1774402c8c67f2d9",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "17bccc03e1484891",
+      "split": "train"
+    },
+    {
+      "doc_id": "18e1a61223db2433",
+      "split": "train"
+    },
+    {
+      "doc_id": "1929dfb99bb604ba",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "19efc9d87ad54ef1",
+      "split": "test"
+    },
+    {
+      "doc_id": "1a128c5a34322499",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "1a4346d26c794b81",
+      "split": "test"
+    },
+    {
+      "doc_id": "1a467d80917b92c7",
+      "split": "train"
+    },
+    {
+      "doc_id": "1a938088e471a694",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "1afc46863c69b0b2",
+      "split": "train"
+    },
+    {
+      "doc_id": "1b149784b7d7a7d9",
+      "split": "train"
+    },
+    {
+      "doc_id": "1bc19607439f6536",
+      "split": "test"
+    },
+    {
+      "doc_id": "1cee1324b659aec7",
+      "split": "train"
+    },
+    {
+      "doc_id": "1d643e83e20330ae",
+      "split": "train"
+    },
+    {
+      "doc_id": "1dbb5c73a78e2e69",
+      "split": "train"
+    },
+    {
+      "doc_id": "1dd357164ab093cc",
+      "split": "val"
+    },
+    {
+      "doc_id": "1e6c0ef3aa4c015b",
+      "split": "val"
+    },
+    {
+      "doc_id": "1e89000a01026b30",
+      "split": "train"
+    },
+    {
+      "doc_id": "1ed3d646d975c592",
+      "split": "test"
+    },
+    {
+      "doc_id": "1f388cf11292555a",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "1f733097c8b0dd97",
+      "split": "train"
+    },
+    {
+      "doc_id": "1f9479ca53321b91",
+      "split": "test"
+    },
+    {
+      "doc_id": "1fb332525937f542",
+      "split": "train"
+    },
+    {
+      "doc_id": "1fbe748dce374f34",
+      "split": "val"
+    },
+    {
+      "doc_id": "208e1d0e8e1dc0b8",
+      "split": "val"
+    },
+    {
+      "doc_id": "21d1c55bcb880e28",
+      "split": "train"
+    },
+    {
+      "doc_id": "229534a98671baf3",
+      "split": "test"
+    },
+    {
+      "doc_id": "22966bcfd9d7a89b",
+      "split": "train"
+    },
+    {
+      "doc_id": "22c66f948c928590",
+      "split": "train"
+    },
+    {
+      "doc_id": "24c85f495fdb716e",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "24f56c9bebd4d3cc",
+      "split": "train"
+    },
+    {
+      "doc_id": "2506274a9c6e539b",
+      "split": "val"
+    },
+    {
+      "doc_id": "255d7655f694cf45",
+      "split": "train"
+    },
+    {
+      "doc_id": "25cc92645c26a21c",
+      "split": "val"
+    },
+    {
+      "doc_id": "264c9d5ace58e0a4",
+      "split": "train"
+    },
+    {
+      "doc_id": "2764fdbc7d6cdec2",
+      "split": "train"
+    },
+    {
+      "doc_id": "279c983662e9335d",
+      "split": "train"
+    },
+    {
+      "doc_id": "279da04df6d177f1",
+      "split": "train"
+    },
+    {
+      "doc_id": "282a6b3d84e5b57c",
+      "split": "train"
+    },
+    {
+      "doc_id": "285f22a27cb2c288",
+      "split": "train"
+    },
+    {
+      "doc_id": "28da346323782dba",
+      "split": "val"
+    },
+    {
+      "doc_id": "2917da756185b323",
+      "split": "train"
+    },
+    {
+      "doc_id": "2928c34aa5514116",
+      "split": "val"
+    },
+    {
+      "doc_id": "2965aea199e0688a",
+      "split": "train"
+    },
+    {
+      "doc_id": "2a956f11beb5ceea",
+      "split": "train"
+    },
+    {
+      "doc_id": "2b95eeb93261d0a6",
+      "split": "train"
+    },
+    {
+      "doc_id": "2bd7fa03b9769ba6",
+      "split": "train"
+    },
+    {
+      "doc_id": "2c53e4d3ae9a10da",
+      "split": "test"
+    },
+    {
+      "doc_id": "2c84cee7c0627155",
+      "split": "val"
+    },
+    {
+      "doc_id": "2d6dbdf2bb33c442",
+      "split": "train"
+    },
+    {
+      "doc_id": "2da3a1fdf9bf058d",
+      "split": "train"
+    },
+    {
+      "doc_id": "2ddad75ebc1c3137",
+      "split": "train"
+    },
+    {
+      "doc_id": "2e3622ee26b55df7",
+      "split": "train"
+    },
+    {
+      "doc_id": "2ebcba02b72ef993",
+      "split": "train"
+    },
+    {
+      "doc_id": "2f1aa3b1b2b93c93",
+      "split": "train"
+    },
+    {
+      "doc_id": "2f2f4d54d043a93c",
+      "split": "train"
+    },
+    {
+      "doc_id": "2f5a51f7fde71022",
+      "split": "train"
+    },
+    {
+      "doc_id": "2ffdde095edfb2b7",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "30e532b8703dc6b0",
+      "split": "test"
+    },
+    {
+      "doc_id": "3161945e55309b7f",
+      "split": "train"
+    },
+    {
+      "doc_id": "318f3247b587d91b",
+      "split": "val"
+    },
+    {
+      "doc_id": "333b2bf5ed90baf3",
+      "split": "train"
+    },
+    {
+      "doc_id": "3375aa6a9cb92134",
+      "split": "train"
+    },
+    {
+      "doc_id": "3434bf43f7708869",
+      "split": "train"
+    },
+    {
+      "doc_id": "34572f6969636a41",
+      "split": "train"
+    },
+    {
+      "doc_id": "3598bc0705d2e049",
+      "split": "train"
+    },
+    {
+      "doc_id": "359e46a4831744f1",
+      "split": "train"
+    },
+    {
+      "doc_id": "361910cd5e1238a2",
+      "split": "train"
+    },
+    {
+      "doc_id": "3669cb1f93b66621",
+      "split": "test"
+    },
+    {
+      "doc_id": "37a2ad11f7834147",
+      "split": "train"
+    },
+    {
+      "doc_id": "3877d327d51ed6af",
+      "split": "val"
+    },
+    {
+      "doc_id": "38ca73595ac1b928",
+      "split": "test"
+    },
+    {
+      "doc_id": "39fd5a78ff6c9e81",
+      "split": "train"
+    },
+    {
+      "doc_id": "3caa8e40f58b8391",
+      "split": "val"
+    },
+    {
+      "doc_id": "3cac3a0e7b4152b0",
+      "split": "val"
+    },
+    {
+      "doc_id": "3ceaa1c582cab378",
+      "split": "train"
+    },
+    {
+      "doc_id": "3d81e6691a05a31d",
+      "split": "val"
+    },
+    {
+      "doc_id": "3e4f66e0c48a7217",
+      "split": "train"
+    },
+    {
+      "doc_id": "3fc31b3928516050",
+      "split": "val"
+    },
+    {
+      "doc_id": "40091e279c78ca90",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "4085e02ac5435ddb",
+      "split": "test"
+    },
+    {
+      "doc_id": "409acefdc38efc26",
+      "split": "train"
+    },
+    {
+      "doc_id": "410e81820918c1fc",
+      "split": "train"
+    },
+    {
+      "doc_id": "417c285a1e5f105e",
+      "split": "test"
+    },
+    {
+      "doc_id": "41bacf60b650fd94",
+      "split": "train"
+    },
+    {
+      "doc_id": "4476edbe41ece598",
+      "split": "train"
+    },
+    {
+      "doc_id": "46fd85b0fc7ac8a0",
+      "split": "train"
+    },
+    {
+      "doc_id": "4739d8ef195e8ed3",
+      "split": "train"
+    },
+    {
+      "doc_id": "48aeef05d92a5c80",
+      "split": "train"
+    },
+    {
+      "doc_id": "490571bc78c370c2",
+      "split": "test"
+    },
+    {
+      "doc_id": "497357c95f8d28de",
+      "split": "train"
+    },
+    {
+      "doc_id": "49dd887296a04197",
+      "split": "test"
+    },
+    {
+      "doc_id": "4a1b19f4aa9d7364",
+      "split": "train"
+    },
+    {
+      "doc_id": "4a4355008ecdfe86",
+      "split": "val"
+    },
+    {
+      "doc_id": "4a8b6fecc3f49b9d",
+      "split": "train"
+    },
+    {
+      "doc_id": "4cdf8fb1a742095c",
+      "split": "val"
+    },
+    {
+      "doc_id": "4d8da5c87cbee011",
+      "split": "train"
+    },
+    {
+      "doc_id": "4f8d84bcbab75c7c",
+      "split": "train"
+    },
+    {
+      "doc_id": "4fe50f2ad6e21d07",
+      "split": "train"
+    },
+    {
+      "doc_id": "5016f260dd5685d9",
+      "split": "train"
+    },
+    {
+      "doc_id": "50f8e7dd08a99208",
+      "split": "train"
+    },
+    {
+      "doc_id": "510bccf8874271c4",
+      "split": "train"
+    },
+    {
+      "doc_id": "5151792d1c90ed51",
+      "split": "train"
+    },
+    {
+      "doc_id": "52508991e41043e6",
+      "split": "test"
+    },
+    {
+      "doc_id": "52b74468810422a0",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "55414288c90f1e99",
+      "split": "train"
+    },
+    {
+      "doc_id": "55b9040b88c944e9",
+      "split": "train"
+    },
+    {
+      "doc_id": "566ec6a9ac86fd90",
+      "split": "train"
+    },
+    {
+      "doc_id": "57373ee1cea58e13",
+      "split": "train"
+    },
+    {
+      "doc_id": "5770f3bb7d77d9e2",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "5bacba152b92efc1",
+      "split": "train"
+    },
+    {
+      "doc_id": "5c488328b26ae299",
+      "split": "train"
+    },
+    {
+      "doc_id": "5c6a85bd1126707d",
+      "split": "train"
+    },
+    {
+      "doc_id": "5ca208323895a8ad",
+      "split": "test"
+    },
+    {
+      "doc_id": "5d68fec91727a75e",
+      "split": "test"
+    },
+    {
+      "doc_id": "5dbde82ed739b9d0",
+      "split": "train"
+    },
+    {
+      "doc_id": "5dc808d7918a737c",
+      "split": "train"
+    },
+    {
+      "doc_id": "5dcebaa8180686a0",
+      "split": "train"
+    },
+    {
+      "doc_id": "5e13e636e31ee740",
+      "split": "train"
+    },
+    {
+      "doc_id": "5ea5b57b084b51d4",
+      "split": "train"
+    },
+    {
+      "doc_id": "5f1a8f22ac53cbf6",
+      "split": "train"
+    },
+    {
+      "doc_id": "5f21439d657ef1c4",
+      "split": "test"
+    },
+    {
+      "doc_id": "5f30f22e656e779e",
+      "split": "train"
+    },
+    {
+      "doc_id": "5f503079fde11452",
+      "split": "train"
+    },
+    {
+      "doc_id": "5f5703768137bcc9",
+      "split": "train"
+    },
+    {
+      "doc_id": "5fb95be5a48d6a87",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "5fe9ea14351ef8b5",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "605c9be21437a265",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "6072df4bae1fa527",
+      "split": "train"
+    },
+    {
+      "doc_id": "6189e46d56130d54",
+      "split": "val"
+    },
+    {
+      "doc_id": "6199a2a40a9ada51",
+      "split": "val"
+    },
+    {
+      "doc_id": "62b29c3e6b89551d",
+      "split": "val"
+    },
+    {
+      "doc_id": "62e1a96430f8c339",
+      "split": "train"
+    },
+    {
+      "doc_id": "631d4d99f839debc",
+      "split": "val"
+    },
+    {
+      "doc_id": "6376804a75a15b40",
+      "split": "train"
+    },
+    {
+      "doc_id": "6416360dbcc64a48",
+      "split": "train"
+    },
+    {
+      "doc_id": "64c31a6c8e6e8d85",
+      "split": "val"
+    },
+    {
+      "doc_id": "64e25b54a5764f42",
+      "split": "train"
+    },
+    {
+      "doc_id": "65556795c8998b8c",
+      "split": "train"
+    },
+    {
+      "doc_id": "65a85dc20e406954",
+      "split": "train"
+    },
+    {
+      "doc_id": "66fce6b9e677de85",
+      "split": "val"
+    },
+    {
+      "doc_id": "68483a15f79c96d8",
+      "split": "test"
+    },
+    {
+      "doc_id": "686cde853c0782fe",
+      "split": "test"
+    },
+    {
+      "doc_id": "69efed2932becd7d",
+      "split": "train"
+    },
+    {
+      "doc_id": "6ad2c0e58093516f",
+      "split": "train"
+    },
+    {
+      "doc_id": "6b19a7890c7d5587",
+      "split": "val"
+    },
+    {
+      "doc_id": "6c0742741ee65a72",
+      "split": "train"
+    },
+    {
+      "doc_id": "6ce5b8478cea6d00",
+      "split": "train"
+    },
+    {
+      "doc_id": "6d952ec1d8dc90cd",
+      "split": "train"
+    },
+    {
+      "doc_id": "6e3f52d9d8631b2b",
+      "split": "train"
+    },
+    {
+      "doc_id": "6f02de0612b291e0",
+      "split": "val"
+    },
+    {
+      "doc_id": "6f11b74f0eb7cd58",
+      "split": "train"
+    },
+    {
+      "doc_id": "6fde082aad3d39f3",
+      "split": "train"
+    },
+    {
+      "doc_id": "70366379644f01bc",
+      "split": "train"
+    },
+    {
+      "doc_id": "707fa38162409348",
+      "split": "val"
+    },
+    {
+      "doc_id": "709ac55e9241b10d",
+      "split": "train"
+    },
+    {
+      "doc_id": "70c2899aecf31a92",
+      "split": "train"
+    },
+    {
+      "doc_id": "710302233c116722",
+      "split": "train"
+    },
+    {
+      "doc_id": "71085fee37e6f1f6",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "713edbe3d2a8ef66",
+      "split": "train"
+    },
+    {
+      "doc_id": "716afff7dfaa4fe0",
+      "split": "train"
+    },
+    {
+      "doc_id": "71a0bb773262b34a",
+      "split": "train"
+    },
+    {
+      "doc_id": "71d5f65cc6088901",
+      "split": "train"
+    },
+    {
+      "doc_id": "72b2fdae25a88b8e",
+      "split": "train"
+    },
+    {
+      "doc_id": "73cea5ca63f1e2c2",
+      "split": "train"
+    },
+    {
+      "doc_id": "7408b44fe0caa658",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "74c87c1b16ef7d43",
+      "split": "val"
+    },
+    {
+      "doc_id": "74d3a48b4aa3455f",
+      "split": "train"
+    },
+    {
+      "doc_id": "75d9f4644f9357a5",
+      "split": "val"
+    },
+    {
+      "doc_id": "762a01d68558db40",
+      "split": "train"
+    },
+    {
+      "doc_id": "76484f1235f6350e",
+      "split": "train"
+    },
+    {
+      "doc_id": "76e19829c9fb8546",
+      "split": "train"
+    },
+    {
+      "doc_id": "76fb3db7082aeaaf",
+      "split": "test"
+    },
+    {
+      "doc_id": "77d4fef29edb5500",
+      "split": "val"
+    },
+    {
+      "doc_id": "7869cd0ebb5ceef3",
+      "split": "test"
+    },
+    {
+      "doc_id": "79a1dbc6169a5ec3",
+      "split": "val"
+    },
+    {
+      "doc_id": "79c3c0b91e533915",
+      "split": "train"
+    },
+    {
+      "doc_id": "7a8287915625b6c6",
+      "split": "train"
+    },
+    {
+      "doc_id": "7ad927f6238ad5ce",
+      "split": "test"
+    },
+    {
+      "doc_id": "7b629fa2ca0bd535",
+      "split": "val"
+    },
+    {
+      "doc_id": "7c75dcc3b5479afc",
+      "split": "train"
+    },
+    {
+      "doc_id": "7c7a2e57598c7dec",
+      "split": "test"
+    },
+    {
+      "doc_id": "7c8773b37e66e223",
+      "split": "train"
+    },
+    {
+      "doc_id": "7e62c0fa693bd2b0",
+      "split": "train"
+    },
+    {
+      "doc_id": "7ead0022b642559c",
+      "split": "val"
+    },
+    {
+      "doc_id": "81cedd2a0a26e25b",
+      "split": "train"
+    },
+    {
+      "doc_id": "81d69bc5cc46a6d9",
+      "split": "val"
+    },
+    {
+      "doc_id": "81ea0199b752f4d3",
+      "split": "train"
+    },
+    {
+      "doc_id": "82755482a24717e0",
+      "split": "train"
+    },
+    {
+      "doc_id": "82853db88e336aff",
+      "split": "train"
+    },
+    {
+      "doc_id": "831dd0cf895d8d1e",
+      "split": "train"
+    },
+    {
+      "doc_id": "8322bdae4474b768",
+      "split": "train"
+    },
+    {
+      "doc_id": "846669920943a8b5",
+      "split": "train"
+    },
+    {
+      "doc_id": "84f0584aa4b33896",
+      "split": "train"
+    },
+    {
+      "doc_id": "85ef7c34e17930f5",
+      "split": "train"
+    },
+    {
+      "doc_id": "8607eedcb12781f5",
+      "split": "train"
+    },
+    {
+      "doc_id": "86791bc61dc5952f",
+      "split": "train"
+    },
+    {
+      "doc_id": "8700901a034aff74",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "874b17bef710cb90",
+      "split": "train"
+    },
+    {
+      "doc_id": "89c58ef7cc282b47",
+      "split": "test"
+    },
+    {
+      "doc_id": "8a061d6ec03f1b49",
+      "split": "train"
+    },
+    {
+      "doc_id": "8ac8fcd55082d4e6",
+      "split": "train"
+    },
+    {
+      "doc_id": "8acd4c7203442e2f",
+      "split": "val"
+    },
+    {
+      "doc_id": "8ae241eb33d46248",
+      "split": "train"
+    },
+    {
+      "doc_id": "8c100fba7809a253",
+      "split": "test"
+    },
+    {
+      "doc_id": "8c4b96afc7d9b99a",
+      "split": "val"
+    },
+    {
+      "doc_id": "8c7207cdbaf44789",
+      "split": "train"
+    },
+    {
+      "doc_id": "8c9aef89c785f68b",
+      "split": "train"
+    },
+    {
+      "doc_id": "8d00b08945d20136",
+      "split": "val"
+    },
+    {
+      "doc_id": "8da33bf812f9fd5b",
+      "split": "train"
+    },
+    {
+      "doc_id": "8ebd8e7ed0fbf29e",
+      "split": "train"
+    },
+    {
+      "doc_id": "8f26ac22002955dc",
+      "split": "train"
+    },
+    {
+      "doc_id": "8faa9ec27f38c460",
+      "split": "train"
+    },
+    {
+      "doc_id": "9080f98e09518787",
+      "split": "val"
+    },
+    {
+      "doc_id": "90d33b008e4d6970",
+      "split": "train"
+    },
+    {
+      "doc_id": "92c6ddc2fcecefea",
+      "split": "train"
+    },
+    {
+      "doc_id": "9480f5f6d3999282",
+      "split": "train"
+    },
+    {
+      "doc_id": "9504e7605cce36c1",
+      "split": "train"
+    },
+    {
+      "doc_id": "95096687a8c2a9bd",
+      "split": "train"
+    },
+    {
+      "doc_id": "95263256d3d21f83",
+      "split": "train"
+    },
+    {
+      "doc_id": "95cf1b23b4f78bd8",
+      "split": "train"
+    },
+    {
+      "doc_id": "963dd7773483f83c",
+      "split": "train"
+    },
+    {
+      "doc_id": "9713c59c15ad3ff7",
+      "split": "train"
+    },
+    {
+      "doc_id": "98be436a148118e3",
+      "split": "train"
+    },
+    {
+      "doc_id": "9a17e3278a564588",
+      "split": "train"
+    },
+    {
+      "doc_id": "9aac4ec441039437",
+      "split": "train"
+    },
+    {
+      "doc_id": "9ac1b926f2691e05",
+      "split": "train"
+    },
+    {
+      "doc_id": "9ad93256dc63cc4e",
+      "split": "val"
+    },
+    {
+      "doc_id": "9df1df832bbed4e3",
+      "split": "val"
+    },
+    {
+      "doc_id": "9e322af81978e116",
+      "split": "train"
+    },
+    {
+      "doc_id": "a08043267ded655f",
+      "split": "train"
+    },
+    {
+      "doc_id": "a0a2100f12229004",
+      "split": "train"
+    },
+    {
+      "doc_id": "a0da16b58334551f",
+      "split": "train"
+    },
+    {
+      "doc_id": "a1308b204cb0970b",
+      "split": "val"
+    },
+    {
+      "doc_id": "a17f6b815260e1b2",
+      "split": "train"
+    },
+    {
+      "doc_id": "a1ae99828ab9dd1c",
+      "split": "train"
+    },
+    {
+      "doc_id": "a2de101fce13c80e",
+      "split": "train"
+    },
+    {
+      "doc_id": "a33827a6b097a6b9",
+      "split": "train"
+    },
+    {
+      "doc_id": "a33b4ec81abd472a",
+      "split": "train"
+    },
+    {
+      "doc_id": "a340184cddf83a2b",
+      "split": "train"
+    },
+    {
+      "doc_id": "a38463d4029415e6",
+      "split": "train"
+    },
+    {
+      "doc_id": "a39d655a94b505a2",
+      "split": "train"
+    },
+    {
+      "doc_id": "a3cf0a4439122b2e",
+      "split": "train"
+    },
+    {
+      "doc_id": "a3d5ac79abbb0395",
+      "split": "train"
+    },
+    {
+      "doc_id": "a512383092a725b8",
+      "split": "train"
+    },
+    {
+      "doc_id": "a5286f3eb59edd0d",
+      "split": "train"
+    },
+    {
+      "doc_id": "a59fec095919ec05",
+      "split": "train"
+    },
+    {
+      "doc_id": "a758838654afdbe2",
+      "split": "test"
+    },
+    {
+      "doc_id": "a75f5b0a79684f6a",
+      "split": "train"
+    },
+    {
+      "doc_id": "a7734489392a287d",
+      "split": "train"
+    },
+    {
+      "doc_id": "a7ae07e00e33afff",
+      "split": "test"
+    },
+    {
+      "doc_id": "a7fd48dfc1e540ef",
+      "split": "train"
+    },
+    {
+      "doc_id": "a816dbc108b2d9d9",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "a8fdccc5d9f733c0",
+      "split": "train"
+    },
+    {
+      "doc_id": "a93dae5172fa75b8",
+      "split": "test"
+    },
+    {
+      "doc_id": "a95fd25d76c2a5d5",
+      "split": "train"
+    },
+    {
+      "doc_id": "ab6d74a245450113",
+      "split": "val"
+    },
+    {
+      "doc_id": "aba10d28ac8b15d4",
+      "split": "test"
+    },
+    {
+      "doc_id": "abafabc2186f149f",
+      "split": "test"
+    },
+    {
+      "doc_id": "ac613caf054c93ff",
+      "split": "val"
+    },
+    {
+      "doc_id": "add46e7c8723e973",
+      "split": "train"
+    },
+    {
+      "doc_id": "ae924e4a0dfd3569",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "aedf33b06cdb5624",
+      "split": "train"
+    },
+    {
+      "doc_id": "af2b8f8f4dd92eae",
+      "split": "train"
+    },
+    {
+      "doc_id": "b14e4cc7d3725275",
+      "split": "train"
+    },
+    {
+      "doc_id": "b1f95658d2b86278",
+      "split": "train"
+    },
+    {
+      "doc_id": "b25bbc4b71819ea9",
+      "split": "test"
+    },
+    {
+      "doc_id": "b298dc65211e5e43",
+      "split": "train"
+    },
+    {
+      "doc_id": "b300cd4bda11b8da",
+      "split": "test"
+    },
+    {
+      "doc_id": "b3887ec4f9604eb8",
+      "split": "train"
+    },
+    {
+      "doc_id": "b38f8c9a4fc322f8",
+      "split": "train"
+    },
+    {
+      "doc_id": "b4539bbba91359ef",
+      "split": "test"
+    },
+    {
+      "doc_id": "b48d2ef55e06cf7f",
+      "split": "train"
+    },
+    {
+      "doc_id": "b521ad5fba67c9b7",
+      "split": "train"
+    },
+    {
+      "doc_id": "b52627293e664b6a",
+      "split": "train"
+    },
+    {
+      "doc_id": "b55dab03a9ff795b",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "b79bfc320fdb0bd4",
+      "split": "train"
+    },
+    {
+      "doc_id": "b7bc7be0ba214d88",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "b8c0b843df7a42bf",
+      "split": "train"
+    },
+    {
+      "doc_id": "b9ed157a9a19a139",
+      "split": "test"
+    },
+    {
+      "doc_id": "ba2cd97ab0d363df",
+      "split": "train"
+    },
+    {
+      "doc_id": "ba6641ba0beabe04",
+      "split": "val"
+    },
+    {
+      "doc_id": "bb48f67ce90b5a4f",
+      "split": "val"
+    },
+    {
+      "doc_id": "bdd673f0b7178071",
+      "split": "train"
+    },
+    {
+      "doc_id": "be4477631495413f",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "bec784a67b7c24f7",
+      "split": "train"
+    },
+    {
+      "doc_id": "bf011f27c7233f43",
+      "split": "train"
+    },
+    {
+      "doc_id": "c029726e959fc231",
+      "split": "train"
+    },
+    {
+      "doc_id": "c1853b463d4df644",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "c1c11e8cb6da0c29",
+      "split": "train"
+    },
+    {
+      "doc_id": "c3f86e7c8fb1ce22",
+      "split": "test"
+    },
+    {
+      "doc_id": "c429faec795907ce",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "c466da1dbaa1917f",
+      "split": "train"
+    },
+    {
+      "doc_id": "c46da1245d43d6be",
+      "split": "train"
+    },
+    {
+      "doc_id": "c61127fd08460cdc",
+      "split": "train"
+    },
+    {
+      "doc_id": "c87283e5b5255bbd",
+      "split": "train"
+    },
+    {
+      "doc_id": "c8e1a4659257f8da",
+      "split": "train"
+    },
+    {
+      "doc_id": "c90e1d3be8aad9bd",
+      "split": "test"
+    },
+    {
+      "doc_id": "ca23d0a3f22c43ca",
+      "split": "train"
+    },
+    {
+      "doc_id": "cabbb7163536a9c8",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "cc1723b4b41eab5a",
+      "split": "train"
+    },
+    {
+      "doc_id": "cc5577ab1bf8c464",
+      "split": "train"
+    },
+    {
+      "doc_id": "cd3c66b7a3755f3f",
+      "split": "train"
+    },
+    {
+      "doc_id": "ce60debfeb027381",
+      "split": "train"
+    },
+    {
+      "doc_id": "cfec6e285b1866db",
+      "split": "train"
+    },
+    {
+      "doc_id": "d0dbad3214748376",
+      "split": "train"
+    },
+    {
+      "doc_id": "d0de7b1292368035",
+      "split": "train"
+    },
+    {
+      "doc_id": "d2d385a84892953e",
+      "split": "train"
+    },
+    {
+      "doc_id": "d3352f21d26f3394",
+      "split": "test"
+    },
+    {
+      "doc_id": "d3ebf4f0c71131c6",
+      "split": "test"
+    },
+    {
+      "doc_id": "d4d216426eb1b55d",
+      "split": "train"
+    },
+    {
+      "doc_id": "d516019e4c9e696d",
+      "split": "train"
+    },
+    {
+      "doc_id": "d72e0056ff3ee8df",
+      "split": "test"
+    },
+    {
+      "doc_id": "d85fe963b048bb11",
+      "split": "test"
+    },
+    {
+      "doc_id": "d8764d9f5d8da445",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "d8e5619f288aa6f5",
+      "split": "test"
+    },
+    {
+      "doc_id": "d8eaff7cee50bde6",
+      "split": "val"
+    },
+    {
+      "doc_id": "d9334784834c433e",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "d970683c3670a146",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "db36bf68accf5d2b",
+      "split": "train"
+    },
+    {
+      "doc_id": "db572453813075ab",
+      "split": "test"
+    },
+    {
+      "doc_id": "db6244ea6d71684a",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "dbd2dee1dc77162e",
+      "split": "val"
+    },
+    {
+      "doc_id": "dce36426750ec96d",
+      "split": "test"
+    },
+    {
+      "doc_id": "ddafa0961bb34725",
+      "split": "train"
+    },
+    {
+      "doc_id": "de050c15b3269b1a",
+      "split": "train"
+    },
+    {
+      "doc_id": "dfe96deb46e5c068",
+      "split": "train"
+    },
+    {
+      "doc_id": "e33c76fd2a38b683",
+      "split": "val"
+    },
+    {
+      "doc_id": "e3699a504321ac58",
+      "split": "train"
+    },
+    {
+      "doc_id": "e39ca4b90d0f269b",
+      "split": "train"
+    },
+    {
+      "doc_id": "e5172fae2a28be77",
+      "split": "train"
+    },
+    {
+      "doc_id": "e713b0d6cf7285c5",
+      "split": "val"
+    },
+    {
+      "doc_id": "e79e13fc37243584",
+      "split": "train"
+    },
+    {
+      "doc_id": "e84c5ecd19d018cc",
+      "split": "test"
+    },
+    {
+      "doc_id": "e893c14f286f930f",
+      "split": "train"
+    },
+    {
+      "doc_id": "e8e46fb83f5a58c2",
+      "split": "train"
+    },
+    {
+      "doc_id": "e9c9b1ee1bb12eb4",
+      "split": "train"
+    },
+    {
+      "doc_id": "ea2a8be1d6e72943",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "eacaff7ce123dcef",
+      "split": "train"
+    },
+    {
+      "doc_id": "eb04ce53c542fb27",
+      "split": "train"
+    },
+    {
+      "doc_id": "eb44ed8e266db199",
+      "split": "val"
+    },
+    {
+      "doc_id": "ebceb17d3ace3663",
+      "split": "train"
+    },
+    {
+      "doc_id": "ed2d358eef39396b",
+      "split": "train"
+    },
+    {
+      "doc_id": "ed5804c7a5faa9ce",
+      "split": "train"
+    },
+    {
+      "doc_id": "eea2271a9dcb9d70",
+      "split": "train"
+    },
+    {
+      "doc_id": "f1e1d2efbc6ae75e",
+      "split": "train"
+    },
+    {
+      "doc_id": "f29e9dac5b089622",
+      "split": "val"
+    },
+    {
+      "doc_id": "f471c29f46d7e39a",
+      "split": "train"
+    },
+    {
+      "doc_id": "f50902d95e5c7970",
+      "split": "train"
+    },
+    {
+      "doc_id": "f586a530c6303f47",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "f64dedd61f7dd7e8",
+      "split": "train"
+    },
+    {
+      "doc_id": "f65757897bad86ed",
+      "split": "test"
+    },
+    {
+      "doc_id": "f82158265466e218",
+      "split": "val"
+    },
+    {
+      "doc_id": "f95ee235203c5a1d",
+      "split": "train"
+    },
+    {
+      "doc_id": "f9bf2c0f7b477acf",
+      "split": "test"
+    },
+    {
+      "doc_id": "fb0ded723152ef4e",
+      "split": "val"
+    },
+    {
+      "doc_id": "fc0a4f319d7df2de",
+      "split": "train"
+    },
+    {
+      "doc_id": "fc2e38a4b7d3cf9f",
+      "split": "train"
+    },
+    {
+      "doc_id": "fd69148ee3e998ee",
+      "split": "train"
+    },
+    {
+      "doc_id": "fdcf7700367f2b0c",
+      "split": "train"
+    },
+    {
+      "doc_id": "feb8db2d8839911e",
+      "split": "holdout"
+    },
+    {
+      "doc_id": "fff059c7ba965f89",
+      "split": "train"
+    }
+  ],
+  "leakage_checks": {
+    "doc_overlap_violations": 0,
+    "fixture_overlap_violations": 0
+  },
+  "notes": "Auto-generated by scripts/seed_gold_fixtures.py"
+}

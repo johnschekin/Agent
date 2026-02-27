@@ -1,0 +1,111 @@
+{
+  "version": "reason-codes-v1",
+  "generated_for": "gold-fixture-v1",
+  "codes": [
+    {
+      "code": "ABS_LOW_MARGIN",
+      "category": "ambiguity",
+      "description": "Top parse candidates are too close to separate confidently.",
+      "allowed_decisions": ["abstain", "review"],
+      "ml_labelable": false
+    },
+    {
+      "code": "ABS_PARENT_CONFLICT",
+      "category": "ambiguity",
+      "description": "Multiple plausible parent assignments with no deterministic winner.",
+      "allowed_decisions": ["abstain", "review"],
+      "ml_labelable": false
+    },
+    {
+      "code": "ABS_ALPHA_ROMAN_CONFLICT",
+      "category": "ambiguity",
+      "description": "Single-token alpha/roman interpretation conflict remains unresolved.",
+      "allowed_decisions": ["abstain", "review"],
+      "ml_labelable": false
+    },
+    {
+      "code": "ABS_XREF_STRUCTURAL_CONFLICT",
+      "category": "ambiguity",
+      "description": "Clause token could be valid xref citation or structural enumerator.",
+      "allowed_decisions": ["abstain", "review"],
+      "ml_labelable": false
+    },
+    {
+      "code": "ABS_SPAN_CONFLICT",
+      "category": "integrity",
+      "description": "Node span boundaries are inconsistent or overlapping in ambiguous ways.",
+      "allowed_decisions": ["abstain"],
+      "ml_labelable": false
+    },
+    {
+      "code": "ABS_DEPTH_CONSTRAINT_CONFLICT",
+      "category": "integrity",
+      "description": "No tree assignment satisfies required depth and parent constraints simultaneously.",
+      "allowed_decisions": ["abstain"],
+      "ml_labelable": false
+    },
+    {
+      "code": "REV_TRUE_ROOT_HIGH_LETTER",
+      "category": "review",
+      "description": "x/y/z branch appears root-level but requires human confirmation.",
+      "allowed_decisions": ["review", "accepted"],
+      "ml_labelable": true
+    },
+    {
+      "code": "REV_INLINE_CONTINUATION_SUSPECTED",
+      "category": "review",
+      "description": "x/y/z likely continuation under earlier root alpha but not definitive.",
+      "allowed_decisions": ["review", "abstain"],
+      "ml_labelable": true
+    },
+    {
+      "code": "REV_DEFINED_TERM_BOUNDARY",
+      "category": "review",
+      "description": "Definition start/end boundary uncertain due formatting or nested lists.",
+      "allowed_decisions": ["review", "abstain"],
+      "ml_labelable": true
+    },
+    {
+      "code": "REV_NONSTRUCT_PARENT_CHAIN",
+      "category": "review",
+      "description": "Child structure appears valid but parent structural status is uncertain.",
+      "allowed_decisions": ["review", "abstain"],
+      "ml_labelable": true
+    },
+    {
+      "code": "SRC_OCR_NOISE",
+      "category": "source_quality",
+      "description": "OCR/encoding artifacts materially affect parse confidence.",
+      "allowed_decisions": ["abstain", "review"],
+      "ml_labelable": false
+    },
+    {
+      "code": "SRC_LAYOUT_FLATTENED",
+      "category": "source_quality",
+      "description": "HTML/PDF layout flattening removed indentation or boundary cues.",
+      "allowed_decisions": ["review", "abstain"],
+      "ml_labelable": false
+    },
+    {
+      "code": "SRC_TRUNCATED_SECTION",
+      "category": "source_quality",
+      "description": "Section text appears truncated or incomplete in source snapshot.",
+      "allowed_decisions": ["abstain"],
+      "ml_labelable": false
+    },
+    {
+      "code": "INFO_CONTROL_POSITIVE",
+      "category": "control",
+      "description": "Known-good control fixture for parser/model calibration.",
+      "allowed_decisions": ["accepted"],
+      "ml_labelable": true
+    },
+    {
+      "code": "INFO_CONTROL_NEGATIVE",
+      "category": "control",
+      "description": "Known-negative control fixture to detect false positives.",
+      "allowed_decisions": ["accepted", "review"],
+      "ml_labelable": true
+    }
+  ]
+}

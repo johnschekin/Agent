@@ -1,0 +1,57 @@
+{
+  "fixture_id": "GFV1-EXAMPLE-0001",
+  "schema_version": "gold-fixture-v1",
+  "category": "high_letter_continuation",
+  "source_type": "corpus",
+  "source": {
+    "doc_id": "example_doc_id",
+    "section_number": "6.02",
+    "snapshot_id": "run_manifest_ray_v2_corpus_build_YYYYMMDDTHHMMSSZ_hash"
+  },
+  "text": {
+    "raw_text": "(a) ... (x) ... (y) ...",
+    "char_start": 0,
+    "char_end": 1200,
+    "normalization": {
+      "engine": "html_utils.normalize_text",
+      "version": "v1"
+    }
+  },
+  "gold_nodes": [
+    {
+      "clause_id": "a",
+      "label": "(a)",
+      "parent_id": "",
+      "depth": 1,
+      "level_type": "alpha",
+      "span_start": 0,
+      "span_end": 400,
+      "is_structural": true,
+      "xref_suspected": false,
+      "confidence_band": "high"
+    },
+    {
+      "clause_id": "a.x",
+      "label": "(x)",
+      "parent_id": "a",
+      "depth": 2,
+      "level_type": "alpha",
+      "span_start": 180,
+      "span_end": 260,
+      "is_structural": true,
+      "xref_suspected": false,
+      "confidence_band": "medium"
+    }
+  ],
+  "gold_decision": "accepted",
+  "reason_codes": ["INFO_CONTROL_POSITIVE"],
+  "adjudication": {
+    "human_verified": true,
+    "ambiguity_class": "none",
+    "adjudicator_id": "initial_seed",
+    "adjudicated_at": "2026-02-27T00:00:00Z",
+    "rationale": "Clear structural continuation under (a)."
+  },
+  "split": "train",
+  "tags": ["parser", "clause", "continuation"]
+}
