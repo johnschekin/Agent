@@ -445,6 +445,36 @@ class TestConfidenceScoring:
         assert not node_i.is_structural_candidate
         assert node_i.demotion_reason == "singleton"
 
+    def test_root_alpha_parent_rehabilitated_from_strong_children(self) -> None:
+        """Duplicate root alpha parent with strong immediate children should be promoted."""
+        text = (
+            "(a) First parent text.\n"
+            "(i) first child under first parent.\n"
+            "(ii) second child under first parent.\n"
+            "(a) Second parent text.\n"
+            "(i) first child under second parent.\n"
+            "(ii) second child under second parent.\n"
+        )
+        nodes = parse_clauses(text)
+        node_dup_parent = next((n for n in nodes if n.id == "a_dup2"), None)
+        assert node_dup_parent is not None
+        assert node_dup_parent.is_structural_candidate
+        assert node_dup_parent.parse_confidence >= 0.55
+        assert node_dup_parent.demotion_reason == ""
+
+    def test_xref_root_parent_not_rehabilitated_from_children(self) -> None:
+        """xref-like root parent should remain demoted even with child run."""
+        text = (
+            "Section 2.14(a)\n"
+            "(i) first child substantive text.\n"
+            "(ii) second child substantive text.\n"
+        )
+        nodes = parse_clauses(text)
+        node_a = next((n for n in nodes if n.id == "a"), None)
+        assert node_a is not None
+        assert not node_a.is_structural_candidate
+        assert node_a.demotion_reason == "singleton"
+
     def test_run_of_three_high_confidence(self) -> None:
         """Run of (a), (b), (c) at line start should have high confidence."""
         text = (

@@ -1,0 +1,156 @@
+[
+  {
+    "document_id": "7e455294fbba0411afe25f5e6d72451243532611e329a881f5326ded9ad25cf0",
+    "family_id": "debt_capacity.indebtedness",
+    "ontology_node_id": "debt_capacity.indebtedness.general_basket",
+    "doc_id": "00d8010fa93d1a81",
+    "section_number": "6.01",
+    "heading": "Indebtedness",
+    "article_num": 6,
+    "article_concept": "negative_covenants",
+    "rule_id": "0b54b933-f5db-4426-b24e-b28db4d04426",
+    "rule_version": 1,
+    "rule_hash": "d6404d6a88d26c67",
+    "source": "bulk_linker",
+    "section_char_start": 336502,
+    "section_char_end": 350300,
+    "link_role": "primary_covenant",
+    "confidence": 0.5,
+    "score_raw": 0.5,
+    "score_calibrated": 0.5,
+    "threshold_profile_id": "scope:debt_capacity.indebtedness.general_basket:ontology:2.5.1",
+    "confidence_tier": "medium",
+    "confidence_breakdown": {
+      "article_match": 0.5,
+      "heading_exactness": 0.5,
+      "clause_signal": 0.5,
+      "template_consistency": 0.5,
+      "defined_term_grounding": 0.5,
+      "structural_prior": 0.5,
+      "semantic_similarity": 0.5
+    },
+    "why_matched": {
+      "article_match": {
+        "reason": "no_article_constraint"
+      },
+      "heading_exactness": {
+        "reason": "heading_is_substring",
+        "matched_value": "other indebtedness"
+      },
+      "clause_signal": {
+        "reason": "not_checked"
+      },
+      "template_consistency": {
+        "reason": "no_template_data"
+      },
+      "defined_term_grounding": {
+        "reason": "no_expected_terms"
+      },
+      "structural_prior": {
+        "reason": "no_structural_prior"
+      },
+      "semantic_similarity": {
+        "reason": "embeddings_unavailable"
+      }
+    },
+    "match_type": "partial",
+    "matched_value": "other indebtedness",
+    "status": "pending_review",
+    "conflicts": [],
+    "grounded": true,
+    "ontology_version": "2.5.1",
+    "section_path": "6.01",
+    "section_reference_key": "7e455294fbba0411afe25f5e6d72451243532611e329a881f5326ded9ad25cf0:indebtedness",
+    "clause_path": "__section__",
+    "clause_key": "7e455294fbba0411afe25f5e6d72451243532611e329a881f5326ded9ad25cf0:indebtedness:__section__",
+    "node_type": "section",
+    "span_start": 336502,
+    "span_end": 350300,
+    "anchor_text": "Indebtedness",
+    "text_sha256": "625e2c4ea71bbb4ec6b392d3fd492e1e907261a6dc0b070b34d3e6bf19e47a06",
+    "chunk_id": "6690127aaca8ffc438c34ab661151f8019f268cfec0fd5890a9c230428dba5f0",
+    "anchor_valid": true,
+    "policy_decision": "review",
+    "policy_reasons": [
+      "threshold.review.met",
+      "grounded.true"
+    ]
+  },
+  {
+    "document_id": "07d21d630f99f42d8779cce2e2f04a19de80c18286b11bbd646f7568426931b6",
+    "family_id": "debt_capacity.indebtedness",
+    "ontology_node_id": "debt_capacity.indebtedness.general_basket",
+    "doc_id": "01b5d9056021e3e9",
+    "section_number": "6.1",
+    "heading": "Indebtedness",
+    "article_num": 6,
+    "article_concept": "negative_covenants",
+    "rule_id": "0b54b933-f5db-4426-b24e-b28db4d04426",
+    "rule_version": 1,
+    "rule_hash": "d6404d6a88d26c67",
+    "source": "bulk_linker",
+    "section_char_start": 516647,
+    "section_char_end": 522265,
+    "link_role": "primary_covenant",
+    "confidence": 0.5,
+    "score_raw": 0.5,
+    "score_calibrated": 0.5,
+    "threshold_profile_id": "scope:debt_capacity.indebtedness.general_basket:ontology:2.5.1",
+    "confidence_tier": "medium",
+    "confidence_breakdown": {
+      "article_match": 0.5,
+      "heading_exactness": 0.5,
+      "clause_signal": 0.5,
+      "template_consistency": 0.5,
+      "defined_term_grounding": 0.5,
+      "structural_prior": 0.5,
+      "semantic_similarity": 0.5
+    },
+    "why_matched": {
+      "article_match": {
+        "reason": "no_article_constraint"
+      },
+      "heading_exactness": {
+        "reason": "heading_is_substring",
+        "matched_value": "other indebtedness"
+      },
+      "clause_signal": {
+        "reason": "not_checked"
+      },
+      "template_consistency": {
+        "reason": "no_template_data"
+      },
+      "defined_term_grounding": {
+        "reason": "no_expected_terms"
+      },
+      "structural_prior": {
+        "reason": "no_structural_prior"
+      },
+      "semantic_similarity": {
+        "reason": "embeddings_unavailable"
+      }
+    },
+    "match_type": "partial",
+    "matched_value": "other indebtedness",
+    "status": "pending_review",
+    "conflicts": [],
+    "grounded": true,
+    "ontology_version": "2.5.1",
+    "section_path": "6.1",
+    "section_reference_key": "07d21d630f99f42d8779cce2e2f04a19de80c18286b11bbd646f7568426931b6:indebtedness",
+    "clause_path": "__section__",
+    "clause_key": "07d21d630f99f42d8779cce2e2f04a19de80c18286b11bbd646f7568426931b6:indebtedness:__section__",
+    "node_type": "section",
+    "span_start": 516647,
+    "span_end": 522265,
+    "anchor_text": "Indebtedness",
+    "text_sha256": "625e2c4ea71bbb4ec6b392d3fd492e1e907261a6dc0b070b34d3e6bf19e47a06",
+    "chunk_id": "eac3c8a34ebdad415350a558e247f6d9674328c9ec894e7697aa0e1f455eef3a",
+    "anchor_valid": true,
+    "policy_decision": "review",
+    "policy_reasons": [
+      "threshold.review.met",
+      "grounded.true"
+    ]
+  }
+]

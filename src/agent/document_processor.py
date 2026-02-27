@@ -346,6 +346,11 @@ def process_document_text(
             "text_length": len(normalized_text),
             "section_parser_mode": "",
             "section_fallback_used": False,
+            "section_parser_trace": json.dumps(
+                {"mode": "skipped_non_cohort"},
+                sort_keys=True,
+                separators=(",", ":"),
+            ),
         }
         return DocumentResult(
             doc=doc_record,
@@ -365,16 +370,31 @@ def process_document_text(
     all_sections: list[OutlineSection] = outline.sections
     section_parser_mode = "doc_outline"
     section_fallback_used = False
+    section_parse_trace: dict[str, Any] = {
+        "outline_articles": len(outline.articles),
+        "outline_sections": len(all_sections),
+        "mode": "doc_outline",
+        "regex_fallback_sections": 0,
+        "clause_retry_applied": False,
+        "clause_retry_sections": 0,
+        "reason": "",
+    }
 
     if not all_sections:
         from agent.section_parser import find_sections
 
-        all_sections = find_sections(normalized_text)  # type: ignore[assignment]
-        if all_sections:
+        regex_sections = find_sections(normalized_text)  # type: ignore[assignment]
+        section_parse_trace["regex_fallback_sections"] = len(regex_sections)
+        all_sections = regex_sections
+        if regex_sections:
             section_parser_mode = "regex_fallback"
             section_fallback_used = True
+            section_parse_trace["mode"] = "regex_fallback"
+            section_parse_trace["reason"] = "outline_sections_zero"
         else:
             section_parser_mode = "none"
+            section_parse_trace["mode"] = "none"
+            section_parse_trace["reason"] = "outline_and_regex_sections_zero"
 
     # Step 6b: Build article records
     article_records: list[dict[str, Any]] = [
@@ -425,6 +445,10 @@ def process_document_text(
                 all_clauses = fallback_clauses
                 section_parser_mode = "regex_fallback"
                 section_fallback_used = True
+                section_parse_trace["clause_retry_applied"] = True
+                section_parse_trace["clause_retry_sections"] = len(fallback_sections)
+                if not section_parse_trace["reason"]:
+                    section_parse_trace["reason"] = "outline_clause_parse_zero"
 
     # Step 8: Extract definitions
     definitions: list[DefinedTerm] = extract_definitions(normalized_text)
@@ -480,6 +504,11 @@ def process_document_text(
         "text_length": len(normalized_text),
         "section_parser_mode": section_parser_mode,
         "section_fallback_used": section_fallback_used,
+        "section_parser_trace": json.dumps(
+            section_parse_trace,
+            sort_keys=True,
+            separators=(",", ":"),
+        ),
     }
 
     # Step 11: Build section records

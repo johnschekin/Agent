@@ -143,14 +143,27 @@ def _make_preview(
     """Insert a preview directly into the database."""
     ts = created_at or datetime.now(UTC).isoformat()
     expires = (datetime.now(UTC) + timedelta(hours=2)).isoformat()
+    params_json = json.dumps(
+        {
+            "lineage": {
+                "corpus_version": "corpus-v1",
+                "corpus_snapshot_id": "snapshot-v1",
+                "parser_version": "parser-v1",
+                "ontology_version": "ontology-v1",
+                "ruleset_version": "ruleset-v1",
+                "git_sha": "abc123",
+                "created_at_utc": "2026-02-27T00:00:00Z",
+            }
+        }
+    )
     store._conn.execute("""
         INSERT INTO family_link_previews
         (preview_id, family_id, rule_id, rule_hash, corpus_version,
-         parser_version, candidate_set_hash, candidate_count,
+         parser_version, candidate_set_hash, candidate_count, params_json,
          new_link_count, already_linked_count, conflict_count,
          by_confidence_tier, avg_confidence, expires_at, created_at)
-        VALUES (?, ?, '', 'h', 'v1', 'p1', ?, 2, 0, 0, 0, '{}', 0.5, ?, ?)
-    """, [preview_id, family_id, candidate_set_hash, expires, ts])
+        VALUES (?, ?, '', 'h', 'corpus-v1', 'parser-v1', ?, 2, ?, 0, 0, 0, '{}', 0.5, ?, ?)
+    """, [preview_id, family_id, candidate_set_hash, params_json, expires, ts])
     return preview_id
 
 
@@ -592,7 +605,23 @@ class TestHandleApply:
         _make_preview(store, preview_id, family_id="debt_capacity.indebtedness", candidate_set_hash="hash-node")
         store._conn.execute(
             "UPDATE family_link_previews SET params_json = ? WHERE preview_id = ?",
-            [json.dumps({"ontology_node_id": "debt_capacity.indebtedness.general_basket"}), preview_id],
+            [
+                json.dumps(
+                    {
+                        "ontology_node_id": "debt_capacity.indebtedness.general_basket",
+                        "lineage": {
+                            "corpus_version": "corpus-v1",
+                            "corpus_snapshot_id": "snapshot-v1",
+                            "parser_version": "parser-v1",
+                            "ontology_version": "ontology-v1",
+                            "ruleset_version": "ruleset-v1",
+                            "git_sha": "abc123",
+                            "created_at_utc": "2026-02-27T00:00:00Z",
+                        },
+                    }
+                ),
+                preview_id,
+            ],
         )
         store.save_preview_candidates(
             preview_id,
@@ -950,7 +979,11 @@ class TestHandleExport:
             {"format": "csv"},
         )
 
+        assert result["schema_version"] == "link_export_v1"
         assert result["format"] == "csv"
+        assert result["contract_format"] == "wave3-handoff"
+        assert result["evidence_schema_version"] == "evidence_v3"
+        assert result["labeled_export_schema_version"] == "labeled_export_v2"
         assert result["row_count"] == 2
         assert result["data_length"] > 0
 
@@ -965,6 +998,7 @@ class TestHandleExport:
             {"format": "jsonl", "family_id": "fam_b"},
         )
 
+        assert result["schema_version"] == "link_export_v1"
         assert result["format"] == "jsonl"
         assert result["row_count"] == 1
         assert result["data_length"] > 0

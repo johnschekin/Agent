@@ -55,6 +55,7 @@ EXPECTED_COLUMNS: dict[str, tuple[str, ...]] = {
         "text_length",
         "section_parser_mode",
         "section_fallback_used",
+        "section_parser_trace",
     ),
     "articles": (
         "doc_id",

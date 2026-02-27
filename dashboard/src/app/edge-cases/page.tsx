@@ -44,6 +44,24 @@ const TIER_COLORS: Record<string, "red" | "orange" | undefined> = {
   template: undefined,
 };
 
+const GROUP_LABELS: Record<string, string> = {
+  parser_integrity: "Parser Integrity",
+  baseline_enrichment: "Baseline Enrichment",
+  outlier_monitoring: "Outlier Monitoring",
+  all: "All Signals",
+};
+const GROUP_ORDER = [
+  "parser_integrity",
+  "baseline_enrichment",
+  "outlier_monitoring",
+  "all",
+] as const;
+const COLLISION_HOT_RANK: Record<string, number> = {
+  clause_dup_id_burst: 0,
+  clause_root_label_repeat_explosion: 1,
+  clause_depth_reset_after_deep: 2,
+};
+
 // --- Category labels (38 categories across 6 tiers) ---
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -190,8 +208,11 @@ function EdgeCaseRow({
 export default function EdgeCasesPage() {
   const router = useRouter();
   const [category, setCategory] = useState("all");
+  const [group, setGroup] = useState("parser_integrity");
+  const [includeMonitorOnly, setIncludeMonitorOnly] = useState(false);
   const [cohortOnly, setCohortOnly] = useState(true);
   const [page, setPage] = useState(0);
+  const detectorStatus = includeMonitorOnly ? "all" : "active";
 
   // Drill-down state for clause anomaly categories
   const [selectedDoc, setSelectedDoc] = useState<{
@@ -201,6 +222,8 @@ export default function EdgeCasesPage() {
 
   const edgeCases = useEdgeCases({
     category,
+    group,
+    detectorStatus,
     page,
     pageSize: 50,
     cohortOnly,
@@ -222,6 +245,13 @@ export default function EdgeCasesPage() {
 
   const handleCategoryChange = useCallback((key: string) => {
     setCategory(key);
+    setPage(0);
+    setSelectedDoc(null);
+  }, []);
+
+  const handleGroupChange = useCallback((nextGroup: string) => {
+    setGroup(nextGroup);
+    setCategory("all");
     setPage(0);
     setSelectedDoc(null);
   }, []);
@@ -262,6 +292,16 @@ export default function EdgeCasesPage() {
           pills.push({ key: catKey, label: catLabel, count: info.count });
         }
       }
+      if (group === "parser_integrity" && tier === "clauses") {
+        pills.sort((a, b) => {
+          const aHot = Object.prototype.hasOwnProperty.call(COLLISION_HOT_RANK, a.key);
+          const bHot = Object.prototype.hasOwnProperty.call(COLLISION_HOT_RANK, b.key);
+          if (aHot && bHot) return COLLISION_HOT_RANK[a.key] - COLLISION_HOT_RANK[b.key];
+          if (aHot) return -1;
+          if (bHot) return 1;
+          return b.count - a.count || a.label.localeCompare(b.label);
+        });
+      }
       if (pills.length > 0) {
         grouped.set(tier, pills);
       }
@@ -272,7 +312,37 @@ export default function EdgeCasesPage() {
   return (
     <ViewContainer title="Edge Case Inspector">
       {/* Controls */}
-      <div className="flex items-center gap-3 mb-4">
+      <div className="mb-4">
+        <div className="flex flex-wrap items-center gap-2 mb-2">
+          {GROUP_ORDER.map((groupKey) => (
+            <button
+              key={groupKey}
+              onClick={() => handleGroupChange(groupKey)}
+              className={cn(
+                "px-2.5 py-1 rounded-sm text-xs font-medium transition-colors",
+                group === groupKey
+                  ? "bg-accent-blue/20 text-accent-blue"
+                  : "bg-surface-3 text-text-muted hover:text-text-secondary border border-border"
+              )}
+            >
+              {GROUP_LABELS[groupKey]}
+            </button>
+          ))}
+        </div>
+        <div className="flex items-center gap-3">
+          <label className="flex items-center gap-1.5 text-xs text-text-secondary cursor-pointer">
+            <input
+              type="checkbox"
+              checked={includeMonitorOnly}
+              onChange={(e) => {
+                setIncludeMonitorOnly(e.target.checked);
+                setCategory("all");
+                setPage(0);
+              }}
+              className="accent-accent-blue"
+            />
+            Include monitor-only detectors
+          </label>
         <label className="flex items-center gap-1.5 text-xs text-text-secondary cursor-pointer">
           <input
             type="checkbox"
@@ -285,6 +355,7 @@ export default function EdgeCasesPage() {
           />
           Cohort Only
         </label>
+        </div>
       </div>
 
       {/* KPI cards — tier-level summaries */}

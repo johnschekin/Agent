@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Save normalized v2 evidence rows with provenance to workspace JSONL files.
+"""Save normalized evidence rows with provenance to workspace JSONL files.
 
 Usage:
     python3 scripts/evidence_collector.py \
@@ -18,6 +18,7 @@ Outputs structured JSON to stdout, human messages to stderr.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 from datetime import UTC, datetime
@@ -57,6 +58,26 @@ def log(msg: str) -> None:
 
 def _now_iso() -> str:
     return datetime.now(UTC).isoformat()
+
+
+_PLACEHOLDER_VERSION_VALUES = {
+    "",
+    "unknown",
+    "parser-unknown",
+    "bulk_linker_v1",
+    "worker_v1",
+    "1.0",
+}
+
+
+def _best_effort_git_sha() -> str:
+    try:
+        from agent.run_manifest import git_commit_hash
+
+        value = git_commit_hash(search_from=Path(__file__).resolve().parents[1])
+        return str(value or "").strip()
+    except Exception:
+        return ""
 
 
 def _as_int(value: Any) -> int | None:
@@ -324,9 +345,168 @@ def _normalize_not_found_from_miss(
     }
 
 
+def _normalize_wave3_row(
+    *,
+    row: dict[str, Any],
+    ontology_node_id: str,
+    run_id: str,
+    strategy_version: int | None,
+    source_tool: str,
+    created_at_utc: str,
+    lineage_defaults: dict[str, str],
+) -> dict[str, Any] | None:
+    doc_id = str(row.get("doc_id", "")).strip()
+    if not doc_id:
+        return None
+
+    record_type = str(row.get("record_type", "HIT")).upper().strip()
+    if record_type not in {"HIT", "NOT_FOUND"}:
+        record_type = "HIT"
+
+    section_number = str(
+        row.get("section_number")
+        or row.get("section")
+        or row.get("parent_section")
+        or ""
+    )
+    heading = str(row.get("heading") or row.get("header_text") or row.get("section_heading") or "")
+    clause_path = str(row.get("clause_path") or "__section__")
+
+    span_start = _as_int(row.get("span_start", row.get("char_start")))
+    span_end = _as_int(row.get("span_end", row.get("char_end")))
+    anchor_text = str(row.get("anchor_text") or row.get("text") or heading or "").strip()
+
+    document_id = str(row.get("document_id") or "").strip()
+    if not document_id:
+        document_id = hashlib.sha256(doc_id.encode("utf-8")).hexdigest()
+    section_reference_key = str(row.get("section_reference_key") or "").strip()
+    if not section_reference_key:
+        section_reference_key = f"{document_id}:{section_number or 'unknown_section'}"
+    clause_key = str(row.get("clause_key") or "").strip()
+    if not clause_key:
+        clause_key = f"{section_reference_key}:{clause_path}"
+
+    text_sha256 = str(row.get("text_sha256") or "").strip()
+    if not text_sha256:
+        text_sha256 = hashlib.sha256(anchor_text.encode("utf-8")).hexdigest()
+    chunk_id = str(row.get("chunk_id") or "").strip()
+    if not chunk_id:
+        chunk_payload = (
+            f"{document_id}|{section_reference_key}|{clause_key}|"
+            f"{span_start}|{span_end}|{text_sha256}"
+        )
+        chunk_id = hashlib.sha256(chunk_payload.encode("utf-8")).hexdigest()
+
+    score_raw = _as_float(row.get("score_raw", row.get("score")))
+    score_calibrated = _as_float(row.get("score_calibrated", row.get("score")))
+    if score_raw is None and score_calibrated is not None:
+        score_raw = score_calibrated
+    if score_calibrated is None and score_raw is not None:
+        score_calibrated = score_raw
+    if score_raw is None:
+        score_raw = 0.0
+    if score_calibrated is None:
+        score_calibrated = 0.0
+
+    grounded = bool(row.get("grounded", True))
+    policy_decision = str(row.get("policy_decision") or "").strip().lower()
+    if policy_decision not in {"must", "review", "reject"}:
+        if score_calibrated >= 0.8 and grounded:
+            policy_decision = "must"
+        elif score_calibrated >= 0.5 or not grounded:
+            policy_decision = "review"
+        else:
+            policy_decision = "reject"
+    policy_reasons_raw = row.get("policy_reasons", [])
+    policy_reasons = [str(v) for v in _as_list(policy_reasons_raw) if str(v)]
+    if not policy_reasons:
+        policy_reasons = [f"policy.{policy_decision}.derived"]
+
+    return {
+        "schema_version": "evidence_v3",
+        "record_type": record_type,
+        "document_id": document_id,
+        "section_reference_key": section_reference_key,
+        "clause_key": clause_key,
+        "ontology_node_id": ontology_node_id,
+        "node_type": str(row.get("node_type") or ("section" if clause_path == "__section__" else "clause")),
+        "section_path": str(row.get("section_path") or section_number),
+        "clause_path": clause_path,
+        "span_start": span_start,
+        "span_end": span_end,
+        "anchor_text": anchor_text,
+        "text_sha256": text_sha256,
+        "chunk_id": chunk_id,
+        "score_raw": score_raw,
+        "score_calibrated": score_calibrated,
+        "threshold_profile_id": str(row.get("threshold_profile_id") or ""),
+        "grounded": grounded,
+        "policy_decision": policy_decision,
+        "policy_reasons": policy_reasons,
+        "run_id": run_id,
+        "corpus_snapshot_id": str(row.get("corpus_snapshot_id") or lineage_defaults.get("corpus_snapshot_id") or ""),
+        "corpus_version": str(row.get("corpus_version") or lineage_defaults.get("corpus_version") or ""),
+        "parser_version": str(row.get("parser_version") or lineage_defaults.get("parser_version") or ""),
+        "ontology_version": str(row.get("ontology_version") or lineage_defaults.get("ontology_version") or ""),
+        "ruleset_version": str(row.get("ruleset_version") or lineage_defaults.get("ruleset_version") or ""),
+        "git_sha": str(row.get("git_sha") or lineage_defaults.get("git_sha") or ""),
+        "source_document_path": str(row.get("source_document_path") or ""),
+        "created_at_utc": created_at_utc,
+        "strategy_version": strategy_version,
+        "source_tool": source_tool,
+        "doc_id": doc_id,
+        "section_number": section_number,
+    }
+
+
+def _validate_wave3_record(row: dict[str, Any]) -> list[str]:
+    required_nonempty = [
+        "document_id",
+        "section_reference_key",
+        "clause_key",
+        "ontology_node_id",
+        "chunk_id",
+        "policy_decision",
+        "run_id",
+        "corpus_version",
+        "parser_version",
+        "ontology_version",
+        "ruleset_version",
+        "git_sha",
+        "created_at_utc",
+    ]
+    missing: list[str] = []
+    for key in required_nonempty:
+        value = row.get(key)
+        if value is None or (isinstance(value, str) and not value.strip()):
+            missing.append(key)
+
+    span_start = _as_int(row.get("span_start"))
+    span_end = _as_int(row.get("span_end"))
+    if span_start is None:
+        missing.append("span_start")
+    if span_end is None:
+        missing.append("span_end")
+    if span_start is not None and span_end is not None and span_end <= span_start:
+        missing.append("span_order")
+    if str(row.get("policy_decision", "")).strip() not in {"must", "review", "reject"}:
+        missing.append("policy_decision")
+    for field in (
+        "corpus_version",
+        "parser_version",
+        "ontology_version",
+        "ruleset_version",
+        "git_sha",
+    ):
+        value = str(row.get(field) or "").strip().lower()
+        if value in _PLACEHOLDER_VERSION_VALUES:
+            missing.append(f"{field}.placeholder")
+    return sorted(set(missing))
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Save normalized evidence v2 rows with provenance."
+        description="Save normalized evidence rows with provenance."
     )
     parser.add_argument(
         "--matches",
@@ -364,6 +544,18 @@ def main() -> None:
         action="store_true",
         help="Do not emit NOT_FOUND rows from miss records or explicit not-found matches.",
     )
+    parser.add_argument(
+        "--schema-version",
+        choices=("evidence_v2", "evidence_v3"),
+        default="evidence_v3",
+        help="Evidence schema version to emit (default: evidence_v3).",
+    )
+    parser.add_argument("--corpus-version", default=None, help="Optional default corpus_version")
+    parser.add_argument("--corpus-snapshot-id", default=None, help="Optional default corpus_snapshot_id")
+    parser.add_argument("--parser-version", default=None, help="Optional default parser_version")
+    parser.add_argument("--ontology-version", default=None, help="Optional default ontology_version")
+    parser.add_argument("--ruleset-version", default=None, help="Optional default ruleset_version")
+    parser.add_argument("--git-sha", default=None, help="Optional default git sha")
     args = parser.parse_args()
 
     matches_path = Path(args.matches)
@@ -396,29 +588,21 @@ def main() -> None:
         sv_raw = payload_meta.get("strategy_version")
         strategy_version = _as_int(sv_raw)
     created_at = _now_iso()
+    lineage_defaults = {
+        "corpus_version": str(args.corpus_version or "").strip(),
+        "corpus_snapshot_id": str(args.corpus_snapshot_id or "").strip(),
+        "parser_version": str(args.parser_version or "").strip(),
+        "ontology_version": str(args.ontology_version or "").strip(),
+        "ruleset_version": str(args.ruleset_version or "").strip(),
+        "git_sha": str(args.git_sha or _best_effort_git_sha()).strip(),
+    }
 
     normalized: list[dict[str, Any]] = []
     skipped = 0
 
     for row in hit_rows:
-        record = _normalize_hit_or_not_found(
-            row=row,
-            ontology_node_id=args.concept_id,
-            run_id=run_id,
-            strategy_version=strategy_version,
-            source_tool=source_tool,
-            created_at=created_at,
-        )
-        if record is None:
-            skipped += 1
-            continue
-        if args.skip_not_found and record["record_type"] == "NOT_FOUND":
-            continue
-        normalized.append(record)
-
-    if not args.skip_not_found:
-        for row in miss_rows:
-            record = _normalize_not_found_from_miss(
+        if args.schema_version == "evidence_v2":
+            record = _normalize_hit_or_not_found(
                 row=row,
                 ontology_node_id=args.concept_id,
                 run_id=run_id,
@@ -426,9 +610,62 @@ def main() -> None:
                 source_tool=source_tool,
                 created_at=created_at,
             )
+        else:
+            record = _normalize_wave3_row(
+                row=row,
+                ontology_node_id=args.concept_id,
+                run_id=run_id,
+                strategy_version=strategy_version,
+                source_tool=source_tool,
+                created_at_utc=created_at,
+                lineage_defaults=lineage_defaults,
+            )
+        if record is None:
+            skipped += 1
+            continue
+        if args.schema_version == "evidence_v3":
+            missing = _validate_wave3_record(record)
+            if missing:
+                log(f"Error: invalid evidence_v3 row missing/invalid fields: {', '.join(missing)}")
+                sys.exit(1)
+        if args.skip_not_found and record["record_type"] == "NOT_FOUND":
+            continue
+        normalized.append(record)
+
+    if not args.skip_not_found:
+        for row in miss_rows:
+            if args.schema_version == "evidence_v2":
+                record = _normalize_not_found_from_miss(
+                    row=row,
+                    ontology_node_id=args.concept_id,
+                    run_id=run_id,
+                    strategy_version=strategy_version,
+                    source_tool=source_tool,
+                    created_at=created_at,
+                )
+            else:
+                miss_row = dict(row)
+                miss_row["record_type"] = "NOT_FOUND"
+                record = _normalize_wave3_row(
+                    row=miss_row,
+                    ontology_node_id=args.concept_id,
+                    run_id=run_id,
+                    strategy_version=strategy_version,
+                    source_tool=source_tool,
+                    created_at_utc=created_at,
+                    lineage_defaults=lineage_defaults,
+                )
             if record is None:
                 skipped += 1
                 continue
+            if args.schema_version == "evidence_v3":
+                missing = _validate_wave3_record(record)
+                if missing:
+                    log(
+                        "Error: invalid evidence_v3 NOT_FOUND row missing/invalid fields: "
+                        + ", ".join(missing)
+                    )
+                    sys.exit(1)
             normalized.append(record)
 
     timestamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%S")
@@ -458,7 +695,7 @@ def main() -> None:
     )
 
     summary = {
-        "schema_version": "evidence_v2",
+        "schema_version": args.schema_version,
         "ontology_node_id": args.concept_id,
         "run_id": run_id,
         "strategy_version": strategy_version,

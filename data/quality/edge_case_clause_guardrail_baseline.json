@@ -1,0 +1,51 @@
+{
+  "generated_at": "2026-02-26T19:40:00Z",
+  "guardrails": {
+    "clause_depth_reset_after_deep.docs": {
+      "max_abs_increase": 0.0,
+      "max_rel_increase": 0.0
+    },
+    "clause_depth_reset_after_deep.total_resets": {
+      "max_abs_increase": 0.0,
+      "max_rel_increase": 0.0
+    },
+    "clause_dup_id_burst.docs": {
+      "max_abs_increase": 0.0,
+      "max_rel_increase": 0.0
+    },
+    "clause_dup_id_burst.max_dup_ratio": {
+      "max_abs_increase": 0.0,
+      "max_rel_increase": 0.0
+    },
+    "clause_root_label_repeat_explosion.docs": {
+      "max_abs_increase": 0.0,
+      "max_rel_increase": 0.0
+    },
+    "clause_root_label_repeat_explosion.max_repeat": {
+      "max_abs_increase": 0.0,
+      "max_rel_increase": 0.0
+    }
+  },
+  "metrics": {
+    "clause_depth_reset_after_deep": {
+      "docs": 8,
+      "flagged_sections_total": 8,
+      "max_resets_per_doc": 4,
+      "total_resets": 19
+    },
+    "clause_dup_id_burst": {
+      "avg_dup_ratio": 0.9437014646009283,
+      "docs": 46,
+      "max_dup_ratio": 0.9859335038363172,
+      "p95_dup_ratio": 0.9840673263086519
+    },
+    "clause_root_label_repeat_explosion": {
+      "avg_repeat": 234.75,
+      "docs": 32,
+      "max_repeat": 450.0,
+      "p95_repeat": 320.4
+    }
+  },
+  "source_db": "corpus_index/corpus.duckdb",
+  "version": 1
+}

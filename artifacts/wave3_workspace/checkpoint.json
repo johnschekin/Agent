@@ -1,0 +1,11 @@
+{
+  "family": "wave3_workspace",
+  "status": "running",
+  "current_concept_id": "debt_capacity.indebtedness",
+  "last_concept_id": "debt_capacity.indebtedness",
+  "last_evidence_file": "artifacts/wave3_workspace/evidence/debt_capacity.indebtedness_20260227T045755.jsonl",
+  "last_evidence_run_id": "evidence_20260227T045755Z_61bdf3ef",
+  "last_evidence_records": 2,
+  "last_evidence_at": "2026-02-27T04:57:55.278767+00:00",
+  "last_update": "2026-02-27T04:57:55.278767+00:00"
+}

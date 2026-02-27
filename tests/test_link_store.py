@@ -114,7 +114,7 @@ class TestInit:
         table_names = {r[0] for r in rows}
         expected_tables = {
             "_schema_version", "family_link_rules", "family_links",
-            "family_link_events", "link_evidence", "link_defined_terms",
+            "family_link_events", "admin_audit_events", "link_evidence", "link_defined_terms",
             "family_link_runs", "family_link_previews", "preview_candidates",
             "family_link_calibrations", "job_queue", "action_log", "undo_state",
             "rule_pins", "pin_evaluations", "family_conflict_policies",
@@ -236,6 +236,32 @@ class TestRulesCrud:
         aliases = set(store.resolve_scope_aliases("debt_capacity.indebtedness"))
         assert "FAM-indebtedness" in aliases
 
+    def test_alias_resolution_scoped_by_ontology_version(self, store: LinkStore) -> None:
+        store.upsert_family_alias(
+            "FAM-indebtedness",
+            "debt_capacity.indebtedness.v1",
+            ontology_version="v1",
+        )
+        store.upsert_family_alias(
+            "FAM-indebtedness",
+            "debt_capacity.indebtedness.v2",
+            ontology_version="v2",
+        )
+
+        aliases_v1 = set(store.resolve_scope_aliases("FAM-indebtedness", ontology_version="v1"))
+        aliases_v2 = set(store.resolve_scope_aliases("FAM-indebtedness", ontology_version="v2"))
+
+        assert "debt_capacity.indebtedness.v1" in aliases_v1
+        assert "debt_capacity.indebtedness.v2" not in aliases_v1
+        assert "debt_capacity.indebtedness.v2" in aliases_v2
+        assert "debt_capacity.indebtedness.v1" not in aliases_v2
+
+    def test_alias_cycle_detection_raises(self, store: LinkStore) -> None:
+        store.upsert_family_alias("A", "B", ontology_version="v1")
+        store.upsert_family_alias("B", "A", ontology_version="v1")
+        with pytest.raises(ValueError, match="Alias cycle detected"):
+            store.resolve_scope_aliases("A", ontology_version="v1")
+
     def test_clone_rule(self, store: LinkStore) -> None:
         store.save_rule({
             "rule_id": "r_original", "family_id": "debt",
@@ -331,6 +357,32 @@ class TestLinksCrud:
         assert rows[0]["ontology_node_id"] == "debt_capacity.indebtedness.general_basket"
         assert rows[0]["clause_id"] == "a.iii"
         assert rows[0]["clause_text"] == "(iii) other Indebtedness ..."
+
+    def test_create_link_persists_policy_and_lineage_fields(self, store: LinkStore) -> None:
+        run_id = str(uuid.uuid4())
+        link = _make_link(doc_id="doc_policy", section_number="6.02")
+        link.update(
+            {
+                "ontology_node_id": "debt_capacity.indebtedness.general_basket",
+                "ontology_version": "ontology-v1",
+                "score_raw": 0.71,
+                "score_calibrated": 0.83,
+                "threshold_profile_id": "scope:debt_capacity.indebtedness.general_basket:ontology:ontology-v1",
+                "policy_decision": "must",
+                "policy_reasons": ["threshold.must.met", "grounded.true"],
+                "corpus_version": "corpus-0.2.0",
+                "parser_version": "parser-abc123",
+            }
+        )
+        created = store.create_links([link], run_id)
+        assert created == 1
+        rows = store.get_links(doc_id="doc_policy")
+        assert len(rows) == 1
+        assert rows[0]["ontology_version"] == "ontology-v1"
+        assert rows[0]["score_raw"] == pytest.approx(0.71)
+        assert rows[0]["score_calibrated"] == pytest.approx(0.83)
+        assert rows[0]["policy_decision"] == "must"
+        assert "threshold.must.met" in str(rows[0]["policy_reasons"])
 
     def test_get_links_filter_by_canonical_scope_alias(self, store: LinkStore) -> None:
         run_id = str(uuid.uuid4())
@@ -615,6 +667,26 @@ class TestEvents:
         events = store.get_events("link_001")
         assert events[0]["metadata"] is not None
 
+    def test_admin_audit_event_round_trip(self, store: LinkStore) -> None:
+        store.log_admin_audit_event(
+            {
+                "action": "calibration.update",
+                "path": "/api/links/calibrate/debt",
+                "method": "POST",
+                "actor_fingerprint": "actor_123",
+                "request_id": "req_123",
+                "source_ip": "127.0.0.1",
+                "source_host": "localhost",
+                "payload_hash": "hash_123",
+                "status_code": 200,
+                "metadata": {"family_id": "debt"},
+            }
+        )
+        rows = store.get_admin_audit_events(limit=5)
+        assert rows
+        assert rows[0]["action"] == "calibration.update"
+        assert rows[0]["request_id"] == "req_123"
+
 
 # ───────────────────── Evidence ──────────────────────────────────────
 
@@ -664,6 +736,47 @@ class TestEvidence:
         result = store.get_evidence("link_002")
         assert result[0]["metadata"] is not None
 
+    def test_wave3_evidence_fields_persist(self, store: LinkStore) -> None:
+        store.save_evidence(
+            [
+                {
+                    "link_id": "link_003",
+                    "run_id": "run_003",
+                    "doc_id": "doc_003",
+                    "section_number": "7.01",
+                    "section_reference_key": "doc_hash:7.01",
+                    "clause_key": "doc_hash:7.01:__section__",
+                    "evidence_type": "heading_match",
+                    "node_type": "section",
+                    "section_path": "7.01",
+                    "clause_path": "__section__",
+                    "char_start": 10,
+                    "char_end": 40,
+                    "anchor_text": "Indebtedness",
+                    "text_sha256": hashlib.sha256(b"Indebtedness").hexdigest(),
+                    "chunk_id": "chunk_003",
+                    "reason_code": "heading_match",
+                    "score": 0.81,
+                    "score_raw": 0.74,
+                    "score_calibrated": 0.81,
+                    "threshold_profile_id": "profile_1",
+                    "policy_decision": "must",
+                    "policy_reasons": ["threshold.must.met", "grounded.true"],
+                    "corpus_version": "corpus-0.2.0",
+                    "parser_version": "parser-v1",
+                    "ontology_version": "ontology-v1",
+                    "ruleset_version": "ruleset-v1",
+                    "git_sha": "abc123",
+                    "created_at_utc": "2026-02-27T00:00:00Z",
+                },
+            ]
+        )
+        result = store.get_evidence("link_003")
+        assert len(result) == 1
+        assert result[0]["chunk_id"] == "chunk_003"
+        assert result[0]["policy_decision"] == "must"
+        assert result[0]["ontology_version"] == "ontology-v1"
+
 
 # ───────────────────── Runs ──────────────────────────────────────────
 
@@ -671,11 +784,20 @@ class TestEvidence:
 class TestRuns:
     def test_create_and_complete_run(self, store: LinkStore) -> None:
         run = _make_run(run_id="run_001")
+        run.update(
+            {
+                "corpus_snapshot_id": "snapshot_001",
+                "ontology_version": "ontology-v1",
+                "ruleset_version": "ruleset-v1",
+                "git_sha": "abcdef1",
+            }
+        )
         store.create_run(run)
 
         runs = store.get_runs()
         assert len(runs) == 1
         assert runs[0]["run_id"] == "run_001"
+        assert runs[0]["ontology_version"] == "ontology-v1"
         assert runs[0]["completed_at"] is None
 
         store.complete_run("run_001", {

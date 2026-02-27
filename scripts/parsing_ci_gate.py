@@ -97,6 +97,16 @@ def run_gate(mode: str, config_path: Path, skip_compile: bool) -> dict[str, Any]
         for target in compile_targets:
             checks.append(_run(["python3", "-m", "py_compile", str(target)], env))
 
+    extra_commands = mode_cfg.get("extra_commands") or []
+    if not isinstance(extra_commands, list):
+        raise ValueError(f"Mode {mode!r} has invalid extra_commands")
+    for cmd in extra_commands:
+        if not isinstance(cmd, list) or not cmd or not all(isinstance(part, str) for part in cmd):
+            raise ValueError(
+                f"Mode {mode!r} extra_commands entries must be non-empty string lists",
+            )
+        checks.append(_run(cmd, env))
+
     all_ok = all(check.ok for check in checks)
     return {
         "ok": all_ok,

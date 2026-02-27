@@ -30,7 +30,7 @@ class DefinedTerm:
     """A defined term extracted from the text."""
 
     term: str                # The defined term itself: "Indebtedness"
-    definition_text: str     # The full definition text (up to 2000 chars)
+    definition_text: str     # The full definition text
     char_start: int          # Char offset of the term in source text
     char_end: int            # Char offset end of term
     def_start: int           # Char offset start of definition text
@@ -190,8 +190,6 @@ _DEF_INTRO_RE = re.compile(
     re.IGNORECASE,
 )
 
-_MAX_DEF_LEN = 2000
-
 
 def _extract_definition_text(
     text: str,
@@ -203,7 +201,7 @@ def _extract_definition_text(
     text until one of:
       - a period followed by a blank line (paragraph break)
       - the start of another quoted/smart-quoted defined term pattern
-      - 2000 characters
+      - the next major structural boundary (Section/Article/Exhibit/Schedule)
 
     Returns (definition_text, def_start, def_end) with offsets relative to
     the original *text*.
@@ -217,7 +215,7 @@ def _extract_definition_text(
         def_start = after_pos
 
     # Determine the end of the definition text.
-    remaining = text[def_start : def_start + _MAX_DEF_LEN]
+    remaining = text[def_start:]
 
     # End-sentinels: period + blank line, or next quoted defined term.
     # We look for the earliest sentinel.
@@ -236,6 +234,16 @@ def _extract_definition_text(
     )
     if next_def:
         candidate = next_def.start() + 1  # +1 because we sliced at [1:]
+        end_offset = min(end_offset, candidate)
+
+    # Sentinel 3: hard structural boundaries usually indicate we've left the
+    # definition list and entered another major section of the agreement.
+    structure_break = re.search(
+        r"(?:^|\n)\s*(?:Section|SECTION|Article|ARTICLE|Exhibit|EXHIBIT|Schedule|SCHEDULE)\s+[A-Z0-9IVX]",
+        remaining[1:],
+    )
+    if structure_break:
+        candidate = structure_break.start() + 1
         end_offset = min(end_offset, candidate)
 
     definition_text = remaining[:end_offset].rstrip()
@@ -358,9 +366,6 @@ def _engine_parenthetical(text: str, global_offset: int) -> list[DefinedTerm]:
         # The definition text spans from sentence_start up to and including
         # the closing parenthesis.
         def_text_raw = text[sentence_start : m.end()].strip()
-        if len(def_text_raw) > _MAX_DEF_LEN:
-            def_text_raw = def_text_raw[:_MAX_DEF_LEN]
-
         def_start = sentence_start + global_offset
         def_end = def_start + len(def_text_raw)
 

@@ -554,21 +554,21 @@
 
 **Improvement 16: Section canonical naming**
 - **Source:** VP `outline.py:117-124`
-- **What:** Add `section_canonical_name` (heading lowercased + stripped) and `section_reference_key` (`{doc_id}:{canonical_name}`) to section data.
+- **What:** Add `section_canonical_name` (heading normalized) and `section_reference_key` (`{document_id}:{canonical_name}`) to section/link anchor data.
 - **Files:** `src/agent/doc_parser.py` or `src/agent/corpus.py` — add to `OutlineSection` or DuckDB `sections` table
 - **Complexity:** Low
-- [ ] Add `canonical_name` to section data model
-- [ ] Add `reference_key` combining doc_id + canonical_name
-- [ ] Add to DuckDB `sections` table schema
+- [x] Add canonical naming helper in parser utilities (`section_canonical_name`)
+- [x] Add `section_reference_key` helper
+- [ ] (Optional) Materialize in DuckDB `sections` table schema (deferred; runtime anchor contract now uses computed fields)
 
 **Improvement 17: Content-addressed chunk IDs**
 - **Source:** VP `outline.py:43-54`
-- **What:** Compute `SHA-256[:16]` chunk ID from `(doc_id, section_path, text_hash)` for each section. Stable across re-parses when section content is unchanged.
+- **What:** Compute Wave3 chunk ID from `(document_id, section_reference_key, clause_key, span_start, span_end, text_sha256)`.
 - **Files:** `src/agent/doc_parser.py` — add `_compute_chunk_id()`, store in section data
 - **Complexity:** Low
-- [ ] Implement `_compute_chunk_id(doc_id, section_path, text_hash)` → hex string
-- [ ] Add `chunk_id` to DuckDB `sections` table
-- [ ] Add tests for stability (same content → same chunk_id)
+- [x] Implement canonical chunk-id helper (`compute_chunk_id`) with full SHA-256 contract
+- [ ] Add `chunk_id` to DuckDB `sections` table (deferred; currently emitted in linker/evidence path)
+- [x] Add stability tests (same anchor tuple => same chunk_id)
 
 **Improvement 18: Contextual reference patterns**
 - **Source:** Neutron `reference-patterns.ts:431-474`

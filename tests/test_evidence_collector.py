@@ -67,6 +67,8 @@ def test_collector_normalizes_pattern_payload_with_not_found(tmp_path: Path) -> 
             "debt_capacity.indebtedness",
             "--workspace",
             str(workspace),
+            "--schema-version",
+            "evidence_v2",
         ],
     )
 
@@ -119,6 +121,8 @@ def test_collector_skip_not_found_filters_records(tmp_path: Path) -> None:
             "--workspace",
             str(workspace),
             "--skip-not-found",
+            "--schema-version",
+            "evidence_v2",
         ],
     )
 
@@ -128,3 +132,86 @@ def test_collector_skip_not_found_filters_records(tmp_path: Path) -> None:
     checkpoint_payload = json.loads((workspace / "checkpoint.json").read_text())
     assert checkpoint_payload["last_evidence_records"] == 1
     assert checkpoint_payload["status"] == "running"
+
+
+def test_collector_wave3_default_schema(tmp_path: Path) -> None:
+    root = Path(__file__).resolve().parents[1]
+    workspace = tmp_path / "workspace"
+    matches_path = tmp_path / "wave3_rows.json"
+    payload = [
+        {
+            "doc_id": "doc1",
+            "section_number": "7.01",
+            "heading": "Indebtedness",
+            "clause_path": "__section__",
+            "char_start": 10,
+            "char_end": 80,
+            "score": 0.82,
+            "corpus_version": "corpus-0.2.0",
+            "parser_version": "parser-v1",
+            "ontology_version": "ontology-v1",
+            "ruleset_version": "ruleset-v1",
+            "git_sha": "abc123",
+        },
+    ]
+    matches_path.write_text(json.dumps(payload))
+
+    summary = _run_collector(
+        root,
+        [
+            "--matches",
+            str(matches_path),
+            "--concept-id",
+            "debt_capacity.indebtedness",
+            "--workspace",
+            str(workspace),
+        ],
+    )
+
+    assert summary["schema_version"] == "evidence_v3"
+    evidence_path = Path(str(summary["evidence_file"]))
+    rows = [json.loads(line) for line in evidence_path.read_text().splitlines() if line.strip()]
+    assert len(rows) == 1
+    assert rows[0]["chunk_id"]
+    assert rows[0]["policy_decision"] in {"must", "review", "reject"}
+
+
+def test_collector_wave3_fails_on_missing_lineage_versions(tmp_path: Path) -> None:
+    root = Path(__file__).resolve().parents[1]
+    workspace = tmp_path / "workspace"
+    matches_path = tmp_path / "wave3_rows_missing_lineage.json"
+    payload = [
+        {
+            "doc_id": "doc1",
+            "section_number": "7.01",
+            "heading": "Indebtedness",
+            "clause_path": "__section__",
+            "char_start": 10,
+            "char_end": 80,
+            "score": 0.82,
+        },
+    ]
+    matches_path.write_text(json.dumps(payload))
+
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(root / "src")
+    proc = subprocess.run(
+        [
+            sys.executable,
+            str(root / "scripts" / "evidence_collector.py"),
+            "--matches",
+            str(matches_path),
+            "--concept-id",
+            "debt_capacity.indebtedness",
+            "--workspace",
+            str(workspace),
+            "--git-sha",
+            "abc123",
+        ],
+        cwd=str(root),
+        env=env,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert proc.returncode != 0

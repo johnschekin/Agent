@@ -1,0 +1,155 @@
+{
+  "artifact_version": "1.1.0",
+  "generated_at_utc": "2026-02-27T05:51:06Z",
+  "git_sha": "68da7d8",
+  "scope": "Agent -> Neutron Wave 3 handoff readiness",
+  "overall_status": "pass",
+  "gates": [
+    {
+      "id": "P0",
+      "name": "Contract freeze and decision artifacts",
+      "status": "pass",
+      "evidence": [
+        "docs/contracts/ids-v1.md",
+        "docs/contracts/evidence-handoff-v1.md",
+        "docs/contracts/link-authority-v1.md",
+        "docs/operations/wave3-readiness-gates-agent.md"
+      ]
+    },
+    {
+      "id": "P1",
+      "name": "Parser determinism and anchor completeness",
+      "status": "pass",
+      "evidence": [
+        "scripts/bulk_family_linker.py",
+        "src/agent/doc_parser.py",
+        "tests/test_bulk_family_linker.py",
+        "tests/test_section_parser.py"
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "Ontology validation and alias version scoping",
+      "status": "pass",
+      "evidence": [
+        "src/agent/ontology_contract.py",
+        "src/agent/conflict_matrix.py",
+        "src/agent/link_store.py",
+        "tests/test_ontology_contract.py",
+        "tests/test_conflict_matrix.py"
+      ]
+    },
+    {
+      "id": "P3",
+      "name": "Calibration wiring and policy decisions",
+      "status": "pass",
+      "evidence": [
+        "scripts/bulk_family_linker.py",
+        "scripts/link_worker.py",
+        "src/agent/link_store.py",
+        "tests/test_link_confidence.py"
+      ]
+    },
+    {
+      "id": "P4",
+      "name": "Lineage and provenance hardening",
+      "status": "pass",
+      "evidence": [
+        "scripts/bulk_family_linker.py",
+        "scripts/backfill_link_lineage.py",
+        "corpus_index/links.duckdb",
+        "docs/operations/wave3-readiness-report-agent.md"
+      ]
+    },
+    {
+      "id": "P5",
+      "name": "Wave3 export adapter and strict validation",
+      "status": "pass",
+      "evidence": [
+        "scripts/evidence_collector.py",
+        "scripts/export_labeled_data.py",
+        "scripts/migrate_evidence_schema.py",
+        "tests/test_evidence_collector.py",
+        "tests/test_export_labeled_data.py"
+      ]
+    },
+    {
+      "id": "P6",
+      "name": "Governance and admin hardening",
+      "status": "pass",
+      "evidence": [
+        "dashboard/api/server.py",
+        "tests/test_links_api_auth.py",
+        "src/agent/link_store.py"
+      ]
+    },
+    {
+      "id": "P7",
+      "name": "Final readiness suite",
+      "status": "pass",
+      "evidence": [
+        "docs/operations/wave3-readiness-report-agent.md",
+        "plans/wave3_agent_readiness_gate.json",
+        "artifacts/wave3_handoff_candidate_sample.json",
+        "artifacts/wave3_workspace/results/wave3_labeled.jsonl"
+      ]
+    }
+  ],
+  "command_results": [
+    {
+      "command": "pytest tests/test_link_store.py tests/test_bulk_family_linker.py tests/test_link_confidence.py",
+      "exit_code": 0,
+      "summary": "235 passed"
+    },
+    {
+      "command": "pytest tests/test_evidence_collector.py tests/test_clause_parser.py tests/test_clause_gold_fixtures.py",
+      "exit_code": 0,
+      "summary": "69 passed"
+    },
+    {
+      "command": "python3 scripts/parsing_ci_gate.py --mode quick",
+      "exit_code": 0,
+      "summary": "ok=true"
+    },
+    {
+      "command": "python3 scripts/bulk_family_linker.py --db corpus_index/corpus.duckdb --links-db corpus_index/links.duckdb --dry-run --family debt_capacity.indebtedness --strict-ontology",
+      "exit_code": 0,
+      "summary": "668 candidates, 0 conflicts, matrix=241 pairs"
+    },
+    {
+      "command": "python3 scripts/backfill_link_lineage.py --links-db corpus_index/links.duckdb",
+      "exit_code": 0,
+      "summary": "bad lineage counts reduced to zero across family_link_runs/family_links/link_evidence"
+    },
+    {
+      "command": "python3 scripts/migrate_evidence_schema.py --input artifacts/wave3_workspace/evidence/debt_capacity.indebtedness_20260227T045755.jsonl --output artifacts/wave3_workspace/migrations/plan_wrapper_out.jsonl",
+      "exit_code": 0,
+      "summary": "2 rows migrated; output checksum stable on rerun"
+    }
+  ],
+  "closed_findings": [
+    "Schema mismatch between Agent evidence output and Wave3 expectations",
+    "Missing canonical key and anchor completeness conventions",
+    "Calibration data not applied in production bulk linking path",
+    "Non-deterministic parser/link candidate ordering risk",
+    "Placeholder lineage versions in active write paths",
+    "Historical lineage gaps in family_link_runs/family_links/link_evidence",
+    "Alias resolution not ontology-version scoped",
+    "Weak admin/governance controls for sensitive writes",
+    "Mutation audit previously omitted failure outcomes",
+    "Ontology conflict matrix empty risk from shape mismatch"
+  ],
+  "open_p0_p1_findings": [],
+  "remaining_risks": [
+    "Ontology conflict policy quality still depends on upstream ontology content; keep strict ontology mode enabled in production.",
+    "Legacy downstream consumers require explicit compatibility mode while migrating off legacy contracts."
+  ],
+  "decision_log": {
+    "d1_canonical_ids": "locked",
+    "d2_confidence_policy": "locked",
+    "d3_versioning": "locked",
+    "d4_alias_policy": "locked",
+    "d5_export_contract": "locked",
+    "silent_deferrals_without_user_approval": []
+  }
+}

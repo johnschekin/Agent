@@ -1,0 +1,26 @@
+{
+  "db": "corpus_index/corpus.duckdb",
+  "source_files": [
+    "/tmp/edge_case_section_triage_depth2_wave1.json",
+    "/tmp/edge_case_section_triage_root_wave1.json"
+  ],
+  "output_files": [
+    "artifacts/parsing/edge_case_manual_review_checklist_wave1.csv",
+    "artifacts/parsing/edge_case_manual_review_checklist_wave1.md"
+  ],
+  "sections_total": 651,
+  "rows_total": 2409,
+  "rows_by_bucket": {
+    "depth2_wave1": 1497,
+    "root_wave1": 912
+  },
+  "sections_by_bucket": {
+    "depth2_wave1": 402,
+    "root_wave1": 249
+  },
+  "docs_by_bucket": {
+    "depth2_wave1": 20,
+    "root_wave1": 10
+  },
+  "sample_size_per_section": 5
+}

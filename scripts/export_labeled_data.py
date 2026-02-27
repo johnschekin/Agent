@@ -136,6 +136,64 @@ def _jsonable(value: Any) -> Any:
     return str(value)
 
 
+_PLACEHOLDER_VERSION_VALUES = {
+    "",
+    "unknown",
+    "parser-unknown",
+    "bulk_linker_v1",
+    "worker_v1",
+    "1.0",
+}
+
+
+def _validate_wave3_evidence_row(row: dict[str, Any]) -> list[str]:
+    required_nonempty = [
+        "ontology_node_id",
+        "doc_id",
+        "section_reference_key",
+        "clause_key",
+        "chunk_id",
+        "run_id",
+        "corpus_version",
+        "parser_version",
+        "ontology_version",
+        "ruleset_version",
+        "git_sha",
+    ]
+    missing: list[str] = []
+    for key in required_nonempty:
+        value = row.get(key)
+        if value is None or (isinstance(value, str) and not value.strip()):
+            missing.append(key)
+
+    span_start = _to_number(row.get("span_start", row.get("char_start")))
+    span_end = _to_number(row.get("span_end", row.get("char_end")))
+    if span_start is None:
+        missing.append("span_start")
+    if span_end is None:
+        missing.append("span_end")
+    if isinstance(span_start, (int, float)) and isinstance(span_end, (int, float)):
+        if float(span_end) <= float(span_start):
+            missing.append("span_order")
+
+    policy_decision = str(row.get("policy_decision", "")).strip()
+    if policy_decision not in {"must", "review", "reject"}:
+        missing.append("policy_decision")
+
+    for field in (
+        "corpus_version",
+        "parser_version",
+        "ontology_version",
+        "ruleset_version",
+        "git_sha",
+    ):
+        value = str(row.get(field) or "").strip().lower()
+        if value in _PLACEHOLDER_VERSION_VALUES:
+            missing.append(f"{field}.placeholder")
+
+    return sorted(set(missing))
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Export labeled evidence rows to JSONL/Parquet with lineage fields."
@@ -156,6 +214,12 @@ def main() -> None:
         choices=("jsonl", "parquet", "both"),
         default="both",
         help="Export format (default: both).",
+    )
+    parser.add_argument(
+        "--contract-format",
+        choices=("wave3-handoff", "legacy-v0"),
+        default="wave3-handoff",
+        help="Export contract profile (default: wave3-handoff).",
     )
     parser.add_argument(
         "--source-db",
@@ -188,6 +252,11 @@ def main() -> None:
         action="store_true",
         help="Deduplicate rows by (ontology_node_id, doc_id, section_number, clause_path, char_start, char_end).",
     )
+    parser.add_argument(
+        "--allow-legacy-evidence",
+        action="store_true",
+        help="Allow evidence_v2 rows in wave3-handoff mode (compatibility escape hatch).",
+    )
     args = parser.parse_args()
 
     input_files = _collect_input_files(args.inputs)
@@ -208,12 +277,27 @@ def main() -> None:
 
     rows: list[dict[str, Any]] = []
     file_row_counts: dict[str, int] = {}
+    validation_errors: list[str] = []
     for fp in input_files:
         loaded = _load_rows_from_file(fp)
         file_row_counts[str(fp)] = len(loaded)
         for row in loaded:
             if not isinstance(row, dict):
                 continue
+            row_schema = str(row.get("schema_version") or "").strip()
+            if args.contract_format == "wave3-handoff":
+                if row_schema != "evidence_v3" and not args.allow_legacy_evidence:
+                    validation_errors.append(
+                        f"{fp}: expected schema_version=evidence_v3, got {row_schema or 'missing'}"
+                    )
+                    continue
+                if row_schema == "evidence_v3":
+                    missing = _validate_wave3_evidence_row(row)
+                    if missing:
+                        validation_errors.append(
+                            f"{fp}: invalid wave3 evidence row missing/invalid fields: {', '.join(missing)}"
+                        )
+                        continue
             record_type = str(row.get("record_type", "HIT")).upper().strip()
             if record_type == "NOT_FOUND" and not args.include_not_found:
                 continue
@@ -233,8 +317,26 @@ def main() -> None:
                 "source_db_manifest_exists": source_manifest_exists,
                 "source_run_id": _to_text(enriched.get("run_id", "")),
                 "source_strategy_version": _to_number(enriched.get("strategy_version")),
+                "source_corpus_version": _to_text(enriched.get("corpus_version", "")),
+                "source_parser_version": _to_text(enriched.get("parser_version", "")),
+                "source_ontology_version": _to_text(enriched.get("ontology_version", "")),
+                "source_ruleset_version": _to_text(enriched.get("ruleset_version", "")),
+                "source_git_sha": _to_text(enriched.get("git_sha", "")),
             }
             rows.append(enriched)
+
+    if validation_errors:
+        log(validation_errors[0])
+        dump_json(
+            {
+                "schema_version": "labeled_export_v2",
+                "status": "failed",
+                "error_count": len(validation_errors),
+                "first_error": validation_errors[0],
+                "export_run_id": export_run_id,
+            }
+        )
+        sys.exit(1)
 
     deduped_count = 0
     if args.dedupe:
@@ -295,7 +397,8 @@ def main() -> None:
             pq.write_table(table, parquet_path)
 
     output = {
-        "schema_version": "labeled_export_v1",
+        "schema_version": "labeled_export_v2",
+        "contract_format": args.contract_format,
         "status": "ok" if not parquet_error else "partial",
         "export_run_id": export_run_id,
         "exported_at": exported_at,

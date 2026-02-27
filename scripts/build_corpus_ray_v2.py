@@ -125,7 +125,8 @@ CREATE TABLE IF NOT EXISTS documents (
     definition_count INTEGER DEFAULT 0,
     text_length INTEGER DEFAULT 0,
     section_parser_mode VARCHAR DEFAULT '',
-    section_fallback_used BOOLEAN DEFAULT false
+    section_fallback_used BOOLEAN DEFAULT false,
+    section_parser_trace VARCHAR DEFAULT ''
 );
 
 CREATE TABLE IF NOT EXISTS articles (
@@ -258,6 +259,7 @@ _TABLE_COLUMNS: dict[str, tuple[str, ...]] = {
         "text_length",
         "section_parser_mode",
         "section_fallback_used",
+        "section_parser_trace",
     ),
     "articles": (
         "doc_id",

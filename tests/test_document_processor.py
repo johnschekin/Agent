@@ -1,6 +1,8 @@
 """Tests for agent.document_processor — shared NLP pipeline module."""
 from __future__ import annotations
 
+import json
+
 import pytest
 
 from agent.document_processor import (
@@ -495,6 +497,10 @@ class TestProcessDocumentText:
         assert result.doc["section_parser_mode"] in (
             "doc_outline", "regex_fallback", "none",
         )
+        trace = json.loads(str(result.doc.get("section_parser_trace", "{}")))
+        assert isinstance(trace, dict)
+        assert "mode" in trace
+        assert "outline_sections" in trace
 
     def test_filing_date_from_filename(self) -> None:
         """Filing date extraction is attempted from filename."""

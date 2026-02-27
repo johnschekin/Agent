@@ -110,9 +110,11 @@ def build_conflict_matrix(
     pair_edges: dict[tuple[str, str], list[tuple[str, str]]] = {}  # (a, b) → [(edge_type, policy)]
 
     for edge in ontology_edges:
-        edge_type = edge.get("edge_type", "")
+        edge_type = str(edge.get("edge_type") or "").strip()
+        if not edge_type:
+            continue
         policy = EDGE_TO_POLICY.get(edge_type)
-        if policy is None:
+        if not policy:
             continue
 
         # Resolve families for source and target
@@ -145,7 +147,7 @@ def build_conflict_matrix(
                 best_policy = policy
 
         # Skip pure "independent" pairs
-        if best_policy == "independent":
+        if not best_policy or best_policy == "independent":
             continue
 
         # Build reason string
@@ -160,7 +162,7 @@ def build_conflict_matrix(
             ontology_version=ontology_version,
         ))
 
-    return results
+    return sorted(results, key=lambda p: (p.family_a, p.family_b))
 
 
 def _resolve_family(
@@ -179,12 +181,28 @@ def _resolve_family(
         return str(edge[family_key])
 
     # Look up concept → family
-    concept_id = edge.get(role, "")
+    concept_id = _get_concept_id(edge, role)
+    if not concept_id:
+        return ""
     if concept_id in nodes:
         node = nodes[concept_id]
         if isinstance(node, dict):
-            return str(node.get("family_id", node.get("family", concept_id)))
+            return str(
+                node.get(
+                    "family_id",
+                    node.get("family", node.get("domain_id", concept_id)),
+                )
+            )
     return concept_id
+
+
+def _get_concept_id(edge: dict[str, Any], role: str) -> str:
+    """Return concept identifier for ``role`` from any supported edge shape."""
+    for key in (f"{role}_id", role):
+        value = str(edge.get(key) or "").strip()
+        if value:
+            return value
+    return ""
 
 
 def _build_reason(

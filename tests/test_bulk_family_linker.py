@@ -26,6 +26,7 @@ from bulk_family_linker import (  # noqa: E402
     _detect_conflicts,
     _extract_ast_match_values,
     _flatten_ontology_nodes,
+    _load_ontology_nodes,
     _get_article_concept,
     bootstrap_rules_into_store,
     build_parser,
@@ -584,6 +585,7 @@ class TestBuildCandidate:
         assert candidate["section_char_start"] == 1000
         assert candidate["section_char_end"] == 2000
         assert candidate["rule_hash"] == _compute_rule_hash(rule)
+        assert candidate["section_reference_key"] == "doc1:7.01"
 
     def test_candidate_status_by_tier(self) -> None:
         """High tier -> active status, other tiers -> pending_review."""
@@ -606,7 +608,7 @@ class TestBuildCandidate:
         candidate_low = _build_candidate(
             section, rule, "exact", "Indebtedness", None, low_conf, [],
         )
-        assert candidate_low["status"] == "pending_review"
+        assert candidate_low["status"] == "rejected"
 
 
 # ─────────────────── TestDetectConflicts ──────────────────
@@ -1073,8 +1075,7 @@ class TestRunBulkLinking:
         saved_runs: list[dict[str, Any]] = []
         store.create_run = lambda run_dict: saved_runs.append(run_dict)  # type: ignore[attr-defined]
 
-        # Patch store.save_evidence — the bulk linker builds evidence rows
-        # with a different schema than what LinkStore.save_evidence expects
+        # Patch store.save_evidence to capture emitted evidence rows.
         saved_evidence: list[dict[str, Any]] = []
 
         def tracking_save_evidence(evidence: list[dict[str, Any]]) -> int:
@@ -1269,13 +1270,11 @@ class TestRunBulkLinking:
         saved_runs: list[dict[str, Any]] = []
         store.create_run = lambda run_dict: saved_runs.append(run_dict)  # type: ignore[attr-defined]
 
-        # Patch save_evidence to count calls but also record data
+        # Patch save_evidence to count calls and record emitted rows.
         saved_evidence: list[list[dict[str, Any]]] = []
 
         def tracking_save_evidence(evidence: list[dict[str, Any]]) -> int:
             saved_evidence.append(evidence)
-            # The real save_evidence expects different fields (link_id, etc.)
-            # so we just return the count
             return len(evidence)
 
         store.save_evidence = tracking_save_evidence  # type: ignore[method-assign]
@@ -1452,3 +1451,23 @@ class TestFlattenOntologyNodes:
         result = _flatten_ontology_nodes(nodes)
         assert result[0]["extra_field"] == 42
         assert result[1]["extra_field"] == 99
+
+
+class TestLoadOntologyNodes:
+    def test_prefers_domains_tree(self) -> None:
+        payload = {
+            "domains": [
+                {
+                    "id": "root",
+                    "children": [
+                        {"id": "child", "family_id": "debt_capacity.indebtedness"},
+                    ],
+                },
+            ],
+            "nodes": [{"id": "legacy_only"}],
+            "edges": [],
+        }
+        nodes = _load_ontology_nodes(payload)
+        assert "root" in nodes
+        assert "child" in nodes
+        assert "legacy_only" not in nodes

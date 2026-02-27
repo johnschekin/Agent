@@ -1,0 +1,71 @@
+{
+  "duration_seconds": 5.519,
+  "ended_at": 1772149818.312761,
+  "environment": {
+    "ci": "",
+    "cwd": "/Users/johnchtchekine/Projects/Agent",
+    "python": "3.13.1 (v3.13.1:06714517797, Dec  3 2024, 14:00:22) [Clang 15.0.0 (clang-1500.3.9.4)]"
+  },
+  "mode": "quick",
+  "started_at": 1772149812.794245,
+  "status": "pass",
+  "steps": [
+    {
+      "command": [
+        "pytest",
+        "-q",
+        "tests/test_doc_parser.py",
+        "tests/test_clause_parser.py",
+        "tests/test_zero_section_recovery.py",
+        "tests/test_definitions.py",
+        "-p",
+        "no:cacheprovider"
+      ],
+      "cwd": "/Users/johnchtchekine/Projects/Agent",
+      "details": {},
+      "duration_seconds": 0.472,
+      "ended_at": 1772149813.265837,
+      "exit_code": 0,
+      "name": "Pytest Parser Core",
+      "started_at": 1772149812.79425,
+      "status": "pass"
+    },
+    {
+      "command": [
+        "pytest",
+        "-q",
+        "tests/test_edge_cases.py",
+        "tests/test_edge_case_clause_guardrail.py",
+        "tests/test_edge_case_clause_parent_guardrail.py",
+        "-p",
+        "no:cacheprovider"
+      ],
+      "cwd": "/Users/johnchtchekine/Projects/Agent",
+      "details": {},
+      "duration_seconds": 2.121,
+      "ended_at": 1772149815.386722,
+      "exit_code": 0,
+      "name": "Pytest Edge Case Suite",
+      "started_at": 1772149813.265924,
+      "status": "pass"
+    },
+    {
+      "command": [
+        "pytest",
+        "-q",
+        "tests/test_link_worker.py",
+        "tests/test_bulk_family_linker.py",
+        "-p",
+        "no:cacheprovider"
+      ],
+      "cwd": "/Users/johnchtchekine/Projects/Agent",
+      "details": {},
+      "duration_seconds": 2.926,
+      "ended_at": 1772149818.3127198,
+      "exit_code": 0,
+      "name": "Pytest Link Integrity",
+      "started_at": 1772149815.386791,
+      "status": "pass"
+    }
+  ]
+}

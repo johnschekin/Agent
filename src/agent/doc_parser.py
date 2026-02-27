@@ -141,11 +141,12 @@ _SECTION_STRICT_RE = re.compile(
 
 # Bare-number section pattern: many CAs (particularly BofA-style) use "X.XX Heading"
 # without a "Section" keyword. Allows 1-2 digit minor numbers to capture both
-# "2.01 Heading" (zero-padded) and "2.1 Heading" (single-digit) formats.
+# "2.01 Heading" (zero-padded) and "2.1 Heading" (single-digit) formats, while
+# also tolerating longer minors and optional letter suffixes ("2.201a").
 # Requires [A-Z][A-Za-z] heading text to avoid matching monetary amounts or ratios.
 # Only used as a fallback when _SECTION_STRICT_RE finds insufficient sections.
 _SECTION_BARE_RE = re.compile(
-    r"(?:^|\n)\s*(\d+\.\d{1,2})\.?\s+([A-Z][A-Za-z][^\n]*)",
+    r"(?:^|\n)\s*(\d+\.\d{1,3}[a-z]?)\.?\s+([A-Z][A-Za-z][^\n]*)",
 )
 
 # R6-fix F11: match letter-spaced "A R T I C L E" (HTML artifact from some EDGAR filings)
@@ -197,7 +198,7 @@ _SECTION_FLAT_RE = re.compile(
 # Validated with major <= 20 guard to avoid matching pricing grid values like "50.00".
 # Ported from Neutron build_section_index.py:60-62 and TI section_level_parser.py:801-940.
 _SECTION_STANDALONE_RE = re.compile(
-    r"(?:^|\n)\s*(\d{1,2}\.\d{1,2})\s*\.?\s*$",
+    r"(?:^|\n)\s*([IVX]+\.\d{1,3}[a-z]?|\d{1,2}\.\d{1,3}[a-z]?)\s*\.?\s*$",
     re.MULTILINE,
 )
 
@@ -494,17 +495,19 @@ def section_canonical_name(heading: str) -> str:
     Useful for fuzzy matching across documents (e.g., "Indebtedness"
     and "INDEBTEDNESS" both become "indebtedness").
     """
-    h = heading.strip().lower()
-    # Remove trailing periods and leading/trailing punctuation
-    h = h.strip(".")
-    # Collapse internal whitespace
+    h = str(heading or "").strip().lower()
+    if not h:
+        return ""
+    # Keep alnum + semantic separators (dot/underscore), drop other punctuation.
+    h = re.sub(r"[^a-z0-9._\s]+", " ", h)
+    # Normalize repeated separators and whitespace.
     h = re.sub(r"\s+", " ", h)
-    return h
+    return h.strip().strip(".")
 
 
-def section_reference_key(doc_id: str, heading: str) -> str:
-    """Build a cross-document reference key: ``{doc_id}:{canonical_name}``."""
-    return f"{doc_id}:{section_canonical_name(heading)}"
+def section_reference_key(doc_id: str, section_number: str) -> str:
+    """Build a section reference key: ``{doc_id}:{section_number}``."""
+    return f"{doc_id}:{str(section_number or '').strip()}"
 
 
 # ---------------------------------------------------------------------------
@@ -515,18 +518,28 @@ import hashlib as _hashlib
 
 
 def section_text_hash(text: str, start: int, end: int) -> str:
-    """SHA-256 of the section text slice, truncated to 16 hex chars."""
-    return _hashlib.sha256(text[start:end].encode()).hexdigest()[:16]
+    """SHA-256 of an anchored text span (full lowercase hex digest)."""
+    return _hashlib.sha256(text[start:end].encode()).hexdigest()
 
 
-def compute_chunk_id(doc_id: str, section_path: str, text_hash: str) -> str:
-    """Content-addressed chunk ID for search retrieval.
+def compute_chunk_id(
+    document_id: str,
+    section_reference_key: str,
+    clause_key: str,
+    span_start: int,
+    span_end: int,
+    text_sha256: str,
+) -> str:
+    """Wave 3 chunk identity hash.
 
-    Stable across re-parses when the section content is unchanged.
-    Format: SHA-256[:16] of ``{doc_id}\\0{section_path}\\0{text_hash}``.
+    Format:
+    sha256(``document_id|section_reference_key|clause_key|span_start|span_end|text_sha256``)
     """
-    payload = f"{doc_id}\x00{section_path}\x00{text_hash}"
-    return _hashlib.sha256(payload.encode()).hexdigest()[:16]
+    payload = (
+        f"{document_id}|{section_reference_key}|{clause_key}|"
+        f"{int(span_start)}|{int(span_end)}|{text_sha256}"
+    )
+    return _hashlib.sha256(payload.encode()).hexdigest()
 
 
 # ---------------------------------------------------------------------------
@@ -1725,7 +1738,10 @@ class DocOutline:
             for sm in _SECTION_STANDALONE_RE.finditer(self._text):
                 number = sm.group(1)
                 # Reject major > 20 (pricing grid values like "50.00 bps")
-                major = int(number.split(".")[0])
+                major_token = number.split(".")[0]
+                major = _roman_to_int(major_token) if not major_token.isdigit() else int(major_token)
+                if major is None:
+                    continue
                 if major > 20:
                     continue
                 # Look-ahead: scan next 2 non-empty lines for heading
@@ -1735,11 +1751,36 @@ class DocOutline:
                     candidate = line.strip()
                     if not candidate:
                         continue
+                    # Reject if the next non-empty line is itself a structural header.
+                    if _SECTION_STRICT_RE.match("\n" + candidate) or _ARTICLE_RE.match("\n" + candidate):
+                        break
+                    # Reserve markers should be tracked as headings.
+                    reserved = _RESERVED_RE.search(candidate)
+                    if reserved:
+                        heading = reserved.group(0)
+                        break
+                    # Standard heading continuation.
                     if candidate[0].isupper() and len(candidate) < 60:
                         heading = candidate
+                        break
+                    # Headingless sections are still valid when body starts with
+                    # a quoted term or clause marker.
+                    if re.match(r'^["\u201c]|^\([a-z]{1,4}\)|^\([ivx]+\)|^\(\d{1,2}\)|^[.:]', candidate):
+                        heading = ""
                     break
-                if heading:
-                    standalone_sections.append((number, heading, sm.start()))
+                # Keep the section if either a heading was found or the body-start
+                # shape looks section-like (e.g., a quoted defined term list).
+                if heading or re.match(
+                    r'^["\u201c]|^\([a-z]{1,4}\)|^\([ivx]+\)|^\(\d{1,2}\)|^[.:]',
+                    (after.lstrip().split("\n", 1)[0].strip() if after.lstrip() else ""),
+                ):
+                    normalized_number = number.replace(" ", "")
+                    if normalized_number and not normalized_number[0].isdigit():
+                        parts = normalized_number.split(".", 1)
+                        roman_int = _roman_to_int(parts[0])
+                        if roman_int is not None:
+                            normalized_number = f"{roman_int}.{parts[1]}"
+                    standalone_sections.append((normalized_number, heading, sm.start()))
         # R6-fix F7: when bare matches outnumber keyword by 3x+, merge both sets
         # instead of replacing keyword with bare.  This handles CAs that mix
         # "Section X.YY" headings with bare "X.YY Heading" lines.  Below 3x we

@@ -1,4 +1,4 @@
-"""Tests for the expanded edge case inspector (38 categories, 6 tiers)."""
+"""Tests for the expanded edge case inspector (39 categories, 6 tiers)."""
 from __future__ import annotations
 
 from typing import Any
@@ -6,9 +6,15 @@ from typing import Any
 import pytest
 
 from dashboard.api.server import (
+    _CATEGORY_TO_GROUP,
+    _CATEGORY_TO_STATUS,
     _CATEGORY_TO_TIER,
     _EDGE_CASE_CATEGORIES,
+    _EDGE_CASE_DETECTOR_STATUSES,
+    _EDGE_CASE_GROUPS,
     _EDGE_CASE_TIERS,
+    _get_detector_status,
+    _get_group,
     _build_doc_category_queries,
     _build_iqr_category_queries,
     _build_join_category_queries,
@@ -198,7 +204,7 @@ def test_tier_registry_completeness() -> None:
 
 def test_tier_count() -> None:
     total = sum(len(c) for c in _EDGE_CASE_TIERS.values())
-    assert total == 38
+    assert total == 41
     assert len(_EDGE_CASE_TIERS) == 6
 
 
@@ -209,6 +215,19 @@ def test_get_tier() -> None:
     assert _get_tier("extreme_word_count") == "document"
     assert _get_tier("orphan_template") == "template"
     assert _get_tier("nonexistent") == "unknown"
+
+
+def test_group_and_status_registry_completeness() -> None:
+    all_cats = {cat for cats in _EDGE_CASE_TIERS.values() for cat in cats}
+    assert set(_CATEGORY_TO_GROUP) == all_cats
+    assert set(_CATEGORY_TO_STATUS) == all_cats
+    assert "parser_integrity" in _EDGE_CASE_GROUPS
+    assert "baseline_enrichment" in _EDGE_CASE_GROUPS
+    assert "outlier_monitoring" in _EDGE_CASE_GROUPS
+    assert "active" in _EDGE_CASE_DETECTOR_STATUSES
+    assert "monitor_only" in _EDGE_CASE_DETECTOR_STATUSES
+    assert _get_group("missing_sections") == "parser_integrity"
+    assert _get_detector_status("definition_malformed_term") == "active"
 
 
 # ---------------------------------------------------------------------------
@@ -305,14 +324,22 @@ def test_deep_nesting_outlier() -> None:
         conn, doc_id="d1", word_count=20000,
         section_count=5, clause_count=20,
     )
-    # 5-segment clause_id → tree_level 5 (> 4 threshold)
+    # three level-4 clauses trigger dense deep nesting detector
     _ins_clause(
-        conn, "d1", "1", "a.i.A.1.x",
-        depth=1, level_type="alpha", parent="a.i.A.1", span_start=100,
+        conn, "d1", "1", "a.i.A.1",
+        depth=4, level_type="numeric", parent="a.i.A", span_start=100,
+    )
+    _ins_clause(
+        conn, "d1", "1", "b.i.B.2",
+        depth=4, level_type="numeric", parent="b.i.B", span_start=200,
+    )
+    _ins_clause(
+        conn, "d1", "1", "c.i.C.3",
+        depth=4, level_type="numeric", parent="c.i.C", span_start=300,
     )
     results = _run_all_queries(conn)
     assert "deep_nesting_outlier" in results
-    assert "tree level 5" in str(results["deep_nesting_outlier"][0][4]).lower()
+    assert "level >= 4" in str(results["deep_nesting_outlier"][0][4]).lower()
 
 
 def test_rootless_deep_clause() -> None:
@@ -377,8 +404,8 @@ def test_section_fallback_used() -> None:
 def test_section_numbering_gap() -> None:
     conn = _make_db()
     _ins_doc(conn, doc_id="d1", word_count=20000, section_count=5)
-    # Sections 1, 2, 5 — gap between 2 and 5
-    for sn, cs in [("1", 0), ("2", 100), ("5", 200)]:
+    # dot-style numbering with missing 6.02
+    for sn, cs in [("6.01", 0), ("6.03", 100)]:
         conn.execute(
             "INSERT INTO sections VALUES (?,?,?,?,?,?,?)",
             ["d1", sn, f"Section {sn}", cs, cs + 100, 1, 500],
@@ -486,7 +513,7 @@ def test_definition_malformed_term() -> None:
         conn.execute(
             "INSERT INTO definitions (doc_id, term, definition_text, pattern_engine) "
             "VALUES (?, ?, ?, ?)",
-            ["d1", f"Bad\\nTerm{i}", "definition body", "colon"],
+            ["d1", f"Bad\nTerm{i}", "definition body", "colon"],
         )
     results = _run_all_queries(conn)
     assert "definition_malformed_term" in results
@@ -709,6 +736,65 @@ def test_clause_depth_reset_after_deep() -> None:
     assert "clause_depth_reset_after_deep" in results
 
 
+def test_clause_ordinal_spike_after_deep() -> None:
+    conn = _make_db()
+    _ins_doc(
+        conn, doc_id="d1", word_count=20000,
+        section_count=5, clause_count=20,
+    )
+    # Pattern: deep clause -> root y spike -> root b reset.
+    conn.execute(
+        "INSERT INTO clauses VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        ["d1", "1", "a.i", "(i)", 2, "roman", 100, 120, "", "", "a", True, 0.9],
+    )
+    conn.execute(
+        "INSERT INTO clauses VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        ["d1", "1", "y", "(y)", 1, "alpha", 130, 145, "", "", "", True, 0.9],
+    )
+    conn.execute(
+        "INSERT INTO clauses VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        ["d1", "1", "b", "(b)", 1, "alpha", 160, 175, "", "", "", True, 0.9],
+    )
+    results = _run_all_queries(conn)
+    assert "clause_ordinal_spike_after_deep" in results
+
+
+def test_structural_child_of_nonstruct_parent() -> None:
+    conn = _make_db()
+    _ins_doc(
+        conn, doc_id="d1", word_count=22000,
+        section_count=4, clause_count=18,
+    )
+    conn.execute(
+        "INSERT INTO clauses VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        ["d1", "2.14", "y", "(y)", 1, "alpha", 100, 150, "", "", "", False, 0.45],
+    )
+    conn.execute(
+        "INSERT INTO clauses VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        ["d1", "2.14", "y.1", "(1)", 4, "numeric", 151, 220, "", "", "y", True, 0.65],
+    )
+    results = _run_all_queries(conn)
+    assert "structural_child_of_nonstruct_parent" in results
+
+
+def test_inline_high_letter_branch() -> None:
+    conn = _make_db()
+    _ins_doc(
+        conn, doc_id="d1", word_count=22000,
+        section_count=4, clause_count=18,
+    )
+    conn.execute(
+        "INSERT INTO clauses VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        ["d1", "2.23", "z", "(z)", 1, "alpha", 100, 120, "", "", "", False, 0.45],
+    )
+    conn.execute(
+        "INSERT INTO clauses VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        ["d1", "2.23", "z.1", "(1)", 4, "numeric", 121, 220, "", "", "z", True, 0.65],
+    )
+    results = _run_all_queries(conn)
+    assert "inline_high_letter_branch" in results
+
+
 # ---------------------------------------------------------------------------
 # No false positives for well-formed document
 # ---------------------------------------------------------------------------
@@ -757,6 +843,9 @@ def test_clean_document_no_edge_cases() -> None:
         "clause_root_label_repeat_explosion",
         "clause_dup_id_burst",
         "clause_depth_reset_after_deep",
+        "clause_ordinal_spike_after_deep",
+        "structural_child_of_nonstruct_parent",
+        "inline_high_letter_branch",
     }
     for cat in critical:
         assert cat not in results, f"Flagged as {cat}"

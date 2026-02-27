@@ -112,7 +112,8 @@ CREATE TABLE documents (
     definition_count INTEGER DEFAULT 0,
     text_length INTEGER DEFAULT 0,
     section_parser_mode VARCHAR DEFAULT '',
-    section_fallback_used BOOLEAN DEFAULT false
+    section_fallback_used BOOLEAN DEFAULT false,
+    section_parser_trace VARCHAR DEFAULT ''
 );
 
 CREATE TABLE articles (
@@ -587,11 +588,10 @@ def _execute_inserts(conn: Any, table_data: dict[str, list[tuple[Any, ...]]]) ->
                 closing_date, filing_date, form_type,
                 template_family, doc_type, doc_type_confidence,
                 market_segment, segment_confidence, cohort_included,
-                word_count, section_count, clause_count,
-                definition_count, text_length,
-                section_parser_mode, section_fallback_used)
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-                       ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+               word_count, section_count, clause_count,
+               definition_count, text_length,
+               section_parser_mode, section_fallback_used, section_parser_trace)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
             docs,
         )
     articles = table_data.get("articles", [])
@@ -787,6 +787,7 @@ def _prepare_batch_tuples(
             d["text_length"],
             d.get("section_parser_mode", ""),
             d.get("section_fallback_used", False),
+            d.get("section_parser_trace", ""),
         )
         for d in all_docs
     ]
@@ -938,7 +939,7 @@ def _build_anomaly_rows_from_db(conn: Any) -> list[dict[str, Any]]:
     rows_raw = conn.execute("""
         SELECT doc_id, path, template_family, section_count, clause_count,
                definition_count, word_count, text_length, section_parser_mode,
-               section_fallback_used
+               section_fallback_used, section_parser_trace
         FROM documents
         WHERE section_count = 0 OR clause_count = 0
         ORDER BY template_family, doc_id
@@ -947,7 +948,7 @@ def _build_anomaly_rows_from_db(conn: Any) -> list[dict[str, Any]]:
     for row in rows_raw:
         (doc_id, path, template_family, section_count, clause_count,
          definition_count, word_count, text_length, section_parser_mode,
-         section_fallback_used) = row
+         section_fallback_used, section_parser_trace) = row
         signatures = _derive_failure_signatures(
             section_count=int(section_count or 0),
             clause_count=int(clause_count or 0),
@@ -966,6 +967,7 @@ def _build_anomaly_rows_from_db(conn: Any) -> list[dict[str, Any]]:
             "text_length": int(text_length or 0),
             "section_parser_mode": section_parser_mode or "",
             "section_fallback_used": bool(section_fallback_used),
+            "section_parser_trace": section_parser_trace or "",
             "failure_signatures": signatures,
         })
     return result

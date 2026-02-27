@@ -1,6 +1,8 @@
 """Tests for agent.conflict_matrix — ontology-aware conflict policy matrix."""
 from __future__ import annotations
 
+import pytest
+
 from agent.conflict_matrix import (
     ALL_POLICIES,
     ConflictPolicy,
@@ -167,6 +169,43 @@ class TestBuildConflictMatrix:
         assert len(result) == 1
         assert result[0].family_a == "concept_x"
         assert result[0].family_b == "concept_y"
+
+    def test_source_target_id_fields_supported(self) -> None:
+        edges = [{"source_id": "concept_x", "target_id": "concept_y", "edge_type": "EXCLUDES_FROM"}]
+        nodes = {
+            "concept_x": {"family_id": "family_x"},
+            "concept_y": {"family_id": "family_y"},
+        }
+        result = build_conflict_matrix(edges, nodes)
+        assert len(result) == 1
+        assert result[0].family_a == "family_x"
+        assert result[0].family_b == "family_y"
+
+    def test_domain_id_used_when_family_missing(self) -> None:
+        edges = [{"source": "concept_x", "target": "concept_y", "edge_type": "CONSTRAINS"}]
+        nodes = {
+            "concept_x": {"domain_id": "domain_x"},
+            "concept_y": {"domain_id": "domain_y"},
+        }
+        result = build_conflict_matrix(edges, nodes)
+        assert len(result) == 1
+        assert result[0].family_a == "domain_x"
+        assert result[0].family_b == "domain_y"
+
+    def test_blank_policy_mapping_skipped(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.setitem(EDGE_TO_POLICY, "EXCLUDES_FROM", "")
+        edges = [_make_edge("a", "b", "EXCLUDES_FROM")]
+        result = build_conflict_matrix(edges, {})
+        assert result == []
+
+    def test_results_sorted_deterministically(self) -> None:
+        edges = [
+            _make_edge("zeta", "alpha", "EXCLUDES_FROM"),
+            _make_edge("gamma", "beta", "CONSTRAINS"),
+        ]
+        result = build_conflict_matrix(edges, {})
+        pairs = [(row.family_a, row.family_b) for row in result]
+        assert pairs == sorted(pairs)
 
 
 # ───────────────────── Lookup helpers ─────────────────────────────────

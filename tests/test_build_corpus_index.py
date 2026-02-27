@@ -788,3 +788,4 @@ class TestRayV2SchemaParity:
         assert "ebitda_confidence" in doc_cols
         assert "section_parser_mode" in doc_cols
         assert "section_fallback_used" in doc_cols
+        assert "section_parser_trace" in doc_cols

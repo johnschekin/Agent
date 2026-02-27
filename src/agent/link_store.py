@@ -17,6 +17,7 @@ The API server only writes to ``job_queue`` and lightweight session tables.
 from __future__ import annotations
 
 import contextlib
+import hashlib
 import importlib
 import json
 import re
@@ -92,16 +93,32 @@ def _canonical_family_token(value: Any) -> str:
     return parts[-1] if parts else raw
 
 
+def _should_upsert_alias(legacy: Any, canonical: Any) -> bool:
+    legacy_value = str(legacy or "").strip()
+    canonical_value = str(canonical or "").strip()
+    if not legacy_value or not canonical_value:
+        return False
+    if legacy_value == canonical_value:
+        return True
+    # Only upsert alias edges for legacy-style ids (for example FAM-*).
+    # Dotted namespaces are treated as canonical ontology scopes; mapping
+    # them to child scopes causes ambiguous alias graphs.
+    legacy_lower = legacy_value.lower()
+    if "." in legacy_value and not legacy_lower.startswith("fam-"):
+        return False
+    return True
+
+
 def _normalized_clause_key(
     clause_id: Any,
     clause_path: Any = None,
 ) -> str:
-    clause_id_value = str(clause_id or "").strip()
-    if clause_id_value:
-        return clause_id_value
     clause_path_value = str(clause_path or "").strip()
     if clause_path_value:
         return clause_path_value
+    clause_id_value = str(clause_id or "").strip()
+    if clause_id_value:
+        return clause_id_value
     return "__section__"
 
 
@@ -113,7 +130,7 @@ def _preview_candidate_id(
     return f"{str(doc_id or '').strip()}::{str(section_number or '').strip()}::{str(clause_key or '__section__').strip() or '__section__'}"
 
 
-SCHEMA_VERSION = "1.2.0"
+SCHEMA_VERSION = "1.3.0"
 
 
 # ---------------------------------------------------------------------------
@@ -158,14 +175,16 @@ CREATE TABLE IF NOT EXISTS family_link_rules (
 
 -- ─── FAMILY SCOPE ALIASES ────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS family_scope_aliases (
-    legacy_family_id VARCHAR PRIMARY KEY,
+    legacy_family_id VARCHAR NOT NULL,
+    ontology_version VARCHAR NOT NULL DEFAULT 'unknown',
     canonical_ontology_node_id VARCHAR NOT NULL,
     source VARCHAR NOT NULL DEFAULT 'inferred',
     created_at TIMESTAMP DEFAULT current_timestamp,
-    updated_at TIMESTAMP DEFAULT current_timestamp
+    updated_at TIMESTAMP DEFAULT current_timestamp,
+    PRIMARY KEY (legacy_family_id, ontology_version)
 );
 CREATE INDEX IF NOT EXISTS idx_family_scope_aliases_canonical
-    ON family_scope_aliases(canonical_ontology_node_id);
+    ON family_scope_aliases(canonical_ontology_node_id, ontology_version);
 
 -- ─── FAMILY LINKS ─────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS family_links (
@@ -193,6 +212,11 @@ CREATE TABLE IF NOT EXISTS family_links (
     clause_key VARCHAR NOT NULL DEFAULT '__section__',
     link_role VARCHAR NOT NULL DEFAULT 'primary_covenant',
     confidence DOUBLE NOT NULL DEFAULT 1.0,
+    score_raw DOUBLE,
+    score_calibrated DOUBLE,
+    threshold_profile_id VARCHAR,
+    policy_decision VARCHAR,
+    policy_reasons VARCHAR,
     confidence_tier VARCHAR NOT NULL DEFAULT 'high',
     confidence_breakdown VARCHAR,
     status VARCHAR NOT NULL DEFAULT 'active',
@@ -201,6 +225,7 @@ CREATE TABLE IF NOT EXISTS family_links (
     unlinked_note VARCHAR,
     corpus_version VARCHAR,
     parser_version VARCHAR,
+    ontology_version VARCHAR,
     created_at TIMESTAMP DEFAULT current_timestamp,
     UNIQUE (scope_id, doc_id, section_number, clause_key)
 );
@@ -227,22 +252,64 @@ CREATE TABLE IF NOT EXISTS family_link_events (
 CREATE INDEX IF NOT EXISTS idx_events_link ON family_link_events(link_id);
 CREATE INDEX IF NOT EXISTS idx_events_type ON family_link_events(event_type);
 
+-- ─── ADMIN AUDIT EVENTS ────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS admin_audit_events (
+    event_id VARCHAR PRIMARY KEY,
+    action VARCHAR NOT NULL,
+    path VARCHAR NOT NULL,
+    method VARCHAR NOT NULL,
+    actor_fingerprint VARCHAR NOT NULL,
+    request_id VARCHAR NOT NULL,
+    source_ip VARCHAR,
+    source_host VARCHAR,
+    payload_hash VARCHAR NOT NULL,
+    status_code INTEGER NOT NULL,
+    metadata VARCHAR,
+    created_at TIMESTAMP DEFAULT current_timestamp
+);
+CREATE INDEX IF NOT EXISTS idx_admin_audit_created ON admin_audit_events(created_at);
+CREATE INDEX IF NOT EXISTS idx_admin_audit_action ON admin_audit_events(action);
+
 -- ─── LINK EVIDENCE ───────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS link_evidence (
     evidence_id VARCHAR PRIMARY KEY,
     link_id VARCHAR NOT NULL,
+    run_id VARCHAR,
+    doc_id VARCHAR,
+    section_number VARCHAR,
+    section_reference_key VARCHAR,
+    clause_key VARCHAR,
     evidence_type VARCHAR NOT NULL,
+    node_type VARCHAR,
+    section_path VARCHAR,
+    clause_path VARCHAR,
     char_start INTEGER NOT NULL,
     char_end INTEGER NOT NULL,
+    anchor_text VARCHAR,
     text_hash VARCHAR NOT NULL,
+    text_sha256 VARCHAR,
+    chunk_id VARCHAR,
     matched_pattern VARCHAR,
     reason_code VARCHAR NOT NULL,
     score DOUBLE NOT NULL DEFAULT 1.0,
+    score_raw DOUBLE,
+    score_calibrated DOUBLE,
+    threshold_profile_id VARCHAR,
+    policy_decision VARCHAR,
+    policy_reasons VARCHAR,
+    corpus_version VARCHAR,
+    parser_version VARCHAR,
+    ontology_version VARCHAR,
+    ruleset_version VARCHAR,
+    git_sha VARCHAR,
+    created_at_utc VARCHAR,
     metadata VARCHAR
 );
 CREATE INDEX IF NOT EXISTS idx_evidence_link ON link_evidence(link_id);
 CREATE INDEX IF NOT EXISTS idx_evidence_type ON link_evidence(evidence_type);
 CREATE INDEX IF NOT EXISTS idx_evidence_char ON link_evidence(link_id, char_start);
+CREATE INDEX IF NOT EXISTS idx_evidence_chunk ON link_evidence(chunk_id);
+CREATE INDEX IF NOT EXISTS idx_evidence_run ON link_evidence(run_id);
 
 -- ─── LINK DEFINED TERMS ─────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS link_defined_terms (
@@ -271,14 +338,19 @@ CREATE TABLE IF NOT EXISTS family_link_runs (
     scope_mode VARCHAR NOT NULL DEFAULT 'corpus',
     rule_version INTEGER,
     corpus_version VARCHAR NOT NULL,
+    corpus_snapshot_id VARCHAR,
     corpus_doc_count INTEGER NOT NULL,
     parser_version VARCHAR NOT NULL,
+    ontology_version VARCHAR,
+    ruleset_version VARCHAR,
+    git_sha VARCHAR,
     links_created INTEGER NOT NULL DEFAULT 0,
     links_skipped_existing INTEGER NOT NULL DEFAULT 0,
     links_skipped_low_confidence INTEGER NOT NULL DEFAULT 0,
     conflicts_detected INTEGER NOT NULL DEFAULT 0,
     outlier_count INTEGER NOT NULL DEFAULT 0,
     preview_summary VARCHAR,
+    created_at_utc VARCHAR,
     started_at TIMESTAMP DEFAULT current_timestamp,
     completed_at TIMESTAMP
 );
@@ -734,6 +806,31 @@ class LinkStore:
             default="corpus",
         )
         self._add_column_if_missing(
+            "family_link_runs",
+            "corpus_snapshot_id",
+            "ALTER TABLE family_link_runs ADD COLUMN corpus_snapshot_id VARCHAR",
+        )
+        self._add_column_if_missing(
+            "family_link_runs",
+            "ontology_version",
+            "ALTER TABLE family_link_runs ADD COLUMN ontology_version VARCHAR",
+        )
+        self._add_column_if_missing(
+            "family_link_runs",
+            "ruleset_version",
+            "ALTER TABLE family_link_runs ADD COLUMN ruleset_version VARCHAR",
+        )
+        self._add_column_if_missing(
+            "family_link_runs",
+            "git_sha",
+            "ALTER TABLE family_link_runs ADD COLUMN git_sha VARCHAR",
+        )
+        self._add_column_if_missing(
+            "family_link_runs",
+            "created_at_utc",
+            "ALTER TABLE family_link_runs ADD COLUMN created_at_utc VARCHAR",
+        )
+        self._add_column_if_missing(
             "family_link_previews",
             "ontology_node_id",
             "ALTER TABLE family_link_previews ADD COLUMN ontology_node_id VARCHAR",
@@ -759,6 +856,152 @@ class LinkStore:
             "clause_key",
             "ALTER TABLE family_links ADD COLUMN clause_key VARCHAR DEFAULT '__section__'",
             default="__section__",
+        )
+        self._add_column_if_missing(
+            "family_links",
+            "ontology_version",
+            "ALTER TABLE family_links ADD COLUMN ontology_version VARCHAR",
+        )
+        self._add_column_if_missing(
+            "family_links",
+            "score_raw",
+            "ALTER TABLE family_links ADD COLUMN score_raw DOUBLE",
+        )
+        self._add_column_if_missing(
+            "family_links",
+            "score_calibrated",
+            "ALTER TABLE family_links ADD COLUMN score_calibrated DOUBLE",
+        )
+        self._add_column_if_missing(
+            "family_links",
+            "threshold_profile_id",
+            "ALTER TABLE family_links ADD COLUMN threshold_profile_id VARCHAR",
+        )
+        self._add_column_if_missing(
+            "family_links",
+            "policy_decision",
+            "ALTER TABLE family_links ADD COLUMN policy_decision VARCHAR",
+        )
+        self._add_column_if_missing(
+            "family_links",
+            "policy_reasons",
+            "ALTER TABLE family_links ADD COLUMN policy_reasons VARCHAR",
+        )
+        self._add_column_if_missing(
+            "family_scope_aliases",
+            "ontology_version",
+            "ALTER TABLE family_scope_aliases ADD COLUMN ontology_version VARCHAR DEFAULT 'unknown'",
+            default="unknown",
+        )
+        self._add_column_if_missing(
+            "link_evidence",
+            "run_id",
+            "ALTER TABLE link_evidence ADD COLUMN run_id VARCHAR",
+        )
+        self._add_column_if_missing(
+            "link_evidence",
+            "doc_id",
+            "ALTER TABLE link_evidence ADD COLUMN doc_id VARCHAR",
+        )
+        self._add_column_if_missing(
+            "link_evidence",
+            "section_number",
+            "ALTER TABLE link_evidence ADD COLUMN section_number VARCHAR",
+        )
+        self._add_column_if_missing(
+            "link_evidence",
+            "section_reference_key",
+            "ALTER TABLE link_evidence ADD COLUMN section_reference_key VARCHAR",
+        )
+        self._add_column_if_missing(
+            "link_evidence",
+            "clause_key",
+            "ALTER TABLE link_evidence ADD COLUMN clause_key VARCHAR",
+        )
+        self._add_column_if_missing(
+            "link_evidence",
+            "node_type",
+            "ALTER TABLE link_evidence ADD COLUMN node_type VARCHAR",
+        )
+        self._add_column_if_missing(
+            "link_evidence",
+            "section_path",
+            "ALTER TABLE link_evidence ADD COLUMN section_path VARCHAR",
+        )
+        self._add_column_if_missing(
+            "link_evidence",
+            "clause_path",
+            "ALTER TABLE link_evidence ADD COLUMN clause_path VARCHAR",
+        )
+        self._add_column_if_missing(
+            "link_evidence",
+            "anchor_text",
+            "ALTER TABLE link_evidence ADD COLUMN anchor_text VARCHAR",
+        )
+        self._add_column_if_missing(
+            "link_evidence",
+            "text_sha256",
+            "ALTER TABLE link_evidence ADD COLUMN text_sha256 VARCHAR",
+        )
+        self._add_column_if_missing(
+            "link_evidence",
+            "chunk_id",
+            "ALTER TABLE link_evidence ADD COLUMN chunk_id VARCHAR",
+        )
+        self._add_column_if_missing(
+            "link_evidence",
+            "score_raw",
+            "ALTER TABLE link_evidence ADD COLUMN score_raw DOUBLE",
+        )
+        self._add_column_if_missing(
+            "link_evidence",
+            "score_calibrated",
+            "ALTER TABLE link_evidence ADD COLUMN score_calibrated DOUBLE",
+        )
+        self._add_column_if_missing(
+            "link_evidence",
+            "threshold_profile_id",
+            "ALTER TABLE link_evidence ADD COLUMN threshold_profile_id VARCHAR",
+        )
+        self._add_column_if_missing(
+            "link_evidence",
+            "policy_decision",
+            "ALTER TABLE link_evidence ADD COLUMN policy_decision VARCHAR",
+        )
+        self._add_column_if_missing(
+            "link_evidence",
+            "policy_reasons",
+            "ALTER TABLE link_evidence ADD COLUMN policy_reasons VARCHAR",
+        )
+        self._add_column_if_missing(
+            "link_evidence",
+            "corpus_version",
+            "ALTER TABLE link_evidence ADD COLUMN corpus_version VARCHAR",
+        )
+        self._add_column_if_missing(
+            "link_evidence",
+            "parser_version",
+            "ALTER TABLE link_evidence ADD COLUMN parser_version VARCHAR",
+        )
+        self._add_column_if_missing(
+            "link_evidence",
+            "ontology_version",
+            "ALTER TABLE link_evidence ADD COLUMN ontology_version VARCHAR",
+        )
+        self._add_column_if_missing(
+            "link_evidence",
+            "ruleset_version",
+            "ALTER TABLE link_evidence ADD COLUMN ruleset_version VARCHAR",
+        )
+        self._add_column_if_missing(
+            "link_evidence",
+            "git_sha",
+            "ALTER TABLE link_evidence ADD COLUMN git_sha VARCHAR",
+        )
+        self._add_column_if_missing(
+            "link_evidence",
+            "created_at_utc",
+            "ALTER TABLE link_evidence ADD COLUMN created_at_utc VARCHAR",
         )
 
         # Backfill additive fields for older databases.
@@ -791,6 +1034,16 @@ class LinkStore:
             )
         with contextlib.suppress(Exception):
             self._conn.execute(
+                "UPDATE family_links SET score_raw = confidence "
+                "WHERE score_raw IS NULL AND confidence IS NOT NULL",
+            )
+        with contextlib.suppress(Exception):
+            self._conn.execute(
+                "UPDATE family_links SET score_calibrated = confidence "
+                "WHERE score_calibrated IS NULL AND confidence IS NOT NULL",
+            )
+        with contextlib.suppress(Exception):
+            self._conn.execute(
                 "UPDATE preview_candidates SET clause_key = "
                 "COALESCE(NULLIF(TRIM(clause_id), ''), NULLIF(TRIM(clause_path), ''), '__section__') "
                 "WHERE clause_key IS NULL OR TRIM(clause_key) = ''",
@@ -805,8 +1058,17 @@ class LinkStore:
 
         self._migrate_preview_candidates_identity_schema()
         self._migrate_family_links_identity_schema()
+        self._migrate_family_scope_aliases_schema()
         with contextlib.suppress(Exception):
             self._refresh_family_scope_aliases()
+        with contextlib.suppress(Exception):
+            self._conn.execute(
+                "CREATE INDEX IF NOT EXISTS idx_evidence_chunk ON link_evidence(chunk_id)"
+            )
+        with contextlib.suppress(Exception):
+            self._conn.execute(
+                "CREATE INDEX IF NOT EXISTS idx_evidence_run ON link_evidence(run_id)"
+            )
 
         # Set schema version
         self._conn.execute(
@@ -1111,6 +1373,11 @@ class LinkStore:
                     clause_key VARCHAR NOT NULL DEFAULT '__section__',
                     link_role VARCHAR NOT NULL DEFAULT 'primary_covenant',
                     confidence DOUBLE NOT NULL DEFAULT 1.0,
+                    score_raw DOUBLE,
+                    score_calibrated DOUBLE,
+                    threshold_profile_id VARCHAR,
+                    policy_decision VARCHAR,
+                    policy_reasons VARCHAR,
                     confidence_tier VARCHAR NOT NULL DEFAULT 'high',
                     confidence_breakdown VARCHAR,
                     status VARCHAR NOT NULL DEFAULT 'active',
@@ -1119,6 +1386,7 @@ class LinkStore:
                     unlinked_note VARCHAR,
                     corpus_version VARCHAR,
                     parser_version VARCHAR,
+                    ontology_version VARCHAR,
                     created_at TIMESTAMP DEFAULT current_timestamp,
                     UNIQUE (scope_id, doc_id, section_number, clause_key)
                 )
@@ -1131,8 +1399,9 @@ class LinkStore:
                     heading, article_num, article_concept, rule_id, rule_version, rule_hash,
                     run_id, source, section_char_start, section_char_end, section_text_hash,
                     clause_id, clause_char_start, clause_char_end, clause_text, clause_key,
-                    link_role, confidence, confidence_tier, confidence_breakdown, status,
-                    unlinked_at, unlinked_reason, unlinked_note, corpus_version, parser_version,
+                    link_role, confidence, score_raw, score_calibrated, threshold_profile_id,
+                    policy_decision, policy_reasons, confidence_tier, confidence_breakdown, status,
+                    unlinked_at, unlinked_reason, unlinked_note, corpus_version, parser_version, ontology_version,
                     created_at
                 )
                 WITH normalized AS (
@@ -1166,6 +1435,11 @@ class LinkStore:
                         COALESCE(NULLIF(TRIM(clause_key), ''), NULLIF(TRIM(clause_id), ''), '__section__') AS clause_key_norm,
                         link_role,
                         confidence,
+                        COALESCE(score_raw, confidence) AS score_raw,
+                        COALESCE(score_calibrated, confidence) AS score_calibrated,
+                        threshold_profile_id,
+                        policy_decision,
+                        policy_reasons,
                         confidence_tier,
                         confidence_breakdown,
                         status,
@@ -1174,6 +1448,7 @@ class LinkStore:
                         unlinked_note,
                         corpus_version,
                         parser_version,
+                        ontology_version,
                         created_at
                     FROM family_links
                 ),
@@ -1214,6 +1489,11 @@ class LinkStore:
                     clause_key_norm,
                     link_role,
                     confidence,
+                    score_raw,
+                    score_calibrated,
+                    threshold_profile_id,
+                    policy_decision,
+                    policy_reasons,
                     confidence_tier,
                     confidence_breakdown,
                     status,
@@ -1222,6 +1502,7 @@ class LinkStore:
                     unlinked_note,
                     corpus_version,
                     parser_version,
+                    ontology_version,
                     created_at
                 FROM ranked
                 WHERE rn = 1
@@ -1248,6 +1529,88 @@ class LinkStore:
                 self._conn.execute("ROLLBACK")
             raise
 
+    def _migrate_family_scope_aliases_schema(self) -> None:
+        expected_pk = ["legacy_family_id", "ontology_version"]
+        if (
+            self._column_exists("family_scope_aliases", "ontology_version")
+            and self._primary_key_columns("family_scope_aliases") == expected_pk
+        ):
+            return
+
+        self._conn.execute("BEGIN TRANSACTION")
+        try:
+            self._conn.execute("DROP TABLE IF EXISTS family_scope_aliases__migrating")
+            self._conn.execute(
+                """
+                CREATE TABLE family_scope_aliases__migrating (
+                    legacy_family_id VARCHAR NOT NULL,
+                    ontology_version VARCHAR NOT NULL DEFAULT 'unknown',
+                    canonical_ontology_node_id VARCHAR NOT NULL,
+                    source VARCHAR NOT NULL DEFAULT 'inferred',
+                    created_at TIMESTAMP DEFAULT current_timestamp,
+                    updated_at TIMESTAMP DEFAULT current_timestamp,
+                    PRIMARY KEY (legacy_family_id, ontology_version)
+                )
+                """
+            )
+            self._conn.execute(
+                """
+                INSERT INTO family_scope_aliases__migrating (
+                    legacy_family_id,
+                    ontology_version,
+                    canonical_ontology_node_id,
+                    source,
+                    created_at,
+                    updated_at
+                )
+                WITH normalized AS (
+                    SELECT
+                        TRIM(legacy_family_id) AS legacy_family_id,
+                        COALESCE(NULLIF(TRIM(ontology_version), ''), 'unknown') AS ontology_version,
+                        TRIM(canonical_ontology_node_id) AS canonical_ontology_node_id,
+                        COALESCE(NULLIF(TRIM(source), ''), 'inferred') AS source,
+                        COALESCE(created_at, current_timestamp) AS created_at,
+                        COALESCE(updated_at, current_timestamp) AS updated_at
+                    FROM family_scope_aliases
+                    WHERE legacy_family_id IS NOT NULL
+                      AND TRIM(legacy_family_id) <> ''
+                      AND canonical_ontology_node_id IS NOT NULL
+                      AND TRIM(canonical_ontology_node_id) <> ''
+                ),
+                ranked AS (
+                    SELECT
+                        *,
+                        ROW_NUMBER() OVER (
+                            PARTITION BY legacy_family_id, ontology_version
+                            ORDER BY updated_at DESC, created_at DESC, canonical_ontology_node_id ASC
+                        ) AS rn
+                    FROM normalized
+                )
+                SELECT
+                    legacy_family_id,
+                    ontology_version,
+                    canonical_ontology_node_id,
+                    source,
+                    created_at,
+                    updated_at
+                FROM ranked
+                WHERE rn = 1
+                """
+            )
+            self._conn.execute("DROP TABLE family_scope_aliases")
+            self._conn.execute(
+                "ALTER TABLE family_scope_aliases__migrating RENAME TO family_scope_aliases"
+            )
+            self._conn.execute(
+                "CREATE INDEX IF NOT EXISTS idx_family_scope_aliases_canonical "
+                "ON family_scope_aliases(canonical_ontology_node_id, ontology_version)"
+            )
+            self._conn.execute("COMMIT")
+        except Exception:
+            with contextlib.suppress(Exception):
+                self._conn.execute("ROLLBACK")
+            raise
+
     @staticmethod
     def _scope_sql_expr(
         *,
@@ -1266,49 +1629,132 @@ class LinkStore:
         legacy_family_id: str,
         canonical_ontology_node_id: str,
         *,
+        ontology_version: str = "unknown",
         source: str = "inferred",
     ) -> None:
         legacy = str(legacy_family_id or "").strip()
         canonical = str(canonical_ontology_node_id or "").strip()
         if not legacy or not canonical:
             return
+        ontology_version_norm = str(ontology_version or "unknown").strip() or "unknown"
         source_norm = str(source or "inferred").strip() or "inferred"
         now = _now()
         existing = self._conn.execute(
-            "SELECT created_at FROM family_scope_aliases WHERE legacy_family_id = ?",
-            [legacy],
+            "SELECT created_at FROM family_scope_aliases "
+            "WHERE legacy_family_id = ? AND ontology_version = ?",
+            [legacy, ontology_version_norm],
         ).fetchone()
         created_at = existing[0] if existing and existing[0] is not None else now
         self._conn.execute(
             """
             INSERT OR REPLACE INTO family_scope_aliases
-            (legacy_family_id, canonical_ontology_node_id, source, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?)
+            (legacy_family_id, ontology_version, canonical_ontology_node_id, source, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?)
             """,
-            [legacy, canonical, source_norm, created_at, now],
+            [legacy, ontology_version_norm, canonical, source_norm, created_at, now],
         )
 
-    def get_canonical_scope_id(self, family_or_scope_id: str | None) -> str | None:
+    def get_canonical_scope_id(
+        self,
+        family_or_scope_id: str | None,
+        *,
+        ontology_version: str | None = None,
+    ) -> str | None:
         raw = str(family_or_scope_id or "").strip()
         if not raw:
             return None
-        row = self._conn.execute(
-            "SELECT canonical_ontology_node_id "
-            "FROM family_scope_aliases WHERE legacy_family_id = ?",
-            [raw],
-        ).fetchone()
+        if ontology_version is not None:
+            ontology_version_norm = str(ontology_version or "unknown").strip() or "unknown"
+            row = self._conn.execute(
+                "SELECT canonical_ontology_node_id "
+                "FROM family_scope_aliases "
+                "WHERE legacy_family_id = ? AND ontology_version = ?",
+                [raw, ontology_version_norm],
+            ).fetchone()
+        else:
+            row = self._conn.execute(
+                "SELECT canonical_ontology_node_id "
+                "FROM family_scope_aliases WHERE legacy_family_id = ? "
+                "ORDER BY updated_at DESC LIMIT 1",
+                [raw],
+            ).fetchone()
         if row and row[0] is not None and str(row[0]).strip():
             return str(row[0]).strip()
         return raw
 
-    def resolve_scope_aliases(self, family_or_scope_id: str | None) -> list[str]:
+    def resolve_scope_aliases(
+        self,
+        family_or_scope_id: str | None,
+        *,
+        ontology_version: str | None = None,
+    ) -> list[str]:
         raw = str(family_or_scope_id or "").strip()
         if not raw:
             return []
+        ontology_version_norm = (
+            str(ontology_version or "unknown").strip() or "unknown"
+            if ontology_version is not None
+            else None
+        )
+
+        if ontology_version_norm is not None:
+            alias_rows = self._conn.execute(
+                "SELECT legacy_family_id, canonical_ontology_node_id "
+                "FROM family_scope_aliases WHERE ontology_version = ?",
+                [ontology_version_norm],
+            ).fetchall()
+        else:
+            alias_rows = self._conn.execute(
+                "SELECT legacy_family_id, canonical_ontology_node_id "
+                "FROM family_scope_aliases",
+            ).fetchall()
+
+        forward_map: dict[str, str] = {}
+        reverse_map: dict[str, set[str]] = {}
+        for legacy_value_raw, canonical_value_raw in alias_rows:
+            legacy_value = str(legacy_value_raw or "").strip()
+            canonical_value = str(canonical_value_raw or "").strip()
+            if not legacy_value or not canonical_value:
+                continue
+            if legacy_value == canonical_value:
+                reverse_map.setdefault(canonical_value, set()).add(legacy_value)
+                continue
+            # Explicitly fail ambiguous alias mapping in same ontology version.
+            existing = forward_map.get(legacy_value)
+            if existing is not None and existing != canonical_value:
+                scope_desc = ontology_version_norm or "all"
+                raise ValueError(
+                    f"Ambiguous alias mapping for {legacy_value} in ontology_version={scope_desc}: "
+                    f"{existing} vs {canonical_value}"
+                )
+            forward_map[legacy_value] = canonical_value
+            reverse_map.setdefault(canonical_value, set()).add(legacy_value)
+
+        # Cycle detection on legacy -> canonical edges.
+        visiting: set[str] = set()
+        visited: set[str] = set()
+
+        def _walk(node: str) -> None:
+            if node in visiting:
+                scope_desc = ontology_version_norm or "all"
+                raise ValueError(
+                    f"Alias cycle detected at {node} in ontology_version={scope_desc}"
+                )
+            if node in visited:
+                return
+            visiting.add(node)
+            target = forward_map.get(node)
+            if target:
+                _walk(target)
+            visiting.remove(node)
+            visited.add(node)
+
+        for key in sorted(forward_map):
+            _walk(key)
 
         resolved: set[str] = set()
         queue: list[str] = [raw]
-        canonical = self.get_canonical_scope_id(raw)
+        canonical = self.get_canonical_scope_id(raw, ontology_version=ontology_version_norm)
         if canonical:
             queue.append(canonical)
 
@@ -1318,37 +1764,22 @@ class LinkStore:
                 continue
             resolved.add(candidate)
 
-            canonical_row = self._conn.execute(
-                "SELECT canonical_ontology_node_id "
-                "FROM family_scope_aliases WHERE legacy_family_id = ?",
-                [candidate],
-            ).fetchone()
-            if canonical_row and canonical_row[0] is not None:
-                canonical_value = str(canonical_row[0]).strip()
-                if canonical_value and canonical_value not in resolved:
-                    queue.append(canonical_value)
+            canonical_value = forward_map.get(candidate)
+            if canonical_value and canonical_value not in resolved:
+                queue.append(canonical_value)
 
-            legacy_rows = self._conn.execute(
-                "SELECT legacy_family_id "
-                "FROM family_scope_aliases WHERE canonical_ontology_node_id = ?",
-                [candidate],
-            ).fetchall()
-            for row in legacy_rows:
-                legacy_value = str(row[0] or "").strip()
+            for legacy_value in sorted(reverse_map.get(candidate, set())):
                 if legacy_value and legacy_value not in resolved:
                     queue.append(legacy_value)
 
-        canonical_scope = self.get_canonical_scope_id(raw) or raw
+        canonical_scope = self.get_canonical_scope_id(raw, ontology_version=ontology_version_norm) or raw
+
         canonical_token = _canonical_family_token(canonical_scope)
         if canonical_token:
-            rows = self._conn.execute(
-                "SELECT legacy_family_id, canonical_ontology_node_id "
-                "FROM family_scope_aliases"
-            ).fetchall()
             token_matches: set[str] = set()
-            for row in rows:
-                legacy_value = str(row[0] or "").strip()
-                canonical_value = str(row[1] or "").strip()
+            for legacy_raw, canonical_raw in alias_rows:
+                legacy_value = str(legacy_raw or "").strip()
+                canonical_value = str(canonical_raw or "").strip()
                 for value in (legacy_value, canonical_value):
                     if value and _canonical_family_token(value) == canonical_token:
                         token_matches.add(canonical_value or value)
@@ -1356,13 +1787,7 @@ class LinkStore:
                 only_match = next(iter(token_matches))
                 if only_match and only_match not in resolved:
                     resolved.add(only_match)
-                more_legacy_rows = self._conn.execute(
-                    "SELECT legacy_family_id FROM family_scope_aliases "
-                    "WHERE canonical_ontology_node_id = ?",
-                    [only_match],
-                ).fetchall()
-                for row in more_legacy_rows:
-                    legacy_value = str(row[0] or "").strip()
+                for legacy_value in sorted(reverse_map.get(only_match, set())):
                     if legacy_value:
                         resolved.add(legacy_value)
 
@@ -1372,41 +1797,113 @@ class LinkStore:
         canonical_scope = str(canonical_scope or "").strip()
         if canonical_scope:
             descendant_prefix = f"{canonical_scope}.%"
-            known_scope_rows = self._conn.execute(
-                """
-                SELECT DISTINCT scope_id
-                FROM (
-                    SELECT COALESCE(NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), '')) AS scope_id
-                    FROM family_links
-                    UNION ALL
-                    SELECT COALESCE(NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), '')) AS scope_id
-                    FROM family_link_rules
-                    UNION ALL
-                    SELECT COALESCE(NULLIF(TRIM(rr.ontology_node_id), ''), NULLIF(TRIM(r.family_id), '')) AS scope_id
-                    FROM family_link_runs AS r
-                    LEFT JOIN family_link_rules AS rr ON rr.rule_id = r.rule_id
-                ) AS known_scopes
-                WHERE scope_id IS NOT NULL
-                  AND TRIM(scope_id) <> ''
-                  AND (scope_id = ? OR scope_id LIKE ?)
-                """,
-                [canonical_scope, descendant_prefix],
-            ).fetchall()
+            if ontology_version_norm is not None:
+                known_scope_rows = self._conn.execute(
+                    """
+                    SELECT DISTINCT scope_id
+                    FROM (
+                        SELECT COALESCE(NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), '')) AS scope_id
+                        FROM family_links
+                        WHERE COALESCE(NULLIF(TRIM(ontology_version), ''), 'unknown') = ?
+                        UNION ALL
+                        SELECT COALESCE(NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), '')) AS scope_id
+                        FROM family_link_rules
+                        UNION ALL
+                        SELECT COALESCE(NULLIF(TRIM(rr.ontology_node_id), ''), NULLIF(TRIM(r.family_id), '')) AS scope_id
+                        FROM family_link_runs AS r
+                        LEFT JOIN family_link_rules AS rr ON rr.rule_id = r.rule_id
+                        WHERE COALESCE(NULLIF(TRIM(r.ontology_version), ''), 'unknown') = ?
+                    ) AS known_scopes
+                    WHERE scope_id IS NOT NULL
+                      AND TRIM(scope_id) <> ''
+                      AND (scope_id = ? OR scope_id LIKE ?)
+                    """,
+                    [ontology_version_norm, ontology_version_norm, canonical_scope, descendant_prefix],
+                ).fetchall()
+            else:
+                known_scope_rows = self._conn.execute(
+                    """
+                    SELECT DISTINCT scope_id
+                    FROM (
+                        SELECT COALESCE(NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), '')) AS scope_id
+                        FROM family_links
+                        UNION ALL
+                        SELECT COALESCE(NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), '')) AS scope_id
+                        FROM family_link_rules
+                        UNION ALL
+                        SELECT COALESCE(NULLIF(TRIM(rr.ontology_node_id), ''), NULLIF(TRIM(r.family_id), '')) AS scope_id
+                        FROM family_link_runs AS r
+                        LEFT JOIN family_link_rules AS rr ON rr.rule_id = r.rule_id
+                    ) AS known_scopes
+                    WHERE scope_id IS NOT NULL
+                      AND TRIM(scope_id) <> ''
+                      AND (scope_id = ? OR scope_id LIKE ?)
+                    """,
+                    [canonical_scope, descendant_prefix],
+                ).fetchall()
             for row in known_scope_rows:
                 scope_value = str(row[0] or "").strip()
                 if not scope_value:
                     continue
                 resolved.add(scope_value)
                 # Bring in any legacy aliases that map to discovered descendant scopes.
-                legacy_rows = self._conn.execute(
-                    "SELECT legacy_family_id "
-                    "FROM family_scope_aliases WHERE canonical_ontology_node_id = ?",
-                    [scope_value],
-                ).fetchall()
-                for legacy_row in legacy_rows:
-                    legacy_value = str(legacy_row[0] or "").strip()
+                for legacy_value in sorted(reverse_map.get(scope_value, set())):
                     if legacy_value:
                         resolved.add(legacy_value)
+
+        # Explicit orphan-alias failure for ontology-scoped alias resolution.
+        if raw in forward_map:
+            canonical_target = forward_map[raw]
+            known_target = False
+            if ontology_version_norm is not None:
+                target_row = self._conn.execute(
+                    """
+                    SELECT 1
+                    FROM (
+                        SELECT COALESCE(NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), '')) AS scope_id
+                        FROM family_links
+                        WHERE COALESCE(NULLIF(TRIM(ontology_version), ''), 'unknown') = ?
+                        UNION ALL
+                        SELECT COALESCE(NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), '')) AS scope_id
+                        FROM family_link_rules
+                        UNION ALL
+                        SELECT COALESCE(NULLIF(TRIM(rr.ontology_node_id), ''), NULLIF(TRIM(r.family_id), '')) AS scope_id
+                        FROM family_link_runs AS r
+                        LEFT JOIN family_link_rules AS rr ON rr.rule_id = r.rule_id
+                        WHERE COALESCE(NULLIF(TRIM(r.ontology_version), ''), 'unknown') = ?
+                    ) AS known_scopes
+                    WHERE scope_id = ?
+                    LIMIT 1
+                    """,
+                    [ontology_version_norm, ontology_version_norm, canonical_target],
+                ).fetchone()
+            else:
+                target_row = self._conn.execute(
+                    """
+                    SELECT 1
+                    FROM (
+                        SELECT COALESCE(NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), '')) AS scope_id
+                        FROM family_links
+                        UNION ALL
+                        SELECT COALESCE(NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), '')) AS scope_id
+                        FROM family_link_rules
+                        UNION ALL
+                        SELECT COALESCE(NULLIF(TRIM(rr.ontology_node_id), ''), NULLIF(TRIM(r.family_id), '')) AS scope_id
+                        FROM family_link_runs AS r
+                        LEFT JOIN family_link_rules AS rr ON rr.rule_id = r.rule_id
+                    ) AS known_scopes
+                    WHERE scope_id = ?
+                    LIMIT 1
+                    """,
+                    [canonical_target],
+                ).fetchone()
+            if target_row is not None:
+                known_target = True
+            if not known_target and canonical_target not in forward_map and canonical_target not in reverse_map:
+                scope_desc = ontology_version_norm or "all"
+                raise ValueError(
+                    f"Orphan alias mapping for {raw} -> {canonical_target} in ontology_version={scope_desc}"
+                )
 
         return sorted(resolved)
 
@@ -1416,7 +1913,8 @@ class LinkStore:
         rows = self._conn.execute(
             """
             SELECT DISTINCT family_id,
-                   COALESCE(NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), ''))
+                   COALESCE(NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), '')),
+                   'unknown'
             FROM family_link_rules
             WHERE family_id IS NOT NULL AND TRIM(family_id) <> ''
             """
@@ -1424,13 +1922,20 @@ class LinkStore:
         for row in rows:
             legacy = str(row[0] or "").strip()
             canonical = str(row[1] or "").strip() or legacy
-            if legacy and canonical:
-                self.upsert_family_alias(legacy, canonical, source="rules")
+            ontology_version = str(row[2] or "unknown").strip() or "unknown"
+            if _should_upsert_alias(legacy, canonical):
+                self.upsert_family_alias(
+                    legacy,
+                    canonical,
+                    ontology_version=ontology_version,
+                    source="rules",
+                )
 
         rows = self._conn.execute(
             """
             SELECT DISTINCT family_id,
-                   COALESCE(NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), ''))
+                   COALESCE(NULLIF(TRIM(ontology_node_id), ''), NULLIF(TRIM(family_id), '')),
+                   COALESCE(NULLIF(TRIM(ontology_version), ''), 'unknown')
             FROM family_links
             WHERE family_id IS NOT NULL AND TRIM(family_id) <> ''
             """
@@ -1438,8 +1943,14 @@ class LinkStore:
         for row in rows:
             legacy = str(row[0] or "").strip()
             canonical = str(row[1] or "").strip() or legacy
-            if legacy and canonical:
-                self.upsert_family_alias(legacy, canonical, source="links")
+            ontology_version = str(row[2] or "unknown").strip() or "unknown"
+            if _should_upsert_alias(legacy, canonical):
+                self.upsert_family_alias(
+                    legacy,
+                    canonical,
+                    ontology_version=ontology_version,
+                    source="links",
+                )
 
         rows = self._conn.execute(
             """
@@ -1447,7 +1958,8 @@ class LinkStore:
                    COALESCE(
                        NULLIF(TRIM(rr.ontology_node_id), ''),
                        NULLIF(TRIM(r.family_id), '')
-                   )
+                   ),
+                   COALESCE(NULLIF(TRIM(r.ontology_version), ''), 'unknown')
             FROM family_link_runs AS r
             LEFT JOIN family_link_rules AS rr ON rr.rule_id = r.rule_id
             WHERE r.family_id IS NOT NULL AND TRIM(r.family_id) <> ''
@@ -1456,28 +1968,34 @@ class LinkStore:
         for row in rows:
             legacy = str(row[0] or "").strip()
             canonical = str(row[1] or "").strip() or legacy
-            if legacy and canonical:
-                self.upsert_family_alias(legacy, canonical, source="runs")
+            ontology_version = str(row[2] or "unknown").strip() or "unknown"
+            if _should_upsert_alias(legacy, canonical):
+                self.upsert_family_alias(
+                    legacy,
+                    canonical,
+                    ontology_version=ontology_version,
+                    source="runs",
+                )
 
         token_rows = self._conn.execute(
-            "SELECT DISTINCT legacy_family_id, canonical_ontology_node_id "
+            "SELECT DISTINCT legacy_family_id, canonical_ontology_node_id, ontology_version "
             "FROM family_scope_aliases"
         ).fetchall()
-        all_scopes = {
-            str(row[1] or "").strip()
-            for row in token_rows
-            if row and row[1] is not None and str(row[1]).strip()
-        }
-        token_to_candidates: dict[str, set[str]] = {}
-        for scope in all_scopes:
+        token_to_candidates: dict[tuple[str, str], set[str]] = {}
+        for row in token_rows:
+            scope = str(row[1] or "").strip()
+            ontology_version = str(row[2] or "unknown").strip() or "unknown"
+            if not scope:
+                continue
             token = _canonical_family_token(scope)
             if not token:
                 continue
-            token_to_candidates.setdefault(token, set()).add(scope)
+            token_to_candidates.setdefault((ontology_version, token), set()).add(scope)
 
         for row in token_rows:
             legacy = str(row[0] or "").strip()
             current_canonical = str(row[1] or "").strip()
+            ontology_version = str(row[2] or "unknown").strip() or "unknown"
             if not legacy:
                 continue
             # Only infer remaps for legacy-style IDs (e.g., FAM-*)
@@ -1489,7 +2007,7 @@ class LinkStore:
                 continue
             candidates = {
                 candidate
-                for candidate in token_to_candidates.get(token, set())
+                for candidate in token_to_candidates.get((ontology_version, token), set())
                 if candidate != legacy
             }
             preferred = {
@@ -1508,9 +2026,9 @@ class LinkStore:
                     """
                     UPDATE family_scope_aliases
                     SET canonical_ontology_node_id = ?, source = ?, updated_at = ?
-                    WHERE legacy_family_id = ?
+                    WHERE legacy_family_id = ? AND ontology_version = ?
                     """,
-                    [target, "token_inferred", now, legacy],
+                    [target, "token_inferred", now, legacy, ontology_version],
                 )
 
     def _ensure_undo_state(self) -> None:
@@ -1775,8 +2293,13 @@ class LinkStore:
             rule.get("created_at", now),
             now,
         ])
-        if family_id and ontology_node_id:
-            self.upsert_family_alias(family_id, ontology_node_id, source="rule_write")
+        if _should_upsert_alias(family_id, ontology_node_id):
+            self.upsert_family_alias(
+                family_id,
+                ontology_node_id,
+                ontology_version=str(rule.get("ontology_version") or "unknown"),
+                source="rule_write",
+            )
 
     def clone_rule(self, rule_id: str, new_rule_id: str) -> dict[str, Any]:
         original = self.get_rule(rule_id)
@@ -1916,15 +2439,16 @@ class LinkStore:
 
     def create_links(self, links: list[dict[str, Any]], run_id: str) -> int:
         created = 0
-        alias_pairs: set[tuple[str, str]] = set()
+        alias_pairs: set[tuple[str, str, str]] = set()
         for link in links:
             link_id = link.get("link_id") or _uuid()
             family_id = str(link.get("family_id") or "").strip()
             ontology_node_id = str(link.get("ontology_node_id") or family_id or "").strip()
             scope_id = str(link.get("scope_id") or ontology_node_id or family_id or "").strip()
+            ontology_version = str(link.get("ontology_version") or "unknown").strip() or "unknown"
             clause_key = _normalized_clause_key(link.get("clause_id"), link.get("clause_key"))
-            if family_id and ontology_node_id:
-                alias_pairs.add((family_id, ontology_node_id))
+            if _should_upsert_alias(family_id, ontology_node_id):
+                alias_pairs.add((family_id, ontology_node_id, ontology_version))
             try:
                 self._conn.execute("""
                     INSERT INTO family_links
@@ -1933,11 +2457,10 @@ class LinkStore:
                      rule_hash, run_id, source, section_char_start,
                      section_char_end, section_text_hash, clause_id,
                      clause_char_start, clause_char_end, clause_text, clause_key, link_role,
-                     confidence, confidence_tier, confidence_breakdown,
-                     status, corpus_version, parser_version, created_at)
-                    VALUES (
-                        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-                        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                     confidence, score_raw, score_calibrated, threshold_profile_id,
+                     policy_decision, policy_reasons, confidence_tier, confidence_breakdown,
+                     status, corpus_version, parser_version, ontology_version, created_at)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, [
                     link_id,
                     family_id,
@@ -1963,18 +2486,29 @@ class LinkStore:
                     clause_key,
                     link.get("link_role", "primary_covenant"),
                     link.get("confidence", 1.0),
+                    link.get("score_raw", link.get("confidence", 1.0)),
+                    link.get("score_calibrated", link.get("confidence", 1.0)),
+                    link.get("threshold_profile_id"),
+                    link.get("policy_decision"),
+                    _opt_json(link, "policy_reasons"),
                     link.get("confidence_tier", "high"),
                     _opt_json(link, "confidence_breakdown"),
                     link.get("status", "active"),
                     link.get("corpus_version"),
                     link.get("parser_version"),
+                    ontology_version,
                     _now(),
                 ])
                 created += 1
             except Exception:
                 pass  # Skip duplicates (UNIQUE constraint)
-        for family_id, ontology_node_id in alias_pairs:
-            self.upsert_family_alias(family_id, ontology_node_id, source="link_write")
+        for family_id, ontology_node_id, ontology_version in alias_pairs:
+            self.upsert_family_alias(
+                family_id,
+                ontology_node_id,
+                ontology_version=ontology_version,
+                source="link_write",
+            )
         return created
 
     def unlink(self, link_id: str, reason: str, note: str = "") -> None:
@@ -2156,22 +2690,90 @@ class LinkStore:
         cols = [d[0] for d in self._conn.description]
         return [_to_dict(cols, row) for row in rows]
 
+    def log_admin_audit_event(self, event: dict[str, Any]) -> None:
+        self._conn.execute(
+            """
+            INSERT INTO admin_audit_events
+            (event_id, action, path, method, actor_fingerprint, request_id, source_ip,
+             source_host, payload_hash, status_code, metadata, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            [
+                event.get("event_id") or _uuid(),
+                str(event.get("action") or "unknown"),
+                str(event.get("path") or ""),
+                str(event.get("method") or ""),
+                str(event.get("actor_fingerprint") or "anonymous"),
+                str(event.get("request_id") or _uuid()),
+                str(event.get("source_ip") or ""),
+                str(event.get("source_host") or ""),
+                str(event.get("payload_hash") or ""),
+                int(event.get("status_code") or 0),
+                _json_dumps(event.get("metadata")) if event.get("metadata") else None,
+                _now(),
+            ],
+        )
+
+    def get_admin_audit_events(self, *, limit: int = 100) -> list[dict[str, Any]]:
+        rows = self._conn.execute(
+            "SELECT * FROM admin_audit_events ORDER BY created_at DESC LIMIT ?",
+            [int(limit)],
+        ).fetchall()
+        cols = [d[0] for d in self._conn.description]
+        return [_to_dict(cols, row) for row in rows]
+
     # ─── Evidence ─────────────────────────────────────────────────
 
     def save_evidence(self, evidence: list[dict[str, Any]]) -> int:
         count = 0
         for ev in evidence:
+            anchor_text = str(ev.get("anchor_text") or "").strip()
+            text_sha256 = str(ev.get("text_sha256") or "").strip()
+            text_hash = str(ev.get("text_hash") or "").strip()
+            if not text_hash and text_sha256:
+                text_hash = text_sha256
+            if not text_hash:
+                text_hash = hashlib.sha256(anchor_text.encode("utf-8")).hexdigest()
             self._conn.execute("""
                 INSERT INTO link_evidence
-                (evidence_id, link_id, evidence_type, char_start, char_end,
-                 text_hash, matched_pattern, reason_code, score, metadata)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                (evidence_id, link_id, run_id, doc_id, section_number,
+                 section_reference_key, clause_key, evidence_type, node_type, section_path, clause_path,
+                 char_start, char_end, anchor_text, text_hash, text_sha256, chunk_id,
+                 matched_pattern, reason_code, score, score_raw, score_calibrated, threshold_profile_id,
+                 policy_decision, policy_reasons, corpus_version, parser_version, ontology_version,
+                 ruleset_version, git_sha, created_at_utc, metadata)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, [
                 ev.get("evidence_id") or _uuid(),
-                ev["link_id"], ev["evidence_type"],
-                ev["char_start"], ev["char_end"], ev["text_hash"],
+                ev["link_id"],
+                ev.get("run_id"),
+                ev.get("doc_id"),
+                ev.get("section_number"),
+                ev.get("section_reference_key"),
+                _normalized_clause_key(ev.get("clause_key"), ev.get("clause_path")),
+                ev["evidence_type"],
+                ev.get("node_type"),
+                ev.get("section_path"),
+                ev.get("clause_path"),
+                ev["char_start"],
+                ev["char_end"],
+                anchor_text or None,
+                text_hash,
+                text_sha256 or None,
+                ev.get("chunk_id"),
                 ev.get("matched_pattern"), ev["reason_code"],
                 ev.get("score", 1.0),
+                ev.get("score_raw", ev.get("score", 1.0)),
+                ev.get("score_calibrated", ev.get("score", 1.0)),
+                ev.get("threshold_profile_id"),
+                ev.get("policy_decision"),
+                _opt_json(ev, "policy_reasons"),
+                ev.get("corpus_version"),
+                ev.get("parser_version"),
+                ev.get("ontology_version"),
+                ev.get("ruleset_version"),
+                ev.get("git_sha"),
+                ev.get("created_at_utc"),
                 _json_dumps(ev["metadata"]) if ev.get("metadata") else None,
             ])
             count += 1
@@ -2193,6 +2795,7 @@ class LinkStore:
             scope_mode = "corpus"
         family_id = str(run.get("family_id") or "").strip()
         rule_id = str(run.get("rule_id") or "").strip()
+        ontology_version = str(run.get("ontology_version") or "unknown").strip() or "unknown"
         canonical_scope = str(run.get("ontology_node_id") or "").strip()
         if not canonical_scope and rule_id:
             with contextlib.suppress(Exception):
@@ -2203,24 +2806,35 @@ class LinkStore:
                     ).strip()
         if not canonical_scope:
             canonical_scope = family_id
-        if family_id and canonical_scope and family_id != "_all":
-            self.upsert_family_alias(family_id, canonical_scope, source="run")
+        if family_id != "_all" and _should_upsert_alias(family_id, canonical_scope):
+            self.upsert_family_alias(
+                family_id,
+                canonical_scope,
+                ontology_version=ontology_version,
+                source="run",
+            )
         self._conn.execute("""
             INSERT INTO family_link_runs
             (run_id, run_type, family_id, rule_id, parent_family_id, parent_run_id, scope_mode, rule_version,
-             corpus_version, corpus_doc_count, parser_version,
+             corpus_version, corpus_snapshot_id, corpus_doc_count, parser_version,
+             ontology_version, ruleset_version, git_sha,
              links_created, links_skipped_existing, links_skipped_low_confidence,
-             conflicts_detected, outlier_count, preview_summary, started_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+             conflicts_detected, outlier_count, preview_summary, created_at_utc, started_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, [
             run["run_id"], run["run_type"], family_id or None,
             rule_id or None, run.get("parent_family_id"),
             run.get("parent_run_id"), scope_mode, run.get("rule_version"),
-            run["corpus_version"], run["corpus_doc_count"], run["parser_version"],
+            run["corpus_version"], run.get("corpus_snapshot_id"),
+            run["corpus_doc_count"], run["parser_version"],
+            ontology_version,
+            run.get("ruleset_version"),
+            run.get("git_sha"),
             run.get("links_created", 0), run.get("links_skipped_existing", 0),
             run.get("links_skipped_low_confidence", 0),
             run.get("conflicts_detected", 0), run.get("outlier_count", 0),
             _json_dumps(run.get("preview_summary")) if run.get("preview_summary") else None,
+            run.get("created_at_utc", _now()),
             _now(),
         ])
 
@@ -2329,8 +2943,13 @@ class LinkStore:
             _now(),
         ])
         family_id = str(preview.get("family_id") or "").strip()
-        if family_id and ontology_node_id:
-            self.upsert_family_alias(family_id, ontology_node_id, source="preview")
+        if _should_upsert_alias(family_id, ontology_node_id):
+            self.upsert_family_alias(
+                family_id,
+                ontology_node_id,
+                ontology_version=str(preview.get("ontology_version") or "unknown"),
+                source="preview",
+            )
 
     def get_preview(self, preview_id: str) -> dict[str, Any] | None:
         row = self._conn.execute(
@@ -2482,9 +3101,16 @@ class LinkStore:
     # ─── Calibration ──────────────────────────────────────────────
 
     def get_calibration(
-        self, family_id: str, template_family: str = "_global",
+        self,
+        family_id: str,
+        template_family: str = "_global",
+        *,
+        ontology_version: str | None = None,
     ) -> dict[str, Any] | None:
-        scope_ids = self.resolve_scope_aliases(family_id)
+        scope_ids = self.resolve_scope_aliases(
+            family_id,
+            ontology_version=ontology_version,
+        )
         if not scope_ids:
             scope_ids = [str(family_id).strip()]
         placeholders = ", ".join("?" for _ in scope_ids)
@@ -2503,9 +3129,17 @@ class LinkStore:
         self, family_id: str, template_family: str,
         thresholds: dict[str, Any],
     ) -> None:
-        canonical_scope = str(self.get_canonical_scope_id(family_id) or family_id).strip()
-        if family_id and canonical_scope:
-            self.upsert_family_alias(str(family_id), canonical_scope, source="calibration")
+        ontology_version = str(thresholds.get("ontology_version") or "unknown").strip() or "unknown"
+        canonical_scope = str(
+            self.get_canonical_scope_id(family_id, ontology_version=ontology_version) or family_id
+        ).strip()
+        if _should_upsert_alias(family_id, canonical_scope):
+            self.upsert_family_alias(
+                str(family_id),
+                canonical_scope,
+                ontology_version=ontology_version,
+                source="calibration",
+            )
         self._conn.execute("""
             INSERT OR REPLACE INTO family_link_calibrations
             (family_id, template_family, high_threshold, medium_threshold,
@@ -3490,8 +4124,13 @@ class LinkStore:
         model_version: str, sample_count: int,
     ) -> None:
         canonical_scope = str(self.get_canonical_scope_id(family_id) or family_id).strip()
-        if family_id and canonical_scope:
-            self.upsert_family_alias(str(family_id), canonical_scope, source="centroid")
+        if _should_upsert_alias(family_id, canonical_scope):
+            self.upsert_family_alias(
+                str(family_id),
+                canonical_scope,
+                ontology_version="unknown",
+                source="centroid",
+            )
         self._conn.execute("""
             INSERT OR REPLACE INTO family_centroids
             (family_id, template_family, centroid_vector, model_version,

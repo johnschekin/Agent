@@ -1,0 +1,206 @@
+{
+  "duration_seconds": 10.955,
+  "ended_at": 1772149743.232501,
+  "environment": {
+    "ci": "",
+    "cwd": "/Users/johnchtchekine/Projects/Agent",
+    "python": "3.13.1 (v3.13.1:06714517797, Dec  3 2024, 14:00:22) [Clang 15.0.0 (clang-1500.3.9.4)]"
+  },
+  "mode": "full",
+  "started_at": 1772149732.2775009,
+  "status": "pass",
+  "steps": [
+    {
+      "command": [
+        "pytest",
+        "-q",
+        "tests/test_doc_parser.py",
+        "tests/test_clause_parser.py",
+        "tests/test_zero_section_recovery.py",
+        "tests/test_definitions.py",
+        "-p",
+        "no:cacheprovider"
+      ],
+      "cwd": "/Users/johnchtchekine/Projects/Agent",
+      "details": {},
+      "duration_seconds": 0.486,
+      "ended_at": 1772149732.7631192,
+      "exit_code": 0,
+      "name": "Pytest Parser Core",
+      "started_at": 1772149732.277507,
+      "status": "pass"
+    },
+    {
+      "command": [
+        "pytest",
+        "-q",
+        "tests/test_edge_cases.py",
+        "tests/test_edge_case_clause_guardrail.py",
+        "tests/test_edge_case_clause_parent_guardrail.py",
+        "-p",
+        "no:cacheprovider"
+      ],
+      "cwd": "/Users/johnchtchekine/Projects/Agent",
+      "details": {},
+      "duration_seconds": 2.256,
+      "ended_at": 1772149735.019635,
+      "exit_code": 0,
+      "name": "Pytest Edge Case Suite",
+      "started_at": 1772149732.763194,
+      "status": "pass"
+    },
+    {
+      "command": [
+        "pytest",
+        "-q",
+        "tests/test_link_worker.py",
+        "tests/test_bulk_family_linker.py",
+        "-p",
+        "no:cacheprovider"
+      ],
+      "cwd": "/Users/johnchtchekine/Projects/Agent",
+      "details": {},
+      "duration_seconds": 3.129,
+      "ended_at": 1772149738.1489348,
+      "exit_code": 0,
+      "name": "Pytest Link Integrity",
+      "started_at": 1772149735.01969,
+      "status": "pass"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/edge_case_clause_guardrail.py",
+        "--db",
+        "/Users/johnchtchekine/Projects/Agent/corpus_index/corpus.duckdb",
+        "--baseline",
+        "/Users/johnchtchekine/Projects/Agent/data/quality/edge_case_clause_guardrail_baseline.json"
+      ],
+      "cwd": "/Users/johnchtchekine/Projects/Agent",
+      "details": {},
+      "duration_seconds": 0.19,
+      "ended_at": 1772149738.339466,
+      "exit_code": 0,
+      "name": "Collision Guardrail Baseline Check",
+      "started_at": 1772149738.149057,
+      "status": "pass"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/edge_case_clause_parent_guardrail.py",
+        "--db",
+        "/Users/johnchtchekine/Projects/Agent/corpus_index/corpus.duckdb",
+        "--baseline",
+        "/Users/johnchtchekine/Projects/Agent/data/quality/edge_case_clause_parent_guardrail_baseline.json"
+      ],
+      "cwd": "/Users/johnchtchekine/Projects/Agent",
+      "details": {},
+      "duration_seconds": 0.773,
+      "ended_at": 1772149739.112155,
+      "exit_code": 0,
+      "name": "Parent-Loss Guardrail Baseline Check",
+      "started_at": 1772149738.339519,
+      "status": "pass"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/clause_shadow_reparse_diff.py",
+        "--db",
+        "/Users/johnchtchekine/Projects/Agent/corpus_index/corpus.duckdb",
+        "--mode",
+        "parent-loss",
+        "--fail-on-regression",
+        "--max-structural-delta-ratio",
+        "0.1",
+        "--json"
+      ],
+      "cwd": "/Users/johnchtchekine/Projects/Agent",
+      "details": {},
+      "duration_seconds": 1.933,
+      "ended_at": 1772149741.045177,
+      "exit_code": 0,
+      "name": "Shadow Reparse Parent-Loss Diff",
+      "started_at": 1772149739.112233,
+      "status": "pass"
+    },
+    {
+      "command": null,
+      "cwd": null,
+      "details": {
+        "collision_metrics": {
+          "clause_depth_reset_after_deep.docs": 1.0,
+          "clause_depth_reset_after_deep.total_resets": 2.0,
+          "clause_dup_id_burst.docs": 0.0,
+          "clause_dup_id_burst.max_dup_ratio": 0.0,
+          "clause_root_label_repeat_explosion.docs": 0.0,
+          "clause_root_label_repeat_explosion.max_repeat": 0.0
+        },
+        "parent_loss_metrics": {
+          "xy_parent_loss.continuation_like_ratio": 0.4759036144578313,
+          "xy_parent_loss.continuation_like_rows": 79.0,
+          "xy_parent_loss.docs": 113.0,
+          "xy_parent_loss.sections": 121.0,
+          "xy_parent_loss.sections_low_root_count": 5.0,
+          "xy_parent_loss.structural_rows": 166.0
+        },
+        "parser_integrity_edge_counts": {
+          "clause_depth_reset_after_deep": 1,
+          "clause_ordinal_spike_after_deep": 1288,
+          "deep_nesting_outlier": 703,
+          "definition_malformed_term": 136,
+          "definition_signature_leak": 36,
+          "definition_truncated_at_cap": 312,
+          "empty_section_headings": 269,
+          "excessive_section_count": 9,
+          "high_definition_count": 5,
+          "inline_high_letter_branch": 2444,
+          "low_avg_clause_confidence": 2134,
+          "low_clause_density": 6,
+          "low_definitions": 1842,
+          "low_section_count": 34,
+          "low_structural_ratio": 2783,
+          "missing_sections": 2,
+          "section_fallback_used": 1,
+          "section_numbering_gap": 2476,
+          "single_engine_definitions": 116,
+          "structural_child_of_nonstruct_parent": 2798,
+          "zero_clauses": 2
+        },
+        "quality_summary": {
+          "anomaly_counts": {
+            "extreme_word_count": 138,
+            "no_definitions": 0,
+            "no_sections": 2,
+            "zero_clauses": 2
+          },
+          "by_doc_type": [
+            {
+              "clause_rate": 99.9,
+              "definition_rate": 100.0,
+              "doc_type": "credit_agreement",
+              "section_rate": 99.9,
+              "total": 3106
+            }
+          ],
+          "clause_extraction_rate": 99.9,
+          "definition_extraction_rate": 100.0,
+          "docs_with_clauses": 3102,
+          "docs_with_definitions": 3106,
+          "docs_with_sections": 3104,
+          "parse_success_rate": 100.0,
+          "section_extraction_rate": 99.9,
+          "total_docs": 3106
+        },
+        "violations": []
+      },
+      "duration_seconds": 2.187,
+      "ended_at": 1772149743.232484,
+      "exit_code": 0,
+      "name": "Full Threshold Checks",
+      "started_at": 1772149741.045232,
+      "status": "pass"
+    }
+  ]
+}

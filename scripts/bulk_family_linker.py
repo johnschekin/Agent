@@ -40,6 +40,7 @@ import json
 import re
 import sys
 import time
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -514,6 +515,132 @@ def _compute_rule_hash(rule: dict[str, Any]) -> str:
     return hashlib.sha256(serialized.encode("utf-8")).hexdigest()[:16]
 
 
+def _utc_now_iso() -> str:
+    return datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+
+def _canonical_section_name(heading: str) -> str:
+    lowered = str(heading or "").strip().lower()
+    lowered = re.sub(r"[^a-z0-9._\s]+", " ", lowered)
+    lowered = re.sub(r"\s+", " ", lowered)
+    return lowered.strip().strip(".")
+
+
+def _normalized_clause_path(value: str | None) -> str:
+    clause_path = str(value or "").strip()
+    return clause_path if clause_path else "__section__"
+
+
+def _compute_anchor_ids(candidate: dict[str, Any]) -> dict[str, Any]:
+    """Compute deterministic Wave 3 anchor identity fields for a candidate."""
+    document_id = str(candidate.get("document_id") or candidate.get("doc_id") or "").strip()
+    section_path = str(candidate.get("section_number") or "").strip()
+    section_reference_key = f"{document_id}:{section_path}"
+
+    clause_path = _normalized_clause_path(
+        str(candidate.get("clause_path") or candidate.get("clause_id") or ""),
+    )
+    clause_key = f"{section_reference_key}:{clause_path}"
+
+    span_start_raw = candidate.get("clause_char_start")
+    span_end_raw = candidate.get("clause_char_end")
+    node_type = "clause"
+    if span_start_raw is None or span_end_raw is None:
+        node_type = "section"
+        span_start_raw = candidate.get("section_char_start")
+        span_end_raw = candidate.get("section_char_end")
+    if candidate.get("defined_term"):
+        node_type = "defined_term"
+    span_start = int(span_start_raw or 0)
+    span_end = int(span_end_raw or 0)
+    anchor_text = str(candidate.get("clause_text") or candidate.get("heading") or "").strip()
+    text_sha256 = hashlib.sha256(anchor_text.encode("utf-8")).hexdigest()
+    chunk_payload = (
+        f"{document_id}|{section_reference_key}|{clause_key}|"
+        f"{span_start}|{span_end}|{text_sha256}"
+    )
+    chunk_id = hashlib.sha256(chunk_payload.encode("utf-8")).hexdigest()
+    return {
+        "section_path": section_path,
+        "section_reference_key": section_reference_key,
+        "clause_path": clause_path,
+        "clause_key": clause_key,
+        "node_type": node_type,
+        "span_start": span_start,
+        "span_end": span_end,
+        "anchor_text": anchor_text,
+        "text_sha256": text_sha256,
+        "chunk_id": chunk_id,
+        "anchor_valid": bool(document_id and section_path and section_reference_key and span_end > span_start),
+    }
+
+
+def _compute_policy_decision(
+    *,
+    score_calibrated: float,
+    must_threshold: float,
+    review_threshold: float,
+    grounded: bool,
+    anchor_valid: bool,
+    ontology_valid: bool,
+    conflicts: list[dict[str, str]],
+) -> tuple[str, list[str]]:
+    """Map score + grounding + validity into deterministic policy decision."""
+    reasons: list[str] = []
+    if not anchor_valid:
+        reasons.append("anchor.invalid")
+    if not ontology_valid:
+        reasons.append("ontology.invalid")
+    if any(str(c.get("policy")) == "exclusive" for c in conflicts):
+        reasons.append("conflict.exclusive")
+    if score_calibrated >= must_threshold:
+        reasons.append("threshold.must.met")
+    elif score_calibrated >= review_threshold:
+        reasons.append("threshold.review.met")
+    else:
+        reasons.append("threshold.review.not_met")
+    reasons.append("grounded.true" if grounded else "grounded.false")
+
+    if not anchor_valid or not ontology_valid or "conflict.exclusive" in reasons:
+        return ("reject", reasons)
+    if score_calibrated >= must_threshold and grounded:
+        return ("must", reasons)
+    if score_calibrated >= review_threshold:
+        return ("review", reasons)
+    # allow review when ungrounded but heading signal is strong and anchor/ontology are valid
+    if not grounded and score_calibrated >= (review_threshold * 0.8):
+        reasons.append("ungrounded.sufficient_evidence")
+        return ("review", reasons)
+    return ("reject", reasons)
+
+
+def _refresh_candidate_anchor_and_policy(
+    candidate: dict[str, Any],
+    *,
+    must_threshold: float,
+    review_threshold: float,
+) -> None:
+    anchors = _compute_anchor_ids(candidate)
+    policy_decision, policy_reasons = _compute_policy_decision(
+        score_calibrated=float(candidate.get("score_calibrated", candidate.get("confidence", 0.0))),
+        must_threshold=must_threshold,
+        review_threshold=review_threshold,
+        grounded=bool(candidate.get("grounded")),
+        anchor_valid=bool(anchors.get("anchor_valid")),
+        ontology_valid=bool(candidate.get("ontology_node_id")),
+        conflicts=list(candidate.get("conflicts") or []),
+    )
+    candidate.update(anchors)
+    candidate["policy_decision"] = policy_decision
+    candidate["policy_reasons"] = policy_reasons
+    if policy_decision == "must":
+        candidate["status"] = "active"
+    elif policy_decision == "review":
+        candidate["status"] = "pending_review"
+    else:
+        candidate["status"] = "rejected"
+
+
 def _build_candidate(
     section: Any,
     rule: dict[str, Any],
@@ -522,11 +649,28 @@ def _build_candidate(
     article_concept: str | None,
     confidence_result: Any,
     conflict_info: list[dict[str, str]],
+    *,
+    document_id: str | None = None,
+    ontology_version: str = "unknown",
+    threshold_profile_id: str | None = None,
+    must_threshold: float | None = None,
+    review_threshold: float | None = None,
+    valid_ontology_node_ids: set[str] | None = None,
 ) -> dict[str, Any]:
     """Build a candidate link dict from a matching section + rule."""
-    return {
+    score_raw = float(confidence_result.score)
+    score_calibrated = float(confidence_result.score)
+    must_thr = float(must_threshold if must_threshold is not None else 0.8)
+    review_thr = float(review_threshold if review_threshold is not None else 0.5)
+    grounded = float(confidence_result.breakdown.get("defined_term_grounding", 1.0)) >= 0.5
+    ontology_node_id = str(rule.get("ontology_node_id", rule.get("family_id", "")) or "")
+    ontology_valid = bool(ontology_node_id)
+    if ontology_valid and valid_ontology_node_ids is not None:
+        ontology_valid = ontology_node_id in valid_ontology_node_ids
+    base: dict[str, Any] = {
+        "document_id": str(document_id or section.doc_id),
         "family_id": rule.get("family_id", ""),
-        "ontology_node_id": rule.get("ontology_node_id", rule.get("family_id", "")),
+        "ontology_node_id": ontology_node_id,
         "doc_id": section.doc_id,
         "section_number": section.section_number,
         "heading": section.heading,
@@ -539,7 +683,10 @@ def _build_candidate(
         "section_char_start": section.char_start,
         "section_char_end": section.char_end,
         "link_role": "primary_covenant",
-        "confidence": confidence_result.score,
+        "confidence": score_calibrated,
+        "score_raw": score_raw,
+        "score_calibrated": score_calibrated,
+        "threshold_profile_id": threshold_profile_id,
         "confidence_tier": confidence_result.tier,
         "confidence_breakdown": confidence_result.breakdown,
         "why_matched": confidence_result.why_matched,
@@ -547,7 +694,29 @@ def _build_candidate(
         "matched_value": matched_value,
         "status": "active" if confidence_result.tier == "high" else "pending_review",
         "conflicts": conflict_info,
+        "grounded": grounded,
+        "ontology_version": ontology_version,
     }
+    anchors = _compute_anchor_ids(base)
+    policy_decision, policy_reasons = _compute_policy_decision(
+        score_calibrated=score_calibrated,
+        must_threshold=must_thr,
+        review_threshold=review_thr,
+        grounded=grounded,
+        anchor_valid=bool(anchors.get("anchor_valid")),
+        ontology_valid=ontology_valid,
+        conflicts=conflict_info,
+    )
+    base.update(anchors)
+    base["policy_decision"] = policy_decision
+    base["policy_reasons"] = policy_reasons
+    if policy_decision == "must":
+        base["status"] = "active"
+    elif policy_decision == "review":
+        base["status"] = "pending_review"
+    else:
+        base["status"] = "rejected"
+    return base
 
 
 def _candidate_clause_key(candidate: dict[str, Any]) -> str:
@@ -676,6 +845,38 @@ def _resolve_section_text_hash(
     return text_hash
 
 
+def _resolve_document_id(
+    corpus: Any,
+    doc_id: str,
+    cache: dict[str, str],
+) -> str:
+    """Resolve deterministic document_id (sha256 of source bytes when available)."""
+    doc_key = str(doc_id or "").strip()
+    if not doc_key:
+        return ""
+    cached = cache.get(doc_key)
+    if cached:
+        return cached
+
+    material: bytes | None = None
+    get_doc = getattr(corpus, "get_doc", None)
+    if callable(get_doc):
+        with contextlib.suppress(Exception):
+            doc_record = get_doc(doc_key)
+            path_value = str(getattr(doc_record, "path", "") or "").strip()
+            if path_value:
+                path = Path(path_value)
+                if path.exists() and path.is_file():
+                    material = path.read_bytes()
+
+    if material is None:
+        material = doc_key.encode("utf-8")
+
+    resolved = hashlib.sha256(material).hexdigest()
+    cache[doc_key] = resolved
+    return resolved
+
+
 def scan_corpus_for_family(
     corpus: Any,
     rule: dict[str, Any],
@@ -685,6 +886,8 @@ def scan_corpus_for_family(
     conflict_matrix: dict[tuple[str, str], Any] | None = None,
     existing_links_by_section: dict[str, list[str]] | None = None,
     calibration: dict[str, Any] | None = None,
+    ontology_version: str = "unknown",
+    valid_ontology_node_ids: set[str] | None = None,
 ) -> list[dict[str, Any]]:
     """Scan the corpus to find sections matching a single rule.
 
@@ -742,8 +945,15 @@ def scan_corpus_for_family(
 
     # Expected defined terms for the defined_term_grounding factor
     expected_terms = rule.get("required_defined_terms") or []
+    must_threshold = float((calibration or {}).get("high_threshold", 0.8))
+    review_threshold = float((calibration or {}).get("medium_threshold", 0.5))
+    threshold_profile_id = str(
+        (calibration or {}).get("threshold_profile_id")
+        or f"scope:{_rule_scope_id(rule) or rule.get('family_id', '')}:ontology:{ontology_version}"
+    )
 
     candidates: list[dict[str, Any]] = []
+    document_id_cache: dict[str, str] = {}
 
     # Determine documents to scan
     target_docs = doc_ids
@@ -772,8 +982,17 @@ def scan_corpus_for_family(
             continue
         if dsl_allowed_sections_by_doc is not None and doc_id not in dsl_allowed_sections_by_doc:
             continue
+        document_id = _resolve_document_id(corpus, doc_id, document_id_cache)
         # Get all sections for this document
         sections = corpus.search_sections(doc_id=doc_id, cohort_only=False, limit=10000)
+        sections = sorted(
+            sections,
+            key=lambda sec: (
+                str(getattr(sec, "section_number", "")),
+                int(getattr(sec, "char_start", 0) or 0),
+                int(getattr(sec, "char_end", 0) or 0),
+            ),
+        )
         inherited_allowed = (
             set(allowed_sections_by_doc.get(doc_id, set()))
             if allowed_sections_by_doc is not None
@@ -923,6 +1142,12 @@ def scan_corpus_for_family(
                             art_concept,
                             confidence_result,
                             conflict_info,
+                            document_id=document_id,
+                            ontology_version=ontology_version,
+                            threshold_profile_id=threshold_profile_id,
+                            must_threshold=must_threshold,
+                            review_threshold=review_threshold,
+                            valid_ontology_node_ids=valid_ontology_node_ids,
                         )
                         clause_id = (
                             f"__def__:{term_match['char_start']}:{term_match['char_end']}:"
@@ -937,6 +1162,12 @@ def scan_corpus_for_family(
                         candidate["definition_char_start"] = int(term_match["char_start"])
                         candidate["definition_char_end"] = int(term_match["char_end"])
                         candidate["definition_text"] = term_match["definition_text"]
+                        candidate["clause_path"] = clause_id
+                        _refresh_candidate_anchor_and_policy(
+                            candidate,
+                            must_threshold=must_threshold,
+                            review_threshold=review_threshold,
+                        )
                         candidates.append(candidate)
                     continue
 
@@ -949,6 +1180,12 @@ def scan_corpus_for_family(
                 art_concept,
                 confidence_result,
                 conflict_info,
+                document_id=document_id,
+                ontology_version=ontology_version,
+                threshold_profile_id=threshold_profile_id,
+                must_threshold=must_threshold,
+                review_threshold=review_threshold,
+                valid_ontology_node_ids=valid_ontology_node_ids,
             )
             candidates.append(candidate)
 
@@ -993,6 +1230,167 @@ def _detect_conflicts(
     return conflicts
 
 
+def _derive_ruleset_version(rules: list[dict[str, Any]]) -> str:
+    rows = sorted(
+        (
+            str(r.get("rule_id") or ""),
+            str(r.get("family_id") or ""),
+            int(r.get("version") or 0),
+            str(r.get("ontology_node_id") or ""),
+        )
+        for r in rules
+    )
+    digest = hashlib.sha256(_json_dumps_compact(rows).encode("utf-8")).hexdigest()
+    return f"ruleset-{digest[:16]}"
+
+
+_PLACEHOLDER_LINEAGE_VALUES = {
+    "",
+    "unknown",
+    "parser-unknown",
+    "bulk_linker_v1",
+    "worker_v1",
+    "1.0",
+}
+
+
+def _is_placeholder_lineage(value: str | None) -> bool:
+    text = str(value or "").strip().lower()
+    return text in _PLACEHOLDER_LINEAGE_VALUES
+
+
+def _best_effort_git_sha() -> str:
+    with contextlib.suppress(Exception):
+        from agent.run_manifest import git_commit_hash
+
+        value = git_commit_hash(search_from=Path(__file__).resolve().parents[1])
+        if value:
+            return str(value).strip()
+    return ""
+
+
+def _sanitize_lineage_value(value: Any, fallback: str) -> str:
+    text = str(value or "").strip()
+    if _is_placeholder_lineage(text):
+        return fallback
+    return text
+
+
+def _resolve_rule_ontology_version(rules: list[dict[str, Any]]) -> str:
+    versions = sorted(
+        {
+            str(rule.get("ontology_version") or "").strip()
+            for rule in rules
+            if not _is_placeholder_lineage(str(rule.get("ontology_version") or "").strip())
+        }
+    )
+    if len(versions) == 1:
+        return versions[0]
+    if len(versions) > 1:
+        digest = hashlib.sha256(_json_dumps_compact(versions).encode("utf-8")).hexdigest()
+        return f"ontology-mixed-{digest[:12]}"
+    return "ontology-unversioned"
+
+
+def _resolve_parser_seed() -> str:
+    with contextlib.suppress(Exception):
+        from agent import parsing_types
+
+        value = str(getattr(parsing_types, "__version__", "") or "").strip()
+        if value:
+            return f"parser-v{value}"
+    return ""
+
+
+def _validate_runtime_versions(runtime_versions: dict[str, str], *, for_write: bool) -> None:
+    required = ("corpus_version", "corpus_snapshot_id", "parser_version", "ontology_version", "ruleset_version")
+    if for_write:
+        required = (*required, "git_sha")
+    invalid = [
+        field for field in required
+        if _is_placeholder_lineage(runtime_versions.get(field))
+    ]
+    if invalid:
+        joined = ", ".join(sorted(invalid))
+        raise ValueError(f"Invalid runtime lineage values (placeholder or empty): {joined}")
+
+
+def _resolve_runtime_versions(
+    corpus: Any,
+    rules: list[dict[str, Any]],
+    *,
+    corpus_version: str | None = None,
+    corpus_snapshot_id: str | None = None,
+    parser_version: str | None = None,
+    ontology_version: str | None = None,
+    ruleset_version: str | None = None,
+    git_sha: str | None = None,
+) -> dict[str, str]:
+    manifest: dict[str, Any] = {}
+    get_run_manifest = getattr(corpus, "get_run_manifest", None)
+    if callable(get_run_manifest):
+        with contextlib.suppress(Exception):
+            manifest_raw = get_run_manifest()
+            if isinstance(manifest_raw, dict):
+                manifest = manifest_raw
+
+    schema_version = str(getattr(corpus, "schema_version", "") or "").strip()
+    resolved_git_sha = _sanitize_lineage_value(
+        git_sha or manifest.get("git_commit") or _best_effort_git_sha(),
+        "",
+    )
+    if not resolved_git_sha:
+        digest = hashlib.sha256(_json_dumps_compact(sorted(str(r.get("rule_id") or "") for r in rules)).encode("utf-8")).hexdigest()
+        resolved_git_sha = f"nogit-{digest[:12]}"
+
+    resolved_corpus_version = _sanitize_lineage_value(
+        corpus_version
+        or manifest.get("schema_version")
+        or schema_version
+        or "",
+        f"corpus-{Path(str(getattr(corpus, '_db_path', 'index'))).stem}",
+    )
+    resolved_corpus_snapshot_id = _sanitize_lineage_value(
+        corpus_snapshot_id
+        or manifest.get("run_id")
+        or resolved_corpus_version
+        or "",
+        f"{resolved_corpus_version}-snapshot",
+    )
+    resolved_ontology_version = _sanitize_lineage_value(
+        ontology_version
+        or manifest.get("ontology_version")
+        or _resolve_rule_ontology_version(rules)
+        or "",
+        _resolve_rule_ontology_version(rules),
+    )
+    resolved_ruleset_version = _sanitize_lineage_value(
+        ruleset_version
+        or _derive_ruleset_version(rules)
+        or "",
+        _derive_ruleset_version(rules),
+    )
+    resolved_parser_version = _sanitize_lineage_value(
+        parser_version
+        or manifest.get("parser_version")
+        or _resolve_parser_seed()
+        or (f"parser-{resolved_git_sha[:12]}" if resolved_git_sha else ""),
+        f"parser-{resolved_git_sha[:12]}",
+    )
+
+    versions = {
+        "corpus_version": resolved_corpus_version,
+        "corpus_snapshot_id": resolved_corpus_snapshot_id,
+        "parser_version": resolved_parser_version,
+        "ontology_version": resolved_ontology_version,
+        "ruleset_version": resolved_ruleset_version,
+        "git_sha": resolved_git_sha,
+        "created_at_utc": _utc_now_iso(),
+    }
+    _validate_runtime_versions(versions, for_write=True)
+    return versions
+
+
 # ---------------------------------------------------------------------------
 # Main scanning orchestration
 # ---------------------------------------------------------------------------
@@ -1006,12 +1404,30 @@ def run_bulk_linking(
     canary_n: int | None = None,
     dry_run: bool = False,
     conflict_matrix: dict[tuple[str, str], Any] | None = None,
+    corpus_version: str | None = None,
+    corpus_snapshot_id: str | None = None,
+    parser_version: str | None = None,
+    ontology_version: str | None = None,
+    ruleset_version: str | None = None,
+    git_sha: str | None = None,
+    valid_ontology_node_ids: set[str] | None = None,
 ) -> dict[str, Any]:
     """Run the full bulk linking pipeline.
 
     Returns a summary dict with candidates, metrics, and run info.
     """
     start_time = time.time()
+
+    runtime_versions = _resolve_runtime_versions(
+        corpus,
+        rules,
+        corpus_version=corpus_version,
+        corpus_snapshot_id=corpus_snapshot_id,
+        parser_version=parser_version,
+        ontology_version=ontology_version,
+        ruleset_version=ruleset_version,
+        git_sha=git_sha,
+    )
 
     # Filter rules by family if requested
     active_rules = [r for r in rules if r.get("status") in ("published", "draft", None)]
@@ -1020,7 +1436,12 @@ def run_bulk_linking(
         scope_aliases: set[str] = {requested_scope}
         if store is not None and hasattr(store, "resolve_scope_aliases"):
             try:
-                scope_aliases.update(store.resolve_scope_aliases(requested_scope))
+                scope_aliases.update(
+                    store.resolve_scope_aliases(
+                        requested_scope,
+                        ontology_version=runtime_versions["ontology_version"],
+                    )
+                )
             except Exception:
                 pass
         active_rules = [
@@ -1081,9 +1502,14 @@ def run_bulk_linking(
             "run_type": "canary" if canary_n else "full",
             "family_id": family_filter or "_all",
             "rule_id": active_rules[0].get("rule_id") if len(active_rules) == 1 else None,
-            "corpus_version": "bulk_linker_v1",
+            "corpus_version": runtime_versions["corpus_version"],
+            "corpus_snapshot_id": runtime_versions["corpus_snapshot_id"],
             "corpus_doc_count": len(doc_ids) if doc_ids else 0,
-            "parser_version": "1.0",
+            "parser_version": runtime_versions["parser_version"],
+            "ontology_version": runtime_versions["ontology_version"],
+            "ruleset_version": runtime_versions["ruleset_version"],
+            "git_sha": runtime_versions["git_sha"],
+            "created_at_utc": runtime_versions["created_at_utc"],
             "links_created": 0,
             "conflicts_detected": 0,
             "scope_mode": "corpus",
@@ -1122,6 +1548,14 @@ def run_bulk_linking(
         else:
             _log(f"  [{i + 1}/{len(active_rules)}] Scanning family={family}")
 
+        calibration: dict[str, Any] | None = None
+        if store is not None and hasattr(store, "get_calibration"):
+            with contextlib.suppress(Exception):
+                calibration = store.get_calibration(
+                    scope_id,
+                    ontology_version=runtime_versions["ontology_version"],
+                )
+
         candidates = scan_corpus_for_family(
             corpus,
             effective_rule,
@@ -1129,7 +1563,18 @@ def run_bulk_linking(
             allowed_sections_by_doc=allowed_sections_by_doc,
             conflict_matrix=conflict_matrix,
             existing_links_by_section=existing_links_by_section,
-            calibration=None,
+            calibration=calibration,
+            ontology_version=runtime_versions["ontology_version"],
+            valid_ontology_node_ids=valid_ontology_node_ids,
+        )
+        candidates = sorted(
+            candidates,
+            key=lambda c: (
+                str(c.get("doc_id", "")),
+                str(c.get("section_number", "")),
+                str(c.get("clause_key", "")),
+                str(c.get("ontology_node_id") or c.get("family_id", "")),
+            ),
         )
 
         _log(f"    Found {len(candidates)} candidates")
@@ -1145,7 +1590,7 @@ def run_bulk_linking(
         all_candidates.extend(candidates)
 
         if not dry_run and store is not None and run_id:
-            linkable = [c for c in candidates if c.get("confidence_tier") in ("high", "medium")]
+            linkable = [c for c in candidates if c.get("policy_decision") in ("must", "review")]
             if linkable:
                 for candidate in linkable:
                     if candidate.get("section_text_hash"):
@@ -1155,6 +1600,13 @@ def run_bulk_linking(
                         str(candidate.get("doc_id", "")),
                         str(candidate.get("section_number", "")),
                         section_text_hash_cache,
+                    )
+                    candidate["corpus_version"] = runtime_versions["corpus_version"]
+                    candidate["parser_version"] = runtime_versions["parser_version"]
+                    candidate["ontology_version"] = runtime_versions["ontology_version"]
+                    candidate["threshold_profile_id"] = (
+                        candidate.get("threshold_profile_id")
+                        or f"scope:{scope_id}:ontology:{runtime_versions['ontology_version']}"
                     )
                 created_now = store.create_links(linkable, run_id)
                 links_created += created_now
@@ -1301,21 +1753,44 @@ def run_bulk_linking(
                 evidence_rows.append(
                     {
                         "link_id": matched["link_id"],
+                        "run_id": run_id,
+                        "document_id": cand.get("document_id"),
                         "family_id": cand.get("family_id"),
                         "doc_id": cand.get("doc_id"),
                         "section_number": cand.get("section_number"),
+                        "section_reference_key": cand.get("section_reference_key"),
+                        "clause_key": cand.get("clause_key"),
                         "evidence_type": "heading_match",
-                        "char_start": cand.get("section_char_start"),
-                        "char_end": cand.get("section_char_end"),
+                        "node_type": cand.get("node_type"),
+                        "section_path": cand.get("section_path"),
+                        "clause_path": cand.get("clause_path"),
+                        "char_start": cand.get("span_start", cand.get("section_char_start")),
+                        "char_end": cand.get("span_end", cand.get("section_char_end")),
+                        "anchor_text": cand.get("anchor_text"),
                         "text_hash": text_hash,
+                        "text_sha256": cand.get("text_sha256"),
+                        "chunk_id": cand.get("chunk_id"),
                         "matched_pattern": cand.get("matched_value"),
                         "reason_code": "heading_match",
-                        "score": cand.get("confidence", 1.0),
+                        "score": cand.get("score_calibrated", cand.get("confidence", 1.0)),
+                        "score_raw": cand.get("score_raw", cand.get("confidence", 1.0)),
+                        "score_calibrated": cand.get("score_calibrated", cand.get("confidence", 1.0)),
+                        "threshold_profile_id": cand.get("threshold_profile_id"),
+                        "policy_decision": cand.get("policy_decision"),
+                        "policy_reasons": cand.get("policy_reasons", []),
+                        "corpus_version": runtime_versions["corpus_version"],
+                        "parser_version": runtime_versions["parser_version"],
+                        "ontology_version": runtime_versions["ontology_version"],
+                        "ruleset_version": runtime_versions["ruleset_version"],
+                        "git_sha": runtime_versions["git_sha"],
+                        "created_at_utc": runtime_versions["created_at_utc"],
                         "metadata": {
                             "match_type": cand.get("match_type"),
                             "matched_value": cand.get("matched_value"),
                             "confidence": cand.get("confidence"),
                             "tier": cand.get("confidence_tier"),
+                            "policy_decision": cand.get("policy_decision"),
+                            "policy_reasons": cand.get("policy_reasons", []),
                         },
                     }
                 )
@@ -1336,6 +1811,7 @@ def run_bulk_linking(
     summary: dict[str, Any] = {
         "status": "dry_run" if dry_run else "completed",
         "run_id": run_id,
+        "runtime_versions": runtime_versions,
         "rules_evaluated": len(active_rules),
         "documents_scanned": len(doc_ids) if doc_ids else "all",
         "total_candidates": len(all_candidates),
@@ -1401,6 +1877,22 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Verbose output to stderr",
     )
+    parser.add_argument(
+        "--ontology-json",
+        default=None,
+        help="Path to ontology JSON (default: data/ontology/r36a_production_ontology_v2.5.1.json)",
+    )
+    parser.add_argument("--corpus-version", default=None, help="Override corpus_version metadata")
+    parser.add_argument("--corpus-snapshot-id", default=None, help="Override corpus snapshot id")
+    parser.add_argument("--parser-version", default=None, help="Override parser_version metadata")
+    parser.add_argument("--ontology-version", default=None, help="Override ontology_version metadata")
+    parser.add_argument("--ruleset-version", default=None, help="Override ruleset_version metadata")
+    parser.add_argument("--git-sha", default=None, help="Override git sha metadata")
+    parser.add_argument(
+        "--strict-ontology",
+        action="store_true",
+        help="Fail if ontology is loaded but conflict policy matrix is empty",
+    )
     return parser
 
 
@@ -1460,26 +1952,72 @@ def main(argv: list[str] | None = None) -> int:
 
     # Build conflict matrix from ontology (if available)
     conflict_matrix_dict: dict[tuple[str, str], Any] | None = None
+    resolved_ontology_version: str | None = args.ontology_version
+    valid_ontology_node_ids: set[str] | None = None
     try:
         from agent.conflict_matrix import build_conflict_matrix, matrix_to_dict
 
         ontology_path = (
-            Path(__file__).resolve().parents[1]
-            / "data" / "ontology" / "r36a_production_ontology_v2.5.1.json"
+            Path(args.ontology_json).resolve()
+            if args.ontology_json
+            else (
+                Path(__file__).resolve().parents[1]
+                / "data" / "ontology" / "r36a_production_ontology_v2.5.1.json"
+            )
         )
         if ontology_path.exists():
+            from agent.ontology_contract import normalize_ontology
+
             with open(ontology_path) as f:
                 ontology_data = json.load(f)
-            ontology_edges = ontology_data.get("edges", [])
-            ontology_nodes = {
-                n["id"]: n
-                for n in _flatten_ontology_nodes(ontology_data.get("nodes", []))
-            }
-            policies = build_conflict_matrix(ontology_edges, ontology_nodes)
+            normalized = normalize_ontology(ontology_data)
+            valid_ontology_node_ids = set(normalized.nodes_by_id.keys())
+            policies = build_conflict_matrix(
+                normalized.edges,
+                normalized.nodes_by_id,
+                ontology_version=normalized.ontology_version,
+            )
+            if not resolved_ontology_version:
+                resolved_ontology_version = normalized.ontology_version
+            if args.strict_ontology and normalized.edges and not policies:
+                _log(
+                    "Error: ontology loaded but produced 0 conflict policies in strict mode"
+                )
+                store.close()
+                return 2
             conflict_matrix_dict = matrix_to_dict(policies)
-            _log(f"  Built conflict matrix: {len(conflict_matrix_dict)} pairs")
+            _log(
+                f"  Built conflict matrix: {len(conflict_matrix_dict)} pairs "
+                f"(ontology_version={normalized.ontology_version})"
+            )
     except Exception as e:
         _log(f"  Warning: could not build conflict matrix: {e}")
+
+    if valid_ontology_node_ids:
+        rules_for_validation = list(rules)
+        if args.family:
+            requested_scope = str(args.family).strip()
+            rules_for_validation = [
+                rule
+                for rule in rules
+                if str(rule.get("family_id") or "").strip() == requested_scope
+                or str(rule.get("ontology_node_id") or "").strip() == requested_scope
+            ]
+            if not rules_for_validation:
+                rules_for_validation = list(rules)
+        invalid_rule_ids = [
+            str(rule.get("rule_id") or "")
+            for rule in rules_for_validation
+            if str(rule.get("ontology_node_id") or rule.get("family_id") or "").strip()
+            not in valid_ontology_node_ids
+        ]
+        if invalid_rule_ids:
+            _log(
+                "Error: rules reference unknown ontology_node_id values: "
+                + ", ".join(sorted(invalid_rule_ids))
+            )
+            store.close()
+            return 2
 
     # Run the bulk linker
     _log("Starting bulk linking...")
@@ -1491,6 +2029,13 @@ def main(argv: list[str] | None = None) -> int:
         canary_n=args.canary,
         dry_run=args.dry_run,
         conflict_matrix=conflict_matrix_dict,
+        corpus_version=args.corpus_version,
+        corpus_snapshot_id=args.corpus_snapshot_id,
+        parser_version=args.parser_version,
+        ontology_version=resolved_ontology_version,
+        ruleset_version=args.ruleset_version,
+        git_sha=args.git_sha,
+        valid_ontology_node_ids=valid_ontology_node_ids,
     )
 
     # Output summary JSON to stdout
@@ -1512,16 +2057,18 @@ def main(argv: list[str] | None = None) -> int:
 
 def _flatten_ontology_nodes(nodes: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Recursively flatten ontology node tree into a flat list."""
-    result: list[dict[str, Any]] = []
-    for node in nodes:
-        # Copy without children
-        flat = {k: v for k, v in node.items() if k != "children"}
-        result.append(flat)
-        # Recurse into children
-        children = node.get("children", [])
-        if children:
-            result.extend(_flatten_ontology_nodes(children))
-    return result
+    from agent.ontology_contract import normalize_ontology
+
+    payload = {"domains": nodes, "edges": []}
+    normalized = normalize_ontology(payload)
+    return list(normalized.nodes_by_id.values())
+
+
+def _load_ontology_nodes(ontology_data: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    """Flatten domains/nodes payload into deterministic node-id map."""
+    from agent.ontology_contract import normalize_ontology
+
+    return normalize_ontology(ontology_data).nodes_by_id
 
 
 if __name__ == "__main__":

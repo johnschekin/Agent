@@ -11,6 +11,8 @@ from __future__ import annotations
 
 import asyncio
 import contextlib
+import hashlib
+import hmac
 import ipaddress
 import json
 import math
@@ -370,6 +372,7 @@ def _load_dotenv() -> None:
 @asynccontextmanager
 async def lifespan(app: FastAPI):  # noqa: ARG001
     _load_dotenv()
+    _validate_links_token_configuration()
 
     global _corpus  # noqa: PLW0603
     if _corpus_db_path.exists():
@@ -506,6 +509,87 @@ _LINKS_TEST_ENDPOINT_TOKEN = os.environ.get(
     _LINKS_ADMIN_TOKEN,
 ).strip()
 _LINKS_TEST_MODE = os.environ.get("LINKS_TEST_MODE", "") == "1"
+_LINKS_RUNTIME_MODE = str(
+    os.environ.get("LINKS_RUNTIME_MODE", os.environ.get("APP_ENV", "dev"))
+).strip().lower() or "dev"
+_LINKS_ALLOW_DEFAULT_TOKEN = os.environ.get("LINKS_ALLOW_DEFAULT_TOKEN", "") == "1"
+_STRICT_LINKS_AUTH = _LINKS_RUNTIME_MODE not in {"dev", "development", "test"} and not _LINKS_TEST_MODE
+_PLACEHOLDER_VERSION_VALUES = {
+    "",
+    "unknown",
+    "parser-unknown",
+    "bulk_linker_v1",
+    "worker_v1",
+    "1.0",
+}
+
+
+def _token_fingerprint(token: str | None) -> str:
+    raw = str(token or "").strip()
+    if not raw:
+        return "anonymous"
+    return hashlib.sha256(raw.encode("utf-8")).hexdigest()[:16]
+
+
+def _safe_token_equal(presented: str | None, expected: str | None) -> bool:
+    if not presented or not expected:
+        return False
+    return hmac.compare_digest(presented, expected)
+
+
+def _default_token_roles() -> dict[str, set[str]]:
+    roles: dict[str, set[str]] = {}
+    if _LINKS_API_TOKEN:
+        roles[_LINKS_API_TOKEN] = {"read", "write"}
+    if _LINKS_ADMIN_TOKEN:
+        roles.setdefault(_LINKS_ADMIN_TOKEN, set()).update({"read", "write", "admin"})
+    return roles
+
+
+def _load_token_roles() -> dict[str, set[str]]:
+    raw = str(os.environ.get("LINKS_TOKEN_ROLES", "")).strip()
+    roles = _default_token_roles()
+    if not raw:
+        return roles
+    try:
+        payload = json.loads(raw)
+    except Exception:
+        return roles
+    if not isinstance(payload, dict):
+        return roles
+    parsed: dict[str, set[str]] = {}
+    for token, role_values in payload.items():
+        token_str = str(token or "").strip()
+        if not token_str:
+            continue
+        if isinstance(role_values, list):
+            parsed[token_str] = {str(v).strip().lower() for v in role_values if str(v).strip()}
+        elif isinstance(role_values, str):
+            parsed[token_str] = {
+                part.strip().lower()
+                for part in role_values.split(",")
+                if part.strip()
+            }
+    if parsed:
+        return parsed
+    return roles
+
+
+_TOKEN_ROLES = _load_token_roles()
+
+
+def _validate_links_token_configuration() -> None:
+    """Fail fast on insecure default token config outside dev/test."""
+    if not _STRICT_LINKS_AUTH or _LINKS_ALLOW_DEFAULT_TOKEN:
+        return
+    if (not _LINKS_API_TOKEN_FROM_ENV) or _safe_token_equal(_LINKS_API_TOKEN, _DEFAULT_LINKS_API_TOKEN):
+        raise RuntimeError(
+            "LINKS_API_TOKEN must be explicitly configured in non-dev runtime mode"
+        )
+    if (not _LINKS_ADMIN_TOKEN_FROM_ENV) or _safe_token_equal(_LINKS_ADMIN_TOKEN, _DEFAULT_LINKS_API_TOKEN):
+        raise RuntimeError(
+            "LINKS_ADMIN_TOKEN must be explicitly configured in non-dev runtime mode"
+        )
 
 
 def _is_loopback_host(host: str | None) -> bool:
@@ -569,55 +653,75 @@ def _require_links_access(request: Request, *, write: bool) -> None:
 
     def _enforce_default_token_scope(presented_token: str) -> None:
         if (
-            presented_token == _DEFAULT_LINKS_API_TOKEN
+            _safe_token_equal(presented_token, _DEFAULT_LINKS_API_TOKEN)
             and not _LINKS_API_TOKEN_FROM_ENV
             and not is_local
+            and _STRICT_LINKS_AUTH
+            and not _LINKS_ALLOW_DEFAULT_TOKEN
         ):
             raise HTTPException(
                 status_code=403,
-                detail="Default links token is restricted to loopback clients",
+                detail="Default links token is disallowed in this runtime mode",
             )
         if (
-            presented_token == _LINKS_ADMIN_TOKEN
+            _safe_token_equal(presented_token, _LINKS_ADMIN_TOKEN)
             and not _LINKS_ADMIN_TOKEN_FROM_ENV
             and not is_local
+            and _STRICT_LINKS_AUTH
+            and not _LINKS_ALLOW_DEFAULT_TOKEN
         ):
             raise HTTPException(
                 status_code=403,
-                detail="Default admin token is restricted to loopback clients",
+                detail="Default admin token is disallowed in this runtime mode",
             )
+
+    def _has_role(presented_token: str, role: str) -> bool:
+        token_roles = _TOKEN_ROLES.get(presented_token)
+        return bool(token_roles and role in token_roles)
 
     # Write operations always require a token.
     if write:
         if not token or token not in allowed_tokens:
             raise HTTPException(status_code=401, detail="Invalid or missing links API token")
+        if not _has_role(token, "write"):
+            raise HTTPException(status_code=403, detail="Token missing write permission")
         _enforce_default_token_scope(token)
+        request.state.links_actor_fingerprint = _token_fingerprint(token)
         return
 
     # Read operations: token optional for loopback only.
     if token:
         if token not in allowed_tokens:
             raise HTTPException(status_code=401, detail="Invalid links API token")
+        if not _has_role(token, "read"):
+            raise HTTPException(status_code=403, detail="Token missing read permission")
         _enforce_default_token_scope(token)
+        request.state.links_actor_fingerprint = _token_fingerprint(token)
         return
 
     if not is_local:
         raise HTTPException(status_code=401, detail="Links API token required")
+    request.state.links_actor_fingerprint = "loopback-anonymous"
 
 
 def _require_links_admin(request: Request) -> None:
     """Require admin token for direct-write management endpoints."""
     token = _extract_request_token(request)
-    if not token or token != _LINKS_ADMIN_TOKEN:
+    if not token or not _safe_token_equal(token, _LINKS_ADMIN_TOKEN):
         raise HTTPException(status_code=403, detail="Admin token required for direct-write endpoint")
+    token_roles = _TOKEN_ROLES.get(token, set())
+    if "admin" not in token_roles:
+        raise HTTPException(status_code=403, detail="Token missing admin permission")
     if (
         not os.environ.get("LINKS_ADMIN_TOKEN")
-        and not _is_local_request(request)
+        and _STRICT_LINKS_AUTH
+        and not _LINKS_ALLOW_DEFAULT_TOKEN
     ):
         raise HTTPException(
             status_code=403,
-            detail="Default admin token is restricted to loopback clients",
+            detail="Default admin token is disallowed in this runtime mode",
         )
+    request.state.links_actor_fingerprint = _token_fingerprint(token)
 
 
 def _require_test_endpoint_access(request: Request) -> None:
@@ -627,7 +731,7 @@ def _require_test_endpoint_access(request: Request) -> None:
     if not _is_local_request(request):
         raise HTTPException(status_code=403, detail="Test endpoints are loopback-only")
     token = _extract_request_token(request)
-    if not token or token != _LINKS_TEST_ENDPOINT_TOKEN:
+    if not token or not _safe_token_equal(token, _LINKS_TEST_ENDPOINT_TOKEN):
         raise HTTPException(status_code=403, detail="Test endpoint token required")
 
 
@@ -653,12 +757,63 @@ def _legacy_api_replacement(path: str) -> str:
     return "/api/links"
 
 
+def _audit_links_mutation(
+    request: Request,
+    *,
+    method: str,
+    path: str,
+    status_code: int,
+    payload_hash: str,
+    outcome: str | None = None,
+    error_detail: str | None = None,
+) -> None:
+    if _link_store is None:
+        return
+    actor_fingerprint = str(
+        getattr(request.state, "links_actor_fingerprint", "anonymous")
+    )
+    request_id = str(
+        request.headers.get("X-Request-Id")
+        or request.headers.get("X-Amzn-Trace-Id")
+        or uuid.uuid4().hex
+    )
+    source_ip = _request_host(request) or ""
+    source_host = str(request.headers.get("host") or "")
+    metadata = {
+        "query": str(request.url.query or ""),
+        "outcome": outcome or ("success" if int(status_code) < 400 else "failure"),
+    }
+    if error_detail:
+        metadata["error_detail"] = error_detail
+    with contextlib.suppress(Exception):
+        _link_store.log_admin_audit_event(
+            {
+                "action": f"{method} {path}",
+                "path": path,
+                "method": method,
+                "actor_fingerprint": actor_fingerprint,
+                "request_id": request_id,
+                "source_ip": source_ip,
+                "source_host": source_host,
+                "payload_hash": payload_hash,
+                "status_code": status_code,
+                "metadata": metadata,
+            }
+        )
+
+
 @app.middleware("http")
 async def _links_api_auth_middleware(request: Request, call_next: Any):
     """Apply auth checks to links/jobs surfaces before handler execution."""
     path = request.url.path
     method = request.method.upper()
     cors_headers = _cors_headers_for_request(request)
+    should_audit_mutation = path.startswith("/api/links") and method in {"POST", "PUT", "PATCH", "DELETE"}
+    is_test_links_path = path.startswith("/api/links/_test")
+    request_payload_hash = hashlib.sha256(b"").hexdigest()
+    if should_audit_mutation:
+        body = await request.body()
+        request_payload_hash = hashlib.sha256(body).hexdigest()
 
     # Handle preflight deterministically for all API routes, including error paths.
     if method == "OPTIONS" and path.startswith("/api/"):
@@ -678,7 +833,7 @@ async def _links_api_auth_middleware(request: Request, call_next: Any):
 
     if path.startswith("/api/links"):
         # Dedicated helper enforces stricter controls for test-only endpoints.
-        if path.startswith("/api/links/_test"):
+        if is_test_links_path:
             response = await call_next(request)
             for key, value in cors_headers.items():
                 if key not in response.headers:
@@ -687,6 +842,16 @@ async def _links_api_auth_middleware(request: Request, call_next: Any):
         try:
             _require_links_access(request, write=method not in {"GET", "HEAD"})
         except HTTPException as exc:
+            if should_audit_mutation:
+                _audit_links_mutation(
+                    request,
+                    method=method,
+                    path=path,
+                    status_code=int(exc.status_code),
+                    payload_hash=request_payload_hash,
+                    outcome="failure",
+                    error_detail=str(exc.detail),
+                )
             return ORJSONResponse(
                 status_code=exc.status_code,
                 content={"detail": exc.detail},
@@ -695,7 +860,17 @@ async def _links_api_auth_middleware(request: Request, call_next: Any):
 
     try:
         response = await call_next(request)
-    except Exception:
+    except Exception as exc:
+        if should_audit_mutation and not is_test_links_path:
+            _audit_links_mutation(
+                request,
+                method=method,
+                path=path,
+                status_code=500,
+                payload_hash=request_payload_hash,
+                outcome="failure",
+                error_detail=f"Unhandled {exc.__class__.__name__}",
+            )
         # Keep CORS headers on unhandled backend errors so browser can read details.
         return ORJSONResponse(
             status_code=500,
@@ -706,6 +881,15 @@ async def _links_api_auth_middleware(request: Request, call_next: Any):
     for key, value in cors_headers.items():
         if key not in response.headers:
             response.headers[key] = value
+    if should_audit_mutation and not is_test_links_path:
+        _audit_links_mutation(
+            request,
+            method=method,
+            path=path,
+            status_code=int(response.status_code),
+            payload_hash=request_payload_hash,
+            outcome="success" if int(response.status_code) < 400 else "failure",
+        )
     return response
 
 
@@ -2114,7 +2298,10 @@ _DUP_BURST_RATIO = 0.90
 _DEEP_RESET_PREV_LEVEL = 4
 _DEEP_RESET_MIN_PER_SECTION = 2
 
-# Tier-based category registry (38 categories across 6 tiers)
+_DEEP_NEST_MIN_LEVEL = 4
+_DEEP_NEST_MIN_PER_DOC = 3
+
+# Tier-based category registry (39 categories across 6 tiers)
 _EDGE_CASE_TIERS: dict[str, list[str]] = {
     "structural": [
         "missing_sections", "low_section_count", "excessive_section_count",
@@ -2125,7 +2312,9 @@ _EDGE_CASE_TIERS: dict[str, list[str]] = {
         "orphan_deep_clause", "inconsistent_sibling_depth",
         "deep_nesting_outlier", "low_structural_ratio", "rootless_deep_clause",
         "clause_root_label_repeat_explosion", "clause_dup_id_burst",
-        "clause_depth_reset_after_deep",
+        "clause_depth_reset_after_deep", "clause_ordinal_spike_after_deep",
+        "structural_child_of_nonstruct_parent",
+        "inline_high_letter_branch",
     ],
     "definitions": [
         "low_definitions", "zero_definitions", "high_definition_count",
@@ -2151,10 +2340,88 @@ _CATEGORY_TO_TIER: dict[str, str] = {
     cat: tier for tier, cats in _EDGE_CASE_TIERS.items() for cat in cats
 }
 _EDGE_CASE_CATEGORIES = {"all"} | set(_CATEGORY_TO_TIER)
+_EDGE_CASE_GROUPS = {
+    "all",
+    "parser_integrity",
+    "baseline_enrichment",
+    "outlier_monitoring",
+}
+_EDGE_CASE_DETECTOR_STATUSES = {"all", "active", "monitor_only", "retired"}
+
+
+def _default_edge_case_group_for_tier(tier: str) -> str:
+    if tier in {"structural", "clauses", "definitions"}:
+        return "parser_integrity"
+    if tier in {"metadata", "template"}:
+        return "baseline_enrichment"
+    return "outlier_monitoring"
+
+
+_EDGE_CASE_GROUP_OVERRIDES: dict[str, str] = {
+    "extreme_facility": "outlier_monitoring",
+    "non_cohort_large_doc": "outlier_monitoring",
+}
+
+_CATEGORY_TO_GROUP: dict[str, str] = {}
+for _cat, _tier in _CATEGORY_TO_TIER.items():
+    _CATEGORY_TO_GROUP[_cat] = _EDGE_CASE_GROUP_OVERRIDES.get(
+        _cat,
+        _default_edge_case_group_for_tier(_tier),
+    )
+
+_CATEGORY_TO_STATUS: dict[str, str] = {cat: "active" for cat in _CATEGORY_TO_TIER}
+for _monitor_only_cat in {
+    "deep_nesting_outlier",
+    "extreme_facility",
+    "unknown_doc_type",
+    "non_credit_agreement",
+    "uncertain_market_segment",
+    "non_cohort_large_doc",
+    "extreme_word_count",
+    "short_text",
+    "extreme_text_ratio",
+    "very_short_document",
+}:
+    _CATEGORY_TO_STATUS[_monitor_only_cat] = "monitor_only"
+
+_PARSER_INTEGRITY_HOT_CATEGORIES: tuple[str, ...] = (
+    "clause_dup_id_burst",
+    "clause_root_label_repeat_explosion",
+    "clause_depth_reset_after_deep",
+    "clause_ordinal_spike_after_deep",
+    "structural_child_of_nonstruct_parent",
+    "inline_high_letter_branch",
+)
+_PARSER_INTEGRITY_HOT_RANK: dict[str, int] = {
+    category: idx for idx, category in enumerate(_PARSER_INTEGRITY_HOT_CATEGORIES)
+}
 
 
 def _get_tier(category: str) -> str:
     return _CATEGORY_TO_TIER.get(category, "unknown")
+
+
+def _get_group(category: str) -> str:
+    return _CATEGORY_TO_GROUP.get(category, "unknown")
+
+
+def _get_detector_status(category: str) -> str:
+    return _CATEGORY_TO_STATUS.get(category, "active")
+
+
+def _edge_case_order_sql(group: str) -> str:
+    if group != "parser_integrity":
+        return "category, doc_id"
+    return (
+        "CASE category "
+        "WHEN 'clause_dup_id_burst' THEN 0 "
+        "WHEN 'clause_root_label_repeat_explosion' THEN 1 "
+        "WHEN 'clause_depth_reset_after_deep' THEN 2 "
+        "WHEN 'clause_ordinal_spike_after_deep' THEN 3 "
+        "ELSE 100 END, "
+        "CASE severity WHEN 'high' THEN 0 WHEN 'medium' THEN 1 ELSE 2 END, "
+        "category, doc_id"
+    )
 
 
 # Standard SELECT columns shared by all edge-case category queries
@@ -2392,17 +2659,19 @@ def _build_join_category_queries(cohort_where: str) -> list[tuple[str, list[Any]
         [],
     ))
 
-    # 13. deep_nesting_outlier — uses tree_level > 4 (from clause_id path)
+    # 13. deep_nesting_outlier — monitor-only detector for dense deep nesting.
     cols = _cols.format(
         cat="deep_nesting_outlier", sev="low",
-        detail="'Max tree level ' || sub.max_level || ' with ' || sub.deep_count || ' clauses beyond level 4'",
+        detail="'Max tree level ' || sub.max_level || ' with ' || sub.deep_count || "
+        f"' clauses at level >= {_DEEP_NEST_MIN_LEVEL}'",
     )
     queries.append((
         f"SELECT {cols} FROM ("
         f"  SELECT doc_id, MAX(tree_level) as max_level, COUNT(*) as deep_count"
         f"  FROM (SELECT *, ARRAY_LENGTH(STRING_SPLIT(clause_id, '.')) AS tree_level FROM clauses) c"
-        f"  WHERE c.is_structural = true AND c.tree_level > 4"
+        f"  WHERE c.is_structural = true AND c.tree_level >= {_DEEP_NEST_MIN_LEVEL}"
         f"  GROUP BY doc_id"
+        f"  HAVING COUNT(*) >= {_DEEP_NEST_MIN_PER_DOC}"
         f") sub JOIN documents d ON sub.doc_id = d.doc_id"
         f"{cohort_doc_filter}",
         [],
@@ -2435,6 +2704,56 @@ def _build_join_category_queries(cohort_where: str) -> list[tuple[str, list[Any]
         f"  FROM (SELECT *, ARRAY_LENGTH(STRING_SPLIT(clause_id, '.')) AS tree_level FROM clauses) c"
         f"  WHERE c.tree_level > 1 AND c.is_structural = true AND (c.parent_id IS NULL OR c.parent_id = '')"
         f"  GROUP BY doc_id"
+        f") sub JOIN documents d ON sub.doc_id = d.doc_id"
+        f"{cohort_doc_filter}",
+        [],
+    ))
+
+    # 16. structural_child_of_nonstruct_parent — structural clause attached to
+    # a parent clause that exists but is non-structural.
+    cols = _cols.format(
+        cat="structural_child_of_nonstruct_parent", sev="high",
+        detail="sub.bad_child_count || ' structural clauses with non-structural parent'",
+    )
+    queries.append((
+        f"SELECT {cols} FROM ("
+        f"  SELECT c.doc_id, COUNT(*) as bad_child_count "
+        f"  FROM clauses c "
+        f"  JOIN clauses p ON p.doc_id = c.doc_id "
+        f"    AND p.section_number = c.section_number "
+        f"    AND p.clause_id = c.parent_id "
+        f"  WHERE c.is_structural = true "
+        f"    AND c.parent_id != '' "
+        f"    AND COALESCE(p.is_structural, false) = false "
+        f"  GROUP BY c.doc_id"
+        f") sub JOIN documents d ON sub.doc_id = d.doc_id"
+        f"{cohort_doc_filter}",
+        [],
+    ))
+
+    # 17. inline_high_letter_branch — structural clauses in high-letter branch
+    # (m-z segment) whose immediate parent is missing/non-structural.
+    cols = _cols.format(
+        cat="inline_high_letter_branch", sev="medium",
+        detail="sub.bad_branch_count || ' structural clauses in high-letter inline branch'",
+    )
+    queries.append((
+        f"SELECT {cols} FROM ("
+        f"  SELECT c.doc_id, COUNT(*) as bad_branch_count "
+        f"  FROM clauses c "
+        f"  LEFT JOIN clauses p ON p.doc_id = c.doc_id "
+        f"    AND p.section_number = c.section_number "
+        f"    AND p.clause_id = c.parent_id "
+        f"  WHERE c.is_structural = true "
+        f"    AND c.parent_id != '' "
+        f"    AND ("
+        f"      split_part(lower(c.clause_id), '.', 1) BETWEEN 'm' AND 'z' "
+        f"      OR split_part(lower(c.clause_id), '.', 2) BETWEEN 'm' AND 'z' "
+        f"      OR split_part(lower(c.clause_id), '.', 3) BETWEEN 'm' AND 'z' "
+        f"      OR split_part(lower(c.clause_id), '.', 4) BETWEEN 'm' AND 'z'"
+        f"    ) "
+        f"    AND (p.clause_id IS NULL OR COALESCE(p.is_structural, false) = false) "
+        f"  GROUP BY c.doc_id"
         f") sub JOIN documents d ON sub.doc_id = d.doc_id"
         f"{cohort_doc_filter}",
         [],
@@ -2518,7 +2837,8 @@ def _build_join_category_queries(cohort_where: str) -> list[tuple[str, list[Any]
         f"SELECT {cols} FROM ("
         f"  SELECT doc_id, COUNT(*) as bad_terms"
         f"  FROM definitions"
-        f"  WHERE regexp_matches(COALESCE(term, ''), '\\\\n')"
+        f"  WHERE POSITION(CHR(10) IN COALESCE(term, '')) > 0"
+        f"     OR POSITION(CHR(13) IN COALESCE(term, '')) > 0"
         f"     OR LENGTH(TRIM(COALESCE(term, ''))) > 80"
         f"     OR regexp_matches(lower(TRIM(COALESCE(term, ''))), "
         f"        '^(the borrower|the lenders?|the administrative agent|the company|the issuer)\\\\b')"
@@ -2611,6 +2931,45 @@ def _build_join_category_queries(cohort_where: str) -> list[tuple[str, list[Any]
         [],
     ))
 
+    # 39. clause_ordinal_spike_after_deep
+    cols = _cols.format(
+        cat="clause_ordinal_spike_after_deep", sev="high",
+        detail="'Out-of-sequence root alpha spikes after deep nesting in ' || sub.flagged_sections || "
+        "' sections (' || sub.total_spikes || ' spikes)'",
+    )
+    queries.append((
+        f"SELECT {cols} FROM ("
+        f"  WITH ordered AS ("
+        f"    SELECT doc_id, section_number, span_start, "
+        f"      array_length(string_split(clause_id, '.')) as tree_level, "
+        f"      ascii(lower(regexp_extract(label, '\\(([A-Za-z0-9]+)\\)', 1))) as ordinal_ascii, "
+        f"      lag(array_length(string_split(clause_id, '.'))) "
+        f"        OVER (PARTITION BY doc_id, section_number ORDER BY span_start) as prev_tree_level, "
+        f"      lead(ascii(lower(regexp_extract(label, '\\(([A-Za-z0-9]+)\\)', 1)))) "
+        f"        OVER (PARTITION BY doc_id, section_number ORDER BY span_start) as next_ascii, "
+        f"      lead(array_length(string_split(clause_id, '.'))) "
+        f"        OVER (PARTITION BY doc_id, section_number ORDER BY span_start) as next_tree_level "
+        f"    FROM clauses "
+        f"    WHERE is_structural = true"
+        f"  ), sec AS ("
+        f"    SELECT doc_id, section_number, COUNT(*) as spike_count "
+        f"    FROM ordered "
+        f"    WHERE tree_level = 1 "
+        f"      AND prev_tree_level >= 2 "
+        f"      AND ordinal_ascii BETWEEN ascii('m') AND ascii('z') "
+        f"      AND next_tree_level = 1 "
+        f"      AND next_ascii IS NOT NULL "
+        f"      AND next_ascii BETWEEN ascii('a') AND ascii('h') "
+        f"    GROUP BY 1, 2 "
+        f"    HAVING COUNT(*) >= 1"
+        f"  ) "
+        f"  SELECT doc_id, COUNT(*) as flagged_sections, SUM(spike_count) as total_spikes "
+        f"  FROM sec GROUP BY doc_id"
+        f") sub JOIN documents d ON sub.doc_id = d.doc_id"
+        f"{cohort_doc_filter}",
+        [],
+    ))
+
     # --- Section JOINs ---
 
     # 5. section_numbering_gap
@@ -2620,12 +2979,42 @@ def _build_join_category_queries(cohort_where: str) -> list[tuple[str, list[Any]
     )
     queries.append((
         f"SELECT {cols} FROM ("
-        f"  SELECT doc_id, COUNT(*) as gap_count FROM ("
-        f"    SELECT doc_id, CAST(section_number AS DOUBLE) as sn,"
-        f"      LAG(CAST(section_number AS DOUBLE)) OVER (PARTITION BY doc_id ORDER BY CAST(section_number AS DOUBLE)) AS prev_sn"
-        f"    FROM sections WHERE section_number NOT LIKE '%.%'"
-        f"  ) numbered WHERE prev_sn IS NOT NULL AND sn - prev_sn > 1.0 AND sn > 1.0"
-        f"  GROUP BY doc_id"
+        f"  WITH parsed AS ("
+        f"    SELECT doc_id, section_number, "
+        f"      regexp_extract(section_number, '^([0-9]+)', 1) AS major_txt, "
+        f"      regexp_extract(section_number, '^[0-9]+[.]([0-9]+)', 1) AS minor_txt "
+        f"    FROM sections "
+        f"    WHERE regexp_matches(COALESCE(section_number, ''), '^[0-9]+([.][0-9]+)?$')"
+        f"  ), norm AS ("
+        f"    SELECT doc_id, "
+        f"      CAST(major_txt AS INTEGER) AS major_n, "
+        f"      CASE WHEN minor_txt <> '' THEN CAST(minor_txt AS INTEGER) ELSE 0 END AS minor_n "
+        f"    FROM parsed "
+        f"    WHERE major_txt <> ''"
+        f"  ), minor_gaps AS ("
+        f"    SELECT doc_id, COUNT(*) AS gap_count FROM ("
+        f"      SELECT doc_id, major_n, minor_n, "
+        f"        LAG(minor_n) OVER (PARTITION BY doc_id, major_n ORDER BY minor_n) AS prev_minor "
+        f"      FROM norm"
+        f"    ) mg "
+        f"    WHERE prev_minor IS NOT NULL AND minor_n - prev_minor > 1 "
+        f"    GROUP BY doc_id"
+        f"  ), major_gaps AS ("
+        f"    SELECT doc_id, COUNT(*) AS gap_count FROM ("
+        f"      SELECT doc_id, major_n, "
+        f"        LAG(major_n) OVER (PARTITION BY doc_id ORDER BY major_n) AS prev_major "
+        f"      FROM (SELECT DISTINCT doc_id, major_n FROM norm)"
+        f"    ) gx "
+        f"    WHERE prev_major IS NOT NULL AND major_n - prev_major > 1 "
+        f"    GROUP BY doc_id"
+        f"  ) "
+        f"  SELECT doc_id, SUM(gap_count) AS gap_count FROM ("
+        f"    SELECT doc_id, gap_count FROM minor_gaps "
+        f"    UNION ALL "
+        f"    SELECT doc_id, gap_count FROM major_gaps"
+        f"  ) g "
+        f"  GROUP BY doc_id "
+        f"  HAVING SUM(gap_count) > 0"
         f") sub JOIN documents d ON sub.doc_id = d.doc_id"
         f"{cohort_doc_filter}",
         [],
@@ -2700,6 +3089,8 @@ def _build_iqr_category_queries(
 @app.get("/api/edge-cases")
 async def edge_cases(
     category: str = Query("all", description="Edge case category to filter"),
+    group: str = Query("all", description="Category group filter"),
+    detector_status: str = Query("all", description="Detector status filter"),
     page: int = Query(0, ge=0),
     page_size: int = Query(50, ge=1, le=200),
     cohort_only: bool = Query(False),
@@ -2711,6 +3102,17 @@ async def edge_cases(
         raise HTTPException(
             400,
             f"Invalid category: {category}. Must be one of: {', '.join(sorted(_EDGE_CASE_CATEGORIES))}",
+        )
+    if group not in _EDGE_CASE_GROUPS:
+        raise HTTPException(
+            400,
+            f"Invalid group: {group}. Must be one of: {', '.join(sorted(_EDGE_CASE_GROUPS))}",
+        )
+    if detector_status not in _EDGE_CASE_DETECTOR_STATUSES:
+        raise HTTPException(
+            400,
+            "Invalid detector_status: "
+            f"{detector_status}. Must be one of: {', '.join(sorted(_EDGE_CASE_DETECTOR_STATUSES))}",
         )
 
     cohort_where = "WHERE cohort_included = true AND" if cohort_only else "WHERE"
@@ -2728,27 +3130,62 @@ async def edge_cases(
         all_params.extend(p[1])
 
     all_union_sql = " UNION ALL ".join(all_queries)
+    allowed_categories = sorted(
+        category_name
+        for category_name in _CATEGORY_TO_TIER
+        if (group == "all" or _get_group(category_name) == group)
+        and (
+            detector_status == "all"
+            or _get_detector_status(category_name) == detector_status
+        )
+    )
+    scoped_sql = all_union_sql
+    scoped_params = list(all_params)
+    if len(allowed_categories) < len(_CATEGORY_TO_TIER):
+        placeholders = ", ".join("?" for _ in allowed_categories)
+        scoped_sql = f"SELECT * FROM ({all_union_sql}) WHERE category IN ({placeholders})"
+        scoped_params = [*all_params, *allowed_categories]
 
     # Global category counts (always includes all categories for pill display)
     cat_rows = corpus.query(
-        f"SELECT category, COUNT(*) FROM ({all_union_sql}) GROUP BY category ORDER BY COUNT(*) DESC",
-        all_params,
+        f"SELECT category, COUNT(*) FROM ({scoped_sql}) GROUP BY category ORDER BY COUNT(*) DESC",
+        scoped_params,
     )
+    category_rows = [
+        {
+            "category": str(r[0]),
+            "count": int(r[1]),
+            "tier": _get_tier(str(r[0])),
+            "group": _get_group(str(r[0])),
+            "detector_status": _get_detector_status(str(r[0])),
+        }
+        for r in cat_rows
+    ]
+    if group == "parser_integrity":
+        category_rows.sort(
+            key=lambda row: (
+                0 if row["category"] in _PARSER_INTEGRITY_HOT_RANK else 1,
+                _PARSER_INTEGRITY_HOT_RANK.get(row["category"], 10_000),
+                -int(row["count"]),
+                str(row["category"]),
+            ),
+        )
 
     # --- Build filtered query (for the paginated case list) ---
     if category == "all":
-        filtered_sql = all_union_sql
-        filtered_params = list(all_params)
+        filtered_sql = scoped_sql
+        filtered_params = list(scoped_params)
     else:
-        filtered_sql = f"SELECT * FROM ({all_union_sql}) WHERE category = ?"
-        filtered_params = [*all_params, category]
+        filtered_sql = f"SELECT * FROM ({scoped_sql}) WHERE category = ?"
+        filtered_params = [*scoped_params, category]
 
     count_row = corpus.query(f"SELECT COUNT(*) FROM ({filtered_sql})", filtered_params)
     total = int(count_row[0][0]) if count_row else 0
 
     offset = page * page_size
+    order_sql = _edge_case_order_sql(group)
     rows = corpus.query(
-        f"SELECT * FROM ({filtered_sql}) ORDER BY category, doc_id LIMIT ? OFFSET ?",
+        f"SELECT * FROM ({filtered_sql}) ORDER BY {order_sql} LIMIT ? OFFSET ?",
         [*filtered_params, page_size, offset],
     )
 
@@ -2756,9 +3193,17 @@ async def edge_cases(
         "total": total,
         "page": page,
         "page_size": page_size,
-        "categories": [
-            {"category": str(r[0]), "count": int(r[1]), "tier": _get_tier(str(r[0]))}
-            for r in cat_rows
+        "group": group,
+        "detector_status": detector_status,
+        "categories": category_rows,
+        "category_meta": [
+            {
+                "category": cat,
+                "tier": _get_tier(cat),
+                "group": _get_group(cat),
+                "detector_status": _get_detector_status(cat),
+            }
+            for cat in sorted(_CATEGORY_TO_TIER)
         ],
         "cases": [
             {
@@ -2767,6 +3212,9 @@ async def edge_cases(
                 "category": str(r[2]),
                 "severity": str(r[3]),
                 "detail": str(r[4]),
+                "tier": _get_tier(str(r[2])),
+                "group": _get_group(str(r[2])),
+                "detector_status": _get_detector_status(str(r[2])),
                 "doc_type": str(r[5]) if r[5] else "",
                 "market_segment": str(r[6]) if r[6] else "",
                 "word_count": int(r[7]) if r[7] is not None else 0,
@@ -2791,6 +3239,9 @@ _CLAUSE_ANOMALY_CATEGORIES = {
     "clause_root_label_repeat_explosion",
     "clause_dup_id_burst",
     "clause_depth_reset_after_deep",
+    "clause_ordinal_spike_after_deep",
+    "structural_child_of_nonstruct_parent",
+    "inline_high_letter_branch",
 }
 
 _DEFINITION_ANOMALY_CATEGORIES = {
@@ -2859,11 +3310,11 @@ async def edge_case_clause_detail(
         params = [doc_id]
 
     elif category == "deep_nesting_outlier":
-        # tree_level > 4
+        # tree_level >= configured min level
         sql = (
             f"SELECT {_clause_cols} FROM clauses c "
             f"WHERE c.doc_id = ? AND c.is_structural = true "
-            f"  AND ARRAY_LENGTH(STRING_SPLIT(c.clause_id, '.')) > 4 "
+            f"  AND ARRAY_LENGTH(STRING_SPLIT(c.clause_id, '.')) >= {_DEEP_NEST_MIN_LEVEL} "
             f"ORDER BY c.section_number, c.span_start"
         )
         params = [doc_id]
@@ -2950,6 +3401,70 @@ async def edge_case_clause_detail(
             f"  AND length(label_inner) = 1 "
             f"  AND label_inner BETWEEN 'm' AND 'z' "
             f"ORDER BY section_number, span_start"
+        )
+        params = [doc_id]
+
+    elif category == "clause_ordinal_spike_after_deep":
+        # Out-of-sequence root alpha spikes after deep nesting (e.g., a -> y -> b).
+        sql = (
+            f"WITH ordered AS ("
+            f"  SELECT c.section_number, c.clause_id, c.label, c.depth, c.level_type, "
+            f"    c.parent_id, c.is_structural, c.parse_confidence, c.header_text, c.span_start, c.span_end, "
+            f"    ARRAY_LENGTH(STRING_SPLIT(c.clause_id, '.')) AS tree_level, "
+            f"    lag(ARRAY_LENGTH(STRING_SPLIT(c.clause_id, '.'))) "
+            f"      OVER (PARTITION BY c.section_number ORDER BY c.span_start) AS prev_tree_level, "
+            f"    ascii(lower(regexp_extract(c.label, '\\(([A-Za-z0-9]+)\\)', 1))) AS ordinal_ascii, "
+            f"    lead(ascii(lower(regexp_extract(c.label, '\\(([A-Za-z0-9]+)\\)', 1)))) "
+            f"      OVER (PARTITION BY c.section_number ORDER BY c.span_start) AS next_ascii, "
+            f"    lead(ARRAY_LENGTH(STRING_SPLIT(c.clause_id, '.'))) "
+            f"      OVER (PARTITION BY c.section_number ORDER BY c.span_start) AS next_tree_level "
+            f"  FROM clauses c "
+            f"  WHERE c.doc_id = ? AND c.is_structural = true"
+            f") "
+            f"SELECT section_number, clause_id, label, depth, level_type, parent_id, is_structural, "
+            f"  parse_confidence, header_text, span_start, span_end, tree_level "
+            f"FROM ordered "
+            f"WHERE tree_level = 1 "
+            f"  AND prev_tree_level >= 2 "
+            f"  AND ordinal_ascii BETWEEN ascii('m') AND ascii('z') "
+            f"  AND next_tree_level = 1 "
+            f"  AND next_ascii IS NOT NULL "
+            f"  AND next_ascii BETWEEN ascii('a') AND ascii('h') "
+            f"ORDER BY section_number, span_start"
+        )
+        params = [doc_id]
+
+    elif category == "structural_child_of_nonstruct_parent":
+        sql = (
+            f"SELECT {_clause_cols} FROM clauses c "
+            f"JOIN clauses p ON p.doc_id = c.doc_id "
+            f"  AND p.section_number = c.section_number "
+            f"  AND p.clause_id = c.parent_id "
+            f"WHERE c.doc_id = ? "
+            f"  AND c.is_structural = true "
+            f"  AND c.parent_id != '' "
+            f"  AND COALESCE(p.is_structural, false) = false "
+            f"ORDER BY c.section_number, c.span_start"
+        )
+        params = [doc_id]
+
+    elif category == "inline_high_letter_branch":
+        sql = (
+            f"SELECT {_clause_cols} FROM clauses c "
+            f"LEFT JOIN clauses p ON p.doc_id = c.doc_id "
+            f"  AND p.section_number = c.section_number "
+            f"  AND p.clause_id = c.parent_id "
+            f"WHERE c.doc_id = ? "
+            f"  AND c.is_structural = true "
+            f"  AND c.parent_id != '' "
+            f"  AND ("
+            f"    split_part(lower(c.clause_id), '.', 1) BETWEEN 'm' AND 'z' "
+            f"    OR split_part(lower(c.clause_id), '.', 2) BETWEEN 'm' AND 'z' "
+            f"    OR split_part(lower(c.clause_id), '.', 3) BETWEEN 'm' AND 'z' "
+            f"    OR split_part(lower(c.clause_id), '.', 4) BETWEEN 'm' AND 'z'"
+            f"  ) "
+            f"  AND (p.clause_id IS NULL OR COALESCE(p.is_structural, false) = false) "
+            f"ORDER BY c.section_number, c.span_start"
         )
         params = [doc_id]
 
@@ -3046,7 +3561,8 @@ async def edge_case_definition_detail(
     elif category == "definition_malformed_term":
         where_extra = (
             "AND ("
-            "  regexp_matches(COALESCE(d.term, ''), '\\\\n') "
+            "  POSITION(CHR(10) IN COALESCE(d.term, '')) > 0 "
+            "  OR POSITION(CHR(13) IN COALESCE(d.term, '')) > 0 "
             "  OR LENGTH(TRIM(COALESCE(d.term, ''))) > 80 "
             "  OR regexp_matches(lower(TRIM(COALESCE(d.term, ''))), "
             "       '^(the borrower|the lenders?|the administrative agent|the company|the issuer)\\\\b') "
@@ -3597,6 +4113,12 @@ class LinkPreviewRequest(BaseModel):
     meta_filters: dict[str, Any] | None = None
     rule_id: str | None = Field(default=None, max_length=255)
     async_threshold: int = Field(default=10000, ge=1, le=50000)
+    corpus_version: str | None = Field(default=None, max_length=255)
+    corpus_snapshot_id: str | None = Field(default=None, max_length=255)
+    parser_version: str | None = Field(default=None, max_length=255)
+    ontology_version: str | None = Field(default=None, max_length=255)
+    ruleset_version: str | None = Field(default=None, max_length=255)
+    git_sha: str | None = Field(default=None, max_length=255)
 
 
 class LinksImportRequest(BaseModel):
@@ -5459,6 +5981,151 @@ def _rule_tokens(rule: dict[str, Any]) -> set[str]:
     return tokens
 
 
+def _best_effort_git_sha() -> str:
+    with contextlib.suppress(Exception):
+        from agent.run_manifest import git_commit_hash
+
+        value = git_commit_hash(search_from=_project_root)
+        if value:
+            return str(value).strip()
+    return ""
+
+
+def _required_lineage_value(field: str, value: Any) -> str:
+    normalized = str(value or "").strip()
+    if not normalized:
+        raise ValueError(f"Missing lineage field: {field}")
+    if normalized.lower() in _PLACEHOLDER_VERSION_VALUES:
+        raise ValueError(f"Placeholder lineage field disallowed: {field}={normalized}")
+    return normalized
+
+
+def _derive_preview_lineage(
+    *,
+    corpus: CorpusIndex,
+    request_body: LinkPreviewRequest,
+    family_id: str,
+    rule_id: str | None,
+    heading_filter_ast: dict[str, Any] | None,
+    filter_dsl: str,
+) -> dict[str, str]:
+    manifest: dict[str, Any] = {}
+    get_run_manifest = getattr(corpus, "get_run_manifest", None)
+    if callable(get_run_manifest):
+        with contextlib.suppress(Exception):
+            raw = get_run_manifest()
+            if isinstance(raw, dict):
+                manifest = raw
+
+    parser_version_seed = ""
+    with contextlib.suppress(Exception):
+        from agent import parsing_types
+
+        parser_version_seed = str(getattr(parsing_types, "__version__", "") or "").strip()
+
+    git_sha = str(
+        request_body.git_sha
+        or manifest.get("git_commit")
+        or _best_effort_git_sha()
+    ).strip()
+    if not git_sha and parser_version_seed:
+        # Keep parser version deterministic even when git metadata is unavailable.
+        git_sha = f"parser-src-{hashlib.sha256(parser_version_seed.encode('utf-8')).hexdigest()[:12]}"
+
+    corpus_version = str(
+        request_body.corpus_version
+        or manifest.get("schema_version")
+        or getattr(corpus, "schema_version", "")
+        or f"corpus-{Path(str(getattr(corpus, '_db_path', _corpus_db_path))).stem}"
+    ).strip()
+    parser_version = str(
+        request_body.parser_version
+        or manifest.get("parser_version")
+        or (f"parser-{parser_version_seed}" if parser_version_seed else "")
+        or (f"parser-{git_sha[:12]}" if git_sha else "")
+    ).strip()
+    ontology_path_match = re.search(
+        r"(v\d+(?:\.\d+){1,3})",
+        _ontology_path.stem,
+        re.IGNORECASE,
+    )
+    ontology_from_path = ontology_path_match.group(1) if ontology_path_match else ""
+    ontology_version = str(
+        request_body.ontology_version
+        or manifest.get("ontology_version")
+        or _ontology_metadata.get("version")
+        or ontology_from_path
+        or ""
+    ).strip()
+
+    ruleset_seed = {
+        "family_id": family_id,
+        "rule_id": str(rule_id or ""),
+        "heading_filter_ast": heading_filter_ast or {},
+        "filter_dsl": str(filter_dsl or ""),
+    }
+    ruleset_digest = hashlib.sha256(
+        json.dumps(ruleset_seed, sort_keys=True, separators=(",", ":"), default=str).encode("utf-8")
+    ).hexdigest()[:16]
+    ruleset_version = str(
+        request_body.ruleset_version
+        or manifest.get("ruleset_version")
+        or f"preview-ruleset-{ruleset_digest}"
+    ).strip()
+
+    corpus_snapshot_id = str(
+        request_body.corpus_snapshot_id
+        or manifest.get("run_id")
+        or f"preview-snapshot-{ruleset_digest}"
+    ).strip()
+
+    try:
+        return {
+            "corpus_version": _required_lineage_value("corpus_version", corpus_version),
+            "corpus_snapshot_id": _required_lineage_value("corpus_snapshot_id", corpus_snapshot_id),
+            "parser_version": _required_lineage_value("parser_version", parser_version),
+            "ontology_version": _required_lineage_value("ontology_version", ontology_version),
+            "ruleset_version": _required_lineage_value("ruleset_version", ruleset_version),
+            "git_sha": _required_lineage_value("git_sha", git_sha),
+            "created_at_utc": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
+        }
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+def _lineage_from_preview(preview: dict[str, Any]) -> dict[str, str]:
+    params_json = _parse_json_object(preview.get("params_json"))
+    lineage_raw = params_json.get("lineage")
+    lineage_dict = lineage_raw if isinstance(lineage_raw, dict) else {}
+
+    def _pick(field: str) -> Any:
+        return (
+            preview.get(field)
+            or lineage_dict.get(field)
+            or params_json.get(field)
+        )
+
+    git_sha = str(_pick("git_sha") or _best_effort_git_sha()).strip()
+    try:
+        return {
+            "corpus_version": _required_lineage_value("corpus_version", _pick("corpus_version")),
+            "corpus_snapshot_id": _required_lineage_value("corpus_snapshot_id", _pick("corpus_snapshot_id")),
+            "parser_version": _required_lineage_value("parser_version", _pick("parser_version")),
+            "ontology_version": _required_lineage_value("ontology_version", _pick("ontology_version")),
+            "ruleset_version": _required_lineage_value("ruleset_version", _pick("ruleset_version")),
+            "git_sha": _required_lineage_value("git_sha", git_sha),
+            "created_at_utc": str(
+                _pick("created_at_utc")
+                or datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+            ),
+        }
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=409,
+            detail=f"{exc}. Regenerate preview to capture current lineage metadata.",
+        ) from exc
+
+
 def _resolve_run_scope(
     store: LinkStore,
     run: dict[str, Any],
@@ -6206,6 +6873,14 @@ async def create_preview(
 
     corpus = _get_corpus()
     preview_id = str(uuid.uuid4())
+    lineage = _derive_preview_lineage(
+        corpus=corpus,
+        request_body=body,
+        family_id=family_id,
+        rule_id=rule_id,
+        heading_filter_ast=heading_ast,
+        filter_dsl=filter_dsl_text,
+    )
 
     # Build WHERE clauses from all text fields
     where_parts: list[str] = []
@@ -6364,12 +7039,23 @@ async def create_preview(
                     " JOIN clauses clause_match "
                     "ON clause_match.doc_id = s.doc_id "
                     "AND clause_match.section_number = s.section_number "
-                    f"AND (({clause_text_sql}) OR ({clause_header_sql}))"
+                    f"AND (({clause_text_sql}) OR ({clause_header_sql})) "
+                    "LEFT JOIN clauses clause_parent "
+                    "ON clause_parent.doc_id = clause_match.doc_id "
+                    "AND clause_parent.section_number = clause_match.section_number "
+                    "AND clause_parent.clause_id = clause_match.parent_id"
                 )
                 clause_detail_params = [*clause_text_params, *clause_header_params]
                 clause_detail_order = (
                     "s.doc_id, s.section_number, "
-                    "clause_match.depth DESC, clause_match.is_structural DESC, "
+                    "CASE "
+                    "WHEN clause_match.parent_id = '' THEN 1 "
+                    "WHEN COALESCE(clause_parent.is_structural, false) THEN 1 "
+                    "ELSE 0 "
+                    "END DESC, "
+                    "clause_match.is_structural DESC, "
+                    "clause_match.parse_confidence DESC, "
+                    "clause_match.depth DESC, "
                     "clause_match.span_start ASC, clause_match.clause_id ASC"
                 )
             else:
@@ -6380,7 +7066,23 @@ async def create_preview(
                     "FROM clauses cm "
                     "WHERE cm.doc_id = s.doc_id "
                     "AND cm.section_number = s.section_number "
-                    "ORDER BY cm.is_structural DESC, cm.depth DESC, cm.span_start ASC LIMIT 1"
+                    "ORDER BY "
+                    "CASE "
+                    "WHEN cm.parent_id = '' THEN 1 "
+                    "WHEN EXISTS ("
+                    "  SELECT 1 FROM clauses cp "
+                    "  WHERE cp.doc_id = cm.doc_id "
+                    "    AND cp.section_number = cm.section_number "
+                    "    AND cp.clause_id = cm.parent_id "
+                    "    AND cp.is_structural = true"
+                    ") THEN 1 "
+                    "ELSE 0 "
+                    "END DESC, "
+                    "cm.is_structural DESC, "
+                    "cm.parse_confidence DESC, "
+                    "cm.depth DESC, "
+                    "cm.span_start ASC, "
+                    "cm.clause_id ASC LIMIT 1"
                     ") clause_match ON TRUE"
                 )
                 clause_detail_order = "s.doc_id, s.section_number, clause_match.clause_id ASC"
@@ -6475,6 +7177,9 @@ async def create_preview(
         "family_id": family_id,
         "ontology_node_id": ontology_node_id or family_id,
         "rule_id": rule_id or "",
+        "corpus_version": lineage["corpus_version"],
+        "parser_version": lineage["parser_version"],
+        "ontology_version": lineage["ontology_version"],
         "params_json": {
             "heading_filter_ast": heading_ast,
             "meta_filters": {k: meta_filter_to_json(v) for k, v in meta_filters.items()},
@@ -6484,6 +7189,7 @@ async def create_preview(
             "parent_rule_id": parent_rule_id,
             "parent_run_id": parent_run_id,
             "result_granularity": effective_result_granularity,
+            "lineage": lineage,
         },
         "candidate_count": len(candidates),
         "candidate_set_hash": candidate_set_hash,
@@ -6527,6 +7233,7 @@ async def create_preview(
         "parent_family_id": parent_family_id,
         "parent_rule_id": parent_rule_id,
         "parent_run_id": parent_run_id,
+        "lineage": lineage,
         "async": False,
     }
 
@@ -6564,6 +7271,8 @@ async def apply_preview(
     if expected_hash and preview.get("candidate_set_hash") != expected_hash:
         raise HTTPException(status_code=409, detail="Candidate set hash mismatch")
 
+    lineage = _lineage_from_preview(preview)
+
     # Submit as async job
     job_id = str(uuid.uuid4())
     store.submit_job({
@@ -6572,6 +7281,13 @@ async def apply_preview(
         "params": {
             "preview_id": preview_id,
             "candidate_set_hash": expected_hash,
+            "corpus_version": lineage["corpus_version"],
+            "corpus_snapshot_id": lineage["corpus_snapshot_id"],
+            "parser_version": lineage["parser_version"],
+            "ontology_version": lineage["ontology_version"],
+            "ruleset_version": lineage["ruleset_version"],
+            "git_sha": lineage["git_sha"],
+            "created_at_utc": lineage["created_at_utc"],
         },
     })
     return {"job_id": job_id, "preview_id": preview_id}
@@ -6854,6 +7570,7 @@ def _upsert_links_from_preview_candidates(
     updated_count = 0
     term_bindings_by_candidate: dict[str, list[dict[str, Any]]] = {}
     preview_params = _parse_json_object(preview.get("params_json"))
+    lineage = _lineage_from_preview(preview)
     raw_ontology_node_id = str(
         preview.get("ontology_node_id")
         or preview_params.get("ontology_node_id")
@@ -6977,10 +7694,18 @@ def _upsert_links_from_preview_candidates(
             "clause_char_end": clause_char_end,
             "clause_text": clause_text,
             "confidence": candidate.get("confidence", 0.0),
+            "score_raw": candidate.get("score_raw", candidate.get("confidence", 0.0)),
+            "score_calibrated": candidate.get("score_calibrated", candidate.get("confidence", 0.0)),
+            "threshold_profile_id": candidate.get("threshold_profile_id"),
+            "policy_decision": candidate.get("policy_decision"),
+            "policy_reasons": candidate.get("policy_reasons"),
             "confidence_tier": candidate.get("confidence_tier", "low"),
             "source": source,
             "status": "active",
             "rule_id": preview.get("rule_id"),
+            "corpus_version": lineage["corpus_version"],
+            "parser_version": lineage["parser_version"],
+            "ontology_version": lineage["ontology_version"],
         }
 
         if scope_aliases:
@@ -7006,7 +7731,9 @@ def _upsert_links_from_preview_candidates(
                 "UPDATE family_links SET "
                 "ontology_node_id = ?, scope_id = ?, heading = ?, rule_id = ?, run_id = ?, source = ?, "
                 "clause_id = ?, clause_key = ?, clause_char_start = ?, clause_char_end = ?, clause_text = ?, "
-                "confidence = ?, confidence_tier = ?, status = 'active', "
+                "confidence = ?, score_raw = ?, score_calibrated = ?, threshold_profile_id = ?, "
+                "policy_decision = ?, policy_reasons = ?, confidence_tier = ?, status = 'active', "
+                "corpus_version = ?, parser_version = ?, ontology_version = ?, "
                 "unlinked_at = NULL, unlinked_reason = NULL, unlinked_note = NULL "
                 "WHERE link_id = ?",
                 [
@@ -7022,7 +7749,15 @@ def _upsert_links_from_preview_candidates(
                     payload["clause_char_end"],
                     payload["clause_text"],
                     payload["confidence"],
+                    payload["score_raw"],
+                    payload["score_calibrated"],
+                    payload["threshold_profile_id"],
+                    payload["policy_decision"],
+                    json.dumps(payload["policy_reasons"]) if payload.get("policy_reasons") is not None else None,
                     payload["confidence_tier"],
+                    payload["corpus_version"],
+                    payload["parser_version"],
+                    payload["ontology_version"],
                     str(existing[0]),
                 ],
             )
@@ -7056,6 +7791,24 @@ def _upsert_links_from_preview_candidates(
                 continue
             with contextlib.suppress(Exception):
                 store.save_link_defined_terms(link_id, bindings)
+
+    store.create_run(
+        {
+            "run_id": run_id,
+            "run_type": "apply",
+            "family_id": family_scope or raw_family_scope,
+            "rule_id": preview.get("rule_id"),
+            "corpus_version": lineage["corpus_version"],
+            "corpus_snapshot_id": lineage["corpus_snapshot_id"],
+            "corpus_doc_count": len(accepted),
+            "parser_version": lineage["parser_version"],
+            "ontology_version": lineage["ontology_version"],
+            "ruleset_version": lineage["ruleset_version"],
+            "git_sha": lineage["git_sha"],
+            "created_at_utc": lineage["created_at_utc"],
+            "links_created": created_count + updated_count,
+        }
+    )
     return run_id, created_count, updated_count
 
 
@@ -8645,6 +9398,9 @@ async def export_links(
             "format": body.get("format", "csv"),
             "family_id": body.get("family_id"),
             "status": body.get("status"),
+            "contract_format": body.get("contract_format", "wave3-handoff"),
+            "evidence_schema_version": body.get("evidence_schema_version", "evidence_v3"),
+            "labeled_export_schema_version": body.get("labeled_export_schema_version", "labeled_export_v2"),
         },
     })
     return {"job_id": job_id}

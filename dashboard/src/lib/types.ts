@@ -291,6 +291,9 @@ export interface EdgeCaseRecord {
   doc_id: string;
   borrower: string;
   category: string;
+  tier: string;
+  group: string;
+  detector_status: string;
   severity: "high" | "medium" | "low";
   detail: string;
   doc_type: string;
@@ -306,7 +309,21 @@ export interface EdgeCasesResponse {
   total: number;
   page: number;
   page_size: number;
-  categories: { category: string; count: number; tier: string }[];
+  group: string;
+  detector_status: string;
+  categories: {
+    category: string;
+    count: number;
+    tier: string;
+    group: string;
+    detector_status: string;
+  }[];
+  category_meta: {
+    category: string;
+    tier: string;
+    group: string;
+    detector_status: string;
+  }[];
   cases: EdgeCaseRecord[];
 }
 

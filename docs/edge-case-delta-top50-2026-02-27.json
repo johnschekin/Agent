@@ -1,0 +1,1232 @@
+{
+  "structural_child_of_nonstruct_parent": {
+    "docs_total": 3091,
+    "sections_total": 38762,
+    "hits_total": 289441,
+    "top_docs_50": [
+      {
+        "doc_id": "5ca208323895a8ad",
+        "borrower": "",
+        "sections": 13,
+        "hits": 673
+      },
+      {
+        "doc_id": "497357c95f8d28de",
+        "borrower": "Windstream Services II",
+        "sections": 26,
+        "hits": 585
+      },
+      {
+        "doc_id": "c90e1d3be8aad9bd",
+        "borrower": "Seacor Marine Foreign",
+        "sections": 14,
+        "hits": 555
+      },
+      {
+        "doc_id": "fed3fbd002e89024",
+        "borrower": "LADDER CAPITAL FINANCE HOLDINGS LLLP, LADDER CORPORATE REVOLVER I LLC and LADDER CAPITAL FINANCE",
+        "sections": 25,
+        "hits": 533
+      },
+      {
+        "doc_id": "21d1c55bcb880e28",
+        "borrower": "Lynnwood Mergersub",
+        "sections": 27,
+        "hits": 510
+      },
+      {
+        "doc_id": "a2de101fce13c80e",
+        "borrower": "US Radiology Specialists, INC. US Outpatient Imaging Specialists",
+        "sections": 33,
+        "hits": 501
+      },
+      {
+        "doc_id": "3d81e6691a05a31d",
+        "borrower": "Samson Investment",
+        "sections": 1,
+        "hits": 492
+      },
+      {
+        "doc_id": "ba2cd97ab0d363df",
+        "borrower": "Meh",
+        "sections": 30,
+        "hits": 489
+      },
+      {
+        "doc_id": "713edbe3d2a8ef66",
+        "borrower": "Ehl Merger Sub",
+        "sections": 30,
+        "hits": 476
+      },
+      {
+        "doc_id": "ed5804c7a5faa9ce",
+        "borrower": "",
+        "sections": 26,
+        "hits": 468
+      },
+      {
+        "doc_id": "be4477631495413f",
+        "borrower": "Dtz U.S. Borrower",
+        "sections": 26,
+        "hits": 467
+      },
+      {
+        "doc_id": "38ca73595ac1b928",
+        "borrower": "Parent",
+        "sections": 21,
+        "hits": 455
+      },
+      {
+        "doc_id": "e39ca4b90d0f269b",
+        "borrower": "Accel Entertainment",
+        "sections": 32,
+        "hits": 453
+      },
+      {
+        "doc_id": "b300cd4bda11b8da",
+        "borrower": "Xponential Fitness",
+        "sections": 29,
+        "hits": 452
+      },
+      {
+        "doc_id": "b3887ec4f9604eb8",
+        "borrower": "Chobani Global",
+        "sections": 26,
+        "hits": 446
+      },
+      {
+        "doc_id": "0ba9644918423787",
+        "borrower": "Cannes Chs Merger Sub",
+        "sections": 28,
+        "hits": 445
+      },
+      {
+        "doc_id": "2ffdde095edfb2b7",
+        "borrower": "Ltf Intermediate",
+        "sections": 27,
+        "hits": 445
+      },
+      {
+        "doc_id": "c61127fd08460cdc",
+        "borrower": "Mcafee",
+        "sections": 24,
+        "hits": 441
+      },
+      {
+        "doc_id": "c1853b463d4df644",
+        "borrower": "Gibraltar Industries",
+        "sections": 26,
+        "hits": 440
+      },
+      {
+        "doc_id": "64e25b54a5764f42",
+        "borrower": "GreenSky",
+        "sections": 27,
+        "hits": 437
+      },
+      {
+        "doc_id": "b7bc7be0ba214d88",
+        "borrower": "Superior Industries International",
+        "sections": 27,
+        "hits": 437
+      },
+      {
+        "doc_id": "3161945e55309b7f",
+        "borrower": "Global Ship Lease",
+        "sections": 20,
+        "hits": 436
+      },
+      {
+        "doc_id": "5dbde82ed739b9d0",
+        "borrower": "New Fortress Energy",
+        "sections": 1,
+        "hits": 435
+      },
+      {
+        "doc_id": "5ea5b57b084b51d4",
+        "borrower": "Keep Truckin",
+        "sections": 8,
+        "hits": 431
+      },
+      {
+        "doc_id": "6c0742741ee65a72",
+        "borrower": "Camelot Uk Holdco",
+        "sections": 21,
+        "hits": 426
+      },
+      {
+        "doc_id": "41bacf60b650fd94",
+        "borrower": "Ims Health Incorporated",
+        "sections": 26,
+        "hits": 418
+      },
+      {
+        "doc_id": "a33827a6b097a6b9",
+        "borrower": "Energy Future Competitive",
+        "sections": 22,
+        "hits": 405
+      },
+      {
+        "doc_id": "a93dae5172fa75b8",
+        "borrower": "Wideopenwest Finance",
+        "sections": 24,
+        "hits": 402
+      },
+      {
+        "doc_id": "1a938088e471a694",
+        "borrower": "Amneal Pharmaceuticals",
+        "sections": 31,
+        "hits": 399
+      },
+      {
+        "doc_id": "417c285a1e5f105e",
+        "borrower": "Knife River",
+        "sections": 21,
+        "hits": 397
+      },
+      {
+        "doc_id": "d85fe963b048bb11",
+        "borrower": "Amneal Pharmaceuticals",
+        "sections": 14,
+        "hits": 397
+      },
+      {
+        "doc_id": "1929dfb99bb604ba",
+        "borrower": "Cpq Midco I",
+        "sections": 20,
+        "hits": 394
+      },
+      {
+        "doc_id": "71085fee37e6f1f6",
+        "borrower": "Everus Construction",
+        "sections": 19,
+        "hits": 394
+      },
+      {
+        "doc_id": "3cac3a0e7b4152b0",
+        "borrower": "Lbm Midco",
+        "sections": 3,
+        "hits": 388
+      },
+      {
+        "doc_id": "f64dedd61f7dd7e8",
+        "borrower": "KINDERCARE LEARNING COMPANIES, INC., as Initial Holdings, KC SUB, LLC, as Intermediate Holdings, KUEHG",
+        "sections": 27,
+        "hits": 385
+      },
+      {
+        "doc_id": "874b17bef710cb90",
+        "borrower": "",
+        "sections": 19,
+        "hits": 376
+      },
+      {
+        "doc_id": "89b19e93a2ace855",
+        "borrower": "Specialty Building Products",
+        "sections": 20,
+        "hits": 373
+      },
+      {
+        "doc_id": "5724671608c78c40",
+        "borrower": "Venator Materials",
+        "sections": 24,
+        "hits": 372
+      },
+      {
+        "doc_id": "37a2ad11f7834147",
+        "borrower": "Tutor Perini",
+        "sections": 24,
+        "hits": 370
+      },
+      {
+        "doc_id": "ac613caf054c93ff",
+        "borrower": "Imola Merger",
+        "sections": 14,
+        "hits": 370
+      },
+      {
+        "doc_id": "80ae47c0ae18dd78",
+        "borrower": "C&W Senior Secured Parent",
+        "sections": 24,
+        "hits": 369
+      },
+      {
+        "doc_id": "2917da756185b323",
+        "borrower": "Ryan Specialty",
+        "sections": 12,
+        "hits": 368
+      },
+      {
+        "doc_id": "52b74468810422a0",
+        "borrower": "Array Technologies",
+        "sections": 21,
+        "hits": 367
+      },
+      {
+        "doc_id": "7bf490c04097d841",
+        "borrower": "",
+        "sections": 26,
+        "hits": 364
+      },
+      {
+        "doc_id": "63fd7b18106c398f",
+        "borrower": "Nord Anglia Education Finance",
+        "sections": 28,
+        "hits": 358
+      },
+      {
+        "doc_id": "6072df4bae1fa527",
+        "borrower": "",
+        "sections": 6,
+        "hits": 355
+      },
+      {
+        "doc_id": "0f3aec04f9dca910",
+        "borrower": "Amag Pharmaceuticals",
+        "sections": 22,
+        "hits": 354
+      },
+      {
+        "doc_id": "a758838654afdbe2",
+        "borrower": "Ditech",
+        "sections": 21,
+        "hits": 354
+      },
+      {
+        "doc_id": "8ae241eb33d46248",
+        "borrower": "",
+        "sections": 12,
+        "hits": 353
+      },
+      {
+        "doc_id": "c1c11e8cb6da0c29",
+        "borrower": "",
+        "sections": 12,
+        "hits": 353
+      }
+    ],
+    "top_sections_50": [
+      {
+        "doc_id": "3d81e6691a05a31d",
+        "borrower": "Samson Investment",
+        "section_number": "9.1",
+        "hits": 492
+      },
+      {
+        "doc_id": "5dbde82ed739b9d0",
+        "borrower": "New Fortress Energy",
+        "section_number": "6.13",
+        "hits": 435
+      },
+      {
+        "doc_id": "c90e1d3be8aad9bd",
+        "borrower": "Seacor Marine Foreign",
+        "section_number": "2.2",
+        "hits": 405
+      },
+      {
+        "doc_id": "5ca208323895a8ad",
+        "borrower": "",
+        "section_number": "9.27",
+        "hits": 389
+      },
+      {
+        "doc_id": "3cac3a0e7b4152b0",
+        "borrower": "Lbm Midco",
+        "section_number": "3.9",
+        "hits": 372
+      },
+      {
+        "doc_id": "6072df4bae1fa527",
+        "borrower": "",
+        "section_number": "15.23",
+        "hits": 349
+      },
+      {
+        "doc_id": "1f733097c8b0dd97",
+        "borrower": "",
+        "section_number": "14.22",
+        "hits": 348
+      },
+      {
+        "doc_id": "55414288c90f1e99",
+        "borrower": "F&C Restaurant",
+        "section_number": "8.10",
+        "hits": 312
+      },
+      {
+        "doc_id": "05ecb029a20ec74b",
+        "borrower": "trols Inc., Protection Services Inc., SCI Products Inc. and Work Area Protection",
+        "section_number": "16.22",
+        "hits": 293
+      },
+      {
+        "doc_id": "d970683c3670a146",
+        "borrower": "Energy & Exploration Partners",
+        "section_number": "6.02",
+        "hits": 286
+      },
+      {
+        "doc_id": "5ea5b57b084b51d4",
+        "borrower": "Keep Truckin",
+        "section_number": "2.23",
+        "hits": 283
+      },
+      {
+        "doc_id": "fc2e38a4b7d3cf9f",
+        "borrower": "the Borrowers",
+        "section_number": "8.8",
+        "hits": 280
+      },
+      {
+        "doc_id": "c1853b463d4df644",
+        "borrower": "Gibraltar Industries",
+        "section_number": "1.01",
+        "hits": 273
+      },
+      {
+        "doc_id": "ed5804c7a5faa9ce",
+        "borrower": "",
+        "section_number": "15.24",
+        "hits": 261
+      },
+      {
+        "doc_id": "f50902d95e5c7970",
+        "borrower": "DXP Enterprises",
+        "section_number": "15.17",
+        "hits": 261
+      },
+      {
+        "doc_id": "ba2cd97ab0d363df",
+        "borrower": "Meh",
+        "section_number": "1.01",
+        "hits": 259
+      },
+      {
+        "doc_id": "417c285a1e5f105e",
+        "borrower": "Knife River",
+        "section_number": "1.01",
+        "hits": 257
+      },
+      {
+        "doc_id": "71085fee37e6f1f6",
+        "borrower": "Everus Construction",
+        "section_number": "1.01",
+        "hits": 256
+      },
+      {
+        "doc_id": "dfe96deb46e5c068",
+        "borrower": "Cardtronics",
+        "section_number": "8.01",
+        "hits": 256
+      },
+      {
+        "doc_id": "119b12a34df6c107",
+        "borrower": "Root",
+        "section_number": "1.6",
+        "hits": 254
+      },
+      {
+        "doc_id": "2506274a9c6e539b",
+        "borrower": "Trean Insurance",
+        "section_number": "2.7",
+        "hits": 254
+      },
+      {
+        "doc_id": "38ca73595ac1b928",
+        "borrower": "Parent",
+        "section_number": "7.20",
+        "hits": 254
+      },
+      {
+        "doc_id": "a2de101fce13c80e",
+        "borrower": "US Radiology Specialists, INC. US Outpatient Imaging Specialists",
+        "section_number": "1.01",
+        "hits": 253
+      },
+      {
+        "doc_id": "6fde082aad3d39f3",
+        "borrower": "",
+        "section_number": "12.23",
+        "hits": 251
+      },
+      {
+        "doc_id": "a8fdccc5d9f733c0",
+        "borrower": "Manitowoc Foodservice",
+        "section_number": "10.01",
+        "hits": 243
+      },
+      {
+        "doc_id": "1dbb5c73a78e2e69",
+        "borrower": "Interior Logic Group Holdings III",
+        "section_number": "13.04",
+        "hits": 242
+      },
+      {
+        "doc_id": "b7bc7be0ba214d88",
+        "borrower": "Superior Industries International",
+        "section_number": "1.01",
+        "hits": 240
+      },
+      {
+        "doc_id": "d2d385a84892953e",
+        "borrower": "J2 Global",
+        "section_number": "6.10",
+        "hits": 240
+      },
+      {
+        "doc_id": "21d1c55bcb880e28",
+        "borrower": "Lynnwood Mergersub",
+        "section_number": "1.01",
+        "hits": 234
+      },
+      {
+        "doc_id": "8ae241eb33d46248",
+        "borrower": "",
+        "section_number": "1.01",
+        "hits": 232
+      },
+      {
+        "doc_id": "c1c11e8cb6da0c29",
+        "borrower": "",
+        "section_number": "1.01",
+        "hits": 232
+      },
+      {
+        "doc_id": "37a2ad11f7834147",
+        "borrower": "Tutor Perini",
+        "section_number": "1.01",
+        "hits": 225
+      },
+      {
+        "doc_id": "5f21439d657ef1c4",
+        "borrower": "Cantor Fitzgerald Securities",
+        "section_number": "17.12",
+        "hits": 224
+      },
+      {
+        "doc_id": "3669cb1f93b66621",
+        "borrower": "Nc Slf",
+        "section_number": "4.10",
+        "hits": 223
+      },
+      {
+        "doc_id": "8a061d6ec03f1b49",
+        "borrower": "Ascena TopCo",
+        "section_number": "9.20",
+        "hits": 223
+      },
+      {
+        "doc_id": "7c8ce0ddd0303adb",
+        "borrower": "A Delaware limited liability",
+        "section_number": "12.20",
+        "hits": 222
+      },
+      {
+        "doc_id": "c61127fd08460cdc",
+        "borrower": "Mcafee",
+        "section_number": "1.01",
+        "hits": 222
+      },
+      {
+        "doc_id": "2ffdde095edfb2b7",
+        "borrower": "Ltf Intermediate",
+        "section_number": "1.01",
+        "hits": 221
+      },
+      {
+        "doc_id": "64c31a6c8e6e8d85",
+        "borrower": "Wells Fargo Bank",
+        "section_number": "1.76",
+        "hits": 219
+      },
+      {
+        "doc_id": "0ba9644918423787",
+        "borrower": "Cannes Chs Merger Sub",
+        "section_number": "1.01",
+        "hits": 215
+      },
+      {
+        "doc_id": "5f30f22e656e779e",
+        "borrower": "Ep Energy",
+        "section_number": "7.13",
+        "hits": 214
+      },
+      {
+        "doc_id": "874b17bef710cb90",
+        "borrower": "",
+        "section_number": "1.1",
+        "hits": 211
+      },
+      {
+        "doc_id": "2917da756185b323",
+        "borrower": "Ryan Specialty",
+        "section_number": "1.1",
+        "hits": 210
+      },
+      {
+        "doc_id": "9ac1b926f2691e05",
+        "borrower": "RhythmOne",
+        "section_number": "2.6",
+        "hits": 210
+      },
+      {
+        "doc_id": "70366379644f01bc",
+        "borrower": "Digital Media Solutions",
+        "section_number": "9.21",
+        "hits": 209
+      },
+      {
+        "doc_id": "6f11b74f0eb7cd58",
+        "borrower": "",
+        "section_number": "1.1",
+        "hits": 208
+      },
+      {
+        "doc_id": "64e25b54a5764f42",
+        "borrower": "GreenSky",
+        "section_number": "1.01",
+        "hits": 207
+      },
+      {
+        "doc_id": "713edbe3d2a8ef66",
+        "borrower": "Ehl Merger Sub",
+        "section_number": "1.01",
+        "hits": 203
+      },
+      {
+        "doc_id": "be4477631495413f",
+        "borrower": "Dtz U.S. Borrower",
+        "section_number": "1.01",
+        "hits": 203
+      },
+      {
+        "doc_id": "07e7141f4bf2caa9",
+        "borrower": "",
+        "section_number": "1.5x",
+        "hits": 202
+      }
+    ]
+  },
+  "inline_high_letter_branch": {
+    "docs_total": 3054,
+    "sections_total": 21466,
+    "hits_total": 106405,
+    "top_docs_50": [
+      {
+        "doc_id": "c90e1d3be8aad9bd",
+        "borrower": "Seacor Marine Foreign",
+        "sections": 7,
+        "hits": 240
+      },
+      {
+        "doc_id": "6c0742741ee65a72",
+        "borrower": "Camelot Uk Holdco",
+        "sections": 15,
+        "hits": 223
+      },
+      {
+        "doc_id": "5ca208323895a8ad",
+        "borrower": "",
+        "sections": 10,
+        "hits": 216
+      },
+      {
+        "doc_id": "049ca540d9f5c227",
+        "borrower": "Composecure",
+        "sections": 13,
+        "hits": 200
+      },
+      {
+        "doc_id": "1929dfb99bb604ba",
+        "borrower": "Cpq Midco I",
+        "sections": 15,
+        "hits": 196
+      },
+      {
+        "doc_id": "3161945e55309b7f",
+        "borrower": "Global Ship Lease",
+        "sections": 6,
+        "hits": 192
+      },
+      {
+        "doc_id": "77d4fef29edb5500",
+        "borrower": "Sp Holdco I",
+        "sections": 14,
+        "hits": 189
+      },
+      {
+        "doc_id": "0fabf97484ff7e28",
+        "borrower": "D Ated As Of O Ctober 31, 2025 Among Qnity Electronics",
+        "sections": 15,
+        "hits": 188
+      },
+      {
+        "doc_id": "89b19e93a2ace855",
+        "borrower": "Specialty Building Products",
+        "sections": 15,
+        "hits": 188
+      },
+      {
+        "doc_id": "0f3aec04f9dca910",
+        "borrower": "Amag Pharmaceuticals",
+        "sections": 13,
+        "hits": 188
+      },
+      {
+        "doc_id": "7bf490c04097d841",
+        "borrower": "",
+        "sections": 20,
+        "hits": 187
+      },
+      {
+        "doc_id": "65a85dc20e406954",
+        "borrower": "",
+        "sections": 18,
+        "hits": 185
+      },
+      {
+        "doc_id": "11f9602bbbaef8a3",
+        "borrower": "",
+        "sections": 14,
+        "hits": 184
+      },
+      {
+        "doc_id": "dd5449a8e0b5c493",
+        "borrower": "Urban One",
+        "sections": 17,
+        "hits": 181
+      },
+      {
+        "doc_id": "8acd4c7203442e2f",
+        "borrower": "Sylvamo",
+        "sections": 15,
+        "hits": 177
+      },
+      {
+        "doc_id": "1dbb5c73a78e2e69",
+        "borrower": "Interior Logic Group Holdings III",
+        "sections": 4,
+        "hits": 175
+      },
+      {
+        "doc_id": "ef8b29492869f76f",
+        "borrower": "Ryam Lux Sarl",
+        "sections": 8,
+        "hits": 173
+      },
+      {
+        "doc_id": "a758838654afdbe2",
+        "borrower": "Ditech",
+        "sections": 15,
+        "hits": 172
+      },
+      {
+        "doc_id": "a33827a6b097a6b9",
+        "borrower": "Energy Future Competitive",
+        "sections": 14,
+        "hits": 172
+      },
+      {
+        "doc_id": "63fd7b18106c398f",
+        "borrower": "Nord Anglia Education Finance",
+        "sections": 16,
+        "hits": 166
+      },
+      {
+        "doc_id": "5770f3bb7d77d9e2",
+        "borrower": "ICON LUXEMBOURG, S.\u00c0 R.L., INDIGO MERGER SUB, INC., ICON CLINICAL RESEARCH LIMITED, ICON GLOBAL TREASURY UNLIMITED COMPANY, ICON US HOLDINGS INC. and ICON CLINICAL INVESTMENTS",
+        "sections": 14,
+        "hits": 165
+      },
+      {
+        "doc_id": "8c4b96afc7d9b99a",
+        "borrower": "ICON LUXEMBOURG, S.\u00c0 R.L., INDIGO MERGER SUB, INC., ICON CLINICAL RESEARCH LIMITED, ICON GLOBAL TREASURY UNLIMITED COMPANY, ICON US HOLDINGS INC. and ICON CLINICAL INVESTMENTS",
+        "sections": 14,
+        "hits": 165
+      },
+      {
+        "doc_id": "5dbde82ed739b9d0",
+        "borrower": "New Fortress Energy",
+        "sections": 1,
+        "hits": 162
+      },
+      {
+        "doc_id": "d85fe963b048bb11",
+        "borrower": "Amneal Pharmaceuticals",
+        "sections": 10,
+        "hits": 160
+      },
+      {
+        "doc_id": "5d2e346b10da1269",
+        "borrower": "Batman Intermediate Holdings B",
+        "sections": 20,
+        "hits": 158
+      },
+      {
+        "doc_id": "28da346323782dba",
+        "borrower": "",
+        "sections": 17,
+        "hits": 157
+      },
+      {
+        "doc_id": "b8c95c80c73a1131",
+        "borrower": "Clover Intermediate",
+        "sections": 8,
+        "hits": 156
+      },
+      {
+        "doc_id": "64c31a6c8e6e8d85",
+        "borrower": "Wells Fargo Bank",
+        "sections": 6,
+        "hits": 155
+      },
+      {
+        "doc_id": "d970683c3670a146",
+        "borrower": "Energy & Exploration Partners",
+        "sections": 2,
+        "hits": 155
+      },
+      {
+        "doc_id": "b298dc65211e5e43",
+        "borrower": "FORGENT INTERMEDIATE IV LLC, US METALCO HOLDINGS LLC, PWRQ INTERMEDIATE LLC and STATES MANUFACTURING",
+        "sections": 22,
+        "hits": 153
+      },
+      {
+        "doc_id": "b8c0b843df7a42bf",
+        "borrower": "Briggs & Stratton",
+        "sections": 14,
+        "hits": 152
+      },
+      {
+        "doc_id": "0839e79292bdc46f",
+        "borrower": "Sucampo Pharmaceuticals",
+        "sections": 12,
+        "hits": 152
+      },
+      {
+        "doc_id": "359929cb8b636615",
+        "borrower": "EMENT among VERTIV INTERMEDIATE HOLDING II",
+        "sections": 10,
+        "hits": 152
+      },
+      {
+        "doc_id": "add46e7c8723e973",
+        "borrower": "Farfetch",
+        "sections": 12,
+        "hits": 149
+      },
+      {
+        "doc_id": "8ae241eb33d46248",
+        "borrower": "",
+        "sections": 10,
+        "hits": 149
+      },
+      {
+        "doc_id": "c1c11e8cb6da0c29",
+        "borrower": "",
+        "sections": 10,
+        "hits": 149
+      },
+      {
+        "doc_id": "5c488328b26ae299",
+        "borrower": "",
+        "sections": 15,
+        "hits": 148
+      },
+      {
+        "doc_id": "497357c95f8d28de",
+        "borrower": "Windstream Services II",
+        "sections": 18,
+        "hits": 147
+      },
+      {
+        "doc_id": "55b9040b88c944e9",
+        "borrower": "Frontline Advance",
+        "sections": 16,
+        "hits": 147
+      },
+      {
+        "doc_id": "ebceb17d3ace3663",
+        "borrower": "Dutch Borrower",
+        "sections": 21,
+        "hits": 146
+      },
+      {
+        "doc_id": "abafabc2186f149f",
+        "borrower": "Navios South American Logistics Inc. and Navios Logistics Finance",
+        "sections": 15,
+        "hits": 146
+      },
+      {
+        "doc_id": "9c782fabee6ac552",
+        "borrower": "",
+        "sections": 11,
+        "hits": 146
+      },
+      {
+        "doc_id": "ed2d358eef39396b",
+        "borrower": "COLUMBUS MCKINNON CORPORATION, COLUMBUS MCKINNON EMEA GMBH, and CERTAIN SUBSIDIARIES",
+        "sections": 15,
+        "hits": 145
+      },
+      {
+        "doc_id": "eacaff7ce123dcef",
+        "borrower": "as of June 8, 2023, as amended as of December 7, 2023 Among OPTION CARE HEALTH",
+        "sections": 13,
+        "hits": 144
+      },
+      {
+        "doc_id": "cabbb7163536a9c8",
+        "borrower": "Oatly Group AB",
+        "sections": 15,
+        "hits": 143
+      },
+      {
+        "doc_id": "d72e0056ff3ee8df",
+        "borrower": "At Home Holding III Inc., a Delaware corporation, and At Home Stores",
+        "sections": 8,
+        "hits": 143
+      },
+      {
+        "doc_id": "73cea5ca63f1e2c2",
+        "borrower": "Cargurus",
+        "sections": 16,
+        "hits": 140
+      },
+      {
+        "doc_id": "11bea569fa9336fe",
+        "borrower": "Issuer",
+        "sections": 15,
+        "hits": 140
+      },
+      {
+        "doc_id": "52b74468810422a0",
+        "borrower": "Array Technologies",
+        "sections": 15,
+        "hits": 140
+      },
+      {
+        "doc_id": "a75f5b0a79684f6a",
+        "borrower": "Live Nation Entertainment",
+        "sections": 15,
+        "hits": 139
+      }
+    ],
+    "top_sections_50": [
+      {
+        "doc_id": "c90e1d3be8aad9bd",
+        "borrower": "Seacor Marine Foreign",
+        "section_number": "2.2",
+        "hits": 188
+      },
+      {
+        "doc_id": "5dbde82ed739b9d0",
+        "borrower": "New Fortress Energy",
+        "section_number": "6.13",
+        "hits": 162
+      },
+      {
+        "doc_id": "1dbb5c73a78e2e69",
+        "borrower": "Interior Logic Group Holdings III",
+        "section_number": "13.04",
+        "hits": 154
+      },
+      {
+        "doc_id": "2506274a9c6e539b",
+        "borrower": "Trean Insurance",
+        "section_number": "2.7",
+        "hits": 136
+      },
+      {
+        "doc_id": "64c31a6c8e6e8d85",
+        "borrower": "Wells Fargo Bank",
+        "section_number": "1.76",
+        "hits": 128
+      },
+      {
+        "doc_id": "d970683c3670a146",
+        "borrower": "Energy & Exploration Partners",
+        "section_number": "6.02",
+        "hits": 128
+      },
+      {
+        "doc_id": "3161945e55309b7f",
+        "borrower": "Global Ship Lease",
+        "section_number": "8.5",
+        "hits": 126
+      },
+      {
+        "doc_id": "5ca208323895a8ad",
+        "borrower": "",
+        "section_number": "9.27",
+        "hits": 122
+      },
+      {
+        "doc_id": "3d81e6691a05a31d",
+        "borrower": "Samson Investment",
+        "section_number": "9.1",
+        "hits": 119
+      },
+      {
+        "doc_id": "b8c95c80c73a1131",
+        "borrower": "Clover Intermediate",
+        "section_number": "1.1",
+        "hits": 119
+      },
+      {
+        "doc_id": "f50902d95e5c7970",
+        "borrower": "DXP Enterprises",
+        "section_number": "15.17",
+        "hits": 115
+      },
+      {
+        "doc_id": "55414288c90f1e99",
+        "borrower": "F&C Restaurant",
+        "section_number": "8.10",
+        "hits": 113
+      },
+      {
+        "doc_id": "3cac3a0e7b4152b0",
+        "borrower": "Lbm Midco",
+        "section_number": "3.9",
+        "hits": 111
+      },
+      {
+        "doc_id": "add46e7c8723e973",
+        "borrower": "Farfetch",
+        "section_number": "1.01",
+        "hits": 107
+      },
+      {
+        "doc_id": "8acd4c7203442e2f",
+        "borrower": "Sylvamo",
+        "section_number": "1.01",
+        "hits": 106
+      },
+      {
+        "doc_id": "6072df4bae1fa527",
+        "borrower": "",
+        "section_number": "15.23",
+        "hits": 99
+      },
+      {
+        "doc_id": "6f11b74f0eb7cd58",
+        "borrower": "",
+        "section_number": "1.1",
+        "hits": 95
+      },
+      {
+        "doc_id": "b8c0b843df7a42bf",
+        "borrower": "Briggs & Stratton",
+        "section_number": "1.01",
+        "hits": 95
+      },
+      {
+        "doc_id": "2f5a51f7fde71022",
+        "borrower": "Ld Lower",
+        "section_number": "1.01",
+        "hits": 92
+      },
+      {
+        "doc_id": "0fabf97484ff7e28",
+        "borrower": "D Ated As Of O Ctober 31, 2025 Among Qnity Electronics",
+        "section_number": "1.01",
+        "hits": 91
+      },
+      {
+        "doc_id": "77d4fef29edb5500",
+        "borrower": "Sp Holdco I",
+        "section_number": "1.1",
+        "hits": 91
+      },
+      {
+        "doc_id": "6c0742741ee65a72",
+        "borrower": "Camelot Uk Holdco",
+        "section_number": "1.1",
+        "hits": 89
+      },
+      {
+        "doc_id": "a75f5b0a79684f6a",
+        "borrower": "Live Nation Entertainment",
+        "section_number": "1.01",
+        "hits": 86
+      },
+      {
+        "doc_id": "cabbb7163536a9c8",
+        "borrower": "Oatly Group AB",
+        "section_number": "1.01",
+        "hits": 86
+      },
+      {
+        "doc_id": "6416360dbcc64a48",
+        "borrower": "Team",
+        "section_number": "1.1",
+        "hits": 85
+      },
+      {
+        "doc_id": "05ecb029a20ec74b",
+        "borrower": "trols Inc., Protection Services Inc., SCI Products Inc. and Work Area Protection",
+        "section_number": "16.22",
+        "hits": 84
+      },
+      {
+        "doc_id": "f5b9b40dba242f07",
+        "borrower": "On Deck Capital",
+        "section_number": "1.1",
+        "hits": 83
+      },
+      {
+        "doc_id": "fc2e38a4b7d3cf9f",
+        "borrower": "the Borrowers",
+        "section_number": "8.8",
+        "hits": 83
+      },
+      {
+        "doc_id": "1929dfb99bb604ba",
+        "borrower": "Cpq Midco I",
+        "section_number": "9.27",
+        "hits": 82
+      },
+      {
+        "doc_id": "2917da756185b323",
+        "borrower": "Ryan Specialty",
+        "section_number": "1.1",
+        "hits": 80
+      },
+      {
+        "doc_id": "95096687a8c2a9bd",
+        "borrower": "WELLS FARGO BANK, NATIONAL ASSOCIATION, as Administrative Agent, WELLS FARGO BANK, NATIONAL ASSOCIATION as Lead Arranger, WELLS FARGO BANK, NATIONAL ASSOCIATION as Sole Book Runner",
+        "section_number": "2.10",
+        "hits": 80
+      },
+      {
+        "doc_id": "95cf1b23b4f78bd8",
+        "borrower": "WELLS FARGO BANK, NATIONAL ASSOCIATION, as Administrative Agent, WELLS FARGO BANK, NATIONAL ASSOCIATION as Lead Arranger, WELLS FARGO BANK, NATIONAL ASSOCIATION as Sole Book Runner",
+        "section_number": "2.10",
+        "hits": 80
+      },
+      {
+        "doc_id": "abafabc2186f149f",
+        "borrower": "Navios South American Logistics Inc. and Navios Logistics Finance",
+        "section_number": "1.1",
+        "hits": 79
+      },
+      {
+        "doc_id": "ee9ca5c3e29fb3c7",
+        "borrower": "Brands",
+        "section_number": "7.20",
+        "hits": 79
+      },
+      {
+        "doc_id": "d0dbad3214748376",
+        "borrower": "the Borrower",
+        "section_number": "23.1",
+        "hits": 78
+      },
+      {
+        "doc_id": "48aeef05d92a5c80",
+        "borrower": "Diamond Resorts",
+        "section_number": "5.15",
+        "hits": 77
+      },
+      {
+        "doc_id": "5fe9ea14351ef8b5",
+        "borrower": "Vacasa",
+        "section_number": "5.2",
+        "hits": 77
+      },
+      {
+        "doc_id": "11f9602bbbaef8a3",
+        "borrower": "",
+        "section_number": "1.1",
+        "hits": 76
+      },
+      {
+        "doc_id": "96e05091488ed62b",
+        "borrower": "Djo",
+        "section_number": "1.01",
+        "hits": 76
+      },
+      {
+        "doc_id": "73cea5ca63f1e2c2",
+        "borrower": "Cargurus",
+        "section_number": "1.01",
+        "hits": 75
+      },
+      {
+        "doc_id": "19efc9d87ad54ef1",
+        "borrower": "Outbrain",
+        "section_number": "1.01",
+        "hits": 74
+      },
+      {
+        "doc_id": "89b19e93a2ace855",
+        "borrower": "Specialty Building Products",
+        "section_number": "1.01",
+        "hits": 74
+      },
+      {
+        "doc_id": "9e322af81978e116",
+        "borrower": "Omaha",
+        "section_number": "1.01",
+        "hits": 73
+      },
+      {
+        "doc_id": "ac613caf054c93ff",
+        "borrower": "Imola Merger",
+        "section_number": "1.01",
+        "hits": 73
+      },
+      {
+        "doc_id": "56482b71faf63969",
+        "borrower": "Academy",
+        "section_number": "1.1",
+        "hits": 72
+      },
+      {
+        "doc_id": "96a040a000868484",
+        "borrower": "Figma",
+        "section_number": "1.1",
+        "hits": 72
+      },
+      {
+        "doc_id": "21d1c55bcb880e28",
+        "borrower": "Lynnwood Mergersub",
+        "section_number": "1.01",
+        "hits": 71
+      },
+      {
+        "doc_id": "5b7fbb033e664e90",
+        "borrower": "S Stores",
+        "section_number": "1.1",
+        "hits": 71
+      },
+      {
+        "doc_id": "d72e0056ff3ee8df",
+        "borrower": "At Home Holding III Inc., a Delaware corporation, and At Home Stores",
+        "section_number": "1.01",
+        "hits": 71
+      },
+      {
+        "doc_id": "ef8b29492869f76f",
+        "borrower": "Ryam Lux Sarl",
+        "section_number": "1.01",
+        "hits": 71
+      }
+    ]
+  },
+  "summary_delta_vs_freeze_active": {
+    "structural_child_of_nonstruct_parent": {
+      "baseline": 2798,
+      "current": 3091,
+      "delta": 293
+    },
+    "inline_high_letter_branch": {
+      "baseline": 2444,
+      "current": 3054,
+      "delta": 610
+    }
+  }
+}

@@ -1,0 +1,1076 @@
+{
+  "selected_sections": 651,
+  "persisted": {
+    "structural_child_of_nonstruct_parent_rows": 13196,
+    "inline_high_letter_branch_rows": 4143,
+    "combined_rows": 17339
+  },
+  "shadow": {
+    "structural_child_of_nonstruct_parent_rows": 9114,
+    "inline_high_letter_branch_rows": 3551,
+    "combined_rows": 12665
+  },
+  "delta": {
+    "structural_child_of_nonstruct_parent_rows": -4082,
+    "inline_high_letter_branch_rows": -592,
+    "combined_rows": -4674
+  },
+  "top_section_improvements": [
+    {
+      "doc_id": "3d81e6691a05a31d",
+      "section_number": "9.1",
+      "persist_struct": 492,
+      "shadow_struct": 309,
+      "delta_struct": -183,
+      "persist_inline": 119,
+      "shadow_inline": 94,
+      "delta_inline": -25
+    },
+    {
+      "doc_id": "c90e1d3be8aad9bd",
+      "section_number": "2.2",
+      "persist_struct": 405,
+      "shadow_struct": 253,
+      "delta_struct": -152,
+      "persist_inline": 188,
+      "shadow_inline": 138,
+      "delta_inline": -50
+    },
+    {
+      "doc_id": "a8fdccc5d9f733c0",
+      "section_number": "10.01",
+      "persist_struct": 243,
+      "shadow_struct": 56,
+      "delta_struct": -187,
+      "persist_inline": 44,
+      "shadow_inline": 30,
+      "delta_inline": -14
+    },
+    {
+      "doc_id": "38ca73595ac1b928",
+      "section_number": "7.20",
+      "persist_struct": 254,
+      "shadow_struct": 77,
+      "delta_struct": -177,
+      "persist_inline": 18,
+      "shadow_inline": 10,
+      "delta_inline": -8
+    },
+    {
+      "doc_id": "5dbde82ed739b9d0",
+      "section_number": "6.13",
+      "persist_struct": 435,
+      "shadow_struct": 297,
+      "delta_struct": -138,
+      "persist_inline": 162,
+      "shadow_inline": 152,
+      "delta_inline": -10
+    },
+    {
+      "doc_id": "5ea5b57b084b51d4",
+      "section_number": "2.23",
+      "persist_struct": 283,
+      "shadow_struct": 167,
+      "delta_struct": -116,
+      "persist_inline": 66,
+      "shadow_inline": 42,
+      "delta_inline": -24
+    },
+    {
+      "doc_id": "5ca208323895a8ad",
+      "section_number": "9.27",
+      "persist_struct": 389,
+      "shadow_struct": 281,
+      "delta_struct": -108,
+      "persist_inline": 122,
+      "shadow_inline": 115,
+      "delta_inline": -7
+    },
+    {
+      "doc_id": "0ba9644918423787",
+      "section_number": "1.01",
+      "persist_struct": 215,
+      "shadow_struct": 113,
+      "delta_struct": -102,
+      "persist_inline": 27,
+      "shadow_inline": 22,
+      "delta_inline": -5
+    },
+    {
+      "doc_id": "c1853b463d4df644",
+      "section_number": "1.01",
+      "persist_struct": 273,
+      "shadow_struct": 179,
+      "delta_struct": -94,
+      "persist_inline": 59,
+      "shadow_inline": 47,
+      "delta_inline": -12
+    },
+    {
+      "doc_id": "a2de101fce13c80e",
+      "section_number": "1.01",
+      "persist_struct": 253,
+      "shadow_struct": 153,
+      "delta_struct": -100,
+      "persist_inline": 60,
+      "shadow_inline": 57,
+      "delta_inline": -3
+    },
+    {
+      "doc_id": "3161945e55309b7f",
+      "section_number": "37.3",
+      "persist_struct": 95,
+      "shadow_struct": 15,
+      "delta_struct": -80,
+      "persist_inline": 25,
+      "shadow_inline": 4,
+      "delta_inline": -21
+    },
+    {
+      "doc_id": "713edbe3d2a8ef66",
+      "section_number": "1.01",
+      "persist_struct": 203,
+      "shadow_struct": 118,
+      "delta_struct": -85,
+      "persist_inline": 30,
+      "shadow_inline": 18,
+      "delta_inline": -12
+    },
+    {
+      "doc_id": "7bf490c04097d841",
+      "section_number": "1.1",
+      "persist_struct": 127,
+      "shadow_struct": 62,
+      "delta_struct": -65,
+      "persist_inline": 55,
+      "shadow_inline": 24,
+      "delta_inline": -31
+    },
+    {
+      "doc_id": "21d1c55bcb880e28",
+      "section_number": "1.01",
+      "persist_struct": 234,
+      "shadow_struct": 153,
+      "delta_struct": -81,
+      "persist_inline": 71,
+      "shadow_inline": 59,
+      "delta_inline": -12
+    },
+    {
+      "doc_id": "fed3fbd002e89024",
+      "section_number": "10.26",
+      "persist_struct": 160,
+      "shadow_struct": 73,
+      "delta_struct": -87,
+      "persist_inline": 15,
+      "shadow_inline": 9,
+      "delta_inline": -6
+    },
+    {
+      "doc_id": "ed5804c7a5faa9ce",
+      "section_number": "15.24",
+      "persist_struct": 261,
+      "shadow_struct": 169,
+      "delta_struct": -92,
+      "persist_inline": 28,
+      "shadow_inline": 28,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "be4477631495413f",
+      "section_number": "1.01",
+      "persist_struct": 203,
+      "shadow_struct": 126,
+      "delta_struct": -77,
+      "persist_inline": 59,
+      "shadow_inline": 44,
+      "delta_inline": -15
+    },
+    {
+      "doc_id": "64e25b54a5764f42",
+      "section_number": "1.01",
+      "persist_struct": 207,
+      "shadow_struct": 124,
+      "delta_struct": -83,
+      "persist_inline": 41,
+      "shadow_inline": 36,
+      "delta_inline": -5
+    },
+    {
+      "doc_id": "d85fe963b048bb11",
+      "section_number": "1.01",
+      "persist_struct": 201,
+      "shadow_struct": 119,
+      "delta_struct": -82,
+      "persist_inline": 51,
+      "shadow_inline": 51,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "ba2cd97ab0d363df",
+      "section_number": "1.01",
+      "persist_struct": 259,
+      "shadow_struct": 179,
+      "delta_struct": -80,
+      "persist_inline": 55,
+      "shadow_inline": 53,
+      "delta_inline": -2
+    },
+    {
+      "doc_id": "5ea5b57b084b51d4",
+      "section_number": "6.14",
+      "persist_struct": 123,
+      "shadow_struct": 67,
+      "delta_struct": -56,
+      "persist_inline": 34,
+      "shadow_inline": 22,
+      "delta_inline": -12
+    },
+    {
+      "doc_id": "5ca208323895a8ad",
+      "section_number": "1.01",
+      "persist_struct": 150,
+      "shadow_struct": 102,
+      "delta_struct": -48,
+      "persist_inline": 70,
+      "shadow_inline": 51,
+      "delta_inline": -19
+    },
+    {
+      "doc_id": "fed3fbd002e89024",
+      "section_number": "1.1",
+      "persist_struct": 158,
+      "shadow_struct": 94,
+      "delta_struct": -64,
+      "persist_inline": 7,
+      "shadow_inline": 7,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "b300cd4bda11b8da",
+      "section_number": "1.01",
+      "persist_struct": 196,
+      "shadow_struct": 140,
+      "delta_struct": -56,
+      "persist_inline": 46,
+      "shadow_inline": 42,
+      "delta_inline": -4
+    },
+    {
+      "doc_id": "e79e13fc37243584",
+      "section_number": "1.1",
+      "persist_struct": 104,
+      "shadow_struct": 48,
+      "delta_struct": -56,
+      "persist_inline": 20,
+      "shadow_inline": 16,
+      "delta_inline": -4
+    }
+  ],
+  "top_section_regressions": [
+    {
+      "doc_id": "6c0742741ee65a72",
+      "section_number": "7.3",
+      "persist_struct": 39,
+      "shadow_struct": 39,
+      "delta_struct": 0,
+      "persist_inline": 29,
+      "shadow_inline": 29,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "d85fe963b048bb11",
+      "section_number": "4.09",
+      "persist_struct": 35,
+      "shadow_struct": 35,
+      "delta_struct": 0,
+      "persist_inline": 31,
+      "shadow_inline": 31,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "89b19e93a2ace855",
+      "section_number": "6.03",
+      "persist_struct": 34,
+      "shadow_struct": 34,
+      "delta_struct": 0,
+      "persist_inline": 16,
+      "shadow_inline": 16,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "6c0742741ee65a72",
+      "section_number": "6.18",
+      "persist_struct": 24,
+      "shadow_struct": 24,
+      "delta_struct": 0,
+      "persist_inline": 20,
+      "shadow_inline": 20,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "d85fe963b048bb11",
+      "section_number": "4.08",
+      "persist_struct": 24,
+      "shadow_struct": 24,
+      "delta_struct": 0,
+      "persist_inline": 19,
+      "shadow_inline": 19,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "713edbe3d2a8ef66",
+      "section_number": "7.02",
+      "persist_struct": 32,
+      "shadow_struct": 32,
+      "delta_struct": 0,
+      "persist_inline": 10,
+      "shadow_inline": 10,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "b300cd4bda11b8da",
+      "section_number": "2.14",
+      "persist_struct": 22,
+      "shadow_struct": 22,
+      "delta_struct": 0,
+      "persist_inline": 18,
+      "shadow_inline": 18,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "1929dfb99bb604ba",
+      "section_number": "6.04",
+      "persist_struct": 17,
+      "shadow_struct": 17,
+      "delta_struct": 0,
+      "persist_inline": 16,
+      "shadow_inline": 16,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "fed3fbd002e89024",
+      "section_number": "6.4",
+      "persist_struct": 29,
+      "shadow_struct": 29,
+      "delta_struct": 0,
+      "persist_inline": 4,
+      "shadow_inline": 4,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "713edbe3d2a8ef66",
+      "section_number": "10.07",
+      "persist_struct": 21,
+      "shadow_struct": 21,
+      "delta_struct": 0,
+      "persist_inline": 9,
+      "shadow_inline": 9,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "ed5804c7a5faa9ce",
+      "section_number": "10.28",
+      "persist_struct": 19,
+      "shadow_struct": 19,
+      "delta_struct": 0,
+      "persist_inline": 11,
+      "shadow_inline": 11,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "38ca73595ac1b928",
+      "section_number": "2.14",
+      "persist_struct": 16,
+      "shadow_struct": 16,
+      "delta_struct": 0,
+      "persist_inline": 13,
+      "shadow_inline": 13,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "ed5804c7a5faa9ce",
+      "section_number": "2.4",
+      "persist_struct": 16,
+      "shadow_struct": 16,
+      "delta_struct": 0,
+      "persist_inline": 12,
+      "shadow_inline": 12,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "497357c95f8d28de",
+      "section_number": "7.08",
+      "persist_struct": 16,
+      "shadow_struct": 16,
+      "delta_struct": 0,
+      "persist_inline": 11,
+      "shadow_inline": 11,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "713edbe3d2a8ef66",
+      "section_number": "2.14",
+      "persist_struct": 18,
+      "shadow_struct": 18,
+      "delta_struct": 0,
+      "persist_inline": 9,
+      "shadow_inline": 9,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "c1853b463d4df644",
+      "section_number": "7.01",
+      "persist_struct": 16,
+      "shadow_struct": 16,
+      "delta_struct": 0,
+      "persist_inline": 10,
+      "shadow_inline": 10,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "3161945e55309b7f",
+      "section_number": "1.7",
+      "persist_struct": 14,
+      "shadow_struct": 14,
+      "delta_struct": 0,
+      "persist_inline": 11,
+      "shadow_inline": 11,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "38ca73595ac1b928",
+      "section_number": "3.01",
+      "persist_struct": 18,
+      "shadow_struct": 18,
+      "delta_struct": 0,
+      "persist_inline": 6,
+      "shadow_inline": 6,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "497357c95f8d28de",
+      "section_number": "2.05",
+      "persist_struct": 18,
+      "shadow_struct": 18,
+      "delta_struct": 0,
+      "persist_inline": 6,
+      "shadow_inline": 6,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "6c0742741ee65a72",
+      "section_number": "2.25",
+      "persist_struct": 12,
+      "shadow_struct": 12,
+      "delta_struct": 0,
+      "persist_inline": 12,
+      "shadow_inline": 12,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "713edbe3d2a8ef66",
+      "section_number": "7.08",
+      "persist_struct": 24,
+      "shadow_struct": 24,
+      "delta_struct": 0,
+      "persist_inline": 0,
+      "shadow_inline": 0,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "21d1c55bcb880e28",
+      "section_number": "10.07",
+      "persist_struct": 18,
+      "shadow_struct": 18,
+      "delta_struct": 0,
+      "persist_inline": 5,
+      "shadow_inline": 5,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "89b19e93a2ace855",
+      "section_number": "6.02",
+      "persist_struct": 19,
+      "shadow_struct": 19,
+      "delta_struct": 0,
+      "persist_inline": 4,
+      "shadow_inline": 4,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "fed3fbd002e89024",
+      "section_number": "6.1",
+      "persist_struct": 21,
+      "shadow_struct": 21,
+      "delta_struct": 0,
+      "persist_inline": 2,
+      "shadow_inline": 2,
+      "delta_inline": 0
+    },
+    {
+      "doc_id": "a33827a6b097a6b9",
+      "section_number": "1.12",
+      "persist_struct": 11,
+      "shadow_struct": 11,
+      "delta_struct": 0,
+      "persist_inline": 11,
+      "shadow_inline": 11,
+      "delta_inline": 0
+    }
+  ],
+  "top_doc_improvements": [
+    {
+      "doc_id": "c90e1d3be8aad9bd",
+      "sections": 14,
+      "persist_struct": 555,
+      "shadow_struct": 356,
+      "delta_struct": -199,
+      "persist_inline": 240,
+      "shadow_inline": 182,
+      "delta_inline": -58,
+      "delta_total": -257
+    },
+    {
+      "doc_id": "5ca208323895a8ad",
+      "sections": 13,
+      "persist_struct": 673,
+      "shadow_struct": 454,
+      "delta_struct": -219,
+      "persist_inline": 216,
+      "shadow_inline": 188,
+      "delta_inline": -28,
+      "delta_total": -247
+    },
+    {
+      "doc_id": "38ca73595ac1b928",
+      "sections": 21,
+      "persist_struct": 455,
+      "shadow_struct": 234,
+      "delta_struct": -221,
+      "persist_inline": 100,
+      "shadow_inline": 83,
+      "delta_inline": -17,
+      "delta_total": -238
+    },
+    {
+      "doc_id": "5ea5b57b084b51d4",
+      "sections": 8,
+      "persist_struct": 431,
+      "shadow_struct": 251,
+      "delta_struct": -180,
+      "persist_inline": 112,
+      "shadow_inline": 73,
+      "delta_inline": -39,
+      "delta_total": -219
+    },
+    {
+      "doc_id": "497357c95f8d28de",
+      "sections": 26,
+      "persist_struct": 585,
+      "shadow_struct": 415,
+      "delta_struct": -170,
+      "persist_inline": 147,
+      "shadow_inline": 105,
+      "delta_inline": -42,
+      "delta_total": -212
+    },
+    {
+      "doc_id": "3161945e55309b7f",
+      "sections": 20,
+      "persist_struct": 436,
+      "shadow_struct": 261,
+      "delta_struct": -175,
+      "persist_inline": 192,
+      "shadow_inline": 158,
+      "delta_inline": -34,
+      "delta_total": -209
+    },
+    {
+      "doc_id": "3d81e6691a05a31d",
+      "sections": 1,
+      "persist_struct": 492,
+      "shadow_struct": 309,
+      "delta_struct": -183,
+      "persist_inline": 119,
+      "shadow_inline": 94,
+      "delta_inline": -25,
+      "delta_total": -208
+    },
+    {
+      "doc_id": "a8fdccc5d9f733c0",
+      "sections": 18,
+      "persist_struct": 304,
+      "shadow_struct": 117,
+      "delta_struct": -187,
+      "persist_inline": 75,
+      "shadow_inline": 61,
+      "delta_inline": -14,
+      "delta_total": -201
+    },
+    {
+      "doc_id": "0ba9644918423787",
+      "sections": 28,
+      "persist_struct": 445,
+      "shadow_struct": 270,
+      "delta_struct": -175,
+      "persist_inline": 92,
+      "shadow_inline": 75,
+      "delta_inline": -17,
+      "delta_total": -192
+    },
+    {
+      "doc_id": "21d1c55bcb880e28",
+      "sections": 27,
+      "persist_struct": 510,
+      "shadow_struct": 348,
+      "delta_struct": -162,
+      "persist_inline": 138,
+      "shadow_inline": 110,
+      "delta_inline": -28,
+      "delta_total": -190
+    },
+    {
+      "doc_id": "fed3fbd002e89024",
+      "sections": 25,
+      "persist_struct": 533,
+      "shadow_struct": 352,
+      "delta_struct": -181,
+      "persist_inline": 66,
+      "shadow_inline": 60,
+      "delta_inline": -6,
+      "delta_total": -187
+    },
+    {
+      "doc_id": "7bf490c04097d841",
+      "sections": 26,
+      "persist_struct": 364,
+      "shadow_struct": 236,
+      "delta_struct": -128,
+      "persist_inline": 187,
+      "shadow_inline": 131,
+      "delta_inline": -56,
+      "delta_total": -184
+    },
+    {
+      "doc_id": "a2de101fce13c80e",
+      "sections": 33,
+      "persist_struct": 501,
+      "shadow_struct": 330,
+      "delta_struct": -171,
+      "persist_inline": 133,
+      "shadow_inline": 124,
+      "delta_inline": -9,
+      "delta_total": -180
+    },
+    {
+      "doc_id": "be4477631495413f",
+      "sections": 26,
+      "persist_struct": 467,
+      "shadow_struct": 316,
+      "delta_struct": -151,
+      "persist_inline": 112,
+      "shadow_inline": 90,
+      "delta_inline": -22,
+      "delta_total": -173
+    },
+    {
+      "doc_id": "c1853b463d4df644",
+      "sections": 26,
+      "persist_struct": 440,
+      "shadow_struct": 304,
+      "delta_struct": -136,
+      "persist_inline": 114,
+      "shadow_inline": 98,
+      "delta_inline": -16,
+      "delta_total": -152
+    },
+    {
+      "doc_id": "ed5804c7a5faa9ce",
+      "sections": 26,
+      "persist_struct": 468,
+      "shadow_struct": 322,
+      "delta_struct": -146,
+      "persist_inline": 122,
+      "shadow_inline": 117,
+      "delta_inline": -5,
+      "delta_total": -151
+    },
+    {
+      "doc_id": "ba2cd97ab0d363df",
+      "sections": 30,
+      "persist_struct": 489,
+      "shadow_struct": 344,
+      "delta_struct": -145,
+      "persist_inline": 108,
+      "shadow_inline": 103,
+      "delta_inline": -5,
+      "delta_total": -150
+    },
+    {
+      "doc_id": "713edbe3d2a8ef66",
+      "sections": 30,
+      "persist_struct": 476,
+      "shadow_struct": 343,
+      "delta_struct": -133,
+      "persist_inline": 106,
+      "shadow_inline": 90,
+      "delta_inline": -16,
+      "delta_total": -149
+    },
+    {
+      "doc_id": "5dbde82ed739b9d0",
+      "sections": 1,
+      "persist_struct": 435,
+      "shadow_struct": 297,
+      "delta_struct": -138,
+      "persist_inline": 162,
+      "shadow_inline": 152,
+      "delta_inline": -10,
+      "delta_total": -148
+    },
+    {
+      "doc_id": "64e25b54a5764f42",
+      "sections": 27,
+      "persist_struct": 437,
+      "shadow_struct": 301,
+      "delta_struct": -136,
+      "persist_inline": 84,
+      "shadow_inline": 75,
+      "delta_inline": -9,
+      "delta_total": -145
+    },
+    {
+      "doc_id": "b300cd4bda11b8da",
+      "sections": 29,
+      "persist_struct": 452,
+      "shadow_struct": 333,
+      "delta_struct": -119,
+      "persist_inline": 126,
+      "shadow_inline": 107,
+      "delta_inline": -19,
+      "delta_total": -138
+    },
+    {
+      "doc_id": "e79e13fc37243584",
+      "sections": 35,
+      "persist_struct": 318,
+      "shadow_struct": 212,
+      "delta_struct": -106,
+      "persist_inline": 104,
+      "shadow_inline": 91,
+      "delta_inline": -13,
+      "delta_total": -119
+    },
+    {
+      "doc_id": "d85fe963b048bb11",
+      "sections": 14,
+      "persist_struct": 397,
+      "shadow_struct": 292,
+      "delta_struct": -105,
+      "persist_inline": 160,
+      "shadow_inline": 152,
+      "delta_inline": -8,
+      "delta_total": -113
+    },
+    {
+      "doc_id": "89b19e93a2ace855",
+      "sections": 20,
+      "persist_struct": 373,
+      "shadow_struct": 302,
+      "delta_struct": -71,
+      "persist_inline": 188,
+      "shadow_inline": 155,
+      "delta_inline": -33,
+      "delta_total": -104
+    },
+    {
+      "doc_id": "1929dfb99bb604ba",
+      "sections": 20,
+      "persist_struct": 394,
+      "shadow_struct": 321,
+      "delta_struct": -73,
+      "persist_inline": 196,
+      "shadow_inline": 175,
+      "delta_inline": -21,
+      "delta_total": -94
+    }
+  ],
+  "top_doc_regressions": [
+    {
+      "doc_id": "add46e7c8723e973",
+      "sections": 18,
+      "persist_struct": 310,
+      "shadow_struct": 276,
+      "delta_struct": -34,
+      "persist_inline": 149,
+      "shadow_inline": 144,
+      "delta_inline": -5,
+      "delta_total": -39
+    },
+    {
+      "doc_id": "b48d2ef55e06cf7f",
+      "sections": 25,
+      "persist_struct": 306,
+      "shadow_struct": 247,
+      "delta_struct": -59,
+      "persist_inline": 95,
+      "shadow_inline": 89,
+      "delta_inline": -6,
+      "delta_total": -65
+    },
+    {
+      "doc_id": "6c0742741ee65a72",
+      "sections": 21,
+      "persist_struct": 426,
+      "shadow_struct": 372,
+      "delta_struct": -54,
+      "persist_inline": 223,
+      "shadow_inline": 210,
+      "delta_inline": -13,
+      "delta_total": -67
+    },
+    {
+      "doc_id": "11734318c85a4c2d",
+      "sections": 21,
+      "persist_struct": 319,
+      "shadow_struct": 253,
+      "delta_struct": -66,
+      "persist_inline": 105,
+      "shadow_inline": 100,
+      "delta_inline": -5,
+      "delta_total": -71
+    },
+    {
+      "doc_id": "a33827a6b097a6b9",
+      "sections": 22,
+      "persist_struct": 405,
+      "shadow_struct": 346,
+      "delta_struct": -59,
+      "persist_inline": 172,
+      "shadow_inline": 159,
+      "delta_inline": -13,
+      "delta_total": -72
+    },
+    {
+      "doc_id": "1929dfb99bb604ba",
+      "sections": 20,
+      "persist_struct": 394,
+      "shadow_struct": 321,
+      "delta_struct": -73,
+      "persist_inline": 196,
+      "shadow_inline": 175,
+      "delta_inline": -21,
+      "delta_total": -94
+    },
+    {
+      "doc_id": "89b19e93a2ace855",
+      "sections": 20,
+      "persist_struct": 373,
+      "shadow_struct": 302,
+      "delta_struct": -71,
+      "persist_inline": 188,
+      "shadow_inline": 155,
+      "delta_inline": -33,
+      "delta_total": -104
+    },
+    {
+      "doc_id": "d85fe963b048bb11",
+      "sections": 14,
+      "persist_struct": 397,
+      "shadow_struct": 292,
+      "delta_struct": -105,
+      "persist_inline": 160,
+      "shadow_inline": 152,
+      "delta_inline": -8,
+      "delta_total": -113
+    },
+    {
+      "doc_id": "e79e13fc37243584",
+      "sections": 35,
+      "persist_struct": 318,
+      "shadow_struct": 212,
+      "delta_struct": -106,
+      "persist_inline": 104,
+      "shadow_inline": 91,
+      "delta_inline": -13,
+      "delta_total": -119
+    },
+    {
+      "doc_id": "b300cd4bda11b8da",
+      "sections": 29,
+      "persist_struct": 452,
+      "shadow_struct": 333,
+      "delta_struct": -119,
+      "persist_inline": 126,
+      "shadow_inline": 107,
+      "delta_inline": -19,
+      "delta_total": -138
+    },
+    {
+      "doc_id": "64e25b54a5764f42",
+      "sections": 27,
+      "persist_struct": 437,
+      "shadow_struct": 301,
+      "delta_struct": -136,
+      "persist_inline": 84,
+      "shadow_inline": 75,
+      "delta_inline": -9,
+      "delta_total": -145
+    },
+    {
+      "doc_id": "5dbde82ed739b9d0",
+      "sections": 1,
+      "persist_struct": 435,
+      "shadow_struct": 297,
+      "delta_struct": -138,
+      "persist_inline": 162,
+      "shadow_inline": 152,
+      "delta_inline": -10,
+      "delta_total": -148
+    },
+    {
+      "doc_id": "713edbe3d2a8ef66",
+      "sections": 30,
+      "persist_struct": 476,
+      "shadow_struct": 343,
+      "delta_struct": -133,
+      "persist_inline": 106,
+      "shadow_inline": 90,
+      "delta_inline": -16,
+      "delta_total": -149
+    },
+    {
+      "doc_id": "ba2cd97ab0d363df",
+      "sections": 30,
+      "persist_struct": 489,
+      "shadow_struct": 344,
+      "delta_struct": -145,
+      "persist_inline": 108,
+      "shadow_inline": 103,
+      "delta_inline": -5,
+      "delta_total": -150
+    },
+    {
+      "doc_id": "ed5804c7a5faa9ce",
+      "sections": 26,
+      "persist_struct": 468,
+      "shadow_struct": 322,
+      "delta_struct": -146,
+      "persist_inline": 122,
+      "shadow_inline": 117,
+      "delta_inline": -5,
+      "delta_total": -151
+    },
+    {
+      "doc_id": "c1853b463d4df644",
+      "sections": 26,
+      "persist_struct": 440,
+      "shadow_struct": 304,
+      "delta_struct": -136,
+      "persist_inline": 114,
+      "shadow_inline": 98,
+      "delta_inline": -16,
+      "delta_total": -152
+    },
+    {
+      "doc_id": "be4477631495413f",
+      "sections": 26,
+      "persist_struct": 467,
+      "shadow_struct": 316,
+      "delta_struct": -151,
+      "persist_inline": 112,
+      "shadow_inline": 90,
+      "delta_inline": -22,
+      "delta_total": -173
+    },
+    {
+      "doc_id": "a2de101fce13c80e",
+      "sections": 33,
+      "persist_struct": 501,
+      "shadow_struct": 330,
+      "delta_struct": -171,
+      "persist_inline": 133,
+      "shadow_inline": 124,
+      "delta_inline": -9,
+      "delta_total": -180
+    },
+    {
+      "doc_id": "7bf490c04097d841",
+      "sections": 26,
+      "persist_struct": 364,
+      "shadow_struct": 236,
+      "delta_struct": -128,
+      "persist_inline": 187,
+      "shadow_inline": 131,
+      "delta_inline": -56,
+      "delta_total": -184
+    },
+    {
+      "doc_id": "fed3fbd002e89024",
+      "sections": 25,
+      "persist_struct": 533,
+      "shadow_struct": 352,
+      "delta_struct": -181,
+      "persist_inline": 66,
+      "shadow_inline": 60,
+      "delta_inline": -6,
+      "delta_total": -187
+    },
+    {
+      "doc_id": "21d1c55bcb880e28",
+      "sections": 27,
+      "persist_struct": 510,
+      "shadow_struct": 348,
+      "delta_struct": -162,
+      "persist_inline": 138,
+      "shadow_inline": 110,
+      "delta_inline": -28,
+      "delta_total": -190
+    },
+    {
+      "doc_id": "0ba9644918423787",
+      "sections": 28,
+      "persist_struct": 445,
+      "shadow_struct": 270,
+      "delta_struct": -175,
+      "persist_inline": 92,
+      "shadow_inline": 75,
+      "delta_inline": -17,
+      "delta_total": -192
+    },
+    {
+      "doc_id": "a8fdccc5d9f733c0",
+      "sections": 18,
+      "persist_struct": 304,
+      "shadow_struct": 117,
+      "delta_struct": -187,
+      "persist_inline": 75,
+      "shadow_inline": 61,
+      "delta_inline": -14,
+      "delta_total": -201
+    },
+    {
+      "doc_id": "3d81e6691a05a31d",
+      "sections": 1,
+      "persist_struct": 492,
+      "shadow_struct": 309,
+      "delta_struct": -183,
+      "persist_inline": 119,
+      "shadow_inline": 94,
+      "delta_inline": -25,
+      "delta_total": -208
+    },
+    {
+      "doc_id": "3161945e55309b7f",
+      "sections": 20,
+      "persist_struct": 436,
+      "shadow_struct": 261,
+      "delta_struct": -175,
+      "persist_inline": 192,
+      "shadow_inline": 158,
+      "delta_inline": -34,
+      "delta_total": -209
+    }
+  ]
+}

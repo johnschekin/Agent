@@ -26,11 +26,13 @@ from __future__ import annotations
 
 import argparse
 import contextlib
+import hashlib
 import json
 import os
 import signal
 import sys
 import time
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -56,12 +58,12 @@ def _json_dumps(obj: Any) -> str:
 
 
 def _normalized_clause_key(clause_id: Any, clause_path: Any = None) -> str:
-    clause_id_value = str(clause_id or "").strip()
-    if clause_id_value:
-        return clause_id_value
     clause_path_value = str(clause_path or "").strip()
     if clause_path_value:
         return clause_path_value
+    clause_id_value = str(clause_id or "").strip()
+    if clause_id_value:
+        return clause_id_value
     return "__section__"
 
 
@@ -75,9 +77,92 @@ def _preview_candidate_id(doc_id: Any, section_number: Any, clause_key: Any) -> 
 
 def _log(msg: str) -> None:
     """Write log message to stderr with timestamp."""
-    import datetime
-    ts = datetime.datetime.now(datetime.UTC).strftime("%H:%M:%S")
+    ts = datetime.now(UTC).strftime("%H:%M:%S")
     print(f"[worker {ts}] {msg}", file=sys.stderr)
+
+
+_PLACEHOLDER_VERSION_VALUES = {
+    "",
+    "unknown",
+    "parser-unknown",
+    "bulk_linker_v1",
+    "worker_v1",
+    "1.0",
+}
+
+
+def _required_lineage_value(field: str, value: Any) -> str:
+    normalized = str(value or "").strip()
+    if not normalized:
+        raise ValueError(f"Missing lineage field: {field}")
+    if normalized.lower() in _PLACEHOLDER_VERSION_VALUES:
+        raise ValueError(f"Placeholder lineage field disallowed: {field}={normalized}")
+    return normalized
+
+
+def _best_effort_git_sha() -> str:
+    with contextlib.suppress(Exception):
+        from agent.run_manifest import git_commit_hash
+
+        value = git_commit_hash(search_from=Path(__file__).resolve().parents[1])
+        if value:
+            return str(value).strip()
+    return ""
+
+
+def _resolve_apply_lineage(preview: dict[str, Any], params: dict[str, Any]) -> dict[str, str]:
+    preview_params: dict[str, Any] = {}
+    raw_params = preview.get("params_json")
+    if isinstance(raw_params, str) and raw_params.strip():
+        with contextlib.suppress(Exception):
+            parsed = _json_loads(raw_params)
+            if isinstance(parsed, dict):
+                preview_params = parsed
+    elif isinstance(raw_params, dict):
+        preview_params = dict(raw_params)
+
+    lineage_raw = preview_params.get("lineage")
+    lineage = lineage_raw if isinstance(lineage_raw, dict) else {}
+
+    def _pick(field: str) -> Any:
+        return (
+            params.get(field)
+            or preview.get(field)
+            or lineage.get(field)
+            or preview_params.get(field)
+        )
+
+    ruleset_seed = {
+        "preview_id": str(preview.get("preview_id") or ""),
+        "family_id": str(preview.get("family_id") or ""),
+        "rule_id": str(preview.get("rule_id") or ""),
+        "candidate_set_hash": str(preview.get("candidate_set_hash") or ""),
+    }
+    ruleset_digest = hashlib.sha256(
+        _json_dumps(ruleset_seed).encode("utf-8")
+    ).hexdigest()[:16]
+
+    git_sha = str(_pick("git_sha") or _best_effort_git_sha()).strip()
+    corpus_snapshot_id = str(
+        _pick("corpus_snapshot_id")
+        or f"preview-apply-{str(preview.get('preview_id') or '')[:16]}"
+    ).strip()
+    ruleset_version = str(
+        _pick("ruleset_version")
+        or f"preview-ruleset-{ruleset_digest}"
+    ).strip()
+
+    now_utc = datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+    return {
+        "corpus_version": _required_lineage_value("corpus_version", _pick("corpus_version")),
+        "corpus_snapshot_id": _required_lineage_value("corpus_snapshot_id", corpus_snapshot_id),
+        "parser_version": _required_lineage_value("parser_version", _pick("parser_version")),
+        "ontology_version": _required_lineage_value("ontology_version", _pick("ontology_version")),
+        "ruleset_version": _required_lineage_value("ruleset_version", ruleset_version),
+        "git_sha": _required_lineage_value("git_sha", git_sha),
+        "created_at_utc": str(_pick("created_at_utc") or now_utc),
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -346,6 +431,46 @@ class LinkWorker:
             "|".join(candidate_hashes).encode(),
         ).hexdigest()[:16]
 
+        git_sha = str(params.get("git_sha") or _best_effort_git_sha()).strip()
+        if not git_sha:
+            git_sha = f"worker-src-{hashlib.sha256(preview_id.encode('utf-8')).hexdigest()[:12]}"
+        corpus_version = str(
+            params.get("corpus_version")
+            or getattr(self._corpus, "schema_version", "")
+            or "corpus-preview"
+        ).strip()
+        parser_version = str(
+            params.get("parser_version")
+            or (f"parser-{git_sha[:12]}" if git_sha else "")
+            or "parser-preview"
+        ).strip()
+        rule_ontology_version = str(
+            rule.get("ontology_version") if isinstance(rule, dict) else ""
+        ).strip()
+        ontology_version = str(
+            params.get("ontology_version")
+            or rule_ontology_version
+            or "ontology-preview"
+        ).strip()
+        ruleset_version = str(
+            params.get("ruleset_version")
+            or f"preview-ruleset-{candidate_set_hash}"
+        ).strip()
+        corpus_snapshot_id = str(
+            params.get("corpus_snapshot_id")
+            or f"preview-snapshot-{preview_id[:12]}"
+        ).strip()
+        created_at_utc = datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+        preview_lineage = {
+            "corpus_version": _required_lineage_value("corpus_version", corpus_version),
+            "corpus_snapshot_id": _required_lineage_value("corpus_snapshot_id", corpus_snapshot_id),
+            "parser_version": _required_lineage_value("parser_version", parser_version),
+            "ontology_version": _required_lineage_value("ontology_version", ontology_version),
+            "ruleset_version": _required_lineage_value("ruleset_version", ruleset_version),
+            "git_sha": _required_lineage_value("git_sha", git_sha),
+            "created_at_utc": created_at_utc,
+        }
+
         # Tier breakdown
         by_tier: dict[str, int] = {"high": 0, "medium": 0, "low": 0}
         for c in candidates:
@@ -357,7 +482,13 @@ class LinkWorker:
             "family_id": family_id,
             "ontology_node_id": family_id,
             "rule_id": rule_id or "",
-            "query_ast": _json_dumps(heading_ast_raw),
+            "corpus_version": preview_lineage["corpus_version"],
+            "parser_version": preview_lineage["parser_version"],
+            "ontology_version": preview_lineage["ontology_version"],
+            "params_json": {
+                "query_ast": heading_ast_raw,
+                "lineage": preview_lineage,
+            },
             "candidate_count": len(candidates),
             "candidate_set_hash": candidate_set_hash,
         })
@@ -411,13 +542,12 @@ class LinkWorker:
             return {"error": "Preview not found", "code": 404}
 
         # Check expiry (1 hour)
-        import datetime
         created_at = preview.get("created_at", "")
         if created_at:
             try:
-                created = datetime.datetime.fromisoformat(created_at)
-                age = datetime.datetime.now(datetime.UTC) - created.replace(
-                    tzinfo=datetime.UTC,
+                created = datetime.fromisoformat(created_at)
+                age = datetime.now(UTC) - created.replace(
+                    tzinfo=UTC,
                 )
                 if age.total_seconds() > 3600:
                     return {"error": "Preview expired", "code": 409}
@@ -444,6 +574,15 @@ class LinkWorker:
 
         if not accepted:
             return {"links_created": 0, "message": "No accepted candidates"}
+
+        try:
+            lineage = _resolve_apply_lineage(preview, params)
+        except ValueError as exc:
+            return {
+                "error": str(exc),
+                "code": 409,
+                "preview_id": preview_id,
+            }
 
         self._store.update_job_progress(
             job_id, 50.0, f"Creating {len(accepted)} links",
@@ -544,6 +683,11 @@ class LinkWorker:
                 "rule_id": preview.get("rule_id"),
                 "source": "preview_apply",
                 "confidence": cand.get("confidence", 0.0),
+                "score_raw": cand.get("score_raw", cand.get("confidence", 0.0)),
+                "score_calibrated": cand.get("score_calibrated", cand.get("confidence", 0.0)),
+                "threshold_profile_id": cand.get("threshold_profile_id"),
+                "policy_decision": cand.get("policy_decision"),
+                "policy_reasons": cand.get("policy_reasons"),
                 "confidence_tier": cand.get("confidence_tier", "low"),
                 "status": "active",
                 "clause_id": clause_id,
@@ -551,6 +695,9 @@ class LinkWorker:
                 "clause_char_start": clause_char_start,
                 "clause_char_end": clause_char_end,
                 "clause_text": clause_text,
+                "corpus_version": lineage["corpus_version"],
+                "parser_version": lineage["parser_version"],
+                "ontology_version": lineage["ontology_version"],
             }
 
             if scope_aliases:
@@ -586,7 +733,10 @@ class LinkWorker:
                     "UPDATE family_links SET "
                     "ontology_node_id = ?, scope_id = ?, heading = ?, rule_id = ?, run_id = ?, source = ?, "
                     "clause_id = ?, clause_key = ?, clause_char_start = ?, clause_char_end = ?, clause_text = ?, "
-                    "confidence = ?, confidence_tier = ?, status = 'active', "
+                    "confidence = ?, score_raw = ?, score_calibrated = ?, threshold_profile_id = ?, "
+                    "policy_decision = ?, policy_reasons = ?, "
+                    "confidence_tier = ?, status = 'active', "
+                    "corpus_version = ?, parser_version = ?, ontology_version = ?, "
                     "unlinked_at = NULL, unlinked_reason = NULL, unlinked_note = NULL "
                     "WHERE link_id = ?",
                     [
@@ -602,7 +752,15 @@ class LinkWorker:
                         link_payload["clause_char_end"],
                         link_payload["clause_text"],
                         link_payload["confidence"],
+                        link_payload["score_raw"],
+                        link_payload["score_calibrated"],
+                        link_payload["threshold_profile_id"],
+                        link_payload["policy_decision"],
+                        json.dumps(link_payload["policy_reasons"]) if link_payload.get("policy_reasons") is not None else None,
                         link_payload["confidence_tier"],
+                        link_payload["corpus_version"],
+                        link_payload["parser_version"],
+                        link_payload["ontology_version"],
                         str(existing[0]),
                     ],
                 )
@@ -622,9 +780,14 @@ class LinkWorker:
             "run_type": "apply",
             "family_id": preview.get("family_id", ""),
             "rule_id": preview.get("rule_id"),
-            "corpus_version": "worker_v1",
+            "corpus_version": lineage["corpus_version"],
+            "corpus_snapshot_id": lineage["corpus_snapshot_id"],
             "corpus_doc_count": len(accepted),
-            "parser_version": "1.0",
+            "parser_version": lineage["parser_version"],
+            "ontology_version": lineage["ontology_version"],
+            "ruleset_version": lineage["ruleset_version"],
+            "git_sha": lineage["git_sha"],
+            "created_at_utc": lineage["created_at_utc"],
             "links_created": created,
         })
 
@@ -895,6 +1058,12 @@ class LinkWorker:
         family_id = params.get("family_id")
         resolved_scope = self._store.get_canonical_scope_id(family_id) if family_id else None
         status = params.get("status")
+        contract_format = str(params.get("contract_format") or "wave3-handoff").strip() or "wave3-handoff"
+        evidence_schema_version = str(params.get("evidence_schema_version") or "evidence_v3").strip() or "evidence_v3"
+        labeled_export_schema_version = (
+            str(params.get("labeled_export_schema_version") or "labeled_export_v2").strip()
+            or "labeled_export_v2"
+        )
 
         self._store.update_job_progress(job_id, 10.0, "Fetching links")
 
@@ -935,7 +1104,11 @@ class LinkWorker:
         self._store.update_job_progress(job_id, 100.0, "Export complete")
 
         return {
+            "schema_version": "link_export_v1",
             "format": export_format,
+            "contract_format": contract_format,
+            "evidence_schema_version": evidence_schema_version,
+            "labeled_export_schema_version": labeled_export_schema_version,
             "row_count": len(links),
             "data_length": len(export_data),
         }

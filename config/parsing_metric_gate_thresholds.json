@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "description": "Aggressive parser quality thresholds requiring substantial across-the-board improvement"
+  },
+  "totals": {
+    "active": {
+      "min_abs_reduction": 2500,
+      "min_rel_reduction": 0.2
+    },
+    "all": {
+      "min_abs_reduction": 2200,
+      "min_rel_reduction": 0.15
+    }
+  },
+  "active_categories": {
+    "default": {
+      "max_abs_increase": 0.0,
+      "max_rel_increase": 0.0,
+      "min_baseline_for_reduction": 100.0,
+      "min_abs_reduction": 25.0,
+      "min_rel_reduction": 0.1
+    },
+    "overrides": {
+      "structural_child_of_nonstruct_parent": {
+        "min_abs_reduction": 1200.0,
+        "min_rel_reduction": 0.4
+      },
+      "inline_high_letter_branch": {
+        "min_abs_reduction": 1100.0,
+        "min_rel_reduction": 0.45
+      },
+      "low_structural_ratio": {
+        "min_abs_reduction": 900.0,
+        "min_rel_reduction": 0.3
+      },
+      "low_avg_clause_confidence": {
+        "min_abs_reduction": 1400.0,
+        "min_rel_reduction": 0.65
+      },
+      "clause_ordinal_spike_after_deep": {
+        "min_abs_reduction": 650.0,
+        "min_rel_reduction": 0.5
+      },
+      "section_numbering_gap": {
+        "min_abs_reduction": 250.0,
+        "min_rel_reduction": 0.1
+      },
+      "low_definitions": {
+        "min_abs_reduction": 250.0,
+        "min_rel_reduction": 0.12
+      }
+    }
+  },
+  "all_categories": {
+    "monitor_only": {
+      "deep_nesting_outlier": {
+        "max_abs_increase": 0.0,
+        "max_rel_increase": 0.0,
+        "min_abs_reduction": 100.0,
+        "min_rel_reduction": 0.15
+      }
+    }
+  },
+  "clause_collision_guardrail": {
+    "baseline_path": "data/quality/edge_case_clause_guardrail_baseline.json",
+    "default": {
+      "max_abs_increase": 0.0,
+      "max_rel_increase": 0.0
+    },
+    "overrides": {
+      "clause_dup_id_burst.docs": {
+        "min_abs_reduction": 30.0,
+        "min_rel_reduction": 0.6
+      },
+      "clause_dup_id_burst.max_dup_ratio": {
+        "min_abs_reduction": 0.03,
+        "min_rel_reduction": 0.03
+      },
+      "clause_root_label_repeat_explosion.docs": {
+        "min_abs_reduction": 20.0,
+        "min_rel_reduction": 0.6
+      },
+      "clause_root_label_repeat_explosion.max_repeat": {
+        "min_abs_reduction": 250.0,
+        "min_rel_reduction": 0.55
+      },
+      "clause_depth_reset_after_deep.docs": {
+        "min_abs_reduction": 5.0,
+        "min_rel_reduction": 0.6
+      },
+      "clause_depth_reset_after_deep.total_resets": {
+        "min_abs_reduction": 11.0,
+        "min_rel_reduction": 0.55
+      }
+    }
+  },
+  "parent_loss_guardrail": {
+    "baseline_path": "data/quality/edge_case_clause_parent_guardrail_baseline.json",
+    "default": {
+      "max_abs_increase": 0.0,
+      "max_rel_increase": 0.0
+    },
+    "overrides": {
+      "xy_parent_loss.docs": {
+        "min_abs_reduction": 120.0,
+        "min_rel_reduction": 0.4
+      },
+      "xy_parent_loss.sections": {
+        "min_abs_reduction": 140.0,
+        "min_rel_reduction": 0.44
+      },
+      "xy_parent_loss.sections_low_root_count": {
+        "min_abs_reduction": 40.0,
+        "min_rel_reduction": 0.5
+      },
+      "xy_parent_loss.structural_rows": {
+        "min_abs_reduction": 190.0,
+        "min_rel_reduction": 0.5
+      },
+      "xy_parent_loss.continuation_like_rows": {
+        "min_abs_reduction": 46.0,
+        "min_rel_reduction": 0.25
+      },
+      "xy_parent_loss.continuation_like_ratio": {
+        "min_abs_reduction": 0.22,
+        "min_rel_reduction": 0.45
+      }
+    }
+  }
+}

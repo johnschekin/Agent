@@ -539,6 +539,7 @@ def _build_tree(
                 if candidate and candidate.level_type == "alpha" and candidate.parent_id == "":
                     active_root_alpha = candidate
                     break
+
             root_alpha_ordinals = {
                 n.ordinal
                 for n in nodes
@@ -817,10 +818,78 @@ def _compute_confidence(
             is_structural, round(confidence, 4), demotion_reason,
         ))
 
+    # Parent rehabilitation (depth-2 focus):
+    # If a root alpha parent (typically (a)/(b)/...) was demoted but has a
+    # strong immediate child run, promote the parent to structural.
+    # This targets chain integrity failures where children are high-confidence
+    # structural clauses under a demoted container parent.
+    by_id = {node.id: idx for idx, (node, *_rest) in enumerate(results)}
+    child_indices_by_parent: dict[str, list[int]] = {}
+    for idx, (node, *_rest) in enumerate(results):
+        if node.parent_id:
+            child_indices_by_parent.setdefault(node.parent_id, []).append(idx)
+
+    for parent_id, child_idxs in child_indices_by_parent.items():
+        parent_idx = by_id.get(parent_id)
+        if parent_idx is None:
+            continue
+
+        (
+            parent_node,
+            parent_anchor_ok,
+            parent_run_ok,
+            parent_gap_ok,
+            parent_is_structural,
+            parent_confidence,
+            _parent_reason,
+        ) = results[parent_idx]
+
+        if parent_is_structural:
+            continue
+        if parent_node.parent_id != "":
+            continue
+        if parent_node.level_type != "alpha":
+            continue
+        if parent_node.ordinal <= 0 or parent_node.ordinal > 8:
+            continue
+        if parent_node.is_xref:
+            continue
+
+        parent_level = len(parent_node.id.split("."))
+        strong_children = 0
+        for child_idx in child_idxs:
+            child_node, child_anchor_ok, _crun, _cgap, child_structural, child_confidence, _creason = results[child_idx]
+            if not child_structural:
+                continue
+            if child_node.is_xref:
+                continue
+            if not child_anchor_ok:
+                continue
+            if child_confidence < 0.75:
+                continue
+            if len(child_node.id.split(".")) != parent_level + 1:
+                continue
+            strong_children += 1
+
+        if strong_children < 2:
+            continue
+        if not parent_anchor_ok and strong_children < 3:
+            continue
+
+        promoted_confidence = round(max(parent_confidence, 0.55), 4)
+        results[parent_idx] = (
+            parent_node,
+            parent_anchor_ok,
+            parent_run_ok,
+            parent_gap_ok,
+            True,
+            promoted_confidence,
+            "",
+        )
+
     # Direct-parent consistency: when parent is non-structural, demote weak
     # structural children (but keep strong anchored run nodes to avoid cascade
     # over-suppression in long sections).
-    by_id = {node.id: idx for idx, (node, *_rest) in enumerate(results)}
     for idx, (node, anchor_ok, run_length_ok, gap_ok, is_structural, confidence, reason) in enumerate(results):
         if not is_structural:
             continue

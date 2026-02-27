@@ -50,6 +50,16 @@ class TestExtractDefinitions:
         if defs_no_offset and defs_with_offset:
             assert defs_with_offset[0].char_start == defs_no_offset[0].char_start + 500
 
+    def test_long_definition_not_truncated_at_2000_chars(self) -> None:
+        long_body = " ".join(["cash flow adjustment"] * 180) + ".\n\n"
+        text = (
+            f'"Long Definition Term" means {long_body}'
+            '"Short Term" means a shorter body.'
+        )
+        defs = extract_definitions(text)
+        long_def = next(d for d in defs if d.term == "Long Definition Term")
+        assert len(long_def.definition_text) > 2000
+
 
 class TestFindTerm:
     def test_find_existing_term(self) -> None:

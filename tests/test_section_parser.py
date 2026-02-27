@@ -437,12 +437,15 @@ class TestSectionCanonicalNaming:
     def test_extra_whitespace(self) -> None:
         assert section_canonical_name("  Restricted   Payments  ") == "restricted payments"
 
+    def test_punctuation_normalized(self) -> None:
+        assert section_canonical_name("Liens/Investments (General)!") == "liens investments general"
+
     def test_empty(self) -> None:
         assert section_canonical_name("") == ""
 
     def test_reference_key(self) -> None:
-        key = section_reference_key("doc123", "Indebtedness")
-        assert key == "doc123:indebtedness"
+        key = section_reference_key("doc123", "7.01")
+        assert key == "doc123:7.01"
 
 
 class TestSectionAbbreviationPatterns:
@@ -523,28 +526,28 @@ class TestContentAddressedChunkIds:
     """Tests for content-addressed chunk IDs (Imp 17)."""
 
     def test_deterministic(self) -> None:
-        h1 = compute_chunk_id("doc123", "7.02", "abc123")
-        h2 = compute_chunk_id("doc123", "7.02", "abc123")
+        h1 = compute_chunk_id("doc123", "doc123:indebtedness", "doc123:indebtedness:a", 10, 25, "abc123")
+        h2 = compute_chunk_id("doc123", "doc123:indebtedness", "doc123:indebtedness:a", 10, 25, "abc123")
         assert h1 == h2
 
     def test_different_doc_different_id(self) -> None:
-        h1 = compute_chunk_id("doc123", "7.02", "abc123")
-        h2 = compute_chunk_id("doc456", "7.02", "abc123")
+        h1 = compute_chunk_id("doc123", "doc123:indebtedness", "doc123:indebtedness:a", 10, 25, "abc123")
+        h2 = compute_chunk_id("doc456", "doc456:indebtedness", "doc456:indebtedness:a", 10, 25, "abc123")
         assert h1 != h2
 
     def test_length(self) -> None:
-        h = compute_chunk_id("doc123", "7.02", "abc123")
-        assert len(h) == 16
+        h = compute_chunk_id("doc123", "doc123:indebtedness", "doc123:indebtedness:a", 10, 25, "abc123")
+        assert len(h) == 64
 
     def test_hex_characters(self) -> None:
-        h = compute_chunk_id("doc123", "7.02", "abc123")
+        h = compute_chunk_id("doc123", "doc123:indebtedness", "doc123:indebtedness:a", 10, 25, "abc123")
         assert all(c in "0123456789abcdef" for c in h)
 
     def test_text_hash(self) -> None:
         h1 = section_text_hash("Hello world", 0, 5)
         h2 = section_text_hash("Hello world", 0, 5)
         assert h1 == h2
-        assert len(h1) == 16
+        assert len(h1) == 64
 
     def test_text_hash_different_slices(self) -> None:
         h1 = section_text_hash("Hello world", 0, 5)

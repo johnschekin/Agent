@@ -225,6 +225,8 @@ export function fetchQualityAnomalies(params: QualityAnomalyParams = {}) {
 // --- Edge Cases ---
 export interface EdgeCaseParams {
   category?: string;
+  group?: string;
+  detectorStatus?: string;
   tier?: string;
   page?: number;
   pageSize?: number;
@@ -234,6 +236,8 @@ export interface EdgeCaseParams {
 export function fetchEdgeCases(params: EdgeCaseParams = {}) {
   const sp = new URLSearchParams();
   if (params.category) sp.set("category", params.category);
+  if (params.group) sp.set("group", params.group);
+  if (params.detectorStatus) sp.set("detector_status", params.detectorStatus);
   if (params.tier) sp.set("tier", params.tier);
   if (params.page !== undefined) sp.set("page", String(params.page));
   if (params.pageSize !== undefined) sp.set("page_size", String(params.pageSize));

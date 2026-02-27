@@ -227,6 +227,29 @@ class TestGhostSectionQuotedTerm:
         assert len(outline.sections) >= 3
 
 
+class TestStandaloneNumberWithQuotedBody:
+    """Standalone section numbers followed by quoted definition bodies."""
+
+    def test_recovers_standalone_numbered_definition_section(self) -> None:
+        text = (
+            "CREDIT AGREEMENT\n\n"
+            "ARTICLE I\n"
+            "DEFINITIONS\n\n"
+            "1.01\n"
+            '"Consolidated EBITDA" means, for any period, the sum of net income and '
+            "all add-backs listed below.\n\n"
+            "1.02\n"
+            '"Indebtedness" means all obligations for borrowed money.\n\n'
+            "ARTICLE II\n"
+            "THE CREDITS\n\n"
+            "2.01 Commitments. Each Lender agrees to make loans.\n\n"
+        )
+        outline = DocOutline.from_text(text)
+        sec_nums = {s.number for s in outline.sections}
+        assert "1.01" in sec_nums
+        assert "1.02" in sec_nums
+
+
 # ── Fix E: Plausibility threshold for flat docs ──────────────────────
 
 
