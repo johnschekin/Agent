@@ -1,0 +1,856 @@
+{
+  "alpha_i_as_alpha": {
+    "file": "tests/fixtures/clause_gold/alpha_i_as_alpha.txt",
+    "nodes": [
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "a",
+        "is_structural_candidate": true,
+        "label": "(a)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "b",
+        "is_structural_candidate": true,
+        "label": "(b)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "c",
+        "is_structural_candidate": true,
+        "label": "(c)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "d",
+        "is_structural_candidate": true,
+        "label": "(d)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "e",
+        "is_structural_candidate": true,
+        "label": "(e)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "f",
+        "is_structural_candidate": true,
+        "label": "(f)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "g",
+        "is_structural_candidate": true,
+        "label": "(g)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "h",
+        "is_structural_candidate": true,
+        "label": "(h)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "i",
+        "is_structural_candidate": true,
+        "label": "(i)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "j",
+        "is_structural_candidate": true,
+        "label": "(j)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      }
+    ]
+  },
+  "depth_reset_anomaly": {
+    "file": "tests/fixtures/clause_gold/depth_reset_anomaly.txt",
+    "nodes": [
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "a",
+        "is_structural_candidate": true,
+        "label": "(a)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.75,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "singleton",
+        "depth": 2,
+        "id": "a.i",
+        "is_structural_candidate": false,
+        "label": "(i)",
+        "level_type": "roman",
+        "parent_id": "a",
+        "parse_confidence": 0.65,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "singleton",
+        "depth": 3,
+        "id": "a.i.A",
+        "is_structural_candidate": false,
+        "label": "(A)",
+        "level_type": "caps",
+        "parent_id": "a.i",
+        "parse_confidence": 0.65,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "singleton",
+        "depth": 4,
+        "id": "a.i.A.1",
+        "is_structural_candidate": false,
+        "label": "(1)",
+        "level_type": "numeric",
+        "parent_id": "a.i.A",
+        "parse_confidence": 0.65,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "depth_reset_anomaly",
+        "depth": 1,
+        "id": "m",
+        "is_structural_candidate": false,
+        "label": "(m)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.0,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "b",
+        "is_structural_candidate": true,
+        "label": "(b)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.75,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "singleton",
+        "depth": 2,
+        "id": "b.i",
+        "is_structural_candidate": false,
+        "label": "(i)",
+        "level_type": "roman",
+        "parent_id": "b",
+        "parse_confidence": 0.65,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "singleton",
+        "depth": 3,
+        "id": "b.i.A",
+        "is_structural_candidate": false,
+        "label": "(A)",
+        "level_type": "caps",
+        "parent_id": "b.i",
+        "parse_confidence": 0.65,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "singleton",
+        "depth": 4,
+        "id": "b.i.A.1",
+        "is_structural_candidate": false,
+        "label": "(1)",
+        "level_type": "numeric",
+        "parent_id": "b.i.A",
+        "parse_confidence": 0.65,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "depth_reset_anomaly",
+        "depth": 1,
+        "id": "p",
+        "is_structural_candidate": false,
+        "label": "(p)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.0,
+        "xref_suspected": false
+      }
+    ]
+  },
+  "duplicate_collision": {
+    "file": "tests/fixtures/clause_gold/duplicate_collision.txt",
+    "nodes": [
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "a",
+        "is_structural_candidate": true,
+        "label": "(a)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "duplicate_id_collision",
+        "depth": 1,
+        "id": "a_dup2",
+        "is_structural_candidate": false,
+        "label": "(a)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.0,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "duplicate_id_collision",
+        "depth": 1,
+        "id": "a_dup3",
+        "is_structural_candidate": false,
+        "label": "(a)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.0,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "b",
+        "is_structural_candidate": true,
+        "label": "(b)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      }
+    ]
+  },
+  "high_letter_continuation_nested": {
+    "file": "tests/fixtures/clause_gold/high_letter_continuation_nested.txt",
+    "nodes": [
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "a",
+        "is_structural_candidate": true,
+        "label": "(a)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "not_anchored; ordinal_gap",
+        "depth": 2,
+        "id": "a.i",
+        "is_structural_candidate": false,
+        "label": "(i)",
+        "level_type": "roman",
+        "parent_id": "a",
+        "parse_confidence": 0.45,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "not_anchored; ordinal_gap",
+        "depth": 2,
+        "id": "a.ii",
+        "is_structural_candidate": false,
+        "label": "(ii)",
+        "level_type": "roman",
+        "parent_id": "a",
+        "parse_confidence": 0.45,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 3,
+        "id": "a.ii.I",
+        "is_structural_candidate": true,
+        "label": "(I)",
+        "level_type": "caps",
+        "parent_id": "a.ii",
+        "parse_confidence": 0.6,
+        "xref_suspected": true
+      },
+      {
+        "demotion_reason": "",
+        "depth": 3,
+        "id": "a.ii.II",
+        "is_structural_candidate": true,
+        "label": "(II)",
+        "level_type": "caps",
+        "parent_id": "a.ii",
+        "parse_confidence": 0.6,
+        "xref_suspected": true
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "b",
+        "is_structural_candidate": true,
+        "label": "(b)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.8,
+        "xref_suspected": true
+      },
+      {
+        "demotion_reason": "",
+        "depth": 2,
+        "id": "a.x",
+        "is_structural_candidate": true,
+        "label": "(x)",
+        "level_type": "roman",
+        "parent_id": "a",
+        "parse_confidence": 0.75,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "singleton",
+        "depth": 2,
+        "id": "a.y",
+        "is_structural_candidate": false,
+        "label": "(y)",
+        "level_type": "alpha",
+        "parent_id": "a",
+        "parse_confidence": 0.35,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "duplicate_id_collision",
+        "depth": 1,
+        "id": "b_dup2",
+        "is_structural_candidate": false,
+        "label": "(b)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.0,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "c",
+        "is_structural_candidate": true,
+        "label": "(c)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      }
+    ]
+  },
+  "high_letter_sequential_root": {
+    "file": "tests/fixtures/clause_gold/high_letter_sequential_root.txt",
+    "nodes": [
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "a",
+        "is_structural_candidate": true,
+        "label": "(a)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "b",
+        "is_structural_candidate": true,
+        "label": "(b)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "c",
+        "is_structural_candidate": true,
+        "label": "(c)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "d",
+        "is_structural_candidate": true,
+        "label": "(d)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "e",
+        "is_structural_candidate": true,
+        "label": "(e)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "f",
+        "is_structural_candidate": true,
+        "label": "(f)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "g",
+        "is_structural_candidate": true,
+        "label": "(g)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "h",
+        "is_structural_candidate": true,
+        "label": "(h)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "i",
+        "is_structural_candidate": true,
+        "label": "(i)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "j",
+        "is_structural_candidate": true,
+        "label": "(j)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "k",
+        "is_structural_candidate": true,
+        "label": "(k)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "l",
+        "is_structural_candidate": true,
+        "label": "(l)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "m",
+        "is_structural_candidate": true,
+        "label": "(m)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "n",
+        "is_structural_candidate": true,
+        "label": "(n)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "o",
+        "is_structural_candidate": true,
+        "label": "(o)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "p",
+        "is_structural_candidate": true,
+        "label": "(p)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "q",
+        "is_structural_candidate": true,
+        "label": "(q)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "r",
+        "is_structural_candidate": true,
+        "label": "(r)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "s",
+        "is_structural_candidate": true,
+        "label": "(s)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "t",
+        "is_structural_candidate": true,
+        "label": "(t)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "u",
+        "is_structural_candidate": true,
+        "label": "(u)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "v",
+        "is_structural_candidate": true,
+        "label": "(v)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "w",
+        "is_structural_candidate": true,
+        "label": "(w)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "x",
+        "is_structural_candidate": true,
+        "label": "(x)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "y",
+        "is_structural_candidate": true,
+        "label": "(y)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      }
+    ]
+  },
+  "inline_reference_branch_guardrail": {
+    "file": "tests/fixtures/clause_gold/inline_reference_branch_guardrail.txt",
+    "nodes": [
+      {
+        "demotion_reason": "singleton",
+        "depth": 2,
+        "id": "i",
+        "is_structural_candidate": false,
+        "label": "(i)",
+        "level_type": "roman",
+        "parent_id": "",
+        "parse_confidence": 0.65,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "g",
+        "is_structural_candidate": true,
+        "label": "(g)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.5,
+        "xref_suspected": true
+      },
+      {
+        "demotion_reason": "singleton",
+        "depth": 2,
+        "id": "g.x",
+        "is_structural_candidate": false,
+        "label": "(x)",
+        "level_type": "roman",
+        "parent_id": "g",
+        "parse_confidence": 0.35,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "a",
+        "is_structural_candidate": true,
+        "label": "(a)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.5,
+        "xref_suspected": true
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "f",
+        "is_structural_candidate": true,
+        "label": "(f)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.65,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "duplicate_id_collision",
+        "depth": 1,
+        "id": "g_dup2",
+        "is_structural_candidate": false,
+        "label": "(g)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.0,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "singleton",
+        "depth": 2,
+        "id": "a.y",
+        "is_structural_candidate": false,
+        "label": "(y)",
+        "level_type": "alpha",
+        "parent_id": "a",
+        "parse_confidence": 0.35,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "non_structural_ancestor",
+        "depth": 4,
+        "id": "a.y.1",
+        "is_structural_candidate": false,
+        "label": "(1)",
+        "level_type": "numeric",
+        "parent_id": "a.y",
+        "parse_confidence": 0.65,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "non_structural_ancestor",
+        "depth": 4,
+        "id": "a.y.2",
+        "is_structural_candidate": false,
+        "label": "(2)",
+        "level_type": "numeric",
+        "parent_id": "a.y",
+        "parse_confidence": 0.65,
+        "xref_suspected": false
+      }
+    ]
+  },
+  "roman_under_alpha": {
+    "file": "tests/fixtures/clause_gold/roman_under_alpha.txt",
+    "nodes": [
+      {
+        "demotion_reason": "singleton",
+        "depth": 1,
+        "id": "a",
+        "is_structural_candidate": false,
+        "label": "(a)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.65,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 2,
+        "id": "a.i",
+        "is_structural_candidate": true,
+        "label": "(i)",
+        "level_type": "roman",
+        "parent_id": "a",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 2,
+        "id": "a.ii",
+        "is_structural_candidate": true,
+        "label": "(ii)",
+        "level_type": "roman",
+        "parent_id": "a",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      },
+      {
+        "demotion_reason": "",
+        "depth": 2,
+        "id": "a.iii",
+        "is_structural_candidate": true,
+        "label": "(iii)",
+        "level_type": "roman",
+        "parent_id": "a",
+        "parse_confidence": 0.95,
+        "xref_suspected": false
+      }
+    ]
+  },
+  "xref_section_clause_chain": {
+    "file": "tests/fixtures/clause_gold/xref_section_clause_chain.txt",
+    "nodes": [
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "a",
+        "is_structural_candidate": true,
+        "label": "(a)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.5,
+        "xref_suspected": true
+      },
+      {
+        "demotion_reason": "",
+        "depth": 1,
+        "id": "b",
+        "is_structural_candidate": true,
+        "label": "(b)",
+        "level_type": "alpha",
+        "parent_id": "",
+        "parse_confidence": 0.5,
+        "xref_suspected": true
+      }
+    ]
+  }
+}
