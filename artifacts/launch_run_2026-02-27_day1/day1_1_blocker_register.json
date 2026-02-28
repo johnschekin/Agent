@@ -1,0 +1,81 @@
+{
+  "schema_version": "day1-blocker-register-v1",
+  "generated_at": "2026-02-27T17:42:20.655634+00:00",
+  "run_id": "launch_run_2026-02-27_day1",
+  "blockers": [
+    {
+      "blocker_id": "BLK-D1-REPLAY-001",
+      "severity": "high",
+      "owner": "Parser Tech Lead",
+      "status": "closed",
+      "summary": "Replay failure observed in dirty workspace; clean-source replay passes, indicating local workspace drift contamination.",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day1/replay_gold_fixtures.json",
+      "hypotheses": [
+        "Structural-candidate heuristics in parser_v1 changed behavior relative to frozen gold expectations.",
+        "Accepted decision policy thresholds are too strict for current structural classification drift profile.",
+        "Fixture adjudication expectations for deep_nesting_chain and linking_contract may lag parser baseline assumptions."
+      ],
+      "next_actions": [
+        "Use clean-source run as canonical GL0 replay evidence for baseline attribution.",
+        "Diff dirty workspace parser files against HEAD to isolate structural classification changes.",
+        "Keep dirty-run failure slice for local change triage only (not baseline regression evidence)."
+      ],
+      "eta_utc": "2026-03-01T18:00:00Z",
+      "resolved_at": "2026-02-27T17:42:20.655634+00:00",
+      "resolution": "Canonical clean-source routing promoted replay pass artifact; dirty replay retained as diagnostic-only and removed from gate blocker set.",
+      "resolution_evidence": [
+        "artifacts/launch_run_2026-02-27_day1/canonical/replay_gold_fixtures.json",
+        "artifacts/launch_run_2026-02-27_day1/day1_canonical_selection_policy.json",
+        "artifacts/launch_run_2026-02-27_day1/day1_canonical_enforcement_report.json",
+        "artifacts/launch_run_2026-02-27_day1/day1_run_manifest.json"
+      ]
+    },
+    {
+      "blocker_id": "BLK-D1-PARENT-001",
+      "severity": "high",
+      "owner": "Parser Engineer",
+      "status": "open",
+      "summary": "Parent-loss guardrail regressions across docs/sections/rows indicate broad x/y parent-link instability.",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day1/edge_case_clause_parent_guardrail.json",
+      "hypotheses": [
+        "High-letter continuation handling is over-producing root-level x/y structural nodes.",
+        "Non-structural parent chain demotion interactions changed effective parent selection.",
+        "Current corpus snapshot quality distribution differs from baseline and is exposing latent parser weakness."
+      ],
+      "next_actions": [
+        "Use top section slice to reproduce parent-loss traces and inspect clause ancestry output.",
+        "Quantify regression by template family/document cohort to isolate concentrated failure source.",
+        "Draft remediation with measurable guardrail target and rollback-safe validation steps."
+      ],
+      "eta_utc": "2026-03-02T00:00:00Z"
+    },
+    {
+      "blocker_id": "BLK-D1-PROV-002",
+      "severity": "medium",
+      "owner": "Program Owner",
+      "status": "closed",
+      "summary": "Day 1 dirty-workspace evidence and clean-source evidence diverge; gate packets must mark clean-source canonical outputs.",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day1/day1_run_manifest.json",
+      "hypotheses": [
+        "Uncommitted parser-area changes altered structural classification behavior in replay.",
+        "Gate evidence process lacked explicit clean-source verification step before Day 1.2."
+      ],
+      "next_actions": [
+        "Require clean-source verification artifact for gate-critical runs when workspace is dirty.",
+        "Annotate gate memo with dirty-vs-clean comparison and canonical decision basis.",
+        "Automate parser fingerprint capture in future run manifests."
+      ],
+      "eta_utc": "2026-03-01T20:00:00Z",
+      "resolved_at": "2026-02-27T17:29:11.932602+00:00",
+      "resolution": "Canonical artifact routing enforced via day1_canonical_selection_policy.json; manifest primary output pointers now target canonical clean-source outputs.",
+      "resolution_evidence": [
+        "artifacts/launch_run_2026-02-27_day1/day1_run_manifest.json",
+        "artifacts/launch_run_2026-02-27_day1/day1_canonical_selection_policy.json",
+        "artifacts/launch_run_2026-02-27_day1/canonical/replay_gold_fixtures.json"
+      ]
+    }
+  ],
+  "updated_at": "2026-02-27T17:42:20.655634+00:00",
+  "register_revision": "day1.4",
+  "first_generated_at": "2026-02-27T17:07:06.150950+00:00"
+}

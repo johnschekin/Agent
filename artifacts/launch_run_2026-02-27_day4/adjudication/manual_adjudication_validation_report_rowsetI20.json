@@ -1,0 +1,18 @@
+{
+  "schema_version": "manual-adjudication-validator-report-v1",
+  "status": "pass",
+  "log_path": "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day4/adjudication/manual_adjudication_batch_train40_rowsetI20.jsonl",
+  "row_count": 20,
+  "summary": {
+    "error_count": 0,
+    "gl1_failure_count": 0
+  },
+  "class_counts": {
+    "ambiguous_alpha_roman": 0,
+    "high_letter_continuation": 0,
+    "nonstruct_parent_chain": 20,
+    "xref_vs_structural": 0
+  },
+  "errors": [],
+  "gl1_failures": []
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": "artifact-filename-migration-map-v1",
+  "generated_at": "2026-02-27T20:54:47.811478+00:00",
+  "mappings": [
+    {
+      "old_path": "artifacts/launch_run_2026-02-27_day2/adjudication/manual_adjudication_batch_train40_0001_0020.jsonl",
+      "new_path": "artifacts/launch_run_2026-02-27_day2/adjudication/manual_adjudication_batch_train40_rowsetA20.jsonl",
+      "old_sha256": "a73468a6ab08a2eb8cbf5b0069a8ae0b0b8fb725735b2a09aba019fcf0a8a14c",
+      "new_sha256": "a73468a6ab08a2eb8cbf5b0069a8ae0b0b8fb725735b2a09aba019fcf0a8a14c"
+    },
+    {
+      "old_path": "artifacts/launch_run_2026-02-27_day2/adjudication/manual_reasoning_train40_0001_0020.jsonl",
+      "new_path": "artifacts/launch_run_2026-02-27_day2/adjudication/manual_reasoning_train40_rowsetA20.jsonl",
+      "old_sha256": "e8105980515fdf43adbad93e8dafef459cb8c7f484759b34b8111430280236ec",
+      "new_sha256": "e8105980515fdf43adbad93e8dafef459cb8c7f484759b34b8111430280236ec"
+    },
+    {
+      "old_path": "artifacts/launch_run_2026-02-27_day2/adjudication/manual_adjudication_attestation_train40_0001_0020.json",
+      "new_path": "artifacts/launch_run_2026-02-27_day2/adjudication/manual_adjudication_attestation_train40_rowsetA20.json",
+      "old_sha256": "dffcef12dde7bef573828f43c8de7ab0e53476d1c4f4f30646ce56d6793ea3ab",
+      "new_sha256": "a2f9938d103d5baf74db31826b15d3ece574a0ae480827b9a70e83533d09566a"
+    },
+    {
+      "old_path": "artifacts/launch_run_2026-02-27_day2/adjudication/p0_adjudication_queue_train40_day2_updates.jsonl",
+      "new_path": "artifacts/launch_run_2026-02-27_day2/adjudication/p0_adjudication_queue_train40_rowsetA20_updates.jsonl",
+      "old_sha256": "0aae19b8515dd1c6d81eea1c3c20192a85d10a5769e904171271a90fbfafa80d",
+      "new_sha256": "0aae19b8515dd1c6d81eea1c3c20192a85d10a5769e904171271a90fbfafa80d"
+    }
+  ]
+}

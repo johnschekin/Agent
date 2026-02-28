@@ -1,0 +1,20 @@
+{
+  "schema_version": "day-gate-summary-v1",
+  "generated_at": "2026-02-27T18:48:11+00:00",
+  "first_generated_at": "2026-02-27T18:48:11+00:00",
+  "updated_at": "2026-02-27T20:55:47.726040+00:00",
+  "day_id": "day2",
+  "status": "fail",
+  "validator_passed": true,
+  "validator_exit_code": 0,
+  "red_team_status": "in_review",
+  "command_exit_codes": {
+    "validate_manual_adjudication_log": 0,
+    "validate_day_bundle": 0
+  },
+  "notes": "Paused after Round 5 remediation for operator retrospective before next adversarial round.",
+  "red_team_review_mode": "adversarial_subagent",
+  "red_team_subagent_id": "019ca0db-6251-74e1-9857-7190ec1ae533",
+  "red_team_verdict": "fail",
+  "red_team_artifact": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round5.json"
+}

@@ -1,0 +1,14 @@
+{
+  "status": "ok",
+  "schema_version": "manual-reaudit-sample-v1",
+  "input_batches": [
+    "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day3/adjudication/manual_adjudication_batch_train40_rowsetB20.jsonl",
+    "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day3/adjudication/manual_adjudication_batch_train40_rowsetC20.jsonl"
+  ],
+  "input_row_count": 40,
+  "sample_row_count": 4,
+  "sample_ratio": 0.1,
+  "min_sample_size": 4,
+  "seed": 20260227,
+  "output_path": "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day3/adjudication/manual_reaudit_sample_day3_scaffold.jsonl"
+}

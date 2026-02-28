@@ -1,0 +1,101 @@
+{
+  "baseline": "/Users/johnchtchekine/Projects/Agent/data/quality/edge_case_clause_parent_guardrail_baseline.json",
+  "checks": [
+    {
+      "baseline": 294.0,
+      "current": 432.0,
+      "limit": 294.0,
+      "max_abs_increase": 0.0,
+      "max_rel_increase": 0.0,
+      "metric": "xy_parent_loss.docs",
+      "passed": false
+    },
+    {
+      "baseline": 318.0,
+      "current": 523.0,
+      "limit": 318.0,
+      "max_abs_increase": 0.0,
+      "max_rel_increase": 0.0,
+      "metric": "xy_parent_loss.sections",
+      "passed": false
+    },
+    {
+      "baseline": 80.0,
+      "current": 17.0,
+      "limit": 80.0,
+      "max_abs_increase": 0.0,
+      "max_rel_increase": 0.0,
+      "metric": "xy_parent_loss.sections_low_root_count",
+      "passed": true
+    },
+    {
+      "baseline": 378.0,
+      "current": 703.0,
+      "limit": 378.0,
+      "max_abs_increase": 0.0,
+      "max_rel_increase": 0.0,
+      "metric": "xy_parent_loss.structural_rows",
+      "passed": false
+    },
+    {
+      "baseline": 184.0,
+      "current": 197.0,
+      "limit": 184.0,
+      "max_abs_increase": 0.0,
+      "max_rel_increase": 0.0,
+      "metric": "xy_parent_loss.continuation_like_rows",
+      "passed": false
+    },
+    {
+      "baseline": 0.48677248677248675,
+      "current": 0.2802275960170697,
+      "limit": 0.48677248677248675,
+      "max_abs_increase": 0.0,
+      "max_rel_increase": 0.0,
+      "metric": "xy_parent_loss.continuation_like_ratio",
+      "passed": true
+    }
+  ],
+  "current_metrics": {
+    "xy_parent_loss": {
+      "continuation_like_ratio": 0.2802275960170697,
+      "continuation_like_rows": 197,
+      "docs": 432,
+      "sections": 523,
+      "sections_low_root_count": 17,
+      "structural_rows": 703
+    }
+  },
+  "db": "/Users/johnchtchekine/Projects/Agent/corpus_index/corpus.duckdb",
+  "failures": [
+    {
+      "baseline": 294.0,
+      "current": 432.0,
+      "limit": 294.0,
+      "metric": "xy_parent_loss.docs",
+      "reason": "regression"
+    },
+    {
+      "baseline": 318.0,
+      "current": 523.0,
+      "limit": 318.0,
+      "metric": "xy_parent_loss.sections",
+      "reason": "regression"
+    },
+    {
+      "baseline": 378.0,
+      "current": 703.0,
+      "limit": 378.0,
+      "metric": "xy_parent_loss.structural_rows",
+      "reason": "regression"
+    },
+    {
+      "baseline": 184.0,
+      "current": 197.0,
+      "limit": 184.0,
+      "metric": "xy_parent_loss.continuation_like_rows",
+      "reason": "regression"
+    }
+  ],
+  "status": "fail"
+}

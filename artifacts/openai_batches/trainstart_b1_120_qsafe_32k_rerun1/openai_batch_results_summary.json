@@ -1,0 +1,24 @@
+{
+  "files": [
+    {
+      "file": "artifacts/openai_batches/trainstart_b1_120_qsafe_32k_rerun1/openai_batch_results_001.output.jsonl",
+      "rows": 50
+    },
+    {
+      "file": "artifacts/openai_batches/trainstart_b1_120_qsafe_32k_rerun1/openai_batch_results_002.output.jsonl",
+      "rows": 7
+    }
+  ],
+  "totals": {
+    "rows": 57,
+    "status_codes": {
+      "200": 57
+    },
+    "gold_decision_counts": {
+      "review": 9,
+      "abstain": 31,
+      "accepted": 9
+    },
+    "payload_parse_errors": 8
+  }
+}

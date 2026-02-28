@@ -1,0 +1,114 @@
+{
+  "schema_version": "layout-render-profile-v1",
+  "profile_id": "ca-html-to-pdf-chromium-v1",
+  "status": "binding",
+  "owner": "parser-program",
+  "description": "Deterministic HTML->PDF render profile for layout-sidecar confidence signals.",
+  "renderer": {
+    "engine": "chromium",
+    "channel": "stable",
+    "version_pinned": true,
+    "expected_major_version": 133,
+    "headless": true,
+    "launch_args": [
+      "--disable-dev-shm-usage",
+      "--font-render-hinting=none",
+      "--force-color-profile=srgb",
+      "--disable-features=IsolateOrigins,site-per-process"
+    ]
+  },
+  "page": {
+    "format": "Letter",
+    "orientation": "portrait",
+    "scale": 1.0,
+    "prefer_css_page_size": false,
+    "print_background": false,
+    "display_header_footer": false,
+    "margins_in": {
+      "top": 0.5,
+      "right": 0.5,
+      "bottom": 0.5,
+      "left": 0.5
+    }
+  },
+  "css_overrides": {
+    "inject": true,
+    "rules": [
+      "html, body { -webkit-text-size-adjust: 100%; }",
+      "body { line-height: 1.35; hyphens: none; orphans: 2; widows: 2; }",
+      "h1, h2, h3, h4, h5, h6 { page-break-after: avoid; }",
+      ".article-heading, .section-heading { page-break-before: auto; page-break-after: avoid; }",
+      "table { page-break-inside: avoid; }",
+      ".signature-page, .exhibit, .schedule { page-break-before: always; }"
+    ]
+  },
+  "fonts": {
+    "required_families": [
+      "Times New Roman",
+      "Arial",
+      "Courier New"
+    ],
+    "fallback_policy": "fail_if_missing",
+    "embed_subset_fonts": true
+  },
+  "bbox_extraction": {
+    "tokenizer": "whitespace+punct",
+    "normalize_unicode": "NFKC",
+    "rounding_decimals": 3,
+    "min_token_length": 1,
+    "drop_empty_tokens": true
+  },
+  "determinism": {
+    "repeats": 2,
+    "require_equal_page_count": true,
+    "hash_components": [
+      "pdf_bytes_sha256",
+      "page_text_sha256",
+      "token_bbox_sha256"
+    ],
+    "thresholds": {
+      "max_token_count_delta_abs": 0,
+      "max_page_text_levenshtein_ratio": 0.001,
+      "max_bbox_shift_px_p95": 2.0,
+      "max_bbox_shift_px_p99": 4.0,
+      "max_token_iou_drop_p95": 0.02
+    }
+  },
+  "low_confidence_routing": {
+    "enabled": true,
+    "source_signal": "heuristic_parse_confidence",
+    "section_threshold": 0.62,
+    "node_threshold": 0.58,
+    "max_sections_per_doc": 12
+  },
+  "ml_sidecar_policy": {
+    "mode": "validator_only",
+    "actions_allowed": [
+      "risk_score",
+      "abstain_recommendation",
+      "review_recommendation",
+      "parent_link_veto"
+    ],
+    "actions_forbidden": [
+      "silent_tree_overwrite",
+      "silent_parent_rewrite",
+      "auto_accept_without_heuristic_or_policy_pass"
+    ],
+    "requires_human_review_when": [
+      "model_disagrees_with_heuristic_and_margin_lt_0.15",
+      "layout_drift_check_failed",
+      "model_recommends_abstain"
+    ]
+  },
+  "artifacts": {
+    "emit": [
+      "render_run_manifest.json",
+      "render_repeat_a.pdf",
+      "render_repeat_b.pdf",
+      "bbox_tokens_repeat_a.jsonl",
+      "bbox_tokens_repeat_b.jsonl",
+      "layout_render_drift_report.json"
+    ],
+    "primary_report": "layout_render_drift_report.json"
+  }
+}

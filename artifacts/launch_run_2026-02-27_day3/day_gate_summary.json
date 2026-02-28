@@ -1,0 +1,26 @@
+{
+  "schema_version": "day-gate-summary-v1",
+  "generated_at": "2026-02-27T21:42:00+00:00",
+  "first_generated_at": "2026-02-27T21:42:00+00:00",
+  "updated_at": "2026-02-27T22:00:30+00:00",
+  "day_id": "day3",
+  "status": "fail",
+  "validator_passed": true,
+  "validator_exit_code": 0,
+  "red_team_status": "in_review",
+  "command_exit_codes": {
+    "validate_manual_adjudication_log_rowsetB20": 0,
+    "validate_manual_adjudication_log_rowsetC20": 0,
+    "build_reaudit_sample": 0,
+    "filter_training_eligible_adjudication_rows": 0,
+    "promote_canonical_adjudication_validation": 0,
+    "promote_canonical_day_validator": 0,
+    "promote_canonical_redteam": 0,
+    "validate_day_bundle": 0
+  },
+  "notes": "Round3 adversarial findings captured; remediation applied; awaiting round4 verification.",
+  "red_team_review_mode": "adversarial_subagent",
+  "red_team_subagent_id": "019ca118-ff7f-7c32-99ce-083873fe73a4",
+  "red_team_verdict": "fail",
+  "red_team_artifact": "artifacts/launch_run_2026-02-27_day3/canonical/red_team/adversarial_subagent_review_day3.json"
+}

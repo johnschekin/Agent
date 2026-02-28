@@ -1,0 +1,41 @@
+{
+  "id": "batch_69a24c67f05c81909fad6f70a107da60",
+  "object": "batch",
+  "endpoint": "/v1/chat/completions",
+  "model": "gpt-5-2025-08-07",
+  "errors": null,
+  "input_file_id": "file-4nX6LAmT3x4HZQNQMK2J9F",
+  "completion_window": "24h",
+  "status": "completed",
+  "output_file_id": "file-85CFUisD1gt6oXtkz9LHfH",
+  "error_file_id": null,
+  "created_at": 1772244071,
+  "in_progress_at": 1772244075,
+  "expires_at": 1772330471,
+  "finalizing_at": 1772244938,
+  "completed_at": 1772244941,
+  "failed_at": null,
+  "expired_at": null,
+  "cancelling_at": null,
+  "cancelled_at": null,
+  "request_counts": {
+    "total": 7,
+    "completed": 7,
+    "failed": 0
+  },
+  "usage": {
+    "input_tokens": 19275,
+    "output_tokens": 17250,
+    "total_tokens": 36525,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 15296
+    }
+  },
+  "metadata": {
+    "job": "gold-fixture-adjudication",
+    "request_file": "openai_batch_requests_002.jsonl"
+  }
+}

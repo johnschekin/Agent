@@ -1,0 +1,26 @@
+{
+  "schema_version": "gate-canonical-selection-v1",
+  "generated_at": "2026-02-27T17:29:11.931589+00:00",
+  "run_id": "launch_run_2026-02-27_day1",
+  "selection_rule": "When workspace is dirty, gate-critical outputs MUST be sourced from clean-source worktree execution at same commit SHA.",
+  "canonical_source": {
+    "type": "clean_worktree",
+    "worktree_path": "/tmp/agent_day1_clean_repro",
+    "commit_sha": "0f4a6a350551d0b22036ff723373598bd4a5a6b9"
+  },
+  "canonical_output_dir": "artifacts/launch_run_2026-02-27_day1/canonical",
+  "canonical_artifacts": {
+    "validate_report": "artifacts/launch_run_2026-02-27_day1/canonical/validate_gold_fixtures.json",
+    "replay_report": "artifacts/launch_run_2026-02-27_day1/canonical/replay_gold_fixtures.json",
+    "clause_guardrail_report": "artifacts/launch_run_2026-02-27_day1/canonical/edge_case_clause_guardrail.json",
+    "parent_guardrail_report": "artifacts/launch_run_2026-02-27_day1/canonical/edge_case_clause_parent_guardrail.json",
+    "parser_v1_tests_log": "artifacts/launch_run_2026-02-27_day1/canonical/parser_v1_tests.log"
+  },
+  "non_canonical_artifacts": {
+    "dirty_replay_report": "artifacts/launch_run_2026-02-27_day1/replay_gold_fixtures.json"
+  },
+  "enforcement": {
+    "canonical_primary_in_manifest": true,
+    "dirty_outputs_marked_diagnostic_only": true
+  }
+}

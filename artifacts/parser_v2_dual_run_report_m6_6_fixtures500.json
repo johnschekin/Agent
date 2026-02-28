@@ -1,0 +1,12 @@
+{
+  "fixtures_path": "data/fixtures/gold/v1/fixtures.jsonl",
+  "processed_sections": 500,
+  "section_status_counts": {
+    "accepted": 3,
+    "review": 468,
+    "abstain": 29
+  },
+  "avg_id_overlap_ratio": 0.116896,
+  "sidecar_records": 500,
+  "sidecar_path": "artifacts/parser_v2_dual_run_sidecar_m6_6_fixtures500.jsonl"
+}

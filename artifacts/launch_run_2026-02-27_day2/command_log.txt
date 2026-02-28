@@ -1,0 +1,8 @@
+MANUAL_ADJ_LINEAGE artifact=adjudication/manual_adjudication_batch_train40_rowsetA20.jsonl sha256=a73468a6ab08a2eb8cbf5b0069a8ae0b0b8fb725735b2a09aba019fcf0a8a14c action=manual_row_entry writer=johnchtchekine ts=2026-02-27T20:43:47.567435+00:00
+MANUAL_ADJ_LINEAGE artifact=adjudication/manual_reasoning_train40_rowsetA20.jsonl sha256=e8105980515fdf43adbad93e8dafef459cb8c7f484759b34b8111430280236ec action=manual_row_reasoning writer=johnchtchekine ts=2026-02-27T20:43:47.567435+00:00
+MANUAL_ADJ_LINEAGE artifact=adjudication/p0_adjudication_queue_train40_rowsetA20_updates.jsonl sha256=0aae19b8515dd1c6d81eea1c3c20192a85d10a5769e904171271a90fbfafa80d action=queue_status_update writer=johnchtchekine ts=2026-02-27T20:43:47.567435+00:00
+MANUAL_ADJUDICATION_ATTESTATION batch_id=train40_rowsetA20 rows=20 method=row_by_row_manual_reasoning attestor=johnchtchekine
+MANUAL_REASONING_ATTESTATION batch_id=train40_rowsetA20 rows=20 coverage=1:1 attestor=johnchtchekine
+QUEUE_LINKAGE_ATTESTATION batch_id=train40_rowsetA20 queue_update_artifact=adjudication/p0_adjudication_queue_train40_rowsetA20_updates.jsonl
+python3 scripts/validate_manual_adjudication_log.py --log artifacts/launch_run_2026-02-27_day2/adjudication/manual_adjudication_batch_train40_rowsetA20.jsonl --json --json-out artifacts/launch_run_2026-02-27_day2/adjudication/manual_adjudication_validation_report.json
+python3 scripts/validate_day_bundle.py --run-dir artifacts/launch_run_2026-02-27_day2 --day-id day2 --profile config/day_bundle_validator/day2_day5_governance_profile.json --strict --json-out artifacts/launch_run_2026-02-27_day2/day_validator_report.json

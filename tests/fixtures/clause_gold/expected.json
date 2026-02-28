@@ -750,8 +750,8 @@
         "level_type": "alpha",
         "xref_suspected": false,
         "is_structural_candidate": false,
-        "parse_confidence": 0.2975,
-        "demotion_reason": "singleton"
+        "parse_confidence": 0.0,
+        "demotion_reason": "duplicate_lineage_descendant"
       },
       {
         "id": "g_dup2.y.1",
@@ -761,8 +761,8 @@
         "level_type": "numeric",
         "xref_suspected": false,
         "is_structural_candidate": false,
-        "parse_confidence": 0.65,
-        "demotion_reason": "non_structural_ancestor"
+        "parse_confidence": 0.0,
+        "demotion_reason": "duplicate_lineage_descendant"
       },
       {
         "id": "g_dup2.y.2",
@@ -772,8 +772,8 @@
         "level_type": "numeric",
         "xref_suspected": false,
         "is_structural_candidate": false,
-        "parse_confidence": 0.65,
-        "demotion_reason": "non_structural_ancestor"
+        "parse_confidence": 0.0,
+        "demotion_reason": "duplicate_lineage_descendant"
       }
     ]
   },

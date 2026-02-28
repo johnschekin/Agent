@@ -1,0 +1,27 @@
+{
+  "schema_version": "manual-adjudication-packet-summary-v1",
+  "generated_at": "2026-02-27T22:54:56+00:00",
+  "batch_id": "train40_rowsetI20",
+  "queue_path": "artifacts/launch_run_2026-02-27_day4/adjudication/manual_adjudication_remaining_queue_day1_21_afterH20.jsonl",
+  "batch_size_requested": 20,
+  "batch_size_selected": 20,
+  "category_quotas_requested": {},
+  "adjudicated_rows_excluded": 0,
+  "unresolved_before_packet": 40,
+  "remaining_after_packet": 20,
+  "packet_category_counts": {
+    "nonstruct_parent_chain": 20
+  },
+  "packet_split_counts": {
+    "test": 11,
+    "holdout": 9
+  },
+  "unresolved_category_counts": {
+    "nonstruct_parent_chain": 21,
+    "xref_vs_structural": 19
+  },
+  "unresolved_split_counts": {
+    "test": 20,
+    "holdout": 20
+  }
+}

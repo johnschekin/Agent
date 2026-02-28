@@ -1,0 +1,7 @@
+{
+  "schema_version": "artifact-filename-migration-map-v1",
+  "generated_at": "2026-02-27T20:20:00+00:00",
+  "run_id": "launch_run_2026-02-27_day3",
+  "mappings": [],
+  "notes": "Day3 used canonical rowset filenames from first write; no filename migrations recorded."
+}

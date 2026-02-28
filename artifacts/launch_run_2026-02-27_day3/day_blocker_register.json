@@ -1,0 +1,75 @@
+{
+  "schema_version": "day-blocker-register-v1",
+  "generated_at": "2026-02-27T21:42:00+00:00",
+  "first_generated_at": "2026-02-27T21:42:00+00:00",
+  "updated_at": "2026-02-27T22:00:30+00:00",
+  "run_id": "launch_run_2026-02-27_day3",
+  "blockers": [
+    {
+      "blocker_id": "BLK-D1-PARENT-001",
+      "severity": "high",
+      "status": "open",
+      "blocking_scope": "launch",
+      "owner": "Parser Engineer",
+      "summary": "Parent-loss guardrail regressions remain open launch debt from GL0 baseline.",
+      "hypotheses": [
+        "High-letter continuation handling over-produces root-level structural nodes.",
+        "Parent-chain demotion interactions changed parent selection behavior."
+      ],
+      "next_actions": [
+        "Execute targeted parent-loss repro slice during Day3-Day4.",
+        "Propose remediation and verify against frozen GL0 baseline."
+      ],
+      "eta_utc": "2026-03-02T00:00:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day1/edge_case_clause_parent_guardrail.json"
+    },
+    {
+      "blocker_id": "BLK-D3-REDTEAM-001",
+      "severity": "high",
+      "status": "open",
+      "blocking_scope": "day_close",
+      "owner": "Data Engineer",
+      "summary": "Round3 validator-provenance finding requires final canonical validator synchronization verification.",
+      "hypotheses": [
+        "Prior round evidence remained active after remediation"
+      ],
+      "next_actions": [
+        "Re-run validator on final state and promote exact report to canonical before round4."
+      ],
+      "eta_utc": "2026-02-27T23:59:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day3/canonical/red_team/adversarial_subagent_review_day3.json"
+    },
+    {
+      "blocker_id": "BLK-D3-REDTEAM-002",
+      "severity": "high",
+      "status": "open",
+      "blocking_scope": "day_close",
+      "owner": "Data Engineer",
+      "summary": "Round3 quarantine-consistency finding requires cross-artifact consistency verification.",
+      "hypotheses": [
+        "Uncertain labels previously leaked into eligible export"
+      ],
+      "next_actions": [
+        "Verify batch/reasoning/queue quarantine consistency acceptance in round4."
+      ],
+      "eta_utc": "2026-02-27T23:59:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day3/canonical/red_team/adversarial_subagent_review_day3.json"
+    },
+    {
+      "blocker_id": "BLK-D3-REDTEAM-003",
+      "severity": "medium",
+      "status": "open",
+      "blocking_scope": "day_close",
+      "owner": "Program Owner",
+      "summary": "Round3 governance-narrative finding requires evidence-aligned status language verification.",
+      "hypotheses": [
+        "Canonical promotions were previously implied instead of command-evidenced"
+      ],
+      "next_actions": [
+        "Verify narrative/status alignment acceptance in round4."
+      ],
+      "eta_utc": "2026-02-27T23:59:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day3/canonical/red_team/adversarial_subagent_review_day3.json"
+    }
+  ]
+}

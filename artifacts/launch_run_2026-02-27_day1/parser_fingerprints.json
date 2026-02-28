@@ -1,0 +1,21 @@
+{
+  "schema_version": "parser-fingerprint-v1",
+  "files": [
+    {
+      "path": "src/agent/clause_parser.py",
+      "sha256": "a761df6d360ab41d86a7c066ff2ff4a7a1ba673b9eb2b63cafb638337bf295e3"
+    },
+    {
+      "path": "src/agent/doc_parser.py",
+      "sha256": "79ef30369fbe1793d344188407e8441aa62f7abd5a5ce1d8040446ccc031592a"
+    },
+    {
+      "path": "src/agent/document_processor.py",
+      "sha256": "24b6e10fc5e746fc330e35b06164e93657a925f2ede936ee0a354de8f7a8c636"
+    },
+    {
+      "path": "src/agent/section_parser.py",
+      "sha256": "4d8038a01e04dbc2ea66e03719e5431e22bed132d69e59cf0f408f96cf2c66e9"
+    }
+  ]
+}

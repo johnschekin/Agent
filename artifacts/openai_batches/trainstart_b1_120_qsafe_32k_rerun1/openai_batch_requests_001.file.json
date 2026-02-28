@@ -1,0 +1,11 @@
+{
+  "object": "file",
+  "id": "file-GFdwtHWt8BGW31PMY9dojq",
+  "purpose": "batch",
+  "filename": "openai_batch_requests_001.jsonl",
+  "bytes": 729730,
+  "created_at": 1772244069,
+  "expires_at": 1774836069,
+  "status": "processed",
+  "status_details": null
+}

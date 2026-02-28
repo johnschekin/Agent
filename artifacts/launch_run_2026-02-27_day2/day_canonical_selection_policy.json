@@ -1,0 +1,16 @@
+{
+  "schema_version": "day-canonical-selection-policy-v1",
+  "day_id": "day2",
+  "generated_at": "2026-02-27T20:55:47.726040+00:00",
+  "workspace_dirty": true,
+  "policy": {
+    "primary_outputs_must_route_to_canonical": true,
+    "dirty_outputs_are_diagnostic_only": true,
+    "primary_output_keys": [
+      "day_validator_report_primary",
+      "adjudication_validation_report_primary",
+      "red_team_adversarial_review_primary"
+    ],
+    "note": "Day2 governance canonical primaries are day validator, adjudication validator, and red-team review artifacts."
+  }
+}

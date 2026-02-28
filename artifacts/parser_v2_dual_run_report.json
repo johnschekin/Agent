@@ -1,0 +1,12 @@
+{
+  "fixtures_path": "data/fixtures/gold/v1/gates/replay_smoke_v1.jsonl",
+  "processed_sections": 52,
+  "section_status_counts": {
+    "accepted": 2,
+    "review": 11,
+    "abstain": 39
+  },
+  "avg_id_overlap_ratio": 0.359408,
+  "sidecar_records": 52,
+  "sidecar_path": "/Users/johnchtchekine/Projects/Agent/artifacts/parser_v2_dual_run_sidecar.jsonl"
+}

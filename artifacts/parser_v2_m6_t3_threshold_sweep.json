@@ -1,0 +1,1801 @@
+{
+  "profiles": {
+    "default": {
+      "rows": 2600,
+      "status_counts": {
+        "abstain": 2481,
+        "review": 112,
+        "accepted": 7
+      },
+      "abstain_rate": 0.954231,
+      "review_rate": 0.043077,
+      "accepted_rate": 0.002692,
+      "avg_critical_abstain_ratio": 0.60422,
+      "avg_margin_abs": 0.123928,
+      "top_categories": [
+        {
+          "category": "ambiguous_alpha_roman",
+          "count": 810,
+          "abstain": 790,
+          "review": 20,
+          "accepted": 0,
+          "abstain_rate": 0.975309
+        },
+        {
+          "category": "high_letter_continuation",
+          "count": 710,
+          "abstain": 706,
+          "review": 4,
+          "accepted": 0,
+          "abstain_rate": 0.994366
+        },
+        {
+          "category": "nonstruct_parent_chain",
+          "count": 190,
+          "abstain": 176,
+          "review": 14,
+          "accepted": 0,
+          "abstain_rate": 0.926316
+        },
+        {
+          "category": "xref_vs_structural",
+          "count": 180,
+          "abstain": 138,
+          "review": 37,
+          "accepted": 5,
+          "abstain_rate": 0.766667
+        },
+        {
+          "category": "true_root_high_letter",
+          "count": 130,
+          "abstain": 123,
+          "review": 7,
+          "accepted": 0,
+          "abstain_rate": 0.946154
+        },
+        {
+          "category": "deep_nesting_chain",
+          "count": 115,
+          "abstain": 103,
+          "review": 12,
+          "accepted": 0,
+          "abstain_rate": 0.895652
+        },
+        {
+          "category": "defined_term_boundary",
+          "count": 110,
+          "abstain": 106,
+          "review": 4,
+          "accepted": 0,
+          "abstain_rate": 0.963636
+        },
+        {
+          "category": "duplicate_collision",
+          "count": 105,
+          "abstain": 105,
+          "review": 0,
+          "accepted": 0,
+          "abstain_rate": 1.0
+        },
+        {
+          "category": "unknown",
+          "count": 100,
+          "abstain": 96,
+          "review": 4,
+          "accepted": 0,
+          "abstain_rate": 0.96
+        },
+        {
+          "category": "formatting_noise",
+          "count": 85,
+          "abstain": 79,
+          "review": 6,
+          "accepted": 0,
+          "abstain_rate": 0.929412
+        },
+        {
+          "category": "linking_contract",
+          "count": 65,
+          "abstain": 59,
+          "review": 4,
+          "accepted": 2,
+          "abstain_rate": 0.907692
+        }
+      ],
+      "params": {
+        "abstain_margin_threshold": 0.08,
+        "review_margin_threshold": 0.2,
+        "section_abstain_ratio_threshold": 0.4
+      }
+    },
+    "calib_m1": {
+      "rows": 2600,
+      "status_counts": {
+        "review": 2274,
+        "abstain": 319,
+        "accepted": 7
+      },
+      "abstain_rate": 0.122692,
+      "review_rate": 0.874615,
+      "accepted_rate": 0.002692,
+      "avg_critical_abstain_ratio": 0.428891,
+      "avg_margin_abs": 0.123928,
+      "top_categories": [
+        {
+          "category": "ambiguous_alpha_roman",
+          "count": 810,
+          "abstain": 67,
+          "review": 743,
+          "accepted": 0,
+          "abstain_rate": 0.082716
+        },
+        {
+          "category": "high_letter_continuation",
+          "count": 710,
+          "abstain": 103,
+          "review": 607,
+          "accepted": 0,
+          "abstain_rate": 0.14507
+        },
+        {
+          "category": "nonstruct_parent_chain",
+          "count": 190,
+          "abstain": 19,
+          "review": 171,
+          "accepted": 0,
+          "abstain_rate": 0.1
+        },
+        {
+          "category": "xref_vs_structural",
+          "count": 180,
+          "abstain": 26,
+          "review": 149,
+          "accepted": 5,
+          "abstain_rate": 0.144444
+        },
+        {
+          "category": "true_root_high_letter",
+          "count": 130,
+          "abstain": 3,
+          "review": 127,
+          "accepted": 0,
+          "abstain_rate": 0.023077
+        },
+        {
+          "category": "deep_nesting_chain",
+          "count": 115,
+          "abstain": 7,
+          "review": 108,
+          "accepted": 0,
+          "abstain_rate": 0.06087
+        },
+        {
+          "category": "defined_term_boundary",
+          "count": 110,
+          "abstain": 6,
+          "review": 104,
+          "accepted": 0,
+          "abstain_rate": 0.054545
+        },
+        {
+          "category": "duplicate_collision",
+          "count": 105,
+          "abstain": 36,
+          "review": 69,
+          "accepted": 0,
+          "abstain_rate": 0.342857
+        },
+        {
+          "category": "unknown",
+          "count": 100,
+          "abstain": 27,
+          "review": 73,
+          "accepted": 0,
+          "abstain_rate": 0.27
+        },
+        {
+          "category": "formatting_noise",
+          "count": 85,
+          "abstain": 6,
+          "review": 79,
+          "accepted": 0,
+          "abstain_rate": 0.070588
+        },
+        {
+          "category": "linking_contract",
+          "count": 65,
+          "abstain": 19,
+          "review": 44,
+          "accepted": 2,
+          "abstain_rate": 0.292308
+        }
+      ],
+      "params": {
+        "abstain_margin_threshold": 0.06,
+        "review_margin_threshold": 0.16,
+        "section_abstain_ratio_threshold": 0.55
+      }
+    },
+    "calib_m2": {
+      "rows": 2600,
+      "status_counts": {
+        "review": 2526,
+        "abstain": 67,
+        "accepted": 7
+      },
+      "abstain_rate": 0.025769,
+      "review_rate": 0.971538,
+      "accepted_rate": 0.002692,
+      "avg_critical_abstain_ratio": 0.428891,
+      "avg_margin_abs": 0.123928,
+      "top_categories": [
+        {
+          "category": "ambiguous_alpha_roman",
+          "count": 810,
+          "abstain": 1,
+          "review": 809,
+          "accepted": 0,
+          "abstain_rate": 0.001235
+        },
+        {
+          "category": "high_letter_continuation",
+          "count": 710,
+          "abstain": 27,
+          "review": 683,
+          "accepted": 0,
+          "abstain_rate": 0.038028
+        },
+        {
+          "category": "nonstruct_parent_chain",
+          "count": 190,
+          "abstain": 2,
+          "review": 188,
+          "accepted": 0,
+          "abstain_rate": 0.010526
+        },
+        {
+          "category": "xref_vs_structural",
+          "count": 180,
+          "abstain": 13,
+          "review": 162,
+          "accepted": 5,
+          "abstain_rate": 0.072222
+        },
+        {
+          "category": "true_root_high_letter",
+          "count": 130,
+          "abstain": 0,
+          "review": 130,
+          "accepted": 0,
+          "abstain_rate": 0.0
+        },
+        {
+          "category": "deep_nesting_chain",
+          "count": 115,
+          "abstain": 0,
+          "review": 115,
+          "accepted": 0,
+          "abstain_rate": 0.0
+        },
+        {
+          "category": "defined_term_boundary",
+          "count": 110,
+          "abstain": 4,
+          "review": 106,
+          "accepted": 0,
+          "abstain_rate": 0.036364
+        },
+        {
+          "category": "duplicate_collision",
+          "count": 105,
+          "abstain": 0,
+          "review": 105,
+          "accepted": 0,
+          "abstain_rate": 0.0
+        },
+        {
+          "category": "unknown",
+          "count": 100,
+          "abstain": 11,
+          "review": 89,
+          "accepted": 0,
+          "abstain_rate": 0.11
+        },
+        {
+          "category": "formatting_noise",
+          "count": 85,
+          "abstain": 0,
+          "review": 85,
+          "accepted": 0,
+          "abstain_rate": 0.0
+        },
+        {
+          "category": "linking_contract",
+          "count": 65,
+          "abstain": 9,
+          "review": 54,
+          "accepted": 2,
+          "abstain_rate": 0.138462
+        }
+      ],
+      "params": {
+        "abstain_margin_threshold": 0.05,
+        "review_margin_threshold": 0.14,
+        "section_abstain_ratio_threshold": 0.65
+      }
+    },
+    "calib_aggr": {
+      "rows": 2600,
+      "status_counts": {
+        "review": 2573,
+        "abstain": 20,
+        "accepted": 7
+      },
+      "abstain_rate": 0.007692,
+      "review_rate": 0.989615,
+      "accepted_rate": 0.002692,
+      "avg_critical_abstain_ratio": 0.428891,
+      "avg_margin_abs": 0.123928,
+      "top_categories": [
+        {
+          "category": "ambiguous_alpha_roman",
+          "count": 810,
+          "abstain": 0,
+          "review": 810,
+          "accepted": 0,
+          "abstain_rate": 0.0
+        },
+        {
+          "category": "high_letter_continuation",
+          "count": 710,
+          "abstain": 3,
+          "review": 707,
+          "accepted": 0,
+          "abstain_rate": 0.004225
+        },
+        {
+          "category": "nonstruct_parent_chain",
+          "count": 190,
+          "abstain": 0,
+          "review": 190,
+          "accepted": 0,
+          "abstain_rate": 0.0
+        },
+        {
+          "category": "xref_vs_structural",
+          "count": 180,
+          "abstain": 5,
+          "review": 170,
+          "accepted": 5,
+          "abstain_rate": 0.027778
+        },
+        {
+          "category": "true_root_high_letter",
+          "count": 130,
+          "abstain": 0,
+          "review": 130,
+          "accepted": 0,
+          "abstain_rate": 0.0
+        },
+        {
+          "category": "deep_nesting_chain",
+          "count": 115,
+          "abstain": 0,
+          "review": 115,
+          "accepted": 0,
+          "abstain_rate": 0.0
+        },
+        {
+          "category": "defined_term_boundary",
+          "count": 110,
+          "abstain": 2,
+          "review": 108,
+          "accepted": 0,
+          "abstain_rate": 0.018182
+        },
+        {
+          "category": "duplicate_collision",
+          "count": 105,
+          "abstain": 0,
+          "review": 105,
+          "accepted": 0,
+          "abstain_rate": 0.0
+        },
+        {
+          "category": "unknown",
+          "count": 100,
+          "abstain": 5,
+          "review": 95,
+          "accepted": 0,
+          "abstain_rate": 0.05
+        },
+        {
+          "category": "formatting_noise",
+          "count": 85,
+          "abstain": 0,
+          "review": 85,
+          "accepted": 0,
+          "abstain_rate": 0.0
+        },
+        {
+          "category": "linking_contract",
+          "count": 65,
+          "abstain": 5,
+          "review": 58,
+          "accepted": 2,
+          "abstain_rate": 0.076923
+        }
+      ],
+      "params": {
+        "abstain_margin_threshold": 0.04,
+        "review_margin_threshold": 0.12,
+        "section_abstain_ratio_threshold": 0.75
+      }
+    },
+    "calib_aggr2": {
+      "rows": 2600,
+      "status_counts": {
+        "review": 2590,
+        "accepted": 7,
+        "abstain": 3
+      },
+      "abstain_rate": 0.001154,
+      "review_rate": 0.996154,
+      "accepted_rate": 0.002692,
+      "avg_critical_abstain_ratio": 0.428891,
+      "avg_margin_abs": 0.123928,
+      "top_categories": [
+        {
+          "category": "ambiguous_alpha_roman",
+          "count": 810,
+          "abstain": 0,
+          "review": 810,
+          "accepted": 0,
+          "abstain_rate": 0.0
+        },
+        {
+          "category": "high_letter_continuation",
+          "count": 710,
+          "abstain": 0,
+          "review": 710,
+          "accepted": 0,
+          "abstain_rate": 0.0
+        },
+        {
+          "category": "nonstruct_parent_chain",
+          "count": 190,
+          "abstain": 0,
+          "review": 190,
+          "accepted": 0,
+          "abstain_rate": 0.0
+        },
+        {
+          "category": "xref_vs_structural",
+          "count": 180,
+          "abstain": 0,
+          "review": 175,
+          "accepted": 5,
+          "abstain_rate": 0.0
+        },
+        {
+          "category": "true_root_high_letter",
+          "count": 130,
+          "abstain": 0,
+          "review": 130,
+          "accepted": 0,
+          "abstain_rate": 0.0
+        },
+        {
+          "category": "deep_nesting_chain",
+          "count": 115,
+          "abstain": 0,
+          "review": 115,
+          "accepted": 0,
+          "abstain_rate": 0.0
+        },
+        {
+          "category": "defined_term_boundary",
+          "count": 110,
+          "abstain": 0,
+          "review": 110,
+          "accepted": 0,
+          "abstain_rate": 0.0
+        },
+        {
+          "category": "duplicate_collision",
+          "count": 105,
+          "abstain": 0,
+          "review": 105,
+          "accepted": 0,
+          "abstain_rate": 0.0
+        },
+        {
+          "category": "unknown",
+          "count": 100,
+          "abstain": 0,
+          "review": 100,
+          "accepted": 0,
+          "abstain_rate": 0.0
+        },
+        {
+          "category": "formatting_noise",
+          "count": 85,
+          "abstain": 0,
+          "review": 85,
+          "accepted": 0,
+          "abstain_rate": 0.0
+        },
+        {
+          "category": "linking_contract",
+          "count": 65,
+          "abstain": 3,
+          "review": 60,
+          "accepted": 2,
+          "abstain_rate": 0.046154
+        }
+      ],
+      "params": {
+        "abstain_margin_threshold": 0.03,
+        "review_margin_threshold": 0.1,
+        "section_abstain_ratio_threshold": 0.82
+      }
+    }
+  },
+  "slices": {
+    "fixtures500": {
+      "rows": 500,
+      "profiles": {
+        "default": {
+          "status_counts": {
+            "abstain": 464,
+            "review": 34,
+            "accepted": 2
+          },
+          "abstain_rate": 0.928,
+          "review_rate": 0.068,
+          "accepted_rate": 0.004,
+          "avg_critical_abstain_ratio": 0.59034,
+          "avg_margin_abs": 0.126982
+        },
+        "calib_m1": {
+          "status_counts": {
+            "review": 425,
+            "abstain": 73,
+            "accepted": 2
+          },
+          "abstain_rate": 0.146,
+          "review_rate": 0.85,
+          "accepted_rate": 0.004,
+          "avg_critical_abstain_ratio": 0.421302,
+          "avg_margin_abs": 0.126982
+        },
+        "calib_m2": {
+          "status_counts": {
+            "review": 479,
+            "abstain": 19,
+            "accepted": 2
+          },
+          "abstain_rate": 0.038,
+          "review_rate": 0.958,
+          "accepted_rate": 0.004,
+          "avg_critical_abstain_ratio": 0.421302,
+          "avg_margin_abs": 0.126982
+        },
+        "calib_aggr": {
+          "status_counts": {
+            "review": 492,
+            "abstain": 6,
+            "accepted": 2
+          },
+          "abstain_rate": 0.012,
+          "review_rate": 0.984,
+          "accepted_rate": 0.004,
+          "avg_critical_abstain_ratio": 0.421302,
+          "avg_margin_abs": 0.126982
+        },
+        "calib_aggr2": {
+          "status_counts": {
+            "review": 497,
+            "accepted": 2,
+            "abstain": 1
+          },
+          "abstain_rate": 0.002,
+          "review_rate": 0.994,
+          "accepted_rate": 0.004,
+          "avg_critical_abstain_ratio": 0.421302,
+          "avg_margin_abs": 0.126982
+        }
+      },
+      "by_profile_category": {
+        "default": [
+          {
+            "category": "ambiguous_alpha_roman",
+            "count": 70,
+            "abstain": 66,
+            "review": 4,
+            "accepted": 0,
+            "abstain_rate": 0.942857
+          },
+          {
+            "category": "high_letter_continuation",
+            "count": 70,
+            "abstain": 69,
+            "review": 1,
+            "accepted": 0,
+            "abstain_rate": 0.985714
+          },
+          {
+            "category": "deep_nesting_chain",
+            "count": 50,
+            "abstain": 45,
+            "review": 5,
+            "accepted": 0,
+            "abstain_rate": 0.9
+          },
+          {
+            "category": "defined_term_boundary",
+            "count": 50,
+            "abstain": 48,
+            "review": 2,
+            "accepted": 0,
+            "abstain_rate": 0.96
+          },
+          {
+            "category": "duplicate_collision",
+            "count": 50,
+            "abstain": 50,
+            "review": 0,
+            "accepted": 0,
+            "abstain_rate": 1.0
+          },
+          {
+            "category": "nonstruct_parent_chain",
+            "count": 50,
+            "abstain": 47,
+            "review": 3,
+            "accepted": 0,
+            "abstain_rate": 0.94
+          },
+          {
+            "category": "xref_vs_structural",
+            "count": 50,
+            "abstain": 38,
+            "review": 11,
+            "accepted": 1,
+            "abstain_rate": 0.76
+          },
+          {
+            "category": "formatting_noise",
+            "count": 40,
+            "abstain": 37,
+            "review": 3,
+            "accepted": 0,
+            "abstain_rate": 0.925
+          },
+          {
+            "category": "true_root_high_letter",
+            "count": 40,
+            "abstain": 37,
+            "review": 3,
+            "accepted": 0,
+            "abstain_rate": 0.925
+          },
+          {
+            "category": "linking_contract",
+            "count": 30,
+            "abstain": 27,
+            "review": 2,
+            "accepted": 1,
+            "abstain_rate": 0.9
+          }
+        ],
+        "calib_m1": [
+          {
+            "category": "ambiguous_alpha_roman",
+            "count": 70,
+            "abstain": 4,
+            "review": 66,
+            "accepted": 0,
+            "abstain_rate": 0.057143
+          },
+          {
+            "category": "high_letter_continuation",
+            "count": 70,
+            "abstain": 20,
+            "review": 50,
+            "accepted": 0,
+            "abstain_rate": 0.285714
+          },
+          {
+            "category": "deep_nesting_chain",
+            "count": 50,
+            "abstain": 3,
+            "review": 47,
+            "accepted": 0,
+            "abstain_rate": 0.06
+          },
+          {
+            "category": "defined_term_boundary",
+            "count": 50,
+            "abstain": 3,
+            "review": 47,
+            "accepted": 0,
+            "abstain_rate": 0.06
+          },
+          {
+            "category": "duplicate_collision",
+            "count": 50,
+            "abstain": 18,
+            "review": 32,
+            "accepted": 0,
+            "abstain_rate": 0.36
+          },
+          {
+            "category": "nonstruct_parent_chain",
+            "count": 50,
+            "abstain": 5,
+            "review": 45,
+            "accepted": 0,
+            "abstain_rate": 0.1
+          },
+          {
+            "category": "xref_vs_structural",
+            "count": 50,
+            "abstain": 7,
+            "review": 42,
+            "accepted": 1,
+            "abstain_rate": 0.14
+          },
+          {
+            "category": "formatting_noise",
+            "count": 40,
+            "abstain": 3,
+            "review": 37,
+            "accepted": 0,
+            "abstain_rate": 0.075
+          },
+          {
+            "category": "true_root_high_letter",
+            "count": 40,
+            "abstain": 1,
+            "review": 39,
+            "accepted": 0,
+            "abstain_rate": 0.025
+          },
+          {
+            "category": "linking_contract",
+            "count": 30,
+            "abstain": 9,
+            "review": 20,
+            "accepted": 1,
+            "abstain_rate": 0.3
+          }
+        ],
+        "calib_m2": [
+          {
+            "category": "ambiguous_alpha_roman",
+            "count": 70,
+            "abstain": 0,
+            "review": 70,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "high_letter_continuation",
+            "count": 70,
+            "abstain": 8,
+            "review": 62,
+            "accepted": 0,
+            "abstain_rate": 0.114286
+          },
+          {
+            "category": "deep_nesting_chain",
+            "count": 50,
+            "abstain": 0,
+            "review": 50,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "defined_term_boundary",
+            "count": 50,
+            "abstain": 2,
+            "review": 48,
+            "accepted": 0,
+            "abstain_rate": 0.04
+          },
+          {
+            "category": "duplicate_collision",
+            "count": 50,
+            "abstain": 0,
+            "review": 50,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "nonstruct_parent_chain",
+            "count": 50,
+            "abstain": 1,
+            "review": 49,
+            "accepted": 0,
+            "abstain_rate": 0.02
+          },
+          {
+            "category": "xref_vs_structural",
+            "count": 50,
+            "abstain": 4,
+            "review": 45,
+            "accepted": 1,
+            "abstain_rate": 0.08
+          },
+          {
+            "category": "formatting_noise",
+            "count": 40,
+            "abstain": 0,
+            "review": 40,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "true_root_high_letter",
+            "count": 40,
+            "abstain": 0,
+            "review": 40,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "linking_contract",
+            "count": 30,
+            "abstain": 4,
+            "review": 25,
+            "accepted": 1,
+            "abstain_rate": 0.133333
+          }
+        ],
+        "calib_aggr": [
+          {
+            "category": "ambiguous_alpha_roman",
+            "count": 70,
+            "abstain": 0,
+            "review": 70,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "high_letter_continuation",
+            "count": 70,
+            "abstain": 1,
+            "review": 69,
+            "accepted": 0,
+            "abstain_rate": 0.014286
+          },
+          {
+            "category": "deep_nesting_chain",
+            "count": 50,
+            "abstain": 0,
+            "review": 50,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "defined_term_boundary",
+            "count": 50,
+            "abstain": 1,
+            "review": 49,
+            "accepted": 0,
+            "abstain_rate": 0.02
+          },
+          {
+            "category": "duplicate_collision",
+            "count": 50,
+            "abstain": 0,
+            "review": 50,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "nonstruct_parent_chain",
+            "count": 50,
+            "abstain": 0,
+            "review": 50,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "xref_vs_structural",
+            "count": 50,
+            "abstain": 2,
+            "review": 47,
+            "accepted": 1,
+            "abstain_rate": 0.04
+          },
+          {
+            "category": "formatting_noise",
+            "count": 40,
+            "abstain": 0,
+            "review": 40,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "true_root_high_letter",
+            "count": 40,
+            "abstain": 0,
+            "review": 40,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "linking_contract",
+            "count": 30,
+            "abstain": 2,
+            "review": 27,
+            "accepted": 1,
+            "abstain_rate": 0.066667
+          }
+        ],
+        "calib_aggr2": [
+          {
+            "category": "ambiguous_alpha_roman",
+            "count": 70,
+            "abstain": 0,
+            "review": 70,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "high_letter_continuation",
+            "count": 70,
+            "abstain": 0,
+            "review": 70,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "deep_nesting_chain",
+            "count": 50,
+            "abstain": 0,
+            "review": 50,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "defined_term_boundary",
+            "count": 50,
+            "abstain": 0,
+            "review": 50,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "duplicate_collision",
+            "count": 50,
+            "abstain": 0,
+            "review": 50,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "nonstruct_parent_chain",
+            "count": 50,
+            "abstain": 0,
+            "review": 50,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "xref_vs_structural",
+            "count": 50,
+            "abstain": 0,
+            "review": 49,
+            "accepted": 1,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "formatting_noise",
+            "count": 40,
+            "abstain": 0,
+            "review": 40,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "true_root_high_letter",
+            "count": 40,
+            "abstain": 0,
+            "review": 40,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "linking_contract",
+            "count": 30,
+            "abstain": 1,
+            "review": 28,
+            "accepted": 1,
+            "abstain_rate": 0.033333
+          }
+        ]
+      }
+    },
+    "hard1000": {
+      "rows": 1000,
+      "profiles": {
+        "default": {
+          "status_counts": {
+            "abstain": 988,
+            "review": 12
+          },
+          "abstain_rate": 0.988,
+          "review_rate": 0.012,
+          "accepted_rate": 0.0,
+          "avg_critical_abstain_ratio": 0.619882,
+          "avg_margin_abs": 0.119366
+        },
+        "calib_m1": {
+          "status_counts": {
+            "review": 901,
+            "abstain": 99
+          },
+          "abstain_rate": 0.099,
+          "review_rate": 0.901,
+          "accepted_rate": 0.0,
+          "avg_critical_abstain_ratio": 0.437943,
+          "avg_margin_abs": 0.119366
+        },
+        "calib_m2": {
+          "status_counts": {
+            "review": 989,
+            "abstain": 11
+          },
+          "abstain_rate": 0.011,
+          "review_rate": 0.989,
+          "accepted_rate": 0.0,
+          "avg_critical_abstain_ratio": 0.437943,
+          "avg_margin_abs": 0.119366
+        },
+        "calib_aggr": {
+          "status_counts": {
+            "review": 999,
+            "abstain": 1
+          },
+          "abstain_rate": 0.001,
+          "review_rate": 0.999,
+          "accepted_rate": 0.0,
+          "avg_critical_abstain_ratio": 0.437943,
+          "avg_margin_abs": 0.119366
+        },
+        "calib_aggr2": {
+          "status_counts": {
+            "review": 1000
+          },
+          "abstain_rate": 0.0,
+          "review_rate": 1.0,
+          "accepted_rate": 0.0,
+          "avg_critical_abstain_ratio": 0.437943,
+          "avg_margin_abs": 0.119366
+        }
+      },
+      "by_profile_category": {
+        "default": [
+          {
+            "category": "ambiguous_alpha_roman",
+            "count": 550,
+            "abstain": 540,
+            "review": 10,
+            "accepted": 0,
+            "abstain_rate": 0.981818
+          },
+          {
+            "category": "high_letter_continuation",
+            "count": 450,
+            "abstain": 448,
+            "review": 2,
+            "accepted": 0,
+            "abstain_rate": 0.995556
+          }
+        ],
+        "calib_m1": [
+          {
+            "category": "ambiguous_alpha_roman",
+            "count": 550,
+            "abstain": 49,
+            "review": 501,
+            "accepted": 0,
+            "abstain_rate": 0.089091
+          },
+          {
+            "category": "high_letter_continuation",
+            "count": 450,
+            "abstain": 50,
+            "review": 400,
+            "accepted": 0,
+            "abstain_rate": 0.111111
+          }
+        ],
+        "calib_m2": [
+          {
+            "category": "ambiguous_alpha_roman",
+            "count": 550,
+            "abstain": 1,
+            "review": 549,
+            "accepted": 0,
+            "abstain_rate": 0.001818
+          },
+          {
+            "category": "high_letter_continuation",
+            "count": 450,
+            "abstain": 10,
+            "review": 440,
+            "accepted": 0,
+            "abstain_rate": 0.022222
+          }
+        ],
+        "calib_aggr": [
+          {
+            "category": "ambiguous_alpha_roman",
+            "count": 550,
+            "abstain": 0,
+            "review": 550,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "high_letter_continuation",
+            "count": 450,
+            "abstain": 1,
+            "review": 449,
+            "accepted": 0,
+            "abstain_rate": 0.002222
+          }
+        ],
+        "calib_aggr2": [
+          {
+            "category": "ambiguous_alpha_roman",
+            "count": 550,
+            "abstain": 0,
+            "review": 550,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "high_letter_continuation",
+            "count": 450,
+            "abstain": 0,
+            "review": 450,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          }
+        ]
+      }
+    },
+    "candidate1000": {
+      "rows": 1000,
+      "profiles": {
+        "default": {
+          "status_counts": {
+            "abstain": 933,
+            "review": 62,
+            "accepted": 5
+          },
+          "abstain_rate": 0.933,
+          "review_rate": 0.062,
+          "accepted_rate": 0.005,
+          "avg_critical_abstain_ratio": 0.591805,
+          "avg_margin_abs": 0.12759
+        },
+        "calib_m1": {
+          "status_counts": {
+            "review": 875,
+            "abstain": 120,
+            "accepted": 5
+          },
+          "abstain_rate": 0.12,
+          "review_rate": 0.875,
+          "accepted_rate": 0.005,
+          "avg_critical_abstain_ratio": 0.420749,
+          "avg_margin_abs": 0.12759
+        },
+        "calib_m2": {
+          "status_counts": {
+            "review": 969,
+            "abstain": 26,
+            "accepted": 5
+          },
+          "abstain_rate": 0.026,
+          "review_rate": 0.969,
+          "accepted_rate": 0.005,
+          "avg_critical_abstain_ratio": 0.420749,
+          "avg_margin_abs": 0.12759
+        },
+        "calib_aggr": {
+          "status_counts": {
+            "review": 987,
+            "abstain": 8,
+            "accepted": 5
+          },
+          "abstain_rate": 0.008,
+          "review_rate": 0.987,
+          "accepted_rate": 0.005,
+          "avg_critical_abstain_ratio": 0.420749,
+          "avg_margin_abs": 0.12759
+        },
+        "calib_aggr2": {
+          "status_counts": {
+            "review": 993,
+            "accepted": 5,
+            "abstain": 2
+          },
+          "abstain_rate": 0.002,
+          "review_rate": 0.993,
+          "accepted_rate": 0.005,
+          "avg_critical_abstain_ratio": 0.420749,
+          "avg_margin_abs": 0.12759
+        }
+      },
+      "by_profile_category": {
+        "default": [
+          {
+            "category": "ambiguous_alpha_roman",
+            "count": 190,
+            "abstain": 184,
+            "review": 6,
+            "accepted": 0,
+            "abstain_rate": 0.968421
+          },
+          {
+            "category": "high_letter_continuation",
+            "count": 190,
+            "abstain": 189,
+            "review": 1,
+            "accepted": 0,
+            "abstain_rate": 0.994737
+          },
+          {
+            "category": "nonstruct_parent_chain",
+            "count": 140,
+            "abstain": 129,
+            "review": 11,
+            "accepted": 0,
+            "abstain_rate": 0.921429
+          },
+          {
+            "category": "xref_vs_structural",
+            "count": 130,
+            "abstain": 100,
+            "review": 26,
+            "accepted": 4,
+            "abstain_rate": 0.769231
+          },
+          {
+            "category": "true_root_high_letter",
+            "count": 90,
+            "abstain": 86,
+            "review": 4,
+            "accepted": 0,
+            "abstain_rate": 0.955556
+          },
+          {
+            "category": "deep_nesting_chain",
+            "count": 65,
+            "abstain": 58,
+            "review": 7,
+            "accepted": 0,
+            "abstain_rate": 0.892308
+          },
+          {
+            "category": "defined_term_boundary",
+            "count": 60,
+            "abstain": 58,
+            "review": 2,
+            "accepted": 0,
+            "abstain_rate": 0.966667
+          },
+          {
+            "category": "duplicate_collision",
+            "count": 55,
+            "abstain": 55,
+            "review": 0,
+            "accepted": 0,
+            "abstain_rate": 1.0
+          },
+          {
+            "category": "formatting_noise",
+            "count": 45,
+            "abstain": 42,
+            "review": 3,
+            "accepted": 0,
+            "abstain_rate": 0.933333
+          },
+          {
+            "category": "linking_contract",
+            "count": 35,
+            "abstain": 32,
+            "review": 2,
+            "accepted": 1,
+            "abstain_rate": 0.914286
+          }
+        ],
+        "calib_m1": [
+          {
+            "category": "ambiguous_alpha_roman",
+            "count": 190,
+            "abstain": 14,
+            "review": 176,
+            "accepted": 0,
+            "abstain_rate": 0.073684
+          },
+          {
+            "category": "high_letter_continuation",
+            "count": 190,
+            "abstain": 33,
+            "review": 157,
+            "accepted": 0,
+            "abstain_rate": 0.173684
+          },
+          {
+            "category": "nonstruct_parent_chain",
+            "count": 140,
+            "abstain": 14,
+            "review": 126,
+            "accepted": 0,
+            "abstain_rate": 0.1
+          },
+          {
+            "category": "xref_vs_structural",
+            "count": 130,
+            "abstain": 19,
+            "review": 107,
+            "accepted": 4,
+            "abstain_rate": 0.146154
+          },
+          {
+            "category": "true_root_high_letter",
+            "count": 90,
+            "abstain": 2,
+            "review": 88,
+            "accepted": 0,
+            "abstain_rate": 0.022222
+          },
+          {
+            "category": "deep_nesting_chain",
+            "count": 65,
+            "abstain": 4,
+            "review": 61,
+            "accepted": 0,
+            "abstain_rate": 0.061538
+          },
+          {
+            "category": "defined_term_boundary",
+            "count": 60,
+            "abstain": 3,
+            "review": 57,
+            "accepted": 0,
+            "abstain_rate": 0.05
+          },
+          {
+            "category": "duplicate_collision",
+            "count": 55,
+            "abstain": 18,
+            "review": 37,
+            "accepted": 0,
+            "abstain_rate": 0.327273
+          },
+          {
+            "category": "formatting_noise",
+            "count": 45,
+            "abstain": 3,
+            "review": 42,
+            "accepted": 0,
+            "abstain_rate": 0.066667
+          },
+          {
+            "category": "linking_contract",
+            "count": 35,
+            "abstain": 10,
+            "review": 24,
+            "accepted": 1,
+            "abstain_rate": 0.285714
+          }
+        ],
+        "calib_m2": [
+          {
+            "category": "ambiguous_alpha_roman",
+            "count": 190,
+            "abstain": 0,
+            "review": 190,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "high_letter_continuation",
+            "count": 190,
+            "abstain": 9,
+            "review": 181,
+            "accepted": 0,
+            "abstain_rate": 0.047368
+          },
+          {
+            "category": "nonstruct_parent_chain",
+            "count": 140,
+            "abstain": 1,
+            "review": 139,
+            "accepted": 0,
+            "abstain_rate": 0.007143
+          },
+          {
+            "category": "xref_vs_structural",
+            "count": 130,
+            "abstain": 9,
+            "review": 117,
+            "accepted": 4,
+            "abstain_rate": 0.069231
+          },
+          {
+            "category": "true_root_high_letter",
+            "count": 90,
+            "abstain": 0,
+            "review": 90,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "deep_nesting_chain",
+            "count": 65,
+            "abstain": 0,
+            "review": 65,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "defined_term_boundary",
+            "count": 60,
+            "abstain": 2,
+            "review": 58,
+            "accepted": 0,
+            "abstain_rate": 0.033333
+          },
+          {
+            "category": "duplicate_collision",
+            "count": 55,
+            "abstain": 0,
+            "review": 55,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "formatting_noise",
+            "count": 45,
+            "abstain": 0,
+            "review": 45,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "linking_contract",
+            "count": 35,
+            "abstain": 5,
+            "review": 29,
+            "accepted": 1,
+            "abstain_rate": 0.142857
+          }
+        ],
+        "calib_aggr": [
+          {
+            "category": "ambiguous_alpha_roman",
+            "count": 190,
+            "abstain": 0,
+            "review": 190,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "high_letter_continuation",
+            "count": 190,
+            "abstain": 1,
+            "review": 189,
+            "accepted": 0,
+            "abstain_rate": 0.005263
+          },
+          {
+            "category": "nonstruct_parent_chain",
+            "count": 140,
+            "abstain": 0,
+            "review": 140,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "xref_vs_structural",
+            "count": 130,
+            "abstain": 3,
+            "review": 123,
+            "accepted": 4,
+            "abstain_rate": 0.023077
+          },
+          {
+            "category": "true_root_high_letter",
+            "count": 90,
+            "abstain": 0,
+            "review": 90,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "deep_nesting_chain",
+            "count": 65,
+            "abstain": 0,
+            "review": 65,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "defined_term_boundary",
+            "count": 60,
+            "abstain": 1,
+            "review": 59,
+            "accepted": 0,
+            "abstain_rate": 0.016667
+          },
+          {
+            "category": "duplicate_collision",
+            "count": 55,
+            "abstain": 0,
+            "review": 55,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "formatting_noise",
+            "count": 45,
+            "abstain": 0,
+            "review": 45,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "linking_contract",
+            "count": 35,
+            "abstain": 3,
+            "review": 31,
+            "accepted": 1,
+            "abstain_rate": 0.085714
+          }
+        ],
+        "calib_aggr2": [
+          {
+            "category": "ambiguous_alpha_roman",
+            "count": 190,
+            "abstain": 0,
+            "review": 190,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "high_letter_continuation",
+            "count": 190,
+            "abstain": 0,
+            "review": 190,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "nonstruct_parent_chain",
+            "count": 140,
+            "abstain": 0,
+            "review": 140,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "xref_vs_structural",
+            "count": 130,
+            "abstain": 0,
+            "review": 126,
+            "accepted": 4,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "true_root_high_letter",
+            "count": 90,
+            "abstain": 0,
+            "review": 90,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "deep_nesting_chain",
+            "count": 65,
+            "abstain": 0,
+            "review": 65,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "defined_term_boundary",
+            "count": 60,
+            "abstain": 0,
+            "review": 60,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "duplicate_collision",
+            "count": 55,
+            "abstain": 0,
+            "review": 55,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "formatting_noise",
+            "count": 45,
+            "abstain": 0,
+            "review": 45,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          },
+          {
+            "category": "linking_contract",
+            "count": 35,
+            "abstain": 2,
+            "review": 32,
+            "accepted": 1,
+            "abstain_rate": 0.057143
+          }
+        ]
+      }
+    },
+    "edgecases100": {
+      "rows": 100,
+      "profiles": {
+        "default": {
+          "status_counts": {
+            "abstain": 96,
+            "review": 4
+          },
+          "abstain_rate": 0.96,
+          "review_rate": 0.04,
+          "accepted_rate": 0.0,
+          "avg_critical_abstain_ratio": 0.641169,
+          "avg_margin_abs": 0.117652
+        },
+        "calib_m1": {
+          "status_counts": {
+            "review": 73,
+            "abstain": 27
+          },
+          "abstain_rate": 0.27,
+          "review_rate": 0.73,
+          "accepted_rate": 0.0,
+          "avg_critical_abstain_ratio": 0.457735,
+          "avg_margin_abs": 0.117652
+        },
+        "calib_m2": {
+          "status_counts": {
+            "review": 89,
+            "abstain": 11
+          },
+          "abstain_rate": 0.11,
+          "review_rate": 0.89,
+          "accepted_rate": 0.0,
+          "avg_critical_abstain_ratio": 0.457735,
+          "avg_margin_abs": 0.117652
+        },
+        "calib_aggr": {
+          "status_counts": {
+            "review": 95,
+            "abstain": 5
+          },
+          "abstain_rate": 0.05,
+          "review_rate": 0.95,
+          "accepted_rate": 0.0,
+          "avg_critical_abstain_ratio": 0.457735,
+          "avg_margin_abs": 0.117652
+        },
+        "calib_aggr2": {
+          "status_counts": {
+            "review": 100
+          },
+          "abstain_rate": 0.0,
+          "review_rate": 1.0,
+          "accepted_rate": 0.0,
+          "avg_critical_abstain_ratio": 0.457735,
+          "avg_margin_abs": 0.117652
+        }
+      },
+      "by_profile_category": {
+        "default": [
+          {
+            "category": "unknown",
+            "count": 100,
+            "abstain": 96,
+            "review": 4,
+            "accepted": 0,
+            "abstain_rate": 0.96
+          }
+        ],
+        "calib_m1": [
+          {
+            "category": "unknown",
+            "count": 100,
+            "abstain": 27,
+            "review": 73,
+            "accepted": 0,
+            "abstain_rate": 0.27
+          }
+        ],
+        "calib_m2": [
+          {
+            "category": "unknown",
+            "count": 100,
+            "abstain": 11,
+            "review": 89,
+            "accepted": 0,
+            "abstain_rate": 0.11
+          }
+        ],
+        "calib_aggr": [
+          {
+            "category": "unknown",
+            "count": 100,
+            "abstain": 5,
+            "review": 95,
+            "accepted": 0,
+            "abstain_rate": 0.05
+          }
+        ],
+        "calib_aggr2": [
+          {
+            "category": "unknown",
+            "count": 100,
+            "abstain": 0,
+            "review": 100,
+            "accepted": 0,
+            "abstain_rate": 0.0
+          }
+        ]
+      }
+    }
+  },
+  "combined": {
+    "recommend_ranked": [
+      {
+        "profile": "calib_aggr2",
+        "explained_rate": 0.998846,
+        "abstain_rate": 0.001154,
+        "accepted_rate": 0.002692,
+        "review_rate": 0.996154
+      },
+      {
+        "profile": "calib_aggr",
+        "explained_rate": 0.992307,
+        "abstain_rate": 0.007692,
+        "accepted_rate": 0.002692,
+        "review_rate": 0.989615
+      },
+      {
+        "profile": "calib_m2",
+        "explained_rate": 0.97423,
+        "abstain_rate": 0.025769,
+        "accepted_rate": 0.002692,
+        "review_rate": 0.971538
+      },
+      {
+        "profile": "calib_m1",
+        "explained_rate": 0.877307,
+        "abstain_rate": 0.122692,
+        "accepted_rate": 0.002692,
+        "review_rate": 0.874615
+      },
+      {
+        "profile": "default",
+        "explained_rate": 0.045769,
+        "abstain_rate": 0.954231,
+        "accepted_rate": 0.002692,
+        "review_rate": 0.043077
+      }
+    ]
+  }
+}

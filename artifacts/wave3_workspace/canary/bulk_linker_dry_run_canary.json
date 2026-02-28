@@ -1,0 +1,28 @@
+{
+  "status": "dry_run",
+  "run_id": null,
+  "runtime_versions": {
+    "corpus_version": "0.2.0",
+    "corpus_snapshot_id": "ray_v2_corpus_build_20260227T041350Z_4e318cf8",
+    "parser_version": "parser-v0.1.0",
+    "ontology_version": "2.5.1",
+    "ruleset_version": "ruleset-aadfd6a9ce53a9f6",
+    "git_sha": "06a2398204cfdd545e27009583196f3702f25f3f",
+    "created_at_utc": "2026-02-27T07:05:58Z"
+  },
+  "rules_evaluated": 1,
+  "documents_scanned": 5,
+  "total_candidates": 0,
+  "links_created": 0,
+  "links_unlinked": 0,
+  "evidence_saved": 0,
+  "by_family": {},
+  "by_tier": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "conflicts_detected": 0,
+  "duration_seconds": 0.15,
+  "candidates": []
+}

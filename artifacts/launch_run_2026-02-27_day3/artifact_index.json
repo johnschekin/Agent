@@ -1,0 +1,167 @@
+{
+  "schema_version": "artifact-index-v1",
+  "generated_at": "2026-02-27T22:03:47+00:00",
+  "run_id": "launch_run_2026-02-27_day3",
+  "artifacts": [
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/adjudication/day3_training_export_eligible_rows.jsonl",
+      "sha256": "ebd0df049611ee9b757f0dfc03fb84a2848f1abc0ddeb7de1a3129c28b7e334b"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/adjudication/day3_training_quarantine_rows.json",
+      "sha256": "7b525e6e56810151d4d6da7b527e7b6763a7f2f06d374a3fc9a67d4d807cfc4f"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/adjudication/day3_training_quarantine_summary.json",
+      "sha256": "7b525e6e56810151d4d6da7b527e7b6763a7f2f06d374a3fc9a67d4d807cfc4f"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/adjudication/filename_migration_map_day3.json",
+      "sha256": "481d4e9a28e7c138f81982e97517b145beb20752001f3c30e1b92d7ec3d0faff"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/adjudication/manual_adjudication_attestation_train40_rowsetB20.json",
+      "sha256": "00e78063408bc3562f233cca0534e60fc2dc5e6d750475db7fcaf00802067cb6"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/adjudication/manual_adjudication_attestation_train40_rowsetC20.json",
+      "sha256": "10f3dda644f9ec7187e00502a8b09450d5a472350b05ecd1567edb5cd996dadf"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/adjudication/manual_adjudication_batch_train40_rowsetB20.jsonl",
+      "sha256": "8d30b1bf841004126900463d77368a84e8de60ef2218047f7897d195f8ec9dac"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/adjudication/manual_adjudication_batch_train40_rowsetC20.jsonl",
+      "sha256": "2d6d51445a8e4aa1b989b494c4b432d97569e846cafc9c9940cd01ecb915ef58"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/adjudication/manual_adjudication_validation_report.json",
+      "sha256": "ec8b0546f219431b4ca52a49a7fee27c09f42ec37e3942a93f9c2b33046dc903"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/adjudication/manual_adjudication_validation_report_rowsetB20.json",
+      "sha256": "3fe54056fac91b0dc8c34c3f3e31443d65518a39e580dd52ae7bfa8f8a713a62"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/adjudication/manual_adjudication_validation_report_rowsetC20.json",
+      "sha256": "3c3c2d1944d57ba88b1b5a14bbfe2b3bb7fc411bc470909b31b5ef37eb93efda"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/adjudication/manual_reasoning_train40_rowsetB20.jsonl",
+      "sha256": "6f6c39439d0e2d32ccb8ac81f02d94711c1694418ed0292a677fc41cc8aff91f"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/adjudication/manual_reasoning_train40_rowsetC20.jsonl",
+      "sha256": "4003c18f2a4c1bf116cbcf22f2176dbb606b09192e8ff001e41df7f2cad8849f"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/adjudication/manual_reaudit_sample_day3_scaffold.jsonl",
+      "sha256": "9f90898e1018335533ad4ba5e38cc7ad6321278bd5f56d2992fa233bafba1765"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/adjudication/manual_reaudit_sample_day3_scaffold_summary.json",
+      "sha256": "6ef6380207a3e99ed3c3b3c18c2b3bfb5d9282af1ec03dc06f7f4bb7b51cef11"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/adjudication/p0_adjudication_queue_train40_rowsetB20_updates.jsonl",
+      "sha256": "a8ac2d4ef20071f46ab3c0defe0d5bbefb6e0e043652a6e72c4664213161dd58"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/adjudication/p0_adjudication_queue_train40_rowsetC20_updates.jsonl",
+      "sha256": "dfec57b028daf2e9ddf55998262a3ee26157f06d39c71815efceed19d6efd212"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/build_reaudit_sample.exit_code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/canonical/adjudication/manual_adjudication_validation_report.json",
+      "sha256": "ec8b0546f219431b4ca52a49a7fee27c09f42ec37e3942a93f9c2b33046dc903"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/canonical/day_validator_report.json",
+      "sha256": "f3473dcb171bab1771872d0439591d42e8ea20509fb4bda02e27d280e4573302"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/canonical/red_team/adversarial_subagent_review_day3.json",
+      "sha256": "2ddd05d3d28d5fa5b75567e331712c1abba1ed553004254b78849e5cfacf25fd"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/clean_source/dirty_worktree_snapshot.json",
+      "sha256": "6b69f760fa5c3d4081557341c4207eb1ca1ca1a5b13d06c29732bfa92e25925b"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/clean_source/worktree_info.json",
+      "sha256": "36c384b16f67f21745f434fff6cbedd207672a5bc623c2de6c15a3010e644976"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/command_log.txt",
+      "sha256": "897c13cadc4d5cbe435ca6eef0a483767f0377bc308fa0c83a3f790cd1831a00"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/day3_retrospective.md",
+      "sha256": "f899d4be250003d70a33db5d43e1bc381466a2a68b0d846efcb12b92869f148d"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/day3_validator_defects_list.md",
+      "sha256": "03a744218fbedb19f06489a94db1002b7a598bc3fa7696fd9b956c09ab602ba7"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/day_blocker_register.json",
+      "sha256": "f02f96ad31fe7ee3c83b440dc5132810840176f96fd20f52ca3bd2af4abafdc5"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/day_canonical_selection_policy.json",
+      "sha256": "dcdcdb4028e2d5a7584088da211c31a4266b8db893286a30acdaed74174730c5"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/day_gate_summary.json",
+      "sha256": "e46e3a9cb693839fddd0717d34d8a552071e3b260587b5f2db1b25754275215c"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/day_run_manifest.json",
+      "sha256": "b2f176b0e3c24811390c3dd0ce8d54690bbfa22374c1edbd181e464d18beb78f"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/filter_training_eligible_adjudication_rows.exit_code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/promote_canonical_adjudication_validation.exit_code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/promote_canonical_day_validator.exit_code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/promote_canonical_redteam.exit_code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/red_team/adversarial_subagent_review_day3_round1.json",
+      "sha256": "45e3da92262a29a059709d7e84840904351fa318988480d92f616dab1d0b3e56"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/red_team/adversarial_subagent_review_day3_round2.json",
+      "sha256": "1e538770b0475246e48da75f0abbbb8f2a17d59619506c805144f94c127dd4a9"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/red_team/adversarial_subagent_review_day3_round3.json",
+      "sha256": "2ddd05d3d28d5fa5b75567e331712c1abba1ed553004254b78849e5cfacf25fd"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/validate_manual_adjudication_log_rowsetB20.exit_code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "artifacts/launch_run_2026-02-27_day3/validate_manual_adjudication_log_rowsetC20.exit_code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "data/fixtures/gold/v1/adjudication/logs/manual_adjudication_log_2026-02-27_day3_v1.jsonl",
+      "sha256": "a152d38b208e45654faeb30125e9a46b057f70fce31328e1b6a5922116946145"
+    }
+  ]
+}

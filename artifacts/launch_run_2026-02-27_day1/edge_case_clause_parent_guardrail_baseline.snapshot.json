@@ -1,0 +1,41 @@
+{
+  "generated_at": "2026-02-26T22:00:06.027877+00:00",
+  "guardrails": {
+    "xy_parent_loss.continuation_like_ratio": {
+      "max_abs_increase": 0.0,
+      "max_rel_increase": 0.0
+    },
+    "xy_parent_loss.continuation_like_rows": {
+      "max_abs_increase": 0.0,
+      "max_rel_increase": 0.0
+    },
+    "xy_parent_loss.docs": {
+      "max_abs_increase": 0.0,
+      "max_rel_increase": 0.0
+    },
+    "xy_parent_loss.sections": {
+      "max_abs_increase": 0.0,
+      "max_rel_increase": 0.0
+    },
+    "xy_parent_loss.sections_low_root_count": {
+      "max_abs_increase": 0.0,
+      "max_rel_increase": 0.0
+    },
+    "xy_parent_loss.structural_rows": {
+      "max_abs_increase": 0.0,
+      "max_rel_increase": 0.0
+    }
+  },
+  "metrics": {
+    "xy_parent_loss": {
+      "continuation_like_ratio": 0.48677248677248675,
+      "continuation_like_rows": 184,
+      "docs": 294,
+      "sections": 318,
+      "sections_low_root_count": 80,
+      "structural_rows": 378
+    }
+  },
+  "source_db": "corpus_index/corpus.duckdb",
+  "version": 1
+}

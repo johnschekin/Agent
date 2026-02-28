@@ -1,0 +1,165 @@
+{
+  "schema_version": "day-bundle-validator-profile-v1",
+  "profile_id": "day6_day17_gl1_gl2_profile",
+  "profile_version": "v1",
+  "applies_to_days": [
+    "day6",
+    "day7",
+    "day8",
+    "day9",
+    "day10",
+    "day11",
+    "day12",
+    "day13",
+    "day14",
+    "day15",
+    "day16",
+    "day17"
+  ],
+  "required_manifest_keys": [
+    "git",
+    "parser",
+    "inputs",
+    "command_exit_codes",
+    "output_artifacts"
+  ],
+  "required_artifacts": [
+    {
+      "id": "run_manifest",
+      "paths": [
+        "day_run_manifest.json"
+      ],
+      "kind": "json"
+    },
+    {
+      "id": "blocker_register",
+      "paths": [
+        "day_blocker_register.json"
+      ],
+      "kind": "json"
+    },
+    {
+      "id": "gate_summary",
+      "paths": [
+        "day_gate_summary.json"
+      ],
+      "kind": "json"
+    },
+    {
+      "id": "command_log",
+      "paths": [
+        "command_log.txt"
+      ],
+      "kind": "text"
+    },
+    {
+      "id": "artifact_index",
+      "paths": [
+        "artifact_index.json"
+      ],
+      "kind": "json"
+    },
+    {
+      "id": "canonical_policy",
+      "paths": [
+        "day_canonical_selection_policy.json"
+      ],
+      "kind": "json",
+      "when": "dirty"
+    },
+    {
+      "id": "validator_report",
+      "paths": [
+        "day_validator_report.json"
+      ],
+      "kind": "generated_json",
+      "generated": true
+    }
+  ],
+  "required_checks": [
+    "VAL-FILE-001",
+    "VAL-JSON-001",
+    "VAL-MANIFEST-001",
+    "VAL-INDEX-001",
+    "VAL-INDEX-002",
+    "VAL-HASH-001",
+    "VAL-EXIT-001",
+    "VAL-GATE-001",
+    "VAL-BLOCKER-001",
+    "VAL-BLOCKER-002",
+    "VAL-REDTEAM-001",
+    "VAL-REDTEAM-002",
+    "VAL-CANON-001",
+    "VAL-CANON-002",
+    "VAL-CANON-003",
+    "VAL-CONSIST-001",
+    "VAL-TIME-001",
+    "VAL-PROV-001",
+    "VAL-ADJ-REASON-001",
+    "VAL-ADJ-REASON-002",
+    "VAL-ADJ-REASON-003",
+    "VAL-ADJ-SPLIT-001",
+    "VAL-ADJ-QUEUE-001",
+    "VAL-ADJ-SYNTH-001"
+  ],
+  "warn_only_checks": [],
+  "gate_rules": {
+    "required_output_artifact_keys": [],
+    "non_blocking_commands": []
+  },
+  "canonical": {
+    "path_markers": [
+      "/canonical/"
+    ],
+    "primary_output_keys": [
+      "validate_report",
+      "replay_report",
+      "clause_guardrail_report",
+      "parent_guardrail_report",
+      "parser_v1_tests_log"
+    ]
+  },
+  "adjudication": {
+    "batch_globs": [
+      "**/*manual_adjudication_batch*.jsonl",
+      "**/*adjudication_batch*.jsonl"
+    ],
+    "reasoning_required_fields": [
+      "row_id",
+      "witness",
+      "hypothesis_A",
+      "hypothesis_B",
+      "why_A_survives",
+      "why_B_survives",
+      "final_decision",
+      "confidence"
+    ],
+    "lineage_attestation_prefix": "MANUAL_ADJUDICATION_ATTESTATION",
+    "queue_update_globs": [
+      "**/*queue*_updates*.jsonl",
+      "**/*adjudication_queue_delta*.jsonl"
+    ],
+    "require_split_field": false
+  },
+  "red_team": {
+    "require_adversarial_subagent_statuses": [
+      "in_review",
+      "complete"
+    ],
+    "artifact_globs": [
+      "**/red_team/adversarial_subagent_review*.json",
+      "**/red_team_adversarial_subagent_review*.json",
+      "**/red_team_review*.json"
+    ],
+    "required_fields": [
+      "schema_version",
+      "day_id",
+      "review_mode",
+      "subagent_id",
+      "adversarial_findings",
+      "verdict",
+      "completed_at"
+    ],
+    "manifest_output_pointer_key": "red_team_adversarial_review"
+  }
+}

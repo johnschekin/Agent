@@ -1,0 +1,33 @@
+{
+  "schema_version": "manual-adjudication-validator-day-summary-v1",
+  "generated_at": "2026-02-27T21:43:00+00:00",
+  "run_id": "launch_run_2026-02-27_day3",
+  "status": "pass",
+  "batch_reports": [
+    {
+      "batch_id": "train40_rowsetB20",
+      "path": "adjudication/manual_adjudication_validation_report_rowsetB20.json",
+      "status": "pass",
+      "row_count": 20
+    },
+    {
+      "batch_id": "train40_rowsetC20",
+      "path": "adjudication/manual_adjudication_validation_report_rowsetC20.json",
+      "status": "pass",
+      "row_count": 20
+    }
+  ],
+  "row_count_total": 40,
+  "class_counts": {
+    "ambiguous_alpha_roman": 26,
+    "high_letter_continuation": 13,
+    "xref_vs_structural": 1,
+    "nonstruct_parent_chain": 0
+  },
+  "decision_counts": {
+    "accepted": 20,
+    "review": 10,
+    "abstain": 10
+  },
+  "error_count_total": 0
+}

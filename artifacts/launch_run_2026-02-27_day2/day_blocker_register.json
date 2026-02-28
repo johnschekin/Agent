@@ -1,0 +1,376 @@
+{
+  "schema_version": "day-blocker-register-v1",
+  "generated_at": "2026-02-27T18:48:11+00:00",
+  "first_generated_at": "2026-02-27T18:48:11+00:00",
+  "updated_at": "2026-02-27T21:10:04.152419+00:00",
+  "run_id": "launch_run_2026-02-27_day2",
+  "blockers": [
+    {
+      "blocker_id": "BLK-D1-PARENT-001",
+      "severity": "high",
+      "status": "open",
+      "blocking_scope": "launch",
+      "owner": "Parser Engineer",
+      "summary": "Parent-loss guardrail regressions remain open launch debt from GL0 baseline.",
+      "hypotheses": [
+        "High-letter continuation handling over-produces root-level structural nodes.",
+        "Parent-chain demotion interactions changed parent selection behavior."
+      ],
+      "next_actions": [
+        "Execute targeted parent-loss repro slice during Day3-Day4.",
+        "Propose remediation and verify against frozen GL0 baseline."
+      ],
+      "eta_utc": "2026-03-02T00:00:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day1/edge_case_clause_parent_guardrail.json"
+    },
+    {
+      "blocker_id": "BLK-D2-REDTEAM-001",
+      "severity": "critical",
+      "status": "re-attributed",
+      "blocking_scope": "day_close",
+      "owner": "Data Engineer",
+      "summary": "Artifact index hash mismatch for validator acceptance doc.",
+      "hypotheses": [
+        "artifact_index was not regenerated after spec acceptance doc edit"
+      ],
+      "next_actions": [
+        "add index-hash consistency validator check",
+        "Re-validate closure against next adversarial subagent report before closing."
+      ],
+      "eta_utc": "2026-02-28T02:00:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round5.json"
+    },
+    {
+      "blocker_id": "BLK-D2-REDTEAM-002",
+      "severity": "high",
+      "status": "re-attributed",
+      "blocking_scope": "day_close",
+      "owner": "Data/Adjudication Lead",
+      "summary": "Adjudication creation provenance is under-captured in command log for synthetic-generation guard confidence.",
+      "hypotheses": [
+        "command log only retained validator invocations",
+        "manual creation steps not artifacted as lineage entries"
+      ],
+      "next_actions": [
+        "extend command-log contract with adjudication artifact creation lineage or manual attestation",
+        "tighten VAL-ADJ-SYNTH-001 to fail when lineage evidence is absent",
+        "Re-validate closure against next adversarial subagent report before closing."
+      ],
+      "eta_utc": "2026-02-28T18:00:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round5.json"
+    },
+    {
+      "blocker_id": "BLK-D2-REDTEAM-003",
+      "severity": "high",
+      "status": "re-attributed",
+      "blocking_scope": "day_close",
+      "owner": "Program Owner",
+      "summary": "Canonical placeholder outputs may be interpreted as executed checks.",
+      "hypotheses": [
+        "placeholder artifacts are too close in shape to real execution outputs"
+      ],
+      "next_actions": [
+        "mark placeholder outputs as skipped/non-primary",
+        "add validator policy for placeholder primaries under pass semantics",
+        "Re-validate closure against next adversarial subagent report before closing."
+      ],
+      "eta_utc": "2026-02-28T18:00:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round5.json"
+    },
+    {
+      "blocker_id": "BLK-D2-REDTEAM-004",
+      "severity": "medium",
+      "status": "open",
+      "blocking_scope": "launch",
+      "owner": "Data Engineer",
+      "summary": "Queue rows still pending without adjudication linkage after successful batch validation.",
+      "hypotheses": [
+        "queue state update step deferred but not artifacted"
+      ],
+      "next_actions": [
+        "update queue rows with adjudication references and status transition",
+        "include queue delta artifact in day bundle"
+      ],
+      "eta_utc": "2026-03-01T00:00:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2.json"
+    },
+    {
+      "blocker_id": "BLK-D2-REDTEAM-005",
+      "severity": "medium",
+      "status": "open",
+      "blocking_scope": "launch",
+      "owner": "Data/Adjudication Lead",
+      "summary": "Batch quality entropy is low (uniform timestamps and templated hypotheses).",
+      "hypotheses": [
+        "batch authoring workflow over-reused template patterns"
+      ],
+      "next_actions": [
+        "introduce quality heuristics in adjudication validator",
+        "run spot audit on next two batches for entropy and rationale variance"
+      ],
+      "eta_utc": "2026-03-01T00:00:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2.json"
+    },
+    {
+      "blocker_id": "BLK-D2-REDTEAM-006",
+      "severity": "critical",
+      "status": "re-attributed",
+      "blocking_scope": "day_close",
+      "owner": "Data Engineer",
+      "summary": "Queue linkage and split leakage remediation for Day2 batch.",
+      "hypotheses": [
+        "mixed split row and missing queue update linkage caused chain-of-custody risk"
+      ],
+      "next_actions": [
+        "enforce queue linkage and split checks in validator",
+        "Re-validate closure against next adversarial subagent report before closing."
+      ],
+      "eta_utc": "2026-02-28T02:00:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round5.json"
+    },
+    {
+      "blocker_id": "BLK-D2-REDTEAM-007",
+      "severity": "high",
+      "status": "open",
+      "blocking_scope": "day_close",
+      "owner": "Data Engineer",
+      "summary": "Batch filename-to-rowset mismatch created lineage ambiguity.",
+      "hypotheses": [
+        "Range-based filename was left unchanged after row substitution."
+      ],
+      "next_actions": [
+        "Rename batch/reasoning/attestation artifacts to non-range rowset identifier and update all references."
+      ],
+      "eta_utc": "2026-02-28T03:30:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round5.json"
+    },
+    {
+      "blocker_id": "BLK-D2-REDTEAM-008",
+      "severity": "medium",
+      "status": "open",
+      "blocking_scope": "day_close",
+      "owner": "Data/Adjudication Lead",
+      "summary": "Witness fields included commentary/placeholder text in some rows.",
+      "hypotheses": [
+        "Manual cleanup introduced explanatory phrases into witness fields."
+      ],
+      "next_actions": [
+        "Restrict witness fields to direct snippet content and sync reasoning witness entries from adjudication rows."
+      ],
+      "eta_utc": "2026-02-28T03:30:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round5.json"
+    },
+    {
+      "blocker_id": "BLK-D2-REDTEAM-009",
+      "severity": "low",
+      "status": "open",
+      "blocking_scope": "day_close",
+      "owner": "Program Owner",
+      "summary": "Retrospective narrative stale vs current gate and red-team state.",
+      "hypotheses": [
+        "Retrospective was not refreshed after subsequent remediation rounds."
+      ],
+      "next_actions": [
+        "Refresh retrospective content after each red-team remediation round."
+      ],
+      "eta_utc": "2026-02-28T03:30:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round5.json"
+    },
+    {
+      "blocker_id": "BLK-D2-REDTEAM-010",
+      "severity": "critical",
+      "status": "open",
+      "blocking_scope": "day_close",
+      "owner": "Data Engineer",
+      "summary": "Manifest output_artifact index coverage gap (round3).",
+      "hypotheses": [
+        "Round3 adversarial finding confirms unresolved governance control."
+      ],
+      "next_actions": [
+        "Add strict manifest-output-to-index 1:1 enforcement and regenerate index."
+      ],
+      "eta_utc": "2026-02-28T04:30:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round5.json"
+    },
+    {
+      "blocker_id": "BLK-D2-REDTEAM-011",
+      "severity": "high",
+      "status": "open",
+      "blocking_scope": "day_close",
+      "owner": "Data Engineer",
+      "summary": "Stale round2 evidence paths remained active in governance pointer (round3).",
+      "hypotheses": [
+        "Round3 adversarial finding confirms unresolved governance control."
+      ],
+      "next_actions": [
+        "Promote round3 artifact as active evidence pointer and maintain round-consistent references."
+      ],
+      "eta_utc": "2026-02-28T04:30:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round5.json"
+    },
+    {
+      "blocker_id": "BLK-D2-REDTEAM-012",
+      "severity": "medium",
+      "status": "open",
+      "blocking_scope": "day_close",
+      "owner": "Data Engineer",
+      "summary": "Witness ellipsis placeholders in adjudication/reasoning rows (round3).",
+      "hypotheses": [
+        "Round3 adversarial finding confirms unresolved governance control."
+      ],
+      "next_actions": [
+        "Remove ellipsis placeholders from witness fields and re-validate artifacts."
+      ],
+      "eta_utc": "2026-02-28T04:30:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round5.json"
+    },
+    {
+      "blocker_id": "BLK-D2-REDTEAM-013",
+      "severity": "high",
+      "status": "open",
+      "blocking_scope": "day_close",
+      "owner": "Data Engineer",
+      "summary": "Lineage evidence needs structured per-artifact command-log events (round3).",
+      "hypotheses": [
+        "Round3 adversarial finding confirms unresolved governance control."
+      ],
+      "next_actions": [
+        "Require MANUAL_ADJ_LINEAGE events with artifact path/hash/writer/action/timestamp and validate in bundle checks."
+      ],
+      "eta_utc": "2026-02-28T04:30:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round5.json"
+    },
+    {
+      "blocker_id": "BLK-D2-REDTEAM-014",
+      "severity": "critical",
+      "status": "re-attributed",
+      "blocking_scope": "day_close",
+      "owner": "Data Engineer",
+      "summary": "Full run-dir artifact index coverage gap (round4).",
+      "hypotheses": [
+        "Round4 adversarial finding confirms unresolved control gap."
+      ],
+      "next_actions": [
+        "Enforce run-dir index coverage with strict include/exclude policy and regenerate index.",
+        "Superseded by round5 findings; validate closure only after next adversarial pass."
+      ],
+      "eta_utc": "2026-02-28T05:30:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round5.json"
+    },
+    {
+      "blocker_id": "BLK-D2-REDTEAM-015",
+      "severity": "high",
+      "status": "re-attributed",
+      "blocking_scope": "day_close",
+      "owner": "Data Engineer",
+      "summary": "Dirty-worktree fingerprint evidence missing from provenance contract (round4).",
+      "hypotheses": [
+        "Round4 adversarial finding confirms unresolved control gap."
+      ],
+      "next_actions": [
+        "Persist dirty snapshot artifact (status+diff hashes) and enforce in provenance validation.",
+        "Superseded by round5 findings; validate closure only after next adversarial pass."
+      ],
+      "eta_utc": "2026-02-28T05:30:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round5.json"
+    },
+    {
+      "blocker_id": "BLK-D2-REDTEAM-016",
+      "severity": "high",
+      "status": "re-attributed",
+      "blocking_scope": "day_close",
+      "owner": "Data Engineer",
+      "summary": "Queue status semantics did not distinguish accepted/review/abstain (round4).",
+      "hypotheses": [
+        "Round4 adversarial finding confirms unresolved control gap."
+      ],
+      "next_actions": [
+        "Enforce decision-specific queue statuses and validator checks.",
+        "Superseded by round5 findings; validate closure only after next adversarial pass."
+      ],
+      "eta_utc": "2026-02-28T05:30:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round5.json"
+    },
+    {
+      "blocker_id": "BLK-D2-REDTEAM-017",
+      "severity": "medium",
+      "status": "re-attributed",
+      "blocking_scope": "day_close",
+      "owner": "Data Engineer",
+      "summary": "Historical evidence path drift for round2 artifacts (round4).",
+      "hypotheses": [
+        "Round4 adversarial finding confirms unresolved control gap."
+      ],
+      "next_actions": [
+        "Preserve old-path compatibility artifacts and provide migration map with hashes.",
+        "Superseded by round5 findings; validate closure only after next adversarial pass."
+      ],
+      "eta_utc": "2026-02-28T05:30:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round5.json"
+    },
+    {
+      "blocker_id": "BLK-D2-REDTEAM-018",
+      "severity": "critical",
+      "status": "open",
+      "blocking_scope": "day_close",
+      "owner": "Data Engineer",
+      "summary": "Migration-map hash mismatch between old/new artifact bytes (round5).",
+      "hypotheses": [
+        "Round5 adversarial finding confirms unresolved control gap."
+      ],
+      "next_actions": [
+        "Regenerate migration map with old/new hashes and validate in VAL-MIG-001."
+      ],
+      "eta_utc": "2026-02-28T06:30:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round5.json"
+    },
+    {
+      "blocker_id": "BLK-D2-REDTEAM-019",
+      "severity": "high",
+      "status": "open",
+      "blocking_scope": "day_close",
+      "owner": "Data Engineer",
+      "summary": "Multiple active attestations without supersession semantics (round5).",
+      "hypotheses": [
+        "Round5 adversarial finding confirms unresolved control gap."
+      ],
+      "next_actions": [
+        "Enforce one active attestation per batch and explicit superseded metadata."
+      ],
+      "eta_utc": "2026-02-28T06:30:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round5.json"
+    },
+    {
+      "blocker_id": "BLK-D2-REDTEAM-020",
+      "severity": "high",
+      "status": "open",
+      "blocking_scope": "day_close",
+      "owner": "Data Engineer",
+      "summary": "Stale governance evidence pointers after remediations (round5).",
+      "hypotheses": [
+        "Round5 adversarial finding confirms unresolved control gap."
+      ],
+      "next_actions": [
+        "Align gate/blocker evidence pointers to round5 and mark prior findings superseded."
+      ],
+      "eta_utc": "2026-02-28T06:30:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round5.json"
+    },
+    {
+      "blocker_id": "BLK-D2-REDTEAM-021",
+      "severity": "medium",
+      "status": "open",
+      "blocking_scope": "day_close",
+      "owner": "Data Engineer",
+      "summary": "Adjudication quality heuristics/waiver controls missing (round5).",
+      "hypotheses": [
+        "Round5 adversarial finding confirms unresolved control gap."
+      ],
+      "next_actions": [
+        "Enable VAL-ADJ-QUALITY-001 and profile thresholds/waiver path."
+      ],
+      "eta_utc": "2026-02-28T06:30:00Z",
+      "evidence_artifact": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round5.json"
+    }
+  ]
+}

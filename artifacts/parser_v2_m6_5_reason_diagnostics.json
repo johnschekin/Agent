@@ -1,0 +1,37 @@
+{
+  "rows": 2600,
+  "section_status_counts": {
+    "review": 1265,
+    "abstain": 1325,
+    "accepted": 10
+  },
+  "node_status_counts": {
+    "review": 485568,
+    "accepted": 417037
+  },
+  "top_section_reason_codes": [
+    [
+      "low_margin",
+      2590
+    ],
+    [
+      "xref_conflict",
+      1926
+    ],
+    [
+      "insufficient_context",
+      1325
+    ]
+  ],
+  "top_node_reason_codes": [
+    [
+      "low_margin",
+      484909
+    ],
+    [
+      "xref_conflict",
+      659
+    ]
+  ],
+  "avg_id_overlap_ratio": 0.108256
+}

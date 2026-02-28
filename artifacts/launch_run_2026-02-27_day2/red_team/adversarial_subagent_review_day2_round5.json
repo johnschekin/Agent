@@ -1,0 +1,66 @@
+{
+  "schema_version": "red-team-adversarial-subagent-review-v1",
+  "day_id": "day2",
+  "review_mode": "adversarial_subagent",
+  "subagent_id": "019ca0db-6251-74e1-9857-7190ec1ae533",
+  "subagent_nickname": "Feynman",
+  "adversarial_findings": [
+    {
+      "finding_id": "RT-D2-R5-001",
+      "severity": "critical",
+      "summary": "Filename migration map contains a hash-level provenance error: mapped new_path attestation hash pointed to old bytes.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/adjudication/filename_migration_map_round2_to_rowsetA20.json:16",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/adjudication/filename_migration_map_round2_to_rowsetA20.json:17",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/adjudication/filename_migration_map_round2_to_rowsetA20.json:18"
+      ],
+      "risk": "Audit replay can bind renamed evidence to incorrect bytes.",
+      "required_action": "Regenerate migration map with old_sha256/new_sha256 and enforce via validator.",
+      "status_after_review": "open"
+    },
+    {
+      "finding_id": "RT-D2-R5-002",
+      "severity": "high",
+      "summary": "Multiple attestation artifacts existed for one batch without supersession semantics.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/adjudication/manual_adjudication_attestation_train40_0001_0020.json:3",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/adjudication/manual_adjudication_attestation_train40_rowsetA20.json:3"
+      ],
+      "risk": "Conflicting provenance statements for one batch.",
+      "required_action": "Define active vs superseded attestation semantics and enforce one active attestation per batch.",
+      "status_after_review": "open"
+    },
+    {
+      "finding_id": "RT-D2-R5-003",
+      "severity": "high",
+      "summary": "Governance evidence pointers were stale versus remediated bytes.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_gate_summary.json:15",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_blocker_register.json:249"
+      ],
+      "risk": "Decisions can be made from stale fail evidence after remediation.",
+      "required_action": "Advance gate/blocker pointers to round5 artifact and mark superseded findings explicitly.",
+      "status_after_review": "open"
+    },
+    {
+      "finding_id": "RT-D2-R5-004",
+      "severity": "medium",
+      "summary": "Training-data quality heuristics/waiver controls were missing.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/adjudication/manual_adjudication_batch_train40_rowsetA20.jsonl:1",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/adjudication/manual_reasoning_train40_rowsetA20.jsonl:1"
+      ],
+      "risk": "Template-heavy adjudication quality can pass without explicit controls.",
+      "required_action": "Add quality heuristics + waiver path to validator profile and checks.",
+      "status_after_review": "open"
+    }
+  ],
+  "verified": [
+    "Validator exit-code artifacts are both 0.",
+    "Queue statuses are decision-specific.",
+    "Dirty-worktree snapshot exists and is hashed in manifest."
+  ],
+  "verdict": "fail",
+  "completed_at": "2026-02-27T20:51:21+00:00",
+  "generated_at": "2026-02-27T20:54:35.286914+00:00"
+}

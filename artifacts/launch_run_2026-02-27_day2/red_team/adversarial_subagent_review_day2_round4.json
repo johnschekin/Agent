@@ -1,0 +1,79 @@
+{
+  "schema_version": "red-team-adversarial-subagent-review-v1",
+  "day_id": "day2",
+  "review_mode": "adversarial_subagent",
+  "subagent_id": "019ca0d1-6498-7580-bda3-9e44308c4654",
+  "subagent_nickname": "Volta",
+  "adversarial_findings": [
+    {
+      "finding_id": "RT-D2-R4-001",
+      "severity": "critical",
+      "summary": "Integrity-control mismatch: contract text says artifact index should cover all produced artifacts, but enforcement is narrowed to manifest outputs, leaving multiple in-bundle files outside index hashing.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/plans/hybrid_ml_parser_day_bundle_validator_spec_2026-02-27.md:41",
+        "/Users/johnchtchekine/Projects/Agent/config/day_bundle_validator/day2_day5_governance_profile.json:113",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/validate_day_bundle.exit_code:1",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/validate_manual_adjudication_log.exit_code:1",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/clean_source/worktree_info.json:1",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/artifact_index.json:4"
+      ],
+      "risk": "Unindexed governance/provenance files can be altered without tripping index-based integrity checks.",
+      "required_action": "Enforce full run-dir index coverage (or a strict explicit allowlist) and fail validation when any in-scope produced artifact is unindexed.",
+      "status_after_review": "open"
+    },
+    {
+      "finding_id": "RT-D2-R4-002",
+      "severity": "high",
+      "summary": "Dirty-worktree provenance is under-specified: run is marked dirty, but recorded clean-source evidence captures only commit SHA and no dirty-file/diff fingerprint.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_run_manifest.json:10",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_canonical_selection_policy.json:5",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/clean_source/worktree_info.json:2",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/clean_source/worktree_info.json:6"
+      ],
+      "risk": "Exact source state used for the run cannot be reconstructed or independently verified.",
+      "required_action": "Record and hash dirty-state evidence (e.g., git status --porcelain plus patch/diff hash artifact) and include it in manifest/index.",
+      "status_after_review": "open"
+    },
+    {
+      "finding_id": "RT-D2-R4-003",
+      "severity": "high",
+      "summary": "Queue linkage semantics can mask uncertainty: rows adjudicated as review or abstain are still marked status=adjudicated in queue updates.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/adjudication/manual_adjudication_batch_train40_rowsetA20.jsonl:2",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/adjudication/manual_adjudication_batch_train40_rowsetA20.jsonl:3",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/adjudication/manual_adjudication_batch_train40_rowsetA20.jsonl:20",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/adjudication/p0_adjudication_queue_train40_rowsetA20_updates.jsonl:2",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/adjudication/p0_adjudication_queue_train40_rowsetA20_updates.jsonl:3",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/adjudication/p0_adjudication_queue_train40_rowsetA20_updates.jsonl:20"
+      ],
+      "risk": "Unresolved labels may be operationally treated as finalized training data.",
+      "required_action": "Introduce distinct queue statuses for accepted, review, and abstain, and add validator checks that prevent unresolved rows from being marked fully adjudicated.",
+      "status_after_review": "open"
+    },
+    {
+      "finding_id": "RT-D2-R4-004",
+      "severity": "medium",
+      "summary": "Historical red-team evidence provenance is stale: round2 cites obsolete adjudication filenames that do not match current bundle artifact naming.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round2.json:48",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round2.json:59",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_run_manifest.json:45",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_run_manifest.json:46",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/artifact_index.json:11",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/artifact_index.json:21"
+      ],
+      "risk": "Audit replay can fail or become ambiguous when cited evidence paths drift from current immutable artifact names.",
+      "required_action": "Add immutable filename migration mapping (old->new with hashes) or preserve archived old-path artifacts referenced by historical reports.",
+      "status_after_review": "open"
+    }
+  ],
+  "verified": [
+    "Gate state is explicitly non-closeable: status=fail, red_team_status=in_review, red_team_verdict=fail.",
+    "Manifest command exit codes align with .exit_code artifacts (validate_manual_adjudication_log=0, validate_day_bundle=0).",
+    "Adjudication batch, manual reasoning, and queue-update artifacts each contain 20 rows."
+  ],
+  "verdict": "fail",
+  "completed_at": "2026-02-27T20:40:46+00:00",
+  "generated_at": "2026-02-27T20:43:34.606267+00:00"
+}

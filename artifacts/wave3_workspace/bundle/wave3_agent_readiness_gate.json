@@ -1,0 +1,109 @@
+{
+  "artifact_version": "1.2.0",
+  "generated_at_utc": "2026-02-27T07:15:53Z",
+  "git_sha": "0f4a6a3",
+  "scope": "Agent -> Neutron Wave 3 handoff readiness",
+  "overall_status": "pass",
+  "gates": [
+    {
+      "id": "P0",
+      "name": "Contract freeze and decision artifacts",
+      "status": "pass",
+      "evidence": [
+        "AGENT_WAVE3_READINESS_PLAN.md",
+        "docs/contracts/ids-v1.md",
+        "docs/contracts/evidence-handoff-v1.md",
+        "docs/contracts/link-authority-v1.md"
+      ]
+    },
+    {
+      "id": "P1",
+      "name": "Deterministic anchors and canonical ID contract",
+      "status": "pass",
+      "evidence": [
+        "scripts/bulk_family_linker.py",
+        "scripts/evidence_collector.py",
+        "scripts/export_labeled_data.py",
+        "tests/test_bulk_family_linker.py",
+        "tests/test_evidence_collector.py",
+        "tests/test_export_labeled_data.py"
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "Producer lineage and policy strictness",
+      "status": "pass",
+      "evidence": [
+        "scripts/evidence_collector.py",
+        "scripts/export_labeled_data.py",
+        "src/agent/link_store.py",
+        "tests/test_link_store.py",
+        "tests/test_export_labeled_data.py"
+      ]
+    },
+    {
+      "id": "P3",
+      "name": "Wave3 handoff bundle generation",
+      "status": "pass",
+      "evidence": [
+        "data/ontology/r36a_production_ontology_v2.5.1.json",
+        "artifacts/wave3_workspace/results/wave3_labeled.jsonl",
+        "artifacts/wave3_workspace/results/wave3_labeled.manifest.json"
+      ]
+    }
+  ],
+  "command_results": [
+    {
+      "command": "python3 -m pytest tests/test_export_labeled_data.py -q",
+      "exit_code": 0,
+      "summary": "8 passed"
+    },
+    {
+      "command": "python3 -m pytest tests/test_evidence_collector.py -q",
+      "exit_code": 0,
+      "summary": "6 passed"
+    },
+    {
+      "command": "python3 -m pytest tests/test_link_store.py -q -p no:cacheprovider",
+      "exit_code": 0,
+      "summary": "120 passed"
+    },
+    {
+      "command": "python3 -m pytest tests/test_bulk_family_linker.py -q -p no:cacheprovider",
+      "exit_code": 0,
+      "summary": "74 passed"
+    },
+    {
+      "command": "python3 scripts/bulk_family_linker.py --db corpus_index/corpus.duckdb --links-db corpus_index/links.duckdb --dry-run --family debt_capacity.indebtedness --strict-ontology",
+      "exit_code": 0,
+      "summary": "668 candidates, conflict matrix=241 pairs"
+    },
+    {
+      "command": "python3 scripts/evidence_collector.py --matches artifacts/wave3_workspace/canary/bulk_linker_candidates_canary25.json --concept-id debt_capacity.indebtedness --workspace artifacts/wave3_workspace/canary --schema-version evidence_v3 --corpus-version 0.2.0 --corpus-snapshot-id ray_v2_corpus_build_20260227T041350Z_4e318cf8 --parser-version parser-v0.1.0 --ontology-version 2.5.1 --ruleset-version ruleset-aadfd6a9ce53a9f6 --git-sha 06a2398204cfdd545e27009583196f3702f25f3f",
+      "exit_code": 0,
+      "summary": "25 evidence_v3 rows emitted"
+    },
+    {
+      "command": "python3 scripts/export_labeled_data.py --inputs artifacts/wave3_workspace/canary/evidence/debt_capacity.indebtedness_20260227T070711.jsonl --output-prefix artifacts/wave3_workspace/results/wave3_labeled --format jsonl --contract-format wave3-handoff --dedupe",
+      "exit_code": 0,
+      "summary": "rows_exported=25, manifest schema=labeled_export_v2"
+    },
+    {
+      "command": "contract sanity script over artifacts/wave3_workspace/results/wave3_labeled.jsonl",
+      "exit_code": 0,
+      "summary": "rows=25, bad_count=0 for required lineage + canonical formulas"
+    }
+  ],
+  "closed_findings": [
+    "Strict required version lineage fields resolved or export fails closed",
+    "Both document_id and doc_id required in exported wave3 rows",
+    "chunk_id/section_reference_key/clause_key formula validation enforced at export and collector boundaries",
+    "policy_decision enum + policy_reasons invariants enforced",
+    "ontology_version consistency enforced for wave3 export sets"
+  ],
+  "open_p0_p1_findings": [],
+  "remaining_risks": [
+    "Parser CI gate is temporarily disabled during parser refactor and must be re-enabled before release freeze.",
+    "Current handoff bundle is canary-scope (25 rows); full-corpus export should be run for final production handoff."
+  ]
+}

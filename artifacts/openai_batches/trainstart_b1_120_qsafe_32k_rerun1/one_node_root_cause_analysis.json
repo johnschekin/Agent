@@ -1,0 +1,225 @@
+{
+  "summary": {
+    "one_node_rows": 8,
+    "decision_counts": {
+      "accepted": 7,
+      "review": 1
+    },
+    "inferred_driver_counts": {
+      "offset_uncertainty": 7,
+      "conservative_root_only_strategy": 8,
+      "formatting_noise": 5,
+      "conservative_seed_bias": 8
+    }
+  },
+  "rows": [
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0043",
+      "decision": "accepted",
+      "category": "high_letter_continuation",
+      "node_count": 1,
+      "reason_codes": [
+        "CONSERVATIVE_ROOT_ONLY",
+        "INLINE_LIST_NOT_STRUCTURAL",
+        "PAGINATION_ARTIFACTS_PRESENT"
+      ],
+      "rationale": "Lettered subclauses (a)-(c) are followed by unlettered continuation paragraphs (conference call; electronic delivery; Public Lender materials) and an inline (w)-(z) list within a single sentence. Pagination artifacts (104, 105) and layout markers increase risk of span misalignment. To ensure precision and avoid overlabeling inline items, a single root section node covering the full section is provided.",
+      "seed_gold_decision": "review",
+      "seed_reason_codes": [
+        "REV_INLINE_CONTINUATION_SUSPECTED"
+      ],
+      "raw_text_char_len": 8773,
+      "alpha_markers": 19,
+      "roman_markers": 6,
+      "section_mentions": 6,
+      "page_artifact_hits": 2,
+      "inferred_drivers": [
+        "offset_uncertainty",
+        "conservative_root_only_strategy",
+        "formatting_noise",
+        "conservative_seed_bias"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0052",
+      "decision": "accepted",
+      "category": "high_letter_continuation",
+      "node_count": 1,
+      "reason_codes": [
+        "TOP_LEVEL_SECTION_ONLY",
+        "OFFSET_CERTAINTY_PRIORITY"
+      ],
+      "rationale": "Subsections (a)-(f) and nested lists are present, but precise internal span indices cannot be guaranteed without tool-based offset verification; a single top-level section node with exact 0..length span is provided to ensure offset accuracy.",
+      "seed_gold_decision": "review",
+      "seed_reason_codes": [
+        "REV_INLINE_CONTINUATION_SUSPECTED"
+      ],
+      "raw_text_char_len": 15544,
+      "alpha_markers": 32,
+      "roman_markers": 20,
+      "section_mentions": 12,
+      "page_artifact_hits": 0,
+      "inferred_drivers": [
+        "offset_uncertainty",
+        "conservative_root_only_strategy",
+        "conservative_seed_bias"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0055",
+      "decision": "review",
+      "category": "high_letter_continuation",
+      "node_count": 1,
+      "reason_codes": [
+        "REV_BOUNDARY_AMBIGUITY",
+        "REV_INLINE_CONTINUATION_SUSPECTED"
+      ],
+      "rationale": "Clear top-level section boundary is identifiable, but there is unresolved ambiguity on whether trailing allocation and cash-collateral paragraphs are part of subsection (d) or free-standing continuations of Section 2.05, and whether embedded markers (X)/(Y) in 2.05(b)(v) and (i)/(ii) in 2.05(b)(vii) merit structural nodes. Inline pagination artifacts also complicate precise sub-boundary placement.",
+      "seed_gold_decision": "review",
+      "seed_reason_codes": [
+        "REV_INLINE_CONTINUATION_SUSPECTED"
+      ],
+      "raw_text_char_len": 25918,
+      "alpha_markers": 86,
+      "roman_markers": 57,
+      "section_mentions": 49,
+      "page_artifact_hits": 6,
+      "inferred_drivers": [
+        "offset_uncertainty",
+        "conservative_root_only_strategy",
+        "formatting_noise",
+        "conservative_seed_bias"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0093",
+      "decision": "accepted",
+      "category": "xref_vs_structural",
+      "node_count": 1,
+      "reason_codes": [
+        "CLEAR_SECTION_WITH_SUBCLAUSES",
+        "ROOT_SPAN_ONLY_TO_AVOID_OFFSET_ERROR"
+      ],
+      "rationale": "Section 2.09 contains clear lettered subclauses (a)\u2013(i); cross-references (e.g., to Section 2.10) are inline and not treated as structural. Due to uncertain precise character offsets amid extensive whitespace, a single root node spanning the full section is provided to ensure accurate boundaries without introducing erroneous sub-spans.",
+      "seed_gold_decision": "abstain",
+      "seed_reason_codes": [
+        "ABS_XREF_STRUCTURAL_CONFLICT"
+      ],
+      "raw_text_char_len": 3456,
+      "alpha_markers": 15,
+      "roman_markers": 1,
+      "section_mentions": 11,
+      "page_artifact_hits": 0,
+      "inferred_drivers": [
+        "offset_uncertainty",
+        "conservative_root_only_strategy",
+        "formatting_noise",
+        "conservative_seed_bias"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0095",
+      "decision": "accepted",
+      "category": "xref_vs_structural",
+      "node_count": 1,
+      "reason_codes": [
+        "STRUCTURE_TOP_LEVEL_ONLY",
+        "XREF_INLINE_IGNORED",
+        "SPAN_PRECISION_PRIORITY"
+      ],
+      "rationale": "Clear top-level section header is present. While subparagraphs (a)-(f) and sub-items (i)-(iii) appear, exact offsets are uncertain given pagination artifacts and inline cross-references; to ensure precision and avoid mislabeling, only the reliable top-level section node is emitted.",
+      "seed_gold_decision": "abstain",
+      "seed_reason_codes": [
+        "ABS_XREF_STRUCTURAL_CONFLICT"
+      ],
+      "raw_text_char_len": 6172,
+      "alpha_markers": 20,
+      "roman_markers": 25,
+      "section_mentions": 5,
+      "page_artifact_hits": 2,
+      "inferred_drivers": [
+        "offset_uncertainty",
+        "conservative_root_only_strategy",
+        "formatting_noise",
+        "conservative_seed_bias"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0104",
+      "decision": "accepted",
+      "category": "xref_vs_structural",
+      "node_count": 1,
+      "reason_codes": [
+        "XREFS_NOT_STRUCTURAL",
+        "INLINE_ENUM_NONSTRUCT",
+        "STRUCT_TOP_LEVEL_ONLY"
+      ],
+      "rationale": "Section 7.9 is a single clause with lettered subclauses (a)-(g). Cross-references within the text (e.g., to subsections and Section 7.1) are not structural. Only the top-level section block is labeled; inline roman numerals are treated as non-structural alternatives.",
+      "seed_gold_decision": "abstain",
+      "seed_reason_codes": [
+        "ABS_XREF_STRUCTURAL_CONFLICT"
+      ],
+      "raw_text_char_len": 6544,
+      "alpha_markers": 11,
+      "roman_markers": 0,
+      "section_mentions": 0,
+      "page_artifact_hits": 1,
+      "inferred_drivers": [
+        "conservative_root_only_strategy",
+        "conservative_seed_bias"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0112",
+      "decision": "accepted",
+      "category": "xref_vs_structural",
+      "node_count": 1,
+      "reason_codes": [
+        "PRECISION_OVER_RECALL",
+        "XREFS_IGNORED"
+      ],
+      "rationale": "Section 7.03 is a clean covenant with enumerated subclauses (a)-(k) and inline cross-references. To avoid offset errors while respecting that cross-references are not structural, a single top-level section node spanning the full section is provided with high confidence.",
+      "seed_gold_decision": "abstain",
+      "seed_reason_codes": [
+        "ABS_XREF_STRUCTURAL_CONFLICT"
+      ],
+      "raw_text_char_len": 2234,
+      "alpha_markers": 14,
+      "roman_markers": 3,
+      "section_mentions": 6,
+      "page_artifact_hits": 0,
+      "inferred_drivers": [
+        "offset_uncertainty",
+        "conservative_root_only_strategy",
+        "conservative_seed_bias"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0119",
+      "decision": "accepted",
+      "category": "xref_vs_structural",
+      "node_count": 1,
+      "reason_codes": [
+        "STRUCT_BLOCK_LIST_PRESENT",
+        "INLINE_ENUMS_NONSTRUCTURAL",
+        "CONSERVATIVE_SPAN_SCOPE"
+      ],
+      "rationale": "Section 8.3 contains a clear chapeau with a block list of exceptions lettered (a)-(i). Cross-references and roman numerals within items are inline and non-structural. To avoid potential misalignment of precise offsets in this long passage with embedded pagination markers, a single top-level section node spanning the entire section is provided for precision.",
+      "seed_gold_decision": "abstain",
+      "seed_reason_codes": [
+        "ABS_XREF_STRUCTURAL_CONFLICT"
+      ],
+      "raw_text_char_len": 9259,
+      "alpha_markers": 14,
+      "roman_markers": 1,
+      "section_mentions": 0,
+      "page_artifact_hits": 2,
+      "inferred_drivers": [
+        "offset_uncertainty",
+        "conservative_root_only_strategy",
+        "formatting_noise",
+        "conservative_seed_bias"
+      ]
+    }
+  ]
+}

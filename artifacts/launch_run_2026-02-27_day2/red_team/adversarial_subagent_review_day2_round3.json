@@ -1,0 +1,75 @@
+{
+  "schema_version": "red-team-adversarial-subagent-review-v1",
+  "day_id": "day2",
+  "review_mode": "adversarial_subagent",
+  "subagent_id": "019ca0ca-03cc-76f0-8fce-7f361ce95e66",
+  "subagent_nickname": "Lorentz",
+  "adversarial_findings": [
+    {
+      "finding_id": "RT-D2-R3-001",
+      "severity": "critical",
+      "summary": "artifact_index does not cover all manifest-declared output artifacts, leaving declared outputs outside hash-index integrity coverage.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_run_manifest.json:44",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_run_manifest.json:48",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_run_manifest.json:50",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_run_manifest.json:55",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/artifact_index.json:4",
+        "/Users/johnchtchekine/Projects/Agent/plans/hybrid_ml_parser_day_bundle_validator_spec_2026-02-27.md:41"
+      ],
+      "risk": "Post-run mutation or substitution of unindexed outputs can evade forensic hash verification and break reproducibility claims.",
+      "required_action": "Enforce 1:1 coverage between manifest output artifact paths and artifact_index entries; fail validation when any declared output is unindexed.",
+      "status_after_review": "open"
+    },
+    {
+      "finding_id": "RT-D2-R3-002",
+      "severity": "high",
+      "summary": "Active round-2 red-team artifact cites obsolete adjudication filenames that are not the current bundle artifacts, so the cited evidence set is stale.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round2.json:48",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round2.json:59",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_run_manifest.json:45",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_run_manifest.json:46",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/artifact_index.json:31"
+      ],
+      "risk": "Governance decisions are being driven by a fail artifact whose evidence paths no longer map cleanly to the current reviewed bytes.",
+      "required_action": "Re-run adversarial review against current rowsetA20 artifact paths and update gate pointer to the new evidence-backed red-team report.",
+      "status_after_review": "open"
+    },
+    {
+      "finding_id": "RT-D2-R3-003",
+      "severity": "medium",
+      "summary": "Retrospective claims placeholder witness cleanup, but adjudication/reasoning rows still contain ellipsis placeholders.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day2_retrospective.md:12",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/adjudication/manual_reasoning_train40_rowsetA20.jsonl:10",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/adjudication/manual_adjudication_batch_train40_rowsetA20.jsonl:10"
+      ],
+      "risk": "Narrative-to-artifact mismatch weakens trust, and placeholder-heavy witness text can degrade training-data clarity.",
+      "required_action": "Remove placeholder ellipses from witness fields or explicitly mark truncation policy and reissue retrospective claims after verification.",
+      "status_after_review": "open"
+    },
+    {
+      "finding_id": "RT-D2-R3-004",
+      "severity": "high",
+      "summary": "Manual-authorship provenance is still attestation-heavy: command_log records attestations and validators but not concrete creation lineage for adjudication files.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/command_log.txt:1",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/command_log.txt:4",
+        "/Users/johnchtchekine/Projects/Agent/docs/operations/manual_adjudication_protocol_v1.md:20",
+        "/Users/johnchtchekine/Projects/Agent/docs/operations/manual_adjudication_protocol_v1.md:21"
+      ],
+      "risk": "A malicious or accidental pre-validation rewrite could be hard to detect with only post-hoc attestations and no write-chain evidence.",
+      "required_action": "Capture signed per-artifact lineage events (writer, command/action, timestamp, file hash) for batch/reasoning/queue-update creation and make validator enforce them.",
+      "status_after_review": "open"
+    }
+  ],
+  "verified": [
+    "Gate is explicitly failed and still in adversarial in_review state with red_team_verdict=fail.",
+    "Canonical diagnostic placeholders are explicitly marked not_run_day2.",
+    "Adjudication batch, reasoning, and queue update artifacts each contain 20 rows with 1:1 row linkage and split=train."
+  ],
+  "verdict": "fail",
+  "completed_at": "2026-02-27T20:30:58+00:00",
+  "generated_at": "2026-02-27T20:34:34.495588+00:00"
+}

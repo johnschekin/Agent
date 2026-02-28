@@ -1,0 +1,27 @@
+{
+  "schema_version": "day1-clean-source-comparison-v1",
+  "run_id": "launch_run_2026-02-27_day1",
+  "commit_sha": "0f4a6a350551d0b22036ff723373598bd4a5a6b9",
+  "dirty_workspace": {
+    "is_dirty": true,
+    "replay_status": "fail",
+    "replay_failed_fixtures": 56,
+    "replay_exit_code": 1
+  },
+  "clean_source": {
+    "worktree_path": "/tmp/agent_day1_clean_repro",
+    "replay_status": "pass",
+    "replay_failed_fixtures": 0,
+    "replay_exit_code": 0
+  },
+  "guardrail_parent_exit_codes": {
+    "dirty": 1,
+    "clean": 1
+  },
+  "conclusion": "Canonical source-state replay is pass; dirty-workspace replay fail is non-canonical and attributed to local workspace drift.",
+  "canonical_artifacts": {
+    "replay_report": "artifacts/launch_run_2026-02-27_day1/canonical/replay_gold_fixtures.json",
+    "parent_guardrail_report": "artifacts/launch_run_2026-02-27_day1/canonical/edge_case_clause_parent_guardrail.json"
+  },
+  "enforced_by": "artifacts/launch_run_2026-02-27_day1/day1_canonical_selection_policy.json"
+}

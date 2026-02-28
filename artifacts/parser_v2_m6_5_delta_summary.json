@@ -1,0 +1,147 @@
+{
+  "slices": {
+    "fixtures500": {
+      "old": {
+        "processed": 500,
+        "counts": {
+          "accepted": 2,
+          "review": 34,
+          "abstain": 464
+        },
+        "avg_id_overlap_ratio": 0.107733
+      },
+      "new": {
+        "processed": 500,
+        "counts": {
+          "accepted": 3,
+          "review": 242,
+          "abstain": 255
+        },
+        "avg_id_overlap_ratio": 0.111952
+      },
+      "delta": {
+        "accepted": 1,
+        "review": 208,
+        "abstain": -209,
+        "avg_id_overlap_ratio": 0.004219
+      }
+    },
+    "candidate1000": {
+      "old": {
+        "processed": 1000,
+        "counts": {
+          "accepted": 5,
+          "review": 62,
+          "abstain": 933
+        },
+        "avg_id_overlap_ratio": 0.120448
+      },
+      "new": {
+        "processed": 1000,
+        "counts": {
+          "accepted": 7,
+          "review": 501,
+          "abstain": 492
+        },
+        "avg_id_overlap_ratio": 0.122491
+      },
+      "delta": {
+        "accepted": 2,
+        "review": 439,
+        "abstain": -441,
+        "avg_id_overlap_ratio": 0.002043
+      }
+    },
+    "hard1000": {
+      "old": {
+        "processed": 1000,
+        "counts": {
+          "accepted": 0,
+          "review": 12,
+          "abstain": 988
+        },
+        "avg_id_overlap_ratio": 0.087432
+      },
+      "new": {
+        "processed": 1000,
+        "counts": {
+          "accepted": 0,
+          "review": 473,
+          "abstain": 527
+        },
+        "avg_id_overlap_ratio": 0.086579
+      },
+      "delta": {
+        "accepted": 0,
+        "review": 461,
+        "abstain": -461,
+        "avg_id_overlap_ratio": -0.000853
+      }
+    },
+    "edgecases100": {
+      "old": {
+        "processed": 100,
+        "counts": {
+          "accepted": 0,
+          "review": 4,
+          "abstain": 96
+        },
+        "avg_id_overlap_ratio": 0.176482
+      },
+      "new": {
+        "processed": 100,
+        "counts": {
+          "accepted": 0,
+          "review": 49,
+          "abstain": 51
+        },
+        "avg_id_overlap_ratio": 0.164202
+      },
+      "delta": {
+        "accepted": 0,
+        "review": 45,
+        "abstain": -45,
+        "avg_id_overlap_ratio": -0.01228
+      }
+    }
+  },
+  "aggregate": {
+    "old": {
+      "processed": 2600,
+      "counts": {
+        "accepted": 7,
+        "review": 112,
+        "abstain": 2481
+      },
+      "rates": {
+        "accepted": 0.002692,
+        "review": 0.043077,
+        "abstain": 0.954231
+      },
+      "avg_id_overlap_ratio": 0.107459
+    },
+    "new": {
+      "processed": 2600,
+      "counts": {
+        "accepted": 10,
+        "review": 1265,
+        "abstain": 1325
+      },
+      "rates": {
+        "accepted": 0.003846,
+        "review": 0.486538,
+        "abstain": 0.509615
+      },
+      "avg_id_overlap_ratio": 0.108256
+    },
+    "delta": {
+      "accepted": 3,
+      "review": 1153,
+      "abstain": -1156,
+      "accepted_rate": 0.001154,
+      "review_rate": 0.443461,
+      "abstain_rate": -0.444616,
+      "avg_id_overlap_ratio": 0.000797
+    }
+  }
+}

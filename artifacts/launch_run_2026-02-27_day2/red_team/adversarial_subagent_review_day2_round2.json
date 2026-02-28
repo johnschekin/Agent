@@ -1,0 +1,84 @@
+{
+  "schema_version": "red-team-adversarial-subagent-review-v1",
+  "day_id": "day2",
+  "review_mode": "adversarial_subagent",
+  "subagent_id": "019ca0bb-8afe-7273-a3eb-147abaccb0a1",
+  "subagent_nickname": "Sagan",
+  "adversarial_findings": [
+    {
+      "finding_id": "RT-D2-R2-001",
+      "severity": "critical",
+      "summary": "artifact_index stale hash for day_validator_report.json due post-index validator write.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/artifact_index.json",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_validator_report.json"
+      ],
+      "risk": "Forensic reproducibility breaks when index hashes diverge from bytes.",
+      "required_action": "Prevent mutable validator output from invalidating indexed bytes; enforce canonical-primary index coverage.",
+      "status_after_review": "open"
+    },
+    {
+      "finding_id": "RT-D2-R2-002",
+      "severity": "high",
+      "summary": "Canonical primary outputs were not all represented in artifact_index.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_canonical_selection_policy.json",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/artifact_index.json"
+      ],
+      "risk": "Primary governance artifacts can bypass hash-level integrity checks.",
+      "required_action": "Require artifact_index coverage for canonical primary outputs.",
+      "status_after_review": "open"
+    },
+    {
+      "finding_id": "RT-D2-R2-003",
+      "severity": "high",
+      "summary": "Blockers were marked closed without a post-remediation adversarial artifact proving closure.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_blocker_register.json"
+      ],
+      "risk": "Governance state can overstate remediation completion.",
+      "required_action": "Use re-attributed/open status until closure is validated by a subsequent adversarial review artifact.",
+      "status_after_review": "open"
+    },
+    {
+      "finding_id": "RT-D2-R2-004",
+      "severity": "high",
+      "summary": "Batch filename range and referenced IDs diverged after row substitution.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/adjudication/manual_adjudication_batch_train40_0001_0020.jsonl"
+      ],
+      "risk": "Lineage ambiguity and confusion in downstream audits.",
+      "required_action": "Rename artifacts to non-range rowset IDs or keep strict filename-to-row-range consistency.",
+      "status_after_review": "open"
+    },
+    {
+      "finding_id": "RT-D2-R2-005",
+      "severity": "medium",
+      "summary": "Some witness text contained commentary-like placeholders rather than direct source snippets.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/adjudication/manual_reasoning_train40_0001_0020.jsonl"
+      ],
+      "risk": "Training-signal quality degrades when witness fields contain non-source prose.",
+      "required_action": "Constrain witness fields to source snippets only and remove placeholders/comments.",
+      "status_after_review": "open"
+    },
+    {
+      "finding_id": "RT-D2-R2-006",
+      "severity": "low",
+      "summary": "Retrospective content was stale relative to active gate and red-team status.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day2_retrospective.md",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_gate_summary.json"
+      ],
+      "risk": "Operational narrative can mislead readers about current gate state.",
+      "required_action": "Synchronize retrospective with the latest gate/red-team status after each remediation round.",
+      "status_after_review": "open"
+    }
+  ],
+  "verified": [
+    "Second adversarial review validated prior remediations and identified residual governance gaps requiring another hardening pass."
+  ],
+  "verdict": "fail",
+  "completed_at": "2026-02-27T20:25:00+00:00",
+  "generated_at": "2026-02-27T20:24:45.682291+00:00"
+}

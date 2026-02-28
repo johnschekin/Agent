@@ -1,0 +1,46 @@
+{
+  "schema_version": "red-team-adversarial-subagent-review-v1",
+  "day_id": "day3",
+  "review_mode": "adversarial_subagent",
+  "subagent_id": "019ca0ff-87e2-7980-abae-490f4bfb0ba8",
+  "adversarial_findings": [
+    {
+      "severity": "critical",
+      "summary": "Temporal provenance inconsistencies were identified in earlier day3 bundle revision.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day3/adjudication/manual_adjudication_attestation_train40_rowsetC20.json"
+      ],
+      "risk": "Chain-of-custody trust loss if timestamps are non-monotonic.",
+      "required_action": "Rebuild with monotonic timestamps and per-write lineage evidence."
+    },
+    {
+      "severity": "high",
+      "summary": "Immutable adjudication log append path was missing in earlier revision.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/docs/operations/manual_adjudication_protocol_v1.md"
+      ],
+      "risk": "Protocol drift on canonical logging.",
+      "required_action": "Append validated rows to immutable versioned log and record provenance."
+    },
+    {
+      "severity": "high",
+      "summary": "Noisy TOC/index witnesses required quarantine from training export.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day3/adjudication/manual_reasoning_train40_rowsetC20.jsonl"
+      ],
+      "risk": "Training contamination from non clause-local spans.",
+      "required_action": "Apply hard pre-filter and quarantine affected rows."
+    },
+    {
+      "severity": "medium",
+      "summary": "Red-team placeholder routing semantics were ambiguous in pre-red-team state.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day3/day_gate_summary.json"
+      ],
+      "risk": "Downstream interpretation ambiguity.",
+      "required_action": "Use explicit in-review status with concrete adversarial artifact pointer."
+    }
+  ],
+  "verdict": "fail",
+  "completed_at": "2026-02-27T21:29:58Z"
+}

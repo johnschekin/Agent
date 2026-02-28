@@ -1,0 +1,17 @@
+{
+  "schema_version": "manual-adjudication-attestation-v1",
+  "batch_id": "train40_rowsetC20",
+  "batch_path": "adjudication/manual_adjudication_batch_train40_rowsetC20.jsonl",
+  "batch_sha256": "2d6d51445a8e4aa1b989b494c4b432d97569e846cafc9c9940cd01ecb915ef58",
+  "reasoning_path": "adjudication/manual_reasoning_train40_rowsetC20.jsonl",
+  "reasoning_sha256": "4003c18f2a4c1bf116cbcf22f2176dbb606b09192e8ff001e41df7f2cad8849f",
+  "command_log_path": "command_log.txt",
+  "command_log_sha256": "897c13cadc4d5cbe435ca6eef0a483767f0377bc308fa0c83a3f790cd1831a00",
+  "queue_update_path": "adjudication/p0_adjudication_queue_train40_rowsetC20_updates.jsonl",
+  "queue_update_sha256": "dfec57b028daf2e9ddf55998262a3ee26157f06d39c71815efceed19d6efd212",
+  "attestor_id": "johnchtchekine",
+  "attested_at": "2026-02-27T20:41:00+00:00",
+  "manual_reasoning_statement": "Rows were manually reasoned and written with row-specific evidence and comparative rationale.",
+  "status": "active",
+  "updated_at": "2026-02-27T22:02:59+00:00"
+}

@@ -1,0 +1,1135 @@
+{
+  "rows": 2600,
+  "section_status_counts": {
+    "abstain": 2481,
+    "review": 112,
+    "accepted": 7
+  },
+  "section_reason_counts": [
+    [
+      "low_margin",
+      2590
+    ],
+    [
+      "xref_conflict",
+      2538
+    ],
+    [
+      "insufficient_context",
+      2481
+    ]
+  ],
+  "node_status_counts": {
+    "accepted": 307020,
+    "review": 279137
+  },
+  "node_reason_counts": [
+    [
+      "low_margin",
+      223401
+    ],
+    [
+      "xref_conflict",
+      55736
+    ]
+  ],
+  "top_categories": [
+    {
+      "category": "ambiguous_alpha_roman",
+      "count": 810,
+      "status_counts": {
+        "abstain": 790,
+        "review": 20
+      },
+      "abstain_rate": 0.975309,
+      "review_rate": 0.024691,
+      "accepted_rate": 0.0,
+      "avg_overlap": 0.02025,
+      "avg_critical_abstain_ratio": 0.616313,
+      "avg_margin_abs": 0.118286,
+      "top_reasons": [
+        [
+          "low_margin",
+          810
+        ],
+        [
+          "xref_conflict",
+          810
+        ],
+        [
+          "insufficient_context",
+          790
+        ]
+      ]
+    },
+    {
+      "category": "high_letter_continuation",
+      "count": 710,
+      "status_counts": {
+        "abstain": 706,
+        "review": 4
+      },
+      "abstain_rate": 0.994366,
+      "review_rate": 0.005634,
+      "accepted_rate": 0.0,
+      "avg_overlap": 0.152327,
+      "avg_critical_abstain_ratio": 0.628733,
+      "avg_margin_abs": 0.120421,
+      "top_reasons": [
+        [
+          "low_margin",
+          710
+        ],
+        [
+          "insufficient_context",
+          706
+        ],
+        [
+          "xref_conflict",
+          701
+        ]
+      ]
+    },
+    {
+      "category": "nonstruct_parent_chain",
+      "count": 190,
+      "status_counts": {
+        "abstain": 176,
+        "review": 14
+      },
+      "abstain_rate": 0.926316,
+      "review_rate": 0.073684,
+      "accepted_rate": 0.0,
+      "avg_overlap": 0.018372,
+      "avg_critical_abstain_ratio": 0.56505,
+      "avg_margin_abs": 0.132207,
+      "top_reasons": [
+        [
+          "low_margin",
+          190
+        ],
+        [
+          "xref_conflict",
+          190
+        ],
+        [
+          "insufficient_context",
+          176
+        ]
+      ]
+    },
+    {
+      "category": "xref_vs_structural",
+      "count": 180,
+      "status_counts": {
+        "review": 37,
+        "abstain": 138,
+        "accepted": 5
+      },
+      "abstain_rate": 0.766667,
+      "review_rate": 0.205556,
+      "accepted_rate": 0.027778,
+      "avg_overlap": 0.376731,
+      "avg_critical_abstain_ratio": 0.521942,
+      "avg_margin_abs": 0.153872,
+      "top_reasons": [
+        [
+          "low_margin",
+          172
+        ],
+        [
+          "xref_conflict",
+          156
+        ],
+        [
+          "insufficient_context",
+          138
+        ]
+      ]
+    },
+    {
+      "category": "true_root_high_letter",
+      "count": 130,
+      "status_counts": {
+        "abstain": 123,
+        "review": 7
+      },
+      "abstain_rate": 0.946154,
+      "review_rate": 0.053846,
+      "accepted_rate": 0.0,
+      "avg_overlap": 0.234585,
+      "avg_critical_abstain_ratio": 0.570029,
+      "avg_margin_abs": 0.142426,
+      "top_reasons": [
+        [
+          "low_margin",
+          130
+        ],
+        [
+          "xref_conflict",
+          130
+        ],
+        [
+          "insufficient_context",
+          123
+        ]
+      ]
+    },
+    {
+      "category": "deep_nesting_chain",
+      "count": 115,
+      "status_counts": {
+        "abstain": 103,
+        "review": 12
+      },
+      "abstain_rate": 0.895652,
+      "review_rate": 0.104348,
+      "accepted_rate": 0.0,
+      "avg_overlap": 0.014914,
+      "avg_critical_abstain_ratio": 0.541106,
+      "avg_margin_abs": 0.138162,
+      "top_reasons": [
+        [
+          "low_margin",
+          115
+        ],
+        [
+          "xref_conflict",
+          115
+        ],
+        [
+          "insufficient_context",
+          103
+        ]
+      ]
+    },
+    {
+      "category": "defined_term_boundary",
+      "count": 110,
+      "status_counts": {
+        "review": 4,
+        "abstain": 106
+      },
+      "abstain_rate": 0.963636,
+      "review_rate": 0.036364,
+      "accepted_rate": 0.0,
+      "avg_overlap": 0.098758,
+      "avg_critical_abstain_ratio": 0.582661,
+      "avg_margin_abs": 0.118211,
+      "top_reasons": [
+        [
+          "low_margin",
+          110
+        ],
+        [
+          "insufficient_context",
+          106
+        ],
+        [
+          "xref_conflict",
+          100
+        ]
+      ]
+    },
+    {
+      "category": "duplicate_collision",
+      "count": 105,
+      "status_counts": {
+        "abstain": 105
+      },
+      "abstain_rate": 1.0,
+      "review_rate": 0.0,
+      "accepted_rate": 0.0,
+      "avg_overlap": 0.013607,
+      "avg_critical_abstain_ratio": 0.664146,
+      "avg_margin_abs": 0.099762,
+      "top_reasons": [
+        [
+          "insufficient_context",
+          105
+        ],
+        [
+          "low_margin",
+          105
+        ],
+        [
+          "xref_conflict",
+          105
+        ]
+      ]
+    },
+    {
+      "category": "unknown",
+      "count": 100,
+      "status_counts": {
+        "abstain": 96,
+        "review": 4
+      },
+      "abstain_rate": 0.96,
+      "review_rate": 0.04,
+      "accepted_rate": 0.0,
+      "avg_overlap": 0.176482,
+      "avg_critical_abstain_ratio": 0.641169,
+      "avg_margin_abs": 0.117652,
+      "top_reasons": [
+        [
+          "low_margin",
+          100
+        ],
+        [
+          "insufficient_context",
+          96
+        ],
+        [
+          "xref_conflict",
+          96
+        ]
+      ]
+    },
+    {
+      "category": "formatting_noise",
+      "count": 85,
+      "status_counts": {
+        "abstain": 79,
+        "review": 6
+      },
+      "abstain_rate": 0.929412,
+      "review_rate": 0.070588,
+      "accepted_rate": 0.0,
+      "avg_overlap": 0.049505,
+      "avg_critical_abstain_ratio": 0.599325,
+      "avg_margin_abs": 0.11709,
+      "top_reasons": [
+        [
+          "low_margin",
+          85
+        ],
+        [
+          "xref_conflict",
+          81
+        ],
+        [
+          "insufficient_context",
+          79
+        ]
+      ]
+    },
+    {
+      "category": "linking_contract",
+      "count": 65,
+      "status_counts": {
+        "abstain": 59,
+        "accepted": 2,
+        "review": 4
+      },
+      "abstain_rate": 0.907692,
+      "review_rate": 0.061538,
+      "accepted_rate": 0.030769,
+      "avg_overlap": 0.264278,
+      "avg_critical_abstain_ratio": 0.597413,
+      "avg_margin_abs": 0.130544,
+      "top_reasons": [
+        [
+          "low_margin",
+          63
+        ],
+        [
+          "insufficient_context",
+          59
+        ],
+        [
+          "xref_conflict",
+          54
+        ]
+      ]
+    }
+  ],
+  "manual_audit_candidates": {
+    "abstain_high_overlap": [
+      {
+        "fixture_id": "GFV1-XREF_VS_STRUCTURAL-0176",
+        "doc_id": "cc5577ab1bf8c464",
+        "section_number": "6.06",
+        "section_key": "cc5577ab1bf8c464::6.06::GFV1-XREF_VS_STRUCTURAL-0176",
+        "category": "xref_vs_structural",
+        "status": "abstain",
+        "overlap": 0.6,
+        "critical_abstain_ratio": 0.4,
+        "margin_abs": 0.093,
+        "reason_codes": [
+          "insufficient_context",
+          "low_margin",
+          "xref_conflict"
+        ],
+        "v1_node_count": 5,
+        "v2_node_count": 3
+      },
+      {
+        "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0176",
+        "doc_id": "cc5577ab1bf8c464",
+        "section_number": "6.06",
+        "section_key": "cc5577ab1bf8c464::6.06::GFV1C-XREF_VS_STRUCTURAL-0176",
+        "category": "xref_vs_structural",
+        "status": "abstain",
+        "overlap": 0.6,
+        "critical_abstain_ratio": 0.4,
+        "margin_abs": 0.093,
+        "reason_codes": [
+          "insufficient_context",
+          "low_margin",
+          "xref_conflict"
+        ],
+        "v1_node_count": 5,
+        "v2_node_count": 3
+      },
+      {
+        "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0888",
+        "doc_id": "a132c6bdf29e708f",
+        "section_number": "4.17",
+        "section_key": "a132c6bdf29e708f::4.17::GFV1C-XREF_VS_STRUCTURAL-0888",
+        "category": "xref_vs_structural",
+        "status": "abstain",
+        "overlap": 0.6,
+        "critical_abstain_ratio": 0.4,
+        "margin_abs": 0.194,
+        "reason_codes": [
+          "insufficient_context",
+          "low_margin",
+          "xref_conflict"
+        ],
+        "v1_node_count": 5,
+        "v2_node_count": 3
+      },
+      {
+        "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0896",
+        "doc_id": "b79bfc320fdb0bd4",
+        "section_number": "2.01",
+        "section_key": "b79bfc320fdb0bd4::2.01::GFV1C-XREF_VS_STRUCTURAL-0896",
+        "category": "xref_vs_structural",
+        "status": "abstain",
+        "overlap": 0.6,
+        "critical_abstain_ratio": 0.4,
+        "margin_abs": 0.208,
+        "reason_codes": [
+          "insufficient_context",
+          "low_margin"
+        ],
+        "v1_node_count": 5,
+        "v2_node_count": 3
+      },
+      {
+        "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0897",
+        "doc_id": "bd90d320b253435b",
+        "section_number": "1.04",
+        "section_key": "bd90d320b253435b::1.04::GFV1C-XREF_VS_STRUCTURAL-0897",
+        "category": "xref_vs_structural",
+        "status": "abstain",
+        "overlap": 0.6,
+        "critical_abstain_ratio": 0.4,
+        "margin_abs": 0.18,
+        "reason_codes": [
+          "insufficient_context",
+          "low_margin",
+          "xref_conflict"
+        ],
+        "v1_node_count": 5,
+        "v2_node_count": 3
+      },
+      {
+        "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0836",
+        "doc_id": "2a9555cf0e8843a3",
+        "section_number": "2.06",
+        "section_key": "2a9555cf0e8843a3::2.06::GFV1C-XREF_VS_STRUCTURAL-0836",
+        "category": "xref_vs_structural",
+        "status": "abstain",
+        "overlap": 0.571429,
+        "critical_abstain_ratio": 0.428571,
+        "margin_abs": 0.195714,
+        "reason_codes": [
+          "insufficient_context",
+          "low_margin"
+        ],
+        "v1_node_count": 7,
+        "v2_node_count": 4
+      },
+      {
+        "fixture_id": "GFV1C-TRUE_ROOT_HIGH_LETTER-0954",
+        "doc_id": "d8dfb87be8788a14",
+        "section_number": "6.02",
+        "section_key": "d8dfb87be8788a14::6.02::GFV1C-TRUE_ROOT_HIGH_LETTER-0954",
+        "category": "true_root_high_letter",
+        "status": "abstain",
+        "overlap": 0.507463,
+        "critical_abstain_ratio": 0.421875,
+        "margin_abs": 0.182812,
+        "reason_codes": [
+          "insufficient_context",
+          "low_margin",
+          "xref_conflict"
+        ],
+        "v1_node_count": 64,
+        "v2_node_count": 37
+      },
+      {
+        "fixture_id": "GFV1-XREF_VS_STRUCTURAL-0147",
+        "doc_id": "0e3833d30e9e75b4",
+        "section_number": "2.09",
+        "section_key": "0e3833d30e9e75b4::2.09::GFV1-XREF_VS_STRUCTURAL-0147",
+        "category": "xref_vs_structural",
+        "status": "abstain",
+        "overlap": 0.5,
+        "critical_abstain_ratio": 0.5,
+        "margin_abs": 0.164062,
+        "reason_codes": [
+          "insufficient_context",
+          "low_margin",
+          "xref_conflict"
+        ],
+        "v1_node_count": 16,
+        "v2_node_count": 8
+      },
+      {
+        "fixture_id": "GFV1-XREF_VS_STRUCTURAL-0175",
+        "doc_id": "c46da1245d43d6be",
+        "section_number": "2.01",
+        "section_key": "c46da1245d43d6be::2.01::GFV1-XREF_VS_STRUCTURAL-0175",
+        "category": "xref_vs_structural",
+        "status": "abstain",
+        "overlap": 0.5,
+        "critical_abstain_ratio": 0.5,
+        "margin_abs": 0.161667,
+        "reason_codes": [
+          "insufficient_context",
+          "low_margin",
+          "xref_conflict"
+        ],
+        "v1_node_count": 12,
+        "v2_node_count": 6
+      },
+      {
+        "fixture_id": "GFV1-XREF_VS_STRUCTURAL-0186",
+        "doc_id": "0937e859c2935bef",
+        "section_number": "2.09",
+        "section_key": "0937e859c2935bef::2.09::GFV1-XREF_VS_STRUCTURAL-0186",
+        "category": "xref_vs_structural",
+        "status": "abstain",
+        "overlap": 0.5,
+        "critical_abstain_ratio": 0.5,
+        "margin_abs": 0.179167,
+        "reason_codes": [
+          "insufficient_context",
+          "low_margin",
+          "xref_conflict"
+        ],
+        "v1_node_count": 6,
+        "v2_node_count": 3
+      },
+      {
+        "fixture_id": "GFV1-LINKING_CONTRACT-0495",
+        "doc_id": "14b2c7ac1289b166",
+        "section_number": "6.08",
+        "section_key": "14b2c7ac1289b166::6.08::GFV1-LINKING_CONTRACT-0495",
+        "category": "linking_contract",
+        "status": "abstain",
+        "overlap": 0.5,
+        "critical_abstain_ratio": 0.5,
+        "margin_abs": 0.173333,
+        "reason_codes": [
+          "insufficient_context",
+          "low_margin",
+          "xref_conflict"
+        ],
+        "v1_node_count": 6,
+        "v2_node_count": 3
+      },
+      {
+        "fixture_id": "GFV1-LINKING_CONTRACT-0500",
+        "doc_id": "1afc46863c69b0b2",
+        "section_number": "6.23",
+        "section_key": "1afc46863c69b0b2::6.23::GFV1-LINKING_CONTRACT-0500",
+        "category": "linking_contract",
+        "status": "abstain",
+        "overlap": 0.5,
+        "critical_abstain_ratio": 0.5,
+        "margin_abs": 0.0775,
+        "reason_codes": [
+          "insufficient_context",
+          "low_margin",
+          "xref_conflict"
+        ],
+        "v1_node_count": 2,
+        "v2_node_count": 1
+      },
+      {
+        "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0147",
+        "doc_id": "0e3833d30e9e75b4",
+        "section_number": "2.09",
+        "section_key": "0e3833d30e9e75b4::2.09::GFV1C-XREF_VS_STRUCTURAL-0147",
+        "category": "xref_vs_structural",
+        "status": "abstain",
+        "overlap": 0.5,
+        "critical_abstain_ratio": 0.5,
+        "margin_abs": 0.164062,
+        "reason_codes": [
+          "insufficient_context",
+          "low_margin",
+          "xref_conflict"
+        ],
+        "v1_node_count": 16,
+        "v2_node_count": 8
+      },
+      {
+        "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0175",
+        "doc_id": "c46da1245d43d6be",
+        "section_number": "2.01",
+        "section_key": "c46da1245d43d6be::2.01::GFV1C-XREF_VS_STRUCTURAL-0175",
+        "category": "xref_vs_structural",
+        "status": "abstain",
+        "overlap": 0.5,
+        "critical_abstain_ratio": 0.5,
+        "margin_abs": 0.161667,
+        "reason_codes": [
+          "insufficient_context",
+          "low_margin",
+          "xref_conflict"
+        ],
+        "v1_node_count": 12,
+        "v2_node_count": 6
+      },
+      {
+        "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0186",
+        "doc_id": "0937e859c2935bef",
+        "section_number": "2.09",
+        "section_key": "0937e859c2935bef::2.09::GFV1C-XREF_VS_STRUCTURAL-0186",
+        "category": "xref_vs_structural",
+        "status": "abstain",
+        "overlap": 0.5,
+        "critical_abstain_ratio": 0.5,
+        "margin_abs": 0.179167,
+        "reason_codes": [
+          "insufficient_context",
+          "low_margin",
+          "xref_conflict"
+        ],
+        "v1_node_count": 6,
+        "v2_node_count": 3
+      },
+      {
+        "fixture_id": "GFV1C-LINKING_CONTRACT-0495",
+        "doc_id": "14b2c7ac1289b166",
+        "section_number": "6.08",
+        "section_key": "14b2c7ac1289b166::6.08::GFV1C-LINKING_CONTRACT-0495",
+        "category": "linking_contract",
+        "status": "abstain",
+        "overlap": 0.5,
+        "critical_abstain_ratio": 0.5,
+        "margin_abs": 0.173333,
+        "reason_codes": [
+          "insufficient_context",
+          "low_margin",
+          "xref_conflict"
+        ],
+        "v1_node_count": 6,
+        "v2_node_count": 3
+      },
+      {
+        "fixture_id": "GFV1C-LINKING_CONTRACT-0500",
+        "doc_id": "1afc46863c69b0b2",
+        "section_number": "6.23",
+        "section_key": "1afc46863c69b0b2::6.23::GFV1C-LINKING_CONTRACT-0500",
+        "category": "linking_contract",
+        "status": "abstain",
+        "overlap": 0.5,
+        "critical_abstain_ratio": 0.5,
+        "margin_abs": 0.0775,
+        "reason_codes": [
+          "insufficient_context",
+          "low_margin",
+          "xref_conflict"
+        ],
+        "v1_node_count": 2,
+        "v2_node_count": 1
+      },
+      {
+        "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0835",
+        "doc_id": "22d23056d66ef0e6",
+        "section_number": "2.09",
+        "section_key": "22d23056d66ef0e6::2.09::GFV1C-XREF_VS_STRUCTURAL-0835",
+        "category": "xref_vs_structural",
+        "status": "abstain",
+        "overlap": 0.5,
+        "critical_abstain_ratio": 0.5,
+        "margin_abs": 0.179167,
+        "reason_codes": [
+          "insufficient_context",
+          "low_margin",
+          "xref_conflict"
+        ],
+        "v1_node_count": 6,
+        "v2_node_count": 3
+      },
+      {
+        "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0889",
+        "doc_id": "a2cd09881b86594b",
+        "section_number": "8.19",
+        "section_key": "a2cd09881b86594b::8.19::GFV1C-XREF_VS_STRUCTURAL-0889",
+        "category": "xref_vs_structural",
+        "status": "abstain",
+        "overlap": 0.5,
+        "critical_abstain_ratio": 0.5,
+        "margin_abs": 0.179167,
+        "reason_codes": [
+          "insufficient_context",
+          "low_margin",
+          "xref_conflict"
+        ],
+        "v1_node_count": 6,
+        "v2_node_count": 3
+      },
+      {
+        "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0900",
+        "doc_id": "c22da78d095773a3",
+        "section_number": "2.01",
+        "section_key": "c22da78d095773a3::2.01::GFV1C-XREF_VS_STRUCTURAL-0900",
+        "category": "xref_vs_structural",
+        "status": "abstain",
+        "overlap": 0.5,
+        "critical_abstain_ratio": 0.5,
+        "margin_abs": 0.173333,
+        "reason_codes": [
+          "insufficient_context",
+          "low_margin",
+          "xref_conflict"
+        ],
+        "v1_node_count": 6,
+        "v2_node_count": 3
+      }
+    ],
+    "review_high_overlap": [
+      {
+        "fixture_id": "GFV1-XREF_VS_STRUCTURAL-0145",
+        "doc_id": "5c6a85bd1126707d",
+        "section_number": "8.02",
+        "section_key": "5c6a85bd1126707d::8.02::GFV1-XREF_VS_STRUCTURAL-0145",
+        "category": "xref_vs_structural",
+        "status": "review",
+        "overlap": 1.0,
+        "critical_abstain_ratio": 0.0,
+        "margin_abs": 0.3,
+        "reason_codes": [
+          "xref_conflict"
+        ],
+        "v1_node_count": 8,
+        "v2_node_count": 8
+      },
+      {
+        "fixture_id": "GFV1-DEFINED_TERM_BOUNDARY-0341",
+        "doc_id": "b79bfc320fdb0bd4",
+        "section_number": "10.09",
+        "section_key": "b79bfc320fdb0bd4::10.09::GFV1-DEFINED_TERM_BOUNDARY-0341",
+        "category": "defined_term_boundary",
+        "status": "review",
+        "overlap": 1.0,
+        "critical_abstain_ratio": 0.0,
+        "margin_abs": 0.2,
+        "reason_codes": [
+          "low_margin"
+        ],
+        "v1_node_count": 3,
+        "v2_node_count": 3
+      },
+      {
+        "fixture_id": "GFV1-DEFINED_TERM_BOUNDARY-0361",
+        "doc_id": "038c785a3a7024ba",
+        "section_number": "6.11",
+        "section_key": "038c785a3a7024ba::6.11::GFV1-DEFINED_TERM_BOUNDARY-0361",
+        "category": "defined_term_boundary",
+        "status": "review",
+        "overlap": 1.0,
+        "critical_abstain_ratio": 0.0,
+        "margin_abs": 0.15,
+        "reason_codes": [
+          "low_margin"
+        ],
+        "v1_node_count": 2,
+        "v2_node_count": 2
+      },
+      {
+        "fixture_id": "GFV1-LINKING_CONTRACT-0478",
+        "doc_id": "02a2f2c637f7f232",
+        "section_number": "7.13",
+        "section_key": "02a2f2c637f7f232::7.13::GFV1-LINKING_CONTRACT-0478",
+        "category": "linking_contract",
+        "status": "review",
+        "overlap": 1.0,
+        "critical_abstain_ratio": 0.0,
+        "margin_abs": 0.155,
+        "reason_codes": [
+          "low_margin"
+        ],
+        "v1_node_count": 2,
+        "v2_node_count": 2
+      },
+      {
+        "fixture_id": "GFV1-LINKING_CONTRACT-0494",
+        "doc_id": "111d5fea87d2c6dc",
+        "section_number": "1.13",
+        "section_key": "111d5fea87d2c6dc::1.13::GFV1-LINKING_CONTRACT-0494",
+        "category": "linking_contract",
+        "status": "review",
+        "overlap": 1.0,
+        "critical_abstain_ratio": 0.0,
+        "margin_abs": 0.155,
+        "reason_codes": [
+          "low_margin"
+        ],
+        "v1_node_count": 2,
+        "v2_node_count": 2
+      },
+      {
+        "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0145",
+        "doc_id": "5c6a85bd1126707d",
+        "section_number": "8.02",
+        "section_key": "5c6a85bd1126707d::8.02::GFV1C-XREF_VS_STRUCTURAL-0145",
+        "category": "xref_vs_structural",
+        "status": "review",
+        "overlap": 1.0,
+        "critical_abstain_ratio": 0.0,
+        "margin_abs": 0.3,
+        "reason_codes": [
+          "xref_conflict"
+        ],
+        "v1_node_count": 8,
+        "v2_node_count": 8
+      },
+      {
+        "fixture_id": "GFV1C-DEFINED_TERM_BOUNDARY-0341",
+        "doc_id": "b79bfc320fdb0bd4",
+        "section_number": "10.09",
+        "section_key": "b79bfc320fdb0bd4::10.09::GFV1C-DEFINED_TERM_BOUNDARY-0341",
+        "category": "defined_term_boundary",
+        "status": "review",
+        "overlap": 1.0,
+        "critical_abstain_ratio": 0.0,
+        "margin_abs": 0.2,
+        "reason_codes": [
+          "low_margin"
+        ],
+        "v1_node_count": 3,
+        "v2_node_count": 3
+      },
+      {
+        "fixture_id": "GFV1C-DEFINED_TERM_BOUNDARY-0361",
+        "doc_id": "038c785a3a7024ba",
+        "section_number": "6.11",
+        "section_key": "038c785a3a7024ba::6.11::GFV1C-DEFINED_TERM_BOUNDARY-0361",
+        "category": "defined_term_boundary",
+        "status": "review",
+        "overlap": 1.0,
+        "critical_abstain_ratio": 0.0,
+        "margin_abs": 0.15,
+        "reason_codes": [
+          "low_margin"
+        ],
+        "v1_node_count": 2,
+        "v2_node_count": 2
+      },
+      {
+        "fixture_id": "GFV1C-LINKING_CONTRACT-0478",
+        "doc_id": "02a2f2c637f7f232",
+        "section_number": "7.13",
+        "section_key": "02a2f2c637f7f232::7.13::GFV1C-LINKING_CONTRACT-0478",
+        "category": "linking_contract",
+        "status": "review",
+        "overlap": 1.0,
+        "critical_abstain_ratio": 0.0,
+        "margin_abs": 0.155,
+        "reason_codes": [
+          "low_margin"
+        ],
+        "v1_node_count": 2,
+        "v2_node_count": 2
+      },
+      {
+        "fixture_id": "GFV1C-LINKING_CONTRACT-0494",
+        "doc_id": "111d5fea87d2c6dc",
+        "section_number": "1.13",
+        "section_key": "111d5fea87d2c6dc::1.13::GFV1C-LINKING_CONTRACT-0494",
+        "category": "linking_contract",
+        "status": "review",
+        "overlap": 1.0,
+        "critical_abstain_ratio": 0.0,
+        "margin_abs": 0.155,
+        "reason_codes": [
+          "low_margin"
+        ],
+        "v1_node_count": 2,
+        "v2_node_count": 2
+      },
+      {
+        "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0855",
+        "doc_id": "6499d87607cda053",
+        "section_number": "2.01",
+        "section_key": "6499d87607cda053::2.01::GFV1C-XREF_VS_STRUCTURAL-0855",
+        "category": "xref_vs_structural",
+        "status": "review",
+        "overlap": 1.0,
+        "critical_abstain_ratio": 0.0,
+        "margin_abs": 0.155,
+        "reason_codes": [
+          "low_margin"
+        ],
+        "v1_node_count": 3,
+        "v2_node_count": 3
+      },
+      {
+        "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0858",
+        "doc_id": "699aab61de6d7784",
+        "section_number": "2.06",
+        "section_key": "699aab61de6d7784::2.06::GFV1C-XREF_VS_STRUCTURAL-0858",
+        "category": "xref_vs_structural",
+        "status": "review",
+        "overlap": 1.0,
+        "critical_abstain_ratio": 0.0,
+        "margin_abs": 0.3,
+        "reason_codes": [
+          "xref_conflict"
+        ],
+        "v1_node_count": 3,
+        "v2_node_count": 3
+      },
+      {
+        "fixture_id": "fixture_000041",
+        "doc_id": "f626955ff4928a9a",
+        "section_number": "7.8",
+        "section_key": "f626955ff4928a9a::7.8::fixture_000041",
+        "category": "unknown",
+        "status": "review",
+        "overlap": 1.0,
+        "critical_abstain_ratio": 0.0,
+        "margin_abs": 0.15,
+        "reason_codes": [
+          "low_margin"
+        ],
+        "v1_node_count": 1,
+        "v2_node_count": 1
+      },
+      {
+        "fixture_id": "GFV1-XREF_VS_STRUCTURAL-0150",
+        "doc_id": "1cee1324b659aec7",
+        "section_number": "2.7",
+        "section_key": "1cee1324b659aec7::2.7::GFV1-XREF_VS_STRUCTURAL-0150",
+        "category": "xref_vs_structural",
+        "status": "review",
+        "overlap": 0.888889,
+        "critical_abstain_ratio": 0.111111,
+        "margin_abs": 0.266667,
+        "reason_codes": [
+          "low_margin",
+          "xref_conflict"
+        ],
+        "v1_node_count": 9,
+        "v2_node_count": 8
+      },
+      {
+        "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0150",
+        "doc_id": "1cee1324b659aec7",
+        "section_number": "2.7",
+        "section_key": "1cee1324b659aec7::2.7::GFV1C-XREF_VS_STRUCTURAL-0150",
+        "category": "xref_vs_structural",
+        "status": "review",
+        "overlap": 0.888889,
+        "critical_abstain_ratio": 0.111111,
+        "margin_abs": 0.266667,
+        "reason_codes": [
+          "low_margin",
+          "xref_conflict"
+        ],
+        "v1_node_count": 9,
+        "v2_node_count": 8
+      },
+      {
+        "fixture_id": "GFV1-XREF_VS_STRUCTURAL-0154",
+        "doc_id": "4fe50f2ad6e21d07",
+        "section_number": "2.06",
+        "section_key": "4fe50f2ad6e21d07::2.06::GFV1-XREF_VS_STRUCTURAL-0154",
+        "category": "xref_vs_structural",
+        "status": "review",
+        "overlap": 0.857143,
+        "critical_abstain_ratio": 0.142857,
+        "margin_abs": 0.257143,
+        "reason_codes": [
+          "low_margin",
+          "xref_conflict"
+        ],
+        "v1_node_count": 7,
+        "v2_node_count": 6
+      },
+      {
+        "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0154",
+        "doc_id": "4fe50f2ad6e21d07",
+        "section_number": "2.06",
+        "section_key": "4fe50f2ad6e21d07::2.06::GFV1C-XREF_VS_STRUCTURAL-0154",
+        "category": "xref_vs_structural",
+        "status": "review",
+        "overlap": 0.857143,
+        "critical_abstain_ratio": 0.142857,
+        "margin_abs": 0.257143,
+        "reason_codes": [
+          "low_margin",
+          "xref_conflict"
+        ],
+        "v1_node_count": 7,
+        "v2_node_count": 6
+      },
+      {
+        "fixture_id": "GFV1-XREF_VS_STRUCTURAL-0178",
+        "doc_id": "ddafa0961bb34725",
+        "section_number": "2.06",
+        "section_key": "ddafa0961bb34725::2.06::GFV1-XREF_VS_STRUCTURAL-0178",
+        "category": "xref_vs_structural",
+        "status": "review",
+        "overlap": 0.8,
+        "critical_abstain_ratio": 0.2,
+        "margin_abs": 0.247,
+        "reason_codes": [
+          "low_margin"
+        ],
+        "v1_node_count": 5,
+        "v2_node_count": 4
+      },
+      {
+        "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0178",
+        "doc_id": "ddafa0961bb34725",
+        "section_number": "2.06",
+        "section_key": "ddafa0961bb34725::2.06::GFV1C-XREF_VS_STRUCTURAL-0178",
+        "category": "xref_vs_structural",
+        "status": "review",
+        "overlap": 0.8,
+        "critical_abstain_ratio": 0.2,
+        "margin_abs": 0.247,
+        "reason_codes": [
+          "low_margin"
+        ],
+        "v1_node_count": 5,
+        "v2_node_count": 4
+      },
+      {
+        "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0841",
+        "doc_id": "337417c552aa9cc5",
+        "section_number": "10.02",
+        "section_key": "337417c552aa9cc5::10.02::GFV1C-XREF_VS_STRUCTURAL-0841",
+        "category": "xref_vs_structural",
+        "status": "review",
+        "overlap": 0.8,
+        "critical_abstain_ratio": 0.2,
+        "margin_abs": 0.246,
+        "reason_codes": [
+          "low_margin"
+        ],
+        "v1_node_count": 10,
+        "v2_node_count": 8
+      }
+    ],
+    "accepted_rows": [
+      {
+        "fixture_id": "GFV1-XREF_VS_STRUCTURAL-0151",
+        "doc_id": "24c85f495fdb716e",
+        "section_number": "2.1",
+        "section_key": "24c85f495fdb716e::2.1::GFV1-XREF_VS_STRUCTURAL-0151",
+        "category": "xref_vs_structural",
+        "status": "accepted",
+        "overlap": 1.0,
+        "critical_abstain_ratio": 0.0,
+        "margin_abs": 0.3,
+        "reason_codes": [],
+        "v1_node_count": 6,
+        "v2_node_count": 6
+      },
+      {
+        "fixture_id": "GFV1-LINKING_CONTRACT-0474",
+        "doc_id": "bdd673f0b7178071",
+        "section_number": "3.25",
+        "section_key": "bdd673f0b7178071::3.25::GFV1-LINKING_CONTRACT-0474",
+        "category": "linking_contract",
+        "status": "accepted",
+        "overlap": 1.0,
+        "critical_abstain_ratio": 0.0,
+        "margin_abs": 0.3,
+        "reason_codes": [],
+        "v1_node_count": 3,
+        "v2_node_count": 3
+      },
+      {
+        "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0151",
+        "doc_id": "24c85f495fdb716e",
+        "section_number": "2.1",
+        "section_key": "24c85f495fdb716e::2.1::GFV1C-XREF_VS_STRUCTURAL-0151",
+        "category": "xref_vs_structural",
+        "status": "accepted",
+        "overlap": 1.0,
+        "critical_abstain_ratio": 0.0,
+        "margin_abs": 0.3,
+        "reason_codes": [],
+        "v1_node_count": 6,
+        "v2_node_count": 6
+      },
+      {
+        "fixture_id": "GFV1C-LINKING_CONTRACT-0474",
+        "doc_id": "bdd673f0b7178071",
+        "section_number": "3.25",
+        "section_key": "bdd673f0b7178071::3.25::GFV1C-LINKING_CONTRACT-0474",
+        "category": "linking_contract",
+        "status": "accepted",
+        "overlap": 1.0,
+        "critical_abstain_ratio": 0.0,
+        "margin_abs": 0.3,
+        "reason_codes": [],
+        "v1_node_count": 3,
+        "v2_node_count": 3
+      },
+      {
+        "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0867",
+        "doc_id": "75d9f4644f9357a5",
+        "section_number": "2.01",
+        "section_key": "75d9f4644f9357a5::2.01::GFV1C-XREF_VS_STRUCTURAL-0867",
+        "category": "xref_vs_structural",
+        "status": "accepted",
+        "overlap": 1.0,
+        "critical_abstain_ratio": 0.0,
+        "margin_abs": 0.3,
+        "reason_codes": [],
+        "v1_node_count": 3,
+        "v2_node_count": 3
+      },
+      {
+        "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0870",
+        "doc_id": "86cfa039ac891c8f",
+        "section_number": "2.06",
+        "section_key": "86cfa039ac891c8f::2.06::GFV1C-XREF_VS_STRUCTURAL-0870",
+        "category": "xref_vs_structural",
+        "status": "accepted",
+        "overlap": 1.0,
+        "critical_abstain_ratio": 0.0,
+        "margin_abs": 0.3,
+        "reason_codes": [],
+        "v1_node_count": 4,
+        "v2_node_count": 4
+      },
+      {
+        "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0892",
+        "doc_id": "a9e1576f0bc13749",
+        "section_number": "2.01",
+        "section_key": "a9e1576f0bc13749::2.01::GFV1C-XREF_VS_STRUCTURAL-0892",
+        "category": "xref_vs_structural",
+        "status": "accepted",
+        "overlap": 1.0,
+        "critical_abstain_ratio": 0.0,
+        "margin_abs": 0.3,
+        "reason_codes": [],
+        "v1_node_count": 3,
+        "v2_node_count": 3
+      }
+    ]
+  }
+}

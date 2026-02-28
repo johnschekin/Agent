@@ -1,0 +1,82 @@
+{
+  "schema_version": "adjudication-training-quarantine-report-v1",
+  "generated_at": "2026-02-27T22:45:09.431528+00:00",
+  "input_paths": [
+    "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day4/adjudication/manual_adjudication_batch_train40_rowsetF20.jsonl"
+  ],
+  "total_rows": 20,
+  "eligible_rows": 6,
+  "quarantined_rows": 14,
+  "quarantine": [
+    {
+      "row_id": "P0-ADJUDICATION-TRAIN40-0057",
+      "decision": "review",
+      "reason": "training_export_eligible=false"
+    },
+    {
+      "row_id": "P0-ADJUDICATION-TRAIN40-0058",
+      "decision": "review",
+      "reason": "training_export_eligible=false"
+    },
+    {
+      "row_id": "P0-ADJUDICATION-TRAIN40-0059",
+      "decision": "review",
+      "reason": "training_export_eligible=false"
+    },
+    {
+      "row_id": "P0-ADJUDICATION-TRAIN40-0060",
+      "decision": "abstain",
+      "reason": "training_export_eligible=false"
+    },
+    {
+      "row_id": "P0-ADJUDICATION-TRAIN40-0085",
+      "decision": "review",
+      "reason": "training_export_eligible=false"
+    },
+    {
+      "row_id": "P0-ADJUDICATION-TRAIN40-0086",
+      "decision": "review",
+      "reason": "training_export_eligible=false"
+    },
+    {
+      "row_id": "P0-ADJUDICATION-TRAIN40-0131",
+      "decision": "review",
+      "reason": "training_export_eligible=false"
+    },
+    {
+      "row_id": "P0-ADJUDICATION-TRAIN40-0132",
+      "decision": "abstain",
+      "reason": "training_export_eligible=false"
+    },
+    {
+      "row_id": "P0-ADJUDICATION-TRAIN40-0134",
+      "decision": "abstain",
+      "reason": "training_export_eligible=false"
+    },
+    {
+      "row_id": "P0-ADJUDICATION-TRAIN40-0135",
+      "decision": "review",
+      "reason": "training_export_eligible=false"
+    },
+    {
+      "row_id": "P0-ADJUDICATION-TRAIN40-0176",
+      "decision": "abstain",
+      "reason": "training_export_eligible=false"
+    },
+    {
+      "row_id": "P0-ADJUDICATION-TRAIN40-0177",
+      "decision": "review",
+      "reason": "training_export_eligible=false"
+    },
+    {
+      "row_id": "P0-ADJUDICATION-TRAIN40-0180",
+      "decision": "abstain",
+      "reason": "training_export_eligible=false"
+    },
+    {
+      "row_id": "P0-ADJUDICATION-TRAIN40-0089",
+      "decision": "review",
+      "reason": "training_export_eligible=false"
+    }
+  ]
+}

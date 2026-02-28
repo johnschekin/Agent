@@ -1,0 +1,77 @@
+{
+  "schema_version": "red-team-adversarial-subagent-review-v1",
+  "day_id": "day2",
+  "review_mode": "adversarial_subagent",
+  "subagent_id": "019ca0a1-fb8b-7882-b6ad-b908fc54b5a3",
+  "subagent_nickname": "Maxwell",
+  "adversarial_findings": [
+    {
+      "finding_id": "RT-D2-001",
+      "severity": "critical",
+      "summary": "artifact_index hash for day2 validator acceptance doc was stale versus on-disk bytes.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/artifact_index.json",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_run_manifest.json"
+      ],
+      "risk": "Provenance checks may consume conflicting hashes and produce false trust.",
+      "required_action": "Regenerate artifact_index hashes from final bytes and enforce index-hash consistency checks.",
+      "status_after_review": "remediated_same_day"
+    },
+    {
+      "finding_id": "RT-D2-002",
+      "severity": "high",
+      "summary": "Synthetic-generation guard evidence is weak because command log does not include adjudication artifact creation lineage.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/command_log.txt",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_validator_report.json"
+      ],
+      "risk": "Post-hoc scripted artifact generation could evade intended manual-authorship control.",
+      "required_action": "Require adjudication creation provenance lines or signed manual attestation in command log checks.",
+      "status_after_review": "open"
+    },
+    {
+      "finding_id": "RT-D2-003",
+      "severity": "high",
+      "summary": "Canonical output placeholders are marked not_run_day2 but could be misread as executed quality checks.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/canonical/validate_gold_fixtures.json",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/canonical/replay_gold_fixtures.json",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/canonical/parser_v1_tests.log"
+      ],
+      "risk": "Reviewers may misinterpret placeholders as executed regression evidence.",
+      "required_action": "Mark placeholders as skipped-nonprimary or add validator rejection for placeholder primaries where pass semantics require execution.",
+      "status_after_review": "open"
+    },
+    {
+      "finding_id": "RT-D2-004",
+      "severity": "medium",
+      "summary": "Queue rows were not advanced from pending to linked adjudication state after validation.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/docs/operations/manual_adjudication_protocol_v1.md",
+        "/Users/johnchtchekine/Projects/Agent/data/fixtures/gold/v1/adjudication/p0_adjudication_queue_200_train40.jsonl"
+      ],
+      "risk": "Label chain-of-custody and dedupe become weaker for downstream export.",
+      "required_action": "Update queue state with adjudication references after successful batch validation and artifact this update.",
+      "status_after_review": "open"
+    },
+    {
+      "finding_id": "RT-D2-005",
+      "severity": "medium",
+      "summary": "Manual-quality entropy is low (identical adjudicated timestamps across all rows and templated hypothesis strings).",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/adjudication/manual_adjudication_batch_train40_0001_0020.jsonl",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/adjudication/manual_reasoning_train40_0001_0020.jsonl"
+      ],
+      "risk": "Template-heavy labels can reduce learning robustness and obscure manual-quality drift.",
+      "required_action": "Add quality heuristics (entropy/timestamp spread/template duplication thresholds) and manual exception path.",
+      "status_after_review": "open"
+    }
+  ],
+  "verified": [
+    "validate_day_bundle.exit_code and validate_manual_adjudication_log.exit_code are 0 before red-team close.",
+    "adjudication batch and manual reasoning artifacts both contain 20 rows with exact row_id coverage."
+  ],
+  "verdict": "fail",
+  "completed_at": "2026-02-27T19:49:58+00:00",
+  "generated_at": "2026-02-27T19:52:16+00:00"
+}

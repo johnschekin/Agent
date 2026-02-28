@@ -1,0 +1,142 @@
+{
+  "date": "2026-02-27",
+  "rows": 2600,
+  "baseline_profile": "default",
+  "recommended_shadow_profile": "calib_m1",
+  "profiles": {
+    "default": {
+      "params": {
+        "abstain_margin_threshold": 0.08,
+        "review_margin_threshold": 0.2,
+        "section_abstain_ratio_threshold": 0.4
+      },
+      "status_counts": {
+        "abstain": 2481,
+        "review": 112,
+        "accepted": 7
+      },
+      "abstain_rate": 0.954231,
+      "review_rate": 0.043077,
+      "accepted_rate": 0.002692,
+      "avg_critical_abstain_ratio": 0.60422,
+      "avg_margin_abs": 0.123928
+    },
+    "calib_m1": {
+      "params": {
+        "abstain_margin_threshold": 0.06,
+        "review_margin_threshold": 0.16,
+        "section_abstain_ratio_threshold": 0.55
+      },
+      "status_counts": {
+        "review": 2274,
+        "abstain": 319,
+        "accepted": 7
+      },
+      "abstain_rate": 0.122692,
+      "review_rate": 0.874615,
+      "accepted_rate": 0.002692,
+      "avg_critical_abstain_ratio": 0.428891,
+      "avg_margin_abs": 0.123928
+    },
+    "calib_m2": {
+      "params": {
+        "abstain_margin_threshold": 0.05,
+        "review_margin_threshold": 0.14,
+        "section_abstain_ratio_threshold": 0.65
+      },
+      "status_counts": {
+        "review": 2526,
+        "abstain": 67,
+        "accepted": 7
+      },
+      "abstain_rate": 0.025769,
+      "review_rate": 0.971538,
+      "accepted_rate": 0.002692,
+      "avg_critical_abstain_ratio": 0.428891,
+      "avg_margin_abs": 0.123928
+    },
+    "calib_aggr": {
+      "params": {
+        "abstain_margin_threshold": 0.04,
+        "review_margin_threshold": 0.12,
+        "section_abstain_ratio_threshold": 0.75
+      },
+      "status_counts": {
+        "review": 2573,
+        "abstain": 20,
+        "accepted": 7
+      },
+      "abstain_rate": 0.007692,
+      "review_rate": 0.989615,
+      "accepted_rate": 0.002692,
+      "avg_critical_abstain_ratio": 0.428891,
+      "avg_margin_abs": 0.123928
+    },
+    "calib_aggr2": {
+      "params": {
+        "abstain_margin_threshold": 0.03,
+        "review_margin_threshold": 0.1,
+        "section_abstain_ratio_threshold": 0.82
+      },
+      "status_counts": {
+        "review": 2590,
+        "accepted": 7,
+        "abstain": 3
+      },
+      "abstain_rate": 0.001154,
+      "review_rate": 0.996154,
+      "accepted_rate": 0.002692,
+      "avg_critical_abstain_ratio": 0.428891,
+      "avg_margin_abs": 0.123928
+    }
+  },
+  "max_permissive_ceiling": {
+    "params": {
+      "abstain_margin_threshold": 0.0,
+      "review_margin_threshold": 0.0,
+      "section_abstain_ratio_threshold": 1.0
+    },
+    "status_counts": {
+      "review": 2592,
+      "accepted": 7,
+      "abstain": 1
+    },
+    "accepted_rate": 0.002692,
+    "note": "Threshold-only tuning cannot raise accepted rate materially; logic changes required."
+  },
+  "default_reason_concentration": {
+    "section_reason_counts_top": [
+      [
+        "low_margin",
+        2590
+      ],
+      [
+        "xref_conflict",
+        2538
+      ],
+      [
+        "insufficient_context",
+        2481
+      ]
+    ],
+    "node_reason_counts_top": [
+      [
+        "low_margin",
+        223401
+      ],
+      [
+        "xref_conflict",
+        55736
+      ]
+    ]
+  },
+  "readiness_verdict": {
+    "production_cutover_ready": false,
+    "reason": "Accepted rate is 0.27% even under permissive thresholds; most sections become review rather than accepted.",
+    "next_actions": [
+      "Adjust node scoring and xref/anchor policy logic",
+      "Introduce category-aware acceptance policy",
+      "Re-run M6 shadow after logic changes"
+    ]
+  }
+}

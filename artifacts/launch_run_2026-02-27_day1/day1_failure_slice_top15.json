@@ -1,0 +1,1998 @@
+{
+  "schema_version": "day1-failure-slice-v1",
+  "generated_at": "2026-02-27T17:07:06.150307+00:00",
+  "run_id": "launch_run_2026-02-27_day1",
+  "replay_failure_summary": {
+    "fixtures_failed": 56,
+    "reason_counts": {
+      "field_mismatch_ratio_above_threshold": 56
+    },
+    "mismatch_field_counts": {
+      "is_structural": 503
+    }
+  },
+  "top_replay_failing_fixtures": [
+    {
+      "fixture_id": "GFV1-DEEP_NESTING_CHAIN-0230",
+      "category": "deep_nesting_chain",
+      "decision": "accepted",
+      "doc_id": "07e7141f4bf2caa9",
+      "section_number": "1.5x",
+      "ok": false,
+      "reasons": [
+        "field_mismatch_ratio_above_threshold"
+      ],
+      "metrics": {
+        "gold_node_count": 752,
+        "actual_node_count": 752,
+        "matched_node_count": 752,
+        "missing_node_count": 0,
+        "extra_node_count": 0,
+        "node_recall": 1.0,
+        "node_precision": 1.0,
+        "field_mismatch_count": 45,
+        "field_mismatch_ratio": 0.011968,
+        "span_mismatch_count": 0,
+        "span_mismatch_ratio": 0.0,
+        "abstain_signal": true,
+        "gold_abstain_signal": true
+      },
+      "samples": {
+        "missing_ids": [],
+        "extra_ids": [],
+        "mismatches": [
+          {
+            "clause_id": "a_dup22",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup23",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup32",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup34",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup34.i",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup34.ii",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup34.iv",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup41",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup15",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup21",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fixture_id": "GFV1-DEEP_NESTING_CHAIN-0192",
+      "category": "deep_nesting_chain",
+      "decision": "accepted",
+      "doc_id": "5ca208323895a8ad",
+      "section_number": "9.27",
+      "ok": false,
+      "reasons": [
+        "field_mismatch_ratio_above_threshold"
+      ],
+      "metrics": {
+        "gold_node_count": 2465,
+        "actual_node_count": 2465,
+        "matched_node_count": 2465,
+        "missing_node_count": 0,
+        "extra_node_count": 0,
+        "node_recall": 1.0,
+        "node_precision": 1.0,
+        "field_mismatch_count": 40,
+        "field_mismatch_ratio": 0.003245,
+        "span_mismatch_count": 0,
+        "span_mismatch_ratio": 0.0,
+        "abstain_signal": true,
+        "gold_abstain_signal": true
+      },
+      "samples": {
+        "missing_ids": [],
+        "extra_ids": [],
+        "mismatches": [
+          {
+            "clause_id": "a_dup107",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup114",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup130",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup166",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup166.ii",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup166.iv",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup179",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup210",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup253",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup265",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fixture_id": "GFV1-DEEP_NESTING_CHAIN-0214",
+      "category": "deep_nesting_chain",
+      "decision": "accepted",
+      "doc_id": "6f11b74f0eb7cd58",
+      "section_number": "1.1",
+      "ok": false,
+      "reasons": [
+        "field_mismatch_ratio_above_threshold"
+      ],
+      "metrics": {
+        "gold_node_count": 577,
+        "actual_node_count": 577,
+        "matched_node_count": 577,
+        "missing_node_count": 0,
+        "extra_node_count": 0,
+        "node_recall": 1.0,
+        "node_precision": 1.0,
+        "field_mismatch_count": 39,
+        "field_mismatch_ratio": 0.013518,
+        "span_mismatch_count": 0,
+        "span_mismatch_ratio": 0.0,
+        "abstain_signal": true,
+        "gold_abstain_signal": true
+      },
+      "samples": {
+        "missing_ids": [],
+        "extra_ids": [],
+        "mismatches": [
+          {
+            "clause_id": "b_dup11",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup11.i",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup11.ii",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup11.iii",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup11.x",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup14",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup15",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup16",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup2",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup24",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fixture_id": "GFV1-DEEP_NESTING_CHAIN-0199",
+      "category": "deep_nesting_chain",
+      "decision": "accepted",
+      "doc_id": "21d1c55bcb880e28",
+      "section_number": "1.01",
+      "ok": false,
+      "reasons": [
+        "field_mismatch_ratio_above_threshold"
+      ],
+      "metrics": {
+        "gold_node_count": 1749,
+        "actual_node_count": 1749,
+        "matched_node_count": 1749,
+        "missing_node_count": 0,
+        "extra_node_count": 0,
+        "node_recall": 1.0,
+        "node_precision": 1.0,
+        "field_mismatch_count": 39,
+        "field_mismatch_ratio": 0.00446,
+        "span_mismatch_count": 0,
+        "span_mismatch_ratio": 0.0,
+        "abstain_signal": true,
+        "gold_abstain_signal": true
+      },
+      "samples": {
+        "missing_ids": [],
+        "extra_ids": [],
+        "mismatches": [
+          {
+            "clause_id": "a_dup13",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup150",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup178",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup23",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup23.1",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup23.7",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup23.i",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup23.ii",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup35",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup45",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fixture_id": "GFV1-DEEP_NESTING_CHAIN-0202",
+      "category": "deep_nesting_chain",
+      "decision": "accepted",
+      "doc_id": "874b17bef710cb90",
+      "section_number": "1.1",
+      "ok": false,
+      "reasons": [
+        "field_mismatch_ratio_above_threshold"
+      ],
+      "metrics": {
+        "gold_node_count": 740,
+        "actual_node_count": 740,
+        "matched_node_count": 740,
+        "missing_node_count": 0,
+        "extra_node_count": 0,
+        "node_recall": 1.0,
+        "node_precision": 1.0,
+        "field_mismatch_count": 38,
+        "field_mismatch_ratio": 0.01027,
+        "span_mismatch_count": 0,
+        "span_mismatch_ratio": 0.0,
+        "abstain_signal": true,
+        "gold_abstain_signal": true
+      },
+      "samples": {
+        "missing_ids": [],
+        "extra_ids": [],
+        "mismatches": [
+          {
+            "clause_id": "b_dup16",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup2",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup22",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup22.i",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup22.iii",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup22.iv",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup22.v",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup29",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup30",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup30.5",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fixture_id": "GFV1-DEEP_NESTING_CHAIN-0194",
+      "category": "deep_nesting_chain",
+      "decision": "accepted",
+      "doc_id": "d970683c3670a146",
+      "section_number": "6.02",
+      "ok": false,
+      "reasons": [
+        "field_mismatch_ratio_above_threshold"
+      ],
+      "metrics": {
+        "gold_node_count": 1165,
+        "actual_node_count": 1165,
+        "matched_node_count": 1165,
+        "missing_node_count": 0,
+        "extra_node_count": 0,
+        "node_recall": 1.0,
+        "node_precision": 1.0,
+        "field_mismatch_count": 36,
+        "field_mismatch_ratio": 0.00618,
+        "span_mismatch_count": 0,
+        "span_mismatch_ratio": 0.0,
+        "abstain_signal": true,
+        "gold_abstain_signal": true
+      },
+      "samples": {
+        "missing_ids": [],
+        "extra_ids": [],
+        "mismatches": [
+          {
+            "clause_id": "a_dup9",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup17",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup17.J",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup23",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup23.9",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup23.A",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup38",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup4",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup40",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup6",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fixture_id": "GFV1-DEEP_NESTING_CHAIN-0209",
+      "category": "deep_nesting_chain",
+      "decision": "accepted",
+      "doc_id": "e39ca4b90d0f269b",
+      "section_number": "1.01",
+      "ok": false,
+      "reasons": [
+        "field_mismatch_ratio_above_threshold"
+      ],
+      "metrics": {
+        "gold_node_count": 1402,
+        "actual_node_count": 1402,
+        "matched_node_count": 1402,
+        "missing_node_count": 0,
+        "extra_node_count": 0,
+        "node_recall": 1.0,
+        "node_precision": 1.0,
+        "field_mismatch_count": 36,
+        "field_mismatch_ratio": 0.005136,
+        "span_mismatch_count": 0,
+        "span_mismatch_ratio": 0.0,
+        "abstain_signal": true,
+        "gold_abstain_signal": true
+      },
+      "samples": {
+        "missing_ids": [],
+        "extra_ids": [],
+        "mismatches": [
+          {
+            "clause_id": "a_dup134",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup7",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup104",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup104.A",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup104.B",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup137",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup17",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup17.1",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup17.7",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup17.8",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fixture_id": "GFV1-DEEP_NESTING_CHAIN-0219",
+      "category": "deep_nesting_chain",
+      "decision": "accepted",
+      "doc_id": "333b2bf5ed90baf3",
+      "section_number": "1.01",
+      "ok": false,
+      "reasons": [
+        "field_mismatch_ratio_above_threshold"
+      ],
+      "metrics": {
+        "gold_node_count": 1188,
+        "actual_node_count": 1188,
+        "matched_node_count": 1188,
+        "missing_node_count": 0,
+        "extra_node_count": 0,
+        "node_recall": 1.0,
+        "node_precision": 1.0,
+        "field_mismatch_count": 34,
+        "field_mismatch_ratio": 0.005724,
+        "span_mismatch_count": 0,
+        "span_mismatch_ratio": 0.0,
+        "abstain_signal": true,
+        "gold_abstain_signal": true
+      },
+      "samples": {
+        "missing_ids": [],
+        "extra_ids": [],
+        "mismatches": [
+          {
+            "clause_id": "a_dup64",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup11",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup12",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup54",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup54.i",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup54.ii",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup54.iii",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup54.iv",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup66",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup89",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fixture_id": "GFV1-DEEP_NESTING_CHAIN-0196",
+      "category": "deep_nesting_chain",
+      "decision": "accepted",
+      "doc_id": "48aeef05d92a5c80",
+      "section_number": "5.15",
+      "ok": false,
+      "reasons": [
+        "field_mismatch_ratio_above_threshold"
+      ],
+      "metrics": {
+        "gold_node_count": 679,
+        "actual_node_count": 679,
+        "matched_node_count": 679,
+        "missing_node_count": 0,
+        "extra_node_count": 0,
+        "node_recall": 1.0,
+        "node_precision": 1.0,
+        "field_mismatch_count": 33,
+        "field_mismatch_ratio": 0.00972,
+        "span_mismatch_count": 0,
+        "span_mismatch_ratio": 0.0,
+        "abstain_signal": true,
+        "gold_abstain_signal": true
+      },
+      "samples": {
+        "missing_ids": [],
+        "extra_ids": [],
+        "mismatches": [
+          {
+            "clause_id": "b_dup18",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup18.i",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup24",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup29",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup32",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "c_dup19",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "c_dup19.i",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "c_dup19.ii",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "c_dup19.iii",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "c_dup24",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fixture_id": "GFV1-DEEP_NESTING_CHAIN-0197",
+      "category": "deep_nesting_chain",
+      "decision": "accepted",
+      "doc_id": "71085fee37e6f1f6",
+      "section_number": "1.01",
+      "ok": false,
+      "reasons": [
+        "field_mismatch_ratio_above_threshold"
+      ],
+      "metrics": {
+        "gold_node_count": 1339,
+        "actual_node_count": 1339,
+        "matched_node_count": 1339,
+        "missing_node_count": 0,
+        "extra_node_count": 0,
+        "node_recall": 1.0,
+        "node_precision": 1.0,
+        "field_mismatch_count": 33,
+        "field_mismatch_ratio": 0.004929,
+        "span_mismatch_count": 0,
+        "span_mismatch_ratio": 0.0,
+        "abstain_signal": true,
+        "gold_abstain_signal": true
+      },
+      "samples": {
+        "missing_ids": [],
+        "extra_ids": [],
+        "mismatches": [
+          {
+            "clause_id": "a_dup128",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup32",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup96",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup101",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup119",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup119.x",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup126",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup128",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup13",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup13.i",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fixture_id": "GFV1-DEEP_NESTING_CHAIN-0203",
+      "category": "deep_nesting_chain",
+      "decision": "accepted",
+      "doc_id": "c61127fd08460cdc",
+      "section_number": "1.01",
+      "ok": false,
+      "reasons": [
+        "field_mismatch_ratio_above_threshold"
+      ],
+      "metrics": {
+        "gold_node_count": 1434,
+        "actual_node_count": 1434,
+        "matched_node_count": 1434,
+        "missing_node_count": 0,
+        "extra_node_count": 0,
+        "node_recall": 1.0,
+        "node_precision": 1.0,
+        "field_mismatch_count": 33,
+        "field_mismatch_ratio": 0.004603,
+        "span_mismatch_count": 0,
+        "span_mismatch_ratio": 0.0,
+        "abstain_signal": true,
+        "gold_abstain_signal": true
+      },
+      "samples": {
+        "missing_ids": [],
+        "extra_ids": [],
+        "mismatches": [
+          {
+            "clause_id": "a_dup133",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup144",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup19",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup5",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup10",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup10.1",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup10.8",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup10.i",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup10.ii",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup105",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fixture_id": "GFV1-DEEP_NESTING_CHAIN-0224",
+      "category": "deep_nesting_chain",
+      "decision": "accepted",
+      "doc_id": "37a2ad11f7834147",
+      "section_number": "1.01",
+      "ok": false,
+      "reasons": [
+        "field_mismatch_ratio_above_threshold"
+      ],
+      "metrics": {
+        "gold_node_count": 1055,
+        "actual_node_count": 1055,
+        "matched_node_count": 1055,
+        "missing_node_count": 0,
+        "extra_node_count": 0,
+        "node_recall": 1.0,
+        "node_precision": 1.0,
+        "field_mismatch_count": 32,
+        "field_mismatch_ratio": 0.006066,
+        "span_mismatch_count": 0,
+        "span_mismatch_ratio": 0.0,
+        "abstain_signal": true,
+        "gold_abstain_signal": true
+      },
+      "samples": {
+        "missing_ids": [],
+        "extra_ids": [],
+        "mismatches": [
+          {
+            "clause_id": "a_dup103",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup103.ii",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup84",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup84.i",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup84.iv",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup109",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup110",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup118",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup123",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup19",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fixture_id": "GFV1-DEEP_NESTING_CHAIN-0205",
+      "category": "deep_nesting_chain",
+      "decision": "accepted",
+      "doc_id": "b300cd4bda11b8da",
+      "section_number": "1.01",
+      "ok": false,
+      "reasons": [
+        "field_mismatch_ratio_above_threshold"
+      ],
+      "metrics": {
+        "gold_node_count": 1446,
+        "actual_node_count": 1446,
+        "matched_node_count": 1446,
+        "missing_node_count": 0,
+        "extra_node_count": 0,
+        "node_recall": 1.0,
+        "node_precision": 1.0,
+        "field_mismatch_count": 32,
+        "field_mismatch_ratio": 0.004426,
+        "span_mismatch_count": 0,
+        "span_mismatch_ratio": 0.0,
+        "abstain_signal": true,
+        "gold_abstain_signal": true
+      },
+      "samples": {
+        "missing_ids": [],
+        "extra_ids": [],
+        "mismatches": [
+          {
+            "clause_id": "a_dup28",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup7",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup125",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup22",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup22.1",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup22.7",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup22.8",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup22.i",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup22.ii",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup43",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fixture_id": "GFV1-DEEP_NESTING_CHAIN-0237",
+      "category": "deep_nesting_chain",
+      "decision": "accepted",
+      "doc_id": "2ffdde095edfb2b7",
+      "section_number": "1.01",
+      "ok": false,
+      "reasons": [
+        "field_mismatch_ratio_above_threshold"
+      ],
+      "metrics": {
+        "gold_node_count": 1449,
+        "actual_node_count": 1449,
+        "matched_node_count": 1449,
+        "missing_node_count": 0,
+        "extra_node_count": 0,
+        "node_recall": 1.0,
+        "node_precision": 1.0,
+        "field_mismatch_count": 32,
+        "field_mismatch_ratio": 0.004417,
+        "span_mismatch_count": 0,
+        "span_mismatch_ratio": 0.0,
+        "abstain_signal": true,
+        "gold_abstain_signal": true
+      },
+      "samples": {
+        "missing_ids": [],
+        "extra_ids": [],
+        "mismatches": [
+          {
+            "clause_id": "a_dup117",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup119",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup119.A",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup119.B",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup158",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup24",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup67",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup8",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup114",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup14",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fixture_id": "GFV1-DEEP_NESTING_CHAIN-0215",
+      "category": "deep_nesting_chain",
+      "decision": "accepted",
+      "doc_id": "d2d385a84892953e",
+      "section_number": "6.10",
+      "ok": false,
+      "reasons": [
+        "field_mismatch_ratio_above_threshold"
+      ],
+      "metrics": {
+        "gold_node_count": 1623,
+        "actual_node_count": 1623,
+        "matched_node_count": 1623,
+        "missing_node_count": 0,
+        "extra_node_count": 0,
+        "node_recall": 1.0,
+        "node_precision": 1.0,
+        "field_mismatch_count": 32,
+        "field_mismatch_ratio": 0.003943,
+        "span_mismatch_count": 0,
+        "span_mismatch_ratio": 0.0,
+        "abstain_signal": true,
+        "gold_abstain_signal": true
+      },
+      "samples": {
+        "missing_ids": [],
+        "extra_ids": [],
+        "mismatches": [
+          {
+            "clause_id": "a_dup113",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup113.i",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup113.ii",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup146",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "a_dup82",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup118",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup118.iii",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup35",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup54",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          },
+          {
+            "clause_id": "b_dup71",
+            "mismatches": {
+              "is_structural": {
+                "gold": true,
+                "actual": false
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "parent_guardrail_regressions": [
+    {
+      "baseline": 294.0,
+      "current": 432.0,
+      "limit": 294.0,
+      "metric": "xy_parent_loss.docs",
+      "reason": "regression"
+    },
+    {
+      "baseline": 318.0,
+      "current": 523.0,
+      "limit": 318.0,
+      "metric": "xy_parent_loss.sections",
+      "reason": "regression"
+    },
+    {
+      "baseline": 378.0,
+      "current": 703.0,
+      "limit": 378.0,
+      "metric": "xy_parent_loss.structural_rows",
+      "reason": "regression"
+    },
+    {
+      "baseline": 184.0,
+      "current": 197.0,
+      "limit": 184.0,
+      "metric": "xy_parent_loss.continuation_like_rows",
+      "reason": "regression"
+    }
+  ],
+  "top_parent_loss_sections_current_snapshot": [
+    {
+      "doc_id": "22274f090c6cc8fd",
+      "section_number": "1.01",
+      "root_count": 15,
+      "structural_rows": 2,
+      "continuation_like_rows": 2,
+      "continuation_like_ratio": 1.0
+    },
+    {
+      "doc_id": "24f56c9bebd4d3cc",
+      "section_number": "3.6",
+      "root_count": 3,
+      "structural_rows": 2,
+      "continuation_like_rows": 2,
+      "continuation_like_ratio": 1.0
+    },
+    {
+      "doc_id": "584ff625fcd1e2e1",
+      "section_number": "6.10",
+      "root_count": 29,
+      "structural_rows": 2,
+      "continuation_like_rows": 2,
+      "continuation_like_ratio": 1.0
+    },
+    {
+      "doc_id": "8f26ac22002955dc",
+      "section_number": "1.01",
+      "root_count": 57,
+      "structural_rows": 2,
+      "continuation_like_rows": 2,
+      "continuation_like_ratio": 1.0
+    },
+    {
+      "doc_id": "aef5001fe0ae8aa9",
+      "section_number": "5.01",
+      "root_count": 27,
+      "structural_rows": 2,
+      "continuation_like_rows": 2,
+      "continuation_like_ratio": 1.0
+    },
+    {
+      "doc_id": "b38f8c9a4fc322f8",
+      "section_number": "1.01",
+      "root_count": 28,
+      "structural_rows": 2,
+      "continuation_like_rows": 2,
+      "continuation_like_ratio": 1.0
+    },
+    {
+      "doc_id": "cae2826345b7a801",
+      "section_number": "1.01",
+      "root_count": 30,
+      "structural_rows": 2,
+      "continuation_like_rows": 2,
+      "continuation_like_ratio": 1.0
+    },
+    {
+      "doc_id": "f2efb1a0aac595cd",
+      "section_number": "1.01",
+      "root_count": 17,
+      "structural_rows": 2,
+      "continuation_like_rows": 2,
+      "continuation_like_ratio": 1.0
+    },
+    {
+      "doc_id": "0584375e25907ea0",
+      "section_number": "6.05",
+      "root_count": 26,
+      "structural_rows": 3,
+      "continuation_like_rows": 1,
+      "continuation_like_ratio": 0.3333333333333333
+    },
+    {
+      "doc_id": "5f5703768137bcc9",
+      "section_number": "2.10",
+      "root_count": 9,
+      "structural_rows": 3,
+      "continuation_like_rows": 1,
+      "continuation_like_ratio": 0.3333333333333333
+    },
+    {
+      "doc_id": "605c9be21437a265",
+      "section_number": "6.06",
+      "root_count": 27,
+      "structural_rows": 3,
+      "continuation_like_rows": 1,
+      "continuation_like_ratio": 0.3333333333333333
+    },
+    {
+      "doc_id": "8700901a034aff74",
+      "section_number": "5.01",
+      "root_count": 9,
+      "structural_rows": 3,
+      "continuation_like_rows": 1,
+      "continuation_like_ratio": 0.3333333333333333
+    },
+    {
+      "doc_id": "f7c26ba37341b530",
+      "section_number": "6.07",
+      "root_count": 31,
+      "structural_rows": 3,
+      "continuation_like_rows": 1,
+      "continuation_like_ratio": 0.3333333333333333
+    },
+    {
+      "doc_id": "fd184897f745034e",
+      "section_number": "1.1",
+      "root_count": 28,
+      "structural_rows": 3,
+      "continuation_like_rows": 1,
+      "continuation_like_ratio": 0.3333333333333333
+    },
+    {
+      "doc_id": "0b384eae2f725c03",
+      "section_number": "1.1",
+      "root_count": 25,
+      "structural_rows": 2,
+      "continuation_like_rows": 1,
+      "continuation_like_ratio": 0.5
+    }
+  ]
+}

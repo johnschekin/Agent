@@ -1,0 +1,109 @@
+{
+  "section_status_counts": {
+    "review": 2481,
+    "abstain": 109,
+    "accepted": 10
+  },
+  "top_section_reason_codes": [
+    [
+      "low_margin",
+      2562
+    ],
+    [
+      "layout_uncertain",
+      2549
+    ],
+    [
+      "xref_conflict",
+      1926
+    ],
+    [
+      "insufficient_context",
+      109
+    ]
+  ],
+  "top_node_reason_codes": [
+    [
+      "layout_uncertain",
+      445443
+    ],
+    [
+      "low_margin",
+      210485
+    ],
+    [
+      "xref_conflict",
+      890
+    ]
+  ],
+  "review_reason_combos": [
+    [
+      [
+        "layout_uncertain",
+        "low_margin",
+        "xref_conflict"
+      ],
+      1881
+    ],
+    [
+      [
+        "layout_uncertain",
+        "low_margin"
+      ],
+      547
+    ],
+    [
+      [
+        "layout_uncertain"
+      ],
+      28
+    ],
+    [
+      [
+        "low_margin"
+      ],
+      24
+    ],
+    [
+      [
+        "low_margin",
+        "xref_conflict"
+      ],
+      1
+    ]
+  ],
+  "abstain_reason_combos": [
+    [
+      [
+        "insufficient_context",
+        "layout_uncertain",
+        "low_margin"
+      ],
+      51
+    ],
+    [
+      [
+        "insufficient_context",
+        "layout_uncertain",
+        "low_margin",
+        "xref_conflict"
+      ],
+      42
+    ],
+    [
+      [
+        "insufficient_context",
+        "low_margin"
+      ],
+      14
+    ],
+    [
+      [
+        "insufficient_context",
+        "low_margin",
+        "xref_conflict"
+      ],
+      2
+    ]
+  ]
+}

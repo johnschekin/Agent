@@ -1,0 +1,66 @@
+{
+  "schema_version": "canonical-enforcement-report-v1",
+  "manifest_path": "artifacts/launch_run_2026-02-27_day1/day1_run_manifest.json",
+  "workspace_dirty": true,
+  "status": "pass",
+  "checks": [
+    {
+      "check": "primary_output::validate_report",
+      "path": "artifacts/launch_run_2026-02-27_day1/canonical/validate_gold_fixtures.json",
+      "exists": true,
+      "canonical_path_required": true,
+      "canonical_path_ok": true,
+      "passed": true
+    },
+    {
+      "check": "primary_output::replay_report",
+      "path": "artifacts/launch_run_2026-02-27_day1/canonical/replay_gold_fixtures.json",
+      "exists": true,
+      "canonical_path_required": true,
+      "canonical_path_ok": true,
+      "passed": true
+    },
+    {
+      "check": "primary_output::clause_guardrail_report",
+      "path": "artifacts/launch_run_2026-02-27_day1/canonical/edge_case_clause_guardrail.json",
+      "exists": true,
+      "canonical_path_required": true,
+      "canonical_path_ok": true,
+      "passed": true
+    },
+    {
+      "check": "primary_output::parent_guardrail_report",
+      "path": "artifacts/launch_run_2026-02-27_day1/canonical/edge_case_clause_parent_guardrail.json",
+      "exists": true,
+      "canonical_path_required": true,
+      "canonical_path_ok": true,
+      "passed": true
+    },
+    {
+      "check": "primary_output::parser_v1_tests_log",
+      "path": "artifacts/launch_run_2026-02-27_day1/canonical/parser_v1_tests.log",
+      "exists": true,
+      "canonical_path_required": true,
+      "canonical_path_ok": true,
+      "passed": true
+    },
+    {
+      "check": "diagnostic_output::dirty_replay_report_diagnostic_only",
+      "path": "artifacts/launch_run_2026-02-27_day1/replay_gold_fixtures.json",
+      "exists": true,
+      "passed": true
+    },
+    {
+      "check": "canonical_policy_present",
+      "path": "artifacts/launch_run_2026-02-27_day1/day1_canonical_selection_policy.json",
+      "exists": true,
+      "passed": true
+    },
+    {
+      "check": "provenance_closure_status",
+      "status": "closed_with_canonical_routing",
+      "passed": true
+    }
+  ],
+  "failures": []
+}

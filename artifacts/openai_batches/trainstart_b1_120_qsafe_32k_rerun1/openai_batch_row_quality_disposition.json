@@ -1,0 +1,578 @@
+{
+  "summary": {
+    "rows": 57,
+    "status_counts": {
+      "caution": 14,
+      "strong": 35,
+      "fail": 8
+    },
+    "note_counts": {
+      "review_rationale_missing_ambiguity_signal": 3,
+      "unusable_output_length_cutoff": 8,
+      "label_not_found_near_span_start": 6,
+      "abstain_rationale_missing_contamination_signal": 2,
+      "accepted_rationale_contains_ambiguity_language": 2,
+      "accepted_with_zero_nodes_verify_inline_only": 2
+    }
+  },
+  "rows": [
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0031",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0072",
+      "category": "high_letter_continuation",
+      "decision": "review",
+      "node_count": 0,
+      "status": "caution",
+      "notes": [
+        "review_rationale_missing_ambiguity_signal"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0032",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0074",
+      "category": "high_letter_continuation",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0033",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0075",
+      "category": "high_letter_continuation",
+      "decision": "review",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0034",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0076",
+      "category": "high_letter_continuation",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0035",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0077",
+      "category": "high_letter_continuation",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0036",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0079",
+      "category": "high_letter_continuation",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0037",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0081",
+      "category": "high_letter_continuation",
+      "decision": "review",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0038",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0082",
+      "category": "high_letter_continuation",
+      "decision": null,
+      "node_count": null,
+      "status": "fail",
+      "notes": [
+        "unusable_output_length_cutoff"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0039",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0083",
+      "category": "high_letter_continuation",
+      "decision": null,
+      "node_count": null,
+      "status": "fail",
+      "notes": [
+        "unusable_output_length_cutoff"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0040",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0084",
+      "category": "high_letter_continuation",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0041",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0085",
+      "category": "high_letter_continuation",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0042",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0086",
+      "category": "high_letter_continuation",
+      "decision": "review",
+      "node_count": 0,
+      "status": "caution",
+      "notes": [
+        "review_rationale_missing_ambiguity_signal"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0043",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0089",
+      "category": "high_letter_continuation",
+      "decision": "accepted",
+      "node_count": 1,
+      "status": "caution",
+      "notes": [
+        "label_not_found_near_span_start"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0044",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0090",
+      "category": "high_letter_continuation",
+      "decision": "review",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0045",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0091",
+      "category": "high_letter_continuation",
+      "decision": null,
+      "node_count": null,
+      "status": "fail",
+      "notes": [
+        "unusable_output_length_cutoff"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0046",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0092",
+      "category": "high_letter_continuation",
+      "decision": null,
+      "node_count": null,
+      "status": "fail",
+      "notes": [
+        "unusable_output_length_cutoff"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0047",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0095",
+      "category": "high_letter_continuation",
+      "decision": "review",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0048",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0097",
+      "category": "high_letter_continuation",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "caution",
+      "notes": [
+        "abstain_rationale_missing_contamination_signal"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0049",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0098",
+      "category": "high_letter_continuation",
+      "decision": "review",
+      "node_count": 0,
+      "status": "caution",
+      "notes": [
+        "review_rationale_missing_ambiguity_signal"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0050",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0099",
+      "category": "high_letter_continuation",
+      "decision": null,
+      "node_count": null,
+      "status": "fail",
+      "notes": [
+        "unusable_output_length_cutoff"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0051",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0100",
+      "category": "high_letter_continuation",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0052",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0102",
+      "category": "high_letter_continuation",
+      "decision": "accepted",
+      "node_count": 1,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0053",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0103",
+      "category": "high_letter_continuation",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0055",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0107",
+      "category": "high_letter_continuation",
+      "decision": "review",
+      "node_count": 1,
+      "status": "caution",
+      "notes": [
+        "label_not_found_near_span_start"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0057",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0109",
+      "category": "high_letter_continuation",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0058",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0111",
+      "category": "high_letter_continuation",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0060",
+      "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0115",
+      "category": "high_letter_continuation",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0091",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0141",
+      "category": "xref_vs_structural",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0092",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0145",
+      "category": "xref_vs_structural",
+      "decision": null,
+      "node_count": null,
+      "status": "fail",
+      "notes": [
+        "unusable_output_length_cutoff"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0093",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0147",
+      "category": "xref_vs_structural",
+      "decision": "accepted",
+      "node_count": 1,
+      "status": "caution",
+      "notes": [
+        "accepted_rationale_contains_ambiguity_language",
+        "label_not_found_near_span_start"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0094",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0153",
+      "category": "xref_vs_structural",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0095",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0155",
+      "category": "xref_vs_structural",
+      "decision": "accepted",
+      "node_count": 1,
+      "status": "caution",
+      "notes": [
+        "accepted_rationale_contains_ambiguity_language"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0096",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0157",
+      "category": "xref_vs_structural",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0097",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0159",
+      "category": "xref_vs_structural",
+      "decision": "review",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0098",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0162",
+      "category": "xref_vs_structural",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0099",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0165",
+      "category": "xref_vs_structural",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0100",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0167",
+      "category": "xref_vs_structural",
+      "decision": null,
+      "node_count": null,
+      "status": "fail",
+      "notes": [
+        "unusable_output_length_cutoff"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0101",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0169",
+      "category": "xref_vs_structural",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0102",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0174",
+      "category": "xref_vs_structural",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "caution",
+      "notes": [
+        "abstain_rationale_missing_contamination_signal"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0103",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0176",
+      "category": "xref_vs_structural",
+      "decision": "accepted",
+      "node_count": 0,
+      "status": "caution",
+      "notes": [
+        "accepted_with_zero_nodes_verify_inline_only"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0104",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0180",
+      "category": "xref_vs_structural",
+      "decision": "accepted",
+      "node_count": 1,
+      "status": "caution",
+      "notes": [
+        "label_not_found_near_span_start"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0105",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0142",
+      "category": "xref_vs_structural",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0106",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0146",
+      "category": "xref_vs_structural",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0107",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0150",
+      "category": "xref_vs_structural",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0108",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0154",
+      "category": "xref_vs_structural",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0109",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0156",
+      "category": "xref_vs_structural",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0110",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0158",
+      "category": "xref_vs_structural",
+      "decision": null,
+      "node_count": null,
+      "status": "fail",
+      "notes": [
+        "unusable_output_length_cutoff"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0111",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0160",
+      "category": "xref_vs_structural",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0112",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0163",
+      "category": "xref_vs_structural",
+      "decision": "accepted",
+      "node_count": 1,
+      "status": "caution",
+      "notes": [
+        "label_not_found_near_span_start"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0113",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0166",
+      "category": "xref_vs_structural",
+      "decision": "accepted",
+      "node_count": 0,
+      "status": "caution",
+      "notes": [
+        "accepted_with_zero_nodes_verify_inline_only"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0114",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0168",
+      "category": "xref_vs_structural",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0115",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0172",
+      "category": "xref_vs_structural",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0116",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0175",
+      "category": "xref_vs_structural",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0117",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0178",
+      "category": "xref_vs_structural",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0118",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0182",
+      "category": "xref_vs_structural",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0119",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0179",
+      "category": "xref_vs_structural",
+      "decision": "accepted",
+      "node_count": 1,
+      "status": "caution",
+      "notes": [
+        "label_not_found_near_span_start"
+      ]
+    },
+    {
+      "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0120",
+      "fixture_id": "GFV1C-XREF_VS_STRUCTURAL-0183",
+      "category": "xref_vs_structural",
+      "decision": "abstain",
+      "node_count": 0,
+      "status": "strong",
+      "notes": []
+    }
+  ]
+}

@@ -445,8 +445,8 @@ class TestConfidenceScoring:
         assert not node_i.is_structural_candidate
         assert node_i.demotion_reason == "singleton"
 
-    def test_root_alpha_parent_rehabilitated_from_strong_children(self) -> None:
-        """Duplicate root alpha parent with strong immediate children should be promoted."""
+    def test_duplicate_collision_node_demoted(self) -> None:
+        """Duplicate collision nodes (_dup) are always demoted (P0 fix)."""
         text = (
             "(a) First parent text.\n"
             "(i) first child under first parent.\n"
@@ -458,9 +458,9 @@ class TestConfidenceScoring:
         nodes = parse_clauses(text)
         node_dup_parent = next((n for n in nodes if n.id == "a_dup2"), None)
         assert node_dup_parent is not None
-        assert node_dup_parent.is_structural_candidate
-        assert node_dup_parent.parse_confidence >= 0.55
-        assert node_dup_parent.demotion_reason == ""
+        assert not node_dup_parent.is_structural_candidate
+        assert node_dup_parent.parse_confidence == 0.0
+        assert node_dup_parent.demotion_reason == "duplicate_id_collision"
 
     def test_xref_root_parent_not_rehabilitated_from_children(self) -> None:
         """xref-like root parent should remain demoted even with child run."""
@@ -741,3 +741,146 @@ class TestDuplicateIdFormat:
             assert len(dup_ids) >= 1, f"Expected _dup suffix in IDs: {ids}"
             for did in dup_ids:
                 assert "._" not in did, f"Dup ID '{did}' has dot-underscore segment"
+
+
+# ===========================================================================
+# P0: Duplicate-lineage demotion
+# ===========================================================================
+
+
+class TestDuplicateLineageDemotion:
+    """P0: Duplicate-lineage nodes are always demoted (root + descendants)."""
+
+    def test_dup_descendant_demoted(self) -> None:
+        """Children of _dup nodes inherit duplicate-lineage demotion."""
+        text = (
+            "(a) First parent text.\n"
+            "(i) first child under first parent.\n"
+            "(ii) second child under first parent.\n"
+            "(a) Second parent text (creates a_dup2).\n"
+            "(i) first child under second parent.\n"
+            "(ii) second child under second parent.\n"
+        )
+        nodes = parse_clauses(text)
+        by_id = {n.id: n for n in nodes}
+        # a_dup2 is the collision root
+        assert not by_id["a_dup2"].is_structural_candidate
+        assert by_id["a_dup2"].demotion_reason == "duplicate_id_collision"
+        assert by_id["a_dup2"].parse_confidence == 0.0
+        # a_dup2.i and a_dup2.ii are descendants
+        for cid in ("a_dup2.i", "a_dup2.ii"):
+            node = by_id[cid]
+            assert not node.is_structural_candidate, f"{cid} should be demoted"
+            assert node.demotion_reason == "duplicate_lineage_descendant"
+            assert node.parse_confidence == 0.0
+
+    def test_dup_root_demoted(self) -> None:
+        """The _dupN collision root itself is demoted."""
+        text = (
+            "(a) First provision.\n"
+            "(b) Second provision.\n"
+            "(a) Duplicate of first.\n"
+        )
+        nodes = parse_clauses(text)
+        dup = next((n for n in nodes if n.id == "a_dup2"), None)
+        assert dup is not None
+        assert not dup.is_structural_candidate
+        assert dup.demotion_reason == "duplicate_id_collision"
+
+
+# ===========================================================================
+# Upward structural propagation
+# ===========================================================================
+
+
+class TestUpwardStructuralPropagation:
+    """Upward propagation: promote non-structural parents with >=2 structural children."""
+
+    def test_upward_propagation_basic(self) -> None:
+        """Unanchored alpha parent with structural roman children gets promoted."""
+        text = (
+            "Some text before the clause list. "
+            "(a) The parent clause covering multiple sub-items:\n"
+            "(i) First roman child with substantial body text.\n"
+            "(ii) Second roman child with substantial body text.\n"
+            "(iii) Third roman child with substantial body text.\n"
+        )
+        nodes = parse_clauses(text)
+        by_id = {n.id: n for n in nodes}
+        assert "a" in by_id
+        roman_kids = [n for n in nodes if n.parent_id == "a" and n.level_type == "roman"]
+        struct_kids = [n for n in roman_kids if n.is_structural_candidate]
+        assert len(struct_kids) >= 2, f"Expected >=2 structural children, got {len(struct_kids)}"
+        assert by_id["a"].is_structural_candidate, (
+            f"(a) should be promoted: conf={by_id['a'].parse_confidence}, "
+            f"reason='{by_id['a'].demotion_reason}'"
+        )
+
+    def test_upward_propagation_below_child_threshold(self) -> None:
+        """Parent with only 1 structural child is NOT promoted."""
+        text = (
+            "Some text before. "
+            "(a) Parent clause:\n"
+            "(i) Only one roman child.\n"
+        )
+        nodes = parse_clauses(text)
+        by_id = {n.id: n for n in nodes}
+        if "a" in by_id and not by_id["a"].is_structural_candidate:
+            assert not by_id["a"].is_structural_candidate
+
+    def test_upward_propagation_dup_excluded(self) -> None:
+        """Duplicate-lineage parents are never promoted even with structural children."""
+        text = (
+            "(a) First parent text.\n"
+            "(i) first child under first parent.\n"
+            "(ii) second child under first parent.\n"
+            "(a) Duplicate parent with structural children.\n"
+            "(i) first child under dup parent.\n"
+            "(ii) second child under dup parent.\n"
+        )
+        nodes = parse_clauses(text)
+        dup = next((n for n in nodes if n.id == "a_dup2"), None)
+        assert dup is not None
+        assert not dup.is_structural_candidate, "Dup parents must stay demoted"
+        assert "duplicate" in dup.demotion_reason
+
+    def test_upward_propagation_xref_parent_allowed(self) -> None:
+        """xref-flagged parent with structural children IS promoted.
+
+        Structural children override the xref heuristic, which produces
+        false positives in long sections.
+        """
+        text = (
+            "(a) First clause in the run.\n"
+            "(b) Second clause in the run.\n"
+            "Section 2.14(c) some cross-reference context text:\n"
+            "(i) First substantive roman child at line start.\n"
+            "(ii) Second substantive roman child at line start.\n"
+            "(iii) Third substantive roman child at line start.\n"
+        )
+        nodes = parse_clauses(text)
+        by_id = {n.id: n for n in nodes}
+        if "c" in by_id:
+            c_node = by_id["c"]
+            roman_kids = [n for n in nodes if n.parent_id == "c" and n.is_structural_candidate]
+            if len(roman_kids) >= 2 and c_node.parse_confidence >= 0.20:
+                assert c_node.is_structural_candidate, (
+                    f"xref parent (c) should be promoted with {len(roman_kids)} "
+                    f"structural children, conf={c_node.parse_confidence}"
+                )
+
+    def test_upward_propagation_prevents_child_demotion(self) -> None:
+        """Children of a promoted parent are NOT re-demoted by parent-consistency."""
+        text = (
+            "Some text before. "
+            "(a) The parent clause:\n"
+            "(i) First roman child with substantial body text.\n"
+            "(ii) Second roman child with substantial body text.\n"
+            "(iii) Third roman child with substantial body text.\n"
+        )
+        nodes = parse_clauses(text)
+        by_id = {n.id: n for n in nodes}
+        if "a" in by_id and by_id["a"].is_structural_candidate:
+            for n in nodes:
+                if n.parent_id == "a" and n.is_structural_candidate:
+                    assert "non_structural_ancestor" not in n.demotion_reason

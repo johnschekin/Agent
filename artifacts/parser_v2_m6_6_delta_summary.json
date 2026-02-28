@@ -1,0 +1,293 @@
+{
+  "slices": {
+    "fixtures500": {
+      "baseline": {
+        "fixtures_path": "data/fixtures/gold/v1/fixtures.jsonl",
+        "processed_sections": 500,
+        "section_status_counts": {
+          "accepted": 2,
+          "review": 34,
+          "abstain": 464
+        },
+        "avg_id_overlap_ratio": 0.107733,
+        "sidecar_records": 500,
+        "sidecar_path": "artifacts/parser_v2_dual_run_sidecar_fixtures500.jsonl"
+      },
+      "m6_5": {
+        "fixtures_path": "data/fixtures/gold/v1/fixtures.jsonl",
+        "processed_sections": 500,
+        "section_status_counts": {
+          "accepted": 3,
+          "review": 242,
+          "abstain": 255
+        },
+        "avg_id_overlap_ratio": 0.111952,
+        "sidecar_records": 500,
+        "sidecar_path": "artifacts/parser_v2_dual_run_sidecar_m6_5_fixtures500.jsonl"
+      },
+      "m6_6": {
+        "fixtures_path": "data/fixtures/gold/v1/fixtures.jsonl",
+        "processed_sections": 500,
+        "section_status_counts": {
+          "accepted": 3,
+          "review": 468,
+          "abstain": 29
+        },
+        "avg_id_overlap_ratio": 0.116896,
+        "sidecar_records": 500,
+        "sidecar_path": "artifacts/parser_v2_dual_run_sidecar_m6_6_fixtures500.jsonl"
+      },
+      "delta_baseline_to_m6_5": {
+        "accepted": 1,
+        "review": 208,
+        "abstain": -209,
+        "avg_id_overlap_ratio": 0.004219
+      },
+      "delta_m6_5_to_m6_6": {
+        "accepted": 0,
+        "review": 226,
+        "abstain": -226,
+        "avg_id_overlap_ratio": 0.004944
+      },
+      "delta_baseline_to_m6_6": {
+        "accepted": 1,
+        "review": 434,
+        "abstain": -435,
+        "avg_id_overlap_ratio": 0.009163
+      }
+    },
+    "candidate1000": {
+      "baseline": {
+        "fixtures_path": "data/fixtures/gold/v1/packs/v1-seed-1000-candidate/fixtures.jsonl",
+        "processed_sections": 1000,
+        "section_status_counts": {
+          "accepted": 5,
+          "review": 62,
+          "abstain": 933
+        },
+        "avg_id_overlap_ratio": 0.120448,
+        "sidecar_records": 1000,
+        "sidecar_path": "artifacts/parser_v2_dual_run_sidecar_candidate1000.jsonl"
+      },
+      "m6_5": {
+        "fixtures_path": "data/fixtures/gold/v1/packs/v1-seed-1000-candidate/fixtures.jsonl",
+        "processed_sections": 1000,
+        "section_status_counts": {
+          "accepted": 7,
+          "review": 501,
+          "abstain": 492
+        },
+        "avg_id_overlap_ratio": 0.122491,
+        "sidecar_records": 1000,
+        "sidecar_path": "artifacts/parser_v2_dual_run_sidecar_m6_5_candidate1000.jsonl"
+      },
+      "m6_6": {
+        "fixtures_path": "data/fixtures/gold/v1/packs/v1-seed-1000-candidate/fixtures.jsonl",
+        "processed_sections": 1000,
+        "section_status_counts": {
+          "accepted": 7,
+          "review": 946,
+          "abstain": 47
+        },
+        "avg_id_overlap_ratio": 0.122701,
+        "sidecar_records": 1000,
+        "sidecar_path": "artifacts/parser_v2_dual_run_sidecar_m6_6_candidate1000.jsonl"
+      },
+      "delta_baseline_to_m6_5": {
+        "accepted": 2,
+        "review": 439,
+        "abstain": -441,
+        "avg_id_overlap_ratio": 0.002043
+      },
+      "delta_m6_5_to_m6_6": {
+        "accepted": 0,
+        "review": 445,
+        "abstain": -445,
+        "avg_id_overlap_ratio": 0.00021
+      },
+      "delta_baseline_to_m6_6": {
+        "accepted": 2,
+        "review": 884,
+        "abstain": -886,
+        "avg_id_overlap_ratio": 0.002253
+      }
+    },
+    "hard1000": {
+      "baseline": {
+        "fixtures_path": "data/fixtures/gold/v1/packs/v1-seed-hard-2500/fixtures.jsonl",
+        "processed_sections": 1000,
+        "section_status_counts": {
+          "accepted": 0,
+          "review": 12,
+          "abstain": 988
+        },
+        "avg_id_overlap_ratio": 0.087432,
+        "sidecar_records": 1000,
+        "sidecar_path": "artifacts/parser_v2_dual_run_sidecar_hard1000.jsonl"
+      },
+      "m6_5": {
+        "fixtures_path": "data/fixtures/gold/v1/packs/v1-seed-hard-2500/fixtures.jsonl",
+        "processed_sections": 1000,
+        "section_status_counts": {
+          "accepted": 0,
+          "review": 473,
+          "abstain": 527
+        },
+        "avg_id_overlap_ratio": 0.086579,
+        "sidecar_records": 1000,
+        "sidecar_path": "artifacts/parser_v2_dual_run_sidecar_m6_5_hard1000.jsonl"
+      },
+      "m6_6": {
+        "fixtures_path": "data/fixtures/gold/v1/packs/v1-seed-hard-2500/fixtures.jsonl",
+        "processed_sections": 1000,
+        "section_status_counts": {
+          "accepted": 0,
+          "review": 985,
+          "abstain": 15
+        },
+        "avg_id_overlap_ratio": 0.081104,
+        "sidecar_records": 1000,
+        "sidecar_path": "artifacts/parser_v2_dual_run_sidecar_m6_6_hard1000.jsonl"
+      },
+      "delta_baseline_to_m6_5": {
+        "accepted": 0,
+        "review": 461,
+        "abstain": -461,
+        "avg_id_overlap_ratio": -0.000853
+      },
+      "delta_m6_5_to_m6_6": {
+        "accepted": 0,
+        "review": 512,
+        "abstain": -512,
+        "avg_id_overlap_ratio": -0.005475
+      },
+      "delta_baseline_to_m6_6": {
+        "accepted": 0,
+        "review": 973,
+        "abstain": -973,
+        "avg_id_overlap_ratio": -0.006328
+      }
+    },
+    "edgecases100": {
+      "baseline": {
+        "fixtures_path": "data/quality/clause_edge_cases_batch_1.jsonl",
+        "processed_sections": 100,
+        "section_status_counts": {
+          "accepted": 0,
+          "review": 4,
+          "abstain": 96
+        },
+        "avg_id_overlap_ratio": 0.176482,
+        "sidecar_records": 100,
+        "sidecar_path": "artifacts/parser_v2_dual_run_sidecar_edgecases100.jsonl"
+      },
+      "m6_5": {
+        "fixtures_path": "data/quality/clause_edge_cases_batch_1.jsonl",
+        "processed_sections": 100,
+        "section_status_counts": {
+          "accepted": 0,
+          "review": 49,
+          "abstain": 51
+        },
+        "avg_id_overlap_ratio": 0.164202,
+        "sidecar_records": 100,
+        "sidecar_path": "artifacts/parser_v2_dual_run_sidecar_m6_5_edgecases100.jsonl"
+      },
+      "m6_6": {
+        "fixtures_path": "data/quality/clause_edge_cases_batch_1.jsonl",
+        "processed_sections": 100,
+        "section_status_counts": {
+          "accepted": 0,
+          "review": 82,
+          "abstain": 18
+        },
+        "avg_id_overlap_ratio": 0.185192,
+        "sidecar_records": 100,
+        "sidecar_path": "artifacts/parser_v2_dual_run_sidecar_m6_6_edgecases100.jsonl"
+      },
+      "delta_baseline_to_m6_5": {
+        "accepted": 0,
+        "review": 45,
+        "abstain": -45,
+        "avg_id_overlap_ratio": -0.01228
+      },
+      "delta_m6_5_to_m6_6": {
+        "accepted": 0,
+        "review": 33,
+        "abstain": -33,
+        "avg_id_overlap_ratio": 0.02099
+      },
+      "delta_baseline_to_m6_6": {
+        "accepted": 0,
+        "review": 78,
+        "abstain": -78,
+        "avg_id_overlap_ratio": 0.00871
+      }
+    }
+  },
+  "aggregate": {
+    "baseline": {
+      "processed": 2600,
+      "accepted": 7,
+      "review": 112,
+      "abstain": 2481,
+      "rates": {
+        "accepted": 0.002692,
+        "review": 0.043077,
+        "abstain": 0.954231
+      },
+      "avg_id_overlap_ratio": 0.107459
+    },
+    "m6_5": {
+      "processed": 2600,
+      "accepted": 10,
+      "review": 1265,
+      "abstain": 1325,
+      "rates": {
+        "accepted": 0.003846,
+        "review": 0.486538,
+        "abstain": 0.509615
+      },
+      "avg_id_overlap_ratio": 0.108256
+    },
+    "m6_6": {
+      "processed": 2600,
+      "accepted": 10,
+      "review": 2481,
+      "abstain": 109,
+      "rates": {
+        "accepted": 0.003846,
+        "review": 0.954231,
+        "abstain": 0.041923
+      },
+      "avg_id_overlap_ratio": 0.107989
+    },
+    "baseline_to_m6_5": {
+      "accepted": 3,
+      "review": 1153,
+      "abstain": -1156,
+      "accepted_rate": 0.001154,
+      "review_rate": 0.443461,
+      "abstain_rate": -0.444616,
+      "avg_id_overlap_ratio": 0.000797
+    },
+    "m6_5_to_m6_6": {
+      "accepted": 0,
+      "review": 1216,
+      "abstain": -1216,
+      "accepted_rate": 0.0,
+      "review_rate": 0.467693,
+      "abstain_rate": -0.467692,
+      "avg_id_overlap_ratio": -0.000267
+    },
+    "baseline_to_m6_6": {
+      "accepted": 3,
+      "review": 2369,
+      "abstain": -2372,
+      "accepted_rate": 0.001154,
+      "review_rate": 0.911154,
+      "abstain_rate": -0.912308,
+      "avg_id_overlap_ratio": 0.00053
+    }
+  }
+}

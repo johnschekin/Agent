@@ -48,6 +48,16 @@ _SINGLETON_PENALTY = 0.85
 _UNANCHORED_RUN_PENALTY = 0.60
 _ROOT_HIGH_LETTER_PENALTY = 0.60
 
+# Upward structural propagation: promote non-structural parents when
+# enough structural children provide evidence of genuine sub-structure.
+_STRUCTURAL_CHILDREN_THRESHOLD = 2
+_PROMOTION_CONFIDENCE_FLOOR = 0.10
+_HARD_DEMOTION_KEYWORDS = frozenset({
+    "ghost_body",
+    "duplicate_id_collision",
+    "duplicate_lineage_descendant",
+})
+
 # Labels whose inner text is ambiguous between alpha and roman
 _AMBIGUOUS_ROMAN = frozenset({"i", "v", "x", "l", "c", "d", "m"})
 
@@ -818,104 +828,115 @@ def _compute_confidence(
             is_structural, round(confidence, 4), demotion_reason,
         ))
 
-    # Parent rehabilitation (depth-2 focus):
-    # If a root alpha parent (typically (a)/(b)/...) was demoted but has a
-    # strong immediate child run, promote the parent to structural.
-    # This targets chain integrity failures where children are high-confidence
-    # structural clauses under a demoted container parent.
-    by_id = {node.id: idx for idx, (node, *_rest) in enumerate(results)}
-    child_indices_by_parent: dict[str, list[int]] = {}
+    # ── P0: Duplicate-lineage demotion ─────────────────────────────
+    # Any node whose ID contains _dup is an artifact of duplicate ID
+    # collision.  Demote the entire lineage (root + descendants).
+    duplicate_lineage_ids = {n.id for n in nodes if "_dup" in n.id}
+    duplicate_root_ids = {
+        n.id for n in nodes if re.search(r"_dup\d+$", n.id)
+    }
+    for idx, (node, a_ok, rl_ok, g_ok, _s, _c, _r) in enumerate(
+        results,
+    ):
+        if node.id in duplicate_lineage_ids:
+            results[idx] = (
+                node, a_ok, rl_ok, g_ok,
+                False, 0.0,
+                "duplicate_id_collision"
+                if node.id in duplicate_root_ids
+                else "duplicate_lineage_descendant",
+            )
+
+    # ── Upward structural propagation (pass 1) ────────────────────
+    # Promote non-structural parents with ≥N structural children when
+    # demotion was for soft reasons.  Bottom-up so cascading works
+    # naturally (deepest nodes processed first).
+    children_of: dict[str, list[int]] = {}
     for idx, (node, *_rest) in enumerate(results):
         if node.parent_id:
-            child_indices_by_parent.setdefault(node.parent_id, []).append(idx)
+            children_of.setdefault(node.parent_id, []).append(idx)
 
-    for parent_id, child_idxs in child_indices_by_parent.items():
-        parent_idx = by_id.get(parent_id)
-        if parent_idx is None:
-            continue
+    promoted_ids: set[str] = set()
 
-        (
-            parent_node,
-            parent_anchor_ok,
-            parent_run_ok,
-            parent_gap_ok,
-            parent_is_structural,
-            parent_confidence,
-            _parent_reason,
-        ) = results[parent_idx]
-
-        if parent_is_structural:
-            continue
-        if parent_node.parent_id != "":
-            continue
-        if parent_node.level_type != "alpha":
-            continue
-        if parent_node.ordinal <= 0 or parent_node.ordinal > 8:
-            continue
-        if parent_node.is_xref:
-            continue
-
-        parent_level = len(parent_node.id.split("."))
-        strong_children = 0
-        for child_idx in child_idxs:
-            child_node, child_anchor_ok, _crun, _cgap, child_structural, child_confidence, _creason = results[child_idx]
-            if not child_structural:
+    def _upward_promote() -> int:
+        """Single bottom-up pass; returns count of new promotions."""
+        count = 0
+        for idx in sorted(
+            range(len(results)),
+            key=lambda i: results[i][0].depth,
+            reverse=True,
+        ):
+            nd, a, r, g, strukt, conf, rsn = results[idx]
+            if strukt:
                 continue
-            if child_node.is_xref:
+            if any(kw in rsn for kw in _HARD_DEMOTION_KEYWORDS):
                 continue
-            if not child_anchor_ok:
+            if conf < _PROMOTION_CONFIDENCE_FLOOR:
                 continue
-            if child_confidence < 0.75:
-                continue
-            if len(child_node.id.split(".")) != parent_level + 1:
-                continue
-            strong_children += 1
+            child_indices = children_of.get(nd.id, [])
+            sc = sum(1 for ci in child_indices if results[ci][4])
+            # Low-confidence xref nodes need stronger child evidence
+            # to override the heuristic (genuine xrefs like
+            # "Section 2.14(a)" rarely have 3+ structural children).
+            required = _STRUCTURAL_CHILDREN_THRESHOLD
+            if nd.is_xref and conf < 0.20:
+                required = max(required, 3)
+            if sc >= required:
+                results[idx] = (nd, a, r, g, True, conf, "")
+                promoted_ids.add(nd.id)
+                count += 1
+        return count
 
-        if strong_children < 2:
-            continue
-        if not parent_anchor_ok and strong_children < 3:
-            continue
+    # ── Iterative upward promotion + parent-consistency ─────────
+    # Loop: promote → demote → promote until no new promotions.
+    # Handles multi-level chains (depth 3-4) that need cascading
+    # propagation through intermediate levels.
+    by_id = {node.id: idx for idx, (node, *_rest) in enumerate(results)}
+    _MAX_PROMOTION_ROUNDS = 5
 
-        promoted_confidence = round(max(parent_confidence, 0.55), 4)
-        results[parent_idx] = (
-            parent_node,
-            parent_anchor_ok,
-            parent_run_ok,
-            parent_gap_ok,
-            True,
-            promoted_confidence,
-            "",
-        )
+    for _round in range(_MAX_PROMOTION_ROUNDS):
+        new_promotions = _upward_promote()
+        if new_promotions == 0 and _round > 0:
+            break
 
-    # Direct-parent consistency: when parent is non-structural, demote weak
-    # structural children (but keep strong anchored run nodes to avoid cascade
-    # over-suppression in long sections).
-    for idx, (node, anchor_ok, run_length_ok, gap_ok, is_structural, confidence, reason) in enumerate(results):
-        if not is_structural:
-            continue
-        parent = node.parent_id
-        if not parent:
-            continue
-        parent_idx = by_id.get(parent)
-        if parent_idx is None:
-            continue
-        parent_structural = results[parent_idx][4]
-        if parent_structural:
-            continue
-        if anchor_ok and run_length_ok and confidence >= 0.75:
-            continue
-        demotion = "non_structural_ancestor"
-        if reason:
-            demotion = f"{reason}; {demotion}"
-        results[idx] = (
-            node,
-            anchor_ok,
-            run_length_ok,
-            gap_ok,
-            False,
-            confidence,
-            demotion,
-        )
+        # Parent-consistency: demote structural children of
+        # non-structural parents using a SNAPSHOT to prevent
+        # cascading within a single pass.
+        structural_snapshot = {
+            results[i][0].id: results[i][4]
+            for i in range(len(results))
+        }
+        for idx, (
+            node, anchor_ok, run_length_ok, gap_ok,
+            is_structural, confidence, reason,
+        ) in enumerate(results):
+            if not is_structural:
+                continue
+            if node.id in promoted_ids:
+                continue
+            parent = node.parent_id
+            if not parent:
+                continue
+            if parent not in by_id:
+                continue
+            if structural_snapshot.get(parent, True):
+                continue
+            # Keep strong anchored-run children structural —
+            # unless parent is duplicate lineage.
+            if (
+                anchor_ok
+                and run_length_ok
+                and confidence >= 0.75
+                and "_dup" not in parent
+            ):
+                continue
+            demotion = "non_structural_ancestor"
+            if reason:
+                demotion = f"{reason}; {demotion}"
+            results[idx] = (
+                node, anchor_ok, run_length_ok, gap_ok,
+                False, confidence, demotion,
+            )
 
     return results
 

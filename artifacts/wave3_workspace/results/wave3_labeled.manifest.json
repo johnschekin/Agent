@@ -1,0 +1,21 @@
+{
+  "schema_version": "labeled_export_v2",
+  "contract_format": "wave3-handoff",
+  "status": "ok",
+  "export_run_id": "export_labeled_20260227T070747Z_bdacdfd8",
+  "exported_at": "2026-02-27T07:07:47.418459+00:00",
+  "inputs": [
+    "artifacts/wave3_workspace/canary/evidence/debt_capacity.indebtedness_20260227T070711.jsonl"
+  ],
+  "input_file_counts": {
+    "artifacts/wave3_workspace/canary/evidence/debt_capacity.indebtedness_20260227T070711.jsonl": 25
+  },
+  "rows_exported": 25,
+  "deduped_rows": 0,
+  "include_not_found": false,
+  "source_db": "",
+  "source_db_manifest": "/Users/johnchtchekine/Projects/Agent/corpus_index/run_manifest.json",
+  "source_db_manifest_exists": true,
+  "jsonl_path": "artifacts/wave3_workspace/results/wave3_labeled.jsonl",
+  "parquet_path": ""
+}

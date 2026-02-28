@@ -1,0 +1,31 @@
+{
+  "status": "pass",
+  "ok": true,
+  "fixtures": "/Users/johnchtchekine/Projects/Agent/data/fixtures/gold/v1/fixtures.jsonl",
+  "thresholds": "/private/tmp/agent_day1_clean_repro/config/gold_replay_gate_thresholds.json",
+  "summary": {
+    "fixtures_total": 500,
+    "fixtures_failed": 0,
+    "fail_by_decision": {},
+    "fail_by_category": {},
+    "pass_by_decision": {
+      "abstain": 90,
+      "accepted": 80,
+      "review": 330
+    },
+    "pass_by_category": {
+      "ambiguous_alpha_roman": 70,
+      "deep_nesting_chain": 50,
+      "defined_term_boundary": 50,
+      "duplicate_collision": 50,
+      "formatting_noise": 40,
+      "high_letter_continuation": 70,
+      "linking_contract": 30,
+      "nonstruct_parent_chain": 50,
+      "true_root_high_letter": 40,
+      "xref_vs_structural": 50
+    }
+  },
+  "budget_breaches": [],
+  "failures": []
+}

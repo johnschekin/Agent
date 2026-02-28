@@ -1,0 +1,1320 @@
+{
+  "slices": {
+    "fixtures500": {
+      "rows": 500,
+      "status_counts": {
+        "abstain": 464,
+        "review": 34,
+        "accepted": 2
+      },
+      "avg_overlap": 0.107733,
+      "top_categories": [
+        {
+          "category": "ambiguous_alpha_roman",
+          "count": 70,
+          "accepted": 0,
+          "review": 4,
+          "abstain": 66,
+          "abstain_rate": 0.942857,
+          "avg_overlap": 0.013053
+        },
+        {
+          "category": "high_letter_continuation",
+          "count": 70,
+          "accepted": 0,
+          "review": 1,
+          "abstain": 69,
+          "abstain_rate": 0.985714,
+          "avg_overlap": 0.139478
+        },
+        {
+          "category": "deep_nesting_chain",
+          "count": 50,
+          "accepted": 0,
+          "review": 5,
+          "abstain": 45,
+          "abstain_rate": 0.9,
+          "avg_overlap": 0.014412
+        },
+        {
+          "category": "defined_term_boundary",
+          "count": 50,
+          "accepted": 0,
+          "review": 2,
+          "abstain": 48,
+          "abstain_rate": 0.96,
+          "avg_overlap": 0.104665
+        },
+        {
+          "category": "duplicate_collision",
+          "count": 50,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 50,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.013601
+        },
+        {
+          "category": "nonstruct_parent_chain",
+          "count": 50,
+          "accepted": 0,
+          "review": 3,
+          "abstain": 47,
+          "abstain_rate": 0.94,
+          "avg_overlap": 0.015292
+        },
+        {
+          "category": "xref_vs_structural",
+          "count": 50,
+          "accepted": 1,
+          "review": 11,
+          "abstain": 38,
+          "abstain_rate": 0.76,
+          "avg_overlap": 0.363878
+        },
+        {
+          "category": "formatting_noise",
+          "count": 40,
+          "accepted": 0,
+          "review": 3,
+          "abstain": 37,
+          "abstain_rate": 0.925,
+          "avg_overlap": 0.049669
+        },
+        {
+          "category": "true_root_high_letter",
+          "count": 40,
+          "accepted": 0,
+          "review": 3,
+          "abstain": 37,
+          "abstain_rate": 0.925,
+          "avg_overlap": 0.190775
+        },
+        {
+          "category": "linking_contract",
+          "count": 30,
+          "accepted": 1,
+          "review": 2,
+          "abstain": 27,
+          "abstain_rate": 0.9,
+          "avg_overlap": 0.265974
+        }
+      ],
+      "top_article_scopes": [
+        {
+          "article_scope": "1",
+          "count": 218,
+          "accepted": 0,
+          "review": 3,
+          "abstain": 215,
+          "abstain_rate": 0.986239,
+          "avg_overlap": 0.022318
+        },
+        {
+          "article_scope": "2",
+          "count": 65,
+          "accepted": 1,
+          "review": 10,
+          "abstain": 54,
+          "abstain_rate": 0.830769,
+          "avg_overlap": 0.224392
+        },
+        {
+          "article_scope": "6",
+          "count": 65,
+          "accepted": 0,
+          "review": 2,
+          "abstain": 63,
+          "abstain_rate": 0.969231,
+          "avg_overlap": 0.206071
+        },
+        {
+          "article_scope": "9",
+          "count": 24,
+          "accepted": 0,
+          "review": 1,
+          "abstain": 23,
+          "abstain_rate": 0.958333,
+          "avg_overlap": 0.101079
+        },
+        {
+          "article_scope": "10",
+          "count": 21,
+          "accepted": 0,
+          "review": 3,
+          "abstain": 18,
+          "abstain_rate": 0.857143,
+          "avg_overlap": 0.135282
+        },
+        {
+          "article_scope": "8",
+          "count": 21,
+          "accepted": 0,
+          "review": 2,
+          "abstain": 19,
+          "abstain_rate": 0.904762,
+          "avg_overlap": 0.208358
+        },
+        {
+          "article_scope": "5",
+          "count": 20,
+          "accepted": 0,
+          "review": 1,
+          "abstain": 19,
+          "abstain_rate": 0.95,
+          "avg_overlap": 0.109494
+        },
+        {
+          "article_scope": "7",
+          "count": 17,
+          "accepted": 0,
+          "review": 5,
+          "abstain": 12,
+          "abstain_rate": 0.705882,
+          "avg_overlap": 0.258661
+        },
+        {
+          "article_scope": "4",
+          "count": 10,
+          "accepted": 0,
+          "review": 2,
+          "abstain": 8,
+          "abstain_rate": 0.8,
+          "avg_overlap": 0.160907
+        },
+        {
+          "article_scope": "3",
+          "count": 8,
+          "accepted": 1,
+          "review": 0,
+          "abstain": 7,
+          "abstain_rate": 0.875,
+          "avg_overlap": 0.19299
+        },
+        {
+          "article_scope": "13",
+          "count": 7,
+          "accepted": 0,
+          "review": 1,
+          "abstain": 6,
+          "abstain_rate": 0.857143,
+          "avg_overlap": 0.073957
+        },
+        {
+          "article_scope": "17",
+          "count": 5,
+          "accepted": 0,
+          "review": 1,
+          "abstain": 4,
+          "abstain_rate": 0.8,
+          "avg_overlap": 0.048548
+        },
+        {
+          "article_scope": "11",
+          "count": 4,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 4,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.046804
+        },
+        {
+          "article_scope": "12",
+          "count": 4,
+          "accepted": 0,
+          "review": 2,
+          "abstain": 2,
+          "abstain_rate": 0.5,
+          "avg_overlap": 0.046677
+        },
+        {
+          "article_scope": "14",
+          "count": 3,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 3,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.011513
+        },
+        {
+          "article_scope": "15",
+          "count": 3,
+          "accepted": 0,
+          "review": 1,
+          "abstain": 2,
+          "abstain_rate": 0.666667,
+          "avg_overlap": 0.011911
+        },
+        {
+          "article_scope": "0",
+          "count": 2,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 2,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.197403
+        },
+        {
+          "article_scope": "16",
+          "count": 1,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 1,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.008422
+        },
+        {
+          "article_scope": "23",
+          "count": 1,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 1,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.012702
+        },
+        {
+          "article_scope": "25",
+          "count": 1,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 1,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.018083
+        }
+      ]
+    },
+    "hard1000": {
+      "rows": 1000,
+      "status_counts": {
+        "abstain": 988,
+        "review": 12
+      },
+      "avg_overlap": 0.087432,
+      "top_categories": [
+        {
+          "category": "ambiguous_alpha_roman",
+          "count": 550,
+          "accepted": 0,
+          "review": 10,
+          "abstain": 540,
+          "abstain_rate": 0.981818,
+          "avg_overlap": 0.022226
+        },
+        {
+          "category": "high_letter_continuation",
+          "count": 450,
+          "accepted": 0,
+          "review": 2,
+          "abstain": 448,
+          "abstain_rate": 0.995556,
+          "avg_overlap": 0.167128
+        }
+      ],
+      "top_article_scopes": [
+        {
+          "article_scope": "1",
+          "count": 523,
+          "accepted": 0,
+          "review": 1,
+          "abstain": 522,
+          "abstain_rate": 0.998088,
+          "avg_overlap": 0.018839
+        },
+        {
+          "article_scope": "7",
+          "count": 130,
+          "accepted": 0,
+          "review": 1,
+          "abstain": 129,
+          "abstain_rate": 0.992308,
+          "avg_overlap": 0.231303
+        },
+        {
+          "article_scope": "6",
+          "count": 112,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 112,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.213359
+        },
+        {
+          "article_scope": "2",
+          "count": 53,
+          "accepted": 0,
+          "review": 1,
+          "abstain": 52,
+          "abstain_rate": 0.981132,
+          "avg_overlap": 0.067928
+        },
+        {
+          "article_scope": "5",
+          "count": 31,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 31,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.098959
+        },
+        {
+          "article_scope": "8",
+          "count": 28,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 28,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.156787
+        },
+        {
+          "article_scope": "9",
+          "count": 28,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 28,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.098201
+        },
+        {
+          "article_scope": "10",
+          "count": 27,
+          "accepted": 0,
+          "review": 1,
+          "abstain": 26,
+          "abstain_rate": 0.962963,
+          "avg_overlap": 0.144589
+        },
+        {
+          "article_scope": "4",
+          "count": 19,
+          "accepted": 0,
+          "review": 3,
+          "abstain": 16,
+          "abstain_rate": 0.842105,
+          "avg_overlap": 0.180057
+        },
+        {
+          "article_scope": "17",
+          "count": 11,
+          "accepted": 0,
+          "review": 2,
+          "abstain": 9,
+          "abstain_rate": 0.818182,
+          "avg_overlap": 0.033628
+        },
+        {
+          "article_scope": "11",
+          "count": 8,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 8,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.067939
+        },
+        {
+          "article_scope": "12",
+          "count": 8,
+          "accepted": 0,
+          "review": 2,
+          "abstain": 6,
+          "abstain_rate": 0.75,
+          "avg_overlap": 0.06218
+        },
+        {
+          "article_scope": "3",
+          "count": 6,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 6,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.117271
+        },
+        {
+          "article_scope": "14",
+          "count": 4,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 4,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.012334
+        },
+        {
+          "article_scope": "13",
+          "count": 3,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 3,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.043993
+        },
+        {
+          "article_scope": "0",
+          "count": 2,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 2,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.047038
+        },
+        {
+          "article_scope": "15",
+          "count": 2,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 2,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.010677
+        },
+        {
+          "article_scope": "16",
+          "count": 1,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 1,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.008422
+        },
+        {
+          "article_scope": "18",
+          "count": 1,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 1,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.0097
+        },
+        {
+          "article_scope": "21",
+          "count": 1,
+          "accepted": 0,
+          "review": 1,
+          "abstain": 0,
+          "abstain_rate": 0.0,
+          "avg_overlap": 0.020797
+        }
+      ]
+    },
+    "candidate1000": {
+      "rows": 1000,
+      "status_counts": {
+        "abstain": 933,
+        "review": 62,
+        "accepted": 5
+      },
+      "avg_overlap": 0.120448,
+      "top_categories": [
+        {
+          "category": "ambiguous_alpha_roman",
+          "count": 190,
+          "accepted": 0,
+          "review": 6,
+          "abstain": 184,
+          "abstain_rate": 0.968421,
+          "avg_overlap": 0.017184
+        },
+        {
+          "category": "high_letter_continuation",
+          "count": 190,
+          "accepted": 0,
+          "review": 1,
+          "abstain": 189,
+          "abstain_rate": 0.994737,
+          "avg_overlap": 0.122003
+        },
+        {
+          "category": "nonstruct_parent_chain",
+          "count": 140,
+          "accepted": 0,
+          "review": 11,
+          "abstain": 129,
+          "abstain_rate": 0.921429,
+          "avg_overlap": 0.019472
+        },
+        {
+          "category": "xref_vs_structural",
+          "count": 130,
+          "accepted": 4,
+          "review": 26,
+          "abstain": 100,
+          "abstain_rate": 0.769231,
+          "avg_overlap": 0.381674
+        },
+        {
+          "category": "true_root_high_letter",
+          "count": 90,
+          "accepted": 0,
+          "review": 4,
+          "abstain": 86,
+          "abstain_rate": 0.955556,
+          "avg_overlap": 0.254055
+        },
+        {
+          "category": "deep_nesting_chain",
+          "count": 65,
+          "accepted": 0,
+          "review": 7,
+          "abstain": 58,
+          "abstain_rate": 0.892308,
+          "avg_overlap": 0.0153
+        },
+        {
+          "category": "defined_term_boundary",
+          "count": 60,
+          "accepted": 0,
+          "review": 2,
+          "abstain": 58,
+          "abstain_rate": 0.966667,
+          "avg_overlap": 0.093836
+        },
+        {
+          "category": "duplicate_collision",
+          "count": 55,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 55,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.013613
+        },
+        {
+          "category": "formatting_noise",
+          "count": 45,
+          "accepted": 0,
+          "review": 3,
+          "abstain": 42,
+          "abstain_rate": 0.933333,
+          "avg_overlap": 0.049358
+        },
+        {
+          "category": "linking_contract",
+          "count": 35,
+          "accepted": 1,
+          "review": 2,
+          "abstain": 32,
+          "abstain_rate": 0.914286,
+          "avg_overlap": 0.262825
+        }
+      ],
+      "top_article_scopes": [
+        {
+          "article_scope": "1",
+          "count": 451,
+          "accepted": 0,
+          "review": 7,
+          "abstain": 444,
+          "abstain_rate": 0.984479,
+          "avg_overlap": 0.022305
+        },
+        {
+          "article_scope": "6",
+          "count": 114,
+          "accepted": 0,
+          "review": 5,
+          "abstain": 109,
+          "abstain_rate": 0.95614,
+          "avg_overlap": 0.237062
+        },
+        {
+          "article_scope": "2",
+          "count": 113,
+          "accepted": 4,
+          "review": 16,
+          "abstain": 93,
+          "abstain_rate": 0.823009,
+          "avg_overlap": 0.271575
+        },
+        {
+          "article_scope": "7",
+          "count": 69,
+          "accepted": 0,
+          "review": 6,
+          "abstain": 63,
+          "abstain_rate": 0.913043,
+          "avg_overlap": 0.243345
+        },
+        {
+          "article_scope": "5",
+          "count": 43,
+          "accepted": 0,
+          "review": 3,
+          "abstain": 40,
+          "abstain_rate": 0.930233,
+          "avg_overlap": 0.156699
+        },
+        {
+          "article_scope": "9",
+          "count": 42,
+          "accepted": 0,
+          "review": 3,
+          "abstain": 39,
+          "abstain_rate": 0.928571,
+          "avg_overlap": 0.135598
+        },
+        {
+          "article_scope": "10",
+          "count": 39,
+          "accepted": 0,
+          "review": 6,
+          "abstain": 33,
+          "abstain_rate": 0.846154,
+          "avg_overlap": 0.164665
+        },
+        {
+          "article_scope": "8",
+          "count": 38,
+          "accepted": 0,
+          "review": 3,
+          "abstain": 35,
+          "abstain_rate": 0.921053,
+          "avg_overlap": 0.205327
+        },
+        {
+          "article_scope": "4",
+          "count": 20,
+          "accepted": 0,
+          "review": 2,
+          "abstain": 18,
+          "abstain_rate": 0.9,
+          "avg_overlap": 0.185144
+        },
+        {
+          "article_scope": "3",
+          "count": 14,
+          "accepted": 1,
+          "review": 1,
+          "abstain": 12,
+          "abstain_rate": 0.857143,
+          "avg_overlap": 0.191614
+        },
+        {
+          "article_scope": "11",
+          "count": 12,
+          "accepted": 0,
+          "review": 3,
+          "abstain": 9,
+          "abstain_rate": 0.75,
+          "avg_overlap": 0.056939
+        },
+        {
+          "article_scope": "12",
+          "count": 10,
+          "accepted": 0,
+          "review": 2,
+          "abstain": 8,
+          "abstain_rate": 0.8,
+          "avg_overlap": 0.041537
+        },
+        {
+          "article_scope": "13",
+          "count": 9,
+          "accepted": 0,
+          "review": 1,
+          "abstain": 8,
+          "abstain_rate": 0.888889,
+          "avg_overlap": 0.072115
+        },
+        {
+          "article_scope": "17",
+          "count": 7,
+          "accepted": 0,
+          "review": 3,
+          "abstain": 4,
+          "abstain_rate": 0.571429,
+          "avg_overlap": 0.039541
+        },
+        {
+          "article_scope": "14",
+          "count": 6,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 6,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.039769
+        },
+        {
+          "article_scope": "15",
+          "count": 4,
+          "accepted": 0,
+          "review": 1,
+          "abstain": 3,
+          "abstain_rate": 0.75,
+          "avg_overlap": 0.012445
+        },
+        {
+          "article_scope": "0",
+          "count": 3,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 3,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.138522
+        },
+        {
+          "article_scope": "16",
+          "count": 1,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 1,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.008422
+        },
+        {
+          "article_scope": "18",
+          "count": 1,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 1,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.0097
+        },
+        {
+          "article_scope": "20",
+          "count": 1,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 1,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.042934
+        }
+      ]
+    },
+    "edgecases100": {
+      "rows": 100,
+      "status_counts": {
+        "abstain": 96,
+        "review": 4
+      },
+      "avg_overlap": 0.176482,
+      "top_categories": [
+        {
+          "category": "unknown",
+          "count": 100,
+          "accepted": 0,
+          "review": 4,
+          "abstain": 96,
+          "abstain_rate": 0.96,
+          "avg_overlap": 0.176482
+        }
+      ],
+      "top_article_scopes": [
+        {
+          "article_scope": "2",
+          "count": 32,
+          "accepted": 0,
+          "review": 1,
+          "abstain": 31,
+          "abstain_rate": 0.96875,
+          "avg_overlap": 0.166849
+        },
+        {
+          "article_scope": "1",
+          "count": 10,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 10,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.03582
+        },
+        {
+          "article_scope": "9",
+          "count": 10,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 10,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.162424
+        },
+        {
+          "article_scope": "6",
+          "count": 9,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 9,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.244167
+        },
+        {
+          "article_scope": "3",
+          "count": 8,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 8,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.175121
+        },
+        {
+          "article_scope": "7",
+          "count": 7,
+          "accepted": 0,
+          "review": 1,
+          "abstain": 6,
+          "abstain_rate": 0.857143,
+          "avg_overlap": 0.345548
+        },
+        {
+          "article_scope": "5",
+          "count": 5,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 5,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.209093
+        },
+        {
+          "article_scope": "8",
+          "count": 5,
+          "accepted": 0,
+          "review": 1,
+          "abstain": 4,
+          "abstain_rate": 0.8,
+          "avg_overlap": 0.168381
+        },
+        {
+          "article_scope": "10",
+          "count": 4,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 4,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.084082
+        },
+        {
+          "article_scope": "4",
+          "count": 4,
+          "accepted": 0,
+          "review": 1,
+          "abstain": 3,
+          "abstain_rate": 0.75,
+          "avg_overlap": 0.296601
+        },
+        {
+          "article_scope": "12",
+          "count": 2,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 2,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.253247
+        },
+        {
+          "article_scope": "0",
+          "count": 1,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 1,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.08642
+        },
+        {
+          "article_scope": "13",
+          "count": 1,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 1,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.09375
+        },
+        {
+          "article_scope": "33",
+          "count": 1,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 1,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.15
+        },
+        {
+          "article_scope": "35",
+          "count": 1,
+          "accepted": 0,
+          "review": 0,
+          "abstain": 1,
+          "abstain_rate": 1.0,
+          "avg_overlap": 0.0625
+        }
+      ]
+    }
+  },
+  "combined": {
+    "rows": 2600,
+    "status_counts": {
+      "abstain": 2481,
+      "review": 112,
+      "accepted": 7
+    },
+    "avg_overlap": 0.107459,
+    "by_slice": [
+      {
+        "slice": "candidate1000",
+        "count": 1000,
+        "accepted": 5,
+        "review": 62,
+        "abstain": 933,
+        "abstain_rate": 0.933,
+        "avg_overlap": 0.120448
+      },
+      {
+        "slice": "hard1000",
+        "count": 1000,
+        "accepted": 0,
+        "review": 12,
+        "abstain": 988,
+        "abstain_rate": 0.988,
+        "avg_overlap": 0.087432
+      },
+      {
+        "slice": "fixtures500",
+        "count": 500,
+        "accepted": 2,
+        "review": 34,
+        "abstain": 464,
+        "abstain_rate": 0.928,
+        "avg_overlap": 0.107733
+      },
+      {
+        "slice": "edgecases100",
+        "count": 100,
+        "accepted": 0,
+        "review": 4,
+        "abstain": 96,
+        "abstain_rate": 0.96,
+        "avg_overlap": 0.176482
+      }
+    ],
+    "by_category": [
+      {
+        "category": "ambiguous_alpha_roman",
+        "count": 810,
+        "accepted": 0,
+        "review": 20,
+        "abstain": 790,
+        "abstain_rate": 0.975309,
+        "avg_overlap": 0.02025
+      },
+      {
+        "category": "high_letter_continuation",
+        "count": 710,
+        "accepted": 0,
+        "review": 4,
+        "abstain": 706,
+        "abstain_rate": 0.994366,
+        "avg_overlap": 0.152327
+      },
+      {
+        "category": "nonstruct_parent_chain",
+        "count": 190,
+        "accepted": 0,
+        "review": 14,
+        "abstain": 176,
+        "abstain_rate": 0.926316,
+        "avg_overlap": 0.018372
+      },
+      {
+        "category": "xref_vs_structural",
+        "count": 180,
+        "accepted": 5,
+        "review": 37,
+        "abstain": 138,
+        "abstain_rate": 0.766667,
+        "avg_overlap": 0.376731
+      },
+      {
+        "category": "true_root_high_letter",
+        "count": 130,
+        "accepted": 0,
+        "review": 7,
+        "abstain": 123,
+        "abstain_rate": 0.946154,
+        "avg_overlap": 0.234585
+      },
+      {
+        "category": "deep_nesting_chain",
+        "count": 115,
+        "accepted": 0,
+        "review": 12,
+        "abstain": 103,
+        "abstain_rate": 0.895652,
+        "avg_overlap": 0.014914
+      },
+      {
+        "category": "defined_term_boundary",
+        "count": 110,
+        "accepted": 0,
+        "review": 4,
+        "abstain": 106,
+        "abstain_rate": 0.963636,
+        "avg_overlap": 0.098758
+      },
+      {
+        "category": "duplicate_collision",
+        "count": 105,
+        "accepted": 0,
+        "review": 0,
+        "abstain": 105,
+        "abstain_rate": 1.0,
+        "avg_overlap": 0.013607
+      },
+      {
+        "category": "unknown",
+        "count": 100,
+        "accepted": 0,
+        "review": 4,
+        "abstain": 96,
+        "abstain_rate": 0.96,
+        "avg_overlap": 0.176482
+      },
+      {
+        "category": "formatting_noise",
+        "count": 85,
+        "accepted": 0,
+        "review": 6,
+        "abstain": 79,
+        "abstain_rate": 0.929412,
+        "avg_overlap": 0.049505
+      },
+      {
+        "category": "linking_contract",
+        "count": 65,
+        "accepted": 2,
+        "review": 4,
+        "abstain": 59,
+        "abstain_rate": 0.907692,
+        "avg_overlap": 0.264278
+      }
+    ],
+    "by_article_scope": [
+      {
+        "article_scope": "1",
+        "count": 1202,
+        "accepted": 0,
+        "review": 11,
+        "abstain": 1191,
+        "abstain_rate": 0.990849,
+        "avg_overlap": 0.020912
+      },
+      {
+        "article_scope": "6",
+        "count": 300,
+        "accepted": 0,
+        "review": 7,
+        "abstain": 293,
+        "abstain_rate": 0.976667,
+        "avg_overlap": 0.221711
+      },
+      {
+        "article_scope": "2",
+        "count": 263,
+        "accepted": 5,
+        "review": 28,
+        "abstain": 230,
+        "abstain_rate": 0.874525,
+        "avg_overlap": 0.206132
+      },
+      {
+        "article_scope": "7",
+        "count": 223,
+        "accepted": 0,
+        "review": 13,
+        "abstain": 210,
+        "abstain_rate": 0.941704,
+        "avg_overlap": 0.240701
+      },
+      {
+        "article_scope": "9",
+        "count": 104,
+        "accepted": 0,
+        "review": 4,
+        "abstain": 100,
+        "abstain_rate": 0.961538,
+        "avg_overlap": 0.120143
+      },
+      {
+        "article_scope": "5",
+        "count": 99,
+        "accepted": 0,
+        "review": 4,
+        "abstain": 95,
+        "abstain_rate": 0.959596,
+        "avg_overlap": 0.131728
+      },
+      {
+        "article_scope": "8",
+        "count": 92,
+        "accepted": 0,
+        "review": 6,
+        "abstain": 86,
+        "abstain_rate": 0.934783,
+        "avg_overlap": 0.189238
+      },
+      {
+        "article_scope": "10",
+        "count": 91,
+        "accepted": 0,
+        "review": 10,
+        "abstain": 81,
+        "abstain_rate": 0.89011,
+        "avg_overlap": 0.148386
+      },
+      {
+        "article_scope": "4",
+        "count": 53,
+        "accepted": 0,
+        "review": 8,
+        "abstain": 45,
+        "abstain_rate": 0.849057,
+        "avg_overlap": 0.187159
+      },
+      {
+        "article_scope": "3",
+        "count": 36,
+        "accepted": 2,
+        "review": 1,
+        "abstain": 33,
+        "abstain_rate": 0.916667,
+        "avg_overlap": 0.175864
+      },
+      {
+        "article_scope": "11",
+        "count": 24,
+        "accepted": 0,
+        "review": 3,
+        "abstain": 21,
+        "abstain_rate": 0.875,
+        "avg_overlap": 0.058917
+      },
+      {
+        "article_scope": "12",
+        "count": 24,
+        "accepted": 0,
+        "review": 6,
+        "abstain": 18,
+        "abstain_rate": 0.75,
+        "avg_overlap": 0.066917
+      },
+      {
+        "article_scope": "17",
+        "count": 23,
+        "accepted": 0,
+        "review": 6,
+        "abstain": 17,
+        "abstain_rate": 0.73913,
+        "avg_overlap": 0.038671
+      },
+      {
+        "article_scope": "13",
+        "count": 20,
+        "accepted": 0,
+        "review": 2,
+        "abstain": 18,
+        "abstain_rate": 0.9,
+        "avg_overlap": 0.069623
+      },
+      {
+        "article_scope": "14",
+        "count": 13,
+        "accepted": 0,
+        "review": 0,
+        "abstain": 13,
+        "abstain_rate": 1.0,
+        "avg_overlap": 0.024807
+      },
+      {
+        "article_scope": "15",
+        "count": 9,
+        "accepted": 0,
+        "review": 2,
+        "abstain": 7,
+        "abstain_rate": 0.777778,
+        "avg_overlap": 0.011874
+      },
+      {
+        "article_scope": "0",
+        "count": 8,
+        "accepted": 0,
+        "review": 0,
+        "abstain": 8,
+        "abstain_rate": 1.0,
+        "avg_overlap": 0.123858
+      },
+      {
+        "article_scope": "16",
+        "count": 3,
+        "accepted": 0,
+        "review": 0,
+        "abstain": 3,
+        "abstain_rate": 1.0,
+        "avg_overlap": 0.008422
+      },
+      {
+        "article_scope": "23",
+        "count": 3,
+        "accepted": 0,
+        "review": 0,
+        "abstain": 3,
+        "abstain_rate": 1.0,
+        "avg_overlap": 0.012702
+      },
+      {
+        "article_scope": "25",
+        "count": 3,
+        "accepted": 0,
+        "review": 0,
+        "abstain": 3,
+        "abstain_rate": 1.0,
+        "avg_overlap": 0.018083
+      },
+      {
+        "article_scope": "18",
+        "count": 2,
+        "accepted": 0,
+        "review": 0,
+        "abstain": 2,
+        "abstain_rate": 1.0,
+        "avg_overlap": 0.0097
+      },
+      {
+        "article_scope": "20",
+        "count": 1,
+        "accepted": 0,
+        "review": 0,
+        "abstain": 1,
+        "abstain_rate": 1.0,
+        "avg_overlap": 0.042934
+      },
+      {
+        "article_scope": "21",
+        "count": 1,
+        "accepted": 0,
+        "review": 1,
+        "abstain": 0,
+        "abstain_rate": 0.0,
+        "avg_overlap": 0.020797
+      },
+      {
+        "article_scope": "29",
+        "count": 1,
+        "accepted": 0,
+        "review": 0,
+        "abstain": 1,
+        "abstain_rate": 1.0,
+        "avg_overlap": 0.020833
+      },
+      {
+        "article_scope": "33",
+        "count": 1,
+        "accepted": 0,
+        "review": 0,
+        "abstain": 1,
+        "abstain_rate": 1.0,
+        "avg_overlap": 0.15
+      },
+      {
+        "article_scope": "35",
+        "count": 1,
+        "accepted": 0,
+        "review": 0,
+        "abstain": 1,
+        "abstain_rate": 1.0,
+        "avg_overlap": 0.0625
+      }
+    ]
+  }
+}

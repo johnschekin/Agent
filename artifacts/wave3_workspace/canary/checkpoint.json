@@ -1,0 +1,12 @@
+{
+  "family": "canary",
+  "status": "running",
+  "current_concept_id": "debt_capacity.indebtedness",
+  "last_concept_id": "debt_capacity.indebtedness",
+  "last_evidence_file": "artifacts/wave3_workspace/canary/evidence/debt_capacity.indebtedness_20260227T070711.jsonl",
+  "last_evidence_run_id": "evidence_20260227T070711Z_de1f356d",
+  "last_evidence_records": 25,
+  "last_evidence_at": "2026-02-27T07:07:11.529445+00:00",
+  "last_update": "2026-02-27T07:07:11.529445+00:00",
+  "last_strategy_version": 1
+}

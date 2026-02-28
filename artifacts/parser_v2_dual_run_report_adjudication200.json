@@ -1,0 +1,12 @@
+{
+  "fixtures_path": "data/fixtures/gold/v1/adjudication/p0_adjudication_queue_200.jsonl",
+  "processed_sections": 0,
+  "section_status_counts": {
+    "accepted": 0,
+    "review": 0,
+    "abstain": 0
+  },
+  "avg_id_overlap_ratio": 0.0,
+  "sidecar_records": 0,
+  "sidecar_path": "artifacts/parser_v2_dual_run_sidecar_adjudication200.jsonl"
+}

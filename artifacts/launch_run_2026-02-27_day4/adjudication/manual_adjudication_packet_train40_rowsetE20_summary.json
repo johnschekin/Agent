@@ -1,0 +1,39 @@
+{
+  "schema_version": "manual-adjudication-packet-summary-v1",
+  "generated_at": "2026-02-27T22:35:06+00:00",
+  "batch_id": "train40_rowsetE20",
+  "queue_path": "data/fixtures/gold/v1/adjudication/p0_adjudication_queue_200_train40.jsonl",
+  "batch_size_requested": 20,
+  "batch_size_selected": 20,
+  "category_quotas_requested": {
+    "ambiguous_alpha_roman": 5,
+    "high_letter_continuation": 5,
+    "nonstruct_parent_chain": 5,
+    "xref_vs_structural": 5
+  },
+  "adjudicated_rows_excluded": 80,
+  "unresolved_before_packet": 120,
+  "remaining_after_packet": 100,
+  "packet_category_counts": {
+    "ambiguous_alpha_roman": 5,
+    "high_letter_continuation": 5,
+    "nonstruct_parent_chain": 5,
+    "xref_vs_structural": 5
+  },
+  "packet_split_counts": {
+    "test": 4,
+    "holdout": 1,
+    "val": 15
+  },
+  "unresolved_category_counts": {
+    "ambiguous_alpha_roman": 9,
+    "high_letter_continuation": 42,
+    "nonstruct_parent_chain": 40,
+    "xref_vs_structural": 29
+  },
+  "unresolved_split_counts": {
+    "test": 58,
+    "holdout": 34,
+    "val": 28
+  }
+}

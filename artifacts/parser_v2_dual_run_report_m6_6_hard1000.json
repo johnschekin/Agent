@@ -1,0 +1,12 @@
+{
+  "fixtures_path": "data/fixtures/gold/v1/packs/v1-seed-hard-2500/fixtures.jsonl",
+  "processed_sections": 1000,
+  "section_status_counts": {
+    "accepted": 0,
+    "review": 985,
+    "abstain": 15
+  },
+  "avg_id_overlap_ratio": 0.081104,
+  "sidecar_records": 1000,
+  "sidecar_path": "artifacts/parser_v2_dual_run_sidecar_m6_6_hard1000.jsonl"
+}

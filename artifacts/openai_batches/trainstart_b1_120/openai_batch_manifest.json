@@ -1,0 +1,48 @@
+{
+  "schema_version": "openai-batch-adjudication-manifest-v1",
+  "generated_at": "2026-02-28T01:36:03+00:00",
+  "packet_path": "/Users/johnchtchekine/Projects/Agent/artifacts/manual_training_start_2026-02-28/adjudication/manual_adjudication_packet_trainstart_b1_120.jsonl",
+  "fixtures_path": "/Users/johnchtchekine/Projects/Agent/data/fixtures/gold/v1/packs/v1-seed-1000-candidate/fixtures.jsonl",
+  "prompt_file": "/Users/johnchtchekine/Projects/Agent/docs/operations/openai_batch_adjudication_prompt_v1.txt",
+  "model": "gpt-5",
+  "batch_size": 50,
+  "max_completion_tokens": 7000,
+  "min_text_chars": 1,
+  "max_text_chars": null,
+  "counts": {
+    "packet_rows": 120,
+    "prepared_rows": 120,
+    "skipped_rows": 0,
+    "batch_files": 3
+  },
+  "prepared_text_length_summary": {
+    "min": 849,
+    "p50": 80021,
+    "p90": 411382,
+    "p95": 584552,
+    "max": 1251880
+  },
+  "skipped_reason_counts": {},
+  "batch_files": [
+    {
+      "file": "artifacts/openai_batches/trainstart_b1_120/openai_batch_requests_001.jsonl",
+      "row_count": 50,
+      "first_custom_id": "adjudication:P1-ADJUDICATION-TRAINSTART-0001",
+      "last_custom_id": "adjudication:P1-ADJUDICATION-TRAINSTART-0050"
+    },
+    {
+      "file": "artifacts/openai_batches/trainstart_b1_120/openai_batch_requests_002.jsonl",
+      "row_count": 50,
+      "first_custom_id": "adjudication:P1-ADJUDICATION-TRAINSTART-0051",
+      "last_custom_id": "adjudication:P1-ADJUDICATION-TRAINSTART-0100"
+    },
+    {
+      "file": "artifacts/openai_batches/trainstart_b1_120/openai_batch_requests_003.jsonl",
+      "row_count": 20,
+      "first_custom_id": "adjudication:P1-ADJUDICATION-TRAINSTART-0101",
+      "last_custom_id": "adjudication:P1-ADJUDICATION-TRAINSTART-0120"
+    }
+  ],
+  "skipped_path": "artifacts/openai_batches/trainstart_b1_120/openai_batch_skipped_rows.json",
+  "submit_script": "/Users/johnchtchekine/Projects/Agent/artifacts/openai_batches/trainstart_b1_120/submit_openai_batches.sh"
+}

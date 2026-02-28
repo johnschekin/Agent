@@ -1,0 +1,380 @@
+[
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0001",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0001",
+    "reason": "text_too_long",
+    "raw_text_len": 1251880
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0002",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0002",
+    "reason": "text_too_long",
+    "raw_text_len": 805601
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0003",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0003",
+    "reason": "text_too_long",
+    "raw_text_len": 1074208
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0004",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0004",
+    "reason": "text_too_long",
+    "raw_text_len": 483765
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0005",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0005",
+    "reason": "text_too_long",
+    "raw_text_len": 770153
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0006",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0007",
+    "reason": "text_too_long",
+    "raw_text_len": 504938
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0007",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0008",
+    "reason": "text_too_long",
+    "raw_text_len": 623403
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0008",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0011",
+    "reason": "text_too_long",
+    "raw_text_len": 555028
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0009",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0012",
+    "reason": "text_too_long",
+    "raw_text_len": 494547
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0010",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0015",
+    "reason": "text_too_long",
+    "raw_text_len": 391111
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0011",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0017",
+    "reason": "text_too_long",
+    "raw_text_len": 411382
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0012",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0021",
+    "reason": "text_too_long",
+    "raw_text_len": 584552
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0013",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0022",
+    "reason": "text_too_long",
+    "raw_text_len": 319731
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0014",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0023",
+    "reason": "text_too_long",
+    "raw_text_len": 262034
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0015",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0024",
+    "reason": "text_too_long",
+    "raw_text_len": 161695
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0016",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0026",
+    "reason": "text_too_long",
+    "raw_text_len": 260121
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0017",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0029",
+    "reason": "text_too_long",
+    "raw_text_len": 292724
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0018",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0030",
+    "reason": "text_too_long",
+    "raw_text_len": 309122
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0019",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0031",
+    "reason": "text_too_long",
+    "raw_text_len": 150742
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0020",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0032",
+    "reason": "text_too_long",
+    "raw_text_len": 150742
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0021",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0033",
+    "reason": "text_too_long",
+    "raw_text_len": 218889
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0022",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0034",
+    "reason": "text_too_long",
+    "raw_text_len": 390417
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0023",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0035",
+    "reason": "text_too_long",
+    "raw_text_len": 809224
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0024",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0036",
+    "reason": "text_too_long",
+    "raw_text_len": 248814
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0025",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0037",
+    "reason": "text_too_long",
+    "raw_text_len": 279375
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0026",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0038",
+    "reason": "text_too_long",
+    "raw_text_len": 403282
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0027",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0039",
+    "reason": "text_too_long",
+    "raw_text_len": 195737
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0028",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0041",
+    "reason": "text_too_long",
+    "raw_text_len": 245616
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0029",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0043",
+    "reason": "text_too_long",
+    "raw_text_len": 316664
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0030",
+    "fixture_id": "GFV1C-AMBIGUOUS_ALPHA_ROMAN-0045",
+    "reason": "text_too_long",
+    "raw_text_len": 211809
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0054",
+    "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0105",
+    "reason": "text_too_long",
+    "raw_text_len": 45460
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0056",
+    "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0108",
+    "reason": "text_too_long",
+    "raw_text_len": 45460
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0059",
+    "fixture_id": "GFV1C-HIGH_LETTER_CONTINUATION-0113",
+    "reason": "text_too_long",
+    "raw_text_len": 45922
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0061",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0241",
+    "reason": "text_too_long",
+    "raw_text_len": 234501
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0062",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0242",
+    "reason": "text_too_long",
+    "raw_text_len": 234501
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0063",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0243",
+    "reason": "text_too_long",
+    "raw_text_len": 205580
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0064",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0246",
+    "reason": "text_too_long",
+    "raw_text_len": 316543
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0065",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0247",
+    "reason": "text_too_long",
+    "raw_text_len": 309820
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0066",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0248",
+    "reason": "text_too_long",
+    "raw_text_len": 131561
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0067",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0250",
+    "reason": "text_too_long",
+    "raw_text_len": 377811
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0068",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0251",
+    "reason": "text_too_long",
+    "raw_text_len": 394408
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0069",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0252",
+    "reason": "text_too_long",
+    "raw_text_len": 254545
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0070",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0255",
+    "reason": "text_too_long",
+    "raw_text_len": 262718
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0071",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0257",
+    "reason": "text_too_long",
+    "raw_text_len": 339535
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0072",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0260",
+    "reason": "text_too_long",
+    "raw_text_len": 122934
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0073",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0263",
+    "reason": "text_too_long",
+    "raw_text_len": 160141
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0074",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0265",
+    "reason": "text_too_long",
+    "raw_text_len": 323798
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0075",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0267",
+    "reason": "text_too_long",
+    "raw_text_len": 147165
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0076",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0275",
+    "reason": "text_too_long",
+    "raw_text_len": 177760
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0077",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0278",
+    "reason": "text_too_long",
+    "raw_text_len": 580438
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0078",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0280",
+    "reason": "text_too_long",
+    "raw_text_len": 166098
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0079",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0285",
+    "reason": "text_too_long",
+    "raw_text_len": 231213
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0080",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0254",
+    "reason": "text_too_long",
+    "raw_text_len": 355610
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0081",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0256",
+    "reason": "text_too_long",
+    "raw_text_len": 80021
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0082",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0258",
+    "reason": "text_too_long",
+    "raw_text_len": 188404
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0083",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0262",
+    "reason": "text_too_long",
+    "raw_text_len": 168261
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0084",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0264",
+    "reason": "text_too_long",
+    "raw_text_len": 291161
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0085",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0266",
+    "reason": "text_too_long",
+    "raw_text_len": 325340
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0086",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0272",
+    "reason": "text_too_long",
+    "raw_text_len": 293356
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0087",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0276",
+    "reason": "text_too_long",
+    "raw_text_len": 118703
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0088",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0279",
+    "reason": "text_too_long",
+    "raw_text_len": 220842
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0089",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0284",
+    "reason": "text_too_long",
+    "raw_text_len": 136917
+  },
+  {
+    "queue_item_id": "P1-ADJUDICATION-TRAINSTART-0090",
+    "fixture_id": "GFV1C-NONSTRUCT_PARENT_CHAIN-0286",
+    "reason": "text_too_long",
+    "raw_text_len": 327526
+  }
+]

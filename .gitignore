@@ -44,6 +44,10 @@ node_modules/
 # Temp
 *.tmp
 *.bak
+tmp_record*.json
+
+# Large artifact sidecar files (generated, too big for GitHub)
+artifacts/parser_v2_dual_run_sidecar*.jsonl
 
 # Gold fixture outputs (generated, too large for git; regenerate via scripts/seed_gold_fixtures.py)
 data/fixtures/gold/v1/*.jsonl

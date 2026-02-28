@@ -1,0 +1,191 @@
+{
+  "schema_version": "day-artifact-index-v1",
+  "generated_at": "2026-02-27T21:10:49.794829+00:00",
+  "artifacts": [
+    {
+      "id": "filename_migration_map_round2_to_rowsetA20.json",
+      "path": "artifacts/launch_run_2026-02-27_day2/adjudication/filename_migration_map_round2_to_rowsetA20.json",
+      "sha256": "382668baa585cdb9b182320f429d5e118eb1597a1725baf9b62e142ab68223bd"
+    },
+    {
+      "id": "manual_adjudication_attestation_train40_0001_0020.json",
+      "path": "artifacts/launch_run_2026-02-27_day2/adjudication/manual_adjudication_attestation_train40_0001_0020.json",
+      "sha256": "dffcef12dde7bef573828f43c8de7ab0e53476d1c4f4f30646ce56d6793ea3ab"
+    },
+    {
+      "id": "manual_adjudication_attestation_train40_rowsetA20.json",
+      "path": "artifacts/launch_run_2026-02-27_day2/adjudication/manual_adjudication_attestation_train40_rowsetA20.json",
+      "sha256": "a2f9938d103d5baf74db31826b15d3ece574a0ae480827b9a70e83533d09566a"
+    },
+    {
+      "id": "manual_adjudication_batch_train40_0001_0020.jsonl",
+      "path": "artifacts/launch_run_2026-02-27_day2/adjudication/manual_adjudication_batch_train40_0001_0020.jsonl",
+      "sha256": "a73468a6ab08a2eb8cbf5b0069a8ae0b0b8fb725735b2a09aba019fcf0a8a14c"
+    },
+    {
+      "id": "manual_adjudication_batch_train40_rowsetA20.jsonl",
+      "path": "artifacts/launch_run_2026-02-27_day2/adjudication/manual_adjudication_batch_train40_rowsetA20.jsonl",
+      "sha256": "a73468a6ab08a2eb8cbf5b0069a8ae0b0b8fb725735b2a09aba019fcf0a8a14c"
+    },
+    {
+      "id": "manual_adjudication_validation_report.json",
+      "path": "artifacts/launch_run_2026-02-27_day2/adjudication/manual_adjudication_validation_report.json",
+      "sha256": "67fdc187c06359ff4fb14767ca0dd6a3fed740c76a462b7ff25e56e76f4f4ccf"
+    },
+    {
+      "id": "manual_reasoning_train40_0001_0020.jsonl",
+      "path": "artifacts/launch_run_2026-02-27_day2/adjudication/manual_reasoning_train40_0001_0020.jsonl",
+      "sha256": "e8105980515fdf43adbad93e8dafef459cb8c7f484759b34b8111430280236ec"
+    },
+    {
+      "id": "manual_reasoning_train40_rowsetA20.jsonl",
+      "path": "artifacts/launch_run_2026-02-27_day2/adjudication/manual_reasoning_train40_rowsetA20.jsonl",
+      "sha256": "e8105980515fdf43adbad93e8dafef459cb8c7f484759b34b8111430280236ec"
+    },
+    {
+      "id": "p0_adjudication_queue_train40_day2_updates.jsonl",
+      "path": "artifacts/launch_run_2026-02-27_day2/adjudication/p0_adjudication_queue_train40_day2_updates.jsonl",
+      "sha256": "0aae19b8515dd1c6d81eea1c3c20192a85d10a5769e904171271a90fbfafa80d"
+    },
+    {
+      "id": "p0_adjudication_queue_train40_rowsetA20_updates.jsonl",
+      "path": "artifacts/launch_run_2026-02-27_day2/adjudication/p0_adjudication_queue_train40_rowsetA20_updates.jsonl",
+      "sha256": "0aae19b8515dd1c6d81eea1c3c20192a85d10a5769e904171271a90fbfafa80d"
+    },
+    {
+      "id": "manual_adjudication_validation_report.json",
+      "path": "artifacts/launch_run_2026-02-27_day2/canonical/adjudication/manual_adjudication_validation_report.json",
+      "sha256": "67fdc187c06359ff4fb14767ca0dd6a3fed740c76a462b7ff25e56e76f4f4ccf"
+    },
+    {
+      "id": "day_validator_report.json",
+      "path": "artifacts/launch_run_2026-02-27_day2/canonical/day_validator_report.json",
+      "sha256": "ac4e3a201a541155d1e42b6a41f39d811da36051f73c64d7bbb133536a83bb74"
+    },
+    {
+      "id": "edge_case_clause_guardrail.json",
+      "path": "artifacts/launch_run_2026-02-27_day2/canonical/edge_case_clause_guardrail.json",
+      "sha256": "0d71143ff5930b6f2a364ef500d06cb232eace7c47f9c3f018d805f945f058b4"
+    },
+    {
+      "id": "edge_case_clause_parent_guardrail.json",
+      "path": "artifacts/launch_run_2026-02-27_day2/canonical/edge_case_clause_parent_guardrail.json",
+      "sha256": "69eedbe74fecada6f05fe440a8853710672dd641b09cd69bdfc51e8d99cd639e"
+    },
+    {
+      "id": "parser_v1_tests.log",
+      "path": "artifacts/launch_run_2026-02-27_day2/canonical/parser_v1_tests.log",
+      "sha256": "6758c2b6dca7d911720a6342a0d4786ef80091b32e9974b7ac848ea91c080a10"
+    },
+    {
+      "id": "adversarial_subagent_review_day2.json",
+      "path": "artifacts/launch_run_2026-02-27_day2/canonical/red_team/adversarial_subagent_review_day2.json",
+      "sha256": "70c267e7ac1ee51db2e5f3b9e17f651e3e860d16aee5eb0c45330b8e9820df3d"
+    },
+    {
+      "id": "replay_gold_fixtures.json",
+      "path": "artifacts/launch_run_2026-02-27_day2/canonical/replay_gold_fixtures.json",
+      "sha256": "9aaf595ebce1af66b92ba4e1d689a40017fd33112c140d9a5b35081b2fd39bb3"
+    },
+    {
+      "id": "validate_gold_fixtures.json",
+      "path": "artifacts/launch_run_2026-02-27_day2/canonical/validate_gold_fixtures.json",
+      "sha256": "b829543d6ca7237c3ea137b423689640df608553cb4b093c04500a5593aa3a93"
+    },
+    {
+      "id": "dirty_worktree_snapshot.json",
+      "path": "artifacts/launch_run_2026-02-27_day2/clean_source/dirty_worktree_snapshot.json",
+      "sha256": "95946532a789c9b4df4b49715eaca7405e701a88b68d96496741f7b93d810ee1"
+    },
+    {
+      "id": "worktree_info.json",
+      "path": "artifacts/launch_run_2026-02-27_day2/clean_source/worktree_info.json",
+      "sha256": "28bd56d61f1ece2c2fc8fa45fad6b1c5f1c7744b628a4d015faa27c15651eb48"
+    },
+    {
+      "id": "command_log.txt",
+      "path": "artifacts/launch_run_2026-02-27_day2/command_log.txt",
+      "sha256": "fdbca5953bb9f5abfe48c55426f9adef9c8ad2a344457736604a4fba7211caf7"
+    },
+    {
+      "id": "day2_retrospective.md",
+      "path": "artifacts/launch_run_2026-02-27_day2/day2_retrospective.md",
+      "sha256": "16bbc06299c2cf5096cd7190039b59790cb578cb4f3107afc22f7c98d4050e1b"
+    },
+    {
+      "id": "day_blocker_register.json",
+      "path": "artifacts/launch_run_2026-02-27_day2/day_blocker_register.json",
+      "sha256": "fce431306aaceb1309df4b2693b35b1d851ca0008eeb36326a5cb37e7451aab6"
+    },
+    {
+      "id": "day_canonical_selection_policy.json",
+      "path": "artifacts/launch_run_2026-02-27_day2/day_canonical_selection_policy.json",
+      "sha256": "a1fa833091524b5320ad05721b1c2120cf83c4abe025808631b2d493d7e0382c"
+    },
+    {
+      "id": "day_gate_summary.json",
+      "path": "artifacts/launch_run_2026-02-27_day2/day_gate_summary.json",
+      "sha256": "2aef1c6f4e477f18784c10448370c1bca96494aee6217bcff00d333a76f2dcc1"
+    },
+    {
+      "id": "day_run_manifest.json",
+      "path": "artifacts/launch_run_2026-02-27_day2/day_run_manifest.json",
+      "sha256": "9be6fa14ec23e9242c16ce4daa89a0a1f19fc33baad83e1db051542e0724df8c"
+    },
+    {
+      "id": "adversarial_subagent_review_day2.json",
+      "path": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2.json",
+      "sha256": "74e22322820283e7d501735cb867c2c2091e4f264ddc68bc4880df1151c585e3"
+    },
+    {
+      "id": "adversarial_subagent_review_day2_round2.json",
+      "path": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round2.json",
+      "sha256": "692e5ce53e24940d400b1581f0758c85ebc9c5e314d28159712b03e9063b70a3"
+    },
+    {
+      "id": "adversarial_subagent_review_day2_round3.json",
+      "path": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round3.json",
+      "sha256": "396920231ddbdaacb3d6091d00d15bbaf55c7b1722f77f390ba383466c828371"
+    },
+    {
+      "id": "adversarial_subagent_review_day2_round4.json",
+      "path": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round4.json",
+      "sha256": "60ef9e12ef71679c3ae7a737d5b054201a78362a127832a3703e6d31142a801c"
+    },
+    {
+      "id": "adversarial_subagent_review_day2_round5.json",
+      "path": "artifacts/launch_run_2026-02-27_day2/red_team/adversarial_subagent_review_day2_round5.json",
+      "sha256": "70c267e7ac1ee51db2e5f3b9e17f651e3e860d16aee5eb0c45330b8e9820df3d"
+    },
+    {
+      "id": "validate_manual_adjudication_log.exit_code",
+      "path": "artifacts/launch_run_2026-02-27_day2/validate_manual_adjudication_log.exit_code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "id": "adversarial_red_team_agent_prompt_v1.txt",
+      "path": "docs/operations/adversarial_red_team_agent_prompt_v1.txt",
+      "sha256": "e96c2d96403199e8a1133227e773a472cdd476365d7af19cc38ee520b3a33876"
+    },
+    {
+      "id": "day2_validator_spec_acceptance_2026-02-27.md",
+      "path": "docs/operations/day2_validator_spec_acceptance_2026-02-27.md",
+      "sha256": "b37e7d86bec2b86d8a48e2161ac1cd42f394f4d0b87a48e03046c9a8833f8fee"
+    },
+    {
+      "id": "hybrid_ml_gate_review_template_v1.md",
+      "path": "docs/operations/hybrid_ml_gate_review_template_v1.md",
+      "sha256": "c7f1dfab3f695c25f8d871b385110fdb00221e4bd2c87b0470a81e9435eaf3c2"
+    },
+    {
+      "id": "manual_adjudication_protocol_v1.md",
+      "path": "docs/operations/manual_adjudication_protocol_v1.md",
+      "sha256": "063153647f108e9dec38122f6e8c494ef265eab0331efb7f9b1bf6c8039d8ef7"
+    },
+    {
+      "id": "hybrid_ml_parser_day_bundle_validator_spec_2026-02-27.md",
+      "path": "plans/hybrid_ml_parser_day_bundle_validator_spec_2026-02-27.md",
+      "sha256": "a69f1a8d8b276692d53abbc7ea99fa588f30aa944a85f85202d3cdb5af37f378"
+    }
+  ]
+}

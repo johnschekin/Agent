@@ -1,0 +1,114 @@
+{
+  "schema_version": "day1-run-manifest-v1",
+  "generated_at": "2026-02-27T17:42:20.655634+00:00",
+  "run_id": "launch_run_2026-02-27_day1",
+  "git": {
+    "commit_sha": "0f4a6a350551d0b22036ff723373598bd4a5a6b9",
+    "short_sha": "0f4a6a350551",
+    "is_dirty": true,
+    "workspace_status_snapshot_path": "artifacts/launch_run_2026-02-27_day1/workspace_dirty_status.snapshot.txt",
+    "workspace_status_snapshot_sha256": "d0c11e5ae1f74aa53b535ae58bc5bb11e0348d98e15abeaee96d94046063f1ac"
+  },
+  "parser": {
+    "engine": "parser_v1",
+    "version": "0.1.0",
+    "primary_artifact_path": "src/agent/clause_parser.py",
+    "primary_artifact_sha256": "a761df6d360ab41d86a7c066ff2ff4a7a1ba673b9eb2b63cafb638337bf295e3",
+    "fingerprint_manifest_path": "artifacts/launch_run_2026-02-27_day1/parser_fingerprints.json",
+    "fingerprint_manifest_sha256": "98fb2d3db1640e7985d7c6e0778f15cc7242917c1ed0310e0da545b50de1ce9d",
+    "dirty_workspace_artifact_sha256": "a761df6d360ab41d86a7c066ff2ff4a7a1ba673b9eb2b63cafb638337bf295e3",
+    "canonical_source_artifact_sha256": "3abc59533d308e245654e6bbfadf8626c92fa9f60a0372aff1865bf8efb97fe0",
+    "canonical_source_artifact_path": "/tmp/agent_day1_clean_repro/src/agent/clause_parser.py",
+    "fingerprint_divergence_detected": true
+  },
+  "corpus": {
+    "build_id": "ray_v2_corpus_build_20260227T041350Z_4e318cf8",
+    "build_git_commit": "06a2398204cfdd545e27009583196f3702f25f3f",
+    "manifest_path": "corpus_index/run_manifest.json",
+    "manifest_sha256": "4d9d62eea744478e788d3309f0290b2e831b17a27d35c1e739f556e9185f9d21",
+    "db_path": "/Users/johnchtchekine/Projects/Agent/corpus_index/corpus.duckdb"
+  },
+  "inputs": {
+    "fixtures_path": "data/fixtures/gold/v1/fixtures.jsonl",
+    "fixtures_sha256": "75260d770ba100f507c07dea54625ee283a837d4b3eb4e67db64b0923973e919",
+    "thresholds_snapshot_path": "artifacts/launch_run_2026-02-27_day1/gold_replay_gate_thresholds.snapshot.json",
+    "thresholds_snapshot_sha256": "d4af48da1598f80b53429ddccee5118627cb6ea3a3c05414778e5d396adddc2b",
+    "clause_guardrail_baseline_snapshot_path": "artifacts/launch_run_2026-02-27_day1/edge_case_clause_guardrail_baseline.snapshot.json",
+    "clause_guardrail_baseline_snapshot_sha256": "26bab60595361e67e5fb14365594cba2cfa80cce5cd1d8f6f191db0249da2e8a",
+    "parent_guardrail_baseline_snapshot_path": "artifacts/launch_run_2026-02-27_day1/edge_case_clause_parent_guardrail_baseline.snapshot.json",
+    "parent_guardrail_baseline_snapshot_sha256": "be56f1768d846c5bd6636f348dced3f05745097403f3c0f2fe3a99b091d00a67"
+  },
+  "command_exit_codes": {
+    "validate_gold_fixtures": 0,
+    "replay_gold_fixtures": 0,
+    "edge_case_clause_guardrail": 0,
+    "edge_case_clause_parent_guardrail": 1,
+    "parser_v1_tests": 0
+  },
+  "output_artifacts": {
+    "validate_report": "artifacts/launch_run_2026-02-27_day1/canonical/validate_gold_fixtures.json",
+    "replay_report": "artifacts/launch_run_2026-02-27_day1/canonical/replay_gold_fixtures.json",
+    "clause_guardrail_report": "artifacts/launch_run_2026-02-27_day1/canonical/edge_case_clause_guardrail.json",
+    "parent_guardrail_report": "artifacts/launch_run_2026-02-27_day1/canonical/edge_case_clause_parent_guardrail.json",
+    "parser_v1_tests_log": "artifacts/launch_run_2026-02-27_day1/canonical/parser_v1_tests.log",
+    "blocker_register": "artifacts/launch_run_2026-02-27_day1/day1_1_blocker_register.json",
+    "failure_slice": "artifacts/launch_run_2026-02-27_day1/day1_failure_slice_top15.json",
+    "run_manifest": "artifacts/launch_run_2026-02-27_day1/day1_run_manifest.json",
+    "canonical_selection_policy": "artifacts/launch_run_2026-02-27_day1/day1_canonical_selection_policy.json",
+    "clean_source_comparison": "artifacts/launch_run_2026-02-27_day1/day1_clean_source_comparison.json",
+    "dirty_replay_report_diagnostic_only": "artifacts/launch_run_2026-02-27_day1/replay_gold_fixtures.json",
+    "canonical_enforcement_report": "artifacts/launch_run_2026-02-27_day1/day1_canonical_enforcement_report.json",
+    "canonical_enforcement_exit_code": "artifacts/launch_run_2026-02-27_day1/day1_canonical_enforcement_report.exit_code"
+  },
+  "clean_source_verification": {
+    "status": "completed",
+    "worktree_info_path": "artifacts/launch_run_2026-02-27_day1/clean_source/worktree_info.json",
+    "worktree_info_sha256": "282b548a3565ec774ff36245c5dcca483b7c9d81b3c7f0c105ac30c2978c237e",
+    "command_exit_codes": {
+      "validate_gold_fixtures": 0,
+      "replay_gold_fixtures": 0,
+      "edge_case_clause_guardrail": 0,
+      "edge_case_clause_parent_guardrail": 1,
+      "parser_v1_tests": 0
+    },
+    "replay": {
+      "dirty_status": "fail",
+      "dirty_failed_fixtures": 56,
+      "clean_status": "pass",
+      "clean_failed_fixtures": 0
+    },
+    "equivalence": {
+      "validate_gold_fixtures_exit_match": true,
+      "replay_gold_fixtures_exit_match": false,
+      "edge_case_clause_guardrail_exit_match": true,
+      "edge_case_clause_parent_guardrail_exit_match": true,
+      "parser_v1_tests_exit_match": true
+    },
+    "conclusion": "Replay gate divergence indicates dirty workspace affected Day 1 replay result; clean-source replay passes while parent guardrail still fails."
+  },
+  "provenance_closure": {
+    "status": "closed_with_canonical_routing",
+    "canonical_selection_policy_path": "artifacts/launch_run_2026-02-27_day1/day1_canonical_selection_policy.json",
+    "canonical_commit_sha": "0f4a6a350551d0b22036ff723373598bd4a5a6b9",
+    "workspace_dirty": true,
+    "note": "Dirty workspace artifacts retained for diagnostics; canonical gate evidence promoted to clean-source outputs."
+  },
+  "dirty_workspace_command_exit_codes": {
+    "validate_gold_fixtures": 0,
+    "replay_gold_fixtures": 1,
+    "edge_case_clause_guardrail": 0,
+    "edge_case_clause_parent_guardrail": 1,
+    "parser_v1_tests": 0
+  },
+  "manifest_revision": "day1.4",
+  "updated_at": "2026-02-27T17:42:20.655634+00:00",
+  "first_generated_at": "2026-02-27T17:07:06.489883+00:00",
+  "canonical_enforcement": {
+    "script": "scripts/enforce_canonical_gate_artifacts.py",
+    "report_path": "artifacts/launch_run_2026-02-27_day1/day1_canonical_enforcement_report.json",
+    "exit_code_path": "artifacts/launch_run_2026-02-27_day1/day1_canonical_enforcement_report.exit_code",
+    "exit_code": 0,
+    "status": "pass",
+    "checked_at": "2026-02-27T17:42:20.655634+00:00"
+  }
+}

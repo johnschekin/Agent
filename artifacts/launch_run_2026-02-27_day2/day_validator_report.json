@@ -1,0 +1,346 @@
+{
+  "schema_version": "day-bundle-validator-report-v1",
+  "generated_at": "2026-02-27T16:10:59.031171-05:00",
+  "day_id": "day2",
+  "run_dir": "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2",
+  "status": "pass",
+  "strict_mode": true,
+  "profile": {
+    "path": "/Users/johnchtchekine/Projects/Agent/config/day_bundle_validator/day2_day5_governance_profile.json",
+    "id": "day2_day5_governance_profile",
+    "version": "v1"
+  },
+  "summary": {
+    "total_checks": 27,
+    "passed": 27,
+    "failed": 0,
+    "warnings": 0
+  },
+  "checks": [
+    {
+      "check_id": "VAL-FILE-001",
+      "severity": "critical",
+      "status": "pass",
+      "message": "All required artifacts are present.",
+      "artifact_path": null,
+      "expected": "all required artifacts present",
+      "actual": {
+        "missing": [],
+        "generated_errors": []
+      }
+    },
+    {
+      "check_id": "VAL-JSON-001",
+      "severity": "critical",
+      "status": "pass",
+      "message": "Required JSON artifacts parsed successfully.",
+      "artifact_path": null,
+      "expected": "all required JSON parse",
+      "actual": []
+    },
+    {
+      "check_id": "VAL-MANIFEST-001",
+      "severity": "critical",
+      "status": "pass",
+      "message": "Manifest contains required top-level keys.",
+      "artifact_path": "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_run_manifest.json",
+      "expected": [
+        "git",
+        "parser",
+        "inputs",
+        "command_exit_codes",
+        "output_artifacts"
+      ],
+      "actual": []
+    },
+    {
+      "check_id": "VAL-INDEX-001",
+      "severity": "critical",
+      "status": "pass",
+      "message": "Artifact index hashes resolve and match disk bytes.",
+      "artifact_path": "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/artifact_index.json",
+      "expected": "artifact_index.artifacts[*].path exists and sha256 matches",
+      "actual": []
+    },
+    {
+      "check_id": "VAL-INDEX-002",
+      "severity": "critical",
+      "status": "pass",
+      "message": "Artifact index covers all canonical primary outputs.",
+      "artifact_path": "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/artifact_index.json",
+      "expected": {
+        "primary_output_keys": [
+          "day_validator_report_primary",
+          "adjudication_validation_report_primary",
+          "red_team_adversarial_review_primary"
+        ],
+        "require_manifest_output_coverage": true,
+        "manifest_output_exclude_keys": [],
+        "require_run_dir_coverage": true,
+        "run_dir_include_globs": [
+          "*",
+          "**/*"
+        ],
+        "run_dir_exclude_globs": [
+          "artifact_index.json",
+          "validate_day_bundle.exit_code",
+          "day_validator_report.json",
+          ".DS_Store",
+          "**/.DS_Store"
+        ]
+      },
+      "actual": []
+    },
+    {
+      "check_id": "VAL-HASH-001",
+      "severity": "critical",
+      "status": "pass",
+      "message": "Manifest hash declarations match artifact bytes.",
+      "artifact_path": null,
+      "expected": "13 declared hash/path pairs",
+      "actual": []
+    },
+    {
+      "check_id": "VAL-EXIT-001",
+      "severity": "critical",
+      "status": "pass",
+      "message": "Manifest command exit codes match .exit_code files.",
+      "artifact_path": null,
+      "expected": "manifest command_exit_codes == *.exit_code",
+      "actual": []
+    },
+    {
+      "check_id": "VAL-GATE-001",
+      "severity": "critical",
+      "status": "pass",
+      "message": "Gate summary is consistent with machine outputs.",
+      "artifact_path": "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_gate_summary.json",
+      "expected": "consistent gate summary",
+      "actual": []
+    },
+    {
+      "check_id": "VAL-BLOCKER-001",
+      "severity": "critical",
+      "status": "pass",
+      "message": "Blocker lifecycle fields are valid.",
+      "artifact_path": "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_blocker_register.json",
+      "expected": "valid blocker lifecycle values",
+      "actual": []
+    },
+    {
+      "check_id": "VAL-BLOCKER-002",
+      "severity": "critical",
+      "status": "pass",
+      "message": "Blockers include valid blocking_scope values.",
+      "artifact_path": "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_blocker_register.json",
+      "expected": [
+        "day_close",
+        "launch"
+      ],
+      "actual": []
+    },
+    {
+      "check_id": "VAL-REDTEAM-001",
+      "severity": "critical",
+      "status": "pass",
+      "message": "Red-team state satisfies enum and validator-first policy.",
+      "artifact_path": null,
+      "expected": {
+        "red_team_status": [
+          "blocked",
+          "complete",
+          "in_review",
+          "not_started",
+          "ready"
+        ],
+        "policy": "non-not_started requires validator_passed=true and exit_code=0"
+      },
+      "actual": []
+    },
+    {
+      "check_id": "VAL-REDTEAM-002",
+      "severity": "critical",
+      "status": "pass",
+      "message": "Adversarial subagent red-team artifact policy satisfied.",
+      "artifact_path": null,
+      "expected": {
+        "required_statuses": [
+          "complete",
+          "in_review"
+        ],
+        "artifact_globs": [
+          "**/red_team/adversarial_subagent_review*.json",
+          "**/red_team_adversarial_subagent_review*.json",
+          "**/red_team_review*.json"
+        ],
+        "required_fields": [
+          "schema_version",
+          "day_id",
+          "review_mode",
+          "subagent_id",
+          "adversarial_findings",
+          "verdict",
+          "completed_at"
+        ]
+      },
+      "actual": []
+    },
+    {
+      "check_id": "VAL-GOV-001",
+      "severity": "high",
+      "status": "pass",
+      "message": "Governance pointers are round-consistent and not stale.",
+      "artifact_path": null,
+      "expected": "manifest/gate red-team pointers and open day-close red-team blocker evidence must be round-consistent",
+      "actual": []
+    },
+    {
+      "check_id": "VAL-CANON-001",
+      "severity": "critical",
+      "status": "pass",
+      "message": "Canonical policy artifact exists when workspace is dirty.",
+      "artifact_path": "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/day_canonical_selection_policy.json",
+      "expected": "canonical policy required when dirty",
+      "actual": []
+    },
+    {
+      "check_id": "VAL-CANON-002",
+      "severity": "critical",
+      "status": "pass",
+      "message": "Primary output pointers are canonical-routed when dirty.",
+      "artifact_path": null,
+      "expected": {
+        "primary_output_keys": [
+          "day_validator_report_primary",
+          "adjudication_validation_report_primary",
+          "red_team_adversarial_review_primary"
+        ],
+        "markers": [
+          "/canonical/"
+        ]
+      },
+      "actual": []
+    },
+    {
+      "check_id": "VAL-CANON-003",
+      "severity": "critical",
+      "status": "pass",
+      "message": "Dirty outputs are diagnostic-only.",
+      "artifact_path": null,
+      "expected": "dirty* outputs should not route to canonical",
+      "actual": []
+    },
+    {
+      "check_id": "VAL-CONSIST-001",
+      "severity": "high",
+      "status": "pass",
+      "message": "Cross-artifact claims are consistent.",
+      "artifact_path": null,
+      "expected": "gate summary exits align with manifest exits where declared",
+      "actual": []
+    },
+    {
+      "check_id": "VAL-TIME-001",
+      "severity": "high",
+      "status": "pass",
+      "message": "Timestamp fields are non-decreasing.",
+      "artifact_path": null,
+      "expected": "first_generated_at <= generated_at <= updated_at",
+      "actual": []
+    },
+    {
+      "check_id": "VAL-PROV-001",
+      "severity": "high",
+      "status": "pass",
+      "message": "Commit provenance alignment is valid.",
+      "artifact_path": null,
+      "expected": "manifest and clean-source commit SHA alignment when dirty",
+      "actual": []
+    },
+    {
+      "check_id": "VAL-ADJ-REASON-001",
+      "severity": "critical",
+      "status": "pass",
+      "message": "Reasoning artifact exists for every adjudication batch.",
+      "artifact_path": null,
+      "expected": "manual_reasoning_<batch_id>.jsonl|.md for each batch",
+      "actual": []
+    },
+    {
+      "check_id": "VAL-ADJ-REASON-002",
+      "severity": "critical",
+      "status": "pass",
+      "message": "Reasoning rows contain required fields.",
+      "artifact_path": null,
+      "expected": [
+        "row_id",
+        "witness",
+        "hypothesis_A",
+        "hypothesis_B",
+        "why_A_survives",
+        "why_B_survives",
+        "final_decision",
+        "confidence"
+      ],
+      "actual": []
+    },
+    {
+      "check_id": "VAL-ADJ-REASON-003",
+      "severity": "critical",
+      "status": "pass",
+      "message": "Reasoning rows have exact 1:1 row_id coverage with adjudication.",
+      "artifact_path": null,
+      "expected": "exact 1:1 row_id mapping",
+      "actual": []
+    },
+    {
+      "check_id": "VAL-ADJ-QUEUE-001",
+      "severity": "critical",
+      "status": "pass",
+      "message": "Queue linkage updates exist and match adjudication rows.",
+      "artifact_path": null,
+      "expected": "queue update rows for each adjudication row with status+adjudication_id",
+      "actual": []
+    },
+    {
+      "check_id": "VAL-ADJ-SPLIT-001",
+      "severity": "critical",
+      "status": "pass",
+      "message": "Adjudication batches are split-homogeneous.",
+      "artifact_path": null,
+      "expected": "single split value per batch when split is present/required",
+      "actual": []
+    },
+    {
+      "check_id": "VAL-ADJ-SYNTH-001",
+      "severity": "critical",
+      "status": "pass",
+      "message": "No synthetic generation and lineage attestation exists.",
+      "artifact_path": "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day2/command_log.txt",
+      "expected": "no scripted writes to adjudication*.jsonl and MANUAL_ADJUDICATION_ATTESTATION batch attestations present",
+      "actual": []
+    },
+    {
+      "check_id": "VAL-ADJ-QUALITY-001",
+      "severity": "medium",
+      "status": "pass",
+      "message": "Adjudication quality heuristics satisfied.",
+      "artifact_path": null,
+      "expected": {
+        "enforced": true
+      },
+      "actual": []
+    },
+    {
+      "check_id": "VAL-MIG-001",
+      "severity": "critical",
+      "status": "pass",
+      "message": "Filename migration map hashes are valid.",
+      "artifact_path": null,
+      "expected": "migration map paths + sha256 fields match on-disk bytes",
+      "actual": []
+    }
+  ],
+  "failed_check_ids": [],
+  "warnings": []
+}

@@ -1,0 +1,37 @@
+{
+  "schema_version": "red-team-adversarial-subagent-review-v1",
+  "day_id": "day3",
+  "review_mode": "adversarial_subagent",
+  "subagent_id": "019ca108-5283-76b0-a1dc-8baa194f457a",
+  "adversarial_findings": [
+    {
+      "severity": "high",
+      "summary": "Round2 found stale round1 anchoring; requires active pointer promotion to fresh review artifact.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day3/day_gate_summary.json"
+      ],
+      "risk": "Governance decisions can be made on stale evidence.",
+      "required_action": "Promote round2 artifact as active canonical red-team evidence and align gate/blocker pointers."
+    },
+    {
+      "severity": "high",
+      "summary": "Round2 found unresolved labels (`review|abstain`) included as training-eligible without explicit override policy.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day3/adjudication/day3_training_export_eligible_rows.jsonl"
+      ],
+      "risk": "Label-noise contamination in training dataset.",
+      "required_action": "Default export eligibility to false for `review|abstain` unless explicit uncertain-export override is present."
+    },
+    {
+      "severity": "medium",
+      "summary": "Round2 requested explicit canonicalization command provenance.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day3/command_log.txt"
+      ],
+      "risk": "Canonical promotion steps are not replayable from evidence alone.",
+      "required_action": "Record canonicalization commands and exit codes in command log and manifest."
+    }
+  ],
+  "verdict": "fail",
+  "completed_at": "2026-02-27T21:40:17Z"
+}

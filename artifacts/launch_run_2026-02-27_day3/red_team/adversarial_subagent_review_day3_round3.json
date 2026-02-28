@@ -1,0 +1,42 @@
+{
+  "schema_version": "red-team-adversarial-subagent-review-v1",
+  "day_id": "day3",
+  "review_mode": "adversarial_subagent",
+  "subagent_id": "019ca118-ff7f-7c32-99ce-083873fe73a4",
+  "adversarial_findings": [
+    {
+      "severity": "critical",
+      "summary": "Primary validator provenance stale/inconsistent between canonical and latest root report; governance timestamp drift remains.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day3/day_run_manifest.json:5",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day3/canonical/day_validator_report.json:3",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day3/day_validator_report.json:3"
+      ],
+      "risk": "Governance may rely on stale validator evidence instead of final byte state.",
+      "required_action": "Re-run validator as final step, promote exact report to canonical, and regenerate manifest/gate/index on same final state."
+    },
+    {
+      "severity": "high",
+      "summary": "Uncertain-label quarantine semantics are inconsistent across batch/reasoning/queue artifacts.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day3/adjudication/manual_reasoning_train40_rowsetB20.jsonl:6",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day3/adjudication/manual_adjudication_batch_train40_rowsetB20.jsonl:6",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day3/adjudication/p0_adjudication_queue_train40_rowsetB20_updates.jsonl:6"
+      ],
+      "risk": "Uncertain rows can leak into training via non-canonical consumer path assumptions.",
+      "required_action": "Make quarantine single-source-of-truth and align all artifacts for each row."
+    },
+    {
+      "severity": "medium",
+      "summary": "Remediation narrative was ahead of evidence; round3 artifact publication and status alignment required.",
+      "evidence": [
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day3/day3_validator_defects_list.md:6",
+        "/Users/johnchtchekine/Projects/Agent/artifacts/launch_run_2026-02-27_day3/day_gate_summary.json:21"
+      ],
+      "risk": "Ambiguous closure signals in governance review.",
+      "required_action": "Update defects/gate/blocker narrative to explicitly state round3 fail and pending round4 verification."
+    }
+  ],
+  "verdict": "fail",
+  "completed_at": "2026-02-27T21:57:45Z"
+}

@@ -1,0 +1,251 @@
+{
+  "schema_version": "day-bundle-validator-profile-v1",
+  "profile_id": "day2_day5_governance_profile",
+  "profile_version": "v1",
+  "applies_to_days": [
+    "day2",
+    "day3",
+    "day4",
+    "day5"
+  ],
+  "required_manifest_keys": [
+    "git",
+    "parser",
+    "inputs",
+    "command_exit_codes",
+    "output_artifacts"
+  ],
+  "required_artifacts": [
+    {
+      "id": "run_manifest",
+      "paths": [
+        "day_run_manifest.json"
+      ],
+      "kind": "json"
+    },
+    {
+      "id": "blocker_register",
+      "paths": [
+        "day_blocker_register.json"
+      ],
+      "kind": "json"
+    },
+    {
+      "id": "gate_summary",
+      "paths": [
+        "day_gate_summary.json"
+      ],
+      "kind": "json"
+    },
+    {
+      "id": "command_log",
+      "paths": [
+        "command_log.txt"
+      ],
+      "kind": "text"
+    },
+    {
+      "id": "artifact_index",
+      "paths": [
+        "artifact_index.json"
+      ],
+      "kind": "json"
+    },
+    {
+      "id": "canonical_policy",
+      "paths": [
+        "day_canonical_selection_policy.json"
+      ],
+      "kind": "json",
+      "when": "dirty"
+    },
+    {
+      "id": "validator_report",
+      "paths": [
+        "day_validator_report.json"
+      ],
+      "kind": "generated_json",
+      "generated": true
+    }
+  ],
+  "required_checks": [
+    "VAL-FILE-001",
+    "VAL-JSON-001",
+    "VAL-MANIFEST-001",
+    "VAL-INDEX-001",
+    "VAL-INDEX-002",
+    "VAL-HASH-001",
+    "VAL-EXIT-001",
+    "VAL-GATE-001",
+    "VAL-BLOCKER-001",
+    "VAL-BLOCKER-002",
+    "VAL-REDTEAM-001",
+    "VAL-REDTEAM-002",
+    "VAL-REDTEAM-003",
+    "VAL-GOV-001",
+    "VAL-CANON-001",
+    "VAL-CANON-002",
+    "VAL-CANON-003",
+    "VAL-CANON-004",
+    "VAL-CONSIST-001",
+    "VAL-TIME-001",
+    "VAL-PROV-001",
+    "VAL-PROV-002",
+    "VAL-ADJ-REASON-001",
+    "VAL-ADJ-REASON-002",
+    "VAL-ADJ-REASON-003",
+    "VAL-ADJ-SPLIT-001",
+    "VAL-ADJ-QUEUE-001",
+    "VAL-ADJ-SYNTH-001",
+    "VAL-ADJ-QUALITY-001",
+    "VAL-ADJ-EXPORT-001",
+    "VAL-FREEZE-001",
+    "VAL-MIG-001"
+  ],
+  "warn_only_checks": [],
+  "gate_rules": {
+    "required_output_artifact_keys": [],
+    "non_blocking_commands": []
+  },
+  "canonical": {
+    "path_markers": [
+      "/canonical/"
+    ],
+    "primary_output_keys": [
+      "day_validator_report_primary",
+      "adjudication_validation_report_primary",
+      "red_team_adversarial_review_primary"
+    ]
+  },
+  "index": {
+    "require_manifest_output_coverage": true,
+    "manifest_output_exclude_keys": [],
+    "require_run_dir_coverage": true,
+    "run_dir_include_globs": [
+      "*",
+      "**/*"
+    ],
+    "run_dir_exclude_globs": [
+      "artifact_index.json",
+      "validate_day_bundle.exit_code",
+      "day_validator_report.json",
+      ".DS_Store",
+      "**/.DS_Store"
+    ]
+  },
+  "adjudication": {
+    "batch_globs": [
+      "**/*manual_adjudication_batch*.jsonl",
+      "**/*adjudication_batch*.jsonl"
+    ],
+    "batch_exclude_globs": [
+      "**/manual_adjudication_batch_train40_0001_0020.jsonl"
+    ],
+    "reasoning_required_fields": [
+      "row_id",
+      "witness",
+      "hypothesis_A",
+      "hypothesis_B",
+      "why_A_survives",
+      "why_B_survives",
+      "final_decision",
+      "confidence"
+    ],
+    "reasoning_min_chars": {
+      "witness": 12,
+      "hypothesis_A": 8,
+      "hypothesis_B": 8,
+      "why_A_survives": 12,
+      "why_B_survives": 12
+    },
+    "lineage_attestation_prefix": "MANUAL_ADJUDICATION_ATTESTATION",
+    "lineage_event_prefix": "MANUAL_ADJ_LINEAGE",
+    "queue_update_globs": [
+      "**/*queue*_updates*.jsonl",
+      "**/*adjudication_queue_delta*.jsonl"
+    ],
+    "manual_only": {
+      "require": true,
+      "protected_path_globs": [
+        "**/*manual_adjudication_batch*.jsonl",
+        "**/*manual_reasoning*.jsonl",
+        "**/*queue*_updates*.jsonl",
+        "**/*adjudication_queue_delta*.jsonl"
+      ],
+      "allowed_line_prefixes": [
+        "MANUAL_ADJ_LINEAGE",
+        "MANUAL_ADJUDICATION_ATTESTATION",
+        "MANUAL_REASONING_ATTESTATION",
+        "QUEUE_LINKAGE_ATTESTATION"
+      ],
+      "allowed_readonly_command_patterns": [
+        "^python3?\\s+scripts/validate_manual_adjudication_log\\.py\\b",
+        "^python3?\\s+scripts/build_reaudit_sample\\.py\\b",
+        "^python3?\\s+scripts/filter_training_eligible_adjudication_rows\\.py\\b",
+        "^python3?\\s+scripts/validate_day_bundle\\.py\\b"
+      ]
+    },
+    "require_split_field": false
+  },
+  "provenance": {
+    "require_dirty_snapshot": true
+  },
+  "migration_map": {
+    "require": true,
+    "globs": [
+      "**/filename_migration_map*.json"
+    ]
+  },
+  "adjudication_quality": {
+    "require": true,
+    "min_unique_timestamp_ratio": 0.8,
+    "min_unique_witness_ratio": 0.8,
+    "min_unique_reasoning_ratio": 0.8
+  },
+  "adjudication_export": {
+    "require": true,
+    "uncertain_decisions": [
+      "review",
+      "abstain"
+    ],
+    "eligibility_field": "training_export_eligible",
+    "allow_override_field": "allow_uncertain_training_export"
+  },
+  "freeze": {
+    "require": true,
+    "anchor_exit_code_file": "validate_day_bundle.exit_code",
+    "mutable_include_globs": [
+      "*",
+      "**/*"
+    ],
+    "mutable_exclude_globs": [
+      "validate_day_bundle.exit_code",
+      "day_validator_report.json",
+      "canonical/day_validator_report.json",
+      "artifact_index.json",
+      ".DS_Store",
+      "**/.DS_Store"
+    ]
+  },
+  "red_team": {
+    "require_adversarial_subagent_statuses": [
+      "in_review",
+      "complete"
+    ],
+    "artifact_globs": [
+      "**/red_team/adversarial_subagent_review*.json",
+      "**/red_team_adversarial_subagent_review*.json",
+      "**/red_team_review*.json"
+    ],
+    "required_fields": [
+      "schema_version",
+      "day_id",
+      "review_mode",
+      "subagent_id",
+      "adversarial_findings",
+      "verdict",
+      "completed_at"
+    ],
+    "manifest_output_pointer_key": "red_team_adversarial_review"
+  }
+}

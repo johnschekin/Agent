@@ -1,0 +1,32 @@
+{
+  "ok": true,
+  "fixture_count": 500,
+  "doc_count": 432,
+  "errors": [],
+  "warnings": [],
+  "counts": {
+    "by_category": {
+      "ambiguous_alpha_roman": 70,
+      "deep_nesting_chain": 50,
+      "defined_term_boundary": 50,
+      "duplicate_collision": 50,
+      "formatting_noise": 40,
+      "high_letter_continuation": 70,
+      "linking_contract": 30,
+      "nonstruct_parent_chain": 50,
+      "true_root_high_letter": 40,
+      "xref_vs_structural": 50
+    },
+    "by_split": {
+      "holdout": 36,
+      "test": 64,
+      "train": 323,
+      "val": 77
+    },
+    "by_decision": {
+      "abstain": 90,
+      "accepted": 80,
+      "review": 330
+    }
+  }
+}
