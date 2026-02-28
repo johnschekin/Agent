@@ -82,6 +82,84 @@ class TestSmartQuotes:
         assert "Indebtedness" in terms
 
 
+class TestQuotedColonDefinitions:
+    """Tests for the \u201cTerm\u201d: and "Term": patterns (smart-quote/straight-quote + colon)."""
+
+    def test_smart_quote_colon_single(self) -> None:
+        text = '\u201cApplicable Margin\u201d: the percentage set forth in the Pricing Grid.'
+        defs = extract_definitions(text)
+        assert len(defs) == 1
+        assert defs[0].term == "Applicable Margin"
+        assert defs[0].pattern_engine == "smart_quote"
+
+    def test_straight_quote_colon_single(self) -> None:
+        text = '"Applicable Margin": the percentage set forth in the Pricing Grid.'
+        defs = extract_definitions(text)
+        assert len(defs) == 1
+        assert defs[0].term == "Applicable Margin"
+        assert defs[0].pattern_engine == "quoted"
+
+    def test_smart_quote_colon_multiple(self) -> None:
+        text = (
+            '\u201cBorrower\u201d: the entity identified as such in the preamble.\n\n'
+            '\u201cLender\u201d: each financial institution listed on Schedule 1.\n\n'
+            '\u201cAgent\u201d: JPMorgan Chase Bank, N.A.'
+        )
+        defs = extract_definitions(text)
+        terms = {d.term for d in defs}
+        assert "Borrower" in terms
+        assert "Lender" in terms
+        # "Agent" starts with a false-positive-guarded word — should still match
+        # since _is_false_positive checks startswith("Article"/"Section"/etc.),
+        # not "Agent".
+        assert "Agent" in terms
+
+    def test_smart_quote_colon_multiline_term(self) -> None:
+        """Term name may span lines in EDGAR HTML-to-text output."""
+        text = '\u201cSenior\nSecured Notes\u201d: the $490,000,000 in aggregate principal amount.'
+        defs = extract_definitions(text)
+        assert len(defs) == 1
+        assert "Senior" in defs[0].term
+        assert "Secured Notes" in defs[0].term
+
+    def test_colon_def_start_offset(self) -> None:
+        """Definition body should start after the colon, not include it."""
+        text = '\u201cTerm\u201d: the definition body starts here.'
+        defs = extract_definitions(text)
+        assert len(defs) == 1
+        assert "the definition body" in defs[0].definition_text
+        # def_start is after the colon
+        assert defs[0].def_start > defs[0].char_end
+
+    def test_smart_quote_with_leading_space(self) -> None:
+        """EDGAR HTML-to-text often produces space after opening smart quote."""
+        text = '\u201c Applicable Margin \u201d: the percentage rate per annum.'
+        defs = extract_definitions(text)
+        assert len(defs) == 1
+        assert defs[0].term == "Applicable Margin"
+
+    def test_digit_starting_term(self) -> None:
+        """Terms like '2023 Senior Secured Notes' start with a digit."""
+        text = '\u201c 2023 Senior Secured Notes \u201d: the $490,000,000 in aggregate principal amount.'
+        defs = extract_definitions(text)
+        assert len(defs) == 1
+        assert "2023 Senior Secured Notes" in defs[0].term
+
+    def test_means_still_preferred_over_colon(self) -> None:
+        """When both 'means' and ':' could match, dedup keeps highest confidence."""
+        text = (
+            '\u201cIndebtedness\u201d means any obligation for borrowed money.\n\n'
+            '\u201cPermitted Liens\u201d: liens permitted under Section 7.01.'
+        )
+        defs = extract_definitions(text)
+        terms = {d.term: d for d in defs}
+        assert "Indebtedness" in terms
+        assert "Permitted Liens" in terms
+        # Both should be smart_quote engine
+        assert terms["Indebtedness"].pattern_engine == "smart_quote"
+        assert terms["Permitted Liens"].pattern_engine == "smart_quote"
+
+
 class TestExtractTermReferences:
     def test_finds_references(self) -> None:
         text = "The Borrower shall not incur any Indebtedness or create any Liens."

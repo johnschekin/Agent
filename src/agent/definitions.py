@@ -257,7 +257,7 @@ def _extract_definition_text(
 # ---------------------------------------------------------------------------
 
 _QUOTED_DEF_RE = re.compile(
-    r'"([A-Z][^"]{1,80}?)"\s*(?:means?|shall mean|is defined as|has the meaning)',
+    r'"\s*([A-Z0-9][^"]{1,80}?)\s*"\s*(?:means?|shall mean|is defined as|has the meaning|:)',
     re.MULTILINE,
 )
 
@@ -295,7 +295,8 @@ def _engine_quoted(text: str, global_offset: int) -> list[DefinedTerm]:
 # ---------------------------------------------------------------------------
 
 _SMART_QUOTE_DEF_RE = re.compile(
-    r"\u201c([A-Z][^\u201d]{1,80}?)\u201d\s*(?:means?|shall mean|is defined as|has the meaning)",
+    r"\u201c\s*([A-Z0-9][^\u201d]{1,80}?)\s*\u201d"
+    r"\s*(?:means?|shall mean|is defined as|has the meaning|:)",
     re.MULTILINE,
 )
 
@@ -333,7 +334,7 @@ def _engine_smart_quote(text: str, global_offset: int) -> list[DefinedTerm]:
 # ---------------------------------------------------------------------------
 
 _PAREN_DEF_RE = re.compile(
-    r'\((?:the|each,?\s*(?:a|an)|collectively,?\s*the)\s*["\u201c]([A-Z][^"\u201d]{1,80}?)["\u201d]\)',
+    r'\((?:the|each,?\s*(?:a|an)|collectively,?\s*the)\s*["\u201c]\s*([A-Z][^"\u201d]{1,80}?)\s*["\u201d]\)',
     re.MULTILINE,
 )
 
